@@ -36,7 +36,10 @@ case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit]
     extends DeclaredTypesEmitters(types, references, ordering) {
   override def emitTypes(b: EntryBuilder): Unit = {
     b.entry("definitions",
-            _.obj(traverse(ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references))), _)))
+            _.obj(
+              traverse(
+                ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq("definitions")))),
+                _)))
   }
 
 }

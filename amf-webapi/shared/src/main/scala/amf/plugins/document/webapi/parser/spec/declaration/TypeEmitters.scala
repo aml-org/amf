@@ -19,7 +19,12 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.{
+  OasTypeDefMatcher,
+  OasTypeDefStringValueMatcher,
+  RamlTypeDefMatcher,
+  RamlTypeDefStringValueMatcher
+}
 import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -65,12 +70,14 @@ case class RamlNamedTypeEmitter(shape: AnyShape,
   override def position(): Position = pos(shape.annotations)
 }
 
-case class OasNamedTypeEmitter(shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
+case class OasNamedTypeEmitter(shape: Shape,
+                               ordering: SpecOrdering,
+                               references: Seq[BaseUnit],
+                               pointer: Seq[String] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimizacion, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
-    b.entry(name, OasTypePartEmitter(shape, ordering, references = references).emit(_))
+    b.entry(name, OasTypePartEmitter(shape, ordering, references = references, pointer = pointer :+ name).emit(_))
   }
 
   override def position(): Position = pos(shape.annotations)
@@ -178,10 +185,10 @@ case class Raml10TypeEmitter(shape: Shape,
         spec.externalLink(shape, references) match {
           case Some(fragment: EncodesModel) =>
             Seq(spec.externalReference(shape.linkLabel.option().getOrElse(fragment.location().get), shape))
-          case _  =>
+          case _ =>
             Seq(spec.localReference(shape))
         }
-      case schema: SchemaShape     => Seq(RamlSchemaShapeEmitter(schema, ordering, references))
+      case schema: SchemaShape => Seq(RamlSchemaShapeEmitter(schema, ordering, references))
       case node: NodeShape if node.annotations.find(classOf[ParsedJSONSchema]).isDefined =>
         Seq(RamlJsonShapeEmitter(node, ordering, references))
       case node: NodeShape =>
@@ -1366,7 +1373,7 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
       case Some(id) =>
         schemaPath.reverse.find(_._1 == id) match {
           case Some((_, pointer)) => Some(pointer)
-          case _                  => None
+          case _                  => schemaPath.headOption.map(_._2) // if there is not any match i assume recursion through root
         }
       case _ => None
     }

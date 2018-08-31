@@ -10,12 +10,21 @@ import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, 
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.remote._
-import amf.core.emitter._
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{Raml08RootLevelEmitters, Raml10RootLevelEmitters, RamlRootLevelEmitters}
-import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, JsonSchemaTypeDefMatcher, OasTypeDefStringValueMatcher, RamlHeader}
+import amf.plugins.document.webapi.parser.spec.raml.{
+  Raml08RootLevelEmitters,
+  Raml10RootLevelEmitters,
+  RamlRootLevelEmitters
+}
+import amf.plugins.document.webapi.parser.{
+  CommonOasTypeDefMatcher,
+  JsonSchemaTypeDefMatcher,
+  OasTypeDefStringValueMatcher,
+  RamlHeader
+}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
@@ -26,7 +35,6 @@ import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import amf.core.utils.Strings
 
 /**
   *
@@ -357,8 +365,9 @@ abstract class RamlSpecEmitterContext(refEmitter: RefEmitter) extends SpecEmitte
 
   def externalReference(location: String, reference: Linkable): PartEmitter =
     new PartEmitter {
-      override def emit(b: PartBuilder): Unit = b += YNode.include(reference.linkLabel.option().getOrElse(reference.location().get))
-      override def position(): Position           = pos(reference.annotations)
+      override def emit(b: PartBuilder): Unit =
+        b += YNode.include(reference.linkLabel.option().getOrElse(reference.location().get))
+      override def position(): Position = pos(reference.annotations)
     }
 
   val factory: RamlEmitterVersionFactory

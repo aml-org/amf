@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/recursive",
+  "definitions": {
+    "recursive": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "a",
+        "b"
+      ],
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "c": {
+              "$ref": "#/definitions/recursive"
+            }
+          }
+        }
+      }
+    }
+  }
+}

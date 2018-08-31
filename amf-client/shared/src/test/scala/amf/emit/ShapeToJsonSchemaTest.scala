@@ -64,6 +64,19 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
     cycle("json-expression.raml", "json-expression-new.json", func, (a: AnyShape) => a.buildJsonSchema())
   }
 
+  test("Test recursive shape") {
+    val func = (u: BaseUnit) =>
+      encodedWebApi(u)
+        .flatMap(_.endPoints.headOption)
+        .flatMap(_.operations.headOption)
+        .flatMap(_.responses.headOption)
+        .flatMap(_.payloads.headOption)
+        .map(_.schema)
+        .collectFirst({ case any: AnyShape => any })
+
+    cycle("recursive.raml", "recursive.json", func, (a: AnyShape) => a.buildJsonSchema())
+  }
+
   private val basePath: String   = "file://amf-client/shared/src/test/resources/tojson/tojsonschema/source/"
   private val goldenPath: String = "amf-client/shared/src/test/resources/tojson/tojsonschema/schemas/"
 
