@@ -24,14 +24,17 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
       case Some(_) =>
         effectiveLinkTarget.asInstanceOf[ResourceType].asEndpoint(unit, profile, errorHandler)
       case _ =>
-        ExtendsHelper.asEndpoint(unit,
-                                 profile,
-                                 dataNode,
-                                 name.value(),
-                                 id,
-                                 ExtendsHelper.findUnitLocationOfElement(id, unit),
-                                 keepEditingInfo = false,
-                                 errorHandler = errorHandler)
+        Option(dataNode)
+          .map(
+            ExtendsHelper.asEndpoint(unit,
+                                     profile,
+                                     _,
+                                     name.value(),
+                                     id,
+                                     ExtendsHelper.findUnitLocationOfElement(id, unit),
+                                     keepEditingInfo = false,
+                                     errorHandler = errorHandler))
+          .orNull
     }
   }
 }

@@ -24,13 +24,16 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
       case Some(_) =>
         effectiveLinkTarget.asInstanceOf[Trait].asOperation(unit, profile)
       case _ =>
-        ExtendsHelper.asOperation(profile,
-                                  dataNode,
-                                  unit,
-                                  name.option().getOrElse(""),
-                                  id,
-                                  ExtendsHelper.findUnitLocationOfElement(id, unit),
-                                  keepEditingInfo = false)
+        Option(dataNode)
+          .map(
+            ExtendsHelper.asOperation(profile,
+                                      _,
+                                      unit,
+                                      name.option().getOrElse(""),
+                                      id,
+                                      ExtendsHelper.findUnitLocationOfElement(id, unit),
+                                      keepEditingInfo = false))
+          .orNull // TODO should we return null or an empty operation?
     }
   }
 }

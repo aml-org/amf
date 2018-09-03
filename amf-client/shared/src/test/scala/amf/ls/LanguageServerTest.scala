@@ -95,9 +95,31 @@ class LanguageServerTest extends AsyncFunSuite with CompilerTestBuilder {
           .head
           .asInstanceOf[ParametrizedDeclaration]
           .target
-          .asInstanceOf[amf.plugins.domain.webapi.models.templates.Trait]
+          .asInstanceOf[Trait]
           .asOperation(model)
         assert(Option(res).isDefined)
+        succeed
+      }
+  }
+
+  test("Trait with unresolved reference") {
+    val file = "file://amf-client/shared/src/test/resources/ls/trait-unresolved.raml"
+    build(file, RamlYamlHint)
+      .map(_.asInstanceOf[Document])
+      .map { model =>
+        val res = model.encodes
+          .asInstanceOf[WebApi]
+          .endPoints
+          .head
+          .operations
+          .head
+          .extend
+          .head
+          .asInstanceOf[ParametrizedDeclaration]
+          .target
+          .asInstanceOf[Trait]
+          .asOperation(model)
+        assert(Option(res).isEmpty)
         succeed
       }
   }
