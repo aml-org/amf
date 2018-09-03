@@ -6,8 +6,9 @@ import amf.core.services.RuntimeValidator
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.TypeDef.{IntType, StrType}
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape, ScalarShape, SchemaShape}
+import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
+import amf.plugins.domain.shapes.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.AsyncFunSuite
@@ -26,7 +27,7 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
   AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
   AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
 
-  case class ShapeInfo(shape: AnyShape, examples: Seq[ExampleInfo])
+  case class ShapeInfo(shape: AnyShape, examples: Seq[ExampleInfo], mode: ValidationMode = StrictValidationMode)
   case class ExampleInfo(name: String, example: String, valid: Boolean)
 
   val fixtureTest: Seq[ShapeInfo] = Seq(
@@ -86,15 +87,26 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
         ExampleInfo("UserJsonExample", Fixture.UserJsonExample, valid = false),
         ExampleInfo("UserXmlExample", Fixture.UserXmlExample, valid = false)
       )
+    ),
+    ShapeInfo(
+      Fixture.UnionStrNil,
+      Seq(
+        ExampleInfo("SimpleScalarNumberExample", "12", valid = true)
+      ),
+      mode = ScalarRelaxedValidationMode
     )
   )
 
   fixtureTest.foreach { si =>
     si.examples.foreach { ei =>
       test(s"Test ${si.shape.name} with example ${ei.name}") {
-        si.shape.validate(ei.example).map { r =>
-          r.conforms should be(ei.valid)
-        }
+        if (si.mode == StrictValidationMode)
+          si.shape.validate(ei.example).map { r =>
+            r.conforms should be(ei.valid)
+          } else
+          si.shape.validateParameter(ei.example).map { r =>
+            r.conforms should be(ei.valid)
+          }
       }
     }
   }
@@ -150,6 +162,10 @@ trait ShapesFixture {
       ScalarShape().withName("simpleStr").withDataType(strXds).withId("http://a.ml/payloadTest/simpleStr")
     val SimpleIntScalar: ScalarShape =
       ScalarShape().withName("simpleInt").withDataType(intXds).withId("http://a.ml/payloadTest/simpleInt")
+
+    val NilS: NilShape = NilShape().withName("nil").withId("http://a.ml/payloadTest/nilShape")
+    val UnionStrNil: UnionShape =
+      UnionShape().withName("union").withId("http://a.ml/payloadTest/simpleStr").withAnyOf(Seq(SimpleStrScalar, NilS))
 
     private val xmlUser: String =
       """|<?xml version="1.0"?>

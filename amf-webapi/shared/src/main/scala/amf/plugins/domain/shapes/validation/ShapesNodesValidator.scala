@@ -1,4 +1,4 @@
-package amf.core.services
+package amf.plugins.domain.shapes.validation
 
 import amf.core.metamodel.document.PayloadFragmentModel
 import amf.core.metamodel.domain.ShapeModel

@@ -59,6 +59,12 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
   def validate(fragment: PayloadFragment): ClientFuture[ValidationReport] =
     _internal.validate(fragment._internal).asClient
 
+  def validateParameter(payload: String, env: Environment): ClientFuture[ValidationReport] =
+    _internal.validateParameter(payload, env._internal).asClient
+
+  def validateParameter(payload: String): ClientFuture[ValidationReport] =
+    _internal.validateParameter(payload).asClient
+
   def payloadValidator(): PayloadValidator = new PayloadValidator(_internal.payloadValidator())
 
   /** Aux method to know when the shape is instance only of any shape

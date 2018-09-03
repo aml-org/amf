@@ -3,12 +3,12 @@ package amf.plugins.document.webapi.validation
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.{DataNode, ScalarNode, Shape}
 import amf.core.parser.Annotations
-import amf.core.services.ShapesNodesValidator
 import amf.core.utils._
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ExampleModel}
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
+import amf.plugins.domain.shapes.validation.ShapesNodesValidator
 
 import scala.collection.mutable
 

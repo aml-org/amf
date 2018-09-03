@@ -3,10 +3,10 @@ package amf.validation
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
 import amf.core.remote.{Hint, OasJsonHint}
-import amf.core.services.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.plugins.domain.shapes.validation.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.plugins.domain.webapi.models.WebApi
 
-class RamlParamPayloadValidationTest extends ApiShapePayloadValidationTest {
+class OasParamPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override val basePath = "file://amf-client/shared/src/test/resources/validations/param-payload/"
   protected def fixtureList: Seq[Fixture] = Seq(

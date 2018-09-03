@@ -1,6 +1,5 @@
-package amf.core.services
+package amf.plugins.domain.shapes.validation
 
-import amf.{ProfileName, ProfileNames}
 import amf.client.plugins._
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{ScalarNode, Shape}
@@ -9,7 +8,9 @@ import amf.core.utils._
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
+import amf.plugins.domain.shapes.models.{ScalarShape, UnionShape}
 import amf.plugins.features.validation.ParserSideValidations
+import amf.{ProfileName, ProfileNames}
 
 import scala.collection.immutable
 import scala.concurrent.Future
@@ -57,7 +58,8 @@ object PayloadValidator {
     if (result.hasError)
       Future.successful(AMFValidationReport(conforms = false, payload, ProfileNames.AMF, result.results))
     else {
-      val f = if (isString(shape) && validationMode == ScalarRelaxedValidationMode) {
+
+      val f = if ((isString(shape) || unionWithString(shape)) && validationMode == ScalarRelaxedValidationMode) {
         result.fragment.encodes match {
           case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
             PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
@@ -70,8 +72,15 @@ object PayloadValidator {
     }
   }
 
-  private def isString(shape: Shape): Boolean =
-    shape.ramlSyntaxKey.equals("stringScalarShape") // todo: temp solution to know if a string scalar. We need to do something with the modules. I need to see any shape hierarchy from validation.
+  private def isString(shape: Shape): Boolean = shape match {
+    case s:ScalarShape => s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri()))
+    case _ => false
+  }
+
+  private def unionWithString(shape: Shape): Boolean = shape match {
+    case u:UnionShape => u.anyOf.exists(isString)
+    case _ => false
+  }
 
   def plugin(mediaType: String, shape: Shape, env: Environment): AMFPayloadValidationPlugin =
     AMFPluginsRegistry

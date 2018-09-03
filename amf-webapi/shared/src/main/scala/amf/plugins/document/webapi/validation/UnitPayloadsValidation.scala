@@ -5,9 +5,9 @@ import amf.core.metamodel.document.PayloadFragmentModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{ArrayNode, DataNode, ObjectNode}
 import amf.core.remote.Platform
-import amf.core.services.ShapesNodesValidator
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
 import amf.internal.environment.Environment
+import amf.plugins.domain.shapes.validation.ShapesNodesValidator
 
 import scala.concurrent.Future
 

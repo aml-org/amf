@@ -3,11 +3,11 @@ package amf.validation
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
 import amf.core.remote._
-import amf.core.services.{PayloadValidator, StrictValidationMode, ValidationMode}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.{Raml08Plugin, Raml10Plugin}
+import amf.plugins.domain.shapes.validation.{PayloadValidator, StrictValidationMode, ValidationMode}
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.{AsyncFunSuite, Matchers}
 
