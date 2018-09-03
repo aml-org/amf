@@ -128,7 +128,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                         ctx.factory
                           .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, defaultType)
                           .parse()
-                          .foreach(payloads += res.withPayload(None).withSchema(_)) // todo
+                          .foreach(payloads += res.withPayload(None).add(Annotations(entry)).withSchema(_)) // todo
                       } else {
                         others.entries.foreach(
                           e =>

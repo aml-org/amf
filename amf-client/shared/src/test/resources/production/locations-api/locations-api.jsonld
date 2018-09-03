@@ -268,6 +268,28 @@
                               }
                             ]
                           }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml#/web-api/end-points/%2Flocations/get/200/default/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml#/web-api/end-points/%2Flocations/get/200/default"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(11,8)-(14,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       }
                     ],
@@ -553,6 +575,28 @@
                                         "@value": "[(20,10)-(21,0)]"
                                       }
                                     ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml#/web-api/end-points/%2Fstr/get/200/default/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml#/web-api/end-points/%2Fstr/get/200/default"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(19,8)-(21,0)]"
                                   }
                                 ]
                               }
