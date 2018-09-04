@@ -16,7 +16,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath       = "file://amf-client/shared/src/test/resources/vocabularies2/validation/"
-  val productionPath = "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/"
+  val productionPath = "file://amf-client/shared/src/test/resources/vocabularies2/production/"
 
   test("validation dialect 1 example 1 correct") {
     validate("dialect1.raml", "instance1_correct1.raml", 0)
@@ -132,7 +132,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
                             ProfileName("ABOUT-validation.raml"),
                             "ABOUT-validation",
                             2,
-                            productionPath)
+                            productionPath + "ABOUT/")
   }
 
   test("Custom validation profile for ABOUT dialect default profile negative case") {
@@ -141,17 +141,23 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
                             ProfileName("ABOUT-validation.raml"),
                             "ABOUT-validation",
                             4,
-                            productionPath)
+                            productionPath + "ABOUT/")
   }
 
-  protected def validate(dialect: String, instance: String, numErrors: Int) = {
+  test("Can validate asyncapi 0.1 error") {
+    validate("dialect1.raml", "example1.raml", 1, productionPath + "asyncapi/")
+  }
+
+
+
+  protected def validate(dialect: String, instance: String, numErrors: Int, path: String = basePath) = {
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     for {
       _ <- amf.core.AMF.init()
       dialect <- {
         new AMFCompiler(
-          basePath + dialect,
+          path + dialect,
           platform,
           None,
           Some("application/yaml"),
@@ -161,7 +167,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
       instance <- {
         AMFValidatorPlugin.enabled = true
         new AMFCompiler(
-          basePath + instance,
+          path + instance,
           platform,
           None,
           Some("application/yaml"),

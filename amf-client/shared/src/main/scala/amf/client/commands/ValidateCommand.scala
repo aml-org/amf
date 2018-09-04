@@ -1,10 +1,13 @@
 package amf.client.commands
 
+import amf.ProfileName
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.validation.AMFValidationReport
+import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 
 import scala.concurrent.Future
@@ -34,13 +37,23 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
   }
 
   def report(model: BaseUnit, config: ParserConfig) = {
-    val customProfileLoaded = if (config.customProfile.isDefined) {
+    val customProfileLoaded: Future[ProfileName] = if (config.customProfile.isDefined) {
       RuntimeValidator.loadValidationProfile(config.customProfile.get) map { profileName =>
         profileName
       }
     } else {
       Future {
-        config.profile
+        model match {
+          case dialectInstance: DialectInstance =>
+            AMLPlugin.registry.dialectFor(dialectInstance) match {
+              case Some(dialect) =>
+                ProfileName(dialect.nameAndVersion())
+              case _             =>
+                config.profile
+            }
+          case _ =>
+            config.profile
+        }
       }
     }
     customProfileLoaded flatMap { profileName =>
