@@ -148,6 +148,9 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
     validate("dialect1.raml", "example1.raml", 1, productionPath + "asyncapi/")
   }
 
+  test("Can validate asyncapi 0.2 correct") {
+    validate("dialect2.raml", "example2.raml", 0, productionPath + "asyncapi/")
+  }
 
 
   protected def validate(dialect: String, instance: String, numErrors: Int, path: String = basePath) = {
