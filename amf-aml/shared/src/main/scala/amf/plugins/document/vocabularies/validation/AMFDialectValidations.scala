@@ -219,6 +219,32 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
               ))
           )
 
+        case literal if  literal.endsWith("link") =>
+          val message = s"Property '${prop.name()}'  value must be of a link"
+          validations += new ValidationSpecification(
+            name = validationId(node, prop.name().value(), "dialectRange"),
+            message = message,
+            ramlMessage = Some(message),
+            oasMessage = Some(message),
+            targetClass = Seq(node.id),
+            propertyConstraints = Seq(
+              PropertyConstraint(
+                ramlPropertyId = prop.nodePropertyMapping().value(),
+                name = validationId(node, prop.name().value(), "dialectRange") + "/prop",
+                message = Some(message),
+                custom = Some((b: EntryBuilder, parentId: String) => {
+                  b.entry(
+                    (Namespace.Shacl + "nodeKind").iri(),
+                    _.obj(_.entry("@id", (Namespace.Shacl + "IRI").iri()))
+                  )
+                }),
+                customRdf = Some((rdfModel: RdfModel, subject: String) => {
+                  val propId                = rdfModel.nextAnonId()
+                  rdfModel.addTriple(subject, (Namespace.Shacl + "nodeKind").iri(), (Namespace.Shacl + "IRI").iri())
+                })
+              ))
+          )
+
         case literal =>
           val message = s"Property '${prop.name()}'  value must be of type $dataRange"
           validations += new ValidationSpecification(
