@@ -167,6 +167,12 @@ case class ParserContext(rootContextDocument: String = "",
   var globalSpace: mutable.Map[String, Any] = mutable.Map()
 
   def violation(node: String, message: String): Unit = violation(node, message, currentFile)
+
+  def forLocation(newLocation: String): ParserContext = {
+    val copied: ParserContext = this.copy(rootContextDocument = newLocation)
+    copied.globalSpace = globalSpace
+    copied
+  }
 }
 
 case class WarningOnlyHandler(override val currentFile: String) extends ErrorHandler {

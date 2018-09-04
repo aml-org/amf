@@ -53,9 +53,13 @@ class AMFCompiler(val rawUrl: String,
     }
   }
 
-  private val context: Context   = base.map(_.update(path)).getOrElse(core.remote.Context(remote, path))
-  private val location           = context.current
-  private val ctx: ParserContext = baseContext.getOrElse(ParserContext(path))
+  private val context: Context = base.map(_.update(path)).getOrElse(core.remote.Context(remote, path))
+  private val location         = context.current
+  private val ctx: ParserContext = baseContext match {
+    case Some(given) if given.currentFile.equals(location) => given
+    case Some(given)                                       => given.forLocation(location)
+    case None                                              => ParserContext(location)
+  }
 
   def build(): Future[BaseUnit] = {
     ExecutionLog.log(s"AMFCompiler#build: Building $rawUrl")

@@ -552,6 +552,16 @@ class RamlParserErrorTest extends ParserErrorTest {
       }
     )
   }
+
+  test("Test location error in fragment") {
+    validate(
+      "error/error-fragment/api.raml",
+      notYmap => {
+        notYmap.level should be("Violation")
+        notYmap.location.get should endWith("error-fragment/fragment.raml")
+      }
+    )
+  }
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =
