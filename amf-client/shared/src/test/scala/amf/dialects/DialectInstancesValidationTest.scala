@@ -152,6 +152,10 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
     validate("dialect2.raml", "example2.raml", 0, productionPath + "asyncapi/")
   }
 
+  test("Can validate asyncapi 0.3 correct") {
+    validate("dialect3.raml", "example3.raml", 0, productionPath + "asyncapi/")
+  }
+
 
   protected def validate(dialect: String, instance: String, numErrors: Int, path: String = basePath) = {
     amf.core.AMF.registerPlugin(AMLPlugin)
