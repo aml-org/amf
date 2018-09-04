@@ -44,8 +44,9 @@ trait CommandHelper {
     val dialectFutures = config.dialects.map { dialect =>
       AMLPlugin.registry.registerDialect(dialect)
     }
-    Future.sequence(dialectFutures).map[Unit] { _ =>
-      }
+    Future.sequence(dialectFutures).map[Unit] { res =>
+      res
+    }
   }
 
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
