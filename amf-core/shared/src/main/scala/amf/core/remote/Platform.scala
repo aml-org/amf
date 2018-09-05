@@ -212,15 +212,16 @@ object UnsupportedFileSystem extends FileSystem {
   private def unsupported = throw new Exception(s"Unsupported operation")
 }
 
-case class FileNotFound(cause: Exception) extends Exception(cause)
+case class FileNotFound(cause: Throwable) extends FileLoaderException("File Not Found: " + cause.getMessage, cause)
 
-case class SocketTimeout(cause: Exception) extends Exception(cause)
+case class SocketTimeout(cause: Throwable) extends FileLoaderException("Socket Timeout: " + cause.getMessage, cause)
 
-case class NetworkError(cause: Throwable) extends Exception(cause)
+case class NetworkError(cause: Throwable) extends FileLoaderException("Network Error: " + cause.getMessage, cause)
 
 case class UnexpectedStatusCode(resource: String, code: Int)
     extends Exception(s"Unexpected status code '$code' for resource '$resource'")
 
-class UnsupportedUrlScheme(url: String)    extends Exception
-class PathResolutionError(message: String) extends Exception
-class FileReadingError(message: String)    extends Exception
+class UnsupportedUrlScheme(url: String)    extends Exception("Unsupported Url scheme: " + url)
+class PathResolutionError(message: String) extends Exception("Error resolving path: " + message)
+
+abstract class FileLoaderException(msj: String, e: Throwable) extends Throwable(msj, e)

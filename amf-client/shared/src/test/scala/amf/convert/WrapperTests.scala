@@ -12,7 +12,7 @@ import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
 import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
-import amf.client.resource.ResourceLoader
+import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.parser.Range
 import amf.core.remote.{Aml, Oas20, Raml, Raml10}
@@ -533,6 +533,44 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit shouldBe a[Document]
       unit.id should be("file://api.raml")
       unit2.id should be("file://api2")
+    }
+  }
+
+  test("Environment resource not loaded exception") {
+    val name = "api.raml"
+
+    val input = s"""
+                   |#%RAML 1.0
+                   |title: Environment test
+                   |types:
+                   |  A: !include not-exists.raml
+    """.stripMargin
+
+    case class ForFailResourceLoader() extends ResourceLoader {
+
+      import amf.client.convert.WebApiClientConverters._
+
+      override def fetch(resource: String): ClientFuture[Content] = {
+        val f =
+          if (resource.endsWith("api.raml")) Future.successful(new Content(input, resource))
+          else
+            Future.failed(new ResourceNotFound(s"Cannot find resource $resource"))
+
+        f.asClient
+      }
+
+      override def accepts(resource: String): Boolean = true
+    }
+
+    val environment = Environment.empty().add(ForFailResourceLoader().asInstanceOf[ClientLoader])
+
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- new RamlParser(environment).parseFileAsync(name).asFuture
+      report <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
+    } yield {
+      report.conforms should be(false)
+      report.results.asSeq.exists(_.message.equals("Cannot find resource not-exists.raml")) should be(true)
     }
   }
 
