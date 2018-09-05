@@ -2,6 +2,7 @@ package amf.plugins.document.vocabularies.model.domain
 
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.model.BoolField
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields, Value}
 import amf.core.vocabulary.ValueType
@@ -21,6 +22,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   val objectProperties: mutable.Map[String, DialectDomainElement]                = mutable.HashMap()
   val objectCollectionProperties: mutable.Map[String, Seq[DialectDomainElement]] = mutable.HashMap()
   val propertyAnnotations: mutable.Map[String, Annotations]                      = mutable.HashMap()
+
+  def isAbstract: BoolField = fields.field(meta.asInstanceOf[DialectDomainElementModel].Abstract)
+  def withAbstract(isAbstract: Boolean): DialectDomainElement = {
+    set(meta.asInstanceOf[DialectDomainElementModel].Abstract, isAbstract)
+    this
+  }
 
   // Types of the instance
   protected var instanceTypes: Seq[String] = Nil

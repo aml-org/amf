@@ -6,7 +6,7 @@ import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
-import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFragmentModel, DialectInstanceLibraryModel, DialectInstanceModel}
+import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFragmentModel, DialectInstanceLibraryModel, DialectInstanceModel, DialectInstancePatchModel}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, External}
 
 trait ComposedInstancesSupport {
@@ -35,7 +35,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   def withDefinedBy(dialectId: String): DialectInstance        = set(DefinedBy, dialectId)
   def withGraphDependencies(ids: Seq[String]): DialectInstance = set(GraphDependencies, ids)
 
-  override def transform(selector: (DomainElement) => Boolean,
+  override def transform(selector: DomainElement => Boolean,
                          transformation: (DomainElement, Boolean) => Option[DomainElement]): BaseUnit = {
     val domainElementAdapter = (o: AmfObject) => {
       o match {
@@ -54,7 +54,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   }
 
   override protected def transformByCondition(element: AmfObject,
-                                              predicate: (AmfObject) => Boolean,
+                                              predicate: AmfObject => Boolean,
                                               transformation: (AmfObject, Boolean) => Option[AmfObject],
                                               cycles: Set[String] = Set.empty,
                                               cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject] = defaultCycleRecoverer): AmfObject = {
@@ -152,10 +152,10 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
     with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceLibraryModel
 
-  def references: Seq[BaseUnit]      = fields(References)
-  def graphDependencies: Seq[String] = fields(GraphDependencies)
-  def declares: Seq[DomainElement]   = fields(Declares)
-  def definedBy(): String            = fields(DefinedBy)
+  def references: Seq[BaseUnit]        = fields(References)
+  def graphDependencies: Seq[StrField] = fields(GraphDependencies)
+  def declares: Seq[DomainElement]     = fields(Declares)
+  def definedBy(): StrField            = fields(DefinedBy)
 
   override def componentId: String = ""
 
@@ -166,4 +166,30 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
 object DialectInstanceLibrary {
   def apply(): DialectInstanceLibrary                         = apply(Annotations())
   def apply(annotations: Annotations): DialectInstanceLibrary = DialectInstanceLibrary(Fields(), annotations)
+}
+
+
+case class DialectInstancePatch(fields: Fields, annotations: Annotations)
+    extends BaseUnit
+    with ExternalContext[DialectInstancePatch]
+    with DeclaresModel
+    with EncodesModel {
+
+  override def meta: Obj = DialectInstancePatchModel
+
+  def references: Seq[BaseUnit]         = fields(References)
+  def graphDependencies: Seq[StrField]  = fields(GraphDependencies)
+  def declares: Seq[DomainElement]      = fields(Declares)
+  def definedBy(): StrField             = fields(DefinedBy)
+  override def encodes: DomainElement   = fields(Encodes)
+
+  override def componentId: String = ""
+
+  def withDefinedBy(dialectId: String): DialectInstancePatch        = set(DefinedBy, dialectId)
+  def withGraphDependencies(ids: Seq[String]): DialectInstancePatch = set(GraphDependencies, ids)
+}
+
+object DialectInstancePatch {
+  def apply(): DialectInstancePatch                         = apply(Annotations())
+  def apply(annotations: Annotations): DialectInstancePatch = DialectInstancePatch(Fields(), annotations)
 }

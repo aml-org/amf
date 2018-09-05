@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 
 import amf.core.metamodel.Field
+import amf.core.metamodel.Type.Bool
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -12,7 +13,8 @@ class DialectDomainElementModel(val typeIri: String = (Namespace.Meta + "Dialect
     extends DomainElementModel
     with LinkableElementModel {
 
-  override def fields: List[Field]     = DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields
+  val Abstract                         = Field(Bool, Namespace.Meta + "Abstract")
+  override def fields: List[Field]     = Abstract :: DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields
   override val `type`: List[ValueType] = Namespace.Meta + "DialectDomainElement" :: DomainElementModel.`type`
 
   override val dynamic = true
@@ -21,7 +23,6 @@ class DialectDomainElementModel(val typeIri: String = (Namespace.Meta + "Dialect
 }
 
 object DialectDomainElementModel {
-
   def apply(): DialectDomainElementModel = new DialectDomainElementModel()
   def apply(typeIri: String)             = new DialectDomainElementModel(typeIri)
 }

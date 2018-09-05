@@ -14,6 +14,12 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
   @JSExportTopLevel("model.domain.DialectDomainElement")
   def this() = this(InternalDialectDomainElement())
 
+  def isAbstract() = _internal.isAbstract
+  def withAbstract(isAbstract: Boolean) = {
+    _internal.withAbstract(isAbstract)
+    this
+  }
+
   def withInstanceTypes(types: ClientList[String]) = {
     _internal.withInstanceTypes(types.asInternal)
     this

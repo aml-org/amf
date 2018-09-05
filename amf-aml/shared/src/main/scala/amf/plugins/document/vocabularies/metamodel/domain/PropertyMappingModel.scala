@@ -8,7 +8,7 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
 
 
-object PropertyMappingModel extends DomainElementModel {
+object PropertyMappingModel extends DomainElementModel with MergeableMappingModel {
 
   val Name                 = Field(Str, Namespace.Schema + "name")
   val NodePropertyMapping   = Field(Iri, Namespace.Shacl + "path")
@@ -29,7 +29,7 @@ object PropertyMappingModel extends DomainElementModel {
 
   override def fields: List[Field] = NodePropertyMapping :: Name :: LiteralRange :: ObjectRange :: MapKeyProperty ::
     MapValueProperty :: MinCount :: Pattern :: Minimum :: Maximum :: AllowMultiple :: Sorted :: Enum :: TypeDiscriminator ::
-    Unique :: TypeDiscriminatorName :: DomainElementModel.fields
+    Unique :: TypeDiscriminatorName :: MergePolicy :: DomainElementModel.fields
 
   override def modelInstance: AmfObject = PropertyMapping()
 
