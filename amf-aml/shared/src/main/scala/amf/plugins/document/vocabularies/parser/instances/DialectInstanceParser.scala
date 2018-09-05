@@ -843,8 +843,12 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
 
     // just to store Ids, and detect potentially duplicated elements in the collection
     val idsMap: mutable.Map[String, Boolean] = mutable.Map()
+    val entries = propertyEntry.value.tagType match {
+      case YType.Seq => propertyEntry.value.as[YSequence].nodes
+      case _         => Seq(propertyEntry.value)
+    }
 
-    val res = propertyEntry.value.as[YSequence].nodes.zipWithIndex.map {
+    val res = entries.zipWithIndex.map {
       case (elementNode, nextElem) =>
         val nestedObjectId = pathSegment(id, List(propertyEntry.key.as[YScalar].text, nextElem.toString))
         property.nodesInRange match {

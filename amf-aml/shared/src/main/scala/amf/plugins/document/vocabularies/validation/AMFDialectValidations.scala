@@ -29,23 +29,23 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     Option(dialect.documents()).flatMap(docs => Option(docs.root())).flatMap(root => root.encoded().option()).map {
       mappingId =>
         Option(findNodeMappingById(mappingId)) match {
-          case Some((_, nodeMapping)) => emitEntityValidations(nodeMapping)
+          case Some((_, nodeMapping)) => emitEntityValidations(nodeMapping, Nil)
           case _                      => Nil
         }
 
     } getOrElse Nil
   }
 
-  protected def emitEntityValidations(node: NodeMapping): List[ValidationSpecification] = {
+  protected def emitEntityValidations(node: NodeMapping, recursion: Seq[String]): List[ValidationSpecification] = {
     node
       .propertiesMapping()
       .flatMap { propertyMapping =>
-        emitPropertyValidations(node, propertyMapping)
+        emitPropertyValidations(node, propertyMapping, recursion ++ Seq(node.id))
       }
       .toList
   }
 
-  protected def emitPropertyValidations(node: NodeMapping, prop: PropertyMapping): List[ValidationSpecification] = {
+  protected def emitPropertyValidations(node: NodeMapping, prop: PropertyMapping, recursion: Seq[String]): List[ValidationSpecification] = {
     val validations: ListBuffer[ValidationSpecification] = ListBuffer.empty
 
     prop.minimum().option().foreach { minValue =>
@@ -152,7 +152,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
             ramlPropertyId = prop.nodePropertyMapping().value(),
             name = validationId(node, prop.name().value(), "enum") + "/prop",
             message = Some(message),
-            in = values.map(_.toString)
+            in = values.map { v => s"$v" }
           ))
       )
     }
@@ -286,8 +286,10 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
 
       // nested validations here
       prop.objectRange().foreach { nodeMapping =>
-        dialect.findNodeMapping(nodeMapping.value()).foreach { mapping =>
-          validations ++= emitEntityValidations(mapping)
+        if (!recursion.contains(nodeMapping.value())) {
+          dialect.findNodeMapping(nodeMapping.value()).foreach { mapping =>
+            validations ++= emitEntityValidations(mapping, recursion ++ Seq(nodeMapping.value()))
+          }
         }
       }
     }
