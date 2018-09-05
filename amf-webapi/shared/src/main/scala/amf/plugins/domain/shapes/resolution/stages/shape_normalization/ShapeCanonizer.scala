@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.{ExplicitField, LocalElement, ResolvedInheritance}
+import amf.core.annotations.{DeclaredElement, ExplicitField, LocalElement, ResolvedInheritance}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
@@ -209,6 +209,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
   def endpointSimpleInheritance(shape: Shape): Boolean = {
     shape match {
+      case any: AnyShape if any.annotations.contains(classOf[DeclaredElement]) => false
       case any: AnyShape =>
         val singleInheritance = any.inherits.size == 1
         val effectiveFields = shape.fields.fields().filter { f =>

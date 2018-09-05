@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#6",
+        "@id": "#7",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -17,29 +17,23 @@
         ],
         "schema-org:name": [
           {
-            "@value": "API"
-          }
-        ],
-        "schema-org:version": [
-          {
-            "@value": "1.0"
+            "@value": "test"
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#6": "RAML 1.0"
+            "#7": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:version": "[(3,0)-(4,0)]",
-            "#6": "[(2,0)-(6,0)]",
-            "schema-org:name": "[(2,0)-(3,0)]"
+            "schema-org:name": "[(2,0)-(3,0)]",
+            "#7": "[(2,0)-(5,27)]"
           }
         }
       }
     ],
     "doc:references": [
       {
-        "@id": "#4",
+        "@id": "#5",
         "@type": [
           "doc:DataType",
           "doc:Fragment",
@@ -47,7 +41,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#5",
+            "@id": "#6",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
@@ -69,7 +63,7 @@
                 ],
                 "shacl:path": [
                   {
-                    "@id": "http://a.ml/vocabularies/data#name"
+                    "@id": "http://a.ml/vocabularies/data#a"
                   }
                 ],
                 "raml-shapes:range": [
@@ -88,16 +82,12 @@
                     ],
                     "shacl:name": [
                       {
-                        "@value": "name"
+                        "@value": "a"
                       }
                     ],
                     "smaps": {
-                      "type-property-lexical-info": {
-                        "#3": "[(4,4)-(4,8)]"
-                      },
                       "lexical": {
-                        "shacl:datatype": "[(4,4)-(5,0)]",
-                        "#3": "[(3,2)-(5,0)]"
+                        "#3": "[(3,2)-(3,11)]"
                       }
                     }
                   }
@@ -109,12 +99,12 @@
                 ],
                 "shacl:name": [
                   {
-                    "@value": "name"
+                    "@value": "a"
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#2": "[(3,2)-(5,0)]"
+                    "#2": "[(3,2)-(3,11)]"
                   }
                 }
               }
@@ -126,17 +116,17 @@
             ],
             "smaps": {
               "source-vendor": {
-                "#5": "RAML 1.0"
+                "#6": "RAML 1.0"
               },
               "lexical": {
-                "#5": "[(2,0)-(5,0)]"
+                "#6": "[(2,0)-(3,11)]"
               }
             }
           }
         ],
         "smaps": {
           "lexical": {
-            "#4": "[(2,0)-(5,0)]"
+            "#5": "[(2,0)-(3,11)]"
           }
         }
       }
@@ -165,7 +155,7 @@
             ],
             "shacl:path": [
               {
-                "@id": "http://a.ml/vocabularies/data#name"
+                "@id": "http://a.ml/vocabularies/data#a"
               }
             ],
             "raml-shapes:range": [
@@ -184,16 +174,12 @@
                 ],
                 "shacl:name": [
                   {
-                    "@value": "name"
+                    "@value": "a"
                   }
                 ],
                 "smaps": {
-                  "type-property-lexical-info": {
-                    "#3": "[(4,4)-(4,8)]"
-                  },
                   "lexical": {
-                    "shacl:datatype": "[(4,4)-(5,0)]",
-                    "#3": "[(3,2)-(5,0)]"
+                    "#3": "[(3,2)-(3,11)]"
                   }
                 }
               }
@@ -205,19 +191,19 @@
             ],
             "shacl:name": [
               {
-                "@value": "name"
+                "@value": "a"
               }
             ],
             "smaps": {
               "lexical": {
-                "#2": "[(3,2)-(5,0)]"
+                "#2": "[(3,2)-(3,11)]"
               }
             }
           }
         ],
         "shacl:name": [
           {
-            "@value": "person"
+            "@value": "A"
           }
         ],
         "smaps": {
@@ -228,10 +214,99 @@
             "#1": "RAML 1.0"
           },
           "lexical": {
-            "#1": "[(2,0)-(5,0)]"
+            "#1": "[(2,0)-(3,11)]"
           },
           "resolved-link": {
             "#1": "amf://id#1"
+          }
+        }
+      },
+      {
+        "@id": "#4",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#2",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#a"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "a"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#3": "[(3,2)-(3,11)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "a"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(3,2)-(3,11)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "B"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#4": ""
+          },
+          "source-vendor": {
+            "#4": "RAML 1.0"
+          },
+          "lexical": {
+            "#4": "[(2,0)-(3,11)]"
+          },
+          "resolved-link": {
+            "#4": "amf://id#4"
           }
         }
       }

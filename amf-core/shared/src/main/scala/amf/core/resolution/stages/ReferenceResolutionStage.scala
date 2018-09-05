@@ -148,7 +148,18 @@ class ReferenceResolutionStage(
     val resolved = element match {
       // link not traversed, cache it and traverse it
       case l: Linkable if l.linkTarget.isDefined && !isCycle =>
-        val resolved = resolveReferenced(l.linkTarget.get)
+        val target = l.linkTarget.get match {
+          case t: DomainElement with Linkable if element.annotations.contains(classOf[DeclaredElement]) =>
+            val copied = t.copyElement().withId(element.id)
+            element match {
+              case n: NamedDomainElement if n.name.option().isDefined =>
+                copied.asInstanceOf[NamedDomainElement].withName(n.name.value())
+              case _ => // ignore
+            }
+            copied
+          case d: DomainElement => d
+        }
+        val resolved = resolveReferenced(target)
         resolved match {
           case linkable: Linkable if l.supportsRecursion.option().getOrElse(false) =>
             linkable.withSupportsRecursion(true)

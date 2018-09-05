@@ -130,6 +130,9 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = name.option().getOrElse("fragment").urlComponentEncoded
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = SecurityScheme.apply
 }
 
 object SecurityScheme {

@@ -108,6 +108,14 @@ class EditingResolutionTest extends BuildCycleTests {
   test("Test url shortener at example (dynamic)") {
     cycle("examples-shortener.raml", "examples-shortener.resolved.jsonld", RamlYamlHint, Amf, resolutionPath)
   }
+
+  test("Test double declared included type") {
+    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "/double-declare-type/")
+  }
+
+  test("Test declared type from library") {
+    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "/declared-from-library/")
+  }
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

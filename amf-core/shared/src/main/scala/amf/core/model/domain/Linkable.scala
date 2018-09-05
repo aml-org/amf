@@ -2,7 +2,7 @@ package amf.core.model.domain
 
 import amf.core.metamodel.domain.LinkableElementModel
 import amf.core.model.{BoolField, StrField}
-import amf.core.parser.{Annotations, DeclarationPromise, ParserContext}
+import amf.core.parser.{Annotations, DeclarationPromise, Fields, ParserContext}
 import org.yaml.model.YPart
 import amf.core.utils._
 
@@ -99,4 +99,11 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
   }
 
   private val linkCounter = new IdCounter()
+
+  /** generates a new instance of the domain element only clonning his own fields map, and not clonning all the tree (not recursive)*/
+  /** Do not generates a new link.*/
+  def copyElement(): Linkable with DomainElement = classConstructor(fields.copy(), annotations.copy())
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy*/
+  protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement
 }

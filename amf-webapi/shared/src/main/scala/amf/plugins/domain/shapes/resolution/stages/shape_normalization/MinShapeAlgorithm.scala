@@ -17,7 +17,10 @@ import org.yaml.model.YError
 
 import scala.collection.mutable
 
-class InheritanceIncompatibleShapeError(val message: String, val property: Option[String] = None, val lexicalInfo: Option[LexicalInformation] = None) extends Exception(message)
+class InheritanceIncompatibleShapeError(val message: String,
+                                        val property: Option[String] = None,
+                                        val lexicalInfo: Option[LexicalInformation] = None)
+    extends Exception(message)
 
 private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationContext) extends RestrictionComputation {
 
@@ -34,8 +37,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
-    val superShape = copy(superShapeOri)
-    val derivedShape  = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
+    val superShape   = copy(superShapeOri)
+    val derivedShape = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
     try {
       derivedShape match {
 
@@ -48,9 +51,9 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
           if (b == s) {
             computeMinScalar(baseScalar, superScalar)
           } else if (b == (Namespace.Xsd + "integer").iri() &&
-            (s == (Namespace.Xsd + "float").iri() ||
-              s == (Namespace.Xsd + "double").iri() ||
-              s == (Namespace.Shapes + "number").iri())) {
+                     (s == (Namespace.Xsd + "float").iri() ||
+                     s == (Namespace.Xsd + "double").iri() ||
+                     s == (Namespace.Shapes + "number").iri())) {
             computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
           } else {
             context.errorHandler.violation(
@@ -182,8 +185,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
 
   protected def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
 
-    val superItems = baseMatrix.items
-    val baseItems  = superMatrix.items
+    val superItems = superMatrix.items
+    val baseItems  = baseMatrix.items
     if (Option(superItems).isDefined && Option(baseItems).isDefined) {
 
       val newItems = context.minShape(baseItems, superItems)
@@ -194,7 +197,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                 superMatrix,
                                 filteredFields = Seq(ArrayShapeModel.Items))
     } else {
-      if (Option(superItems).isDefined) baseItems.fields.setWithoutId(ArrayShapeModel.Items, superItems)
+      if (Option(superItems).isDefined) baseMatrix.fields.setWithoutId(ArrayShapeModel.Items, superItems)
     }
 
     baseMatrix
@@ -212,7 +215,9 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         baseTuple
       } else {
         throw new InheritanceIncompatibleShapeError(
-          "Cannot inherit from a tuple shape with different number of elements", None, baseTuple.position())
+          "Cannot inherit from a tuple shape with different number of elements",
+          None,
+          baseTuple.position())
       }
     } else {
       val newItems = for {
@@ -315,20 +320,20 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   val unionErrorHandler = new ErrorHandler {
-    override  val parserCount: Int = 0
-    override  val currentFile: String = ""
+    override val parserCount: Int    = 0
+    override val currentFile: String = ""
 
     override def handle[T](error: YError, defaultValue: T): T = {
       throw new Exception("raising exceptions in union processing")
     }
 
     override protected def reportConstraint(id: String,
-                                   node: String,
-                                   property: Option[String],
-                                   message: String,
-                                   lexical: Option[LexicalInformation],
-                                   level: String,
-                                   location: Option[String]): Unit = {
+                                            node: String,
+                                            property: Option[String],
+                                            message: String,
+                                            lexical: Option[LexicalInformation],
+                                            level: String,
+                                            location: Option[String]): Unit = {
       throw new Exception("raising exceptions in union processing")
     }
 
@@ -360,10 +365,11 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         }
         val finalMinShapes = minShapes.collect { case Some(s) => s }
         if (finalMinShapes.isEmpty)
-          throw new InheritanceIncompatibleShapeError("Cannot compute inheritance for union", None, baseUnion.position())
+          throw new InheritanceIncompatibleShapeError("Cannot compute inheritance for union",
+                                                      None,
+                                                      baseUnion.position())
         finalMinShapes
       }
-
 
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
                                   AmfArray(newUnionItems),
@@ -408,7 +414,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         case _: Exception => None
       }
     }
-    val newUnionItems = minItems collect { case Some(s) => s}
+    val newUnionItems = minItems collect { case Some(s) => s }
     if (newUnionItems.isEmpty) {
       throw new InheritanceIncompatibleShapeError("Cannot compute inheritance from union", None, baseShape.position())
     }

@@ -27,6 +27,11 @@ case class RecursiveShape(override val fields: Fields, override val annotations:
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/recursive"
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = RecursiveShape.apply
+
+  override def copyElement(): this.type = this
 }
 
 object RecursiveShape {

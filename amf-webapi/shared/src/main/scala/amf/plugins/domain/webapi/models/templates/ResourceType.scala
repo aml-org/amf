@@ -2,6 +2,7 @@ package amf.plugins.domain.webapi.models.templates
 
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
+import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{Annotations, DefaultUnhandledError, ErrorHandler, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.ResourceTypeModel
@@ -37,6 +38,9 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
           .orNull
     }
   }
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ResourceType.apply
 }
 
 object ResourceType {

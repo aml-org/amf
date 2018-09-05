@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import java.util.Optional
 
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.model.{BoolField, IntField}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
@@ -78,8 +78,8 @@ case class ArrayShape(override val fields: Fields, override val annotations: Ann
 
   override def meta: AnyShapeModel = ArrayShapeModel
 
-  override def copyShape(): ArrayShape = ArrayShape(fields.copy(), annotations.copy()).withId(id)
-
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ArrayShape.apply
 }
 
 object ArrayShape {
@@ -98,13 +98,13 @@ case class MatrixShape(override val fields: Fields, override val annotations: An
   def items: Shape                       = fields.field(Items)
   def withItems(items: Shape): this.type = set(Items, items)
 
-  def toArrayShape               = {
+  def toArrayShape = {
     val array = ArrayShape(fields, annotations)
     Option(id) match {
       case Some(effectiveId: String) =>
-        val res= array.withId(effectiveId)
+        val res = array.withId(effectiveId)
         res
-      case None              =>
+      case None =>
         array
     }
   }
@@ -114,8 +114,8 @@ case class MatrixShape(override val fields: Fields, override val annotations: An
 
   override def meta: AnyShapeModel = MatrixShapeModel
 
-  override def copyShape(): MatrixShape = MatrixShape(fields.copy(), annotations.copy()).withId(id)
-
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = MatrixShape.apply
 }
 
 object MatrixShape {
@@ -140,7 +140,8 @@ case class TupleShape(override val fields: Fields, override val annotations: Ann
 
   override def meta: AnyShapeModel = TupleShapeModel
 
-  override def copyShape(): TupleShape = TupleShape(fields.copy(), annotations.copy()).withId(id)
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = TupleShape.apply
 }
 
 object TupleShape {

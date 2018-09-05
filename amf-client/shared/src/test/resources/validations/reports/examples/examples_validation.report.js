@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message:  should be integer
+  Message: should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/scalar/D/example/default-example
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message:  should have required property 'g'
+  Message: should have required property 'g'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example
   Property: 
@@ -32,7 +32,7 @@ Level: Violation
 Level: Warning
 
 - Source: http://a.ml/vocabularies/amf/parser#unsupported-example-media-type-warning
-  Message: Unsupported validation for mediatype: application/xml and shape file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/I/type
+  Message: Unsupported validation for mediatype: application/xml and shape file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/I
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/I/example/default-example
   Property: http://a.ml/vocabularies/document#value

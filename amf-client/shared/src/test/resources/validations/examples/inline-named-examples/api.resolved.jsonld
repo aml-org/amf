@@ -344,7 +344,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#1/linked_2",
+                            "@id": "#1/linked_1",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -410,7 +410,7 @@
     ],
     "doc:references": [
       {
-        "@id": "#27",
+        "@id": "#26",
         "@type": [
           "doc:NamedExample",
           "doc:Fragment",
@@ -569,12 +569,12 @@
         ],
         "smaps": {
           "lexical": {
-            "#27": "[(2,0)-(9,0)]"
+            "#26": "[(2,0)-(9,0)]"
           }
         }
       },
       {
-        "@id": "#28",
+        "@id": "#27",
         "@type": [
           "doc:DataType",
           "doc:Fragment",
@@ -582,7 +582,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#1",
+            "@id": "#28",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
@@ -934,182 +934,25 @@
             ],
             "shacl:name": [
               {
-                "@value": "Organization"
-              }
-            ],
-            "doc:examples": [
-              {
-                "@id": "#15",
-                "@type": [
-                  "doc:Example",
-                  "doc:DomainElement"
-                ],
-                "schema-org:name": [
-                  {
-                    "@value": "value"
-                  }
-                ],
-                "doc:strict": [
-                  {
-                    "@value": true
-                  }
-                ],
-                "doc:structuredValue": [
-                  {
-                    "@id": "#16",
-                    "@type": [
-                      "data:Object"
-                    ],
-                    "data:alternate_id": [
-                      {
-                        "@id": "#17",
-                        "@type": [
-                          "data:Scalar"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "1",
-                            "@type": "xsd:integer"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#17": "[(3,18)-(3,19)]"
-                          }
-                        }
-                      }
-                    ],
-                    "data:category": [
-                      {
-                        "@id": "#18",
-                        "@type": [
-                          "data:Object"
-                        ],
-                        "data:id": [
-                          {
-                            "@id": "#19",
-                            "@type": [
-                              "data:Scalar"
-                            ],
-                            "data:value": [
-                              {
-                                "@value": "39691",
-                                "@type": "xsd:integer"
-                              }
-                            ],
-                            "smaps": {
-                              "lexical": {
-                                "#19": "[(5,10)-(5,15)]"
-                              }
-                            }
-                          }
-                        ],
-                        "data:name": [
-                          {
-                            "@id": "#20",
-                            "@type": [
-                              "data:Scalar"
-                            ],
-                            "data:value": [
-                              {
-                                "@value": "Religious and Spiritual",
-                                "@type": "xsd:string"
-                              }
-                            ],
-                            "smaps": {
-                              "lexical": {
-                                "#20": "[(6,12)-(6,35)]"
-                              }
-                            }
-                          }
-                        ],
-                        "smaps": {
-                          "data-node-properties": {
-                            "#18": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
-                          },
-                          "lexical": {
-                            "#18": "[(5,0)-(7,0)]"
-                          }
-                        }
-                      }
-                    ],
-                    "data:created_at": [
-                      {
-                        "@id": "#21",
-                        "@type": [
-                          "data:Scalar"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "2013-01-02T22:21:34Z",
-                            "@type": "xsd:dateTime"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#21": "[(7,16)-(7,36)]"
-                          }
-                        }
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#16": "[(3,0)-(9,0)]"
-                      },
-                      "data-node-properties": {
-                        "#16": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
-                      }
-                    }
-                  }
-                ],
-                "shacl:raw": [
-                  {
-                    "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
-                  }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "doc:strict": "true"
-                  },
-                  "resolved-link": {
-                    "#15": "amf://id#22"
-                  },
-                  "lexical": {
-                    "shacl:raw": "[(3,0)-(9,0)]",
-                    "#15": "[(2,6)-(9,0)]",
-                    "schema-org:name": "[(2,0)-(9,0)]"
-                  },
-                  "source-vendor": {
-                    "#15": "RAML 1.0"
-                  },
-                  "local-element": {
-                    "#15": ""
-                  }
-                }
+                "@value": "type"
               }
             ],
             "smaps": {
-              "resolved-link": {
-                "#1": "amf://id#26"
-              },
-              "type-property-lexical-info": {
-                "#1": "[(2,0)-(2,4)]"
+              "source-vendor": {
+                "#28": "RAML 1.0"
               },
               "lexical": {
-                "#1": "[(2,0)-(20,0)]"
+                "#28": "[(2,0)-(20,0)]"
               },
-              "source-vendor": {
-                "#1": "RAML 1.0"
-              },
-              "declared-element": {
-                "#1": ""
+              "type-property-lexical-info": {
+                "#28": "[(2,0)-(2,4)]"
               }
             }
           }
         ],
         "smaps": {
           "lexical": {
-            "#28": "[(2,0)-(20,0)]"
+            "#27": "[(2,0)-(20,0)]"
           }
         }
       },
@@ -1880,7 +1723,7 @@
         ],
         "smaps": {
           "resolved-link": {
-            "#1": "amf://id#26"
+            "#1": "amf://id#25"
           },
           "type-property-lexical-info": {
             "#1": "[(2,0)-(2,4)]"
@@ -2414,7 +2257,7 @@
             ],
             "smaps": {
               "resolved-link": {
-                "#1": "amf://id#26"
+                "#1": "amf://id#25"
               },
               "type-property-lexical-info": {
                 "#1": "[(2,0)-(2,4)]"
@@ -3206,7 +3049,7 @@
             ],
             "smaps": {
               "resolved-link": {
-                "#1": "amf://id#26"
+                "#1": "amf://id#25"
               },
               "type-property-lexical-info": {
                 "#1": "[(2,0)-(2,4)]"

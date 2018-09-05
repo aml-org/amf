@@ -107,7 +107,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#1/linked_2",
+                            "@id": "#1/linked_1",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -172,7 +172,7 @@
     ],
     "doc:references": [
       {
-        "@id": "#9",
+        "@id": "#8",
         "@type": [
           "doc:DataType",
           "doc:Fragment",
@@ -180,7 +180,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#1",
+            "@id": "#9",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
@@ -250,7 +250,7 @@
             ],
             "shacl:name": [
               {
-                "@value": "AppPerson"
+                "@value": "type"
               }
             ],
             "doc:examples": [
@@ -317,27 +317,21 @@
               }
             ],
             "smaps": {
-              "resolved-link": {
-                "#1": "amf://id#8"
-              },
-              "type-property-lexical-info": {
-                "#1": "[(2,0)-(2,4)]"
+              "source-vendor": {
+                "#9": "RAML 1.0"
               },
               "lexical": {
-                "#1": "[(2,0)-(6,10)]"
+                "#9": "[(2,0)-(6,10)]"
               },
-              "source-vendor": {
-                "#1": "RAML 1.0"
-              },
-              "declared-element": {
-                "#1": ""
+              "type-property-lexical-info": {
+                "#9": "[(2,0)-(2,4)]"
               }
             }
           }
         ],
         "smaps": {
           "lexical": {
-            "#9": "[(2,0)-(6,10)]"
+            "#8": "[(2,0)-(6,10)]"
           }
         }
       }
@@ -482,7 +476,7 @@
         ],
         "smaps": {
           "resolved-link": {
-            "#1": "amf://id#8"
+            "#1": "amf://id#7"
           },
           "type-property-lexical-info": {
             "#1": "[(2,0)-(2,4)]"

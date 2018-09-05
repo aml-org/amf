@@ -1,6 +1,7 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.model.StrField
+import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel._
@@ -25,8 +26,6 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/scalar/" + name.option().getOrElse("default-scalar").urlComponentEncoded
 
-  override def copyShape(): ScalarShape = ScalarShape(fields.copy(), annotations.copy()).withId(id)
-
   override def ramlSyntaxKey: String = dataType.option().getOrElse("#shape").split("#").last match {
     case "integer" | "float" | "double" | "long" | "number" => "numberScalarShape"
     case "string"                                           => "stringScalarShape"
@@ -34,6 +33,8 @@ case class ScalarShape(override val fields: Fields, override val annotations: An
     case _                                                  => "shape"
   }
 
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ScalarShape.apply
 }
 
 object ScalarShape {

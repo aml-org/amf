@@ -40,6 +40,11 @@ case class CustomDomainProperty(fields: Fields, annotations: Annotations)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = name.option().map(_.urlComponentEncoded).getOrElse("")
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    CustomDomainProperty.apply
+
 }
 
 object CustomDomainProperty {

@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel._
@@ -21,8 +21,6 @@ case class UnionShape(override val fields: Fields, override val annotations: Ann
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/union/" + name.option().getOrElse("default-union").urlComponentEncoded
 
-  override def copyShape(): UnionShape = UnionShape(fields.copy(), annotations.copy()).withId(id)
-
   def isPolymorphicUnion: Boolean = {
     anyOf.foldLeft(true) {
       case (acc, shape) =>
@@ -31,6 +29,9 @@ case class UnionShape(override val fields: Fields, override val annotations: Ann
   }
 
   override def ramlSyntaxKey: String = "unionShape"
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = UnionShape.apply
 }
 
 object UnionShape {

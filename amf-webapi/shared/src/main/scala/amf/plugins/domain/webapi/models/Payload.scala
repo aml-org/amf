@@ -84,6 +84,8 @@ case class Payload(fields: Fields, annotations: Annotations) extends DomainEleme
       .option()
       .getOrElse(name.option().getOrElse("default"))
       .urlComponentEncoded // todo: / char of media type should be encoded?
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Payload.apply
 }
 
 object Payload {

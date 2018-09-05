@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields, UnresolvedReference}
 import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
@@ -40,9 +40,10 @@ case class UnresolvedShape(override val fields: Fields,
   // if is unresolved the effective target its himselft, because any real type has been found.
   override def effectiveLinkTarget: UnresolvedShape = this
 
-  override def copyShape(): UnresolvedShape =
-    UnresolvedShape(fields.copy(), annotations.copy(), reference, fatherExtensionParser).withId(id)
-
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    (fields: Fields, annotations: Annotations) =>
+      new UnresolvedShape(fields, annotations, reference, fatherExtensionParser)
 }
 
 object UnresolvedShape {
@@ -62,4 +63,5 @@ object UnresolvedShape {
             annotations: Annotations,
             extensionParser: Option[Option[String] => ShapeExtensionParser]): UnresolvedShape =
     UnresolvedShape(Fields(), annotations, reference, extensionParser)
+
 }

@@ -58,8 +58,6 @@ trait ShapeHelpers { this: Shape =>
     }
   }
 
-  def copyShape(): Shape
-
   protected def buildFixPoint(id: Option[String],
                               name: String,
                               link: Linkable,

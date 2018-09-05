@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import amf.core.annotations.DeclaredElement
 import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.{ExternalSourceElement, Shape}
+import amf.core.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
@@ -143,13 +143,16 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
       fields.filter(fe => fe._1 != AnyShapeModel.Examples).nonEmpty &&
       annotations.find(classOf[TypePropertyLexicalInfo]).isEmpty
 
-  override def copyShape(): AnyShape = AnyShape(fields.copy(), annotations.copy()).withId(id)
-
   protected def inlined: Boolean = annotations.find(classOf[InlineDefinition]).isDefined
 
   override def ramlSyntaxKey: String = "anyShape"
 
   def trackedExample(trackId: String): Option[Example] = examples.find(_.isTrackedBy(trackId))
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = AnyShape.apply
+
+  override def copyShape(): this.type = super.copyShape().withId(id)
 }
 
 object AnyShape {

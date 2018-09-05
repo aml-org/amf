@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.models
 
+import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, Fields}
@@ -70,9 +71,10 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/" + name.option().getOrElse("default-node").urlComponentEncoded
 
-  override def copyShape(): NodeShape = NodeShape(fields.copy(), annotations.copy()).withId(id)
-
   override val ramlSyntaxKey: String = "nodeShape"
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = NodeShape.apply
 }
 
 object NodeShape {

@@ -2,6 +2,7 @@ package amf.plugins.domain.webapi.models.templates
 
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
+import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.TraitModel
@@ -36,6 +37,9 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
           .orNull // TODO should we return null or an empty operation?
     }
   }
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Trait.apply
 }
 
 object Trait {

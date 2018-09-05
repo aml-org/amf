@@ -3,7 +3,7 @@ package amf.core.model.domain.extensions
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel._
-import amf.core.model.domain.{Shape, IdsTraversionCheck}
+import amf.core.model.domain.{DomainElement, IdsTraversionCheck, Linkable, Shape}
 import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.parser.{Annotations, ErrorHandler, Fields}
 import amf.core.utils.Strings
@@ -20,7 +20,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   def readOnly: BoolField   = fields.field(ReadOnly)
   def writeOnly: BoolField  = fields.field(WriteOnly)
   def deprecated: BoolField = fields.field(Deprecated)
-  def patternName: StrField     = fields.field(PatternName)
+  def patternName: StrField = fields.field(PatternName)
 
   def withPath(path: String): this.type  = set(Path, path)
   def withRange(range: Shape): this.type = set(Range, range)
@@ -55,6 +55,11 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/property/" + name.option().getOrElse("default-property").urlComponentEncoded
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = PropertyShape.apply
+
+  override def copyElement(): this.type = this
 }
 
 object PropertyShape {
