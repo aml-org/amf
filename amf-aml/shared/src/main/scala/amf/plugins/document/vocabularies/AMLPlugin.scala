@@ -132,7 +132,8 @@ object AMLPlugin
     DialectFragmentModel,
     DialectInstanceModel,
     DialectInstanceLibraryModel,
-    DialectInstanceFragmentModel
+    DialectInstanceFragmentModel,
+    DialectInstancePatchModel
   )
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map(
@@ -157,6 +158,8 @@ object AMLPlugin
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
+    "application/aml+json",
+    "application/aml+yaml",
     "application/raml",
     "application/raml+json",
     "application/raml+yaml",
@@ -167,9 +170,6 @@ object AMLPlugin
     "application/json"
   )
 
-  /*
-
-   */
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
@@ -265,6 +265,8 @@ object AMLPlugin
         new DialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseFragment()
       else if (dialect.isLibraryHeader(headerKey))
         new DialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext)).parseLibrary()
+      else if (dialect.isPatchHeader(headerKey))
+        new DialectInstanceParser(document)(new DialectInstanceContext(dialect, parentContext).forPatch()).parsePatch()
       else
         throw new Exception(s"Unknown type of dialect header $header")
     }

@@ -11,7 +11,7 @@ import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
+import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.DynamicExtensionParser
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
@@ -73,11 +73,17 @@ class DialectInstanceContext(var dialect: Dialect,
     extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.parserCount)
     with SyntaxErrorReporter {
 
+  var isPatch: Boolean = false
   var nestedDialects: Seq[Dialect]                              = Nil
   val libraryDeclarationsNodeMappings: Map[String, NodeMapping] = parseDeclaredNodeMappings("library")
   val rootDeclarationsNodeMappings: Map[String, NodeMapping]    = parseDeclaredNodeMappings("root")
 
   globalSpace = wrapped.globalSpace
+
+  def forPatch(): DialectInstanceContext = {
+    isPatch = false
+    this
+  }
 
   def registerJsonPointerDeclaration(pointer: String, declared: DialectDomainElement) =
     globalSpace.update(pointer, declared)
@@ -178,7 +184,6 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
     val result = ReferenceDeclarations()
     parseLibraries(dialectInstance, result, location)
     parseExternals(result, location)
-
     references.foreach {
       case ParsedReference(f: DialectInstanceFragment, origin: Reference, None) => result += (origin.url, f)
       case _                                                                    =>
@@ -308,6 +313,16 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
 
     document
   }
+
+  def parsePatch(): Option[DialectInstancePatch] = {
+    parseDocument() match {
+      case Some(dialectInstance) =>
+        Some(checkTarget(DialectInstancePatch(dialectInstance.fields, dialectInstance.annotations)))
+      case _                     =>
+        None
+    }
+  }
+
 
   def parseFragment(): Option[DialectInstanceFragment] = {
     val dialectInstanceFragment: DialectInstanceFragment = DialectInstanceFragment(Annotations(map))
@@ -460,7 +475,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   }
 
   protected def parseNode(path: String, defaultId: String, ast: YNode, mapping: NodeMapping, additionalProperties: Map[String, Any]): Option[DialectDomainElement] = {
-    ast.tagType match {
+    val result = ast.tagType match {
       case YType.Map =>
         val nodeMap = ast.as[YMap]
         dispatchNodeMap(nodeMap) match {
@@ -495,6 +510,11 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       case _ =>
         ctx.violation(defaultId, "Cannot parse AST node for node in dialect instance", ast)
         None
+    }
+    // if we are parsing a patch document we mark the node as abstract
+    result match {
+      case Some(node) if ctx.isPatch => Some(node.withAbstract(true))
+      case other                     => other
     }
   }
 
@@ -1296,4 +1316,19 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
     if (allFound) { path + "/" + keyId.mkString("_").urlEncoded } else { defaultId }
   }
+
+  private def checkTarget(patch: DialectInstancePatch): DialectInstancePatch = {
+    map.key("$target") match {
+      case Some(entry) if entry.value.tagType == YType.Str =>
+        patch.withExtendsModel(platform.resolvePath(entry.value.as[String]))
+
+      case Some(entry) =>
+        ctx.violation("Patch $target must be a valida URL", entry.value)
+
+      case _           => // ignore
+    }
+    patch
+  }
+
+
 }

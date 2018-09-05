@@ -58,7 +58,14 @@ case class Dialect(fields: Fields, annotations: Annotations)
     case None          => Nil
   }
 
+  def patchHeaders: Seq[String] = Option(documents().library()) match {
+    case Some(library) => Seq(s"%Patch/${header.replaceFirst("%", "")}")
+    case None          => Nil
+  }
+
   def isLibraryHeader(header: String): Boolean = libraryHeaders.contains(header.replace(" ", ""))
+
+  def isPatchHeader(header: String): Boolean = patchHeaders.contains(header.replace(" ", ""))
 
   def fragmentHeaders: Seq[String] = documents().fragments().map { fragment =>
     s"%${fragment.documentName().value()}/${header.replaceFirst("%", "")}".replace(" ", "")

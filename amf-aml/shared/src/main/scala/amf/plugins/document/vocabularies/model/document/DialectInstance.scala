@@ -181,12 +181,14 @@ case class DialectInstancePatch(fields: Fields, annotations: Annotations)
   def graphDependencies: Seq[StrField]  = fields(GraphDependencies)
   def declares: Seq[DomainElement]      = fields(Declares)
   def definedBy(): StrField             = fields(DefinedBy)
+  def extendsModel                      = fields(DialectInstancePatchModel.Extends)
   override def encodes: DomainElement   = fields(Encodes)
 
   override def componentId: String = ""
 
   def withDefinedBy(dialectId: String): DialectInstancePatch        = set(DefinedBy, dialectId)
   def withGraphDependencies(ids: Seq[String]): DialectInstancePatch = set(GraphDependencies, ids)
+  def withExtendsModel(target: String): DialectInstancePatch        = set(DialectInstancePatchModel.Extends, target)
 }
 
 object DialectInstancePatch {
