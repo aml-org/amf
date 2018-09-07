@@ -1,6 +1,6 @@
 package amf
 
-import amf.client.commands.{CmdLineParser, ParseCommand, TranslateCommand, ValidateCommand}
+import amf.client.commands._
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.unsafe.PlatformSecrets
 
@@ -21,6 +21,7 @@ object Main extends PlatformSecrets {
           case Some(ParserConfig.TRANSLATE) => Await.result(runTranslate(cfg), 1 day)
           case Some(ParserConfig.VALIDATE)  => Await.result(runValidate(cfg), 1 day)
           case Some(ParserConfig.PARSE)     => Await.ready(runParse(cfg), 1 day)
+          case Some(ParserConfig.PATCH)     => Await.ready(runPatch(cfg), 1 day)
           case _                            => failCommand()
         }
       case _ => System.exit(ExitCodes.WrongInvocation)
@@ -36,4 +37,5 @@ object Main extends PlatformSecrets {
   def runTranslate(config: ParserConfig): Future[Any] = TranslateCommand(platform).run(config)
   def runValidate(config: ParserConfig): Future[Any]  = ValidateCommand(platform).run(config)
   def runParse(config: ParserConfig): Future[Any]     = ParseCommand(platform).run(config)
+  def runPatch(config: ParserConfig): Future[Any]     = PatchCommand(platform).run(config)
 }

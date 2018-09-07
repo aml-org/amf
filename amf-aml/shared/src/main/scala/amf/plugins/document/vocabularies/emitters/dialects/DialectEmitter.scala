@@ -302,6 +302,13 @@ case class PropertyMappingEmitter(dialect: Dialect,
             emitters ++= Seq(MapEntryEmitter("range", literal.split(Namespace.Xsd.base).last, YType.Str, pos))
         }
 
+        propertyMapping.mergePolicy.option().foreach { policy =>
+          val pos = fieldPos(propertyMapping, PropertyMappingModel.MergePolicy)
+          emitters ++= Seq(
+            new MapEntryEmitter("patch", policy, YType.Str, pos)
+          )
+        }
+
         val nodes = propertyMapping.objectRange()
         if (nodes.nonEmpty) {
           val pos = fieldPos(propertyMapping, PropertyMappingModel.ObjectRange)
@@ -465,6 +472,9 @@ case class NodeMappingEmitter(dialect: Dialect,
           )
           nodeMapping.idTemplate.option().foreach { idTemplate =>
             b.entry("idTemplate", idTemplate)
+          }
+          nodeMapping.mergePolicy.option().foreach { policy =>
+            b.entry("patch", policy)
           }
         }
       )

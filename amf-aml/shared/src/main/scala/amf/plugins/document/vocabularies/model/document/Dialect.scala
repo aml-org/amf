@@ -58,7 +58,11 @@ case class Dialect(fields: Fields, annotations: Annotations)
     case None          => Nil
   }
 
+  def patchHeaders: Seq[String] = Seq(s"%Patch/${header.replaceFirst("%", "")}")
+
   def isLibraryHeader(header: String): Boolean = libraryHeaders.contains(header.replace(" ", ""))
+
+  def isPatchHeader(header: String): Boolean = patchHeaders.contains(header.replace(" ", ""))
 
   def fragmentHeaders: Seq[String] = documents().fragments().map { fragment =>
     s"%${fragment.documentName().value()}/${header.replaceFirst("%", "")}".replace(" ", "")
@@ -66,7 +70,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   def isFragmentHeader(header: String): Boolean = fragmentHeaders.contains(header.replace(" ", ""))
 
-  def allHeaders: Seq[String] = Seq(header) ++ libraryHeaders ++ fragmentHeaders
+  def allHeaders: Seq[String] = Seq(header) ++ libraryHeaders ++ fragmentHeaders ++ patchHeaders
 
   def meta: Obj = DialectModel
 }

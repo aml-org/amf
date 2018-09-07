@@ -10,7 +10,7 @@ import amf.core.parser.{Annotations, BaseSpecParser, ErrorHandler, FutureDeclara
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
+import amf.plugins.document.vocabularies.metamodel.domain.{NodeMappingModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
@@ -90,7 +90,8 @@ trait DialectSyntax { this: DialectContext =>
     "classTerm"  -> true,
     "mapping"    -> false,
     "idProperty" -> false,
-    "idTemplate" -> false
+    "idTemplate" -> false,
+    "patch"      -> false
   )
 
   val fragment: Map[String, Boolean] = Map(
@@ -113,7 +114,8 @@ trait DialectSyntax { this: DialectContext =>
     "enum"                  -> false,
     "typeDiscriminatorName" -> false,
     "typeDiscriminator"     -> false,
-    "unique"                -> false
+    "unique"                -> false,
+    "patch"                 -> false
   )
 
   val documentsMapping: Map[String, Boolean] = Map(
@@ -594,6 +596,18 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
     )
 
     map.key(
+      "patch",
+      entry => {
+        val patchMethod = ValueNode(entry.value).string().toString
+        if (PropertyMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethod)) {
+          propertyMapping.withMergePolicy(patchMethod)
+        } else {
+          ctx.violation(propertyMapping.id, s"Unsupported property mapping patch operation '$patchMethod'", entry.value)
+        }
+      }
+    )
+
+    map.key(
       "mapValue",
       entry => {
         val propertyTermId = ValueNode(entry.value).string().toString
@@ -738,6 +752,18 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
                 nodeMapping.withNodeTypeMapping(classTerm.id)
               case _ =>
                 ctx.violation(nodeMapping.id, s"Cannot find class term with alias $classTermId", entry.value)
+            }
+          }
+        )
+
+        map.key(
+          "patch",
+          entry => {
+            val patchMethod = ValueNode(entry.value).string().toString
+            if (NodeMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethod)) {
+              nodeMapping.withMergePolicy(patchMethod)
+            } else {
+              ctx.violation(nodeMapping.id, s"Unsupported node mapping patch operation '$patchMethod'", entry.value)
             }
           }
         )

@@ -136,6 +136,16 @@ object CmdLineParser {
           .action((f, c) => c.copy(validate = f))
       }
 
+    cmd("patch")
+        .text("Apply a AML patch")
+        .action((_,c) => c.copy(mode = Some(ParserConfig.PATCH)))
+        .children {
+          opt[String]("patch-target")
+            .abbr("tg")
+            .text("Location of the file being patched")
+            .action((f,c) => c.copy(patchTarget = Some(f)))
+        }
+
     cmd("validate")
       .text("Validates the spec and generates the validation report")
       .action((_, c) => c.copy(mode = Some(ParserConfig.VALIDATE)))
@@ -144,7 +154,9 @@ object CmdLineParser {
       var error = ""
       if (c.input.isEmpty) error += "Missing <file_input>\n"
       if (c.inputMediaType.isEmpty) error += "Missing <file_input>\n"
-      if (c.inputFormat.isEmpty) error += "Missing --format-in\n"
+      if (c.mode.get != ParserConfig.PATCH) {
+        if (c.inputFormat.isEmpty) error += "Missing --format-in\n"
+      }
       if (c.inputMediaType.isEmpty) error += "Missing --media-type-in\n"
       if (c.mode.isDefined && c.mode.get == ParserConfig.TRANSLATE) {
         if (c.outputFormat.isEmpty) error += "Missing --format-out\n"

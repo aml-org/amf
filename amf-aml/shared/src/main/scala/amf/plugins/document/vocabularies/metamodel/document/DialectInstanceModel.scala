@@ -2,10 +2,10 @@ package amf.plugins.document.vocabularies.metamodel.document
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Iri}
-import amf.core.metamodel.document.{DocumentModel, FragmentModel, ModuleModel}
+import amf.core.metamodel.document._
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
+import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstanceFragment, DialectInstanceLibrary, DialectInstancePatch}
 
 object DialectInstanceModel extends DocumentModel with ExternalContextModel {
 
@@ -44,4 +44,16 @@ object DialectInstanceFragmentModel extends DocumentModel with ExternalContextMo
     Namespace.Meta + "DialectInstanceFragment" :: FragmentModel.`type`
 
   override def fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: FragmentModel.fields
+}
+
+object DialectInstancePatchModel extends DocumentModel with ExternalContextModel with ExtensionLikeModel {
+  val DefinedBy = Field(Iri, Namespace.Meta + "definedBy")
+  val GraphDependencies = Field(Array(Iri), Namespace.Document + "graphDependencies")
+
+  override def modelInstance: AmfObject = DialectInstancePatch()
+
+  override val `type`: List[ValueType] =
+    Namespace.Meta + "DialectInstancePatch" :: Namespace.Document + "DocumentExtension" :: BaseUnitModel.`type`
+
+  override def fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: Extends :: FragmentModel.fields
 }

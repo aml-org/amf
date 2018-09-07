@@ -16,6 +16,7 @@ case class NodeMapping(override private[amf] val _internal: InternalNodeMapping)
   def nodetypeMapping: StrField                        = _internal.nodetypeMapping
   def propertiesMapping(): ClientList[PropertyMapping] = _internal.propertiesMapping().asClient
   def idTemplate: StrField                             = _internal.idTemplate
+  def mergePolicy: StrField                            = _internal.mergePolicy
 
   def withName(name: String): NodeMapping = {
     _internal.withName(name)
@@ -34,6 +35,11 @@ case class NodeMapping(override private[amf] val _internal: InternalNodeMapping)
 
   def withIdTemplate(idTemplate: String) = {
     _internal.withIdTemplate(idTemplate)
+    this
+  }
+
+  def withMergePolicy(mergePolicy: String): NodeMapping = {
+    _internal.withMergePolicy(mergePolicy)
     this
   }
 }

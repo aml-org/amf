@@ -37,4 +37,12 @@ case class AmfScalar(value: Any, annotations: Annotations = new Annotations()) e
       case v                                => v.asInstanceOf[Number]
     }
   }
+
+  override def equals(obj: scala.Any): Boolean = {
+    obj match {
+      case AmfScalar(otherValue, _) =>
+        value equals(otherValue)
+      case _                        => false
+    }
+  }
 }

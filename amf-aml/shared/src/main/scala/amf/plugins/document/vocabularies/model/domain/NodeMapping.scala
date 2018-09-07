@@ -9,7 +9,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel._
 import org.yaml.model.YMap
 
-case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainElement with Linkable with MergeableMapping {
 
   override def meta: Obj = NodeMappingModel
 

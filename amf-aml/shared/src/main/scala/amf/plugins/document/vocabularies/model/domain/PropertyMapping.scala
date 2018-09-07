@@ -19,7 +19,7 @@ object ObjectMapInheritanceProperty extends PropertyClassification
 object ObjectPairProperty           extends PropertyClassification
 object LiteralPropertyCollection    extends PropertyClassification
 
-case class PropertyMapping(fields: Fields, annotations: Annotations) extends DomainElement {
+case class PropertyMapping(fields: Fields, annotations: Annotations) extends DomainElement with MergeableMapping {
 
   def name(): StrField                  = fields.field(Name)
   def nodePropertyMapping(): StrField   = fields.field(NodePropertyMapping)

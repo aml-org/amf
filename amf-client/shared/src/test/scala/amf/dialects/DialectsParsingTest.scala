@@ -75,6 +75,10 @@ class DialectsParsingTest extends BuildCycleTests {
     cycle("example16.raml", "example16.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 17 test") {
+    cycle("example17.raml", "example17.json", VocabularyYamlHint, Amf)
+  }
+
   test("parse mappings_lib test") {
     cycle("mappings_lib.raml", "mappings_lib.json", VocabularyYamlHint, Amf)
   }
@@ -141,6 +145,10 @@ class DialectsParsingTest extends BuildCycleTests {
 
   test("generate 16 test") {
     cycle("example16.json", "example16.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 17 test") {
+    cycle("example17.json", "example17.raml", AmfJsonHint, Aml)
   }
 
   test("generate mappings_lib test") {

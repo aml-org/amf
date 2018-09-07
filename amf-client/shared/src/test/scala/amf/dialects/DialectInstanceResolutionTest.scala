@@ -27,6 +27,22 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
     withDialect("dialect9.raml", "example9.raml", "example9.resolved.raml", VocabularyYamlHint, Aml)
   }
 
+  test("resolve patch 22a test") {
+    withDialect("dialect22.raml", "patch22.raml", "patch22.resolved.raml", VocabularyYamlHint, Aml)
+  }
+
+  test("resolve patch 22b test") {
+    withDialect("dialect22.raml", "patch22b.raml", "patch22b.resolved.raml", VocabularyYamlHint, Aml)
+  }
+
+  test("resolve patch 22c test") {
+    withDialect("dialect22.raml", "patch22c.raml", "patch22c.resolved.raml", VocabularyYamlHint, Aml)
+  }
+
+  test("resolve patch 22d test") {
+    withDialect("dialect22.raml", "patch22d.raml", "patch22d.resolved.raml", VocabularyYamlHint, Aml)
+  }
+
   protected def withDialect(dialect: String,
                             source: String,
                             golden: String,
