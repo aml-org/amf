@@ -177,12 +177,12 @@ case class DialectInstancePatch(fields: Fields, annotations: Annotations)
 
   override def meta: Obj = DialectInstancePatchModel
 
-  def references: Seq[BaseUnit]         = fields(References)
-  def graphDependencies: Seq[StrField]  = fields(GraphDependencies)
-  def declares: Seq[DomainElement]      = fields(Declares)
-  def definedBy(): StrField             = fields(DefinedBy)
-  def extendsModel                      = fields(DialectInstancePatchModel.Extends)
-  override def encodes: DomainElement   = fields(Encodes)
+  def references: Seq[BaseUnit]         = fields.field(References)
+  def graphDependencies: Seq[StrField]  = fields.field(GraphDependencies)
+  def declares: Seq[DomainElement]      = fields.field(Declares)
+  def definedBy(): StrField             = fields.field(DefinedBy)
+  def extendsModel: StrField            = fields.field(DialectInstancePatchModel.Extends)
+  override def encodes: DomainElement   = fields.field(Encodes)
 
   override def componentId: String = ""
 

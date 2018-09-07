@@ -23,16 +23,13 @@ import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmit
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectLibrary, Vocabulary}
+import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.parser.ExtensionHeader
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{
-  DialectInstanceResolutionPipeline,
-  DialectResolutionPipeline
-}
+import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.{ProfileName, RamlProfile}
 import org.yaml.model._
@@ -148,9 +145,10 @@ object AMLPlugin
     */
   override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
     unit match {
-      case dialect: Dialect         => new DialectResolutionPipeline(dialect).resolve()
-      case dialect: DialectInstance => new DialectInstanceResolutionPipeline(dialect).resolve()
-      case _                        => unit
+      case patch: DialectInstancePatch => new DialectInstancePatchResolutionPipeline(patch).resolve()
+      case dialect: Dialect            => new DialectResolutionPipeline(dialect).resolve()
+      case dialect: DialectInstance    => new DialectInstanceResolutionPipeline(dialect).resolve()
+      case _                           => unit
     }
 
   /**

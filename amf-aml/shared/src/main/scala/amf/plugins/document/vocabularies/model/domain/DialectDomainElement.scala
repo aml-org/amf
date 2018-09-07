@@ -16,6 +16,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     extends DynamicDomainElement
     with Linkable {
 
+
   val literalProperties: mutable.Map[String, Any]                                = mutable.HashMap()
   val linkProperties: mutable.Map[String, Any]                                   = mutable.HashMap()
   val mapKeyProperties: mutable.Map[String, Any]                                 = mutable.HashMap()
@@ -134,6 +135,26 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     }
   }
 
+  protected def propertyMappingForField(field: Field): Option[PropertyMapping] = {
+    val iri = field.value.iri()
+    definedBy.propertiesMapping().find(_.nodePropertyMapping().value() == iri)
+  }
+
+  def removeField(patchField: Field) = {
+    propertyMappingForField(patchField) match {
+      case Some(property) =>
+        val id = property.id
+        mapKeyProperties.remove(id)
+        objectCollectionProperties.remove(id)
+        objectProperties.remove(id)
+        literalProperties.remove(id)
+        linkProperties.remove(id)
+        propertyAnnotations.remove(id)
+        fields.remove(id)
+      case _ => // ignore
+    }
+  }
+
   def containsProperty(property: PropertyMapping): Boolean = {
     mapKeyProperties.contains(property.nodePropertyMapping().value()) ||
     objectCollectionProperties.contains(property.id) ||
@@ -184,6 +205,49 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         })
       case _ => // ignore
     }
+    this
+  }
+
+  def patchLiteralField(field: Field, value: Any): DialectDomainElement = {
+    propertyMappingForField(field) match {
+      case Some(property) =>
+        val id = property.id
+        if (mapKeyProperties.contains(id)) {
+          mapKeyProperties.put(id, value)
+        } else if (linkProperties.contains(id)) {
+          linkProperties.put(id, value.toString)
+        } else {
+          literalProperties.put(id, value)
+        }
+      case _ => // ignore
+    }
+
+    this
+  }
+
+  def patchObjectField(field: Field, value: DialectDomainElement): DialectDomainElement = {
+    propertyMappingForField(field) match {
+      case Some(property) =>
+        val id = property.id
+        if (mapKeyProperties.contains(id)) {
+          mapKeyProperties.put(id, value)
+        } else  {
+          objectProperties.put(id, value)
+        }
+      case _ => // ignore
+    }
+
+    this
+  }
+
+  def patchObjectField(field: Field, value: Seq[DialectDomainElement]): DialectDomainElement = {
+    propertyMappingForField(field) match {
+      case Some(property) =>
+        val id = property.id
+        objectCollectionProperties.put(id, value)
+      case _ => // ignore
+    }
+
     this
   }
 

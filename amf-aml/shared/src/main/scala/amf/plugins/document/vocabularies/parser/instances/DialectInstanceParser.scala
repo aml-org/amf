@@ -81,7 +81,7 @@ class DialectInstanceContext(var dialect: Dialect,
   globalSpace = wrapped.globalSpace
 
   def forPatch(): DialectInstanceContext = {
-    isPatch = false
+    isPatch = true
     this
   }
 
@@ -187,6 +187,11 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
     references.foreach {
       case ParsedReference(f: DialectInstanceFragment, origin: Reference, None) => result += (origin.url, f)
       case _                                                                    =>
+    }
+    if (ctx.isPatch) {
+      references.foreach {
+        case ParsedReference(f: DialectInstance, origin: Reference, None) => result += (origin.url, f)
+      }
     }
 
     result
@@ -317,7 +322,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   def parsePatch(): Option[DialectInstancePatch] = {
     parseDocument() match {
       case Some(dialectInstance) =>
-        Some(checkTarget(DialectInstancePatch(dialectInstance.fields, dialectInstance.annotations)))
+        val patch = DialectInstancePatch(dialectInstance.fields, dialectInstance.annotations)
+        patch.withId(dialectInstance.id)
+        Some(checkTarget(patch))
       case _                     =>
         None
     }
@@ -513,15 +520,16 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
     // if we are parsing a patch document we mark the node as abstract
     result match {
-      case Some(node) if ctx.isPatch => Some(node.withAbstract(true))
+      case Some(node) if ctx.isPatch =>
+        Some(node.withAbstract(true))
       case other                     => other
     }
   }
 
   protected def parseProperty(id: String,
-                    propertyEntry: YMapEntry,
-                    property: PropertyMapping,
-                    node: DialectDomainElement): Unit = {
+                              propertyEntry: YMapEntry,
+                              property: PropertyMapping,
+                              node: DialectDomainElement): Unit = {
     property.classification() match {
       case ExtensionPointProperty    => parseDialectExtension(id, propertyEntry, property, node)
       case LiteralProperty           => parseLiteralProperty(id, propertyEntry, property, node)

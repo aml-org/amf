@@ -13,7 +13,7 @@ class DialectDomainElementModel(val typeIri: String = (Namespace.Meta + "Dialect
     extends DomainElementModel
     with LinkableElementModel {
 
-  val Abstract                         = Field(Bool, Namespace.Meta + "Abstract")
+  val Abstract                         = Field(Bool, Namespace.Meta + "abstract")
   override def fields: List[Field]     = Abstract :: DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields
   override val `type`: List[ValueType] = Namespace.Meta + "DialectDomainElement" :: DomainElementModel.`type`
 

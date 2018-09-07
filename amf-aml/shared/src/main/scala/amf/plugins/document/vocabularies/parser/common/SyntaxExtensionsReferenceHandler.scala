@@ -71,6 +71,7 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry) extends Refer
         entry.key.as[YScalar].text match {
           case "$target"  => // patch $target link
             val includeRef = entry.value
+            ramlInclude(includeRef)
 
           case "$dialect" => // $dialect link
             val dialectRef = entry.value
