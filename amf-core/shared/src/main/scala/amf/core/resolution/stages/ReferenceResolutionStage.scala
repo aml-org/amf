@@ -5,7 +5,7 @@ import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.document.{BaseUnit, Document, EncodesModel}
 import amf.core.model.domain._
-import amf.core.parser.ErrorHandler
+import amf.core.parser.{ErrorHandler, UnresolvedReference}
 import org.mulesoft.common.core.Strings
 
 import scala.collection.mutable
@@ -99,7 +99,8 @@ class ReferenceResolutionStage(
 
   def findLinkPredicates(element: DomainElement): Boolean = {
     val validLink = element match {
-      case l: Linkable => l.isLink
+      case _: UnresolvedReference => false
+      case l: Linkable            => l.isLink
       // link in a data node (trait or resource type) see DataNodeParser for details
       case l: LinkNode => true
 

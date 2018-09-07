@@ -79,5 +79,8 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/shapes/invalid-recursives.raml", Some("invalid-recursives.report"))
   }
 
+  test("Test unresolved shape in fragment") {
+    validate("/shapes/frag-future-ref/api.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }
