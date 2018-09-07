@@ -38,6 +38,7 @@ case class ParserConfig(mode: Option[String] = None,
                         withSourceMaps: Boolean = false,
                         withCompactNamespaces: Boolean = false,
                         validate: Boolean = true,
+                        patchTarget: Option[String] = None,
                         validationProfile: String = AmfProfile.profile,
                         customProfile: Option[String] = None,
                         resolve: Boolean = false,
@@ -56,6 +57,7 @@ object ParserConfig {
   val TRANSLATE = "translate"
   val REPL      = "repl"
   val VALIDATE  = "validate"
+  val PATCH     = "patch"
 }
 
 object ExitCodes {

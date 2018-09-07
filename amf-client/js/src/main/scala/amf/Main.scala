@@ -1,13 +1,12 @@
 package amf
 
-import amf.client.commands.{CmdLineParser, ParseCommand, TranslateCommand, ValidateCommand}
+import amf.client.commands._
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.unsafe.PlatformSecrets
 
 import scala.concurrent.Future
 import scala.language.postfixOps
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.Promise
@@ -41,6 +40,10 @@ object Main extends PlatformSecrets {
             val f = runParse(cfg)
             f.failed.foreach(e => failPromise(e))
             f.toJSPromise
+          case Some(ParserConfig.PATCH) =>
+            val f = runPatch(cfg)
+            f.failed.foreach(e => failPromise(e))
+            f.toJSPromise
           case _ =>
             failCommand()
             throw new Exception("Error executing AMF")
@@ -63,4 +66,5 @@ object Main extends PlatformSecrets {
   def runTranslate(config: ParserConfig): Future[Any] = TranslateCommand(platform).run(config)
   def runValidate(config: ParserConfig): Future[Any]  = ValidateCommand(platform).run(config)
   def runParse(config: ParserConfig): Future[Any]     = ParseCommand(platform).run(config)
+  def runPatch(config: ParserConfig): Future[Any]     = PatchCommand(platform).run(config)
 }
