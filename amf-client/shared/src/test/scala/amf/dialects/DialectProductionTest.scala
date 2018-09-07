@@ -72,6 +72,10 @@ class DialectProductionTest extends BuildCycleTests {
                 basePath + "ABOUT/github/")
   }
 
+  test("Can parse ABOUT-hosted dialectinstance") {
+    withDialect("ABOUT-hosted-vcs-dialect.yaml", "ABOUT_hosted.yaml", "ABOUT_hosted.jsonld", VocabularyYamlHint, Amf, basePath + "ABOUT/")
+  }
+
   test("Can parse and generate the Instagram dialect") {
     cycle("dialect.raml", "dialect.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
   }
