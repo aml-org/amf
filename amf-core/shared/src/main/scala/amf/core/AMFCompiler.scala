@@ -137,7 +137,7 @@ class AMFCompiler(val rawUrl: String,
         Right(
           Root(document,
                content.url,
-               content.mime.getOrElse(mediaType.getOrElse("")),
+               mediaType.getOrElse(content.mime.getOrElse("")),
                Seq(),
                referenceKind,
                content.stream.toString))
