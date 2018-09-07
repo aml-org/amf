@@ -1,0 +1,119 @@
+[
+  {
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#DialectInstance",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml"
+      }
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/",
+        "@type": [
+          "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#SoftwareProjectHostedVcsMetadata",
+          "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml#/declarations/SoftwareProjectHostedVcsMetadataNode",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#name": [
+          {
+            "@value": "maelstrom-artifacts"
+          }
+        ],
+        "http://about.org/ABOUT-vocabulary.yaml#forkedFrom": [
+          {
+            "@value": "false"
+          }
+        ],
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#owner": [
+          {
+            "@value": "mulesoft"
+          }
+        ],
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#stargazersCount": [
+          {
+            "@value": 0
+          }
+        ],
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#isPrivate": [
+          {
+            "@value": true
+          }
+        ],
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#createdAt": [
+          {
+            "@value": "2017-08-30T19:56:58Z",
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+          }
+        ],
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#updatedAt": [
+          {
+            "@value": "2018-09-07T21:33:28Z",
+            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+          }
+        ],
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#ownerAvatar": [
+          {
+            "@value": "https://avatars1.githubusercontent.com/u/185740?v=4"
+          }
+        ],
+        "http://www.w3.org/2002/07/owl#partOf": [
+          {
+            "@value": "https://github.com/mulesoft/maelstrom-artifacts"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,0)-(11,13)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(11,13)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

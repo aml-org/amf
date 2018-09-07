@@ -949,6 +949,11 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         Some(value.as[YScalar].text)
       case YType.Str if property.literalRange().value() == (Namespace.Shapes + "link").iri() =>
         Some(("link", value.as[YScalar].text))
+      case YType.Str
+        if property.literalRange().value() == (Namespace.Xsd + "time").iri() ||
+          property.literalRange().value() == (Namespace.Xsd + "date").iri() ||
+          property.literalRange().value() == (Namespace.Xsd + "dateTime").iri() =>
+        Some(YNode(value.value, YType.Timestamp).as[SimpleDateTime])
       case YType.Str =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,

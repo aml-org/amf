@@ -447,17 +447,26 @@ object GraphEmitter extends MetaModelTypeMapping {
           typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
           sources(v)
         case Type.Date =>
-          val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
-          if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
-            typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
-          } else {
-            typedScalar(b,
-                        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
-                        (Namespace.Xsd + "date").iri(),
-                        inArray = false,
-                        ctx)
-            sources(v)
+          val maybeDateTime = v.value.asInstanceOf[AmfScalar].value match {
+            case dt: SimpleDateTime => Some(dt)
+            case other              => SimpleDateTime.parse(other.toString)
           }
+          maybeDateTime match {
+            case Some(dateTime) =>
+              if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
+                typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
+              } else {
+                typedScalar(b,
+                  f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
+                  (Namespace.Xsd + "date").iri(),
+                  inArray = false,
+                  ctx)
+
+              }
+            case _ =>
+              scalarEmitter.scalar(b, v.value.toString, YType.Str)
+          }
+          sources(v)
         case a: SortedArray =>
           createSortedArray(b, v.value.asInstanceOf[AmfArray].values, parent, a.element, sources, Some(v), ctx)
         case a: Array =>
