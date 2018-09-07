@@ -132,7 +132,7 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
   }
 
   /**
-    * Generates a custom validaton profile as specified in the input validation profile file
+    * Generates a custom validation profile as specified in the input validation profile file
     * @param profileName name of the profile to be parsed
     * @param customProfilePath path to the custom profile file
     * @return the AMF validation report
