@@ -109,26 +109,27 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
                                isAnnotation = false,
                                StringDefaultType)
                 .parse()
-                .foreach(s => {
-                  val property = webFormShape.withProperty(e.key.toString())
-                  // by default 0.8 fields are optional
-                  property.withMinCount(0)
-                  // find for an explicit annotation
-                  e.value.asOption[YMap] match {
-                    case Some(nestedMap) =>
-                      nestedMap.key(
-                        "required",
-                        entry => {
-                          val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
-                          property.set(PropertyShapeModel.MinCount,
-                                       AmfScalar(if (required) 1 else 0),
-                                       Annotations(entry) += ExplicitField())
-                        }
-                      )
-                    case _ =>
-                  }
-                  property.withRange(s).adopted(property.id)
-                })
+                .foreach {
+                  s =>
+                    val property = webFormShape.withProperty(e.key.toString())
+                    // by default 0.8 fields are optional
+                    property.withMinCount(0)
+                    // find for an explicit annotation
+                    e.value.asOption[YMap] match {
+                      case Some(nestedMap) =>
+                        nestedMap.key(
+                          "required",
+                          entry => {
+                            val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
+                            property.set(PropertyShapeModel.MinCount,
+                                         AmfScalar(if (required) 1 else 0),
+                                         Annotations(entry) += ExplicitField())
+                          }
+                        )
+                      case _ =>
+                    }
+                    property.add(Annotations(e)).withRange(s).adopted(property.id)
+                }
             })
             webFormShape.set(NodeShapeModel.Closed, true) // RAML 0.8 does not support open node shapes (see APIMF-732)
             webFormShape
