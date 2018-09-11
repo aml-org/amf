@@ -244,18 +244,20 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
         }
         targetNode.patchObjectField(patchField, newDomainElements.values.toSeq)
       case "upsert" =>
-        val computedDomainElements: Seq[(Option[DialectDomainElement], Option[DialectDomainElement])] = patchPropertyValueIds.collect { case (id, elem) =>
+        val existingElems = patchPropertyValueIds.toSeq.map { case (id, elem) =>
           targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
             case Some(targetElem) => (Some(targetElem), elem)
             case None             => (None            , elem)
           }
-        } map { case (maybeTargetElem, patchElem) =>
+        }
+
+        val computedDomainElements = existingElems.map { case (maybeTargetElem, patchElem) =>
           maybeTargetElem match {
             case Some(targetElem) => (Some(targetElem), patchNode(Some(targetElem), targetLocation, patchElem, patchLocation))
             case None             => (None            , Some(patchElem))
           }
 
-        } toSeq
+        }
 
         val newDomainElements = computedDomainElements.foldLeft(targetPropertyValueIds) { case (acc, (maybeTargetElem, maybeMergedElem)) =>
           maybeTargetElem match {
