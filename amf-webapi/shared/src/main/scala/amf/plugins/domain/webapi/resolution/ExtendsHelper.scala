@@ -175,24 +175,24 @@ object ExtendsHelper {
   }
 
   private def annotateExtensionId(point: DomainElement, extensionId: String, extensionLocation: Option[String]): Unit = {
-    val extendedFieldAnnotation = ExtensionProvenance(extensionId, extensionLocation)
+    val annotation = ExtensionProvenance(extensionId, extensionLocation)
     if (!point.fields
           .fields()
           .headOption
-          .exists(_.value.annotations.find(classOf[ExtensionProvenance]).exists(_.baseId == extensionId))) {
+          .exists(_.value.annotations.collect({ case e: ExtensionProvenance => e }).exists(_.baseId == extensionId))) {
       point.fields.fields().foreach { field =>
-        field.value.annotations += extendedFieldAnnotation
+        field.value.annotations += annotation
         field.value.value match {
           case elem: DomainElement => annotateExtensionId(elem, extensionId, extensionLocation)
           case arr: AmfArray =>
             arr.values.foreach {
               case elem: DomainElement =>
-                elem.annotations += extendedFieldAnnotation
+                elem.annotations += annotation
                 annotateExtensionId(elem, extensionId, extensionLocation)
               case other =>
-                other.annotations += extendedFieldAnnotation
+                other.annotations += annotation
             }
-          case scalar => scalar.annotations += extendedFieldAnnotation
+          case scalar => scalar.annotations += annotation
         }
       }
     }
