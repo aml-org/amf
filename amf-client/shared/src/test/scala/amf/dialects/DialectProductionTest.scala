@@ -1,12 +1,33 @@
 package amf.dialects
 
+import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.BuildCycleTests
+import amf.plugins.document.vocabularies.AMLPlugin
 
 import scala.concurrent.ExecutionContext
 
-class DialectProductionTest extends BuildCycleTests {
+trait DialectInstanceTester { this: BuildCycleTests =>
+
+  protected def withDialect(dialect: String,
+                            source: String,
+                            golden: String,
+                            hint: Hint,
+                            target: Vendor,
+                            directory: String = basePath) = {
+    for {
+      v   <- Validation(platform).map(_.withEnabledValidation(false))
+      _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
+      res <- cycle(source, golden, hint, target, directory)
+    } yield {
+      res
+    }
+  }
+
+}
+
+class DialectProductionTest extends BuildCycleTests with DialectInstanceTester {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -96,18 +117,20 @@ class DialectProductionTest extends BuildCycleTests {
     withDialect("activity.yaml", "stream1.yaml", "stream1.json", VocabularyYamlHint, Amf, basePath + "streams/")
   }
 
-  protected def withDialect(dialect: String,
-                            source: String,
-                            golden: String,
-                            hint: Hint,
-                            target: Vendor,
-                            directory: String = basePath) = {
-    for {
-      v   <- Validation(platform).map(_.withEnabledValidation(false))
-      _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
-      res <- cycle(source, golden, hint, target, directory)
-    } yield {
-      res
-    }
+}
+
+
+class DialectProductionResolutionTest extends BuildCycleTests with DialectInstanceTester {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = AMLPlugin.resolve(unit)
+
+  val basePath = "amf-client/shared/src/test/resources/vocabularies2/production/"
+
+  // Order is not predictable
+  ignore("Can parse asyncapi overlay instances") {
+    withDialect("dialect6.yaml", "patch6.yaml", "patch6.resolved.yaml", VocabularyYamlHint, Aml, basePath + "asyncapi/")
   }
+
 }
