@@ -59,7 +59,7 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = PropertyShape.apply
 
-  override def copyElement(): this.type = this
+  override def copyElement(): PropertyShape = PropertyShape(fields.copy(), annotations.copy())
 }
 
 object PropertyShape {

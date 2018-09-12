@@ -1,0 +1,15 @@
+#%RAML 1.0 DataType
+# referenced by Device.raml, MobileTransactionInfo.raml
+    type: object
+    properties:
+      type:
+        required: true
+        description: Type of payment program for the product being purchased
+        type: string
+        enum:
+        - EARLY_LOAN     # Financing for an existing customer who is trading in a currently financed device and has not completed full term for the existing device
+        - LOAN           # Financing for device (that is not part of EARLY_LOAN upgrade)
+        - LEASE          # Lease agreement (device must be returned at end of contract term)
+        - MERCHANT_LOAN  # Financing for device but not using service provider financing program (details need not be specified to service provider)
+        - SUBSIDIZED     # (Can be passed in CreateCustomer) No device payments. Two-year subsidized service agreement
+        - NONSUBSIDIZED  # (Can be passed in CreateCustomer) No device payments. Full-price purchase

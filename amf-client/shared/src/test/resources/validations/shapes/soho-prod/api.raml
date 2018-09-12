@@ -1,0 +1,36 @@
+#%RAML 1.0
+title: test
+
+types:
+  Connection: !include types/Connection.raml
+  Device: !include types/Device.raml
+  PaymentProgram: !include types/PaymentProgram.raml
+
+/plansRequest:
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          devices:
+            required: true
+            description: Products to match for service plans
+            type: array
+            items:
+              type: Device
+
+        example: |
+          {
+              "devices": [
+                {
+                  "serialNumber": "355375080110536",
+                  "paymentPlan": {
+                    "type": "LOAN"
+                  },
+                  "connection":{
+                     "phoneNumber":"7407074043"
+                  }
+                }
+              ]
+          }
+

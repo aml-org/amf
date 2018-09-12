@@ -2,6 +2,7 @@ package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
+import amf.plugins.domain.shapes.resolution.stages.DefaultRecursionHandler
 import amf.plugins.features.validation.ParserSideValidations
 import amf.{ProfileName, Raml08Profile}
 
@@ -12,7 +13,9 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
                                             final val profile: ProfileName,
                                             val cache: NormalizationCache = NormalizationCache()) {
 
-  val isRaml08: Boolean                        = profile.equals(Raml08Profile)
+  val isRaml08: Boolean                         = profile.equals(Raml08Profile)
+  val recursionHandler: DefaultRecursionHandler = DefaultRecursionHandler()
+
   private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
 
   def minShape(derivedShape: Shape, superShape: Shape): Shape =

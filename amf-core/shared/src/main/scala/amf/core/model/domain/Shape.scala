@@ -144,7 +144,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
 
   def ramlSyntaxKey: String = "shape"
 
-  def copyShape(): this.type = copyElement().asInstanceOf[this.type]
+  def copyShape(): this.type = copyElement().asInstanceOf[this.type].withId(id)
 }
 
 case class IdsTraversionCheck() {

@@ -1,5 +1,6 @@
 package amf.core.model.domain
 
+import amf.core.annotations.ResolvedInheritance
 import amf.core.metamodel.Obj
 import amf.core.metamodel.domain.RecursiveShapeModel
 import amf.core.metamodel.domain.RecursiveShapeModel._
@@ -48,7 +49,7 @@ object RecursiveShape {
       .withFixPoint(l.id)
 
   def apply(shape: Shape): RecursiveShape =
-    apply(Fields(), shape.annotations)
+    apply(Fields(), shape.annotations.copy().reject(_.isInstanceOf[ResolvedInheritance]))
       .withName(shape.name.option().getOrElse("default-recursion"))
       .adopted(shape.id)
       .withSupportsRecursion(shape.supportsRecursion.value())

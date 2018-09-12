@@ -214,5 +214,9 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   test("Test invalid string hierarchy examples") {
     validate("/examples/string-hierarchy.raml", Some("scalars-numbers-string.report"))
   }
+
+  test("Recursion with unresolve ref - validate recursion") {
+    validate("/shapes/soho-prod/api.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }
