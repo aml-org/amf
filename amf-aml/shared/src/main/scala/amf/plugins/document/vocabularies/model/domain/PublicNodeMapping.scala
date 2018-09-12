@@ -75,10 +75,12 @@ case class DocumentsModel(fields: Fields, annotations: Annotations) extends Doma
   def root(): DocumentMapping           = fields.field(Root)
   def library(): DocumentMapping        = fields.field(Library)
   def fragments(): Seq[DocumentMapping] = fields.field(Fragments)
+  def selfEncoded(): Boolean            = fields.field(SelfEncoded)
 
   def withRoot(documentMapping: DocumentMapping): DocumentsModel     = set(Root, documentMapping)
   def withLibrary(library: DocumentMapping): DocumentsModel          = set(Library, library)
   def withFragments(fragments: Seq[DocumentMapping]): DocumentsModel = setArrayWithoutId(Fragments, fragments)
+  def withSelfEncoded(selfEncoded: Boolean): DocumentsModel          = set(SelfEncoded, selfEncoded)
 
   override def meta: Obj = DocumentsModelModel
 

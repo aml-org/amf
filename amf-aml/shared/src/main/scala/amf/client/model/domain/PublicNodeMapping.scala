@@ -68,4 +68,9 @@ case class DocumentsModel(override private[amf] val _internal: InternalDocuments
   def withLibrary(library: DocumentMapping) = {
     _internal.withLibrary(library._internal)
   }
+
+  def selfEncoded(): Boolean = _internal.selfEncoded()
+  def withSelfEncoded(selfEncoded: Boolean): DocumentsModel = {
+    _internal.withSelfEncoded(selfEncoded)
+  }
 }
