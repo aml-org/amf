@@ -7,22 +7,20 @@ baseUri: https://domain.test.com/
     responses:
       200:
         body:
-          application/json:
-            description: Comment describing your JSON Schema
-            type: object
-            additionalProperties: true
-            properties:
-              a1:
-                description: Comment describing your JSON Schema
-                type: object
-                additionalProperties: true
-                properties:
-                  b:
-                    type: string
-                    required: false
-                required: false
-              a2:
-                type: array
-                items:
-                  type: string
-                required: false
+          application/json: |-
+            {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "description": "Comment describing your JSON Schema",
+              "type": "object",
+              "properties": {
+                "a1": {
+                  "$ref": "b.json#/definitions/B"
+                },
+                "a2": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }

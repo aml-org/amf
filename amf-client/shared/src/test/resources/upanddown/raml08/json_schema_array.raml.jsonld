@@ -430,7 +430,7 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://a.ml/vocabularies/document-source-maps#json-schema-id": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
@@ -439,7 +439,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,2)-(4,8)]"
+                    "@value": "http://jsonschema.net/wip"
                   }
                 ]
               }
@@ -470,7 +470,7 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#json-schema-id": [
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
@@ -479,7 +479,21 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "http://jsonschema.net/wip"
+                    "@value": "[(4,2)-(4,8)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/raml08/json_schema_array.raml#/declarations/schemas/wip"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"id\": \"http://jsonschema.net/wip\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"questionnaires\": {\n      \"id\": \"http://jsonschema.net/wip/questionnaires\",\n      \"type\": \"array\",\n      \"items\": [{\n        \"id\": \"http://jsonschema.net/wip/questionnaires/0\",\n        \"type\": \"object\",\n        \"description\": \"Metadata about which questionnaires apply to this WIP, and their current state. There will be one item for each questionnaire.\"\n      }]\n    }\n  }\n}"
                   }
                 ]
               }

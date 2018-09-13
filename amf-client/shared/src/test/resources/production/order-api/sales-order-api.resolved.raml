@@ -93,7 +93,6 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
     description: Create a new Order.
     body:
       application/json:
-        type: object
         example:
           products:
             -
@@ -102,42 +101,78 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
               quantity: "1"
           status: new
           price: "625"
-        additionalProperties: true
-        properties:
-          products:
-            type: array
-            items:
-              type: object
-              additionalProperties: true
-              properties:
-                id:
-                  type: string
-                  required: true
-                productName:
-                  type: string
-                  required: true
-                quantity:
-                  type: string
-                  required: true
-            required: true
-          status:
-            type: string
-            required: true
-          price:
-            type: string
-            required: true
+        type: |-
+          {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "id": "http://jsonschema.net",
+            "type": "object",
+            "properties": {
+              "products": {
+                "id": "http://jsonschema.net/products",
+                "type": "array",
+                "items": {
+                  "id": "http://jsonschema.net/products/0",
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "id": "http://jsonschema.net/products/0/id",
+                      "type": "string"
+                    },
+                    "productName": {
+                      "id": "http://jsonschema.net/products/0/productName",
+                      "type": "string"
+                    },
+                    "quantity": {
+                      "id": "http://jsonschema.net/products/0/quantity",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "productName",
+                    "quantity"
+                  ]
+                },
+                "required": [
+                  "0"
+                ]
+              },
+              "status": {
+                "id": "http://jsonschema.net/status",
+                "type": "string"
+              },
+              "price": {
+                "id": "http://jsonschema.net/price",
+                "type": "string"
+              }
+            },
+            "required": [
+              "products",
+              "status",
+              "price"
+            ]
+          }
     responses:
       201:
         body:
           application/json:
-            type: object
             example:
               id: "1"
-            additionalProperties: true
-            properties:
-              id:
-                type: string
-                required: true
+            type: |-
+              {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "id": "http://jsonschema.net",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "id": "http://jsonschema.net/id",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "id"
+                ]
+              }
       400:
         body:
           application/json:
@@ -177,7 +212,6 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
     put:
       body:
         application/json:
-          type: object
           example:
             id: "1"
             userId: "1001"
@@ -201,79 +235,108 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
             price: "1304"
             creationDate: 12/01/2015
             trackingNumber: 6a381a7a-65b8-4858-b884-d2897b7a5564
-          additionalProperties: true
-          properties:
-            id:
-              type: string
-              required: false
-            userId:
-              type: string
-              required: false
-            billingAddress:
-              type: object
-              additionalProperties: true
-              properties:
-                address1:
-                  type: string
-                  required: false
-                address2:
-                  type: string
-                  required: false
-                city:
-                  type: string
-                  required: false
-                state:
-                  type: string
-                  required: false
-                postalCode:
-                  type: string
-                  required: false
-                country:
-                  type: string
-                  required: false
-              required: false
-            payment:
-              type: object
-              additionalProperties: true
-              properties:
-                name:
-                  type: string
-                  required: false
-                number:
-                  type: string
-                  required: false
-                type:
-                  type: string
-                  required: false
-              required: false
-            products:
-              type: array
-              items:
-                type: object
-                additionalProperties: true
-                properties:
-                  id:
-                    type: string
-                    required: false
-                  productName:
-                    type: string
-                    required: false
-                  quantity:
-                    type: string
-                    required: false
-              required: false
-            status:
-              type: string
-              required: false
-            price:
-              type: string
-              required: false
-            creationDate:
-              type: string
-              required: false
-            trackingNumber:
-              type: string
-              required: false
+          type: |-
+            {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "id": "http://jsonschema.net",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "id": "http://jsonschema.net/id",
+                  "type": "string"
+                },
+                "userId": {
+                  "id": "http://jsonschema.net/userId",
+                  "type": "string"
+                },
+                "billingAddress": {
+                  "id": "http://jsonschema.net/billingAddress",
+                  "type": "object",
+                  "properties": {
+                    "address1": {
+                      "id": "http://jsonschema.net/billingAddress/address1",
+                      "type": "string"
+                    },
+                    "address2": {
+                      "id": "http://jsonschema.net/billingAddress/address2",
+                      "type": "string"
+                    },
+                    "city": {
+                      "id": "http://jsonschema.net/billingAddress/city",
+                      "type": "string"
+                    },
+                    "state": {
+                      "id": "http://jsonschema.net/billingAddress/state",
+                      "type": "string"
+                    },
+                    "postalCode": {
+                      "id": "http://jsonschema.net/billingAddress/postalCode",
+                      "type": "string"
+                    },
+                    "country": {
+                      "id": "http://jsonschema.net/billingAddress/country",
+                      "type": "string"
+                    }
+                  }
+                },
+                "payment": {
+                  "id": "http://jsonschema.net/payment",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "id": "http://jsonschema.net/payment/name",
+                      "type": "string"
+                    },
+                    "number": {
+                      "id": "http://jsonschema.net/payment/number",
+                      "type": "string"
+                    },
+                    "type": {
+                      "id": "http://jsonschema.net/payment/type",
+                      "type": "string"
+                    }
+                  }
+                },
+                "products": {
+                  "id": "http://jsonschema.net/products",
+                  "type": "array",
+                  "items": {
+                    "id": "http://jsonschema.net/products/0",
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "id": "http://jsonschema.net/products/0/id",
+                        "type": "string"
+                      },
+                      "productName": {
+                        "id": "http://jsonschema.net/products/0/productName",
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "id": "http://jsonschema.net/products/0/quantity",
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "status": {
+                  "id": "http://jsonschema.net/status",
+                  "type": "string"
+                },
+                "price": {
+                  "id": "http://jsonschema.net/price",
+                  "type": "string"
+                },
+                "creationDate": {
+                  "id": "http://jsonschema.net/creationDate",
+                  "type": "string"
+                },
+                "trackingNumber": {
+                  "id": "http://jsonschema.net/trackingNumber",
+                  "type": "string"
+                }
+              }
+            }
       responses:
         204: {}
         400:

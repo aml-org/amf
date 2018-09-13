@@ -1,0 +1,25 @@
+#%RAML 0.8
+title: La Liga
+version: 1.0
+baseUri: http://localhost:8080/api
+
+/fixture:
+  displayName: Fixture
+  get:
+    description: Retrieve a list of matches for the current season
+    responses:
+      200:
+        body:
+          application/json:
+            schema: !include fixture-schema-output.json
+            example: |
+                [{
+                    "homeTeam": "BAR",
+                    "awayTeam": "RMA",
+                    "date": "2014-01-12T20:00:00Z"
+                  },
+                    {
+                    "homeTeam": "BAR",
+                    "awayTeam": "RMA",
+                    "date": "2014-01-12T20:00:00Z"
+                }]

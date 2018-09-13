@@ -1248,6 +1248,20 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/schemas/someSchema"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,2)-(4,8)]"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
@@ -1298,7 +1312,7 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
@@ -1307,7 +1321,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,2)-(4,8)]"
+                    "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"description\": \"Comment describing your JSON Schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"auditDetails\": {\n      \"$ref\": \"#/definitions/auditDetails\"\n    },\n    \"formOfPayments\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"$ref\": \"#/definitions/formOfPayment\"\n      }\n    }\n  },\n  \"additionalProperties\": false,\n  \"definitions\": {\n    \"auditDetails\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"formOfPayment\": {\n          \"$ref\": \"#/definitions/formOfPayment\"\n        },\n        \"createTime\": {\n          \"type\": \"number\"\n        },\n        \"lastUpdatedTime\": {\n          \"type\": \"number\"\n        }\n      },\n      \"additionalProperties\": false\n    },\n    \"formOfPayment\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"auditDetails\": {\n          \"$ref\": \"#/definitions/auditDetails\"\n        },\n        \"createTime\": {\n          \"type\": \"number\"\n        },\n        \"lastUpdatedTime\": {\n          \"type\": \"number\"\n        }\n      },\n      \"additionalProperties\": false\n    }\n  }\n}"
                   }
                 ]
               }

@@ -731,6 +731,20 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/definitions-loops/crossfiles.raml#/declarations/schemas/someSchema"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,2)-(4,8)]"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
@@ -769,7 +783,7 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
@@ -778,7 +792,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,2)-(4,8)]"
+                    "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"description\": \"Comment describing your JSON Schema\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"a1\": {\n      \"$ref\": \"b.json#/definitions/B\"\n    },\n    \"a2\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\"\n      }\n    }\n  }\n}"
                   }
                 ]
               }

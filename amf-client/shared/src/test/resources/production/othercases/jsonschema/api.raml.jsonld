@@ -271,6 +271,20 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/production/othercases/jsonschema/api.raml#/declarations/types/jsonSchema"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,6)-(6,12)]"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
@@ -321,7 +335,7 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
@@ -330,7 +344,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,6)-(6,12)]"
+                    "@value": "{\n  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n  \"$ref\": \"#/definitions/root\",\n  \"definitions\": {\n    \"root\": {\n      \"type\": \"object\",\n      \"additionalProperties\": true,\n      \"required\": [\n        \"age\"\n      ],\n      \"properties\": {\n        \"age\": {\n          \"type\": \"number\"\n        }\n      }\n    }\n  }\n}"
                   }
                 ]
               }

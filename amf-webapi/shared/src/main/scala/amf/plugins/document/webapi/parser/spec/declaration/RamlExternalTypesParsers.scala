@@ -77,6 +77,7 @@ case class RamlJsonSchemaExpression(key: YNode,
               .get(path)
               .foreach(e => shape.withReference(e.encoded.id))
             ctx.declarations.registerExternalRef(path, shape)
+            shape.annotations += ParsedJSONSchema(origin.text.trim)
             shape
         }
       case None =>
@@ -125,12 +126,8 @@ case class RamlJsonSchemaExpression(key: YNode,
       context.localJSONSchemaContext = Some(schemaEntry.node)
 
       Oas2DocumentParser(
-        Root(SyamlParsedDocument(None, schemaEntry),
-             url,
-             "application/json",
-             Nil,
-             InferredLinkReference,
-             text))(context)
+        Root(SyamlParsedDocument(None, schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
+        context)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = context.declarations.shapes
       val resolvedShapes = new ReferenceResolutionStage(false)(ctx)
@@ -174,7 +171,8 @@ case class RamlJsonSchemaExpression(key: YNode,
     ctx.localJSONSchemaContext = Some(schemaEntry.value)
 
     val s =
-      OasTypeParser(schemaEntry, shape => adopt(shape), ctx.computeJsonSchemaVersion(schemaEntry.value))(toSchemaContext(ctx, valueAST))
+      OasTypeParser(schemaEntry, shape => adopt(shape), ctx.computeJsonSchemaVersion(schemaEntry.value))(
+        toSchemaContext(ctx, valueAST))
         .parse() match {
         case Some(sh) => sh
         case None =>

@@ -216,7 +216,7 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
@@ -225,7 +225,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(6,12)-(6,18)]"
+                                        "@value": "{\n    \"$schema\": \"http://json-schema.org/draft-04/schema#\",\n    \"$ref\": \"#/definitions/root\",\n    \"definitions\": {\n        \"root\": {\n            \"type\": \"object\",\n            \"additionalProperties\": true,\n            \"required\": [\n                \"age\"\n            ],\n            \"properties\": {\n                \"age\": {\n                    \"type\": \"number\"\n                }\n            }\n        }\n    }\n}"
                                       }
                                     ]
                                   }
@@ -252,6 +252,20 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(1,0)-(16,9)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(6,12)-(6,18)]"
                                       }
                                     ]
                                   }

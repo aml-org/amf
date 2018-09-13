@@ -96,10 +96,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("azure_blob_service raml to jsonld") {
-    cycle("microsoft_azure_blob_service.raml",
-      "microsoft_azure_blob_service.raml.resolved.jsonld",
-      RamlYamlHint,
-      Amf)
+    cycle("microsoft_azure_blob_service.raml", "microsoft_azure_blob_service.raml.resolved.jsonld", RamlYamlHint, Amf)
   }
 
   test("test definition_loops input") {
@@ -210,17 +207,16 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("Test endpoints are not removed") {
-    val source = "demo-api.raml"
-    val golden = ""
-    val hint = RamlYamlHint
-    val target = Amf
-    val directory = basePath + "demo-api/"
-    val syntax = None
+    val source     = "demo-api.raml"
+    val golden     = ""
+    val hint       = RamlYamlHint
+    val target     = Amf
+    val directory  = basePath + "demo-api/"
+    val syntax     = None
     val validation = None
 
-    val config = CycleConfig(source, golden, hint, target, directory, syntax)
+    val config                    = CycleConfig(source, golden, hint, target, directory, syntax)
     val useAmfJsonldSerialization = true
-
 
     for {
       simpleModel <- build(config, validation, useAmfJsonldSerialization).map(new AmfEditingPipeline(_).resolve())
@@ -275,6 +271,10 @@ class Raml08ResolutionTest extends RamlResolutionTest {
 
   test("Test empty trait in operations") {
     cycle("empty-is-operation-endpoint.raml", "empty-is-operation-endpoint.raml.raml", RamlYamlHint, Raml08)
+  }
+
+  test("Test included schema") {
+    cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml08, basePath + "included-schema/")
   }
 }
 

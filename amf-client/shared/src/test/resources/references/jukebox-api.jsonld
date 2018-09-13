@@ -1256,6 +1256,20 @@
                 ]
               }
             ],
+            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/references/jukebox-api.raml#/declarations/types/song"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,2)-(2,8)]"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
@@ -1294,7 +1308,7 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+            "http://a.ml/vocabularies/document-source-maps#parsed-json-schema": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
@@ -1303,7 +1317,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,2)-(2,8)]"
+                    "@value": "{\n  \"type\": \"object\",\n  \"$schema\": \"http://json-schema.org/draft-03/schema\",\n  \"required\": true,\n  \"properties\": {\n    \"songId\": {\n      \"type\": \"string\",\n      \"required\": true,\n      \"minLength\": 36,\n      \"maxLength\": 36\n    },\n    \"songTitle\": {\n      \"type\": \"string\",\n      \"required\": true\n    },\n    \"albumId\": {\n      \"type\": \"string\",\n      \"required\": true,\n      \"minLength\": 36,\n      \"maxLength\": 36\n    }\n  }\n}"
                   }
                 ]
               }
