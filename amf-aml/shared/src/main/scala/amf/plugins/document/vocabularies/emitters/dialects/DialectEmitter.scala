@@ -7,7 +7,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{AmfScalar, DomainElement}
-import amf.core.parser.Position
+import amf.core.parser.{Annotations, Position}
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.document.Vocabulary
@@ -109,6 +109,47 @@ case class LibraryDocumentModelEmitter(dialect: Dialect,
       .collect { case Some(pos) => pos }
     allPos.sorted.headOption.getOrElse(ZERO)
   }
+}
+
+case class DocumentsModelOptionsEmitter(dialect: Dialect,
+                                        ordering: SpecOrdering,
+                                        aliases: Map[String, (String, String)] = Map())
+  extends EntryEmitter
+    with AliasesConsumer {
+
+  val mapping: DocumentsModel    = dialect.documents()
+  var emitters: Seq[EntryEmitter] = Seq()
+
+  private def hasOptions(): Boolean = mapping.selfEncoded().option().isDefined
+
+  val sortedNodes: Seq[MapEntryEmitter] = if (hasOptions()) {
+    val options     = Map("selfEncoded" -> mapping.selfEncoded().option())
+    val types       = Map("selfEncoded" -> YType.Bool)
+    val annotations = Map("selfEncoded" -> mapping.selfEncoded().annotations())
+
+    val optionNodes: Seq[MapEntryEmitter] = options.map {
+      case (optionName, maybeValue) =>
+        maybeValue map { value =>
+          val key                = optionName
+          val nodetype           = types(optionName)
+          val position: Position = pos(annotations(optionName))
+          MapEntryEmitter(optionName, value.toString, nodetype, position)
+        }
+    } collect { case Some(node) => node } toSeq
+    val sorted: Seq[MapEntryEmitter] = ordering.sorted(optionNodes)
+    sorted
+  } else {
+    Nil
+  }
+
+  override def emit(b: EntryBuilder): Unit = {
+    if (sortedNodes.nonEmpty) {
+      b.entry("options", _.obj { b => traverse(sortedNodes, b)
+      })
+    }
+  }
+
+  override def position(): Position = sortedNodes.headOption.map(_.position).getOrElse(ZERO)
 }
 
 case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)])
@@ -226,6 +267,9 @@ case class DocumentsModelEmitter(dialect: Dialect, ordering: SpecOrdering, alias
         if (Option(documents.library()).isDefined) {
           emitters ++= Seq(LibraryDocumentModelEmitter(dialect, ordering, aliases))
         }
+
+        emitters ++= Seq(DocumentsModelOptionsEmitter(dialect, ordering))
+
         traverse(ordering.sorted(emitters), b)
       }
     )

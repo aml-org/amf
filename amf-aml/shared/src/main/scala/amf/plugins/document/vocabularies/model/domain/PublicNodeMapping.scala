@@ -1,17 +1,13 @@
 package amf.plugins.document.vocabularies.model.domain
 
 import amf.core.metamodel.Obj
-import amf.core.model.StrField
+import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentMappingModel._
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel._
 import amf.plugins.document.vocabularies.metamodel.domain.PublicNodeMappingModel._
-import amf.plugins.document.vocabularies.metamodel.domain.{
-  DocumentMappingModel,
-  DocumentsModelModel,
-  PublicNodeMappingModel
-}
+import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, DocumentsModelModel, PublicNodeMappingModel}
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 case class PublicNodeMapping(fields: Fields, annotations: Annotations) extends DomainElement {
@@ -75,7 +71,7 @@ case class DocumentsModel(fields: Fields, annotations: Annotations) extends Doma
   def root(): DocumentMapping           = fields.field(Root)
   def library(): DocumentMapping        = fields.field(Library)
   def fragments(): Seq[DocumentMapping] = fields.field(Fragments)
-  def selfEncoded(): Boolean            = fields.field(SelfEncoded)
+  def selfEncoded(): BoolField          = fields.field(SelfEncoded)
 
   def withRoot(documentMapping: DocumentMapping): DocumentsModel     = set(Root, documentMapping)
   def withLibrary(library: DocumentMapping): DocumentsModel          = set(Library, library)
