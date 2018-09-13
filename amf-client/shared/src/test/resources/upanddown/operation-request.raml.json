@@ -17,7 +17,8 @@
         {
           "name": "two",
           "required": false,
-          "in": "path"
+          "in": "path",
+          "type": "string"
         }
       ]
     },
@@ -28,7 +29,8 @@
         {
           "name": "two",
           "required": false,
-          "in": "path"
+          "in": "path",
+          "type": "string"
         }
       ],
       "get": {
@@ -60,12 +62,14 @@
           {
             "name": "Header-One",
             "required": false,
-            "in": "header"
+            "in": "header",
+            "type": "string"
           },
           {
             "name": "Header-Two",
             "required": true,
-            "in": "header"
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {}

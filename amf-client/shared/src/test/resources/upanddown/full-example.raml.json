@@ -59,13 +59,15 @@
         {
           "name": "two",
           "required": false,
-          "in": "path"
+          "in": "path",
+          "type": "string"
         },
         {
           "name": "three",
           "description": "endpoint uri parameter",
           "required": true,
-          "in": "path"
+          "in": "path",
+          "type": "string"
         }
       ],
       "get": {
@@ -75,7 +77,8 @@
             "name": "param1",
             "description": "Some descr",
             "required": true,
-            "in": "query"
+            "in": "query",
+            "type": "string"
           },
           {
             "name": "param2",

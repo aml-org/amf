@@ -1188,17 +1188,11 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/scalar/A",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/any/A",
         "@type": [
-          "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
-          "http://a.ml/vocabularies/shapes#Shape",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://www.w3.org/ns/shacl#datatype": [
-          {
-            "@id": "http://www.w3.org/2001/XMLSchema#string"
-          }
+          "http://a.ml/vocabularies/shapes#Shape"
         ],
         "http://www.w3.org/ns/shacl#name": [
           {
@@ -1207,7 +1201,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/scalar/A/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/any/A/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1215,7 +1209,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/scalar/A"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/any/A"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1241,7 +1235,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/scalar/A"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/any/A"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1255,7 +1249,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/scalar/A"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/default-types.raml#/declarations/types/any/A"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

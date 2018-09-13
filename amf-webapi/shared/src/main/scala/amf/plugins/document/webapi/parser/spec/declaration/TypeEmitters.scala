@@ -1961,14 +1961,12 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
 
     fs.entry(ScalarShapeModel.DataType)
       .foreach { f =>
-        if (!f.value.annotations.contains(classOf[Inferred])) {
-          val typeDefStr = spec.typeDefMatcher.matchType(typeDef.get)
-          scalar.annotations.find(classOf[TypePropertyLexicalInfo]) match {
-            case Some(lexicalInfo) =>
-              result += MapEntryEmitter("type", typeDefStr, YType.Str, lexicalInfo.range.start)
-            case _ =>
-              result += MapEntryEmitter("type", typeDefStr, position = pos(f.value.annotations)) // TODO check this  - annotations of typeDef in parser
-          }
+        val typeDefStr = spec.typeDefMatcher.matchType(typeDef.get)
+        scalar.annotations.find(classOf[TypePropertyLexicalInfo]) match {
+          case Some(lexicalInfo) =>
+            result += MapEntryEmitter("type", typeDefStr, YType.Str, lexicalInfo.range.start)
+          case _ =>
+            result += MapEntryEmitter("type", typeDefStr, position = pos(f.value.annotations)) // TODO check this  - annotations of typeDef in parser
         }
       }
 
