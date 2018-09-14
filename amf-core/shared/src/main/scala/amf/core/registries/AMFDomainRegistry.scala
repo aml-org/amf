@@ -51,7 +51,7 @@ object AMFDomainRegistry {
     "data-node-properties" -> DataNodePropertiesAnnotations,
     "resolved-link"        -> ResolvedLinkAnnotation
   )
-  val metadataRegistry: mutable.HashMap[String, Obj] = map(
+  val metadataRegistry: mutable.Map[String, Obj] = map(
     size = 1024,
     defaultIri(DocumentModel)              -> DocumentModel,
     defaultIri(ModuleModel)                -> ModuleModel,
@@ -79,7 +79,9 @@ object AMFDomainRegistry {
   def registerAnnotation(a: String, agl: AnnotationGraphLoader): Option[AnnotationGraphLoader] =
     annotationsRegistry.put(a, agl)
 
-  def registerModelEntity(entity: Obj): Option[Obj] = metadataRegistry.put(defaultIri(entity), entity)
+  def registerModelEntity(entity: Obj): Option[Obj] = {
+    metadataRegistry.put(defaultIri(entity), entity)
+  }
 
   def registerModelEntityResolver(resolver: AMFDomainEntityResolver): Unit = metadataResolverRegistry.append(resolver)
 

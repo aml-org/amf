@@ -17,7 +17,7 @@ object VocabularyModel extends ModuleModel with ExternalContextModel {
   override def modelInstance: AmfObject = Vocabulary()
 
   override val `type`: List[ValueType] =
-    Namespace.Owl + "Ontology2" :: Namespace.Meta + "Vocabulary" :: BaseUnitModel.`type`
+    Namespace.Meta + "Vocabulary" :: Namespace.Owl + "Ontology" :: BaseUnitModel.`type`
 
   override def fields: List[Field] = Name :: Imports :: Externals :: Declares :: Base :: BaseUnitModel.Location :: BaseUnitModel.fields
 }

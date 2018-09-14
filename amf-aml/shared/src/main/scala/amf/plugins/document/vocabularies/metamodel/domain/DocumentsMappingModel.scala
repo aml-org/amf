@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Iri, Str}
+import amf.core.metamodel.Type.{Array, Iri, Str, Bool}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -40,8 +40,9 @@ object DocumentsModelModel extends DomainElementModel {
   val Root = Field(DocumentMappingModel, Namespace.Meta + "rootDocument")
   val Fragments = Field(Array(DocumentMappingModel), Namespace.Meta + "fragments")
   val Library = Field(DocumentMappingModel, Namespace.Meta + "library")
+  val SelfEncoded = Field(Bool, Namespace.Meta + "selfEncoded")
 
-  override def fields: List[Field] = Root :: Fragments :: Library :: DomainElementModel.fields
+  override def fields: List[Field] = Root :: Fragments :: Library :: SelfEncoded :: DomainElementModel.fields
 
   override def modelInstance: AmfObject = DocumentsModel()
 

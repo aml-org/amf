@@ -121,17 +121,23 @@ trait DialectSyntax { this: DialectContext =>
   val documentsMapping: Map[String, Boolean] = Map(
     "root"      -> false,
     "fragments" -> false,
-    "library"   -> false
+    "library"   -> false,
+    "options"   -> false
+  )
+
+  val documentsMappingOptions: Map[String, Boolean] = Map(
+    "selfEncoded"      -> false
   )
 
   def closedNode(nodeType: String, id: String, map: YMap): Unit = {
     val allowedProps = nodeType match {
-      case "dialect"          => dialect
-      case "library"          => library
-      case "fragment"         => fragment
-      case "nodeMapping"      => nodeMapping
-      case "propertyMapping"  => propertyMapping
-      case "documentsMapping" => documentsMapping
+      case "dialect"                 => dialect
+      case "library"                 => library
+      case "fragment"                => fragment
+      case "nodeMapping"             => nodeMapping
+      case "propertyMapping"         => propertyMapping
+      case "documentsMapping"        => documentsMapping
+      case "documentsMappingOptions" => documentsMappingOptions
     }
     map.map.keySet.map(_.as[YScalar].text).foreach { property =>
       allowedProps.get(property) match {
@@ -954,6 +960,32 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
     }
   }
 
+  def parseDocumentsOptions(value: YNode, documentsMapping: DocumentsModel) = {
+    value.as[YMap].key("options") match {
+      case Some(entry:YMapEntry) =>
+        entry.value.tagType match {
+          case YType.Map =>
+            val optionsMap = entry.value.as[YMap]
+            ctx.closedNode("documentsMappingOptions", documentsMapping.id, optionsMap)
+            optionsMap.key("selfEncoded") match {
+              case Some(optionsEntry: YMapEntry) =>
+                optionsEntry.value.tagType match {
+                  case YType.Bool =>
+                    val selfEncoded = optionsEntry.value.as[Boolean]
+                    documentsMapping.withSelfEncoded(selfEncoded)
+                  case _          =>
+                    ctx.violation(documentsMapping.id, "'selfEncoded' Option for a documents mapping must be a boolean", optionsEntry)
+                }
+              case _                       => // ignore
+
+            }
+          case _ =>
+            ctx.violation(documentsMapping.id, "Options for a documents mapping must be a map", entry.value)
+        }
+      case _ => // ignore
+    }
+  }
+
   private def parseDocumentsMapping(map: YMap, parent: String): Unit = {
     val documentsMapping = DocumentsModel().withId(parent + "#/documents")
     map.key("documents").foreach { e =>
@@ -965,6 +997,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
         documentsMapping.withFragments(fragmentMappings)
       }
       parseLibraries(e.value, documentsMapping.id).foreach(documentsMapping.withLibrary)
+      parseDocumentsOptions(e.value, documentsMapping)
     }
 
     dialect.withDocuments(documentsMapping)
