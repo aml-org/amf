@@ -408,13 +408,21 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
+  protected def encodedElementDefaultId(dialectInstance: EncodesModel): String = {
+    if (ctx.dialect.documents().selfEncoded().option().getOrElse(false)) {
+      dialectInstance.location().getOrElse(dialectInstance.id)
+    } else {
+      dialectInstance.id + "#/"
+    }
+  }
+
   protected def parseEncoded(dialectInstance: EncodesModel): Option[DialectDomainElement] = {
     Option(ctx.dialect.documents()) flatMap { documents: DocumentsModel =>
       Option(documents.root()) flatMap { mapping =>
         ctx.findNodeMapping(mapping.encoded().value()) match {
           case Some(nodeMapping) =>
             val path = dialectInstance.id + "#"
-            parseNode(path, path + "/", map, nodeMapping, Map())
+            parseNode(path, encodedElementDefaultId(dialectInstance), map, nodeMapping, Map(), rootNode = true)
           case _                 => None
         }
       }
@@ -481,7 +489,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
-  protected def parseNode(path: String, defaultId: String, ast: YNode, mapping: NodeMapping, additionalProperties: Map[String, Any]): Option[DialectDomainElement] = {
+  protected def parseNode(path: String, defaultId: String, ast: YNode, mapping: NodeMapping, additionalProperties: Map[String, Any], rootNode: Boolean = false): Option[DialectDomainElement] = {
     val result = ast.tagType match {
       case YType.Map =>
         val nodeMap = ast.as[YMap]
@@ -498,14 +506,16 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             }
           case _ =>
             val node: DialectDomainElement = DialectDomainElement(nodeMap).withDefinedBy(mapping)
-            val finalId                    = generateNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
+            val finalId                    = generateNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties, rootNode)
             node.withId(finalId)
             node.withInstanceTypes(Seq(mapping.nodetypeMapping.value(), mapping.id))
             parseAnnotations(nodeMap, node)
             mapping.propertiesMapping().foreach { propertyMapping =>
               val propertyName = propertyMapping.name().value()
               nodeMap.entries.find(_.key.as[YScalar].text == propertyName) match {
-                case Some(entry) => parseProperty(defaultId, entry, propertyMapping, node)
+                case Some(entry) =>
+                  val nestedId = if (ctx.dialect.documents().selfEncoded().option().getOrElse(false) && rootNode) defaultId + "#/" else defaultId
+                  parseProperty(nestedId, entry, propertyMapping, node)
                 case None        => // ignore
               }
             }
@@ -1265,15 +1275,19 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
-  protected def generateNodeId(node: DialectDomainElement, nodeMap: YMap, path: String, defaultId: String, mapping: NodeMapping, additionalProperties: Map[String, Any]) = {
-    if (nodeMap.key("$id").isDefined) {
-      explicitNodeId(node, nodeMap, path, defaultId, mapping)
-    } else if (mapping.idTemplate.nonEmpty) {
-      templateNodeId(node, nodeMap, path, defaultId, mapping)
-    } else if (mapping.primaryKey().nonEmpty) {
-      primaryKeyNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
+  protected def generateNodeId(node: DialectDomainElement, nodeMap: YMap, path: String, defaultId: String, mapping: NodeMapping, additionalProperties: Map[String, Any], rootNode: Boolean): String = {
+    if (rootNode && ctx.dialect.documents().selfEncoded().option().getOrElse(false)) {
+      defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
     } else {
-      defaultId
+      if (nodeMap.key("$id").isDefined) {
+        explicitNodeId(node, nodeMap, path, defaultId, mapping)
+      } else if (mapping.idTemplate.nonEmpty) {
+        templateNodeId(node, nodeMap, path, defaultId, mapping)
+      } else if (mapping.primaryKey().nonEmpty) {
+        primaryKeyNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
+      } else {
+        defaultId
+      }
     }
   }
 

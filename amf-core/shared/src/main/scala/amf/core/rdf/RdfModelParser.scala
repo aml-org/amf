@@ -6,7 +6,7 @@ import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, SourceMapModel
 import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
-import amf.core.model.document.{BaseUnit, Document, SourceMap}
+import amf.core.model.document._
 import amf.core.model.domain
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
@@ -34,7 +34,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     graph = Some(model)
     graph.get.findNode(location) match {
       case Some(rootNode) =>
-        parse(rootNode) match {
+        parse(rootNode, findBaseUnit = true) match {
           case Some(unit: BaseUnit) => unit.set(BaseUnitModel.Location, location.split("#").head)
           case _ =>
             ctx.violation(location, s"Unable to parse RDF model for location root node: $location")
@@ -46,9 +46,9 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     }
   }
 
-  def parse(node: Node): Option[AmfObject] = {
+  def parse(node: Node, findBaseUnit: Boolean = false): Option[AmfObject] = {
     val id = node.subject
-    retrieveType(id, node) map { model =>
+    retrieveType(id, node, findBaseUnit) map { model =>
       val sources  = retrieveSources(id, node)
       val instance = buildType(model)(annotations(nodes, sources, id))
       instance.withId(id)
@@ -315,9 +315,10 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           val items = properties
           val values: Seq[AmfElement] = a.element match {
             case _: Obj =>
+              val shouldParseUnit = f.value.iri() == (Namespace.Document + "references").iri() // this is for self-encoded documents
               items.flatMap(n =>
                 findLink(n) match {
-                  case Some(n) => parse(n)
+                  case Some(n) => parse(n, shouldParseUnit)
                   case _       => None
               })
             case Str | Iri => items.map(n => strCoercion(n))
@@ -389,9 +390,20 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     }
   }
 
-  private def retrieveType(id: String, node: Node): Option[Obj] = {
+  private def isUnitModel(typeModel: Obj): Boolean = typeModel.isInstanceOf[DocumentModel] || typeModel.isInstanceOf[EncodesModel] || typeModel.isInstanceOf[DeclaresModel] || typeModel.isInstanceOf[BaseUnitModel]
+
+  private def retrieveType(id: String, node: Node, findBaseUnit: Boolean = false): Option[Obj] = {
     val stringTypes = ts(node, ctx, id)
-    stringTypes.find(findType(_).isDefined) match {
+    val foundType = stringTypes.find { t =>
+      val maybeFoundType = findType(t)
+      // this is just for self-encoding documents
+      maybeFoundType match {
+        case Some(typeModel) if !findBaseUnit && !isUnitModel(typeModel) => true
+        case Some(typeModel) if findBaseUnit && isUnitModel(typeModel)   => true
+        case _                                                           => false
+      }
+    }
+    foundType match {
       case Some(t) => findType(t)
       case None =>
         ctx.violation(id, s"Error parsing JSON-LD node, unknown @types $stringTypes", ctx.currentFile)
@@ -408,18 +420,19 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     }
   }
 
-  private val types: Map[String, Obj] = Map.empty ++ AMFDomainRegistry.metadataRegistry
+  private def types: Map[String, Obj] = Map.empty ++ AMFDomainRegistry.metadataRegistry
 
   private def findType(typeString: String): Option[Obj] = {
     types.get(typeString).orElse(AMFDomainRegistry.findType(typeString))
   }
 
+  val documentType: String     = (Namespace.Document + "Document").iri()
+  val fragmentType: String     = (Namespace.Document + "Fragment").iri()
+  val moduleType: String       = (Namespace.Document + "Module").iri()
+  val unitType: String         = (Namespace.Document + "Unit").iri()
+  val documentTypesSet = Set(documentType, fragmentType, moduleType, unitType)
+
   protected def ts(node: Node, ctx: ParserContext, id: String): Seq[String] = {
-    val documentType     = (Namespace.Document + "Document").iri()
-    val fragmentType     = (Namespace.Document + "Fragment").iri()
-    val moduleType       = (Namespace.Document + "Module").iri()
-    val unitType         = (Namespace.Document + "Unit").iri()
-    val documentTypesSet = Set(documentType, fragmentType, moduleType, unitType)
     val allTypes         = node.classes
     val nonDocumentTypes = allTypes.filter(t => !documentTypesSet.contains(t))
     val documentTypes    = allTypes.filter(t => documentTypesSet.contains(t)).sorted // we just use the fact that lexical order is correct
