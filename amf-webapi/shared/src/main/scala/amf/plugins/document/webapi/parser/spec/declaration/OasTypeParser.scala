@@ -38,7 +38,7 @@ class OAS30SchemaVersion(override val position: String) extends OASSchemaVersion
 object OAS30SchemaVersion { def apply(position: String) = new OAS20SchemaVersion(position) }
 object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3")
 object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4")
-object JSONSchemaUnspecifiedVersion extends JSONSchemaVersion("")
+object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
 
 /**
   * OpenAPI Type Parser.
@@ -226,6 +226,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         Some(parseScalarType(TypeDef.StrType, name, exclusiveProps, s => s.withId(union.id + "/string")))
       case "boolean" =>
         Some(parseScalarType(TypeDef.BoolType, name, exclusiveProps, s => s.withId(union.id + "/boolean")))
+      case "null" =>
+        Some(parseScalarType(TypeDef.NilType, name, exclusiveProps, s => s.withId(union.id + "/nil")))
       case "any"             => Some(parseAnyType(name, exclusiveProps, s => s.withId(union.id + "/any")))
       case _                 => None
     } collect { case Some(t) => t }
@@ -335,8 +337,14 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                             // case when in an OAS spec we point with a regular $ref to something that is external
                             // and holds a JSON schema
                             // we need to promote an external fragment to data type fragment
-                            val promotedShape = ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
-                            Some(promotedShape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name).withSupportsRecursion(true))
+                            val promotedShape =
+                              ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
+                            Some(
+                              promotedShape
+                                .link(text, Annotations(ast))
+                                .asInstanceOf[AnyShape]
+                                .withName(name)
+                                .withSupportsRecursion(true))
                           } else {
                             Some(jsonSchemaShape)
                           }
@@ -673,7 +681,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class NodeShapeParser(shape: NodeShape, map: YMap)(implicit val ctx: OasWebApiContext) extends AnyShapeParser() {
+  case class NodeShapeParser(shape: NodeShape, map: YMap)(implicit val ctx: OasWebApiContext)
+      extends AnyShapeParser() {
     override def parse(): NodeShape = {
 
       super.parse()
@@ -704,9 +713,11 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         .map { field =>
           field.value.tagType match {
             case YType.Seq if version == JSONSchemaDraft3SchemaVersion =>
-              ctx.violation(shape.id, "Required arrays of properties not supported in JSON Schema below version draft-4", field.value)
-              Map[String,YNode]()
-            case YType.Seq  =>
+              ctx.violation(shape.id,
+                            "Required arrays of properties not supported in JSON Schema below version draft-4",
+                            field.value)
+              Map[String, YNode]()
+            case YType.Seq =>
               field.value.as[YSequence].nodes.foldLeft(Map[String, YNode]()) {
                 case (acc, node) =>
                   acc.updated(node.as[String], node)
@@ -836,7 +847,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             entry => {
               if (entry.value.tagType == YType.Bool) {
                 if (version == JSONSchemaDraft4SchemaVersion) {
-                  ctx.violation(property.id,  "Required property boolean value is only supported in JSON Schema draft-3", entry)
+                  ctx.violation(property.id,
+                                "Required property boolean value is only supported in JSON Schema draft-3",
+                                entry)
                 }
                 val required = ScalarNode(entry.value).boolean().value.asInstanceOf[Boolean]
                 property.set(PropertyShapeModel.MinCount,

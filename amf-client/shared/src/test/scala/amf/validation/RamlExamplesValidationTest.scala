@@ -218,5 +218,10 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   test("Recursion with unresolve ref - validate recursion") {
     validate("/shapes/soho-prod/api.raml")
   }
+
+  test("Nullable example (null disjoint union)") {
+    validate("/examples/nullable-schema/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

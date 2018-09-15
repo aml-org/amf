@@ -1,0 +1,13 @@
+#%RAML 0.8
+---
+title: disjoint union
+
+schemas:
+  - theType: !include the_type.json
+
+/disjoint/union:
+  post:
+    body:
+      application/json:
+        schema: theType
+        example: !include the_example.json
