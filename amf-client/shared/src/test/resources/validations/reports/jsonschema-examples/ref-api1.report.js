@@ -5,7 +5,7 @@ Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: foo should NOT have additional properties
 foo should be boolean
 foo should match some schema in anyOf
@@ -16,7 +16,7 @@ foo should match some schema in anyOf
   Position: Some(LexicalInformation([(48,0)-(51,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api1.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: foo should be boolean
 foo should match some schema in anyOf
 foo.foo should be boolean

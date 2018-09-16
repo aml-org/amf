@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should have required property 'value1'
 should have required property 'value2'
 

@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: ['I_4'] should be integer
 ['S_0'] should be string
 

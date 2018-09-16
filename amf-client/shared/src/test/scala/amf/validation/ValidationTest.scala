@@ -267,6 +267,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("oas example error in shape becomes warning") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(validationsPath + "/production/oas_example1.yaml", platform, OasYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, Oas20Profile)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
   //test("pattern raml example test") { was duplicated by   test("Param in raml 0.8 api") {

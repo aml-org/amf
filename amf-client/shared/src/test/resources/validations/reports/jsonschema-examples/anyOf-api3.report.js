@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: bar should be integer
 foo should be string
 should match some schema in anyOf

@@ -5,7 +5,7 @@ Number of results: 4
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidInt1
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(11,19)-(11,20)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidInt2
@@ -21,7 +21,7 @@ Level: Violation
   Position: Some(LexicalInformation([(12,19)-(12,31)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidBoolean
@@ -29,7 +29,7 @@ Level: Violation
   Position: Some(LexicalInformation([(13,22)-(13,26)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidNumber

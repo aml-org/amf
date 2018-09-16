@@ -5,8 +5,8 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message:  should match pattern "^[a-z]*$"
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: should match pattern "^[a-z]*$"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-default.raml#/declarations/types/scalar/name/scalar_1
   Property: 

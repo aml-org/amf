@@ -139,7 +139,7 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
         level = SeverityLevels.VIOLATION,
         targetNode = payload.encodes.id,
         targetProperty = None,
-        validationId = (Namespace.AmfParser + "exampleError").iri(),
+        validationId = (Namespace.AmfParser + "example-validation-error").iri(),
         position = payload.encodes.position(),
         location = payload.encodes.location(),
         source = validationException

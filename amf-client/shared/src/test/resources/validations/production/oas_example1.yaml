@@ -1,0 +1,23 @@
+swagger: '2.0'
+info:
+  title: test
+  version: '1'
+  description: test
+
+
+paths:
+  /path:
+    get:
+      parameters:
+      - name: test
+        in: query
+        description: test
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+        enum:
+        - ProductionOrder
+      responses:
+        "200":
+          description: test
