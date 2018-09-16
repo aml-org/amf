@@ -120,7 +120,7 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
             level = SeverityLevels.VIOLATION,
             targetNode = vc.payload.encodes.id,
             targetProperty = None,
-            validationId = (Namespace.AmfParser + "exampleError").iri(),
+            validationId = (Namespace.AmfParser + "example-validation-error").iri(),
             position = vc.payload.encodes.position(),
             location = vc.payload.encodes.location(),
             source = e
@@ -132,7 +132,7 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
             level = SeverityLevels.VIOLATION,
             targetNode = vc.payload.encodes.id,
             targetProperty = None,
-            validationId = (Namespace.AmfParser + "exampleError").iri(),
+            validationId = (Namespace.AmfParser + "example-validation-error").iri(),
             position = vc.payload.encodes.position(),
             location = vc.payload.encodes.location(),
             source = e

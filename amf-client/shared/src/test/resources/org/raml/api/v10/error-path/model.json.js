@@ -5,7 +5,7 @@ Number of results: 6
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: [0][1] should be number
 [1][1] should be number
 
@@ -15,7 +15,7 @@ Level: Violation
   Position: Some(LexicalInformation([(6,13)-(6,39)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: family[1] should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/badExample
@@ -23,7 +23,7 @@ Level: Violation
   Position: Some(LexicalInformation([(26,0)-(31,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should have required property 'age'
 should have required property 'family'
 
@@ -33,7 +33,7 @@ should have required property 'family'
   Position: Some(LexicalInformation([(32,0)-(33,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: age should be integer
 name should be string
 
@@ -43,7 +43,7 @@ name should be string
   Position: Some(LexicalInformation([(34,0)-(39,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: users[1].family[1] should be string
 users[1].family[2] should be string
 users[2].age should be integer
@@ -54,7 +54,7 @@ users[2].age should be integer
   Position: Some(LexicalInformation([(51,0)-(72,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: authors[1] should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/two

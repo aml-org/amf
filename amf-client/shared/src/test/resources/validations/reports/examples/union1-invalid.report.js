@@ -5,10 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message:  should be integer
- should be null
- should match some schema in anyOf
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: should be integer
+should be null
+should match some schema in anyOf
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/union1-invalid.raml#/web-api/end-points/%2Ftest/get/request/parameter/date/union/schema/example/default-example

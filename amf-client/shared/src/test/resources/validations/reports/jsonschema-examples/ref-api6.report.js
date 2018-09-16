@@ -5,7 +5,7 @@ Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: nodes[0].subtree.nodes[0] should have required property 'meta'
 nodes[0].subtree.nodes[0] should have required property 'nodes'
 nodes[0].subtree.nodes[1] should have required property 'meta'
@@ -21,7 +21,7 @@ nodes[1].subtree.nodes[1] should have required property 'nodes'
   Position: Some(LexicalInformation([(38,0)-(53,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api6.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: nodes[0].subtree.nodes[0] should have required property 'meta'
 nodes[0].subtree.nodes[0] should have required property 'nodes'
 nodes[0].subtree.nodes[1] should have required property 'meta'

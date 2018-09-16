@@ -5,7 +5,7 @@ Number of results: 4
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: b should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/A/example/default-example
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(13,0)-(16,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/scalar/D/example/default-example
@@ -21,7 +21,7 @@ Level: Violation
   Position: Some(LexicalInformation([(33,13)-(33,17)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should have required property 'g'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example

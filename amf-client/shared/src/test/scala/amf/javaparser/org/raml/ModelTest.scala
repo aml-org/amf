@@ -32,7 +32,7 @@ trait ModelValidationTest extends DirectoryTest {
       // we only need to use the platform if there are errors in examples, this is what causes differences due to
       // the different JSON-Schema libraries used in JS and the JVM
       val usePlatform = !report.conforms && report.results.exists(
-        _.validationId == (Namespace.AmfParser + "exampleError").iri())
+        _.validationId == (Namespace.AmfParser + "example-validation-error").iri())
       (output, usePlatform)
     }
   }
