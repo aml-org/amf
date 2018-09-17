@@ -1,0 +1,25 @@
+#%RAML 1.0 Library
+types:
+  A:
+    displayName: A
+    type: object
+    properties:
+      a:
+        required: false
+        displayName: a
+        description: a
+        type:
+        - string
+  B:
+    displayName: B
+    description: ''
+    type: object
+    properties:
+      FlexAccountRecord:
+        required: false
+        displayName: b
+        type:
+        - array
+        
+        items:
+          type: A
