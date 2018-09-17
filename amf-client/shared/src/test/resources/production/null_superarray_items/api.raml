@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: test
+
+uses: 
+  baseTypes: Types/baseTypes.raml
+
+/b:
+  post:
+    body:
+      application/json:
+        type: baseTypes.B
+    responses:
+      200:
+        body:
+          application/json:
+            type: baseTypes.B

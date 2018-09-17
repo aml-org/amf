@@ -240,14 +240,17 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   protected def computeMinArray(baseArray: ArrayShape, superArray: ArrayShape): Shape = {
-    val superItems      = superArray.items
-    val baseItemsOption = Option(baseArray.items)
+    val superItemsOption = Option(superArray.items)
+    val baseItemsOption  = Option(baseArray.items)
 
     val newItems = baseItemsOption
       .map { baseItems =>
-        context.minShape(baseItems, superItems)
+        superItemsOption match {
+          case Some(superItems) => context.minShape(baseItems, superItems)
+          case _                => baseItems
+        }
       }
-      .orElse(Option(superItems))
+      .orElse(superItemsOption)
     newItems.foreach { ni =>
       baseArray.withItems(ni)
     }
