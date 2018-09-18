@@ -289,6 +289,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("0.8 'id' identifiers in JSON Schema shapes test") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "/id_json_schema_locations.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, RamlProfile)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 2)
+    }
+  }
+
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
   //test("pattern raml example test") { was duplicated by   test("Param in raml 0.8 api") {

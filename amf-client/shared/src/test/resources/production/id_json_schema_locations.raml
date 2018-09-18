@@ -1,0 +1,1864 @@
+#%RAML 0.8
+title: Test API
+version: "1.0.0"
+baseUri: "https://test.com/life"
+traits: 
+    - 
+        trat1:
+            displayName: trait1
+/policies: 
+    is: [trait1]
+    get: 
+        headers: 
+            Authorization: 
+                type: string
+                required: false
+                repeat: false
+        queryParameters: 
+            statusView: 
+                type: string
+                required: false
+                repeat: false
+                enum: [pending]
+                default: pending
+                example: pending
+            producerName: 
+                type: string
+                required: false
+                repeat: false
+            producerWithRoleCode: 
+                type: string
+                required: false
+                repeat: false
+            producerId: 
+                type: string
+                required: false
+                repeat: false
+            policyNumber: 
+                type: integer
+                required: false
+                repeat: false
+            hierarchy: 
+                type: string
+                required: false
+                repeat: false
+                enum: [self]
+                default: self
+                example: self
+            fields: 
+                type: string
+                required: false
+                repeat: false
+                example: product,caseManager
+            client_id: 
+                type: string
+                required: true
+                repeat: false
+            client_secret: 
+                type: string
+                required: true
+                repeat: false
+        responses: 
+            "200": 
+                body: 
+                    application/json: 
+                        schema: |
+                            {
+                               "type":"object",
+                               "id":"urn:jsonschema:com:company:onesource:model:policy:Policy",
+                               "properties":{
+                                  "carrierName":{
+                                     "type":"string"
+                                  },
+                                  "policyStatus":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:Status",
+                                     "properties":{
+                                        "workflowStatus":{
+                                           "type":"string"
+                                        },
+                                        "status":{
+                                           "type":"string"
+                                        },
+                                        "statusDetail":{
+                                           "type":"string"
+                                        },
+                                        "description":{
+                                           "type":"string"
+                                        },
+                                        "date":{
+                                           "type":"string",
+                            			   "format":"date-time"
+                                        }
+                                     }
+                                  },
+                                  "carrierCode":{
+                                     "type":"string"
+                                  },
+                                  "issueAge":{
+                                     "type":"string"
+                                  },
+                                  "customerRoleContacts":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:CustomerRoleContact",
+                                        "properties":{
+                                           "post":{
+                                              "type":"object",
+                                              "$ref":"urn:jsonschema:com:company:onesource:model:Address"
+                                           },
+                                           "phoneNumber":{
+                                              "type":"object",
+                                              "$ref":"urn:jsonschema:com:company:onesource:model:Phone"
+                                           },
+                                           "type":{
+                                              "type":"string"
+                                           },
+                                           "email":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "coverage":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"array",
+                                        "items":{
+                                           "type":"object",
+                                           "id":"urn:jsonschema:com:company:onesource:model:policy:CoverageDetail",
+                                           "properties":{
+                                              "faceAmount":{
+                                                 "type":"string"
+                                              },
+                                              "annualPremium":{
+                                                 "type":"string"
+                                              },
+                                              "customerId":{
+                                                 "type":"integer"
+                                              },
+                                              "monthlyBenefit":{
+                                                 "type":"string"
+                                              },
+                                              "name":{
+                                                 "type":"string"
+                                              }
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "writingAgents":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:producer:ProducerRole",
+                                        "properties":{
+                                           "contact":{
+                                              "type":"object",
+                                              "id":"urn:jsonschema:com:company:onesource:model:Contact",
+                                              "properties":{
+                                                 "post":{
+                                                    "type":"object",
+                                                    "id":"urn:jsonschema:com:company:onesource:model:Address",
+                                                    "properties":{
+                                                       "stateProvince":{
+                                                          "type":"string"
+                                                       },
+                                                       "country":{
+                                                          "type":"string"
+                                                       },
+                                                       "postalCode":{
+                                                          "type":"string"
+                                                       },
+                                                       "city":{
+                                                          "type":"string"
+                                                       },
+                                                       "lines":{
+                                                          "type":"array",
+                                                          "items":{
+                                                             "type":"string"
+                                                          }
+                                                       }
+                                                    }
+                                                 },
+                                                 "phoneNumber":{
+                                                    "type":"object",
+                                                    "id":"urn:jsonschema:com:company:onesource:model:Phone",
+                                                    "properties":{
+                                                       "work":{
+                                                          "type":"string"
+                                                       },
+                                                       "cell":{
+                                                          "type":"string"
+                                                       },
+                                                       "fax":{
+                                                          "type":"string"
+                                                       },
+                                                       "home":{
+                                                          "type":"string"
+                                                       }
+                                                    }
+                                                 },
+                                                 "type":{
+                                                    "type":"string"
+                                                 },
+                                                 "email":{
+                                                    "type":"string"
+                                                 }
+                                              }
+                                           },
+                                           "roleCode":{
+                                              "type":"string"
+                                           },
+                                           "carrierCode":{
+                                              "type":"string"
+                                           },
+                                           "fullName":{
+                                              "type":"string"
+                                           },
+                                           "id":{
+                                              "type":"integer"
+                                           },
+                                           "statusCode":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "caseId":{
+                                     "type":"string"
+                                  },
+                                  "billingPayment":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:BillingPayment",
+                                     "properties":{
+                                        "consolidatedPlan":{
+                                           "type":"boolean"
+                                        },
+                                        "incomeDate":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "settlementIncomeOption":{
+                                           "type":"string"
+                                        },
+                                        "cashWithApplication":{
+                                           "type":"string"
+                                        },
+                                        "modalPremium":{
+                                           "type":"string"
+                                        },
+                                        "billingMethod":{
+                                           "type":"string"
+                                        },
+                                        "billingMode":{
+                                           "type":"string"
+                                        }
+                                     }
+                                  },
+                                  "policyId":{
+                                     "type":"integer"
+                                  },
+                                  "ratingInformation":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:RatingInformation",
+                                        "properties":{
+                                           "tobaccoUse":{
+                                              "type":"boolean"
+                                           },
+                                           "coverageDescription":{
+                                              "type":"string"
+                                           },
+                                           "riskClass":{
+                                              "type":"string"
+                                           },
+                                           "customerId":{
+                                              "type":"integer"
+                                           },
+                                           "coverages":{
+                                              "type":"array",
+                                              "items":{
+                                                 "type":"object",
+                                                 "id":"urn:jsonschema:com:company:onesource:model:policy:Rating",
+                                                 "properties":{
+                                                    "duration":{
+                                                       "type":"string"
+                                                    },
+                                                    "coverageDescription":{
+                                                       "type":"string"
+                                                    },
+                                                    "flatExtra":{
+                                                       "type":"string"
+                                                    },
+                                                    "ratingType":{
+                                                       "type":"string"
+                                                    },
+                                                    "tableName":{
+                                                       "type":"string"
+                                                    }
+                                                 }
+                                              }
+                                           },
+                                           "ratedAge":{
+                                              "type":"string"
+                                           },
+                                           "morbidityTable":{
+                                              "type":"string"
+                                           },
+                                           "mortalityTable":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "product":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:Product",
+                                     "properties":{
+                                        "underwritingRequired":{
+                                           "type":"boolean"
+                                        },
+                                        "productTypeCode":{
+                                           "type":"string"
+                                        },
+                                        "productTypeCategory":{
+                                           "type":"string"
+                                        },
+                                        "productName":{
+                                           "type":"string"
+                                        },
+                                        "productCode":{
+                                           "type":"string"
+                                        },
+                                        "productCategory":{
+                                           "type":"string"
+                                        }
+                                     }
+                                  },
+                                  "requirements":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"array",
+                                        "items":{
+                                           "type":"object",
+                                           "id":"urn:jsonschema:com:company:onesource:model:policy:Requirement",
+                                           "properties":{
+                                              "status":{
+                                                 "type":"string"
+                                              },
+                                              "comments":{
+                                                 "type":"string"
+                                              },
+                                              "neededToPay":{
+                                                 "type":"boolean"
+                                              },
+                                              "customerId":{
+                                                 "type":"integer"
+                                              },
+                                              "dateCreated":{
+                                                 "type":"string",
+                                                 "format":"date-time"
+                                              },
+                                              "requirementName":{
+                                                 "type":"string"
+                                              },
+                                              "dateReceived":{
+                                                 "type":"string",
+                                                 "format":"date-time"
+                                              }
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "application":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:Application",
+                                     "properties":{
+                                        "received":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "entered":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "issueState":{
+                                           "type":"string"
+                                        },
+                                        "policySent":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "readyToIssue":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "underWriter":{
+                                           "type":"string"
+                                        },
+                                        "paid":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "signed":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "uwDecision":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "illustrationUrl":{
+                                           "type":"string"
+                                        },
+                                        "applicationUrl":{
+                                           "type":"string"
+                                        }
+                                     }
+                                  },
+                                  "exchangeHistory":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:TransferHistory",
+                                        "properties":{
+                                           "otherCarrierPolicyNumber":{
+                                              "type":"string"
+                                           },
+                                           "otherCarrierName":{
+                                              "type":"string"
+                                           },
+                                           "comments":{
+                                              "type":"array",
+                                              "items":{
+                                                 "type":"object",
+                                                 "id":"urn:jsonschema:com:company:onesource:model:policy:Comment",
+                                                 "properties":{
+                                                    "date":{
+                                                       "type":"string",
+                                                       "format":"date-time"
+                                                    },
+                                                    "comment":{
+                                                       "type":"string"
+                                                    }
+                                                 }
+                                              }
+                                           },
+                                           "amountReceived":{
+                                              "type":"string"
+                                           },
+                                           "dateReceived":{
+                                              "type":"string",
+                                              "format":"date-time"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "servicingAgent":{
+                                     "type":"object",
+                                     "$ref":"urn:jsonschema:com:company:onesource:model:producer:ProducerRole"
+                                  },
+                                  "lastRefreshDate":{
+                                     "type":"string",
+                                     "format":"date-time"
+                                  },
+                                  "investmentAllocation":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:InvestmentAllocation",
+                                        "properties":{
+                                           "type":{
+                                              "type":"string"
+                                           },
+                                           "percentage":{
+                                              "type":"number"
+                                           },
+                                           "name":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "jointEqualAge":{
+                                     "type":"string"
+                                  },
+                                  "customers":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:Customer",
+                                        "properties":{
+                                           "taxIdType":{
+                                              "type":"string"
+                                           },
+                                           "gender":{
+                                              "type":"string"
+                                           },
+                                           "lastName":{
+                                              "type":"string"
+                                           },
+                                           "taxId":{
+                                              "type":"string"
+                                           },
+                                           "dateOfBirth":{
+                                              "type":"string",
+                                              "format":"date-time"
+                                           },
+                                           "fullName":{
+                                              "type":"string"
+                                           },
+                                           "firstName":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "relatedPolicies":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:RelatedPolicy",
+                                        "properties":{
+                                           "modalPremium":{
+                                              "type":"string"
+                                           },
+                                           "productName":{
+                                              "type":"string"
+                                           },
+                                           "policyNumber":{
+                                              "type":"string"
+                                           },
+                                           "billingMethod":{
+                                              "type":"string"
+                                           },
+                                           "policyId":{
+                                              "type":"integer"
+                                           },
+                                           "billingMode":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "policyNumber":{
+                                     "type":"string"
+                                  },
+                                  "caseManager":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:CaseManager",
+                                     "properties":{
+                                        "emailAddress":{
+                                           "type":"string"
+                                        },
+                                        "displayName":{
+                                           "type":"string"
+                                        }
+                                     }
+                                  },
+                                  "customerRoles":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"array",
+                                        "items":{
+                                           "type":"object",
+                                           "id":"urn:jsonschema:com:company:onesource:model:policy:CustomerRole",
+                                           "properties":{
+                                              "customerRoleContactId":{
+                                                 "type":"integer"
+                                              },
+                                              "customerId":{
+                                                 "type":"integer"
+                                              }
+                                           }
+                                        }
+                                     }
+                                  }
+                               }
+                            }
+                        example: |
+                            {
+                              "policyId": 8101777,
+                              "policyNumber": "0720591200",
+                              "caseId": "2016-06-09-14.52.30.142260",
+                              "carrierCode": "PML",
+                              "lastRefreshDate": "2016-07-21T10:00:11.000",
+                              "product": {
+                                "productTypeCode": "WL",
+                                "productTypeCategory": "Life",
+                                "productCode": "071WL",
+                                "productName": "Legacy",
+                                "productCategory": "Life",
+                                "underwritingRequired": true
+                              },
+                              "policyStatus": {
+                                "status": "Pending",
+                                "statusDetail": "Underwriting Approved",
+                                "workflowStatus": "Requirements Outstanding, Underwriting Complete",
+                                "date": "2016-08-08",
+                                "description": "Requirements Outstanding, Underwriting Complete"
+                              },
+                              "billingPayment": {
+                                "billingMethod": "Direct",
+                                "billingMode": "ANNUAL",
+                                "modalPremium": "USD 2375.70",
+                                "cashWithApplication": "USD 0.00",
+                                "consolidatedPlan": false
+                              },
+                              "caseManager": {
+                                "displayName": "RAVAGE",
+                                "emailAddress": "LifeNewBusiness@company.com"
+                              },
+                              "application": {
+                                "issueState": "NY",
+                                "underWriter": "BUGS BUNNY",
+                                "signed": "2016-06-09",
+                                "received": "2016-06-09",
+                                "entered": "2016-06-09",
+                                "uwDecision": "2016-06-21",
+                                "readyToIssue": "2016-06-29",
+                                "paid": "2016-06-29"
+                              },
+                              "writingAgents": [
+                                {
+                                  "id": 2032881,
+                                  "roleCode": "4641001",
+                                  "fullName": "WALT DISNEY"
+                                },
+                                {
+                                  "id": 2157289,
+                                  "roleCode": "47627",
+                                  "fullName": "UB IWERKS"
+                                }
+                              ],
+                              "servicingAgent": {
+                                "id": 2157289,
+                                "roleCode": "47627",
+                                "fullName": "UB IWERKS"
+                              },
+                              "customers": {
+                                "59701075": {
+                                  "fullName": "MINNIE M MOUSE",
+                                  "firstName": "MINNIE",
+                                  "lastName": "MOUSE",
+                                  "dateOfBirth": "1928-11-18",
+                                  "gender": "F",
+                                  "taxId": "***-**-1234",
+                                  "taxIdType": "SSN"
+                                },
+                                "59705037": {
+                                  "fullName": "DONALD D DUCK",
+                                  "firstName": "DONALD",
+                                  "lastName": "DUCK",
+                                  "dateOfBirth": "1934-06-09",
+                                  "gender": "M"
+                                }
+                              },
+                              "customerRoleContacts": {
+                                "13802511": {},
+                                "13807059": {
+                                  "post": {
+                                    "city": "ANYTOWN",
+                                    "stateProvince": "NY",
+                                    "postalCode": "12345",
+                                    "country": "UNITED STATES",
+                                    "lines": [
+                                      "123 MAIN ST"
+                                    ]
+                                  }
+                                },
+                                "13807060": {
+                                  "post": {
+                                    "city": "ANYTOWN",
+                                    "stateProvince": "NY",
+                                    "postalCode": "12345",
+                                    "country": "UNITED STATES",
+                                    "lines": [
+                                      "123 MAIN ST"
+                                    ]
+                                  }
+                                }
+                              },
+                              "issueAge": "P35Y",
+                              "ratingInformation": [
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Preferred",
+                                  "tobaccoUse": false
+                                },
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Not Assigned",
+                                  "tobaccoUse": false
+                                },
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Not Assigned",
+                                  "tobaccoUse": false
+                                },
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Not Assigned",
+                                  "tobaccoUse": false
+                                },
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Not Assigned",
+                                  "tobaccoUse": false
+                                }
+                              ],
+                              "customerRoles": {
+                                "Owner": [
+                                  {
+                                    "customerId": 59701075,
+                                    "customerRoleContactId": 13807059
+                                  }
+                                ],
+                                "Beneficiary": [
+                                  {
+                                    "customerId": 59705037,
+                                    "customerRoleContactId": 13802511
+                                  }
+                                ],
+                                "Insured": [
+                                  {
+                                    "customerId": 59701075,
+                                    "customerRoleContactId": 13807060
+                                  }
+                                ],
+                                "Payor": [
+                                  {
+                                    "customerId": 59701075,
+                                    "customerRoleContactId": 13807059
+                                  }
+                                ]
+                              },
+                              "requirements": {
+                                "received": [
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Application",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "I-20833 (ICC)"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Blood Profile",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-20",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Chronic Illness Disclosure Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "I-24811 (SIGN)"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Consumer Suitability Questionnaire Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "I-22733"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "HIPAA Authorization Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "10-15857"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "HIV Consent Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "7-18047 (TX)"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Motor Vehicle Report",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-15",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Paramedical",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-20",
+                                    "dateReceived": "2016-06-20",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Patriot Act Customer Identification Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "7-17078"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Physical Measurements",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-20",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Terminal Illness Disclosure Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "I-24811 (SIGN)"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Urine Specimen",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-20",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  }
+                                ],
+                                "neededForUnderwriting": [
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Additional Form Required To Mail Policy",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-15",
+                                    "dateReceived": null,
+                                    "neededToPay": false,
+                                    "comments": "Please provide unsigned illustration prior to issue due to BIR involvement."
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Advise Issue",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-29",
+                                    "dateReceived": null,
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Case Approved Preferred Non-Tobacco",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-20",
+                                    "dateReceived": null,
+                                    "neededToPay": false,
+                                    "comments": "chol/HDL ratio 4.2."
+                                  }
+                                ],
+                                "obtainAtDelivery": [
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Certificate Of Insurability",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-20",
+                                    "dateReceived": null,
+                                    "neededToPay": true,
+                                    "comments": "Will need to be completed/signed when premium's collected."
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Initial Premium",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-15",
+                                    "dateReceived": null,
+                                    "neededToPay": true,
+                                    "comments": "Collect on delivery."
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Signed Illustration",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": null,
+                                    "neededToPay": true,
+                                    "comments": "All pages needed"
+                                  }
+                                ]
+                              },
+                              "coverage": {
+                                "base": [
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Whole Life",
+                                    "faceAmount": "USD 200481.00",
+                                    "annualPremium": "USD 2375.70"
+                                  }
+                                ],
+                                "riders": [
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Blended Insurance Rider",
+                                    "faceAmount": "USD 150000.00",
+                                    "annualPremium": "USD 2375.70"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Chronic Illness Rider",
+                                    "faceAmount": "USD 0.00",
+                                    "annualPremium": "USD 2375.70"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Terminal Illness Rider",
+                                    "faceAmount": "USD 0.00",
+                                    "annualPremium": "USD 2375.70"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Accelerator Paid Up Additions Rdr",
+                                    "faceAmount": "USD 0.00",
+                                    "annualPremium": "USD 2375.70"
+                                  }
+                                ]
+                              }
+                            }
+            "400": 
+            "401": 
+            "404": 
+/policies/{policyNumber}: 
+    uriParameters: 
+        policyNumber: 
+            type: string
+            required: false
+            repeat: false
+            example: "12345"
+    is: [client-id-required]
+    get: 
+        headers: 
+            Authorization: 
+                type: string
+                required: false
+                repeat: false
+        queryParameters: 
+            fields: 
+                type: string
+                required: false
+                repeat: false
+                example: product,caseManager
+            client_id: 
+                type: string
+                required: true
+                repeat: false
+            client_secret: 
+                type: string
+                required: true
+                repeat: false
+        responses: 
+            "200": 
+                body: 
+                    application/json: 
+                        schema: |
+                            {
+                               "type":"object",
+                               "id":"urn:jsonschema:com:company:onesource:model:policy:Policy",
+                               "properties":{
+                                  "carrierName":{
+                                     "type":"string"
+                                  },
+                                  "policyStatus":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:Status",
+                                     "properties":{
+                                        "workflowStatus":{
+                                           "type":"string"
+                                        },
+                                        "status":{
+                                           "type":"string"
+                                        },
+                                        "statusDetail":{
+                                           "type":"string"
+                                        },
+                                        "description":{
+                                           "type":"string"
+                                        },
+                                        "date":{
+                                           "type":"string",
+                            			   "format":"date-time"
+                                        }
+                                     }
+                                  },
+                                  "carrierCode":{
+                                     "type":"string"
+                                  },
+                                  "issueAge":{
+                                     "type":"string"
+                                  },
+                                  "customerRoleContacts":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:CustomerRoleContact",
+                                        "properties":{
+                                           "post":{
+                                              "type":"object",
+                                              "$ref":"urn:jsonschema:com:company:onesource:model:Address"
+                                           },
+                                           "phoneNumber":{
+                                              "type":"object",
+                                              "$ref":"urn:jsonschema:com:company:onesource:model:Phone"
+                                           },
+                                           "type":{
+                                              "type":"string"
+                                           },
+                                           "email":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "coverage":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"array",
+                                        "items":{
+                                           "type":"object",
+                                           "id":"urn:jsonschema:com:company:onesource:model:policy:CoverageDetail",
+                                           "properties":{
+                                              "faceAmount":{
+                                                 "type":"string"
+                                              },
+                                              "annualPremium":{
+                                                 "type":"string"
+                                              },
+                                              "customerId":{
+                                                 "type":"integer"
+                                              },
+                                              "monthlyBenefit":{
+                                                 "type":"string"
+                                              },
+                                              "name":{
+                                                 "type":"string"
+                                              }
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "writingAgents":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:producer:ProducerRole",
+                                        "properties":{
+                                           "contact":{
+                                              "type":"object",
+                                              "id":"urn:jsonschema:com:company:onesource:model:Contact",
+                                              "properties":{
+                                                 "post":{
+                                                    "type":"object",
+                                                    "id":"urn:jsonschema:com:company:onesource:model:Address",
+                                                    "properties":{
+                                                       "stateProvince":{
+                                                          "type":"string"
+                                                       },
+                                                       "country":{
+                                                          "type":"string"
+                                                       },
+                                                       "postalCode":{
+                                                          "type":"string"
+                                                       },
+                                                       "city":{
+                                                          "type":"string"
+                                                       },
+                                                       "lines":{
+                                                          "type":"array",
+                                                          "items":{
+                                                             "type":"string"
+                                                          }
+                                                       }
+                                                    }
+                                                 },
+                                                 "phoneNumber":{
+                                                    "type":"object",
+                                                    "id":"urn:jsonschema:com:company:onesource:model:Phone",
+                                                    "properties":{
+                                                       "work":{
+                                                          "type":"string"
+                                                       },
+                                                       "cell":{
+                                                          "type":"string"
+                                                       },
+                                                       "fax":{
+                                                          "type":"string"
+                                                       },
+                                                       "home":{
+                                                          "type":"string"
+                                                       }
+                                                    }
+                                                 },
+                                                 "type":{
+                                                    "type":"string"
+                                                 },
+                                                 "email":{
+                                                    "type":"string"
+                                                 }
+                                              }
+                                           },
+                                           "roleCode":{
+                                              "type":"string"
+                                           },
+                                           "carrierCode":{
+                                              "type":"string"
+                                           },
+                                           "fullName":{
+                                              "type":"string"
+                                           },
+                                           "id":{
+                                              "type":"integer"
+                                           },
+                                           "statusCode":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "caseId":{
+                                     "type":"string"
+                                  },
+                                  "billingPayment":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:BillingPayment",
+                                     "properties":{
+                                        "consolidatedPlan":{
+                                           "type":"boolean"
+                                        },
+                                        "incomeDate":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "settlementIncomeOption":{
+                                           "type":"string"
+                                        },
+                                        "cashWithApplication":{
+                                           "type":"string"
+                                        },
+                                        "modalPremium":{
+                                           "type":"string"
+                                        },
+                                        "billingMethod":{
+                                           "type":"string"
+                                        },
+                                        "billingMode":{
+                                           "type":"string"
+                                        }
+                                     }
+                                  },
+                                  "policyId":{
+                                     "type":"integer"
+                                  },
+                                  "ratingInformation":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:RatingInformation",
+                                        "properties":{
+                                           "tobaccoUse":{
+                                              "type":"boolean"
+                                           },
+                                           "coverageDescription":{
+                                              "type":"string"
+                                           },
+                                           "riskClass":{
+                                              "type":"string"
+                                           },
+                                           "customerId":{
+                                              "type":"integer"
+                                           },
+                                           "coverages":{
+                                              "type":"array",
+                                              "items":{
+                                                 "type":"object",
+                                                 "id":"urn:jsonschema:com:company:onesource:model:policy:Rating",
+                                                 "properties":{
+                                                    "duration":{
+                                                       "type":"string"
+                                                    },
+                                                    "coverageDescription":{
+                                                       "type":"string"
+                                                    },
+                                                    "flatExtra":{
+                                                       "type":"string"
+                                                    },
+                                                    "ratingType":{
+                                                       "type":"string"
+                                                    },
+                                                    "tableName":{
+                                                       "type":"string"
+                                                    }
+                                                 }
+                                              }
+                                           },
+                                           "ratedAge":{
+                                              "type":"string"
+                                           },
+                                           "morbidityTable":{
+                                              "type":"string"
+                                           },
+                                           "mortalityTable":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "product":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:Product",
+                                     "properties":{
+                                        "underwritingRequired":{
+                                           "type":"boolean"
+                                        },
+                                        "productTypeCode":{
+                                           "type":"string"
+                                        },
+                                        "productTypeCategory":{
+                                           "type":"string"
+                                        },
+                                        "productName":{
+                                           "type":"string"
+                                        },
+                                        "productCode":{
+                                           "type":"string"
+                                        },
+                                        "productCategory":{
+                                           "type":"string"
+                                        }
+                                     }
+                                  },
+                                  "requirements":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"array",
+                                        "items":{
+                                           "type":"object",
+                                           "id":"urn:jsonschema:com:company:onesource:model:policy:Requirement",
+                                           "properties":{
+                                              "status":{
+                                                 "type":"string"
+                                              },
+                                              "comments":{
+                                                 "type":"string"
+                                              },
+                                              "neededToPay":{
+                                                 "type":"boolean"
+                                              },
+                                              "customerId":{
+                                                 "type":"integer"
+                                              },
+                                              "dateCreated":{
+                                                 "type":"string",
+                                                 "format":"date-time"
+                                              },
+                                              "requirementName":{
+                                                 "type":"string"
+                                              },
+                                              "dateReceived":{
+                                                 "type":"string",
+                                                 "format":"date-time"
+                                              }
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "application":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:Application",
+                                     "properties":{
+                                        "received":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "entered":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "issueState":{
+                                           "type":"string"
+                                        },
+                                        "policySent":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "readyToIssue":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "underWriter":{
+                                           "type":"string"
+                                        },
+                                        "paid":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "signed":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "uwDecision":{
+                                           "type":"string",
+                                           "format":"date-time"
+                                        },
+                                        "illustrationUrl":{
+                                           "type":"string"
+                                        },
+                                        "applicationUrl":{
+                                           "type":"string"
+                                        }
+                                     }
+                                  },
+                                  "exchangeHistory":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:TransferHistory",
+                                        "properties":{
+                                           "otherCarrierPolicyNumber":{
+                                              "type":"string"
+                                           },
+                                           "otherCarrierName":{
+                                              "type":"string"
+                                           },
+                                           "comments":{
+                                              "type":"array",
+                                              "items":{
+                                                 "type":"object",
+                                                 "id":"urn:jsonschema:com:company:onesource:model:policy:Comment",
+                                                 "properties":{
+                                                    "date":{
+                                                       "type":"string",
+                                                       "format":"date-time"
+                                                    },
+                                                    "comment":{
+                                                       "type":"string"
+                                                    }
+                                                 }
+                                              }
+                                           },
+                                           "amountReceived":{
+                                              "type":"string"
+                                           },
+                                           "dateReceived":{
+                                              "type":"string",
+                                              "format":"date-time"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "servicingAgent":{
+                                     "type":"object",
+                                     "$ref":"urn:jsonschema:com:company:onesource:model:producer:ProducerRole"
+                                  },
+                                  "lastRefreshDate":{
+                                     "type":"string",
+                                     "format":"date-time"
+                                  },
+                                  "investmentAllocation":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:InvestmentAllocation",
+                                        "properties":{
+                                           "type":{
+                                              "type":"string"
+                                           },
+                                           "percentage":{
+                                              "type":"number"
+                                           },
+                                           "name":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "jointEqualAge":{
+                                     "type":"string"
+                                  },
+                                  "customers":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:Customer",
+                                        "properties":{
+                                           "taxIdType":{
+                                              "type":"string"
+                                           },
+                                           "gender":{
+                                              "type":"string"
+                                           },
+                                           "lastName":{
+                                              "type":"string"
+                                           },
+                                           "taxId":{
+                                              "type":"string"
+                                           },
+                                           "dateOfBirth":{
+                                              "type":"string",
+                                              "format":"date-time"
+                                           },
+                                           "fullName":{
+                                              "type":"string"
+                                           },
+                                           "firstName":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "relatedPolicies":{
+                                     "type":"array",
+                                     "items":{
+                                        "type":"object",
+                                        "id":"urn:jsonschema:com:company:onesource:model:policy:RelatedPolicy",
+                                        "properties":{
+                                           "modalPremium":{
+                                              "type":"string"
+                                           },
+                                           "productName":{
+                                              "type":"string"
+                                           },
+                                           "policyNumber":{
+                                              "type":"string"
+                                           },
+                                           "billingMethod":{
+                                              "type":"string"
+                                           },
+                                           "policyId":{
+                                              "type":"integer"
+                                           },
+                                           "billingMode":{
+                                              "type":"string"
+                                           }
+                                        }
+                                     }
+                                  },
+                                  "policyNumber":{
+                                     "type":"string"
+                                  },
+                                  "caseManager":{
+                                     "type":"object",
+                                     "id":"urn:jsonschema:com:company:onesource:model:policy:CaseManager",
+                                     "properties":{
+                                        "emailAddress":{
+                                           "type":"string"
+                                        },
+                                        "displayName":{
+                                           "type":"string"
+                                        }
+                                     }
+                                  },
+                                  "customerRoles":{
+                                     "type":"object",
+                                     "additionalProperties":{
+                                        "type":"array",
+                                        "items":{
+                                           "type":"object",
+                                           "id":"urn:jsonschema:com:company:onesource:model:policy:CustomerRole",
+                                           "properties":{
+                                              "customerRoleContactId":{
+                                                 "type":"integer"
+                                              },
+                                              "customerId":{
+                                                 "type":"integer"
+                                              }
+                                           }
+                                        }
+                                     }
+                                  }
+                               }
+                            }
+                        example: |
+                            {
+                              "policyId": 8101777,
+                              "policyNumber": "0720591200",
+                              "caseId": "2016-06-09-14.52.30.142260",
+                              "carrierCode": "PML",
+                              "lastRefreshDate": "2016-07-21T10:00:11.000",
+                              "product": {
+                                "productTypeCode": "WL",
+                                "productTypeCategory": "Life",
+                                "productCode": "071WL",
+                                "productName": "Legacy",
+                                "productCategory": "Life",
+                                "underwritingRequired": true
+                              },
+                              "policyStatus": {
+                                "status": "Pending",
+                                "statusDetail": "Underwriting Approved",
+                                "workflowStatus": "Requirements Outstanding, Underwriting Complete",
+                                "date": "2016-08-08",
+                                "description": "Requirements Outstanding, Underwriting Complete"
+                              },
+                              "billingPayment": {
+                                "billingMethod": "Direct",
+                                "billingMode": "ANNUAL",
+                                "modalPremium": "USD 2375.70",
+                                "cashWithApplication": "USD 0.00",
+                                "consolidatedPlan": false
+                              },
+                              "caseManager": {
+                                "displayName": "RAVAGE",
+                                "emailAddress": "LifeNewBusiness@company.com"
+                              },
+                              "application": {
+                                "issueState": "NY",
+                                "underWriter": "BUGS BUNNY",
+                                "signed": "2016-06-09",
+                                "received": "2016-06-09",
+                                "entered": "2016-06-09",
+                                "uwDecision": "2016-06-21",
+                                "readyToIssue": "2016-06-29",
+                                "paid": "2016-06-29"
+                              },
+                              "writingAgents": [
+                                {
+                                  "id": 2032881,
+                                  "roleCode": "4641001",
+                                  "fullName": "WALT DISNEY"
+                                },
+                                {
+                                  "id": 2157289,
+                                  "roleCode": "47627",
+                                  "fullName": "UB IWERKS"
+                                }
+                              ],
+                              "servicingAgent": {
+                                "id": 2157289,
+                                "roleCode": "47627",
+                                "fullName": "UB IWERKS"
+                              },
+                              "customers": {
+                                "59701075": {
+                                  "fullName": "MINNIE M MOUSE",
+                                  "firstName": "MINNIE",
+                                  "lastName": "MOUSE",
+                                  "dateOfBirth": "1928-11-18",
+                                  "gender": "F",
+                                  "taxId": "***-**-1234",
+                                  "taxIdType": "SSN"
+                                },
+                                "59705037": {
+                                  "fullName": "DONALD D DUCK",
+                                  "firstName": "DONALD",
+                                  "lastName": "DUCK",
+                                  "dateOfBirth": "1934-06-09",
+                                  "gender": "M"
+                                }
+                              },
+                              "customerRoleContacts": {
+                                "13802511": {},
+                                "13807059": {
+                                  "post": {
+                                    "city": "ANYTOWN",
+                                    "stateProvince": "NY",
+                                    "postalCode": "12345",
+                                    "country": "UNITED STATES",
+                                    "lines": [
+                                      "123 MAIN ST"
+                                    ]
+                                  }
+                                },
+                                "13807060": {
+                                  "post": {
+                                    "city": "ANYTOWN",
+                                    "stateProvince": "NY",
+                                    "postalCode": "12345",
+                                    "country": "UNITED STATES",
+                                    "lines": [
+                                      "123 MAIN ST"
+                                    ]
+                                  }
+                                }
+                              },
+                              "issueAge": "P35Y",
+                              "ratingInformation": [
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Preferred",
+                                  "tobaccoUse": false
+                                },
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Not Assigned",
+                                  "tobaccoUse": false
+                                },
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Not Assigned",
+                                  "tobaccoUse": false
+                                },
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Not Assigned",
+                                  "tobaccoUse": false
+                                },
+                                {
+                                  "customerId": 59701075,
+                                  "riskClass": "Not Assigned",
+                                  "tobaccoUse": false
+                                }
+                              ],
+                              "customerRoles": {
+                                "Owner": [
+                                  {
+                                    "customerId": 59701075,
+                                    "customerRoleContactId": 13807059
+                                  }
+                                ],
+                                "Beneficiary": [
+                                  {
+                                    "customerId": 59705037,
+                                    "customerRoleContactId": 13802511
+                                  }
+                                ],
+                                "Insured": [
+                                  {
+                                    "customerId": 59701075,
+                                    "customerRoleContactId": 13807060
+                                  }
+                                ],
+                                "Payor": [
+                                  {
+                                    "customerId": 59701075,
+                                    "customerRoleContactId": 13807059
+                                  }
+                                ]
+                              },
+                              "requirements": {
+                                "received": [
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Application",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "I-20833 (ICC)"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Blood Profile",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-20",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Chronic Illness Disclosure Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "I-24811 (SIGN)"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Consumer Suitability Questionnaire Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "I-22733"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "HIPAA Authorization Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "10-15857"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "HIV Consent Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "7-18047 (TX)"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Motor Vehicle Report",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-15",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Paramedical",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-20",
+                                    "dateReceived": "2016-06-20",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Patriot Act Customer Identification Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "7-17078"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Physical Measurements",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-20",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Terminal Illness Disclosure Form",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-09",
+                                    "neededToPay": false,
+                                    "comments": "I-24811 (SIGN)"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Urine Specimen",
+                                    "status": "Complete",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": "2016-06-20",
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  }
+                                ],
+                                "neededForUnderwriting": [
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Additional Form Required To Mail Policy",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-15",
+                                    "dateReceived": null,
+                                    "neededToPay": false,
+                                    "comments": "Please provide unsigned illustration prior to issue due to BIR involvement."
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Advise Issue",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-29",
+                                    "dateReceived": null,
+                                    "neededToPay": false,
+                                    "comments": ""
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Case Approved Preferred Non-Tobacco",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-20",
+                                    "dateReceived": null,
+                                    "neededToPay": false,
+                                    "comments": "chol/HDL ratio 4.2."
+                                  }
+                                ],
+                                "obtainAtDelivery": [
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Certificate Of Insurability",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-20",
+                                    "dateReceived": null,
+                                    "neededToPay": true,
+                                    "comments": "Will need to be completed/signed when premium's collected."
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Initial Premium",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-15",
+                                    "dateReceived": null,
+                                    "neededToPay": true,
+                                    "comments": "Collect on delivery."
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "requirementName": "Signed Illustration",
+                                    "status": "Pending",
+                                    "dateCreated": "2016-06-09",
+                                    "dateReceived": null,
+                                    "neededToPay": true,
+                                    "comments": "All pages needed"
+                                  }
+                                ]
+                              },
+                              "coverage": {
+                                "base": [
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Whole Life",
+                                    "faceAmount": "USD 200481.00",
+                                    "annualPremium": "USD 2375.70"
+                                  }
+                                ],
+                                "riders": [
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Blended Insurance Rider",
+                                    "faceAmount": "USD 150000.00",
+                                    "annualPremium": "USD 2375.70"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Chronic Illness Rider",
+                                    "faceAmount": "USD 0.00",
+                                    "annualPremium": "USD 2375.70"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Terminal Illness Rider",
+                                    "faceAmount": "USD 0.00",
+                                    "annualPremium": "USD 2375.70"
+                                  },
+                                  {
+                                    "customerId": 59701075,
+                                    "name": "Accelerator Paid Up Additions Rdr",
+                                    "faceAmount": "USD 0.00",
+                                    "annualPremium": "USD 2375.70"
+                                  }
+                                ]
+                              }
+                            }
+            "400": 
+            "401": 
+            "404": 
