@@ -117,9 +117,10 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
                 println(s"  ====> RESULT: false")
                 println(validationException.getAllMessages)
                 println("-----------------------\n\n")
-             */
-
+            */
             iterateValidations(validationException, payload)
+          case exception: Error =>
+            reportValidationException(exception, payload)
         }
 
       case _ => Nil // schema is not a JSON object
@@ -146,6 +147,19 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
       )
     }
     resultsAcc
+  }
+
+  def reportValidationException(exception: Throwable, payload: PayloadFragment): Seq[AMFValidationResult] = {
+    Seq(AMFValidationResult(
+      message = s"Internal error during validation ${exception.getMessage}",
+      level = SeverityLevels.VIOLATION,
+      targetNode = payload.encodes.id,
+      targetProperty = None,
+      validationId = (Namespace.AmfParser + "example-validation-error").iri(),
+      position = payload.encodes.position(),
+      location = payload.encodes.location(),
+      source = exception
+    ))
   }
 
   private def makeValidationMessage(validationException: ValidationException): String = {

@@ -1,0 +1,39 @@
+#%RAML 1.0 Library
+resourceTypes:
+  RT:
+    description: |
+      The <<resourcePathName | !singularize>> resource.
+    get:
+      description: |
+        Returns the <<resourcePathName | !singularize>> resource specified
+        by its *identifier*.
+      responses:
+        200:
+          description: |
+            The request has succeeded. The information returned with the
+            response is dependent on the method used in the request.
+          body:
+            application/schema+json:
+              schema: !include http://json-schema.org/draft-04/schema#
+              example: |
+                {
+                    "$schema" : "http://json-schema.org/draft-04/schema",
+                    "type" : "object",
+                    "properties" : {
+                      "fields1": {
+                        "type": "string"
+                      },
+                      "field2": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer",
+                          "minimum": 0
+                        }
+                      },
+                      "field3": {
+                        "type": "string",
+                        "format": "date"
+                      }
+                    },
+                    "required": ["field1", "field2", "field3"]
+                  }

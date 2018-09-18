@@ -16,10 +16,11 @@ object JsJsonSchemaValidator extends PlatformJsonSchemaValidator {
   override protected def processCandidate(dataNode: js.Dynamic,
                                           jsonSchema: String,
                                           payload: PayloadFragment): Seq[AMFValidationResult] = {
-    var schemaNode = loadJson(jsonSchema).asInstanceOf[js.Dictionary[js.Dynamic]]
-    schemaNode -= "x-amf-fragmentType"
-    schemaNode -= "example"
-    schemaNode -= "examples"
+    try {
+      var schemaNode = loadJson(jsonSchema).asInstanceOf[js.Dictionary[js.Dynamic]]
+      schemaNode -= "x-amf-fragmentType"
+      schemaNode -= "example"
+      schemaNode -= "examples"
 
     /*
         println("\n\nValidating...")
@@ -29,29 +30,44 @@ object JsJsonSchemaValidator extends PlatformJsonSchemaValidator {
         println(js.JSON.stringify(dataNode))
      */
 
-    val correct = validator.validate(schemaNode.asInstanceOf[js.Object], dataNode)
 
-    /*
+      val correct = validator.validate(schemaNode.asInstanceOf[js.Object], dataNode)
+
+      /*
         println(s"  ====> RESULT: $correct")
         println(js.JSON.stringify(validator.errors))
         println("-----------------------\n\n")
      */
 
-    if (!correct) {
-      validator.errors.toOption.getOrElse(js.Array[ValidationResult]()).map { result =>
-        AMFValidationResult(
-          message = makeValidationMessage(result),
-          level = SeverityLevels.VIOLATION,
-          targetNode = payload.encodes.id,
-          targetProperty = None,
-          validationId = (Namespace.AmfParser + "example-validation-error").iri(),
-          position = payload.encodes.position(),
-          location = payload.encodes.location(),
-          source = result
-        )
+      if (!correct) {
+        validator.errors.toOption.getOrElse(js.Array[ValidationResult]()).map { result =>
+          AMFValidationResult(
+            message = makeValidationMessage(result),
+            level = SeverityLevels.VIOLATION,
+            targetNode = payload.encodes.id,
+            targetProperty = None,
+            validationId = (Namespace.AmfParser + "example-validation-error").iri(),
+            position = payload.encodes.position(),
+            location = payload.encodes.location(),
+            source = result
+          )
+        }
+      } else {
+        Nil
       }
-    } else {
-      Nil
+    } catch {
+      case e: scala.scalajs.js.JavaScriptException =>
+        Seq(
+          AMFValidationResult(
+            message = s"Internal error during validation ${e.getMessage}",
+            level = SeverityLevels.VIOLATION,
+            targetNode = payload.encodes.id,
+            targetProperty = None,
+            validationId = (Namespace.AmfParser + "example-validation-error").iri(),
+            position = payload.encodes.position(),
+            location = payload.encodes.location(),
+            source = e
+          ))
     }
   }
 
