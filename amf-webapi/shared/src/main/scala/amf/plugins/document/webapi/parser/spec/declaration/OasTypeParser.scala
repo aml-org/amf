@@ -370,16 +370,21 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       SchemaShapeParser(shape, map).parse()
     } else {
       val shape = NodeShape(ast).withName(name)
-      checkJsonIdentity(shape, map, adopt)
+      checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
       NodeShapeParser(shape, map).parse()
     }
   }
 
-  private def checkJsonIdentity(shape: AnyShape, map: YMap, adopt: Shape => Unit): Unit = {
-    if (!isOas && !isOas3) {
-      map.map.get("id") foreach { _.asOption[String].foreach { ctx.registerJsonSchema(_, shape) } }
-    }
+  private def checkJsonIdentity(shape: AnyShape, map: YMap, adopt: Shape => Unit, futureDeclarations: FutureDeclarations): Unit = {
     adopt(shape)
+    if (!isOas && !isOas3) {
+      map.map.get("id") foreach { f =>
+        f.asOption[String].foreach { id =>
+          futureDeclarations.resolveRef(id, shape)
+          ctx.registerJsonSchema(id, shape)
+        }
+      }
+    }
   }
 
   private def parseUnionType(): UnionShape = {
@@ -622,7 +627,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends AnyShapeParser() {
     override def parse(): AnyShape = {
-      checkJsonIdentity(shape, map, adopt)
+      checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
       super.parse()
 
       map.key("minItems", ArrayShapeModel.MinItems in shape)

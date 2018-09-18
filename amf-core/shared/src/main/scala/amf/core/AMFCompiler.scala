@@ -6,9 +6,9 @@ import amf.client.remote.Content
 import amf.core
 import amf.core.benchmark.ExecutionLog
 import amf.core.exception.{CyclicReferenceException, UnsupportedVendorException}
-import amf.core.model.document.{BaseUnit, ExternalFragment, RecursiveUnit}
+import amf.core.model.document.{BaseUnit, Document, ExternalFragment, RecursiveUnit}
 import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, UnspecifiedReference}
+import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, ReferenceResolutionResult, UnspecifiedReference}
 import amf.client.plugins.AMFDocumentPlugin
 import amf.core.client.ParsingOptions
 import amf.core.registries.AMFPluginsRegistry
@@ -206,54 +206,36 @@ class AMFCompiler(val rawUrl: String,
     }
   }
 
-  def resolveRecursiveUnit(fulllUrl: String): Future[RecursiveUnit] = {
-    ExecutionLog.log(s"AMFCompiler#parserReferences: Recursive reference $fulllUrl for $rawUrl")
-    remote.resolve(fulllUrl, env) map { content =>
-      val recUnit = RecursiveUnit().withId(fulllUrl).withLocation(fulllUrl)
-      recUnit.withRaw(content.stream.toString)
-      recUnit
-    }
-  }
-
   private def parseReferences(root: Root, domainPlugin: AMFDocumentPlugin): Future[Root] = {
     val handler = domainPlugin.referenceHandler()
     val refs    = handler.collect(root.parsed, ctx)
     ExecutionLog.log(s"AMFCompiler#parseReferences: ${refs.toReferences.size} references found in $rawUrl")
-    val units = refs.toReferences
+    val parsed: Seq[Future[Option[ParsedReference]]] = refs.toReferences
       .filter(_.isRemote)
       .map(link => {
-        link
-          .resolve(context, None, cache, ctx, env, link.refs.map(_.node))
-          .recover {
-            case e: CyclicReferenceException if domainPlugin.allowRecursiveReferences =>
-              val fulllUrl = e.history.last
-              resolveRecursiveUnit(fulllUrl)
-          }
-          .flatMap(u => {
-            val f = u match {
-              case fu: Future[_] => fu.mapTo[BaseUnit]
-              case bu: BaseUnit  => Future.successful(bu)
-            }
-            f.flatMap { u =>
-              val reference = ParsedReference(u, link)
-              handler.update(reference, ctx, context, env).map(Some(_))
-            }
-          })
-          .recover {
-            case e @ (_: URISyntaxException | _: FileLoaderException | _: UnsupportedUrlScheme |
-                _: PathResolutionError) =>
-              if (!link.isInferred) {
-                link.refs.map(_.node).foreach { ref =>
-                  ctx.violation(link.url, e.getMessage, ref)
+        link.resolve(context, None, cache, ctx, env, link.refs.map(_.node), domainPlugin.allowRecursiveReferences) flatMap {
+          case ReferenceResolutionResult(_, Some(unit)) =>
+            val reference = ParsedReference(unit, link)
+            handler.update(reference, ctx, context, env).map(Some(_))
+          case ReferenceResolutionResult(Some(e), _)       =>
+            e match {
+              case e: CyclicReferenceException if !domainPlugin.allowRecursiveReferences =>
+                ctx.violation(ParserSideValidations.CycleReferenceError.id, link.url, e.getMessage, link.refs.head.node)
+                Future(None)
+              case e  =>
+                if (!link.isInferred) {
+                  link.refs.map(_.node).foreach { ref =>
+                    ctx.violation(link.url, e.getMessage, ref)
+                  }
                 }
-              }
-              None
-            case e: CyclicReferenceException if !domainPlugin.allowRecursiveReferences =>
-              ctx.violation(ParserSideValidations.CycleReferenceError.id, link.url, e.getMessage, link.refs.head.node)
-              None
-          }
+                Future(None)
+
+            }
+          case _ => Future(None)
+        }
       })
-    Future.sequence(units).map(rs => root.copy(references = rs.flatten))
+
+    Future.sequence(parsed).map(rs => root.copy(references = rs.flatten))
   }
 
   private def resolve(): Future[Content] = remote.resolve(location, env)

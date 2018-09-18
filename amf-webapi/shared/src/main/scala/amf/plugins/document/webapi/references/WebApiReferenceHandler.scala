@@ -171,7 +171,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
 
   private def ramlInclude(node: YNode): Unit = {
     node.value match {
-      case scalar: YScalar => references += (scalar.text, LinkReference, node)
+      case scalar: YScalar =>
+        references += (scalar.text, LinkReference, node)
       case _               => throw new Exception(s"Unexpected !include with ${node.value}")
     }
   }
@@ -188,24 +189,22 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val updated = context.update(reference.unit.id) // ??
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, None, Cache(), ctx, environment, r.refs.map(_.node))
-            .flatMap(u => {
-              val resolved = handleRamlExternalFragment(ParsedReference(u, r), ctx, updated, environment)
+          r.resolve(updated, None, Cache(), ctx, environment, r.refs.map(_.node), allowRecursiveRefs = true)
+            .flatMap {
+              case ReferenceResolutionResult(None, Some(unit)) =>
+                val resolved = handleRamlExternalFragment(ParsedReference(unit, r), ctx, updated, environment)
 
-              resolved.map(res => {
-                r.refs.foreach { refContainer =>
-                  refContainer.node match {
-                    case mut: MutRef => mut.target = res.ast
-                    case other =>
-                      ctx.violation("Cannot inline a fragment in a not mutable node", other)
+                resolved.map(res => {
+                  r.refs.foreach { refContainer =>
+                    refContainer.node match {
+                      case mut: MutRef => mut.target = res.ast
+                      case other =>
+                        ctx.violation("Cannot inline a fragment in a not mutable node", other)
+                    }
+                    // not meaning, only for collect all futures, not matter the type
                   }
-                // not meaning, only for collect all futures, not matter the type
-                }
-              })
-            })
-            .recover {
-              case e: URISyntaxException           => None
-              case e: FileNotFound if r.isInferred => None
+                })
+              case ReferenceResolutionResult(Some(e), _) => Future(Nil)
             }
         })
 
