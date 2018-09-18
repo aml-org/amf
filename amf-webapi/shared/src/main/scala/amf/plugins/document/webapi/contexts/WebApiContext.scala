@@ -250,7 +250,9 @@ abstract class WebApiContext(val loc: String,
     case Some(shape: AnyShape) => Some(shape)
     case _                     => None
   }
-  def registerJsonSchema(url: String, shape: AnyShape): Unit = globalSpace.update(url, shape)
+  def registerJsonSchema(url: String, shape: AnyShape): Unit = {
+    globalSpace.update(url, shape)
+  }
 
   def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasWebApiContext): Option[AnyShape] = {
     val referenceUrl =

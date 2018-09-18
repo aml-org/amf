@@ -3,6 +3,7 @@ package amf.validation
 import _root_.org.scalatest.AsyncFunSuite
 import amf._
 import amf.core.AMFSerializer
+import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Module
 import amf.core.model.domain.{ObjectNode, RecursiveShape}
@@ -323,6 +324,20 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.conforms)
     }
   }
+
+  test("Recursion introduced after resource type application test") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "/recursion_after_resource_type/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, Raml08Profile)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 1)
+    }
+  }
+
+
 
 
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests

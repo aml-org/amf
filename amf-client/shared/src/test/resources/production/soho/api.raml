@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Provisioning and Activation Module
+
+protocols: [ HTTPS ]
+types:
+  Connection: !include types/Connection.raml
+  Device: !include types/Device.raml
+
+/catalog:
+  post:
+    body:
+      application/json:
+        type: object
+        properties:
+          devices:
+            required: true
+            type: Device
+          transactionType:
+            required: true
+            type: string
+        example: !include examples/CJ1.RetrievePlans.Request.json
