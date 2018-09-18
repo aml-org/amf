@@ -1,0 +1,1096 @@
+
+{
+    "info":{
+        "version":"20180419111524",
+        "description":"An account generated for a staff member in the system. Staff accounts are used by CSRs, sales agents, site administrators, etc.",
+        "title":"accounts"
+    },
+    "paths":{
+        "/services/rest/connect/v1.4/accounts":{
+            "post":{
+                "responses":{
+                    "default":{
+                        "description":"",
+                        "schema":{
+                            "$ref":"#/definitions/accounts"
+                        }
+                    }
+                },
+                "parameters":[
+                    {
+                        "schema":{
+                            "required":[
+                                "login",
+                                "name",
+                                "profile",
+                                "staffGroup"
+                            ],
+                            "$ref":"#/definitions/accounts"
+                        },
+                        "name":"body",
+                        "in":"body"
+                    }
+                ],
+                "description":"Create an instance of accounts",
+                "summary":"Create an instance of accounts",
+                "operationId":"post /services/rest/connect/v1.4/accounts",
+                "x-relation":[
+                    "create"
+                ]
+            },
+            "get":{
+                "responses":{
+                    "default":{
+                        "description":"",
+                        "schema":{
+                            "$ref":"#/definitions/accounts-collection"
+                        }
+                    }
+                },
+                "parameters":[
+                    {
+                        "description":"Returns the count of elements as the given order. The value is a comma delimited string. Each token in the string is the name of the field, optionally followed by asc or desc.",
+                        "type":"string",
+                        "name":"orderBy",
+                        "in":"query"
+                    },
+                    {
+                        "description":"Restrict which fields shall be returned. The value is a comma delimited string and each token is a field name",
+                        "type":"string",
+                        "name":"fields",
+                        "in":"query"
+                    },
+                    {
+                        "description":"Query parameter that allows searching by providing ROQL WHERE clause filtering",
+                        "type":"string",
+                        "name":"q",
+                        "in":"query"
+                    },
+                    {
+                        "description":"The requested page size, which limits the number of elements the collection should max return",
+                        "type":"integer",
+                        "name":"limit",
+                        "in":"query"
+                    },
+                    {
+                        "description":"The offset of the page. By default, offset is 0, which means first page will be returned.",
+                        "type":"integer",
+                        "name":"offset",
+                        "in":"query"
+                    },
+                    {
+                        "description":"Indicates whether or not to calculate the totalResults property. By default, totalResults is not calculated.",
+                        "type":"boolean",
+                        "name":"totalResults",
+                        "in":"query"
+                    }
+                ],
+                "produces":[
+                    "application/json;type=collection"
+                ],
+                "description":"Retrieve collection of accounts",
+                "summary":"Retrieve collection of accounts",
+                "operationId":"get /services/rest/connect/v1.4/accounts",
+                "consumes":[
+                    "application/x-www-form-urlencoded"
+                ],
+                "x-relation":[
+                    "self"
+                ]
+            }
+        },
+        "/services/rest/connect/latest/accounts/{id}":{
+            "patch":{
+                "responses":{
+                    "default":{
+                        "description":""
+                    }
+                },
+                "parameters":[
+                    {
+                        "description":"Primary key identifier",
+                        "required":true,
+                        "type":"integer",
+                        "name":"id",
+                        "in":"path"
+                    },
+                    {
+                        "schema":{
+                            "$ref":"#/definitions/accounts"
+                        },
+                        "name":"body",
+                        "in":"body"
+                    }
+                ],
+                "description":"Update an instance of accounts",
+                "summary":"Update an instance of accounts",
+                "operationId":"patch /services/rest/connect/latest/accounts/{id}",
+                "x-relation":[
+                    "update"
+                ]
+            },
+            "delete":{
+                "responses":{
+                    "default":{
+                        "description":"",
+                        "schema":{
+                            "type":"null",
+                            "description":"No content returned on delete",
+                            "title":"No content"
+                        }
+                    }
+                },
+                "parameters":[
+                    {
+                        "description":"Primary key identifier",
+                        "required":true,
+                        "type":"integer",
+                        "name":"id",
+                        "in":"path"
+                    }
+                ],
+                "description":"Delete an instance of accounts",
+                "summary":"Delete an instance of accounts",
+                "operationId":"delete /services/rest/connect/latest/accounts/{id}",
+                "x-relation":[
+                    "delete"
+                ]
+            },
+            "get":{
+                "responses":{
+                    "default":{
+                        "description":"",
+                        "schema":{
+                            "$ref":"#/definitions/accounts"
+                        }
+                    }
+                },
+                "parameters":[
+                    {
+                        "description":"Primary key identifier",
+                        "required":true,
+                        "type":"integer",
+                        "name":"id",
+                        "in":"path"
+                    }
+                ],
+                "produces":[
+                    "application/json"
+                ],
+                "description":"Retrieve an instance of accounts",
+                "summary":"Retrieve an instance of accounts",
+                "operationId":"get /services/rest/connect/latest/accounts/{id}",
+                "x-relation":[
+                    "self"
+                ]
+            }
+        }
+    },
+    "swagger":"2.0",
+    "definitions":{
+        "accounts-attributes":{
+            "type":"object",
+            "description":"Group of flags which enable certain features or special behaviors on an Account",
+            "properties":{
+                "viewsReportsDisabled":{
+                    "type":"boolean",
+                    "description":"Prevents the staff account from being included in the list for filters in reports"
+                },
+                "infrequentUser":{
+                    "type":"boolean",
+                    "description":"Flag that indicates if the staff account is considered an infrequent user seat, as opposed to a full seat."
+                },
+                "permanentlyDisabled":{
+                    "type":"boolean",
+                    "description":"Permanently disables the staff account (for example, when a staff member leaves your organization). Note: The staff account will continue to appear in the tree of the Staff Accounts management console if the Show Disabled setting is on, but you will not be able to clear the Permanently Disable check box if you edit the account. You can reuse the login name of a permanently disabled staff account for a different staff account."
+                },
+                "accountLocked":{
+                    "type":"boolean",
+                    "description":"Temporarily locks the staff account. You might choose to do this if, for example, a staff member takes a leave of absence. This will also be set automatically if a staff member has exceeded the number of invalid logins or has an expired password."
+                },
+                "forcePasswordChange":{
+                    "type":"boolean",
+                    "description":"Forces the staff member to change her password the next time she logs in. Note: This flag remains true until the staff member changes her password."
+                },
+                "virtualAccount":{
+                    "type":"boolean",
+                    "description":"Flag indicating if the account is a Virtual Account.  Read-only"
+                },
+                "passwordNeverExpires":{
+                    "type":"boolean",
+                    "description":"Disables password expiration. This will override any system-wide password expiration configurations."
+                },
+                "canModifyEmailSignature":{
+                    "type":"boolean",
+                    "description":"Enables the staff account to modify the email signature."
+                },
+                "staffAssignmentDisabled":{
+                    "type":"boolean",
+                    "description":"Prevents the staff account from being assigned to incidents, answers, opportunities, and tasks"
+                }
+            }
+        },
+        "accounts-collection":{
+            "type":"object",
+            "properties":{
+                "createdTime":{
+                    "$ref":"#/definitions/accounts/properties/createdTime"
+                },
+                "updatedTime":{
+                    "$ref":"#/definitions/accounts/properties/updatedTime"
+                },
+                "id":{
+                    "$ref":"#/definitions/accounts/properties/id"
+                },
+                "lookupName":{
+                    "$ref":"#/definitions/accounts/properties/lookupName"
+                }
+            },
+            "description":"Collection of accounts"
+        },
+        "CO.Office":{
+            "type":"object",
+            "description":"Office",
+            "properties":{
+                "updatedTime":{
+                    "type":"string",
+                    "description":"Last updated date and time.  Read-only"
+                },
+                "FieldState":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"FieldState",
+                    "maxLength":50
+                },
+                "FieldCity":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"FieldCity",
+                    "maxLength":100
+                },
+                "FieldZip":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"FieldZip",
+                    "maxLength":10
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                },
+                "createdTime":{
+                    "type":"string",
+                    "description":"Creation date and time.  Read-only"
+                },
+                "FieldName":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"FieldName",
+                    "maxLength":349525
+                },
+                "FieldAddress":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"FieldAddress",
+                    "maxLength":349525
+                },
+                "id":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"System-assigned primary key identifier for office record",
+                    "maximum":2147483647
+                }
+            }
+        },
+        "accounts-serviceSettings":{
+            "type":"object",
+            "description":"Service related information for the account",
+            "properties":{
+                "screenPopPort":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"Port number on which to listen for screen pop alerts destined for the staff account. Used in Citrix and Terminal Services environments where there are multiple agents logged in to different sessions on the same machine.",
+                    "maximum":65535
+                }
+            }
+        },
+        "accounts":{
+            "type":"object",
+            "description":"An account generated for a staff member in the system. Staff accounts are used by CSRs, sales agents, site administrators, etc.",
+            "properties":{
+                "phones":{
+                    "items":{
+                        "type":"object"
+                    },
+                    "type":[
+                        "array",
+                        "null"
+                    ],
+                    "description":"List of phone numbers",
+                    "$ref":"#/definitions/accounts-phones"
+                },
+                "manager":{
+                    "type":[
+                        "object",
+                        "null"
+                    ],
+                    "description":"Staff member's manager",
+                    "$ref":"#/definitions/accounts"
+                },
+                "accountHierarchy":{
+                    "items":{
+                        "type":"object"
+                    },
+                    "type":"array",
+                    "description":"Hierarchy of managers for the staff member.  Read-only",
+                    "$ref":"#/definitions/accounts"
+                },
+                "nameFurigana":{
+                    "type":"object",
+                    "description":"Furigana reading aid for the Name. This field is used in workspaces on the agent console and is only available if the site has at least one Japanese interface.",
+                    "$ref":"#/definitions/accounts-nameFurigana"
+                },
+                "id":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"Primary key identifier",
+                    "maximum":9.223372036854776E18
+                },
+                "displayOrder":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"Controls the display position of this staff account relative to other members of the same group",
+                    "maximum":2147483647
+                },
+                "staffGroup":{
+                    "type":"object",
+                    "description":"Group to which the staff member is assigned",
+                    "$ref":"#/definitions/namedIDs-accounts-staffGroup"
+                },
+                "salesSettings":{
+                    "type":"object",
+                    "description":"Sales module specific settings",
+                    "$ref":"#/definitions/accounts-salesSettings"
+                },
+                "passwordExpirationTime":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"Date and time when the password is set to expire.  Read-only"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                },
+                "serviceSettings":{
+                    "type":"object",
+                    "description":"Service module specific settings",
+                    "$ref":"#/definitions/accounts-serviceSettings"
+                },
+                "profile":{
+                    "type":[
+                        "object",
+                        "null"
+                    ],
+                    "description":"Profile to which the staff account is assigned",
+                    "$ref":"#/definitions/namedIDs-accounts-profile"
+                },
+                "attributes":{
+                    "type":"object",
+                    "description":"Group of flags which enable certain features or special behaviors",
+                    "$ref":"#/definitions/accounts-attributes"
+                },
+                "CustomFields":{
+                    "type":"object",
+                    "description":"List of custom field values",
+                    "$ref":"#/definitions/accounts-CustomFields"
+                },
+                "emailNotification":{
+                    "type":[
+                        "object",
+                        "null"
+                    ],
+                    "description":"Format the staff member prefers for email notifications",
+                    "$ref":"#/definitions/namedIDs-accounts-emailNotification"
+                },
+                "emails":{
+                    "items":{
+                        "type":"object"
+                    },
+                    "type":[
+                        "array",
+                        "null"
+                    ],
+                    "description":"List of email addresses",
+                    "$ref":"#/definitions/accounts-emails"
+                },
+                "updatedTime":{
+                    "type":"string",
+                    "description":"Last updated date and time.  Read-only"
+                },
+                "displayName":{
+                    "pattern":"^[^\n]*$",
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"Display name",
+                    "maxLength":80
+                },
+                "name":{
+                    "type":"object",
+                    "description":"Staff member's name",
+                    "$ref":"#/definitions/accounts-name"
+                },
+                "country":{
+                    "type":"object",
+                    "description":"Default country identifier",
+                    "$ref":"#/definitions/countries"
+                },
+                "newPassword":{
+                    "pattern":"^[^\t\n]*$",
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"Write-only field used to change the authentication password. It is stored with a one-way encryption in the system.",
+                    "maxLength":20
+                },
+                "signature":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"Email signature",
+                    "maxLength":1333
+                },
+                "createdTime":{
+                    "type":"string",
+                    "description":"Creation date and time.  Read-only"
+                },
+                "notificationPending":{
+                    "type":"boolean",
+                    "description":"Flag indicating whether any notifications are pending.  Read-only"
+                },
+                "login":{
+                    "pattern":"^(([^ \t\n][^\t\n]*([^ \t\n]))|([^ \t\n]))$",
+                    "type":"string",
+                    "description":"Authentication user name",
+                    "maxLength":80
+                }
+            }
+        },
+        "salesTerritories-names":{
+            "type":"object",
+            "description":"Strings that are language-specific, allowing localization of fields.  Like the Label class, but the label text cannot be empty or null.  Labels will be assembled in a list that is associated with one particular text field",
+            "properties":{
+                "labelText":{
+                    "type":"string",
+                    "description":"Label text.  Must be a non-empty string",
+                    "maxLength":80
+                },
+                "language":{
+                    "type":"object",
+                    "description":"Language ID. This is the key for the list entry.",
+                    "$ref":"#/definitions/namedIDs-salesTerritories-names-language"
+                }
+            }
+        },
+        "accounts-CustomFields":{
+            "type":"object",
+            "description":"The base class for the CustomFields object",
+            "properties":{
+                "c":{
+                    "type":"object",
+                    "description":"",
+                    "$ref":"#/definitions/accounts-CustomFields-c"
+                },
+                "CO":{
+                    "type":"object",
+                    "description":"",
+                    "$ref":"#/definitions/accounts-CustomFields-CO"
+                }
+            }
+        },
+        "namedIDs-accounts-phones-phoneType":{
+            "type":"object",
+            "description":"An ID which has an associated name string.  These IDs can be set by either value or name.  If the name cannot uniquely determine the value, an error is generated.",
+            "properties":{
+                "id":{
+                    "minimum":0,
+                    "type":"integer",
+                    "description":"ID value"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        },
+        "accounts-CustomFields-c":{
+            "type":"object",
+            "description":"The base class for the CustomFields object",
+            "properties":{
+                "hire_date":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"The date this person was hired"
+                },
+                "job_title":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"",
+                    "maxLength":255
+                }
+            }
+        },
+        "namedIDs-accounts-profile":{
+            "type":"object",
+            "description":"An ID which has an associated name string.  These IDs can be set by either value or name.  If the name cannot uniquely determine the value, an error is generated.",
+            "properties":{
+                "id":{
+                    "minimum":0,
+                    "type":"integer",
+                    "description":"ID value"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        },
+        "namedIDs-accounts-staffGroup":{
+            "type":"object",
+            "description":"An ID which has an associated name string.  These IDs can be set by either value or name.  If the name cannot uniquely determine the value, an error is generated.",
+            "properties":{
+                "id":{
+                    "minimum":0,
+                    "type":"integer",
+                    "description":"ID value"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        },
+        "namedIDs-accounts-emails-addressType":{
+            "type":"object",
+            "description":"An ID which has an associated name string.  These IDs can be set by either value or name.  If the name cannot uniquely determine the value, an error is generated.",
+            "properties":{
+                "id":{
+                    "minimum":0,
+                    "type":"integer",
+                    "description":"ID value"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        },
+        "accounts-salesSettings":{
+            "type":"object",
+            "description":"Sales related information for the account",
+            "properties":{
+                "territory":{
+                    "type":[
+                        "object",
+                        "null"
+                    ],
+                    "description":"Sales territory ID",
+                    "$ref":"#/definitions/salesTerritories"
+                },
+                "defaultCurrency":{
+                    "type":"object",
+                    "description":"Default currency ID",
+                    "$ref":"#/definitions/namedIDs-accounts-salesSettings-defaultCurrency"
+                }
+            }
+        },
+        "accounts-nameFurigana":{
+            "type":"object",
+            "description":"A person's first and last name",
+            "properties":{
+                "last":{
+                    "pattern":"^[^\n]*$",
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"Surname or last name",
+                    "maxLength":80
+                },
+                "first":{
+                    "pattern":"^[^\n]*$",
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"Given or first name",
+                    "maxLength":80
+                }
+            }
+        },
+        "accounts-CustomFields-CO":{
+            "type":"object",
+            "description":"The base class for the CustomFields object",
+            "properties":{
+                "AcctText":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"AcctText",
+                    "maxLength":349525
+                },
+                "AcctBool":{
+                    "type":[
+                        "boolean",
+                        "null"
+                    ],
+                    "description":"AcctBool"
+                },
+                "AcctInteger":{
+                    "minimum":-2147483645,
+                    "type":[
+                        "integer",
+                        "null"
+                    ],
+                    "description":"AcctInteger",
+                    "maximum":2147483647
+                },
+                "office_id":{
+                    "type":[
+                        "object",
+                        "null"
+                    ],
+                    "description":"Foreign key identifier for office record",
+                    "$ref":"#/definitions/CO.Office"
+                }
+            }
+        },
+        "countries-names":{
+            "type":"object",
+            "description":"Strings that are language-specific, allowing localization of fields.  Like the Label class, but the label text cannot be empty or null.  Labels will be assembled in a list that is associated with one particular text field",
+            "properties":{
+                "labelText":{
+                    "type":"string",
+                    "description":"Label text.  Must be a non-empty string",
+                    "maxLength":80
+                },
+                "language":{
+                    "type":"object",
+                    "description":"Language ID. This is the key for the list entry.",
+                    "$ref":"#/definitions/namedIDs-countries-names-language"
+                }
+            }
+        },
+        "namedIDs-countries-provinces-names-language":{
+            "type":"object",
+            "description":"An ID which has an associated name string.  These IDs can be set by either value or name.  If the name cannot uniquely determine the value, an error is generated.",
+            "properties":{
+                "id":{
+                    "minimum":0,
+                    "type":"integer",
+                    "description":"ID value"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        },
+        "namedIDs-salesTerritories-adminVisibleInterfaces":{
+            "type":"object",
+            "description":"Named ID that can be included in a list",
+            "properties":{
+                "id":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"ID value. This is the key for the list entry.",
+                    "maximum":9.223372036854776E18
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        },
+        "namedIDs-accounts-emailNotification":{
+            "type":"object",
+            "description":"An ID which has an associated name string.  These IDs can be set by either value or name.  If the name cannot uniquely determine the value, an error is generated.",
+            "properties":{
+                "id":{
+                    "minimum":0,
+                    "type":"integer",
+                    "description":"ID value"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        },
+        "namedIDs-salesTerritories-names-language":{
+            "type":"object",
+            "description":"An ID which has an associated name string.  These IDs can be set by either value or name.  If the name cannot uniquely determine the value, an error is generated.",
+            "properties":{
+                "id":{
+                    "minimum":0,
+                    "type":"integer",
+                    "description":"ID value"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        },
+        "accounts-name":{
+            "type":"object",
+            "description":"A person's first and last name where both are required",
+            "properties":{
+                "last":{
+                    "pattern":"^[^\n]*$",
+                    "type":"string",
+                    "description":"Surname or last name",
+                    "maxLength":80
+                },
+                "first":{
+                    "pattern":"^[^\n]*$",
+                    "type":"string",
+                    "description":"Given or first name",
+                    "maxLength":80
+                }
+            }
+        },
+        "accounts-emails":{
+            "type":"object",
+            "description":"Email address and associated information",
+            "properties":{
+                "addressType":{
+                    "type":"object",
+                    "description":"Address type (e.g. Primary or Alt1). This is the key for the list entry.",
+                    "$ref":"#/definitions/namedIDs-accounts-emails-addressType"
+                },
+                "certificate":{
+                    "pattern":"^(\n|\r)*[-]+BEGIN CERTIFICATE[-]+[0-9a-zA-Z+/=\n\r]*[-]+END CERTIFICATE[-]+(\n|\r)*$",
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"Associated public email certificate, used to encrypt outgoing email.",
+                    "maxLength":1333
+                },
+                "invalid":{
+                    "type":"boolean",
+                    "description":"Disables the email address"
+                },
+                "address":{
+                    "pattern":"^((([-_!#$%&'*+/=?^~`{|}\\w]+(\\.[.]?[-_!#$%&'*+/=?^~`{|}\\w]+)*)|(\"[^\"]+\"))@[0-9A-Za-z]+([\\-]+[0-9A-Za-z]+)*(\\.[0-9A-Za-z]+([\\-]+[0-9A-Za-z]+)*)+[; ]*)$",
+                    "type":"string",
+                    "description":"Email address string",
+                    "maxLength":80
+                }
+            }
+        },
+        "countries-provinces-names":{
+            "type":"object",
+            "description":"Strings that are language-specific, allowing localization of fields.  Like the Label class, but the label text cannot be empty or null.  Labels will be assembled in a list that is associated with one particular text field",
+            "properties":{
+                "labelText":{
+                    "type":"string",
+                    "description":"Label text.  Must be a non-empty string",
+                    "maxLength":80
+                },
+                "language":{
+                    "type":"object",
+                    "description":"Language ID. This is the key for the list entry.",
+                    "$ref":"#/definitions/namedIDs-countries-provinces-names-language"
+                }
+            }
+        },
+        "countries-provinces":{
+            "type":"object",
+            "description":"Contains information about the provinces in the Countries/Provinces customizable menu.",
+            "properties":{
+                "name":{
+                    "type":"string",
+                    "description":"The name of the province in the current interface's language. Read-only.",
+                    "maxLength":255
+                },
+                "names":{
+                    "items":{
+                        "type":"object"
+                    },
+                    "type":"array",
+                    "description":"The list of names or labels for this province for each available language.",
+                    "$ref":"#/definitions/countries-provinces-names"
+                },
+                "displayOrder":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"Display position relative to other provinces associated with the same country.",
+                    "maximum":32767
+                },
+                "id":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"The Province ID.",
+                    "maximum":9.223372036854776E18
+                }
+            }
+        },
+        "namedIDs-countries-names-language":{
+            "type":"object",
+            "description":"An ID which has an associated name string.  These IDs can be set by either value or name.  If the name cannot uniquely determine the value, an error is generated.",
+            "properties":{
+                "id":{
+                    "minimum":0,
+                    "type":"integer",
+                    "description":"ID value"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        },
+        "countries":{
+            "type":"object",
+            "description":"Represents a country object defined in the system.",
+            "properties":{
+                "updatedTime":{
+                    "type":"string",
+                    "description":"Last updated date and time.  Read-only"
+                },
+                "provinces":{
+                    "items":{
+                        "type":"object"
+                    },
+                    "type":[
+                        "array",
+                        "null"
+                    ],
+                    "description":"A list of states or provinces associated with this country.",
+                    "$ref":"#/definitions/countries-provinces"
+                },
+                "iSOCode":{
+                    "pattern":"^[A-Z]{2}$",
+                    "type":"string",
+                    "description":"The ISO 3166 country code.",
+                    "maxLength":2
+                },
+                "name":{
+                    "type":"string",
+                    "description":"Name of the Country in the current interface's language. Read-only.",
+                    "maxLength":80
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                },
+                "phoneMask":{
+                    "pattern":"^(([U|L|M][#|A|L|C])|(F.))+$",
+                    "type":"string",
+                    "description":"A string of twice as many characters as found in the phone number.  Two (2) characters are needed to represent every digit or character in the phone number. The first character of the mask describes the target character and the second constrains its type.",
+                    "maxLength":80
+                },
+                "abbreviation":{
+                    "pattern":"^[A-Z]{2,3}$",
+                    "type":"string",
+                    "description":"The two or three character abbreviation for this country.",
+                    "maxLength":3
+                },
+                "names":{
+                    "items":{
+                        "type":"object"
+                    },
+                    "type":"array",
+                    "description":"A list of labels or names used for this country on each unique interface.",
+                    "$ref":"#/definitions/countries-names"
+                },
+                "createdTime":{
+                    "type":"string",
+                    "description":"Creation date and time.  Read-only"
+                },
+                "phoneCode":{
+                    "pattern":"^[][+0-9a-zA-Z[:blank:].,()#-/]*$",
+                    "type":"string",
+                    "description":"used by the Click-to-Dial feature.\"",
+                    "maxLength":10
+                },
+                "postalMask":{
+                    "pattern":"^(([U|L|M][#|A|L|C])|(F.))+$",
+                    "type":"string",
+                    "description":"A string of twice as many characters as found in the postal code (target).  Two (2) characters are needed to represent every digit or character in the postal code. The first character of the mask describes the target character and the second constrains its type.",
+                    "maxLength":20
+                },
+                "id":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"Primary key identifier",
+                    "maximum":9.223372036854776E18
+                },
+                "displayOrder":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"The position of the country in the Countries/Provinces tree and drop-down menu.",
+                    "maximum":2147483647
+                }
+            }
+        },
+        "salesTerritories":{
+            "type":"object",
+            "description":"A specific geographical sales region",
+            "properties":{
+                "comment":{
+                    "type":[
+                        "string",
+                        "null"
+                    ],
+                    "description":"Comment/notes",
+                    "maxLength":1333
+                },
+                "updatedTime":{
+                    "type":"string",
+                    "description":"Last updated date and time.  Read-only"
+                },
+                "name":{
+                    "type":"string",
+                    "description":"Name of the SalesTerritory in the current interface's language. Read-only.",
+                    "maxLength":80
+                },
+                "parent":{
+                    "type":[
+                        "object",
+                        "null"
+                    ],
+                    "description":"Parent sales territory in the hierarchy",
+                    "$ref":"#/definitions/salesTerritories"
+                },
+                "territoryHierarchy":{
+                    "items":{
+                        "type":"object"
+                    },
+                    "type":[
+                        "array",
+                        "null"
+                    ],
+                    "description":"List of all parents in the hierarchy, from the root to the immediate parent.  Read-only",
+                    "$ref":"#/definitions/salesTerritories"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                },
+                "disabled":{
+                    "type":"boolean",
+                    "description":"Disables sales territory"
+                },
+                "names":{
+                    "items":{
+                        "type":"object"
+                    },
+                    "type":"array",
+                    "description":"List of names, one for each supported language",
+                    "$ref":"#/definitions/salesTerritories-names"
+                },
+                "createdTime":{
+                    "type":"string",
+                    "description":"Creation date and time.  Read-only"
+                },
+                "id":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"Primary key identifier",
+                    "maximum":9.223372036854776E18
+                },
+                "displayOrder":{
+                    "minimum":1,
+                    "type":"integer",
+                    "description":"Controls the display position of this sales territory relative to other members of the same group",
+                    "maximum":2147483647
+                },
+                "adminVisibleInterfaces":{
+                    "items":{
+                        "type":"object"
+                    },
+                    "type":[
+                        "array",
+                        "null"
+                    ],
+                    "description":"List of interfaces on which the category is available for admin use",
+                    "$ref":"#/definitions/namedIDs-salesTerritories-adminVisibleInterfaces"
+                }
+            }
+        },
+        "accounts-phones":{
+            "type":"object",
+            "description":"A phone number and its ancillary data",
+            "properties":{
+                "rawNumber":{
+                    "type":"string",
+                    "description":"Automatically populated with the numerical data from the Number; i.e. if Number contained \"1 (406) 522-4200\", this field would contain \"14065224200\".  Read-only",
+                    "maxLength":40
+                },
+                "number":{
+                    "pattern":"^[][+0-9a-zA-Z[:blank:].,()#-/]*$",
+                    "type":"string",
+                    "description":"Free-form phone number",
+                    "maxLength":40
+                },
+                "phoneType":{
+                    "type":"object",
+                    "description":"Type of phone number (e.g. Home, Mobile, Office, etc.). This is the key for the list entry.",
+                    "$ref":"#/definitions/namedIDs-accounts-phones-phoneType"
+                }
+            }
+        },
+        "namedIDs-accounts-salesSettings-defaultCurrency":{
+            "type":"object",
+            "description":"An ID which has an associated name string.  These IDs can be set by either value or name.  If the name cannot uniquely determine the value, an error is generated.",
+            "properties":{
+                "id":{
+                    "minimum":0,
+                    "type":"integer",
+                    "description":"ID value"
+                },
+                "lookupName":{
+                    "type":"string",
+                    "description":"Name used to lookup this object",
+                    "maxLength":255
+                }
+            }
+        }
+    }
+}

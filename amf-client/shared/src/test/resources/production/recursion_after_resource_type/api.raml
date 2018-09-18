@@ -1,0 +1,103 @@
+#%RAML 0.8
+---
+baseUri: https://mocksvc.mulesoft.com/mocks/742d34fd-0260-4021-9036-973971c18188
+title: "example 1- RAML"
+version: v1
+
+
+
+protocols: [ HTTP, HTTPS ]
+mediaType: application/json
+documentation:
+    - title: Home
+      content: |
+       Contract-first with RAML
+schemas:
+    - author: |
+        {   "$schema": "http://json-schema.org/draft-03/schema",
+            "type": "object",
+            "description": "A single author",
+            "properties": {
+                "id": { "type": "integer", "required": true},
+                "name":  { "type": "string", "required": true },
+                "books": { 
+                    "type": "array", 
+                    "items": {
+                        "$ref":"book"
+                    }
+                }
+            }
+        }
+    - book: |
+        {   "$schema": "http://json-schema.org/draft-03/schema",
+            "type": "object",
+            "description": "A single book",
+            "properties": {
+                "id": { "type": "integer", "required": true},
+                "name":  { "type": "string", "required": true },
+                "isbn":  { "type": "string", "required": true },
+                "author_id" : { "type": "integer" }
+            }
+        }
+    - authors: |
+        {   "$schema": "http://json-schema.org/draft-03/schema",
+            "type": "object",
+            "description": "a collection of authors",
+            "properties": {
+                "size":  { "type": "integer", "required": true },
+                "authors":  {
+                    "type": "array",
+                    "items": { "$ref": "author" }
+                }
+              }
+        }
+/authors:
+    displayName: AuthorsResource
+    type: { 
+        collection: { 
+            schema: authors 
+        } 
+    }
+
+    get:
+        description: Get a list of all the authors in the system
+        responses:
+          200:
+            body:
+              application/json:
+                example: |
+                 "authors" : [
+                  {
+                    "id": 1,
+                    "name":  "name author 1",
+                    "books": [{}]
+                  },
+                  {
+                    "id": 2,
+                    "name":  "name author 2",
+                    "books": [{}]
+                  }
+                 ]
+
+
+    post:
+        description: Add author
+        responses:
+            201:
+                body:
+                    application/json:
+                        schema: author
+resourceTypes:
+    - collection:
+        get:
+            responses:
+                200:
+                    body:
+                        application/json:
+                            schema: <<schema>>
+        post:
+            responses:
+                201:
+                    body:
+                        application/json:
+                            schema: <<schema>>

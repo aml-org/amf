@@ -117,7 +117,6 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
                            traversed: IdsTraversionCheck): Unit = {
     this.fields.foreach {
       case (f, v) =>
-        val value = v.value
         val clonedValue = v.value match {
           case s: Shape if s.id != this.id && traversed.canTravers(s.id) =>
             traversed.runPushed((t: IdsTraversionCheck) => { s.cloneShape(recursionErrorHandler, recursionBase, t) })

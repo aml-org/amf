@@ -93,7 +93,6 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
 
         val schemaLoader = schemaBuilder.build()
         val schema       = schemaLoader.load().build()
-
         /*
             println("\n\nValidating...")
             println("  - SCHEMA:")
@@ -104,20 +103,18 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
 
         try {
           schema.validate(dataNode)
-
-          /*
+            /*
               println(s"  ====> RESULT: true")
               println("-----------------------\n\n")
-           */
-
+            */
           Nil
         } catch {
           case validationException: ValidationException =>
-            /*
+              /*
                 println(s"  ====> RESULT: false")
                 println(validationException.getAllMessages)
                 println("-----------------------\n\n")
-            */
+              */
             iterateValidations(validationException, payload)
           case exception: Error =>
             reportValidationException(exception, payload)
