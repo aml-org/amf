@@ -1313,4 +1313,8 @@ class CompleteCycleTest extends BuildCycleTests {
   test("Test parse empty included external fragment") {
     cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml, basePath + "empty-external-fragment/")
   }
+
+  test("Test file array in raml 08") {
+    cycle("file-array.raml", "file-array.raml.raml", RamlYamlHint, Raml08, base08Path)
+  }
 }

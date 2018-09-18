@@ -2133,6 +2133,11 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
         array.items match {
           case sc: ScalarShape =>
             SimpleTypeEmitter(sc, ordering).emitters() :+ MapEntryEmitter("repeat", "true", YType.Bool)
+          case f: FileShape =>
+            val scalar =
+              ScalarShape(f.fields, f.annotations)
+                .withDataType(XsdTypeDefMapping.xsdFromString("file")._1.get)
+            SimpleTypeEmitter(scalar, ordering).emitters() :+ MapEntryEmitter("repeat", "true", YType.Bool)
           case other =>
             Seq(CommentEmitter(other, s"Cannot emit array shape with items ${other.getClass.toString} in raml 08"))
         }
