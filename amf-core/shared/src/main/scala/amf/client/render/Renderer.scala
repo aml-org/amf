@@ -7,6 +7,7 @@ import amf.client.model.document.BaseUnit
 import amf.core.AMFSerializer
 import amf.core.emitter.{RenderOptions => InternalRenderOptions}
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
+import org.yaml.writer.Writer
 
 import scala.concurrent.Future
 import scala.scalajs.js.annotation.JSExport
@@ -42,6 +43,14 @@ class Renderer(vendor: String, mediaType: String) {
   def generateString(unit: BaseUnit, options: RenderOptions): ClientFuture[String] =
     generate(unit._internal, InternalRenderOptions(options)).asClient
 
+  @JSExport
+  def generateToWriter(unit: BaseUnit, options: RenderOptions, writer: Writer): ClientFuture[Writer] =
+    generate(unit._internal, InternalRenderOptions(options), writer).asClient
+
+  @JSExport
+  def generateToWriter(unit: BaseUnit, writer: Writer): ClientFuture[Writer] =
+    generateToWriter(unit, RenderOptions(), writer)
+
   /**
     * Asynchronously renders the syntax text and stores it in the file pointed by the provided URL.
     * It must throw an UnsupportedOperation exception in platforms without support to write to the file system
@@ -69,4 +78,6 @@ class Renderer(vendor: String, mediaType: String) {
   private def generate(unit: InternalBaseUnit, options: InternalRenderOptions): Future[String] =
     new AMFSerializer(unit, mediaType, vendor, options).renderToString
 
+  private def generate(unit: InternalBaseUnit, options: InternalRenderOptions, writer: Writer): Future[Writer] =
+    new AMFSerializer(unit, mediaType, vendor, options).renderToWriter(writer)
 }

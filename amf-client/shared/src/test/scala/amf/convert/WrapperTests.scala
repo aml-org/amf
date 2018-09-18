@@ -19,6 +19,7 @@ import amf.core.remote.{Aml, Oas20, Raml, Raml10}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
+import org.yaml.writer.{ExitRenderException, Writer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -533,6 +534,38 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit shouldBe a[Document]
       unit.id should be("file://api.raml")
       unit2.id should be("file://api2")
+    }
+  }
+
+  test("Generate to writer and exit") {
+    val input = s"""
+                   |#%RAML 1.0
+                   |title: Environment test
+                   |version: 32.0.7
+    """.stripMargin
+
+    case class FailingWriter() extends Writer {
+      private val str: StringBuilder = new StringBuilder()
+
+      override def append(s: String): this.type = {
+        str.append(s)
+        if (s == "\"32.0.7\"") throw ExitRenderException()
+        this
+      }
+
+      override def string(): String = str.toString
+
+      override def flush(): this.type = this
+
+      override def close(): FailingWriter.this.type = this
+    }
+
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(input).asFuture
+      rendered <- new AmfGraphRenderer().generateToWriter(unit, FailingWriter()).asFuture
+    } yield {
+      rendered.string() should endWith("\"32.0.7\"")
     }
   }
 

@@ -1,7 +1,5 @@
 package amf.core
 
-import java.io.Writer
-
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, ExternalFragment}
@@ -10,6 +8,7 @@ import amf.core.parser.ParsedDocument
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.RuntimeSerializer
+import org.yaml.writer.Writer
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -36,7 +35,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   def renderToString: Future[String] = Future { render() }
 
   /** Print ast to file. */
-  def renderToFile(remote: Platform, path: String): Future[Unit] = remote.write(path, render())
+  def renderToFile(remote: Platform, path: String): Future[Unit] = Future { render() }.map(remote.write(path, _))
 
   private def render(writer: Writer): Writer =
     parsed { (syntaxPlugin, mediaType, ast) =>

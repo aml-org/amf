@@ -1,14 +1,16 @@
 package amf.plugins.features.validation
 
-import java.io.{FileWriter, PrintWriter, StringWriter, Writer}
+import java.io.{PrintWriter, StringWriter, Writer => JavaWriter}
 
 import amf.core.rdf._
 import amf.core.vocabulary.Namespace
+import org.apache.jena.graph.Graph
 import org.apache.jena.rdf.model.Model
 import org.apache.jena.riot._
 import org.apache.jena.riot.system.RiotLib
 import org.apache.jena.sparql.util.Context
 import org.topbraid.jenax.util.JenaUtil
+import org.yaml.writer.{WrappedWriter, Writer}
 
 class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfModel {
 
@@ -24,7 +26,10 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
     this
   }
 
-  override def addTriple(subject: String, predicate: String, objLiteralValue: String, objLiteralType: Option[String]): RdfModel = {
+  override def addTriple(subject: String,
+                         predicate: String,
+                         objLiteralValue: String,
+                         objLiteralType: Option[String]): RdfModel = {
     nodesCache = nodesCache - subject
     model.add(
       model.createStatement(
@@ -51,7 +56,7 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
         out.println(s"<${st.getSubject.getURI}> <${st.getPredicate.getURI}> <${st.getObject.asResource().getURI}> .")
       }
     }
-    */
+     */
     out.println(RDFPrinter(model, "N3"))
     out.close()
   }
@@ -63,31 +68,30 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
   override def findNode(uri: String): Option[Node] = {
     nodesCache.get(uri) match {
       case Some(node) => Some(node)
-      case None       =>
+      case None =>
         val node = model.getResource(uri)
         if (node.isResource) {
-          val res = node.asResource()
-          val id = res.getURI
+          val res                = node.asResource()
+          val id                 = res.getURI
           var resourceProperties = Map[String, Seq[PropertyObject]]()
           var resourceClasses    = Seq[String]()
-          val properties = res.listProperties()
+          val properties         = res.listProperties()
 
           while (properties.hasNext) {
             val statement = properties.nextStatement()
             val predicate = statement.getPredicate.getURI
-            val oldProps = resourceProperties.getOrElse(predicate, Nil)
+            val oldProps  = resourceProperties.getOrElse(predicate, Nil)
             if (predicate == (Namespace.Rdf + "type").iri()) {
               resourceClasses ++= Seq(statement.getObject.asResource().getURI)
             } else if (statement.getObject.isLiteral) {
               val lit = statement.getObject.asLiteral()
               resourceProperties = resourceProperties.updated(predicate,
-                oldProps ++ Seq(
-                  Literal(
-                    value = lit.getLexicalForm,
-                    literalType = Some(lit.getDatatypeURI)
-                  )
-                )
-              )
+                                                              oldProps ++ Seq(
+                                                                Literal(
+                                                                  value = lit.getLexicalForm,
+                                                                  literalType = Some(lit.getDatatypeURI)
+                                                                )
+                                                              ))
             } else if (statement.getObject.isResource) {
               resourceProperties = resourceProperties.updated(
                 predicate,
@@ -113,15 +117,15 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
     mediaType match {
       case "application/ld+json" | "application/json" =>
         parser.lang(RDFLanguages.JSONLD)
-      case "text/n3" | "text/rdf+n3"                  =>
+      case "text/n3" | "text/rdf+n3" =>
         parser.lang(RDFLanguages.N3)
-      case "application/x-turtle" | "text/turtle"     =>
+      case "application/x-turtle" | "text/turtle" =>
         parser.lang(RDFLanguages.TURTLE)
-      case "text/plain"              =>
+      case "text/plain" =>
         parser.lang(RDFLanguages.NTRIPLES)
-      case "application/rdf+xml"     =>
+      case "application/rdf+xml" =>
         parser.lang(RDFLanguages.RDFXML)
-      case _                         =>
+      case _ =>
         throw new Exception(s"Unsupported RDF media type $mediaType")
     }
     parser.parse(model)
@@ -129,7 +133,7 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
 
   /**
     * Write model as a String representation
- *
+    *
     * @param mediaType
     * @return
     */
@@ -140,29 +144,38 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
     Some(writer.toString)
   }
 
-  override def serializeWriter(mediaType: String,
-                               writer: Writer): Option[Writer] = {
+  override def serializeWriter(mediaType: String, writer: Writer): Option[Writer] = {
 
-    val format = formatForMediaType(mediaType)
+    val format      = formatForMediaType(mediaType)
     val graphWriter = RDFWriterRegistry.getWriterGraphFactory(format).create(format)
-    val modelGraph = model.getGraph
-    graphWriter.write(writer, modelGraph, RiotLib.prefixMap(modelGraph), "", new Context())
-    Some(writer)
+    val modelGraph  = model.getGraph
+    writer match {
+      case WrappedWriter(wrapped: JavaWriter) =>
+        write(graphWriter, modelGraph, wrapped)
+        Some(writer)
+      case _ =>
+        val str = new StringWriter()
+        write(graphWriter, modelGraph, str)
+        Some(WrappedWriter(str))
+    }
   }
+
+  private def write(graphWriter: WriterGraphRIOT, modelGraph: Graph, writer: JavaWriter): Unit =
+    graphWriter.write(writer, modelGraph, RiotLib.prefixMap(modelGraph), "", new Context())
 
   protected def formatForMediaType(mediaType: String) = {
     mediaType match {
-      case "application/ld+json"     =>
+      case "application/ld+json" =>
         RDFFormat.JSONLD_EXPAND_FLAT // flatten and without context
       case "text/n3" | "text/rdf+n3" =>
         RDFFormat.NT
       case "application/x-turtle" | "text/turtle" =>
         RDFFormat.TURTLE
-      case "text/plain"              =>
+      case "text/plain" =>
         RDFFormat.NTRIPLES
-      case "application/rdf+xml"     =>
+      case "application/rdf+xml" =>
         RDFFormat.RDFXML
-      case _                         =>
+      case _ =>
         throw new Exception(s"Unsupported RDF media type $mediaType")
     }
   }

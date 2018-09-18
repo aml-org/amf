@@ -1,10 +1,9 @@
 package amf.core.rdf
 
-import java.io.Writer
-
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParsedDocument
+import org.yaml.writer.Writer
 
 case class RdfModelDocument(model: RdfModel) extends ParsedDocument
 

@@ -1,16 +1,15 @@
 package amf.plugins.features.validation
 
-import java.io.Writer
-
 import amf.core.rdf._
 import amf.core.vocabulary.Namespace
+import org.yaml.writer.Writer
 
 import scala.scalajs.js
 
 object RDF {
   lazy val instance: js.Dynamic = if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
     throw new Exception("Cannot find global SHACLValidator object")
-  }  else {
+  } else {
     js.Dynamic.global.SHACLValidator.`$rdf`
   }
 }
@@ -18,14 +17,14 @@ object RDF {
 object JSONLD {
   lazy val instance: js.Dynamic = if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
     throw new Exception("Cannot find global SHACLValidator object")
-  }  else {
+  } else {
     js.Dynamic.global.SHACLValidator.jsonld
   }
 }
 
 class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfModel {
 
-  lazy val rdf: js.Dynamic = RDF.instance
+  lazy val rdf: js.Dynamic    = RDF.instance
   lazy val jsonld: js.Dynamic = JSONLD.instance
 
   override def addTriple(subject: String, predicate: String, objResource: String): RdfModel = {
@@ -39,7 +38,10 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
     this
   }
 
-  override def addTriple(subject: String, predicate: String, objLiteralValue: String, objLiteralType: Option[String]): RdfModel = {
+  override def addTriple(subject: String,
+                         predicate: String,
+                         objLiteralValue: String,
+                         objLiteralType: Option[String]): RdfModel = {
     nodesCache = nodesCache - subject
     val s = rdf.namedNode(subject)
     val p = rdf.namedNode(predicate)
@@ -62,27 +64,25 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
   override def findNode(uri: String): Option[Node] = {
     nodesCache.get(uri) match {
       case Some(node) => Some(node)
-      case _          =>
+      case _ =>
         val id = s"<$uri>"
         model.subjectIndex.asInstanceOf[js.Dictionary[js.Array[js.Dynamic]]].get(id) match {
           case Some(statements) =>
-
             var resourceProperties = Map[String, Seq[PropertyObject]]()
             var resourceClasses    = Seq[String]()
 
-
             statements.foreach { statement =>
-
               val property = statement.predicate.uri.asInstanceOf[String]
 
-              val obj = statement.`object`
+              val obj      = statement.`object`
               val oldProps = resourceProperties.getOrElse(property, Nil)
 
               if (property == (Namespace.Rdf + "type").iri()) {
                 resourceClasses ++= Seq(obj.uri.asInstanceOf[String])
               } else if (obj.termType.asInstanceOf[String] == "Literal") {
 
-                resourceProperties = resourceProperties.updated(property,
+                resourceProperties = resourceProperties.updated(
+                  property,
                   oldProps ++ Seq(
                     Literal(
                       value = s"${obj.value}",
@@ -96,13 +96,13 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
                 )
 
               } else {
-                resourceProperties = resourceProperties.updated(property,
-                  oldProps ++ Seq(
-                    Uri(
-                      value = s"${Option(obj.uri).getOrElse(obj.toCanonical())}"
-                    )
-                  )
-                )
+                resourceProperties =
+                  resourceProperties.updated(property,
+                                             oldProps ++ Seq(
+                                               Uri(
+                                                 value = s"${Option(obj.uri).getOrElse(obj.toCanonical())}"
+                                               )
+                                             ))
               }
             }
 
@@ -122,7 +122,7 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
 
   /**
     * Write model as a String representation
- *
+    *
     * @param mediaType
     * @return
     */
@@ -130,16 +130,14 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
     throw new Exception("Sync rdf serialization not supported yet")
   }
 
-
   /**
     * Write model using a writer
- *
+    *
     * @param mediaType
-    * @writer writer where to send the representation
+    * @param writer writer where to send the representation
     * @return
     */
-  override def serializeWriter(mediaType: String,
-                               writer: Writer): Option[Writer] = {
+  override def serializeWriter(mediaType: String, writer: Writer): Option[Writer] = {
     throw new Exception("Sync rdf serialization to writer not supported yet")
   }
 }

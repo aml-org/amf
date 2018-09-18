@@ -1,9 +1,10 @@
 package amf.core.rdf
-import java.io.Writer
+
+import org.yaml.writer.Writer
 
 class PropertyObject(val value: String)
 case class Literal(override val value: String, literalType: Option[String]) extends PropertyObject(value)
-case class Uri(override val value: String) extends PropertyObject(value)
+case class Uri(override val value: String)                                  extends PropertyObject(value)
 case class Node(subject: String, classes: Seq[String], properties: Map[String, Seq[PropertyObject]])
 
 /**
@@ -22,7 +23,7 @@ abstract class RdfModel {
   }
 
   /**
-  * Load RDF string representation in this model
+    * Load RDF string representation in this model
     * @param text
     * @param mediaType
     */
@@ -38,7 +39,7 @@ abstract class RdfModel {
   /**
     * Write model using a writer
     * @param mediaType
-    * @writer writer where to send the representation
+    * @param writer writer where to send the representation
     * @return
     */
   def serializeWriter(mediaType: String, writer: Writer): Option[Writer]

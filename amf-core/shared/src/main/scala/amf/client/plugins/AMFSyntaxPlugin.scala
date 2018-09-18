@@ -1,9 +1,8 @@
 package amf.client.plugins
 
-import java.io.Writer
-
 import amf.core.client.ParsingOptions
 import amf.core.parser.{ParsedDocument, ParserContext}
+import org.yaml.writer.Writer
 
 abstract class AMFSyntaxPlugin extends AMFPlugin {
   def supportedMediaTypes(): Seq[String]

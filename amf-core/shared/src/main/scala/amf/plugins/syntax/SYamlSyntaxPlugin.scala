@@ -1,7 +1,5 @@
 package amf.plugins.syntax
 
-import java.io.Writer
-
 import amf.client.plugins.{AMFPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.client.ParsingOptions
@@ -11,6 +9,7 @@ import amf.core.unsafe.PlatformSecrets
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.{JsonParser, YamlParser}
 import org.yaml.render.{JsonRender, YamlRender}
+import org.yaml.writer.Writer
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
