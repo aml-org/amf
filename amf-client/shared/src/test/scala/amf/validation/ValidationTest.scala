@@ -301,6 +301,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+  test("Erroneous JSON schema in ResourceType test") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "/resource_type_failing_schema/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, RamlProfile)
+    } yield {
+      assert(!report.conforms)
+      assert(report.results.size == 3)
+    }
+  }
+
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
   //test("pattern raml example test") { was duplicated by   test("Param in raml 0.8 api") {

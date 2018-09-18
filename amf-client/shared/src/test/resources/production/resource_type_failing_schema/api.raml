@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: test
+baseUri: https://test.com/
+
+uses:
+  rt: libraries/resourceTypes.raml
+
+/test:
+  type: rt.RT
+  delete:
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            properties:
+              a: string
+
