@@ -232,7 +232,7 @@ case class RamlXmlSchemaExpression(key: YNode,
     val parsed = value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
-        val parsedSchema = typeOrSchema(map) match {
+        val parsedSchema = nestedTypeOrSchema(map) match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
             val shape =
               SchemaShape().withRaw(typeEntry.value.as[YScalar].text).withMediaType("application/xml")
@@ -314,7 +314,7 @@ trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with Ram
     value.tagType match {
       case YType.Map =>
         val map = value.as[YMap]
-        typeOrSchema(map) match {
+        nestedTypeOrSchema(map) match {
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
             ValueAndOrigin(typeEntry.value.as[YScalar].text, typeEntry.value, getOrigi(typeEntry.value))
           case _ =>

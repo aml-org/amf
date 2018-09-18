@@ -59,9 +59,11 @@ object RamlTypeDefMatcher {
       case _               => default
     }
 
+  def ltrim(s: String) = s.replaceAll("^\\s+", "")
+
   object XMLSchema {
     def unapply(str: String): Option[String] = {
-      val trimed = str
+      val trimed = ltrim(str)
       if (trimed.startsWith("<") && !(trimed.startsWith("<<") && trimed.endsWith(">>"))) Some(str)
       else None
     }
@@ -69,18 +71,19 @@ object RamlTypeDefMatcher {
 
   object JSONSchema {
     def unapply(str: String): Option[String] = {
-      val trimed = str.trim
+      val trimed = ltrim(str.trim)
       if (trimed.startsWith("[") || trimed.startsWith("{")) Some(str)
       else None
     }
   }
 
   object TypeExpression {
-    def unapply(str: String): Option[String] =
-      if ((str.contains("[]") && !str.startsWith("[") && str.endsWith("]")) || str.contains("|") || str.contains("(") || str
-            .contains(")"))
+    def unapply(str: String): Option[String] = {
+      val trimed = ltrim(str.trim)
+      if ((trimed.contains("[]") && !trimed.startsWith("[") && trimed.endsWith("]")) || trimed.contains("|") || trimed.contains("(") || trimed.contains(")"))
         Some(str)
       else None
+    }
   }
 }
 

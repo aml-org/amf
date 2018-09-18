@@ -312,6 +312,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       assert(report.results.size == 3)
     }
   }
+  
+  test("Nested XML Schema test") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "/nested_xml_schema/api.raml", platform, RamlYamlHint, validation)
+        .build()
+      report <- validation.validate(doc, Raml10Profile)
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
 
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
