@@ -1384,7 +1384,9 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
           "$ref",
           pointerRef
         )
-      case _ => // ignore
+      case _ =>
+        println("NOPE!!!!!!!!!!!!!!!!")
+      // ignore
     }
   }
 
