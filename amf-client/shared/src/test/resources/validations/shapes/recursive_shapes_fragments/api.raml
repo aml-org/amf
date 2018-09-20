@@ -1,5 +1,5 @@
 #%RAML 1.0
-title: Provisioning and Activation Module
+title: test
 
 protocols: [ HTTPS ]
 types:
@@ -12,10 +12,10 @@ types:
       application/json:
         type: object
         properties:
-          devices:
+          x:
             required: true
             type: Device
-          transactionType:
+          y:
             required: true
             type: string
-        example: !include examples/CJ1.RetrievePlans.Request.json
+        example: !include examples/example.json

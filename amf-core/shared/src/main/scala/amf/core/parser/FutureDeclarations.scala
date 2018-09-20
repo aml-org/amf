@@ -2,6 +2,8 @@ package amf.core.parser
 
 import amf.core.model.domain.Linkable
 
+import scala.collection.mutable
+
 case class DeclarationPromise(private val success: (Linkable) => Any,
                               private val failure: () => Any,
                               var resolved: Boolean = false) {
@@ -19,16 +21,16 @@ case class DeclarationPromise(private val success: (Linkable) => Any,
 
 trait FutureDeclarations {
 
-  var promises: Map[String, Seq[DeclarationPromise]] = Map()
+  val promises: mutable.Map[String, Seq[DeclarationPromise]] = mutable.Map()
 
   def futureRef(id: String, name: String, promise: DeclarationPromise): Unit = {
     val otherPromises = promises.getOrElse(name, Seq[DeclarationPromise]())
-    promises = promises.updated(name, otherPromises ++ Seq(promise))
+    promises.update(name, otherPromises ++ Seq(promise))
   }
 
   def resolveRef(name: String, value: Linkable): Unit = {
     promises.getOrElse(name, Seq[DeclarationPromise]()).foreach(_.resolve(value))
-    promises = promises.updated(name, Seq[DeclarationPromise]())
+    promises.update(name, Seq[DeclarationPromise]())
   }
 
   /** Resolve all UnresolvedShape references or fail. */

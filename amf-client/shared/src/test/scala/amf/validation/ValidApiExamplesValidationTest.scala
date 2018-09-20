@@ -215,5 +215,11 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Test valid array of object against enum") {
     checkValid("/enums/valid-obj-array-enums.raml")
   }
+
+  test("Test mutually recursive shapes in fragments") {
+    checkValid("/shapes/recursive_shapes_fragments/api.raml")
+  }
+
+
   override val hint: Hint = RamlYamlHint
 }
