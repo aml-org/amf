@@ -292,6 +292,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val InvalidDeclarationPathComponent = ValidationSpecification(
+    (Namespace.AmfParser + "invalid-declaration-path").iri(),
+    "Declaration Path component is not present in tree",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val levels: Map[String, Map[ProfileName, String]] = Map(
     DuplicatedOperationStatusCodeSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
@@ -595,6 +603,15 @@ object ParserSideValidations {
       Oas20Profile  -> SeverityLevels.WARNING,
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.WARNING
+    ),
+    InvalidDeclarationPathComponent.id -> Map(
+      RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
+      Raml08Profile -> SeverityLevels.VIOLATION,
+      OasProfile    -> SeverityLevels.WARNING,
+      Oas20Profile  -> SeverityLevels.WARNING,
+      Oas30Profile  -> SeverityLevels.WARNING,
+      AmfProfile    -> SeverityLevels.WARNING
     )
   )
 
@@ -630,6 +647,7 @@ object ParserSideValidations {
     OasInvalidBodyParameter,
     ResolutionErrorSpecification,
     PatternPropertiesOnClosedNodeSpecification,
-    DiscriminatorOnExtendedUnionSpecification
+    DiscriminatorOnExtendedUnionSpecification,
+    InvalidDeclarationPathComponent
   )
 }

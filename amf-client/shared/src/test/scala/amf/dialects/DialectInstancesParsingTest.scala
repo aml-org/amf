@@ -150,12 +150,16 @@ class DialectInstancesParsingTest extends BuildCycleTests {
   if (platform.name == "jvm") {
     test("parse 23 (non-amf) test") {
       withDialect("dialect23.raml",
-        "example23.raml",
-        "example23.rdf.json",
-        VocabularyYamlHint,
-        Amf,
-        useAmfJsonldSerialisation = false)
+                  "example23.raml",
+                  "example23.rdf.json",
+                  VocabularyYamlHint,
+                  Amf,
+                  useAmfJsonldSerialisation = false)
     }
+  }
+
+  test("parse 24 test") {
+    withDialect("dialect24.raml", "example24.raml", "example24.json", VocabularyJsonHint, Amf)
   }
 
   if (platform.name == "jvm") {
@@ -272,12 +276,16 @@ class DialectInstancesParsingTest extends BuildCycleTests {
   if (platform.name == "jvm") {
     test("generate 23 (non-amf) test") {
       withDialect("dialect23.raml",
-        "example23.rdf.json",
-        "example23.raml",
-        AmfJsonHint,
-        Aml,
-        useAmfJsonldSerialisation = false)
+                  "example23.rdf.json",
+                  "example23.raml",
+                  AmfJsonHint,
+                  Aml,
+                  useAmfJsonldSerialisation = false)
     }
+  }
+
+  test("generate 24 test") {
+    withDialect("dialect24.raml", "example24.json", "example24.raml", AmfJsonHint, Aml)
   }
 
   protected def withDialect(dialect: String,
