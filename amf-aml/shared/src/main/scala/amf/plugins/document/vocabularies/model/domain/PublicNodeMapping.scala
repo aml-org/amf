@@ -7,7 +7,11 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentMappingModel._
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel._
 import amf.plugins.document.vocabularies.metamodel.domain.PublicNodeMappingModel._
-import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, DocumentsModelModel, PublicNodeMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{
+  DocumentMappingModel,
+  DocumentsModelModel,
+  PublicNodeMappingModel
+}
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 case class PublicNodeMapping(fields: Fields, annotations: Annotations) extends DomainElement {
@@ -72,11 +76,13 @@ case class DocumentsModel(fields: Fields, annotations: Annotations) extends Doma
   def library(): DocumentMapping        = fields.field(Library)
   def fragments(): Seq[DocumentMapping] = fields.field(Fragments)
   def selfEncoded(): BoolField          = fields.field(SelfEncoded)
+  def declarationsPath(): StrField      = fields.field(DeclarationsPath)
 
   def withRoot(documentMapping: DocumentMapping): DocumentsModel     = set(Root, documentMapping)
   def withLibrary(library: DocumentMapping): DocumentsModel          = set(Library, library)
   def withFragments(fragments: Seq[DocumentMapping]): DocumentsModel = setArrayWithoutId(Fragments, fragments)
   def withSelfEncoded(selfEncoded: Boolean): DocumentsModel          = set(SelfEncoded, selfEncoded)
+  def withDeclarationsPath(declarationsPath: String): DocumentsModel = set(DeclarationsPath, declarationsPath)
 
   override def meta: Obj = DocumentsModelModel
 

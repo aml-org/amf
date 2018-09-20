@@ -1,17 +1,17 @@
 package amf.plugins.document.vocabularies.metamodel.document
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Str}
+import amf.core.metamodel.Type.Str
 import amf.core.metamodel.document.{DocumentModel, FragmentModel, ModuleModel}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, ExternalModel}
+import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 
 object DialectModel extends DocumentModel with ExternalContextModel {
 
-  val Name = Field(Str, Namespace.Schema + "name")
-  val Version = Field(Str, Namespace.Schema + "version")
+  val Name      = Field(Str, Namespace.Schema + "name")
+  val Version   = Field(Str, Namespace.Schema + "version")
   val Documents = Field(DocumentsModelModel, Namespace.Meta + "documents")
 
   override def modelInstance: AmfObject = Dialect()
@@ -21,7 +21,6 @@ object DialectModel extends DocumentModel with ExternalContextModel {
 
   override def fields: List[Field] = Name :: Version :: Externals :: Documents :: DocumentModel.fields
 }
-
 
 object DialectLibraryModel extends ModuleModel with ExternalContextModel {
   override def modelInstance: AmfObject = DialectLibrary()

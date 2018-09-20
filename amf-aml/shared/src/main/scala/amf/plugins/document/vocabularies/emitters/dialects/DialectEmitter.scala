@@ -7,16 +7,15 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, Position}
+import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.annotations.AliasesLocation
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, PropertyMappingModel}
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YType}
@@ -114,18 +113,21 @@ case class LibraryDocumentModelEmitter(dialect: Dialect,
 case class DocumentsModelOptionsEmitter(dialect: Dialect,
                                         ordering: SpecOrdering,
                                         aliases: Map[String, (String, String)] = Map())
-  extends EntryEmitter
+    extends EntryEmitter
     with AliasesConsumer {
 
-  val mapping: DocumentsModel    = dialect.documents()
+  val mapping: DocumentsModel     = dialect.documents()
   var emitters: Seq[EntryEmitter] = Seq()
 
-  private def hasOptions(): Boolean = mapping.selfEncoded().option().isDefined
+  private def hasOptions(): Boolean =
+    Seq(mapping.selfEncoded().option(), mapping.declarationsPath().option()).flatten.nonEmpty
 
   val sortedNodes: Seq[MapEntryEmitter] = if (hasOptions()) {
-    val options     = Map("selfEncoded" -> mapping.selfEncoded().option())
-    val types       = Map("selfEncoded" -> YType.Bool)
-    val annotations = Map("selfEncoded" -> mapping.selfEncoded().annotations())
+    val options =
+      Map("selfEncoded" -> mapping.selfEncoded().option(), "declarationsPath" -> mapping.declarationsPath().option())
+    val types = Map("selfEncoded" -> YType.Bool, "declarationsPath" -> YType.Str)
+    val annotations = Map("selfEncoded" -> mapping.selfEncoded().annotations(),
+                          "declarationsPath" -> mapping.declarationsPath().annotations())
 
     val optionNodes: Seq[MapEntryEmitter] = options.map {
       case (optionName, maybeValue) =>
@@ -144,7 +146,8 @@ case class DocumentsModelOptionsEmitter(dialect: Dialect,
 
   override def emit(b: EntryBuilder): Unit = {
     if (sortedNodes.nonEmpty) {
-      b.entry("options", _.obj { b => traverse(sortedNodes, b)
+      b.entry("options", _.obj { b =>
+        traverse(sortedNodes, b)
       })
     }
   }
