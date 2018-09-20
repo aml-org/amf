@@ -1,17 +1,16 @@
 package amf.core
 
+import amf.client.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.client.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
 import amf.core.parser.ParsedDocument
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.RuntimeSerializer
 import org.yaml.writer.Writer
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: RenderOptions) {
 
@@ -29,13 +28,18 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   }
 
   /** Print ast to writer. */
-  def renderToWriter(writer: Writer): Future[Writer] = Future { render(writer) }
+  def renderToWriter(writer: Writer)(implicit executor: ExecutionContext): Future[Writer] = Future(render(writer))
 
   /** Print ast to string. */
-  def renderToString: Future[String] = Future { render() }
+  def renderToString: Future[String] = {
+    Future(render())(scala.concurrent.ExecutionContext.Implicits.global)
+  }
 
   /** Print ast to file. */
-  def renderToFile(remote: Platform, path: String): Future[Unit] = Future { render() }.map(remote.write(path, _))
+  def renderToFile(remote: Platform, path: String): Future[Unit] = {
+    import scala.concurrent.ExecutionContext.Implicits.global
+    Future(render()).map(remote.write(path, _))
+  }
 
   private def render(writer: Writer): Writer =
     parsed { (syntaxPlugin, mediaType, ast) =>

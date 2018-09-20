@@ -78,6 +78,8 @@ class Renderer(vendor: String, mediaType: String) {
   private def generate(unit: InternalBaseUnit, options: InternalRenderOptions): Future[String] =
     new AMFSerializer(unit, mediaType, vendor, options).renderToString
 
-  private def generate(unit: InternalBaseUnit, options: InternalRenderOptions, writer: Writer): Future[Writer] =
+  private def generate(unit: InternalBaseUnit, options: InternalRenderOptions, writer: Writer): Future[Writer] = {
+    import scala.concurrent.ExecutionContext.Implicits.global
     new AMFSerializer(unit, mediaType, vendor, options).renderToWriter(writer)
+  }
 }
