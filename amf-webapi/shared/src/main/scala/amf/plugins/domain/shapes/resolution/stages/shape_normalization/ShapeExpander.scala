@@ -8,26 +8,18 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.shapes.resolution.stages.RecursionHandler
+import amf.plugins.domain.shapes.resolution.stages.RecursionErrorRegister
 
 private[stages] object ShapeExpander {
-  def apply(s: Shape, context: NormalizationContext): Shape =
-    new ShapeExpander(s, ErrorRecusionHanlder())(context).normalize()
+  def apply(s: Shape, context: NormalizationContext, recursionRegister: RecursionErrorRegister): Shape =
+    new ShapeExpander(s, recursionRegister: RecursionErrorRegister)(context).normalize()
 }
 
-sealed case class ShapeExpander(root: Shape, recursionHandler: RecursionHandler)(
+sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRegister)(
     implicit val context: NormalizationContext)
     extends ShapeNormalizer {
 
-  def normalize(): Shape = {
-    try {
-      normalize(root)
-    } catch {
-      case _: RecursiveStructure =>
-        ShapeExpander(root, context.recursionHandler).normalize()
-      // todo: reset recursion handler?
-    }
-  }
+  def normalize(): Shape = normalize(root)
 
   protected val traversed: IdsTraversionCheck =
     IdsTraversionCheck().withAllowedCyclesInstances(Seq(classOf[UnresolvedShape]))
@@ -40,17 +32,15 @@ sealed case class ShapeExpander(root: Shape, recursionHandler: RecursionHandler)
 
   private def recursiveNormalization(shape: Shape) = traversed.runPushed(_ => normalize(shape))
 
-  override def normalizeAction(s: Shape): Shape = {
-    val shape = recursionHandler.shapeBeforeExpansion(s)
+  override def normalizeAction(shape: Shape): Shape = {
     shape match {
-      case l: Linkable if l.isLink =>
-        recursionHandler.recursionAndError(root, Some(root.id), shape, traversed)
+      case l: Linkable if l.isLink => recursionRegister.recursionAndError(root, Some(root.id), shape, traversed)
       case _ if traversed.has(shape) && !shape.isInstanceOf[RecursiveShape] =>
-        recursionHandler.recursionAndError(root, None, shape, traversed)
+        recursionRegister.recursionAndError(root, None, shape, traversed)
       case _ =>
         ensureCorrect(shape)
-        if (!shape.isInstanceOf[PropertyShape]) traversed + shape.id
-        val normalized = traversed.runPushed(_ => {
+        traversed + shape.id
+        traversed.runPushed(_ => {
           shape match {
             case union: UnionShape       => expandUnion(union)
             case scalar: ScalarShape     => expandAny(scalar)
@@ -62,11 +52,10 @@ sealed case class ShapeExpander(root: Shape, recursionHandler: RecursionHandler)
             case nil: NilShape           => nil
             case node: NodeShape         => expandNode(node)
             case recursive: RecursiveShape =>
-              recursionHandler.recursionError(recursive, recursive, recursive.id, traversed)
+              recursionRegister.recursionError(recursive, recursive, recursive.id, traversed)
             case any: AnyShape => expandAny(any)
           }
         })
-        normalized
     }
   }
 
@@ -76,7 +65,7 @@ sealed case class ShapeExpander(root: Shape, recursionHandler: RecursionHandler)
       // in this case i use the father shape id and position, because the inheritance could be a recursive shape already
       val newInherits = shape.inherits.map {
         case r: RecursiveShape if r.fixpoint.option().exists(_.equals(shape.id)) =>
-          recursionHandler.recursionError(shape, r, r.id, traversed) // direct recursion
+          recursionRegister.recursionError(shape, r, r.id, traversed) // direct recursion
         case r: RecursiveShape => r
         case other             => recursiveNormalization(other)
       }
@@ -123,7 +112,7 @@ sealed case class ShapeExpander(root: Shape, recursionHandler: RecursionHandler)
     val oldItems  = array.fields.getValue(ArrayShapeModel.Items)
     if (mandatory)
       array.inherits.collect({ case arr: ArrayShape if arr.items.isInstanceOf[RecursiveShape] => arr }).foreach { f =>
-        recursionHandler.recursionError(array, f.items.asInstanceOf[RecursiveShape], array.id, traversed)
+        recursionRegister.recursionError(array, f.items.asInstanceOf[RecursiveShape], array.id, traversed)
       }
     if (Option(oldItems).isDefined) {
       if (mandatory) {
@@ -221,17 +210,3 @@ sealed case class ShapeExpander(root: Shape, recursionHandler: RecursionHandler)
     union
   }
 }
-
-// Handler only for detect if the root shape contains any recursion, so it MUST be cloned.
-sealed case class ErrorRecusionHanlder() extends RecursionHandler {
-  override def recursionAndError(root: Shape, base: Option[String], s: Shape, traversed: IdsTraversionCheck)(
-      implicit context: NormalizationContext): RecursiveShape = throw new RecursiveStructure
-
-  override def shapeBeforeExpansion(s: Shape): Shape = s
-
-  override def recursionError(original: Shape, r: RecursiveShape, checkId: String, traversed: IdsTraversionCheck)(
-      implicit context: NormalizationContext): RecursiveShape = throw new RecursiveStructure
-
-}
-
-sealed class RecursiveStructure extends Exception

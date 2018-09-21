@@ -152,7 +152,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = AnyShape.apply
 
-  override def copyShape(): this.type = super.copyShape()
+  override def copyShape(): this.type = super.copyShape().withId(id)
 }
 
 object AnyShape {

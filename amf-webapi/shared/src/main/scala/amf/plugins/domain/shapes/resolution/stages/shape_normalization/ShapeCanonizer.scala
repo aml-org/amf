@@ -14,12 +14,7 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 private[stages] object ShapeCanonizer {
-  def apply(s: Shape, context: NormalizationContext): Shape = {
-    if (context.recursionHandler.isRootRecursive(s)) skipCache(s, context)
-    else ShapeCanonizer()(context).normalize(s)
-  }
-
-  def skipCache(s: Shape, context: NormalizationContext): Shape = ShapeCanonizer()(context).normalizeWithoutCaching(s)
+  def apply(s: Shape, context: NormalizationContext): Shape = ShapeCanonizer()(context).normalize(s)
 }
 
 sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) extends ShapeNormalizer {
@@ -32,16 +27,13 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
   private var withoutCaching = false
 
   private def runWithoutCaching[T](fn: () => T): T = {
-    if (withoutCaching) fn()
-    else {
-      withoutCaching = true
-      val t: T = fn()
-      withoutCaching = false
-      t
-    }
+    withoutCaching = true
+    val t: T = fn()
+    withoutCaching = false
+    t
   }
 
-  def normalizeWithoutCaching(s: Shape): Shape = runWithoutCaching(() => normalize(s))
+  private def normalizeWithoutCaching(s: Shape): Shape = runWithoutCaching(() => normalize(s))
 
   private def actionWithoutCaching(s: Shape): Shape = runWithoutCaching(() => normalizeAction(s))
 
@@ -174,7 +166,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     }
   }
 
-  protected def aggregateExamples(shape: Shape, referencedShape: Shape): Unit = {
+  protected def aggregateExamples(shape: Shape, referencedShape: Shape) = {
     val names: mutable.Set[String] = mutable.Set() // duplicated names
     var exCounter                  = 0
     if (shape.isInstanceOf[AnyShape] && referencedShape.isInstanceOf[AnyShape]) {

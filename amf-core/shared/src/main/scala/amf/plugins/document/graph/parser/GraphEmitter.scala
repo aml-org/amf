@@ -407,9 +407,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                       ctx: EmissionContext): Unit = {
       val scalarEmitter = options.getCustomEmitter.getOrElse(DefaultScalarEmitter)
       t match {
-        case _: ShapeModel
-            if (!v.value
-              .isInstanceOf[RecursiveShape]) && v.value.annotations.contains(classOf[ResolvedInheritance]) && !ctx.declares =>
+        case _: ShapeModel if v.value.annotations.contains(classOf[ResolvedInheritance]) && !ctx.declares =>
           extractToLink(v.value.asInstanceOf[Shape], b, ctx)
         case t: DomainElement with Linkable if t.isLink =>
           link(b, t, inArray = false, ctx)

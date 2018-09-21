@@ -10,7 +10,6 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization._
 import amf.plugins.features.validation.ParserSideValidations
 
-import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 /**
@@ -42,29 +41,17 @@ class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean
 
   protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
     element match {
-      case shape: Shape => Some(ShapeCanonizer(ShapeExpander(shape, context), context))
+      case shape: Shape => Some(ShapeCanonizer(ShapeExpander(shape, context, recursionRegister), context))
       case other        => Some(other)
     }
   }
 
-}
-
-private[stages] trait RecursionHandler {
-  def recursionError(original: Shape, r: RecursiveShape, checkId: String, traversed: IdsTraversionCheck)(
-      implicit context: NormalizationContext): RecursiveShape
-  def recursionAndError(root: Shape, base: Option[String], s: Shape, traversed: IdsTraversionCheck)(
-      implicit context: NormalizationContext): RecursiveShape
-
-  def shapeBeforeExpansion(s: Shape): Shape
+  private val recursionRegister = RecursionErrorRegister()
 
 }
 
-private[stages] case class DefaultRecursionHandler() extends RecursionHandler {
+private[stages] case class RecursionErrorRegister() {
   private val avoidRegister = ListBuffer[String]()
-
-  private val rootWithRecursion: mutable.Set[String] = mutable.Set()
-
-  def isRootRecursive(s: Shape): Boolean = rootWithRecursion.contains(s.id)
 
   private def buildRecursion(base: Option[String], s: Shape): RecursiveShape = {
     val fixPointId = base.getOrElse(s.id)
@@ -72,13 +59,11 @@ private[stages] case class DefaultRecursionHandler() extends RecursionHandler {
     r
   }
 
-  override def recursionAndError(root: Shape, base: Option[String], s: Shape, traversed: IdsTraversionCheck)(
-      implicit context: NormalizationContext): RecursiveShape = {
-    rootWithRecursion += root.id
+  def recursionAndError(root: Shape, base: Option[String], s: Shape, traversed: IdsTraversionCheck)(
+      implicit context: NormalizationContext): RecursiveShape =
     recursionError(root, buildRecursion(base, s), root.id, traversed: IdsTraversionCheck)
-  }
 
-  override def recursionError(original: Shape, r: RecursiveShape, checkId: String, traversed: IdsTraversionCheck)(
+  def recursionError(original: Shape, r: RecursiveShape, checkId: String, traversed: IdsTraversionCheck)(
       implicit context: NormalizationContext): RecursiveShape = {
 
     val canRegister = !avoidRegister.contains(r.id)
@@ -97,6 +82,4 @@ private[stages] case class DefaultRecursionHandler() extends RecursionHandler {
     }
     r
   }
-
-  override def shapeBeforeExpansion(s: Shape): Shape = s.copyShape()
 }
