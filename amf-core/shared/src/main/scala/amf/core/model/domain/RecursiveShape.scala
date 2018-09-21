@@ -8,7 +8,12 @@ import amf.core.parser.{Annotations, ErrorHandler, Fields}
 
 case class RecursiveShape(override val fields: Fields, override val annotations: Annotations) extends Shape {
 
+  var fixpointTarget: Option[Shape] = None
   def fixpoint: StrField = fields.field(FixPoint)
+  def withFixpointTarget(target: Shape): this.type = {
+    fixpointTarget = Some(target)
+    this
+  }
 
   def withFixPoint(shapeId: String): this.type = set(FixPoint, shapeId)
 
@@ -18,6 +23,7 @@ case class RecursiveShape(override val fields: Fields, override val annotations:
     val cloned = RecursiveShape()
     cloned.id = this.id
     copyFields(recursionErrorHandler, cloned, None, traversed)
+    fixpointTarget.foreach(cloned.withFixpointTarget)
     cloned
   }
 
@@ -46,6 +52,7 @@ object RecursiveShape {
       .adopted(l.id)
       .withSupportsRecursion(l.supportsRecursion.value())
       .withFixPoint(l.id)
+      .withFixpointTarget(l.effectiveLinkTarget.asInstanceOf[Shape])
 
   def apply(shape: Shape): RecursiveShape =
     apply(Fields(), shape.annotations)
@@ -53,4 +60,5 @@ object RecursiveShape {
       .adopted(shape.id)
       .withSupportsRecursion(shape.supportsRecursion.value())
       .withFixPoint(shape.id)
+      .withFixpointTarget(shape)
 }

@@ -21,7 +21,7 @@ class RecursiveShapesTest extends MultiPlatformReportGenTest with BuildCycleTest
   private case class RecursiveShapeFixture(api: String, report: String, oasGoldenPath: String)
   private val fixture: Seq[RecursiveShapeFixture] =
     Seq(
-      RecursiveShapeFixture("props1.raml", "props1.report", "props1.json"),
+      // RecursiveShapeFixture("props1.raml", "props1.report", "props1.json"),
       RecursiveShapeFixture("props2.raml", "props2.report", "props2.json")
     )
 
@@ -30,7 +30,7 @@ class RecursiveShapesTest extends MultiPlatformReportGenTest with BuildCycleTest
       validate(rf.api, Some(rf.report))
     }
 
-    test("Test emittion " + rf.api) {
+    test("HERE_HERE Test emission " + rf.api) {
       cycle(rf.api, rf.oasGoldenPath)
     }
 

@@ -35,7 +35,10 @@ trait ShapeHelpers { this: Shape =>
       val cloned: Shape = this match {
         case _: Linkable if this.isLink =>
           buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler)
-        case _: RecursiveShape                             => RecursiveShape(annotations)
+        case r: RecursiveShape                             => r.fixpointTarget match {
+          case Some(target) => r.withFixpointTarget(target)
+          case _            => r
+        }
         case _: UnionShape                                 => UnionShape(annotations)
         case _: ScalarShape                                => ScalarShape(annotations)
         case _: ArrayShape                                 => ArrayShape(annotations)

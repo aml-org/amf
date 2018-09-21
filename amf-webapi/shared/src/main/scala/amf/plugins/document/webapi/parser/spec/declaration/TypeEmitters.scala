@@ -1373,7 +1373,8 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
       case Some(id) =>
         schemaPath.reverse.find(_._1 == id) match {
           case Some((_, pointer)) => Some(pointer)
-          case _                  => schemaPath.headOption.map(_._2) // if there is not any match i assume recursion through root
+          case _                  =>
+            recursive.fixpointTarget.flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
         }
       case _ => None
     }

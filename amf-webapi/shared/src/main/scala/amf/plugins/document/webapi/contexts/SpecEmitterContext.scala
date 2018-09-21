@@ -375,6 +375,9 @@ abstract class RamlSpecEmitterContext(refEmitter: RefEmitter) extends SpecEmitte
 }
 
 abstract class OasSpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends SpecEmitterContext(refEmitter) {
+
+  def schemasDeclarationsPath: String
+
   override def localReference(reference: Linkable): PartEmitter =
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
@@ -390,16 +393,20 @@ final case class JsonSchemaEmitterContext() extends Oas2SpecEmitterContext {
   override val typeDefMatcher: OasTypeDefStringValueMatcher = JsonSchemaTypeDefMatcher
 
   override val anyOfKey: String = "anyOf"
+
+  override def schemasDeclarationsPath: String = "/definitions/"
 }
 
 class Oas3SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
   override val factory: OasSpecEmitterFactory = Oas3SpecEmitterFactory()(this)
   override val vendor: Vendor                 = Oas30
+  override def schemasDeclarationsPath: String = "/components/schemas/"
 }
 
 class Oas2SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
   override val factory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(this)
   override val vendor: Vendor                 = Oas20
+  override def schemasDeclarationsPath: String = "/definitions/"
 }
 
 trait RefEmitter {
