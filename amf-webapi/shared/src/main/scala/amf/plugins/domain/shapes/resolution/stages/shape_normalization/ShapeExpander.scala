@@ -35,8 +35,10 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   override def normalizeAction(shape: Shape): Shape = {
     shape match {
       case l: Linkable if l.isLink => recursionRegister.recursionAndError(root, Some(root.id), shape, traversed)
+
       case _ if traversed.has(shape) && !shape.isInstanceOf[RecursiveShape] =>
         recursionRegister.recursionAndError(root, None, shape, traversed)
+
       case _ =>
         ensureCorrect(shape)
         traversed + shape.id
@@ -145,7 +147,20 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   protected def expandNode(node: NodeShape): NodeShape = {
     val oldProperties = node.fields.getValue(NodeShapeModel.Properties)
     if (Option(oldProperties).isDefined) {
-      val newProperties = node.properties.map { recursiveNormalization }
+      val newProperties = node.properties.map { prop =>
+        val newPropertyShape = recursiveNormalization(prop).asInstanceOf[PropertyShape]
+        // update the closure
+        newPropertyShape.range match {
+          case rec: RecursiveShape =>
+            rec.fixpointTarget.foreach(target =>
+              node.closureShapes ++= Seq(target).filter(_.id != node.id)
+            )
+          case other               =>
+            node.closureShapes ++= other.closureShapes.filter(_.id != node.id)
+
+        }
+        newPropertyShape
+      }
       node.setArrayWithoutId(NodeShapeModel.Properties, newProperties, oldProperties.annotations)
     }
 

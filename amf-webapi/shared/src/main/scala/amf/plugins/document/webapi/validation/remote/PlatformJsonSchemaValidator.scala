@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin}
-import amf.plugins.document.webapi.parser.spec.oas.OasFragmentEmitter
+import amf.plugins.document.webapi.parser.spec.oas.{JsonSchemaValidationFragmentEmitter, OasFragmentEmitter}
 import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
@@ -195,7 +195,7 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
 
     SYamlSyntaxPlugin.unparse("application/json",
                               SyamlParsedDocument(document =
-                                new OasFragmentEmitter(dataType)(JsonSchemaEmitterContext())
+                                new JsonSchemaValidationFragmentEmitter(dataType)(JsonSchemaEmitterContext())
                                   .emitFragment())) // todo for logic in serializer. Hoy to handle the root?
 
   }

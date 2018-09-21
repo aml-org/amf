@@ -14,6 +14,10 @@ import scala.collection.mutable
   */
 abstract class Shape extends DomainElement with Linkable with NamedDomainElement {
 
+  // used at runtime during validation
+  val closureShapes: mutable.Set[Shape] = mutable.Set()
+
+
   def name: StrField                                     = fields.field(Name)
   def displayName: StrField                              = fields.field(DisplayName)
   def description: StrField                              = fields.field(Description)
@@ -27,6 +31,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
   def not: Shape                                         = fields.field(Not)
   def customShapeProperties: Seq[ShapeExtension]         = fields.field(CustomShapeProperties)
   def customShapePropertyDefinitions: Seq[PropertyShape] = fields.field(CustomShapePropertyDefinitions)
+  // def closure: Seq[String]            = fields.field(Closure)
 
   def withName(name: String): this.type               = set(Name, name)
   def withDisplayName(name: String): this.type        = set(DisplayName, name)
@@ -48,7 +53,14 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
     add(CustomShapePropertyDefinitions, result)
     result
   }
+  /*
+  def withClosure(closure: Seq[String]): this.type                     = set(Closure, closure)
 
+  def appendToClosure(shapeId: String): this.type = {
+    val updatedClosure = closure :+ shapeId
+    withClosure(updatedClosure)
+  }
+  */
   def withDefaultStr(value: String): Shape.this.type = set(DefaultValueString, value)
 
   def effectiveInherits: Seq[Shape] = {

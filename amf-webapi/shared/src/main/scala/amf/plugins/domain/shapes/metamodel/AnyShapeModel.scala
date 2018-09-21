@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.metamodel
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Array
+import amf.core.metamodel.Type.{Array, Iri}
 import amf.core.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
 import amf.core.vocabulary.Namespace.{Document, Schema, Shacl, Shapes}
 import amf.core.vocabulary.ValueType

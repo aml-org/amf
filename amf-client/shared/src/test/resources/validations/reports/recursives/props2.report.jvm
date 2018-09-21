@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml
 Profile: RAML 1.0
 Conforms? false
-Number of results: 5
+Number of results: 3
 
 Level: Violation
 
@@ -14,15 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
-  Message: /c/a/b expected type: String, found: JSONObject
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml#/declarations/types/B/example/valid
-  Property: 
-  Position: Some(LexicalInformation([(31,0)-(38,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml
-
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
-  Message: /c/a/b expected type: String, found: JSONObject
+  Message: /c/a/b/b expected type: String, found: Integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml#/declarations/types/B/example/invalid
   Property: 
@@ -30,21 +22,9 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
-  Message: /a required key [c] not found
-/a/a expected type: JSONObject, found: String
-
-  Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml#/declarations/types/C/example/valid
-  Property: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml#/declarations/types/C/example/valid
-  Position: Some(LexicalInformation([(52,0)-(59,0)]))
-  Location: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml
-
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
-  Message: /a required key [c] not found
-/a/a expected type: JSONObject, found: String
-
+  Message: /a/b/c/c expected type: String, found: Integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml#/declarations/types/C/example/invalid
-  Property: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml#/declarations/types/C/example/invalid
+  Property: 
   Position: Some(LexicalInformation([(60,0)-(66,18)]))
   Location: file://amf-client/shared/src/test/resources/validations/recursives/props2.raml

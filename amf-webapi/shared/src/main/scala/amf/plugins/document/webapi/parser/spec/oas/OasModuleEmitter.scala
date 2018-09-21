@@ -6,8 +6,9 @@ import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
+import amf.core.parser.Position.ZERO
 import amf.core.remote.Oas
-import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, OasSpecEmitterContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -154,6 +155,22 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     }
 
     override def position(): Position = Position.ZERO
+  }
+
+}
+
+class JsonSchemaValidationFragmentEmitter(fragment: DataTypeFragment)(implicit override val spec: JsonSchemaEmitterContext) extends OasFragmentEmitter(fragment) {
+
+  override def emitFragment(): YDocument = {
+
+    val ordering: SpecOrdering = SpecOrdering.ordering(Oas, fragment.annotations)
+    val closureShapes = fragment.encodes.closureShapes.toSeq
+
+    YDocument {
+      _.obj { b =>
+        traverse(DataTypeFragmentEmitter(fragment, ordering).emitters ++ Seq(OasDeclaredTypesEmitters(closureShapes, Nil, ordering)), b)
+      }
+    }
   }
 
 }
