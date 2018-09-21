@@ -1,0 +1,66 @@
+#%RAML 1.0
+title: test
+types:
+  C:
+    properties:
+      c: string
+      a?: A
+    examples:
+      valid:
+        c: hh
+        a:
+          a: ee
+          b:
+            b: last
+            c:
+              c: tt
+      invalid:
+        c: hh
+        a:
+          a: ee
+          b:
+            b: last
+            c:
+              c: 5
+  B:
+    properties:
+      b: string
+      c?: C
+    examples:
+      valid:
+        b: hh
+        c:
+          c: ee
+          a:
+            a: last
+            b:
+              b: tt
+      invalid:
+        b: hh
+        c:
+          c: ee
+          a:
+            a: last
+            b:
+              b: 5
+  A:
+    properties:
+      a: string
+      b?: B
+    examples:
+      valid:
+        a: hh
+        b:
+          b: ee
+          c:
+            c: last
+            a:
+              a: tt
+      invalid:
+        a: hh
+        b:
+          b: ee
+          c:
+            c: last
+            a:
+              a: 5

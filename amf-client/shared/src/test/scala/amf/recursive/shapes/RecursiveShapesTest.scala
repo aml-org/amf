@@ -22,7 +22,9 @@ class RecursiveShapesTest extends MultiPlatformReportGenTest with BuildCycleTest
   private val fixture: Seq[RecursiveShapeFixture] =
     Seq(
       RecursiveShapeFixture("props1.raml", "props1.report", "props1.json"),
-      RecursiveShapeFixture("props2.raml", "props2.report", "props2.json")
+      RecursiveShapeFixture("props2.raml", "props2.report", "props2.json"),
+      RecursiveShapeFixture("props2rev.raml", "props2rev.report", "props2rev.json"),
+      RecursiveShapeFixture("props3.raml", "props3.report", "props3.json")
     )
 
   fixture.foreach { rf =>
