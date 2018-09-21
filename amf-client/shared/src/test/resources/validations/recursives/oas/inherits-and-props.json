@@ -1,0 +1,127 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test",
+    "version": "1.0"
+  },
+  "paths": {},
+  "definitions": {
+    "A": {
+      "x-amf-examples": {
+        "valid": {
+          "a": "aa",
+          "b": "bb",
+          "c": "cc",
+          "r": {
+            "a": "aa2",
+            "b": "bb2",
+            "c": "cc2"
+          }
+        },
+        "invalid": {
+          "a": "aa",
+          "b": "bb",
+          "c": "cc",
+          "r": {
+            "a": "aa2",
+            "b": "bb2",
+            "c": 5
+          }
+        }
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "a",
+        "c",
+        "b"
+      ],
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "r": {
+          "$ref": "#/definitions/A"
+        },
+        "c": {
+          "type": "string"
+        },
+        "b": {
+          "type": "string"
+        }
+      }
+    },
+    "B": {
+      "x-amf-examples": {
+        "valid": {
+          "b": "bb",
+          "c": "cc",
+          "r": {
+            "a": "aa2",
+            "b": "bb2",
+            "c": "cc2"
+          }
+        },
+        "invalid": {
+          "b": "bb",
+          "c": "cc",
+          "r": {
+            "a": "aa2",
+            "b": "bb2",
+            "c": 5
+          }
+        }
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "c",
+        "b"
+      ],
+      "properties": {
+        "r": {
+          "$ref": "#/definitions/A"
+        },
+        "c": {
+          "type": "string"
+        },
+        "b": {
+          "type": "string"
+        }
+      }
+    },
+    "C": {
+      "x-amf-examples": {
+        "valid": {
+          "c": "cc",
+          "r": {
+            "a": "aa2",
+            "b": "bb2",
+            "c": "cc2"
+          }
+        },
+        "invalid": {
+          "c": "cc",
+          "r": {
+            "a": "aa2",
+            "b": "bb2",
+            "c": 5
+          }
+        }
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "c"
+      ],
+      "properties": {
+        "c": {
+          "type": "string"
+        },
+        "r": {
+          "$ref": "#/definitions/A"
+        }
+      }
+    }
+  }
+}

@@ -35,6 +35,25 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
 }
 
 private[shape_normalization] case class NormalizationCache() {
+  def updateFixPointsAndClojures(canonical: Shape): Unit = {
+    updateRecursiveTargets(canonical)
+    cache.values.foreach { s =>
+      s.closureShapes.find(clo => clo.id == canonical.id && clo != canonical) match {
+        case Some(clo) =>
+          s.closureShapes.remove(clo)
+          s.closureShapes += canonical
+        case _ => // ignore
+      }
+    }
+  }
+
+  private def updateRecursiveTargets(newShape: Shape): NormalizationCache = {
+    fixPointCache.values.flatten
+      .filter(_.fixpointTarget.exists(_.id == newShape.id))
+      .foreach(_.fixpointTarget = Some(newShape))
+    this
+  }
+
   def removeIfPresent(shape: Shape): this.type = {
     get(shape.id) match {
       case Some(s) if s.equals(shape) => cache.remove(shape.id)
