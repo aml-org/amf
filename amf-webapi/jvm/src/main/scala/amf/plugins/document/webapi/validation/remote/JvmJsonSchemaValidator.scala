@@ -81,9 +81,11 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
         schemaNode.remove("examples")
         schemaNode.remove("x-amf-examples")
 
+        /*
         println("\n\nValidating...")
         println("  - SCHEMA:")
         println(jsonSchema)
+        */
 
         val schemaBuilder = SchemaLoader
           .builder()
@@ -99,8 +101,10 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
         val schemaLoader = schemaBuilder.build()
         val schema       = schemaLoader.load().build()
 
+        /*
         println("  - DATA:")
         println(dataNode)
+        */
 
         try {
           schema.validate(dataNode)

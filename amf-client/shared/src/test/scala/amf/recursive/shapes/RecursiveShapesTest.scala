@@ -24,15 +24,16 @@ class RecursiveShapesTest extends MultiPlatformReportGenTest with BuildCycleTest
       RecursiveShapeFixture("props1.raml", "props1.report", "props1.json"),
       RecursiveShapeFixture("props2.raml", "props2.report", "props2.json"),
       RecursiveShapeFixture("props2rev.raml", "props2rev.report", "props2rev.json"),
-      RecursiveShapeFixture("props3.raml", "props3.report", "props3.json")
+      RecursiveShapeFixture("props3.raml", "props3.report", "props3.json"),
+      RecursiveShapeFixture("items1.raml", "items1.report", "items1.json")
     )
 
   fixture.foreach { rf =>
-    test("HERE_HERE Test validation " + rf.api) {
+    test("Test validation " + rf.api) {
       validate(rf.api, Some(rf.report))
     }
 
-    test("HERE_HERE Test emission " + rf.api) {
+    test("Test emission " + rf.api) {
       cycle(rf.api, rf.oasGoldenPath)
     }
 
