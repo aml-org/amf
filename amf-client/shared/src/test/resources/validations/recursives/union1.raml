@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: test
+types:
+  A:
+    type: B | C
+    examples:
+      valid:
+        b: foo
+        c:
+          c: wadus
+      invalid:
+        c: 1
+        b:
+          b: 2
+  B:
+    properties:
+      b: string
+      c?: C
+  C:
+    properties:
+      c: string
+      b?: B

@@ -173,7 +173,6 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
             )
           case other               =>
             tuple.closureShapes ++= other.closureShapes.filter(_.id != tuple.id)
-
         }
         newItem
       }
@@ -253,7 +252,16 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     val oldAnyOf = union.fields.getValue(UnionShapeModel.AnyOf)
     if (Option(oldAnyOf).isDefined) {
       val newAnyOf = union.anyOf.map { u =>
-        traversed.recursionAllowed(() => recursiveNormalization(u), u.id)
+        val unionMember = traversed.recursionAllowed(() => recursiveNormalization(u), u.id)
+        unionMember match {
+          case rec: RecursiveShape =>
+            rec.fixpointTarget.foreach(target =>
+              union.closureShapes ++= Seq(target).filter(_.id != union.id)
+            )
+          case other               =>
+            union.closureShapes ++= other.closureShapes.filter(_.id != union.id)
+        }
+        unionMember
       }
       union.setArrayWithoutId(UnionShapeModel.AnyOf, newAnyOf, oldAnyOf.annotations)
     } else if (Option(union.inherits).isEmpty || union.inherits.isEmpty) {

@@ -1,0 +1,98 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test",
+    "version": "1.0"
+  },
+  "paths": {},
+  "definitions": {
+    "A": {
+      "x-amf-union": [
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "b"
+          ],
+          "properties": {
+            "b": {
+              "type": "string"
+            },
+            "c": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "c"
+              ],
+              "properties": {
+                "c": {
+                  "type": "string"
+                },
+                "b": {
+                  "$ref": "#/definitions/B"
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "c"
+          ],
+          "properties": {
+            "c": {
+              "type": "string"
+            },
+            "b": {
+              "$ref": "#/definitions/B"
+            }
+          }
+        }
+      ]
+    },
+    "B": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "b"
+      ],
+      "properties": {
+        "b": {
+          "type": "string"
+        },
+        "c": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "c"
+          ],
+          "properties": {
+            "c": {
+              "type": "string"
+            },
+            "b": {
+              "$ref": "#/definitions/B"
+            }
+          }
+        }
+      }
+    },
+    "C": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "c"
+      ],
+      "properties": {
+        "c": {
+          "type": "string"
+        },
+        "b": {
+          "$ref": "#/definitions/B"
+        }
+      }
+    }
+  }
+}
