@@ -1,0 +1,45 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test",
+    "version": "1.0"
+  },
+  "paths": {},
+  "definitions": {
+    "A": {
+      "x-amf-examples": {
+        "valid": {
+          "b": "hh",
+          "a": {
+            "b": "ee",
+            "a": {
+              "b": "last"
+            }
+          }
+        },
+        "invalid": {
+          "b": "hh",
+          "a": {
+            "b": "ee",
+            "a": {
+              "b": 5
+            }
+          }
+        }
+      },
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "b"
+      ],
+      "properties": {
+        "b": {
+          "type": "string"
+        },
+        "a": {
+          "$ref": "#/definitions/A"
+        }
+      }
+    }
+  }
+}

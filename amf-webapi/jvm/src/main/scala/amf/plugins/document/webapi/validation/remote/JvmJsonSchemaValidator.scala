@@ -93,28 +93,27 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
 
         val schemaLoader = schemaBuilder.build()
         val schema       = schemaLoader.load().build()
-        /*
-            println("\n\nValidating...")
-            println("  - SCHEMA:")
-            println(jsonSchema)
-            println("  - DATA:")
-            println(dataNode)
-         */
+
+        println("\n\nValidating...")
+        println("  - SCHEMA:")
+        println(jsonSchema)
+        println("  - DATA:")
+        println(dataNode)
 
         try {
           schema.validate(dataNode)
-            /*
+          /*
               println(s"  ====> RESULT: true")
               println("-----------------------\n\n")
-            */
+           */
           Nil
         } catch {
           case validationException: ValidationException =>
-              /*
+            /*
                 println(s"  ====> RESULT: false")
                 println(validationException.getAllMessages)
                 println("-----------------------\n\n")
-              */
+             */
             iterateValidations(validationException, payload)
           case exception: Error =>
             reportValidationException(exception, payload)
@@ -147,16 +146,17 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
   }
 
   def reportValidationException(exception: Throwable, payload: PayloadFragment): Seq[AMFValidationResult] = {
-    Seq(AMFValidationResult(
-      message = s"Internal error during validation ${exception.getMessage}",
-      level = SeverityLevels.VIOLATION,
-      targetNode = payload.encodes.id,
-      targetProperty = None,
-      validationId = (Namespace.AmfParser + "example-validation-error").iri(),
-      position = payload.encodes.position(),
-      location = payload.encodes.location(),
-      source = exception
-    ))
+    Seq(
+      AMFValidationResult(
+        message = s"Internal error during validation ${exception.getMessage}",
+        level = SeverityLevels.VIOLATION,
+        targetNode = payload.encodes.id,
+        targetProperty = None,
+        validationId = (Namespace.AmfParser + "example-validation-error").iri(),
+        position = payload.encodes.position(),
+        location = payload.encodes.location(),
+        source = exception
+      ))
   }
 
   private def makeValidationMessage(validationException: ValidationException): String = {
