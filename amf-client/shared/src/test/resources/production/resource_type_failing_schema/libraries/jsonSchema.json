@@ -1,0 +1,61 @@
+{
+  "id": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Core schema meta-schema",
+  "definitions": {
+    "schemaArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#" }
+    },
+    "simpleTypes": {
+      "enum": [ "array", "boolean", "integer", "null", "number", "object", "string" ]
+    },
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "additionalItems": {
+      "anyOf": [
+        { "type": "boolean" },
+        { "$ref": "#" }
+      ],
+      "default": {}
+    },
+    "items": {
+      "anyOf": [
+        { "$ref": "#/definitions/schemaArray" }
+      ]
+    },
+    "dependencies": {
+      "type": "object",
+      "additionalProperties": {
+        "anyOf": [
+          { "$ref": "#" },
+          { "$ref": "#/definitions/stringArray" }
+        ]
+      }
+    },
+    "type": {
+      "anyOf": [
+        { "$ref": "#/definitions/simpleTypes" },
+        {
+          "type": "array",
+          "items": { "$ref": "#/definitions/simpleTypes" },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      ]
+    },
+    "allOf": { "$ref": "#/definitions/schemaArray" }
+  },
+  "default": {}
+}

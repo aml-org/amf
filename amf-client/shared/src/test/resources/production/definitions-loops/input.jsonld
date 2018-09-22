@@ -321,20 +321,21 @@
                             ],
                             "http://a.ml/vocabularies/shapes#range": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/auditDetails/unresolved",
+                                "@id": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/auditDetails/default-node",
                                 "@type": [
-                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#NodeShape",
                                   "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape"
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
                                 "http://a.ml/vocabularies/document#link-target": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/schemas/someSchema/property/auditDetails/unresolved/linked_1"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#link-label": [
                                   {
-                                    "@value": "auditDetails"
+                                    "@value": "file://amf-client/shared/src/test/resources/production/definitions-loops/schema.json#/definitions/auditDetails"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document#recursive": [
@@ -342,14 +343,9 @@
                                     "@value": true
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "auditDetails"
-                                  }
-                                ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/auditDetails/unresolved/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/auditDetails/default-node/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -357,7 +353,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/auditDetails/unresolved"
+                                            "@value": "file://amf-client/shared/src/test/resources/production/definitions-loops/input.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/auditDetails/default-node"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [

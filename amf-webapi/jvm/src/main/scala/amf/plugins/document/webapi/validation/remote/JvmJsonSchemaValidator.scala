@@ -104,7 +104,7 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
         /*
         println("  - DATA:")
         println(dataNode)
-        */
+         */
 
         try {
           schema.validate(dataNode)

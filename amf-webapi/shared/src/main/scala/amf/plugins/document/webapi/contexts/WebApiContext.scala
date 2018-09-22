@@ -246,12 +246,15 @@ abstract class WebApiContext(val loc: String,
   globalSpace = wrapped.globalSpace
 
   // JSON Schema has a global namespace
-  def findJsonSchema(url: String): Option[AnyShape] = globalSpace.get(url) match {
+
+  protected def normalizedJsonPointer(url: String): String = if (url.endsWith("/"))  url.dropRight(1) else url
+
+  def findJsonSchema(url: String): Option[AnyShape] = globalSpace.get(normalizedJsonPointer(url)) match {
     case Some(shape: AnyShape) => Some(shape)
     case _                     => None
   }
   def registerJsonSchema(url: String, shape: AnyShape): Unit = {
-    globalSpace.update(url, shape)
+    globalSpace.update(normalizedJsonPointer(url), shape)
   }
 
   def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasWebApiContext): Option[AnyShape] = {

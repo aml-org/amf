@@ -88,6 +88,10 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
     validate("/ref/api7.raml", Some("ref-api7.report"))
   }
 
+  test("JSON Schema ref test8") {
+    validate("/ref/api8.raml", Some("ref-api8.report"))
+  }
+
   test("Test validation with # in property shape name") {
     validate("/invalid-char-property-name.raml", None)
   }

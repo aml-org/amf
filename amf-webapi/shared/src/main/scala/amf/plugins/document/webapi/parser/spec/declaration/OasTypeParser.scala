@@ -10,12 +10,11 @@ import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
-import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.spec.{OasDefinitions, _}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
+import amf.plugins.document.webapi.parser.spec.{OasDefinitions, _}
 import amf.plugins.domain.shapes.annotations.NilUnion
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -299,7 +298,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                     // Introduces the problem of an invalid link
                     val tmpShape =
                       UnresolvedShape(fullRef, map).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
-                    tmpShape.unresolvedSeverity = "warning"
+                    tmpShape.unresolved(fullRef, e, "warning")(ctx)
                     tmpShape.withContext(ctx)
                     adopt(tmpShape)
                     ctx.registerJsonSchema(fullRef, tmpShape)
@@ -352,6 +351,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                     }
                 }
               case other =>
+                println(s"OTHER ${other}")
                 // normal path for a variable in a regular OAS, not inlined JSON Schema
                 val shape = UnresolvedShape(text, map).withName(text)
                 shape.withContext(ctx)
@@ -375,7 +375,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  private def checkJsonIdentity(shape: AnyShape, map: YMap, adopt: Shape => Unit, futureDeclarations: FutureDeclarations): Unit = {
+  private def checkJsonIdentity(shape: AnyShape,
+                                map: YMap,
+                                adopt: Shape => Unit,
+                                futureDeclarations: FutureDeclarations): Unit = {
     adopt(shape)
     if (!isOas && !isOas3) {
       map.map.get("id") foreach { f =>
@@ -703,7 +706,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         entry.value.tagType match {
           case YType.Bool => (NodeShapeModel.Closed in shape).negated.explicit(entry)
           case YType.Map =>
-            OasTypeParser(entry, s => s.adopted(shape.id)).parse().foreach { s =>
+            OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
               shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
             }
           case _ => ctx.violation(shape.id, "Invalid part type for additional properties node", entry)

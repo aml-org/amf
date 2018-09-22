@@ -60,8 +60,10 @@ private[stages] case class RecursionErrorRegister() {
   }
 
   def recursionAndError(root: Shape, base: Option[String], s: Shape, traversed: IdsTraversionCheck)(
-      implicit context: NormalizationContext): RecursiveShape =
-    recursionError(root, buildRecursion(base, s), root.id, traversed: IdsTraversionCheck)
+      implicit context: NormalizationContext): RecursiveShape = {
+    val recursion = buildRecursion(base, s)
+    recursionError(root, recursion, root.id, traversed: IdsTraversionCheck)
+  }
 
   def recursionError(original: Shape, r: RecursiveShape, checkId: String, traversed: IdsTraversionCheck)(
       implicit context: NormalizationContext): RecursiveShape = {

@@ -14,7 +14,8 @@ resourceTypes:
             response is dependent on the method used in the request.
           body:
             application/schema+json:
-              schema: !include http://json-schema.org/draft-04/schema#
+#              schema: !include http://json-schema.org/draft-04/schema#
+              schema: !include jsonSchema.json
               example: |
                 {
                     "$schema" : "http://json-schema.org/draft-04/schema",

@@ -5,15 +5,6 @@ import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
-import amf.core.parser.{
-  Annotations,
-  InferredLinkReference,
-  ParsedDocument,
-  ParsedReference,
-  Reference,
-  ReferenceFragmentPartition,
-  _
-}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
@@ -169,12 +160,24 @@ case class RamlJsonSchemaExpression(key: YNode,
 
     // we set the local schema entry to be able to resolve local $refs
     ctx.localJSONSchemaContext = Some(schemaEntry.value)
+    val jsonSchemaContext = toSchemaContext(ctx, valueAST)
+    val fullRef = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "#")
+    val tmpShape =
+      UnresolvedShape(fullRef, schemaEntry).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
+    tmpShape.unresolved(fullRef, schemaEntry, "warning")(jsonSchemaContext)
+    tmpShape.withContext(jsonSchemaContext)
+    adopt(tmpShape)
+    ctx.registerJsonSchema(fullRef, tmpShape)
 
     val s =
       OasTypeParser(schemaEntry, shape => adopt(shape), ctx.computeJsonSchemaVersion(schemaEntry.value))(
-        toSchemaContext(ctx, valueAST))
+        jsonSchemaContext)
         .parse() match {
-        case Some(sh) => sh
+        case Some(sh) =>
+          ctx.futureDeclarations.resolveRef(fullRef, sh)
+          tmpShape.resolve(sh) // useless?
+          ctx.registerJsonSchema(fullRef, sh)
+          sh
         case None =>
           val shape = SchemaShape()
           adopt(shape)

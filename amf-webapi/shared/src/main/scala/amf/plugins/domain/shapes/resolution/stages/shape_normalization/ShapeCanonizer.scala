@@ -367,10 +367,17 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       canonicalInheritance(union)
     } else {
       val anyOfAcc: ListBuffer[Shape] = ListBuffer()
-      union.anyOf.foreach { shape =>
+      union.anyOf.foreach { shape: Shape =>
         normalize(shape) match {
-          case union: UnionShape => union.anyOf.foreach(e => anyOfAcc += e)
-          case other: Shape      => anyOfAcc += other
+          case nestedUnion: UnionShape =>
+            union.closureShapes ++= nestedUnion.closureShapes
+            nestedUnion.anyOf.foreach(e => anyOfAcc += e)
+          case rec: RecursiveShape =>
+            rec.fixpointTarget.foreach(target => union.closureShapes ++= Seq(target).filter(_.id != union.id))
+            anyOfAcc += rec
+          case other: Shape      =>
+            union.closureShapes ++= other.closureShapes
+            anyOfAcc += other
         }
       }
       val anyOfAnnotations = Option(union.fields.getValue(UnionShapeModel.AnyOf)) match {

@@ -1,0 +1,86 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "description": "Comment describing your JSON Schema",
+      "type": "object",
+      "properties": {
+        "auditDetails": {
+          "$ref": "#/definitions/auditDetails"
+        },
+        "formOfPayments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/formOfPayment"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "definitions": {
+        "auditDetails": {
+          "type": "object",
+          "properties": {
+            "formOfPayment": {
+              "$ref": "#/definitions/formOfPayment"
+            },
+            "createTime": {
+              "type": "number"
+            },
+            "lastUpdatedTime": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        "formOfPayment": {
+          "type": "object",
+          "properties": {
+            "auditDetails": {
+              "$ref": "#/definitions/auditDetails"
+            },
+            "createTime": {
+              "type": "number"
+            },
+            "lastUpdatedTime": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              formOfPayments:
+                - createTime: 12
+                  lastUpdatedTime: 23
+                  auditDetails:
+                    formOfPayment:
+                      createTime: 1
+                      lastUpdatedTime: 2
+
+/ep2:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example:
+              formOfPayments:
+                - createTime: 12
+                  lastUpdatedTime: 23
+                  auditDetails:
+                    formOfPayment:
+                      createTime: "ho"
+                      lastUpdatedTime: 2

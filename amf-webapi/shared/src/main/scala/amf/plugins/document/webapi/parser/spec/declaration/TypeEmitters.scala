@@ -1374,7 +1374,16 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
         schemaPath.reverse.find(_._1 == id) match {
           case Some((_, pointer)) => Some(pointer)
           case _                  =>
-            recursive.fixpointTarget.flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
+            recursive.fixpointTarget match {
+              case Some(shape) =>
+                schemaPath.reverse.find(_._1 == shape.id) match {
+                  case Some((_, pointer)) => Some(pointer)
+                  case _                  =>
+                    recursive.fixpointTarget.flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
+                }
+              case _           =>
+                recursive.fixpointTarget.flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
+            }
         }
       case _ => None
     }
