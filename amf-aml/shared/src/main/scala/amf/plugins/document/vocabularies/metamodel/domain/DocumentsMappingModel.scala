@@ -9,9 +9,8 @@ import amf.plugins.document.vocabularies.model.domain.{DocumentMapping, Document
 
 object PublicNodeMappingModel extends DomainElementModel {
 
-  val Name = Field(Str, Namespace.Schema + "name")
+  val Name       = Field(Str, Namespace.Schema + "name")
   val MappedNode = Field(Iri, Namespace.Meta + "mappedNode")
-
 
   override def fields: List[Field] = Name :: MappedNode :: DomainElementModel.fields
 
@@ -20,11 +19,10 @@ object PublicNodeMappingModel extends DomainElementModel {
   override val `type`: List[ValueType] = Namespace.Meta + "PublicNodeMapping" :: DomainElementModel.`type`
 }
 
-
 object DocumentMappingModel extends DomainElementModel {
 
-  val DocumentName = Field(Str, Namespace.Meta + "name")
-  val EncodedNode = Field(Iri, Namespace.Meta + "encodedNode")
+  val DocumentName  = Field(Str, Namespace.Meta + "name")
+  val EncodedNode   = Field(Iri, Namespace.Meta + "encodedNode")
   val DeclaredNodes = Field(Array(PublicNodeMappingModel), Namespace.Meta + "declaredNode")
 
   override def fields: List[Field] = DocumentName :: EncodedNode :: DeclaredNodes :: DomainElementModel.fields
@@ -34,15 +32,17 @@ object DocumentMappingModel extends DomainElementModel {
   override val `type`: List[ValueType] = Namespace.Meta + "DocumentMapping" :: DomainElementModel.`type`
 }
 
-
 object DocumentsModelModel extends DomainElementModel {
 
-  val Root = Field(DocumentMappingModel, Namespace.Meta + "rootDocument")
+  val Root      = Field(DocumentMappingModel, Namespace.Meta + "rootDocument")
   val Fragments = Field(Array(DocumentMappingModel), Namespace.Meta + "fragments")
-  val Library = Field(DocumentMappingModel, Namespace.Meta + "library")
-  val SelfEncoded = Field(Bool, Namespace.Meta + "selfEncoded")
+  val Library   = Field(DocumentMappingModel, Namespace.Meta + "library")
+  // options:
+  val SelfEncoded      = Field(Bool, Namespace.Meta + "selfEncoded")
+  val DeclarationsPath = Field(Str, Namespace.Meta + "declarationsPath")
 
-  override def fields: List[Field] = Root :: Fragments :: Library :: SelfEncoded :: DomainElementModel.fields
+  override def fields: List[Field] =
+    Root :: Fragments :: Library :: SelfEncoded :: DeclarationsPath :: DomainElementModel.fields
 
   override def modelInstance: AmfObject = DocumentsModel()
 

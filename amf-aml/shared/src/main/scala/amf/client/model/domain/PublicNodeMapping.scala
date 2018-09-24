@@ -2,7 +2,11 @@ package amf.client.model.domain
 
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.model.{BoolField, StrField}
-import amf.plugins.document.vocabularies.model.domain.{DocumentMapping => InternalDocumentMapping, DocumentsModel => InternalDocumentsModel, PublicNodeMapping => InternalPublicNodeMapping}
+import amf.plugins.document.vocabularies.model.domain.{
+  DocumentMapping => InternalDocumentMapping,
+  DocumentsModel => InternalDocumentsModel,
+  PublicNodeMapping => InternalPublicNodeMapping
+}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -68,5 +72,10 @@ case class DocumentsModel(override private[amf] val _internal: InternalDocuments
   def selfEncoded(): BoolField = _internal.selfEncoded()
   def withSelfEncoded(selfEncoded: Boolean): DocumentsModel = {
     _internal.withSelfEncoded(selfEncoded)
+  }
+
+  def declarationsPath(): StrField = _internal.declarationsPath()
+  def withDeclarationsPath(declarationsPath: String): DocumentsModel = {
+    _internal.withDeclarationsPath(declarationsPath)
   }
 }

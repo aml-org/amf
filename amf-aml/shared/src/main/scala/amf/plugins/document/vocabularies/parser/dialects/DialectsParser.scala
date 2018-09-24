@@ -10,7 +10,7 @@ import amf.core.parser.{Annotations, BaseSpecParser, ErrorHandler, FutureDeclara
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{NodeMappingModel, PropertyMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, NodeMappingModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
@@ -126,7 +126,8 @@ trait DialectSyntax { this: DialectContext =>
   )
 
   val documentsMappingOptions: Map[String, Boolean] = Map(
-    "selfEncoded"      -> false
+    "selfEncoded"      -> false,
+    "declarationsPath" -> false
   )
 
   def closedNode(nodeType: String, id: String, map: YMap): Unit = {
@@ -608,7 +609,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
         if (PropertyMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethod)) {
           propertyMapping.withMergePolicy(patchMethod)
         } else {
-          ctx.violation(propertyMapping.id, s"Unsupported property mapping patch operation '$patchMethod'", entry.value)
+          ctx.violation(propertyMapping.id,
+                        s"Unsupported property mapping patch operation '$patchMethod'",
+                        entry.value)
         }
       }
     )
@@ -650,7 +653,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
       }
     )
 
-    map.key("unique",
+    map.key(
+      "unique",
       entry => {
         entry.value.tagType match {
           case YType.Bool =>
@@ -659,7 +663,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
           case _ =>
             ctx.violation("Unique property in a property mapping must be a boolean value", entry.value)
         }
-      })
+      }
+    )
 
     map.key(
       "maximum",
@@ -962,27 +967,39 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
 
   def parseDocumentsOptions(value: YNode, documentsMapping: DocumentsModel) = {
     value.as[YMap].key("options") match {
-      case Some(entry:YMapEntry) =>
-        entry.value.tagType match {
-          case YType.Map =>
-            val optionsMap = entry.value.as[YMap]
+      case Some(entry: YMapEntry) =>
+        entry.value.toOption[YMap] match {
+          case Some(optionsMap) =>
             ctx.closedNode("documentsMappingOptions", documentsMapping.id, optionsMap)
-            optionsMap.key("selfEncoded") match {
-              case Some(optionsEntry: YMapEntry) =>
-                optionsEntry.value.tagType match {
-                  case YType.Bool =>
-                    val selfEncoded = optionsEntry.value.as[Boolean]
-                    documentsMapping.withSelfEncoded(selfEncoded)
-                  case _          =>
-                    ctx.violation(documentsMapping.id, "'selfEncoded' Option for a documents mapping must be a boolean", optionsEntry)
-                }
-              case _                       => // ignore
-
-            }
+            parseOptions(optionsMap, documentsMapping)
           case _ =>
             ctx.violation(documentsMapping.id, "Options for a documents mapping must be a map", entry.value)
         }
       case _ => // ignore
+    }
+  }
+
+  def parseOptions(map: YMap, documentsModel: DocumentsModel) = {
+    map.key("selfEncoded").map(v => parseSelfEncoded(v, documentsModel))
+    map.key("declarationsPath").map(v => parseDeclarationsPath(v, documentsModel))
+  }
+
+  private def parseSelfEncoded(entry: YMapEntry, documentsModel: DocumentsModel) = {
+    entry.value.tagType match {
+      case YType.Bool =>
+        val selfEncoded = ValueNode(entry.value).boolean()
+        documentsModel.set(DocumentsModelModel.SelfEncoded, selfEncoded, Annotations(entry))
+      case _ =>
+        ctx.violation(documentsModel.id, "'selfEncoded' Option for a documents mapping must be a boolean", entry)
+    }
+  }
+
+  private def parseDeclarationsPath(entry: YMapEntry, documentsModel: DocumentsModel) = {
+    entry.value.tagType match {
+      case YType.Str =>
+        documentsModel.set(DocumentsModelModel.DeclarationsPath, ValueNode(entry.value).string(), Annotations(entry))
+      case _ =>
+        ctx.violation(documentsModel.id, "'declarationsPath' Option for a documents mapping must be a String", entry)
     }
   }
 
