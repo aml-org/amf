@@ -162,6 +162,14 @@ class DialectInstancesParsingTest extends BuildCycleTests {
     withDialect("dialect24.raml", "example24.raml", "example24.json", VocabularyJsonHint, Amf)
   }
 
+  test("parse 24b test") {
+    withDialect("dialect24.raml", "example24b.raml", "example24b.json", VocabularyJsonHint, Amf)
+  }
+
+  test("parse 24c test") {
+    withDialect("dialect24.raml", "example24c.raml", "example24c.json", VocabularyJsonHint, Amf)
+  }
+
   if (platform.name == "jvm") {
     test("generate 1 test") {
       withDialect("dialect1.raml",
@@ -286,6 +294,14 @@ class DialectInstancesParsingTest extends BuildCycleTests {
 
   test("generate 24 test") {
     withDialect("dialect24.raml", "example24.json", "example24.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 24 b test") {
+    withDialect("dialect24.raml", "example24b.json", "example24b.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 24 c test") {
+    withDialect("dialect24.raml", "example24c.json", "example24c.raml", AmfJsonHint, Aml)
   }
 
   protected def withDialect(dialect: String,

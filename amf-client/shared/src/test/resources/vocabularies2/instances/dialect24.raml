@@ -11,6 +11,9 @@ nodeMappings:
         patch: insert
         unique: true
         mandatory: true
+      rb:
+        propertyTerm: v3.rb
+        range: myDeclarations
   myDeclarations:
     classTerm: v3.Decla
     mapping:
@@ -21,6 +24,8 @@ nodeMappings:
 documents:
   root:
     encodes: Local
+    declares:
+      declarations: myDeclarations
   library:
     declares:
       declarations: myDeclarations

@@ -173,24 +173,31 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                     instance: DialectInstance,
                                     dialect: Dialect,
                                     ordering: SpecOrdering,
+                                    declarationsPath: Seq[String],
                                     aliases: Map[String, (String, String)],
                                     keyPropertyId: Option[String] = None)
     extends EntryEmitter
     with DialectEmitterHelper {
 
   override def emit(b: EntryBuilder): Unit = {
-    val declarationKey = publicNodeMapping.name().value()
-    b.entry(
-      declarationKey,
-      _.obj { b =>
-        sortedDeclarations().foreach { decl =>
-          b.entry(
-            YNode(decl.id.split("#").last.split("/").last.urlDecoded), // we are using the last part of the URL as the identifier in dialects
-            (b) => DialectNodeEmitter(decl, nodeMapping, instance, dialect, ordering, aliases).emit(b)
-          )
+    if (declarationsPath.isEmpty) {
+      val declarationKey = publicNodeMapping.name().value()
+      b.entry(
+        declarationKey,
+        _.obj { b =>
+          sortedDeclarations().foreach { decl =>
+            b.entry(
+              YNode(decl.id.split("#").last.split("/").last.urlDecoded), // we are using the last part of the URL as the identifier in dialects
+              (b) => DialectNodeEmitter(decl, nodeMapping, instance, dialect, ordering, aliases).emit(b)
+            )
+          }
         }
-      }
-    )
+      )
+    } else {
+      b.entry(declarationsPath.head, _.obj { b =>
+        DeclarationsGroupEmitter(declared, publicNodeMapping, nodeMapping, instance, dialect, ordering, declarationsPath.tail, aliases, keyPropertyId).emit(b)
+      })
+    }
   }
 
   override def position(): Position =
@@ -607,6 +614,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                          instance,
                                          dialect,
                                          ordering,
+                                         docs.declarationsPath().option().getOrElse("/").split("/"),
                                          aliases))
             } else acc
         }

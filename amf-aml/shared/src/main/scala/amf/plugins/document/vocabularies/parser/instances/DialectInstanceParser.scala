@@ -422,7 +422,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       declarationsNodeMappings.foreach {
         case (name, nodeMapping) =>
           declarationsMap.entries.find(_.key.as[YScalar].text == name).foreach { entry =>
-            val declarationsId = root.location + normalizedPath.getOrElse("#/") + name.urlComponentEncoded
+            val declarationsId = root.location + "#" + normalizedPath.getOrElse("/") + name.urlComponentEncoded
             entry.value.as[YMap].entries.foreach { declarationEntry =>
               val id = pathSegment(declarationsId, List(declarationEntry.key.as[YScalar].text))
               parseNode(declarationsId, id, declarationEntry.value, nodeMapping, Map()) match {
