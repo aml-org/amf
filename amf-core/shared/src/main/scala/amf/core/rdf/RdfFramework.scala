@@ -3,7 +3,7 @@ package amf.core.rdf
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParsedDocument
-import org.yaml.writer.Writer
+import org.mulesoft.common.io.Output
 
 case class RdfModelDocument(model: RdfModel) extends ParsedDocument
 
@@ -27,7 +27,7 @@ trait RdfFramework {
     rdfModelDocument.model.serializeString(mediaType)
   }
 
-  def rdfModelToSyntaxWriter(mediaType: String, rdfModelDocument: RdfModelDocument, writer: Writer): Option[Writer] = {
+  def rdfModelToSyntaxWriter[W: Output](mediaType: String, rdfModelDocument: RdfModelDocument, writer: W): Option[W] = {
     rdfModelDocument.model.serializeWriter(mediaType, writer)
   }
 

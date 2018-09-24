@@ -315,7 +315,8 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           val items = properties
           val values: Seq[AmfElement] = a.element match {
             case _: Obj =>
-              val shouldParseUnit = f.value.iri() == (Namespace.Document + "references").iri() // this is for self-encoded documents
+              val shouldParseUnit = f.value.iri() == (Namespace.Document + "references")
+                .iri() // this is for self-encoded documents
               items.flatMap(n =>
                 findLink(n) match {
                   case Some(n) => parse(n, shouldParseUnit)
@@ -390,7 +391,9 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     }
   }
 
-  private def isUnitModel(typeModel: Obj): Boolean = typeModel.isInstanceOf[DocumentModel] || typeModel.isInstanceOf[EncodesModel] || typeModel.isInstanceOf[DeclaresModel] || typeModel.isInstanceOf[BaseUnitModel]
+  private def isUnitModel(typeModel: Obj): Boolean =
+    typeModel.isInstanceOf[DocumentModel] || typeModel.isInstanceOf[EncodesModel] || typeModel
+      .isInstanceOf[DeclaresModel] || typeModel.isInstanceOf[BaseUnitModel]
 
   private def retrieveType(id: String, node: Node, findBaseUnit: Boolean = false): Option[Obj] = {
     val stringTypes = ts(node, ctx, id)
@@ -426,11 +429,11 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     types.get(typeString).orElse(AMFDomainRegistry.findType(typeString))
   }
 
-  val documentType: String     = (Namespace.Document + "Document").iri()
-  val fragmentType: String     = (Namespace.Document + "Fragment").iri()
-  val moduleType: String       = (Namespace.Document + "Module").iri()
-  val unitType: String         = (Namespace.Document + "Unit").iri()
-  val documentTypesSet = Set(documentType, fragmentType, moduleType, unitType)
+  val documentType: String = (Namespace.Document + "Document").iri()
+  val fragmentType: String = (Namespace.Document + "Fragment").iri()
+  val moduleType: String   = (Namespace.Document + "Module").iri()
+  val unitType: String     = (Namespace.Document + "Unit").iri()
+  val documentTypesSet     = Set(documentType, fragmentType, moduleType, unitType)
 
   protected def ts(node: Node, ctx: ParserContext, id: String): Seq[String] = {
     val allTypes         = node.classes
@@ -486,7 +489,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
 
   private def date(property: PropertyObject) = {
     property match {
-      case Literal(v, _) => AmfScalar(SimpleDateTime.parse(v).get)
+      case Literal(v, _) => AmfScalar(SimpleDateTime.parse(v).right.get)
       case Uri(v)        => throw new Exception(s"Expecting Date literal found URI $v")
     }
   }

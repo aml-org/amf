@@ -8,7 +8,8 @@ import amf.core.parser.ParsedDocument
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.RuntimeSerializer
-import org.yaml.writer.Writer
+import org.mulesoft.common.io.Output
+import org.mulesoft.common.io.Output._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -28,7 +29,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   }
 
   /** Print ast to writer. */
-  def renderToWriter(writer: Writer)(implicit executor: ExecutionContext): Future[Writer] = Future(render(writer))
+  def renderToWriter[W: Output](writer: W)(implicit executor: ExecutionContext): Future[Unit] = Future(render(writer))
 
   /** Print ast to string. */
   def renderToString: Future[String] = {
@@ -41,11 +42,11 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
     Future(render()).map(remote.write(path, _))
   }
 
-  private def render(writer: Writer): Writer =
+  private def render[W: Output](writer: W): Unit =
     parsed { (syntaxPlugin, mediaType, ast) =>
       syntaxPlugin.unparse(mediaType, ast, writer)
     } match {
-      case Some(w) => w
+      case Some(_) =>
       case None if unit.isInstanceOf[ExternalFragment] =>
         writer.append(unit.asInstanceOf[ExternalFragment].encodes.raw.value())
       case _ => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")

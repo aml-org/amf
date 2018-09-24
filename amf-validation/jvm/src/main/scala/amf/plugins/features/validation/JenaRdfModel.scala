@@ -9,8 +9,8 @@ import org.apache.jena.rdf.model.Model
 import org.apache.jena.riot._
 import org.apache.jena.riot.system.RiotLib
 import org.apache.jena.sparql.util.Context
+import org.mulesoft.common.io.Output
 import org.topbraid.jenax.util.JenaUtil
-import org.yaml.writer.{WrappedWriter, Writer}
 
 class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfModel {
 
@@ -144,19 +144,16 @@ class JenaRdfModel(val model: Model = JenaUtil.createMemoryModel()) extends RdfM
     Some(writer.toString)
   }
 
-  override def serializeWriter(mediaType: String, writer: Writer): Option[Writer] = {
+  override def serializeWriter[W: Output](mediaType: String, writer: W): Option[W] = {
 
     val format      = formatForMediaType(mediaType)
     val graphWriter = RDFWriterRegistry.getWriterGraphFactory(format).create(format)
     val modelGraph  = model.getGraph
     writer match {
-      case WrappedWriter(wrapped: JavaWriter) =>
-        write(graphWriter, modelGraph, wrapped)
+      case w: JavaWriter =>
+        graphWriter.write(w, modelGraph, RiotLib.prefixMap(modelGraph), "", new Context())
         Some(writer)
-      case _ =>
-        val str = new StringWriter()
-        write(graphWriter, modelGraph, str)
-        Some(WrappedWriter(str))
+      case _ => None
     }
   }
 

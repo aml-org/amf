@@ -1,6 +1,6 @@
 package amf.core.rdf
 
-import org.yaml.writer.Writer
+import org.mulesoft.common.io.Output
 
 class PropertyObject(val value: String)
 case class Literal(override val value: String, literalType: Option[String]) extends PropertyObject(value)
@@ -42,7 +42,7 @@ abstract class RdfModel {
     * @param writer writer where to send the representation
     * @return
     */
-  def serializeWriter(mediaType: String, writer: Writer): Option[Writer]
+  def serializeWriter[W: Output](mediaType: String, writer: W): Option[W]
 
   def toN3(): String
 

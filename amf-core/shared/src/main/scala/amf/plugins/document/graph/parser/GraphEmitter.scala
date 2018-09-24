@@ -451,7 +451,7 @@ object GraphEmitter extends MetaModelTypeMapping {
         case Type.Date =>
           val maybeDateTime = v.value.asInstanceOf[AmfScalar].value match {
             case dt: SimpleDateTime => Some(dt)
-            case other              => SimpleDateTime.parse(other.toString)
+            case other              => SimpleDateTime.parse(other.toString).toOption
           }
           maybeDateTime match {
             case Some(dateTime) =>
@@ -459,10 +459,10 @@ object GraphEmitter extends MetaModelTypeMapping {
                 typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
               } else {
                 typedScalar(b,
-                  f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
-                  (Namespace.Xsd + "date").iri(),
-                  inArray = false,
-                  ctx)
+                            f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
+                            (Namespace.Xsd + "date").iri(),
+                            inArray = false,
+                            ctx)
 
               }
             case _ =>

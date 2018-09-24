@@ -2,7 +2,7 @@ package amf.plugins.features.validation
 
 import amf.core.rdf._
 import amf.core.vocabulary.Namespace
-import org.yaml.writer.Writer
+import org.mulesoft.common.io.Output
 
 import scala.scalajs.js
 
@@ -137,7 +137,7 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
     * @param writer writer where to send the representation
     * @return
     */
-  override def serializeWriter(mediaType: String, writer: Writer): Option[Writer] = {
+  override def serializeWriter[W: Output](mediaType: String, writer: W): Option[W] = {
     throw new Exception("Sync rdf serialization to writer not supported yet")
   }
 }

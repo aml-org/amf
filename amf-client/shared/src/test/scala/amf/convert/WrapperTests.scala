@@ -1,5 +1,7 @@
 package amf.convert
 
+import java.io.StringWriter
+
 import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 import amf._
 import amf.client.AMF
@@ -19,7 +21,7 @@ import amf.core.remote.{Aml, Oas20, Raml, Raml10}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
-import org.yaml.writer.{ExitRenderException, Writer}
+import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -544,28 +546,15 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
                    |version: 32.0.7
     """.stripMargin
 
-    case class FailingWriter() extends Writer {
-      private val str: StringBuilder = new StringBuilder()
-
-      override def append(s: String): this.type = {
-        str.append(s)
-        if (s == "\"32.0.7\"") throw ExitRenderException()
-        this
-      }
-
-      override def string(): String = str.toString
-
-      override def flush(): this.type = this
-
-      override def close(): FailingWriter.this.type = this
-    }
-
+    val buffer = LimitedStringBuffer(450)
     for {
-      _        <- AMF.init().asFuture
-      unit     <- new RamlParser().parseStringAsync(input).asFuture
-      rendered <- new AmfGraphRenderer().generateToWriter(unit, FailingWriter()).asFuture
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseStringAsync(input).asFuture
+      e    <- new AmfGraphRenderer().generateToWriter(unit, buffer).asFuture.failed
     } yield {
-      rendered.string() should endWith("\"32.0.7\"")
+      e shouldBe a[LimitReachedException]
+
+      buffer.toString() should endWith("\"http://schema.org/WebAPI\"")
     }
   }
 

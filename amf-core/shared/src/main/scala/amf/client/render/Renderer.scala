@@ -1,13 +1,14 @@
 package amf.client.render
 
-import java.io.File
+import java.io.{File, Writer}
 
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.document.BaseUnit
 import amf.core.AMFSerializer
 import amf.core.emitter.{RenderOptions => InternalRenderOptions}
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
-import org.yaml.writer.Writer
+import org.mulesoft.common.io.Output._
+import org.mulesoft.common.io.{LimitedStringBuffer, Output}
 
 import scala.concurrent.Future
 import scala.scalajs.js.annotation.JSExport
@@ -43,12 +44,24 @@ class Renderer(vendor: String, mediaType: String) {
   def generateString(unit: BaseUnit, options: RenderOptions): ClientFuture[String] =
     generate(unit._internal, InternalRenderOptions(options)).asClient
 
+  /** Asynchronously renders the syntax to a provided writer and returns it. */
   @JSExport
-  def generateToWriter(unit: BaseUnit, options: RenderOptions, writer: Writer): ClientFuture[Writer] =
+  def generateToWriter(unit: BaseUnit, options: RenderOptions, writer: Writer): ClientFuture[Unit] =
     generate(unit._internal, InternalRenderOptions(options), writer).asClient
 
+  /** Asynchronously renders the syntax to a provided writer and returns it. */
   @JSExport
-  def generateToWriter(unit: BaseUnit, writer: Writer): ClientFuture[Writer] =
+  def generateToWriter(unit: BaseUnit, writer: Writer): ClientFuture[Unit] =
+    generateToWriter(unit, RenderOptions(), writer)
+
+  /** Asynchronously renders the syntax to a provided string buffer with limited capacity and returns it. */
+  @JSExport
+  def generateToWriter(unit: BaseUnit, options: RenderOptions, writer: LimitedStringBuffer): ClientFuture[Unit] =
+    generate(unit._internal, InternalRenderOptions(options), writer).asClient
+
+  /** Asynchronously renders the syntax to a provided string buffer with limited capacity and returns it. */
+  @JSExport
+  def generateToWriter(unit: BaseUnit, writer: LimitedStringBuffer): ClientFuture[Unit] =
     generateToWriter(unit, RenderOptions(), writer)
 
   /**
@@ -78,7 +91,7 @@ class Renderer(vendor: String, mediaType: String) {
   private def generate(unit: InternalBaseUnit, options: InternalRenderOptions): Future[String] =
     new AMFSerializer(unit, mediaType, vendor, options).renderToString
 
-  private def generate(unit: InternalBaseUnit, options: InternalRenderOptions, writer: Writer): Future[Writer] = {
+  private def generate[W: Output](unit: InternalBaseUnit, options: InternalRenderOptions, writer: W): Future[Unit] = {
     import scala.concurrent.ExecutionContext.Implicits.global
     new AMFSerializer(unit, mediaType, vendor, options).renderToWriter(writer)
   }

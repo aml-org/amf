@@ -14,9 +14,8 @@ import scala.collection.mutable.ListBuffer
 /**
   * Parse an object as a fully dynamic value.
   */
-case class DynamicExtensionParser(node: YNode,
-                                  parent: Option[String] = None,
-                                  idCounter: IdCounter = new IdCounter)(implicit ctx: ParserContext) {
+case class DynamicExtensionParser(node: YNode, parent: Option[String] = None, idCounter: IdCounter = new IdCounter)(
+    implicit ctx: ParserContext) {
 
   def parseTimestamp(node: YNode): (Seq[String], Seq[String]) = {
     val text = node.as[YScalar].text.toLowerCase()
@@ -49,7 +48,7 @@ case class DynamicExtensionParser(node: YNode,
       case YType.Map       => parseObject(node.as[YMap])
       case YType.Timestamp =>
         // TODO add time-only type in syaml and amf
-        SimpleDateTime.parse(node.toString()) match {
+        SimpleDateTime.parse(node.toString()).toOption match {
           case Some(sdt) =>
             try {
               sdt.toDate // This is to validate the parsed timestamp
@@ -68,10 +67,10 @@ case class DynamicExtensionParser(node: YNode,
       case other =>
         val parsed = parseScalar(YScalar(other.toString()), "string")
         ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
-          parsed.id,
-          None,
-          s"Cannot parse data node from AST structure '$other'",
-          node)
+                      parsed.id,
+                      None,
+                      s"Cannot parse data node from AST structure '$other'",
+                      node)
         parsed
     }
   }
@@ -130,7 +129,7 @@ case class DynamicExtensionParser(node: YNode,
     val node = DataObjectNode(Annotations(value)).withName(idCounter.genId("object"))
     parent.foreach(node.adopted)
     value.entries.map { ast =>
-      val key = ast.key.as[YScalar].text
+      val key                 = ast.key.as[YScalar].text
       val value               = ast.value
       val propertyAnnotations = Annotations(ast)
 

@@ -42,7 +42,6 @@ import amf.client.validate.{
   ValidationCandidate => ClientValidationCandidate,
   ValidationShapeSet => ClientValidationShapeSet
 }
-import org.yaml.writer.Writer
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -83,7 +82,6 @@ trait CoreBaseConverter
   implicit object AnyMatcher         extends IdentityMatcher[Any]
   implicit object UnitMatcher        extends IdentityMatcher[Unit]
   implicit object ProfileNameMatcher extends IdentityMatcher[ProfileName]
-  implicit object WriterMatcher      extends IdentityMatcher[Writer]
 
   implicit object ContentMatcher extends IdentityMatcher[Content]
 

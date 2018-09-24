@@ -6,10 +6,10 @@ import amf.core.client.ParsingOptions
 import amf.core.parser.{ParsedDocument, ParserContext, SyamlParsedDocument}
 import amf.core.rdf.RdfModelDocument
 import amf.core.unsafe.PlatformSecrets
+import org.mulesoft.common.io.Output
 import org.yaml.model.{YComment, YDocument, YMap, YNode}
 import org.yaml.parser.{JsonParser, YamlParser}
 import org.yaml.render.{JsonRender, YamlRender}
-import org.yaml.writer.Writer
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -75,12 +75,13 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
     }
   }
 
-  override def unparse(mediaType: String, doc: ParsedDocument, writer: Writer): Option[Writer] = {
+  override def unparse[W: Output](mediaType: String, doc: ParsedDocument, writer: W): Option[W] = {
     doc match {
       case input: SyamlParsedDocument =>
         val ast = input.document
         render(mediaType, ast) { (format, ast) =>
-          Some(if (format == "yaml") writer.append(YamlRender.render(ast)) else JsonRender.render(ast, writer))
+          if (format == "yaml") YamlRender.render(writer, ast) else JsonRender.render(ast, writer)
+          Some(writer)
         }
       case input: RdfModelDocument if platform.rdfFramework.isDefined =>
         platform.rdfFramework.get.rdfModelToSyntaxWriter(mediaType, input, writer)

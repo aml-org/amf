@@ -83,7 +83,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
       case YType.Null      => parseScalar(node.as[YScalar], "nil")
       case YType.Timestamp =>
         // TODO add time-only type in syaml and amf
-        SimpleDateTime.parse(node.toString()) match {
+        SimpleDateTime.parse(node.toString()).toOption match {
           case Some(sdt) =>
             try {
               sdt.toDate // This is to validate the parsed timestamp

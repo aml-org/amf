@@ -325,10 +325,10 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     val value = node.tagType match {
       case YType.Map =>
         node.as[YMap].entries.find(_.key.as[String] == "@value") match {
-          case Some(entry) => SimpleDateTime.parse(entry.value.as[YScalar].text).get
-          case _           => SimpleDateTime.parse(node.as[YScalar].text).get
+          case Some(entry) => SimpleDateTime.parse(entry.value.as[YScalar].text).right.get
+          case _           => SimpleDateTime.parse(node.as[YScalar].text).right.get
         }
-      case _ => SimpleDateTime.parse(node.as[YScalar].text).get
+      case _ => SimpleDateTime.parse(node.as[YScalar].text).right.get
     }
     AmfScalar(value)
   }
