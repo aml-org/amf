@@ -6,8 +6,6 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.domain.shapes.models.TypeDef
-import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.features.validation.ParserSideValidations
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
@@ -60,19 +58,15 @@ case class DataNodeParser(node: YNode,
 
 case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
                             parent: Option[String] = None,
-                            idCounter: IdCounter = new IdCounter,
-                            forcedType: Option[TypeDef] = None)(implicit ctx: WebApiContext) {
+                            idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
-    val finalDataType = forcedType
-      .map(XsdTypeDefMapping.xsd)
-      .orElse({
-        if (dataType == "dateTimeOnly") {
-          Some((Namespace.Shapes + "dateTimeOnly").iri())
-        } else {
-          Some((Namespace.Xsd + dataType).iri())
-        }
-      })
+    val finalDataType =
+      if (dataType == "dateTimeOnly") {
+        Some((Namespace.Shapes + "dateTimeOnly").iri())
+      } else {
+        Some((Namespace.Xsd + dataType).iri())
+      }
     val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
       .withName(idCounter.genId("scalar"))
     parent.foreach(node.adopted)

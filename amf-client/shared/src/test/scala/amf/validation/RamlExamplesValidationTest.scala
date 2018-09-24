@@ -223,5 +223,14 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/nullable-schema/api.raml")
   }
 
+  // validate enums here?
+  test("Invalid boolean enum value at string type") {
+    validate("enums/enum-boolean-invalid.raml", Some("enum-boolean-invalid.report"))
+  }
+
+  test("Invalid integer enum value at string type") {
+    validate("enums/enum-int-invalid.raml", Some("enum-int-invalid.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

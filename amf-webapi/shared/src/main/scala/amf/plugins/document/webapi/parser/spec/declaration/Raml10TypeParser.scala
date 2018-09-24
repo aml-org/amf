@@ -715,9 +715,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       extends AnyShapeParser
       with CommonScalarParsingLogic {
 
-    override lazy val dataNodeParser: YNode => DataNode = ScalarNodeParser(
-      forcedType = if (typeDef == TypeDef.StrType) Some(typeDef) else None,
-      parent = Some(shape.id)).parse
+    override lazy val dataNodeParser: YNode => DataNode = ScalarNodeParser(parent = Some(shape.id)).parse
 
     override def parse(): ScalarShape = {
       super.parse()

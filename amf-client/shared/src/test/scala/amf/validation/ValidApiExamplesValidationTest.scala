@@ -19,10 +19,6 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("examples/arrayItems2.raml")
   }
 
-  test("Force enum values as string in default string header") {
-    checkValid("examples/force-enum-string.raml")
-  }
-
   test("Minimum and maximum over float format") {
     checkValid("examples/min-max-float-format.raml")
   }
@@ -219,7 +215,6 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
   test("Test mutually recursive shapes in fragments") {
     checkValid("/shapes/recursive_shapes_fragments/api.raml")
   }
-
 
   override val hint: Hint = RamlYamlHint
 }
