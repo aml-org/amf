@@ -67,8 +67,11 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       // in this case i use the father shape id and position, because the inheritance could be a recursive shape already
       val newInherits = shape.inherits.map {
         case r: RecursiveShape if r.fixpoint.option().exists(_.equals(shape.id)) =>
+          r.fixpointTarget.foreach(target => shape.closureShapes ++= Seq(target).filter(_.id != shape.id))
           recursionRegister.recursionError(shape, r, r.id, traversed) // direct recursion
-        case r: RecursiveShape => r
+        case r: RecursiveShape =>
+          r.fixpointTarget.foreach(target => shape.closureShapes ++= Seq(target).filter(_.id != shape.id))
+          r
         case other =>
           recursiveNormalization(other) match {
             case rec: RecursiveShape =>
@@ -91,7 +94,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
         constraint match {
           case rec: RecursiveShape =>
             rec.fixpointTarget.foreach(target => shape.closureShapes ++= Seq(target).filter(_.id != shape.id))
-          case other         =>
+          case other =>
             shape.closureShapes ++= other.closureShapes.filter(_.id != shape.id)
         }
         constraint
@@ -106,7 +109,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
         constraint match {
           case rec: RecursiveShape =>
             rec.fixpointTarget.foreach(target => shape.closureShapes ++= Seq(target).filter(_.id != shape.id))
-          case other               =>
+          case other =>
             shape.closureShapes ++= other.closureShapes.filter(_.id != shape.id)
         }
         constraint
@@ -121,7 +124,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
         constraint match {
           case rec: RecursiveShape =>
             rec.fixpointTarget.foreach(target => shape.closureShapes ++= Seq(target).filter(_.id != shape.id))
-          case other               =>
+          case other =>
             shape.closureShapes ++= other.closureShapes.filter(_.id != shape.id)
         }
         constraint
@@ -135,7 +138,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       constraint match {
         case rec: RecursiveShape =>
           rec.fixpointTarget.foreach(target => shape.closureShapes ++= Seq(target).filter(_.id != shape.id))
-        case other               =>
+        case other =>
           shape.closureShapes ++= other.closureShapes.filter(_.id != shape.id)
       }
       shape.set(ShapeModel.Not, constraint, notConstraint.annotations)
@@ -155,7 +158,9 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     val oldItems  = array.fields.getValue(ArrayShapeModel.Items)
     if (mandatory)
       array.inherits.collect({ case arr: ArrayShape if arr.items.isInstanceOf[RecursiveShape] => arr }).foreach { f =>
-        recursionRegister.recursionError(array, f.items.asInstanceOf[RecursiveShape], array.id, traversed)
+        val r = f.items.asInstanceOf[RecursiveShape]
+        recursionRegister.recursionError(array, r, array.id, traversed)
+        r.fixpointTarget.foreach(target => array.closureShapes ++= Seq(target).filter(_.id != array.id))
       }
     if (Option(oldItems).isDefined) {
       val newItems = if (mandatory) {
