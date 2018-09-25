@@ -63,7 +63,16 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
       }
 
       scheme
-    case _ => throw new Exception(s"Invalid type ${node.tagType}")
+    case YType.Include =>
+      ctx.violation(
+        ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id,
+        "'securedBy' property doesn't accept !include tag, only references to security schemes.",
+        node
+      )
+      producer("invalid").add(Annotations(node))
+    case t =>
+      ctx.violation(ParserSideValidations.ParsingErrorSpecification.id, s"Invalid type $t for 'securedBy' node.", node)
+      producer("invalid").add(Annotations(node))
   }
 }
 

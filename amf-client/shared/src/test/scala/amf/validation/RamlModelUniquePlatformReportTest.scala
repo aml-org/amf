@@ -144,5 +144,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("/invalid-library-include/api.raml", Some("invalid-library-include.report"))
   }
 
+  test("Invalid include security scheme in securedBy") {
+    validate("/invalid-secured-by-include/api.raml", Some("invalid-secured-by-include.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }
