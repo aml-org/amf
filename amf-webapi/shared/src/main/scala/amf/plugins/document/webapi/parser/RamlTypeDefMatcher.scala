@@ -20,13 +20,16 @@ object RamlTypeDefMatcher {
     case _         => None
   }
 
-  def matchType(ramlType: String, format: String = "", default: TypeDef = ObjectType): TypeDef =
+  def matchType(ramlType: String,
+                format: String = "",
+                default: TypeDef = ObjectType,
+                isRef: Boolean = false): TypeDef =
     ramlType match {
-      case XMLSchema(_)        => XMLSchemaType
-      case JSONSchema(_)       => JSONSchemaType
-      case TypeExpression(_)   => TypeExpressionType
-      case "nil" | "" | "null" => NilType
-      case "any"               => AnyType
+      case XMLSchema(_) if !isRef  => XMLSchemaType
+      case JSONSchema(_) if !isRef => JSONSchemaType
+      case TypeExpression(_)       => TypeExpressionType
+      case "nil" | "" | "null"     => NilType
+      case "any"                   => AnyType
       case "string" =>
         format match {
           case "byte"     => ByteType
@@ -80,7 +83,8 @@ object RamlTypeDefMatcher {
   object TypeExpression {
     def unapply(str: String): Option[String] = {
       val trimed = ltrim(str.trim)
-      if ((trimed.contains("[]") && !trimed.startsWith("[") && trimed.endsWith("]")) || trimed.contains("|") || trimed.contains("(") || trimed.contains(")"))
+      if ((trimed.contains("[]") && !trimed.startsWith("[") && trimed.endsWith("]")) || trimed.contains("|") || trimed
+            .contains("(") || trimed.contains(")"))
         Some(str)
       else None
     }

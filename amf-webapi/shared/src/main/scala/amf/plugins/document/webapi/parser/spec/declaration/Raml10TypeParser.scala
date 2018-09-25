@@ -91,11 +91,11 @@ trait RamlTypeSyntax {
     }
   }
 
-  def wellKnownType(str: String): Boolean =
+  def wellKnownType(str: String, isRef: Boolean = false): Boolean =
     if (str.indexOf("|") > -1 || str.indexOf("[") > -1 || str.indexOf("{") > -1 || str.indexOf("]") > -1 || str
           .indexOf("}") > -1 || (str.startsWith("<<") && str.endsWith(">>"))) {
       false
-    } else RamlTypeDefMatcher.matchType(str, default = UndefinedType) != UndefinedType
+    } else RamlTypeDefMatcher.matchType(str, default = UndefinedType, isRef = isRef) != UndefinedType
 
   def isTypeExpression(str: String): Boolean = {
     try { RamlTypeDefMatcher.matchType(str, default = UndefinedType) == TypeExpressionType } catch {

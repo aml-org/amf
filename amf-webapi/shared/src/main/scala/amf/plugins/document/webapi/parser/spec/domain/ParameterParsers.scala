@@ -113,7 +113,7 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                   .withName("schema")
                   .adopted(parameter.id)
                 parameter.withSchema(schema)
-              case Right(ref) if wellKnownType(ref.text) =>
+              case Right(ref) if wellKnownType(ref.text, isRef = true) =>
                 val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
                 parameter.withSchema(schema)
 

@@ -148,5 +148,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("/invalid-secured-by-include/api.raml", Some("invalid-secured-by-include.report"))
   }
 
+  test("Invalid parameter link") {
+    validate("/parameters/invalid-link.raml", Some("invalid-link.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }
