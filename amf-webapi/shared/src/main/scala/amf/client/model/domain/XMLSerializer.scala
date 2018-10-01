@@ -16,7 +16,7 @@ case class XMLSerializer(override private[amf] val _internal: InternalXMLSeriali
   def this() = this(InternalXMLSerializer())
 
   def attribute: BoolField = _internal.attribute
-  def internal: BoolField  = _internal.wrapped
+  def wrapped: BoolField   = _internal.wrapped
   def name: StrField       = _internal.name
   def namespace: StrField  = _internal.namespace
   def prefix: StrField     = _internal.prefix
