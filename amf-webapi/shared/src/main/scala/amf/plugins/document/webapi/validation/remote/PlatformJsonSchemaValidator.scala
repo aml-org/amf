@@ -7,17 +7,18 @@ import amf.core.parser.SyamlParsedDocument
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin}
-import amf.plugins.document.webapi.parser.spec.oas.{JsonSchemaValidationFragmentEmitter, OasFragmentEmitter}
+import amf.plugins.document.webapi.PayloadPlugin
+import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.collection.mutable
 import scala.concurrent.Future
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
@@ -57,9 +58,8 @@ trait PlatformSchemaValidator {
             currentDataNode match {
               case obj: ObjectNode =>
                 obj.properties.get(discriminatorProp) match {
-                  case Some(v: ScalarNode) => {
+                  case Some(v: ScalarNode) =>
                     v.value == discriminatorValue
-                  }
                   case _ => false
                 }
               case _ => false
@@ -108,7 +108,7 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
   protected def processCandidate(obj: LoadedObj, str: String, fragment: PayloadFragment): Seq[AMFValidationResult]
 
   override def validate(validationCandidates: Seq[ValidationCandidate],
-                        profile: ValidationProfile): Future[AMFValidationReport] = {
+                        profile: ValidationProfile): Future[AMFValidationReport] = Future {
 
     val jsonSchemaCandidates: Seq[JsonSchemaCandidate] = computeJsonSchemaCandidates(validationCandidates)
 
@@ -142,13 +142,12 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
       //        case JsonSchemaCandidate(c, jsonSchema,None, None)
       case _ => Nil
     }
-    Future.successful(
-      AMFValidationReport(
-        conforms = results.isEmpty,
-        model = "http://test.com/paylaod#validations",
-        profile = profile.name, // profiles.headOption.map(_.name).getOrElse(ProfileNames.AMF)
-        results = results
-      )
+
+    AMFValidationReport(
+      conforms = results.isEmpty,
+      model = "http://test.com/paylaod#validations",
+      profile = profile.name, // profiles.headOption.map(_.name).getOrElse(ProfileNames.AMF)
+      results = results
     )
   }
 
@@ -193,10 +192,11 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    SYamlSyntaxPlugin.unparse("application/json",
-                              SyamlParsedDocument(document =
-                                new JsonSchemaValidationFragmentEmitter(dataType)(JsonSchemaEmitterContext())
-                                  .emitFragment())) // todo for logic in serializer. Hoy to handle the root?
+    SYamlSyntaxPlugin.unparse(
+      "application/json",
+      SyamlParsedDocument(
+        document = new JsonSchemaValidationFragmentEmitter(dataType)(JsonSchemaEmitterContext())
+          .emitFragment())) // todo for logic in serializer. Hoy to handle the root?
 
   }
 

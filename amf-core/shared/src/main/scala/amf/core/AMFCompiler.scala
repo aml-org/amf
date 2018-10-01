@@ -8,7 +8,14 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.exception.{CyclicReferenceException, UnsupportedVendorException}
 import amf.core.model.document.{BaseUnit, Document, ExternalFragment, RecursiveUnit}
 import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{ParsedDocument, ParsedReference, ParserContext, ReferenceKind, ReferenceResolutionResult, UnspecifiedReference}
+import amf.core.parser.{
+  ParsedDocument,
+  ParsedReference,
+  ParserContext,
+  ReferenceKind,
+  ReferenceResolutionResult,
+  UnspecifiedReference
+}
 import amf.client.plugins.AMFDocumentPlugin
 import amf.core.client.ParsingOptions
 import amf.core.registries.AMFPluginsRegistry
@@ -146,11 +153,10 @@ class AMFCompiler(val rawUrl: String,
     }
   }
 
-  def parseExternalFragment(content: Content): Future[BaseUnit] = {
-    val result = ExternalDomainElement().withId(content.url + "#/").withRaw(content.stream.toString) //
+  def parseExternalFragment(content: Content): Future[BaseUnit] = Future {
+    val result = ExternalDomainElement().withId(content.url + "#/").withRaw(content.stream.toString)
     content.mime.foreach(mime => result.withMediaType(mime))
-    Future.successful(
-      ExternalFragment().withLocation(content.url).withId(content.url).withEncodes(result).withLocation(content.url))
+    ExternalFragment().withLocation(content.url).withId(content.url).withEncodes(result).withLocation(content.url)
   }
 
   private def parseDomain(parsed: Either[Content, Root]): Future[BaseUnit] = {
@@ -187,12 +193,14 @@ class AMFCompiler(val rawUrl: String,
         }
       case None if vendor.isDefined => throw new UnsupportedVendorException(vendor.get)
       case None =>
-        ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing domain $rawUrl NO PLUGIN")
-        val fragment = ExternalFragment()
-          .withLocation(document.location)
-          .withId(document.location)
-          .withEncodes(ExternalDomainElement().withRaw(document.raw).withMediaType(document.mediatype))
-        Future.successful(fragment)
+        Future {
+          ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing domain $rawUrl NO PLUGIN")
+          ExternalFragment()
+            .withLocation(document.location)
+            .withId(document.location)
+            .withEncodes(ExternalDomainElement().withRaw(document.raw).withMediaType(document.mediatype))
+        }
+
     }
 
     futureDocument map { baseUnit: BaseUnit =>
@@ -217,12 +225,13 @@ class AMFCompiler(val rawUrl: String,
           case ReferenceResolutionResult(_, Some(unit)) =>
             val reference = ParsedReference(unit, link)
             handler.update(reference, ctx, context, env).map(Some(_))
-          case ReferenceResolutionResult(Some(e), _)       =>
+          case ReferenceResolutionResult(Some(e), _) =>
             e match {
               case e: CyclicReferenceException if !domainPlugin.allowRecursiveReferences =>
-                ctx.violation(ParserSideValidations.CycleReferenceError.id, link.url, e.getMessage, link.refs.head.node)
+                ctx
+                  .violation(ParserSideValidations.CycleReferenceError.id, link.url, e.getMessage, link.refs.head.node)
                 Future(None)
-              case e  =>
+              case e =>
                 if (!link.isInferred) {
                   link.refs.map(_.node).foreach { ref =>
                     ctx.violation(link.url, e.getMessage, ref)

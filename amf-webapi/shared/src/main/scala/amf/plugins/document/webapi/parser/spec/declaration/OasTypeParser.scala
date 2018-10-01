@@ -350,8 +350,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                       }
                     }
                 }
-              case other =>
-                println(s"OTHER ${other}")
+              case _ =>
                 // normal path for a variable in a regular OAS, not inlined JSON Schema
                 val shape = UnresolvedShape(text, map).withName(text)
                 shape.withContext(ctx)

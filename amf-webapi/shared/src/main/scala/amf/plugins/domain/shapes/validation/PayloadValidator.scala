@@ -64,7 +64,7 @@ object PayloadValidator {
           case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
             PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
                             result.fragment.mediaType.value())
-          case other => result.fragment
+          case _ => result.fragment
         }
       } else
         result.fragment
@@ -73,13 +73,13 @@ object PayloadValidator {
   }
 
   private def isString(shape: Shape): Boolean = shape match {
-    case s:ScalarShape => s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri()))
-    case _ => false
+    case s: ScalarShape => s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri()))
+    case _              => false
   }
 
   private def unionWithString(shape: Shape): Boolean = shape match {
-    case u:UnionShape => u.anyOf.exists(isString)
-    case _ => false
+    case u: UnionShape => u.anyOf.exists(isString)
+    case _             => false
   }
 
   def plugin(mediaType: String, shape: Shape, env: Environment): AMFPayloadValidationPlugin =
