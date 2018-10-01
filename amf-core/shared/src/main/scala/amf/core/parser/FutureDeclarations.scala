@@ -23,18 +23,18 @@ trait FutureDeclarations {
 
   val promises: mutable.Map[String, Seq[DeclarationPromise]] = mutable.Map()
 
-  def futureRef(id: String, name: String, promise: DeclarationPromise): Unit = {
+  def futureRef(id: String, name: String, promise: DeclarationPromise): Unit = this.synchronized {
     val otherPromises = promises.getOrElse(name, Seq[DeclarationPromise]())
     promises.update(name, otherPromises ++ Seq(promise))
   }
 
-  def resolveRef(name: String, value: Linkable): Unit = {
+  def resolveRef(name: String, value: Linkable): Unit = this.synchronized {
     promises.getOrElse(name, Seq[DeclarationPromise]()).foreach(_.resolve(value))
     promises.update(name, Seq[DeclarationPromise]())
   }
 
   /** Resolve all UnresolvedShape references or fail. */
-  def resolve(): Unit = {
+  def resolve(): Unit = this.synchronized {
     // we fail unresolved references
     promises.values.flatten.filter(!_.resolved).foreach(_.fail())
   }
