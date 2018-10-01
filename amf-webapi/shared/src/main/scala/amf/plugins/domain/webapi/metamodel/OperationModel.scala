@@ -3,29 +3,31 @@ package amf.plugins.domain.webapi.metamodel
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type._
 import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.vocabulary.Namespace.{Document, Http, Hydra, Schema}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+import amf.plugins.domain.shapes.metamodel.common.DocumentationField
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.Operation
 
 /**
   * Operation meta model.
   */
-object OperationModel extends DomainElementModel with KeyField with OptionalField {
+object OperationModel
+    extends DomainElementModel
+    with KeyField
+    with OptionalField
+    with NameFieldSchema
+    with DescriptionField
+    with DocumentationField {
 
   val Method = Field(Str, Hydra + "method")
-
-  val Name = Field(Str, Schema + "name")
-
-  val Description = Field(Str, Schema + "description")
 
   val Deprecated = Field(Bool, Document + "deprecated")
 
   val Summary = Field(Str, Http + "guiSummary")
-
-  val Documentation = Field(CreativeWorkModel, Schema + "documentation")
 
   val Schemes = Field(Array(Str), Http + "scheme")
 

@@ -3,6 +3,7 @@ package amf.plugins.domain.webapi.metamodel
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.WebApi
 import amf.core.vocabulary.Namespace._
@@ -12,11 +13,7 @@ import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 /**
   * Web Api metamodel
   */
-object WebApiModel extends DomainElementModel {
-
-  val Name = Field(Str, Schema + "name")
-
-  val Description = Field(Str, Schema + "description")
+object WebApiModel extends DomainElementModel with NameFieldSchema with DescriptionField {
 
   val Servers = Field(Array(ServerModel), Http + "server")
 

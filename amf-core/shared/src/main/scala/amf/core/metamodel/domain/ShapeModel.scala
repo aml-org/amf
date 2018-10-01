@@ -2,6 +2,7 @@ package amf.core.metamodel.domain
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Iri, SortedArray, Str}
+import amf.core.metamodel.domain.common.{DescriptionField, DisplayNameField}
 import amf.core.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.vocabulary.Namespace.{Schema, Shacl, Shapes}
@@ -12,13 +13,11 @@ import amf.core.vocabulary.ValueType
   * They can be used to define and enforce schemas for the data graph information through SHACL.
   * Shapes can be recursive and inherit from other shapes.
   */
-trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyField {
+trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyField with DescriptionField {
 
   val Name = Field(Str, Shacl + "name")
 
   val DisplayName = Field(Str, Schema + "name")
-
-  val Description = Field(Str, Schema + "description")
 
   val Default = Field(DataNodeModel, Shacl + "defaultValue")
 

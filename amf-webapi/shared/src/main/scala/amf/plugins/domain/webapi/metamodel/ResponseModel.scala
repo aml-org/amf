@@ -2,21 +2,25 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
+import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.core.vocabulary.Namespace._
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.shapes.metamodel.ExampleModel
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.webapi.models.Response
 
 /**
   * Response metamodel.
   */
-object ResponseModel extends DomainElementModel with KeyField with OptionalField with LinkableElementModel {
-
-  val Name = Field(Str, Schema + "name")
-
-  val Description = Field(Str, Schema + "description")
+object ResponseModel
+    extends DomainElementModel
+    with KeyField
+    with OptionalField
+    with ExamplesField
+    with LinkableElementModel
+    with NameFieldSchema
+    with DescriptionField {
 
   val StatusCode = Field(Str, Hydra + "statusCode")
 
@@ -25,8 +29,6 @@ object ResponseModel extends DomainElementModel with KeyField with OptionalField
   val Payloads = Field(Array(PayloadModel), Http + "payload")
 
   val Links = Field(Array(TemplatedLinkModel), Http + "link")
-
-  val Examples = Field(Array(ExampleModel), Document + "examples")
 
   override val key: Field = StatusCode
 

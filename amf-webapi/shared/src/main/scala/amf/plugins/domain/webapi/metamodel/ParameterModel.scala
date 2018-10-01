@@ -2,23 +2,27 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Bool, Str}
+import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
-import amf.core.vocabulary.Namespace.{Document, Http, Hydra, Schema => SchemaNamespace}
+import amf.core.vocabulary.Namespace.{Document, Http, Hydra}
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.shapes.metamodel.ExampleModel
+import amf.plugins.domain.shapes.metamodel.common.ExampleField
 import amf.plugins.domain.webapi.models.Parameter
 
 /**
   * Parameter metaModel.
   */
-object ParameterModel extends DomainElementModel with LinkableElementModel with KeyField with OptionalField {
-
-  val Name = Field(Str, SchemaNamespace + "name")
+object ParameterModel
+    extends DomainElementModel
+    with LinkableElementModel
+    with KeyField
+    with NameFieldSchema
+    with OptionalField
+    with ExampleField
+    with DescriptionField {
 
   val ParameterName = Field(Str, Http + "paramName")
-
-  val Description = Field(Str, SchemaNamespace + "description")
 
   val Required = Field(Bool, Hydra + "required")
 
@@ -37,8 +41,6 @@ object ParameterModel extends DomainElementModel with LinkableElementModel with 
   val Schema = Field(ShapeModel, Http + "schema")
 
   val Payloads = Field(Array(PayloadModel), Http + "payload")
-
-  val Examples = Field(Array(ExampleModel), Http + "example")
 
   override val key: Field = Name
 

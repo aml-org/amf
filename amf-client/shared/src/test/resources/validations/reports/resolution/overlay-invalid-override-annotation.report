@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/validations/overlays/invalid-override-annotation/overlay.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#resolution-error
+  Message: Property 'http://www.w3.org/ns/shacl#datatype' in 'ScalarShape' is not allowed to be overriden or added in overlays
+  Level: Violation
+  Target: http://www.w3.org/ns/shacl#datatype
+  Property: 
+  Position: None
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#resolution-error
+  Message: Property 'http://a.ml/vocabularies/document#name' in 'CustomDomainProperty' is not allowed to be overriden or added in overlays
+  Level: Violation
+  Target: http://a.ml/vocabularies/document#name
+  Property: 
+  Position: Some(LexicalInformation([(5,2)-(5,5)]))
+  Location: file://amf-client/shared/src/test/resources/validations/overlays/invalid-override-annotation/overlay.raml

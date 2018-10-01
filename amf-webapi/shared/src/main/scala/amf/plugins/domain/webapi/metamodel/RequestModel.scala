@@ -2,6 +2,7 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Bool, Str}
+import amf.core.metamodel.domain.common.DescriptionField
 import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.vocabulary.Namespace.{Http, Schema}
 import amf.core.vocabulary.ValueType
@@ -10,9 +11,7 @@ import amf.plugins.domain.webapi.models.Request
 /**
   * Request metaModel.
   */
-object RequestModel extends DomainElementModel {
-
-  val Description = Field(Str, Schema + "description")
+object RequestModel extends DomainElementModel with DescriptionField {
 
   val Required = Field(Bool, Http + "required")
 

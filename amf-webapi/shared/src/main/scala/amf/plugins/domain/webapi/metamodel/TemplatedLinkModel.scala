@@ -2,6 +2,7 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
+import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.core.vocabulary.Namespace.{Http, Hydra, Schema}
 import amf.core.vocabulary.ValueType
@@ -10,9 +11,11 @@ import amf.plugins.domain.webapi.models.TemplatedLink
 /**
   * Link metaModel.
   */
-object TemplatedLinkModel extends DomainElementModel with LinkableElementModel {
-
-  val Name = Field(Str, Schema + "name")
+object TemplatedLinkModel
+    extends DomainElementModel
+    with LinkableElementModel
+    with NameFieldSchema
+    with DescriptionField {
 
   val Template = Field(Str, Hydra + "template")
 
@@ -21,8 +24,6 @@ object TemplatedLinkModel extends DomainElementModel with LinkableElementModel {
   val Mapping = Field(Array(IriTemplateMappingModel), Hydra + "mapping")
 
   val RequestBody = Field(Str, Http + "requestBody")
-
-  val Description = Field(Str, Schema + "description")
 
   val Server = Field(ServerModel, Http + "server")
 

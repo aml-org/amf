@@ -3,6 +3,7 @@ package amf.plugins.domain.webapi.metamodel
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Iri, Str}
 import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.plugins.domain.webapi.models.Organization
 import amf.core.vocabulary.Namespace.Schema
 import amf.core.vocabulary.ValueType
@@ -10,11 +11,9 @@ import amf.core.vocabulary.ValueType
 /**
   * Organization metamodel
   */
-object OrganizationModel extends DomainElementModel {
+object OrganizationModel extends DomainElementModel with NameFieldSchema {
 
   val Url = Field(Iri, Schema + "url")
-
-  val Name = Field(Str, Schema + "name")
 
   val Email = Field(Str, Schema + "email")
 

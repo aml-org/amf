@@ -2,19 +2,16 @@ package amf.core.metamodel.domain.templates
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
+import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
 import amf.core.vocabulary.Namespace._
 import amf.core.vocabulary.ValueType
 
-trait AbstractDeclarationModel extends DomainElementModel with KeyField {
-
-  val Name = Field(Str, Schema + "name")
+trait AbstractDeclarationModel extends DomainElementModel with KeyField with NameFieldSchema with DescriptionField {
 
   val DataNode = Field(DataNodeModel, Document + "dataNode")
 
   val Variables = Field(Array(Str), Document + "variable")
-
-  val Description = Field(Str, Schema + "description")
 
   override val key: Field = Name
 

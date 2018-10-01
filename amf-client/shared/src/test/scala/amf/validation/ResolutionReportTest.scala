@@ -31,22 +31,6 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/types/unresolve-inherits-differentclass.raml", Some("unresolve-inherits-differentclass.report"))
   }
 
-  test("Invalid fields in overlay and master") {
-    checkReport("/overlays/invalid-override/overlay.raml", Some("overlays-report.report"))
-  }
-
-  test("Invalid fields without override in overlay") {
-    checkReport("/overlays/restricted-notoverride/overlay.raml", None)
-  }
-
-  test("Invalid type overrided") {
-    checkReport("/overlays/valid-declaration/overlay.raml", None)
-  }
-
-  test("Invalid not existing node in master") {
-    checkReport("/overlays/not-existing-node/overlay.raml", Some("not-existing-node.report"))
-  }
-
   test("Valid recursive optional property with items recursive") {
     checkReport("/types/optional-prop-item-recursive.raml", None)
   }
@@ -82,5 +66,64 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   test("Test unresolved shape in fragment") {
     validate("/shapes/frag-future-ref/api.raml")
   }
+
+  test("Invalid insertion baseuri in overlay") {
+    checkReport("/overlays/invalid-insertion-baseuri/overlay.raml", Some("overlay-invalid-insert-baseuri.report"))
+  }
+
+  test("Invalid insertion endpoint in overlay") {
+    checkReport("/overlays/invalid-insertion-endpoint/overlay.raml", Some("overlay-invalid-insert-endpoint.report"))
+  }
+
+  test("Invalid insertion node in overlay") {
+    checkReport("/overlays/invalid-insertion-node/overlay.raml", Some("overlay-invalid-insert-node.report"))
+  }
+
+  test("Invalid annotation override in overlay") {
+    checkReport("/overlays/invalid-override-annotation/overlay.raml",
+                Some("overlay-invalid-override-annotation.report"))
+  }
+
+  test("Invalid baseuri override in overlay") {
+    checkReport("/overlays/invalid-override-baseuri/overlay.raml", Some("overlay-invalid-override-baseuri.report"))
+  }
+
+  test("Invalid declaration override in overlay") {
+    checkReport("/overlays/invalid-override-declaration/overlay.raml",
+                Some("overlay-invalid-override-declaration.report"))
+  }
+
+  test("Valid annotation insertion in overlay") {
+    checkReport("/overlays/valid-insertion-declaration-annotation/overlay.raml", None)
+  }
+
+  test("Valid declaration insertion in overlay") {
+    checkReport("/overlays/valid-insertion-declaration-type/overlay.raml", None)
+  }
+
+  test("Valid documentation insertion in overlay") {
+    checkReport("/overlays/valid-insertion-documentation/overlay.raml", None)
+  }
+
+  test("Valid documentation insertion in overlay 2") {
+    checkReport("/overlays/valid-insertion-documentation-2/overlay.raml", None)
+  }
+
+  test("Valid operation example insertion in overlay") {
+    checkReport("/overlays/valid-insertion-operation-example/overlay.raml", None)
+  }
+
+  test("Valid type example insertion in overlay") {
+    checkReport("/overlays/valid-insertion-type-example/overlay.raml", None)
+  }
+
+  test("Valid override title insertion in overlay") {
+    checkReport("/overlays/valid-override-title/overlay.raml", None)
+  }
+
+  test("Valid complex overlay") {
+    checkReport("/overlays/valid-complex/overlay2.raml", None)
+  }
+
   override val hint: Hint = RamlYamlHint
 }

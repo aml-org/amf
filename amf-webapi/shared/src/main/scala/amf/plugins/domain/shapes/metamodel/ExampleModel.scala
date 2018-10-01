@@ -2,6 +2,7 @@ package amf.plugins.domain.shapes.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Bool, Str}
+import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ExternalSourceElementModel, LinkableElementModel}
 import amf.plugins.domain.shapes.models.Example
@@ -15,9 +16,9 @@ object ExampleModel
     extends DomainElementModel
     with LinkableElementModel
     with KeyField
-    with ExternalSourceElementModel {
+    with ExternalSourceElementModel
+    with NameFieldSchema {
 
-  val Name            = Field(Str, Schema + "name")
   val DisplayName     = Field(Str, Document + "displayName")
   val Summary         = Field(Str, Http + "guiSummary")
   val Description     = Field(Str, Schema + "description")

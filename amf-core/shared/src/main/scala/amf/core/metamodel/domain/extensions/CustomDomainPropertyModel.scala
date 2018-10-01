@@ -2,11 +2,12 @@ package amf.core.metamodel.domain.extensions
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Iri, Str}
+import amf.core.metamodel.domain.common.{DescriptionField, DisplayNameField}
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.vocabulary.Namespace.{Document, Rdf, Rdfs, Shapes}
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.vocabulary.Namespace._
+import amf.core.vocabulary.ValueType
 
 /**
   * Custom Domain Property
@@ -21,14 +22,12 @@ import amf.core.vocabulary.{Namespace, ValueType}
   * Contrast this extension mechanism with the creation of a propertyTerm in a vocabulary, a more
   * re-usable and generic way of achieving the same functionality
   */
-object CustomDomainPropertyModel extends DomainElementModel with KeyField {
+object CustomDomainPropertyModel extends DomainElementModel with KeyField with DisplayNameField with DescriptionField {
 
   /**
     * The name of the extension
     */
-  val Name        = Field(Str, Namespace.Document + "name")
-  val DisplayName = Field(Str, Namespace.Schema + "name")
-  val Description = Field(Str, Namespace.Schema + "description")
+  val Name = Field(Str, Document + "name")
 
   override val key: Field = Name
 
@@ -46,7 +45,8 @@ object CustomDomainPropertyModel extends DomainElementModel with KeyField {
     */
   val Schema = Field(ShapeModel, Shapes + "schema")
 
-  override def fields: List[Field] = List(Domain, Schema, Name) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+  override def fields: List[Field] =
+    List(Domain, Schema, Name) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = Rdf + "Property" :: Document + "DomainProperty" :: DomainElementModel.`type`
 

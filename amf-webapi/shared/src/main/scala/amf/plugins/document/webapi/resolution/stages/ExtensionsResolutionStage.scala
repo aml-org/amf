@@ -1,28 +1,29 @@
 package amf.plugins.document.webapi.resolution.stages
 
 import amf.core.annotations.{Aliases, SynthesizedField}
-import amf.core.metamodel.Type.{ArrayLike, Scalar}
+import amf.core.metamodel.Type.Scalar
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel._
-import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
+import amf.core.metamodel.domain.common._
+import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
-import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.metamodel.{Field, Type}
 import amf.core.model.document._
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, ErrorHandler, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, CreativeWorkModel, ExampleModel}
+import amf.plugins.domain.shapes.metamodel.ExampleModel
+import amf.plugins.domain.shapes.metamodel.common._
+import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
-import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
@@ -54,7 +55,6 @@ class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: B
 
 abstract class MergingRestrictions() {
   def allowsOverride(field: Field): Boolean
-
   def allowsNodeInsertionIn(field: Field): Boolean
 }
 
@@ -193,7 +193,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
               case _                    => field.value.toString
             }
 
-            errorHandler.warning(
+            errorHandler.violation(
               ParserSideValidations.ResolutionErrorSpecification.id,
               node,
               s"Property '$node' of type '${value.value.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
@@ -221,11 +221,11 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
               case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
           case Some(existing) => // cannot be override
-            errorHandler.warning(
+            errorHandler.violation(
               ParserSideValidations.ResolutionErrorSpecification.id,
-              existing.field.toString,
+              field.toString,
               s"Property '${existing.field.toString}' in '${master.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
-              existing.value.annotations
+              value.annotations
             )
         }
     }
@@ -385,7 +385,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     existing match {
       case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), extensionId, extensionLocation)
       case None if !(restrictions allowsNodeInsertionIn field) =>
-        errorHandler.warning(
+        errorHandler.violation(
           ParserSideValidations.ResolutionErrorSpecification.id,
           obj.id,
           s"Property of key '${obj.id}' of class '${obj.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
@@ -502,43 +502,50 @@ class OverlayResolutionStage(override val profile: ProfileName, override val kee
 object MergingRestrictions {
 
   val unrestricted: MergingRestrictions = new MergingRestrictions {
-    override def allowsOverride(field: Field): Boolean = true
-
+    override def allowsOverride(field: Field): Boolean        = true
     override def allowsNodeInsertionIn(field: Field): Boolean = true
   }
 
   val onlyFunctionalField: MergingRestrictions = new MergingRestrictions {
-    override def allowsOverride(field: Field): Boolean = {
-      val forgivenScalar = (field.`type`.isInstanceOf[Scalar] && !(Seq(
-        WebApiModel.Name.value.iri(),
-        WebApiModel.Description.value.iri(),
-        WebApiModel.Documentations.value.iri(),
-        TagModel.Documentation.value.iri(),
-        BaseUnitModel.Usage.value.iri(),
-        EndPointModel.Path.value.iri(),
-        OperationModel.Method.value.iri(),
-        AnyShapeModel.Examples.value.iri()
-      ) contains field.value.iri())) || field.value
-        .iri()
-        .equals(WebApiModel.Servers.toString) // exception array field, because servers its not a field key element, so we cannot merge.
 
-      !forgivenScalar || field.value.ns == Namespace.Shacl
-    }
+    val allowedFields: Seq[Field] = Seq(
+      NameFieldShacl.Name,
+      NameFieldSchema.Name,
+      DisplayNameField.DisplayName,
+      ShapeModel.DisplayName,
+      DescriptionField.Description,
+      DocumentationField.Documentation,
+      TagModel.Documentation,
+      WebApiModel.Documentations,
+      BaseUnitModel.Usage,
+      ExampleField.Examples,
+      ExamplesField.Examples,
+      DomainElementModel.CustomDomainProperties
+    )
 
-    override def allowsNodeInsertionIn(field: Field): Boolean = {
+    val allowedScalarFieldsInObject = Seq(
+      EndPointModel.Path,
+      OperationModel.Method,
+      ResponseModel.StatusCode,
+      PayloadModel.MediaType
+    )
+
+    val blockedObjectFields = Seq(
+      WebApiModel.Servers
+    )
+
+    def isAllowedField(field: Field): Boolean             = allowedFields.contains(field)
+    def isAllowedScalarObjectField(field: Field): Boolean = allowedScalarFieldsInObject.contains(field)
+    def isAllowedObjectField(field: Field): Boolean       = !blockedObjectFields.contains(field)
+
+    override def allowsOverride(field: Field): Boolean =
       field.`type` match {
-        case o: Obj            => checkObjAllow(o)
-        case ArrayLike(o: Obj) => checkObjAllow(o)
-        case _                 => true
+        case s: Scalar => isAllowedField(field) || isAllowedScalarObjectField(field)
+        case _         => isAllowedField(field) || isAllowedObjectField(field)
       }
-    }
-    private def checkObjAllow(o: Obj) = {
-      val allowedObjs =
-        Seq(ShapeModel, CustomDomainPropertyModel, DomainExtensionModel, ExampleModel, CreativeWorkModel)
-      o match {
-        case k: KeyField => allowedObjs.contains(o)
-        case _           => true
-      }
-    }
+
+    // Can insert new examples/documentation in existing
+    override def allowsNodeInsertionIn(field: Field): Boolean = isAllowedField(field)
+
   }
 }

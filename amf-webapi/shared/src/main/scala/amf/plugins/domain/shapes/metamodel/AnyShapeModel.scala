@@ -1,19 +1,15 @@
 package amf.plugins.domain.shapes.metamodel
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Iri}
 import amf.core.metamodel.domain.{ExternalSourceElementModel, ShapeModel}
-import amf.core.vocabulary.Namespace.{Document, Schema, Shacl, Shapes}
+import amf.core.vocabulary.Namespace.{Shacl, Shapes}
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
 import amf.plugins.domain.shapes.models.AnyShape
 
-trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel {
-
-  val Documentation = Field(CreativeWorkModel, Schema + "documentation")
+trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with ExamplesField with DocumentationField {
 
   val XMLSerialization = Field(XMLSerializerModel, Shapes + "xmlSerialization")
-
-  val Examples = Field(Array(ExampleModel), Document + "examples")
 
   override def fields: List[Field] =
     ShapeModel.fields ++ ExternalSourceElementModel.fields ++ List(Documentation, XMLSerialization, Examples)
