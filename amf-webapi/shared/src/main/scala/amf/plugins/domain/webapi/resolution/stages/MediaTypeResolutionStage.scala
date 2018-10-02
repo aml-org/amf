@@ -14,7 +14,8 @@ import amf.{OasProfile, ProfileName}
   * Request payloads will have as default mime type the 'accepts' field.
   * Response payloads will have as default mime type the 'contentType' field.
   */
-class MediaTypeResolutionStage(profile: ProfileName)(override implicit val errorHandler: ErrorHandler)
+class MediaTypeResolutionStage(profile: ProfileName, isValidation: Boolean = false)(
+    override implicit val errorHandler: ErrorHandler)
     extends ResolutionStage() {
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
@@ -59,17 +60,21 @@ class MediaTypeResolutionStage(profile: ProfileName)(override implicit val error
 
         Option(operation.request).foreach { request =>
           // Use accepts field.
-          accepts.foreach { a =>
-            if (profile == OasProfile) operation.set(OperationModel.Accepts, a)
-            request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id))
+          accepts match {
+            case Some(a) =>
+              if (!isValidation && profile == OasProfile) operation.set(OperationModel.Accepts, a)
+              request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id))
+            case None =>
           }
         }
 
         operation.responses.foreach { response =>
           // Use contentType field.
-          contentType.foreach { ct =>
-            if (profile == OasProfile) operation.set(OperationModel.ContentType, ct)
-            response.setArray(RequestModel.Payloads, payloads(response.payloads, ct, response.id))
+          contentType match {
+            case Some(ct) =>
+              if (!isValidation && profile == OasProfile) operation.set(OperationModel.ContentType, ct)
+              response.setArray(RequestModel.Payloads, payloads(response.payloads, ct, response.id))
+            case None =>
           }
         }
       }
@@ -79,7 +84,7 @@ class MediaTypeResolutionStage(profile: ProfileName)(override implicit val error
   /** Get and remove field from domain element */
   private def field(element: DomainElement, field: Field) = {
     val result = element.fields.entry(field).map(_.array.values.map(v => v.asInstanceOf[AmfScalar].toString))
-    element.fields.removeField(field)
+    if (!isValidation) element.fields.removeField(field)
     result
   }
 

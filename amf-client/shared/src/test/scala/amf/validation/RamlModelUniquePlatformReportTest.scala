@@ -152,5 +152,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("/parameters/invalid-link.raml", Some("invalid-link.report"))
   }
 
+  test("Payload with no mediaType") {
+    validate("/payloads/no-media-type.raml", Some("no-media-type.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

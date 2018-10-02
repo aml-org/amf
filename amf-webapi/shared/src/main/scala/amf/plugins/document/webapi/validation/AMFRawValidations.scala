@@ -704,19 +704,6 @@ object AMFRawValidations {
       "raml-http:mediaType",
       "PropertyShape",
       "sh:path",
-      "sh:maxCount",
-      "1",
-      "Only one media type per payload is allowed",
-      "Only one media type per payload is allowed",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-http:Payload",
-      "raml-http:mediaType",
-      "PropertyShape",
-      "sh:path",
       "sh:pattern",
       "^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))$|^text\\/\\w+; charset=[-\\w]+$",
       "Invalid media type for method",
@@ -1753,6 +1740,19 @@ object AMFRawValidations {
       "0",
       "MaxProperties must be greater than or equal to minProperties",
       "MaxProperties must be greater than or equal to minProperties",
+      "Violation"
+    ),
+    AMFValidation(
+      Raml.name,
+      "Domain",
+      "raml-http:Payload",
+      "raml-http:mediaType",
+      "PropertyShape",
+      "sh:path",
+      "sh:minCount",
+      "1",
+      "Payload media type is mandatory",
+      "",
       "Violation"
     )
   )
