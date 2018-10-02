@@ -172,12 +172,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
             }
           case _ =>
-            ctx.violation(shape.id,
-                          "",
-                          None,
-                          s"Error parsing type expression, cannot accept type $shape",
-                          lexical,
-                          location)
+            ctx.violation(shape.id, s"Error parsing type expression, cannot accept type $shape", lexical, location)
             Some(shape)
         }
     }
@@ -227,8 +222,8 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
   }
 
   private val (lexical, location) = part match {
-    case (p: YPart) => (Some(new LexicalInformation(Range(p.range))), p.sourceName.option)
-    case _          => (None, None)
+    case p: YPart => (Some(new LexicalInformation(Range(p.range))), p.sourceName.option)
+    case _        => (None, None)
   }
 }
 

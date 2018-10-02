@@ -25,11 +25,11 @@ object RamlTypeDefMatcher {
                 default: TypeDef = ObjectType,
                 isRef: Boolean = false): TypeDef =
     ramlType match {
-      case XMLSchema(_) if !isRef  => XMLSchemaType
-      case JSONSchema(_) if !isRef => JSONSchemaType
-      case TypeExpression(_)       => TypeExpressionType
-      case "nil" | "" | "null"     => NilType
-      case "any"                   => AnyType
+      case XMLSchema(_) if !isRef      => XMLSchemaType
+      case JSONSchema(_) if !isRef     => JSONSchemaType
+      case TypeExpression(_) if !isRef => TypeExpressionType
+      case "nil" | "" | "null"         => NilType
+      case "any"                       => AnyType
       case "string" =>
         format match {
           case "byte"     => ByteType
