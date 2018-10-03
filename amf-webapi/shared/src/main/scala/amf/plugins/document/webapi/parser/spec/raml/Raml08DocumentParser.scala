@@ -4,7 +4,6 @@ import amf.core.Root
 import amf.core.annotations.DeclaredElement
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
-import amf.core.remote.{Raml08, Vendor}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.{
@@ -86,7 +85,7 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
   }
 
   private def parseEntries(entries: Seq[YMapEntry], parent: String): Unit = entries.foreach { entry =>
-    ctx.declarations += SecuritySchemeParser(entry, scheme => scheme.withName(entry.key).adopted(parent))
+    ctx.declarations += SecuritySchemeParser(entry, (scheme, name) => scheme.withName(name).adopted(parent))
       .parse()
       .add(DeclaredElement())
   }

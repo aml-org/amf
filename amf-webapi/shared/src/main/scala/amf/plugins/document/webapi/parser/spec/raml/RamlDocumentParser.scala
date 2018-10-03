@@ -260,9 +260,9 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
             e.value.as[YMap].entries.foreach { entry =>
               ctx.declarations += SecuritySchemeParser(
                 entry,
-                scheme => {
+                (scheme, name) => {
                   scheme.set(SecuritySchemeModel.Name,
-                             AmfScalar(entry.key.as[String], Annotations(entry.key.value)),
+                             AmfScalar(name, Annotations(entry.key.value)),
                              Annotations(entry.key))
                   scheme.adopted(parent)
                 }
@@ -420,7 +420,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
   protected def nestedTypeOrSchema(map: YMap): Option[YMapEntry] = map.key("type").orElse(map.key("schema")) match {
     case Some(n) if n.value.tagType == YType.Map =>
       nestedTypeOrSchema(n.value.as[YMap])
-    case res                                     =>
+    case res =>
       res
   }
 

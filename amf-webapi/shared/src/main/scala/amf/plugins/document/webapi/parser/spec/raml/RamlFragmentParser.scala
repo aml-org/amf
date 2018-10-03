@@ -58,7 +58,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
     optionFragment match {
       case Some(fragment) =>
-        rootMap.key("usage", (usage) => {
+        rootMap.key("usage", usage => {
           fragment.set(
             FragmentModel.Usage,
             AmfScalar(usage.value.as[String], Annotations(usage.value)),
@@ -164,7 +164,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
         RamlSecuritySchemeParser(map,
                                  "securityDefinitions",
                                  map,
-                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme) =>
+                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme, _) =>
                                    security.adopted(root.location + "#/"))
           .parse())
     }

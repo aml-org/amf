@@ -156,5 +156,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("/payloads/no-media-type.raml", Some("no-media-type.report"))
   }
 
+  test("Invalid security scheme key") {
+    validate("/securitySchemes/invalid-key.raml", Some("invalid-key.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

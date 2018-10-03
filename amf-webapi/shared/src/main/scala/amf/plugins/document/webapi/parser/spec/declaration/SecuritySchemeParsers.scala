@@ -22,10 +22,10 @@ import scala.collection.mutable
   *
   */
 object SecuritySchemeParser {
-  def apply(entry: YMapEntry, adopt: SecurityScheme => SecurityScheme)(
+  def apply(entry: YMapEntry, adopt: (SecurityScheme, String) => SecurityScheme)(
       implicit ctx: WebApiContext): SecuritySchemeParser = // todo factory for oas too?
     ctx.vendor match {
-      case _: Raml => RamlSecuritySchemeParser(entry, entry.key, entry.value, adopt)(toRaml(ctx))
+      case _: Raml => RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx))
       case _: Oas  => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
       case other   => throw new IllegalArgumentException(s"Unsupported vendor $other in security scheme parsers")
     }
@@ -35,14 +35,16 @@ object SecuritySchemeParser {
 trait SecuritySchemeParser extends SpecParserOps {
   def parse(): SecurityScheme
 }
-case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: SecurityScheme => SecurityScheme)(
-    implicit ctx: RamlWebApiContext)
+case class RamlSecuritySchemeParser(ast: YPart,
+                                    key: String,
+                                    node: YNode,
+                                    adopt: (SecurityScheme, String) => SecurityScheme)(implicit ctx: RamlWebApiContext)
     extends SecuritySchemeParser {
   override def parse(): SecurityScheme = {
     ctx.link(node) match {
       case Left(link) => parseReferenced(key, link, Annotations(node), adopt)
       case Right(value) =>
-        val scheme = adopt(SecurityScheme(ast))
+        val scheme = adopt(SecurityScheme(ast), key)
 
         val map = value.as[YMap]
 
@@ -63,12 +65,12 @@ case class RamlSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt:
   def parseReferenced(name: String,
                       parsedUrl: String,
                       annotations: Annotations,
-                      adopt: SecurityScheme => SecurityScheme): SecurityScheme = {
+                      adopt: (SecurityScheme, String) => SecurityScheme): SecurityScheme = {
     val scheme = ctx.declarations
       .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.All)
 
     val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
-    adopt(copied)
+    adopt(copied, name)
     copied.withName(name)
   }
 }
@@ -152,14 +154,16 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
   }
 }
 
-case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: SecurityScheme => SecurityScheme)(
-    implicit ctx: WebApiContext)
+case class OasSecuritySchemeParser(ast: YPart,
+                                   key: String,
+                                   node: YNode,
+                                   adopt: (SecurityScheme, String) => SecurityScheme)(implicit ctx: WebApiContext)
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
     ctx.link(node) match {
       case Left(link) => parseReferenced(key, link, Annotations(node), adopt)
       case Right(value) =>
-        val scheme = adopt(SecurityScheme(ast))
+        val scheme = adopt(SecurityScheme(ast), key)
 
         val map = value.as[YMap]
 
@@ -322,12 +326,12 @@ case class OasSecuritySchemeParser(ast: YPart, key: String, node: YNode, adopt: 
   def parseReferenced(name: String,
                       parsedUrl: String,
                       annotations: Annotations,
-                      adopt: SecurityScheme => SecurityScheme): SecurityScheme = {
+                      adopt: (SecurityScheme, String) => SecurityScheme): SecurityScheme = {
     val scheme = ctx.declarations
       .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.Fragments)
 
     val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
-    adopt(copied)
+    adopt(copied, name)
     copied.withName(name)
   }
 }

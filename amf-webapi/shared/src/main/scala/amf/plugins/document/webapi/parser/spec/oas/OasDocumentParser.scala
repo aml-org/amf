@@ -579,9 +579,9 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
         e.value.as[YMap].entries.foreach { entry =>
           ctx.declarations += SecuritySchemeParser(
             entry,
-            scheme => {
+            (scheme, name) => {
               scheme.set(ParametrizedSecuritySchemeModel.Name,
-                         AmfScalar(entry.key.as[String], Annotations(entry.key.value)),
+                         AmfScalar(name, Annotations(entry.key.value)),
                          Annotations(entry.key))
               scheme.adopted(parent)
             }
@@ -597,9 +597,9 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
         e.value.as[YMap].entries.foreach { entry =>
           ctx.declarations += SecuritySchemeParser(
             entry,
-            scheme => {
+            (scheme, name) => {
               scheme.set(ParametrizedSecuritySchemeModel.Name,
-                         AmfScalar(entry.key.as[String], Annotations(entry.key.value)),
+                         AmfScalar(name, Annotations(entry.key.value)),
                          Annotations(entry.key))
               scheme.adopted(parent)
             }
