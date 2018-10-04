@@ -34,7 +34,7 @@ trait FutureDeclarations {
   }
 
   /** Resolve all UnresolvedShape references or fail. */
-  def resolve(): Unit = this.synchronized {
+  def resolve(): Unit = {
     // we fail unresolved references
     promises.values.flatten.filter(!_.resolved).foreach(_.fail())
   }
