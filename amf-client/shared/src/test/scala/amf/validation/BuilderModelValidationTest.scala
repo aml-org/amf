@@ -13,11 +13,11 @@ import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
 import amf.{RAMLStyle, RamlProfile}
-import org.scalatest.Matchers
+import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.ExecutionContext
 
-class BuilderModelValidationTest extends FileAssertionTest with Matchers {
+class BuilderModelValidationTest extends AsyncFunSuite with FileAssertionTest with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

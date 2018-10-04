@@ -1,0 +1,13 @@
+#%RAML 1.0
+(amf-parameters):
+  a:
+    type: string
+  payload?:
+    properties:
+      prop?:
+        type: string
+title: test
+version: "1.0"
+/a/{a}:
+  uriParameters:
+    a: a

@@ -8,13 +8,13 @@ import amf.core.remote.{Raml, RamlYamlHint}
 import amf.core.services.RuntimeValidator
 import amf.core.vocabulary.Namespace
 import amf.facades.Validation
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.document.webapi.contexts.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models._
 
-class TypeResolutionTest extends BuildCycleTests with CompilerTestBuilder {
+class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
 
   test("TypeExpressions") {
     Validation(platform)

@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: test
+types:
+  Customer:
+    properties:
+      name:
+        type: string
+      lastName:
+        type: string
+      address:
+        properties:
+          street:
+            type: string
+          number:
+            type: integer
+    example: {}

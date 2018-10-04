@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Jukebox API
+version: v1
+traits:
+  searchable:
+    queryParameters:
+      query:
+        example: |
+          <<example>>
+/songs:
+  get:
+    is:
+      -
+        searchable:
+          example: "[\"songTitle\", \"Get L\", \"like\"]"

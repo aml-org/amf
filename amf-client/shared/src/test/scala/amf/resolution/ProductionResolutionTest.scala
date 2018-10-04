@@ -68,6 +68,8 @@ class ProductionResolutionTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
   val validationPath    = "amf-client/shared/src/test/resources/validations/"
+  val productionRaml10  = "amf-client/shared/src/test/resources/production/raml10/"
+  val productionRaml08  = "amf-client/shared/src/test/resources/production/raml08/"
 
   test("Test declared type with facet added") {
     cycle("add-facet.raml", "add-facet.raml.jsonld", RamlYamlHint, Amf, basePath + "inherits-resolution-declares/")
@@ -100,7 +102,11 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("test definition_loops input") {
-    cycle("crossfiles2.raml", "crossfiles2.resolved.raml", RamlYamlHint, Raml, basePath + "definitions-loops/")
+    cycle("api.raml",
+          "crossfiles2.resolved.raml",
+          RamlYamlHint,
+          Raml,
+          productionRaml08 + "definitions-loops-crossfiles2/")
   }
 
   test("Types with unions raml to AMF") {
@@ -120,11 +126,11 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("american-flights-api example") {
-    cycle("american-flights-api.raml",
+    cycle("api.raml",
           "american-flights-api.resolved.raml",
           RamlYamlHint,
           Raml,
-          basePath + "american-flights-api/")
+          productionRaml10 + "american-flights-api/")
   }
 
   ignore("API Console test api") {
@@ -207,11 +213,11 @@ class ProductionResolutionTest extends RamlResolutionTest {
   }
 
   test("Test endpoints are not removed") {
-    val source     = "demo-api.raml"
+    val source     = "api.raml"
     val golden     = ""
     val hint       = RamlYamlHint
     val target     = Amf
-    val directory  = basePath + "demo-api/"
+    val directory  = productionRaml10 + "demo-api/"
     val syntax     = None
     val validation = None
 

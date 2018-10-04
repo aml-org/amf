@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Simple Array Type with Example
+types:
+  Email:
+    properties:
+      subject:
+        type: string
+      body:
+        type: string
+  Emails:
+    type:
+      - Email[]
+    minItems: 1
+    uniqueItems: true
+    example:
+      -
+        subject: My Email 1
+        body: This is the text for email 1.
+      -
+        subject: My Email 2
+        body: This is the text for email 2.

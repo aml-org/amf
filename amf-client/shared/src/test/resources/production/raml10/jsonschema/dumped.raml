@@ -1,0 +1,22 @@
+#%RAML 1.0
+types:
+  jsonSchema: |
+    {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "$ref": "#/definitions/root",
+      "definitions": {
+        "root": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "age"
+          ],
+          "properties": {
+            "age": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    }
+title: test

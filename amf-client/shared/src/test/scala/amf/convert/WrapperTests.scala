@@ -29,7 +29,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  private val banking       = "file://amf-client/shared/src/test/resources/production/banking-api/api.raml"
+  private val banking       = "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml"
   private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
   private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
@@ -38,7 +38,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val demosInstance = "file://amf-client/shared/src/test/resources/api/examples/libraries/demo.raml"
   private val security      = "file://amf-client/shared/src/test/resources/upanddown/unnamed-security-scheme.raml"
   private val amflight =
-    "file://amf-client/shared/src/test/resources/production/american-flight-api-2.0.1-raml/api.raml"
+    "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml.ignore/api.raml"
   private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
   private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
@@ -1186,13 +1186,13 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _ <- AMF.init().asFuture
       unit <- new RamlParser()
-        .parseFileAsync("file://amf-client/shared/src/test/resources/production/othercases/xsdschema/api.raml")
+        .parseFileAsync("file://amf-client/shared/src/test/resources/production/raml10/xsdschema/api.raml")
         .asFuture
     } yield {
       val location: Option[String] =
         unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[SchemaShape].location.asOption
       location.isDefined should be(true)
-      location.get should be("file://amf-client/shared/src/test/resources/production/othercases/xsdschema/schema.xsd")
+      location.get should be("file://amf-client/shared/src/test/resources/production/raml10/xsdschema/schema.xsd")
 
     }
   }
@@ -1201,7 +1201,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     for {
       _ <- AMF.init().asFuture
       unit <- new RamlParser()
-        .parseFileAsync("file://amf-client/shared/src/test/resources/production/othercases/xsdexample/api.raml")
+        .parseFileAsync("file://amf-client/shared/src/test/resources/production/raml10/xsdexample/api.raml")
         .asFuture
     } yield {
       val location: Option[String] = unit
@@ -1216,8 +1216,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .location
         .asOption
       location.isDefined should be(true)
-      location.get should be(
-        "file://amf-client/shared/src/test/resources/production/othercases/xsdexample/example.xsd")
+      location.get should be("file://amf-client/shared/src/test/resources/production/raml10/xsdexample/example.xsd")
     }
   }
 
@@ -1226,7 +1225,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _ <- AMF.init().asFuture
       unit <- new RamlParser()
         .parseFileAsync(
-          "file://amf-client/shared/src/test/resources/production/othercases/xsdschema/api-with-fragment-ref-xml.raml")
+          "file://amf-client/shared/src/test/resources/production/raml10/xsdschema-withfragmentref/api.raml")
         .asFuture
     } yield {
       val shape = unit
@@ -1245,7 +1244,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _ <- AMF.init().asFuture
       unit <- new RamlParser()
         .parseFileAsync(
-          "file://amf-client/shared/src/test/resources/production/othercases/jsonschema/api-with-fragment-ref.raml")
+          "file://amf-client/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml")
         .asFuture
     } yield {
       val shape = unit

@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: test
+types:
+  Customer:
+    properties:
+      name:
+        type: string
+      lastName:
+        type: string
+      address:
+        properties:
+          street:
+            type: string
+          number:
+            type: integer
+    example: |-
+      <Customer>
+          <name>Bart</name>
+          <lastName>Simpson</lastName>
+          <address>
+              <street>evergreen</street>
+              <number>123</number>
+          </address>
+      </Customer>

@@ -1,0 +1,86 @@
+#%RAML 1.0
+types:
+  Person:
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      age:
+        type: integer
+      address:
+        properties:
+          street:
+            type: string
+          number:
+            type: integer
+          document:
+            type: object
+          lastName:
+            type: string
+title: test title
+description: test description
+mediaType:
+  - application/yaml
+version: "1.1"
+(amf-termsOfService): terms of service
+protocols:
+  - http
+  - https
+/level-zero:
+  displayName: One display name
+  description: and this description!
+  get:
+    displayName: Some title
+    queryParameters:
+      param1:
+        description: Some descr
+        type: object
+        properties:
+          name:
+            type: string
+          lastName:
+            type: string
+          address:
+            properties:
+              city:
+                type: string
+              postal:
+                type: integer
+      param2:
+        type: string
+      param3:
+        description: typeless
+    headers:
+      Header-One:
+        required: false
+        type: string
+        xml:
+          attribute: true
+          prefix: pref
+          name: Xml-name
+          namespace: xsd
+      header-two:
+        type: object
+        properties:
+          number:
+            type: integer
+    body:
+      application/raml:
+        type: string
+      application/json:
+        type: object
+        properties:
+          howmuch:
+            type: integer
+    responses:
+      200:
+        body:
+          type: object
+          properties:
+            invented:
+              type: string
+      404:
+        body:
+          type: integer
+baseUri: api.example.com/path

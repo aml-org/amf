@@ -1,0 +1,43 @@
+#%RAML 1.0
+types:
+  ScalarTest:
+    type: string
+    enum:
+      - a1
+      - a2
+    pattern: blabla.+
+    minLength: 1
+    default: defaultValue
+    maxLength: 20
+  IntegerTest:
+    type: number
+    minimum: 2
+    maximum: 25
+    (amf-exclusiveMinimum): false
+    (amf-exclusiveMaximum): false
+    format: int32
+    multipleOf: 2
+  ObjectTest:
+    displayName: that person
+    description: ooo person
+    default:
+      name: john doe
+    (amf-externalDocs):
+      url: externalDocsUrl
+      description: externalDocsDescription
+    properties:
+      name:
+        type: string
+        (amf-readOnly): false
+    minProperties: 1
+    maxProperties: 5
+    additionalProperties: true
+    discriminator: ddd
+    discriminatorValue: valueD
+    xml:
+      attribute: true
+      wrapped: true
+      name: test
+      namespace: namespacetest
+      prefix: blabla
+title: test title

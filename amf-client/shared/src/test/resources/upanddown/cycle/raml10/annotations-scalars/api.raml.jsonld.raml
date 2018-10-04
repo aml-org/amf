@@ -1,0 +1,45 @@
+#%RAML 1.0
+title:
+  value: test
+  (AnnotationInTitle): sjf
+version:
+  value: "1.0"
+  (AnnotationInVersion): sjf
+documentation:
+  -
+    title:
+      value: Documentation title
+      (AnnotationInDocumentationTitle): sjf
+    content:
+      value: Documentation content
+      (AnnotationInDocumentationContent): sjf
+    (AnnotationInDocumentationRoot): sjf
+mediaType: application/json
+baseUri: falsedomain.com/apis
+/customers:
+  displayName:
+    value: EndPoint display name
+    (AnnotationInEndPointDisplayName): sjf
+  description:
+    value: EndPoint description
+    (AnnotationInEndPointDescription): sjf
+  /{customer_id}:
+    uriParameters:
+      customer_id:
+        type: string
+        (AnnotationInParameter): sjf
+    get:
+      description:
+        value: Returns Customer data
+        (AnnotationInOperationDescription): sjf
+      responses:
+        200:
+          description:
+            value: Response description
+            (AnnotationInResponseDescription): sjf
+          body:
+            application/json:
+      (AnnotationInOperation): sjf
+  (AnnotationInEndPointAlpha): alpha
+  (AnnotationInEndPointBeta): beta
+(AnnotationInRoot): sjf

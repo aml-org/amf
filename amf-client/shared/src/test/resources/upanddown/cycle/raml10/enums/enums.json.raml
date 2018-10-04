@@ -1,0 +1,41 @@
+#%RAML 1.0
+types:
+  scalarString:
+    enum:
+      - a
+      - b
+    type: string
+  scalarNumber:
+    enum:
+      - 1
+      - 2
+    type: integer
+  objectType:
+    enum:
+      -
+        value1: a
+        value2: b
+      -
+        value1: c
+        value2: d
+    type: object
+    properties:
+      value1:
+        type: string
+        required: true
+      value2:
+        type: string
+        required: true
+  arrayType:
+    enum:
+      -
+        - a
+        - b
+      -
+        - c
+        - d
+    type: array
+    items:
+      type: string
+title: name
+version: "1.0"

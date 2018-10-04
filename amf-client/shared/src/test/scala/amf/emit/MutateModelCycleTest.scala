@@ -3,13 +3,13 @@ package amf.emit
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
 import amf.core.remote._
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
 
-class MutateModelCycleTest extends BuildCycleTests {
+class MutateModelCycleTest extends FunSuiteCycleTests {
 
   test("Test add empty variable to trait") {
 

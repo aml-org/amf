@@ -1,0 +1,75 @@
+#%RAML 1.0
+title: test title
+description: test description
+(amf-termsOfService): terms of service
+version: "1.1"
+(amf-license):
+  url: http://test.com/licenseUrl
+  name: licenseName
+mediaType:
+  - application/yaml
+protocols:
+  - http
+  - https
+(amf-contact):
+  url: http://test.com/contactUrl
+  name: contactName
+  email: contactEmail
+documentation:
+  -
+    content: externalDocsDescription
+    (amf-url): http://test.com/externalDocsUrl
+/levelzero:
+  displayName: Name
+  get:
+    displayName: Some title
+    description: Some description
+    (amf-oasDeprecated): true
+    (amf-summary): This is a summary
+    (amf-externalDocs):
+      url: http://test.com/urlExternalDocs
+      description: descriptionExternalDocs
+    protocols:
+      - http
+      - https
+    (amf-consumes):
+      - application/xml
+    (amf-produces):
+      - application/json
+  post:
+    displayName: Some title
+    description: Some description
+    (amf-externalDocs):
+      url: http://test.com/urlExternalDocs
+      description: descriptionExternalDocs
+    protocols:
+      - http
+      - https
+  /level-one:
+    displayName: One display name
+    description: and this description!
+    get:
+      displayName: Some title level one
+      description: Some description level one
+      (amf-oasDeprecated): true
+      (amf-summary): This is a summary level one
+      (amf-externalDocs):
+        url: http://test.com/urlExternalDocs
+        description: descriptionExternalDocs level one
+      protocols:
+        - http
+        - https
+  /another-level-one:
+    displayName: some other display name
+/another-levelzero:
+  displayName: Root name
+  post:
+    displayName: Some title another level 0
+    description: Some description another level 0
+    (amf-externalDocs):
+      url: http://test.com/urlExternalDocs
+      description: descriptionExternalDocs another level 0
+    protocols:
+      - http
+      - https
+baseUri: api.example.com/path

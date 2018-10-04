@@ -7,13 +7,13 @@ import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
 import amf.facades.Validation
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class EditingResolutionTest extends BuildCycleTests {
+class EditingResolutionTest extends FunSuiteCycleTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

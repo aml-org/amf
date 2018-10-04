@@ -4,13 +4,13 @@ import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.emit.AMFRenderer
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import amf.plugins.document.webapi.resolution.pipelines.AmfResolutionPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 
 import scala.concurrent.Future
 
-abstract class ResolutionTest extends BuildCycleTests {
+abstract class ResolutionTest extends FunSuiteCycleTests {
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {

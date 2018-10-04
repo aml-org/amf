@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  HasHome:
+    properties:
+      homeAddress:
+        type: string
+  Cat:
+    properties:
+      name:
+        type: string
+      color:
+        type: string
+  Dog:
+    properties:
+      name:
+        type: string
+      fangs:
+        type: string
+  HomeAnimal:
+    type:
+      - HasHome
+      - Dog | Cat

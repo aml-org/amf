@@ -1,0 +1,42 @@
+#%RAML 1.0
+
+title: test with references
+version: "0.1"
+
+types:
+  A:
+    type: string
+  B: !include referred.raml
+
+annotationTypes:
+  annotA:
+    type: string
+  annotB: !include referred_annotation.raml
+
+resourceTypes:
+  ta:
+    description: test
+  tb: !include referred_resource_type.raml
+
+securitySchemes:
+  oauth20: !include ../../../../references/fragments/security-scheme.raml
+
+/test:
+  get:
+    securedBy:
+      - oauth20
+    responses:
+      200:
+        body:
+          application/json:
+            properties:
+              a: A
+              b: B
+    (annotA): foo
+    (annotB): bar
+
+/test2:
+  type: ta
+
+/test3:
+  type: tb

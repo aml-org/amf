@@ -1,0 +1,36 @@
+#%RAML 1.0
+title: test
+protocols:
+  - http
+baseUri: test.com/accounts
+types:
+  User:
+    properties:
+      name:
+        type: string
+      age:
+        type: integer
+      account:
+        type: object
+  Account:
+    properties:
+      accountId:
+        type: string
+/users:
+  get:
+    responses:
+      200:
+        body:
+          application/json: User[]
+  /{id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json: User
+    /account:
+      get:
+        responses:
+          200:
+            body:
+              application/json: Account

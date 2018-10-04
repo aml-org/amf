@@ -2,12 +2,12 @@ package amf.dialects
 
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Aml, VocabularyYamlHint}
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import amf.plugins.document.vocabularies.AMLPlugin
 
 import scala.concurrent.ExecutionContext
 
-abstract class DialectResolutionCycleTests extends BuildCycleTests {
+abstract class DialectResolutionCycleTests extends FunSuiteCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     AMLPlugin.resolve(unit)
 }

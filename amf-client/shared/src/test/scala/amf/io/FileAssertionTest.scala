@@ -3,13 +3,13 @@ package amf.io
 import amf.common.Tests.checkDiff
 import amf.core.unsafe.PlatformSecrets
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.{Assertion, AsyncFunSuite, AsyncTestSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait FileAssertionTest extends AsyncFunSuite with PlatformSecrets {
+trait FileAssertionTest extends PlatformSecrets {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+  private implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   protected val fs: FileSystem = platform.fs
 
@@ -25,6 +25,7 @@ trait FileAssertionTest extends AsyncFunSuite with PlatformSecrets {
   }
 
   /** Return random temporary file name for testing. */
-  def tmp(name: String = ""): String = (platform.tmpdir() + platform.fs.separatorChar + System.nanoTime() + "-" + name)
-    .replaceAll(s"${platform.fs.separatorChar}${platform.fs.separatorChar}", s"${platform.fs.separatorChar}")
+  def tmp(name: String = ""): String =
+    (platform.tmpdir() + platform.fs.separatorChar + System.nanoTime() + "-" + name)
+      .replaceAll(s"${platform.fs.separatorChar}${platform.fs.separatorChar}", s"${platform.fs.separatorChar}")
 }

@@ -3,12 +3,12 @@ package amf.dialects
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 
-class DialectInstancesRDFTest extends AsyncFunSuite with PlatformSecrets with BuildCycleTests {
+class DialectInstancesRDFTest extends FunSuiteCycleTests with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

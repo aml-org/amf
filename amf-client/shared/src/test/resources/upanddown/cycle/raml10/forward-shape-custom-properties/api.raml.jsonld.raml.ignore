@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: test API
+types:
+  ParentType:
+    facets:
+      b:
+        type: number
+    type: object
+  ChildType:
+    type:
+      - ParentType
+    b: 5

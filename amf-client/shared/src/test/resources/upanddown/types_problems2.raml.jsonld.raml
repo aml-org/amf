@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: AMF Test API
+baseUri: http://localhost/escape
+/trial:
+  /{uriParam}:
+    post:
+      body:
+        application/json:
+          type:
+            - number[]
+    get:
+      body:
+        application/json:
+          type:
+            - number | boolean
+          anyOf: []

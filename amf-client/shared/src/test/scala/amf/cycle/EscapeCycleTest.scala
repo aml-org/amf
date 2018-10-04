@@ -1,9 +1,9 @@
 package amf.cycle
 
 import amf.core.remote.{Raml, RamlYamlHint}
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 
-class EscapeCycleTest extends BuildCycleTests {
+class EscapeCycleTest extends FunSuiteCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/escape/"
 

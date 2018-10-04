@@ -1,0 +1,65 @@
+#%RAML 1.0
+types:
+  StringType:
+    type: string
+  ByteType:
+    type: string
+    (amf-format): byte
+  BinaryType:
+    type: string
+    (amf-format): binary
+  PasswordType:
+    type: string
+    (amf-format): password
+  IntegerType:
+    type: integer
+  NumberType:
+    type: number
+  BooleanType:
+    type: boolean
+  NilType:
+    type: nil
+  AnyType:
+    type: any
+  DateTimeType:
+    type: datetime
+  DateTimeOnlyType:
+    type: datetime-only
+  TimeOnlyType:
+    type: time-only
+  DateOnlyType:
+    type: date-only
+  ObjectType:
+    type: object
+  FileType:
+    type: file
+    fileTypes:
+      - image/jpeg
+      - image/png
+    maxLength: 307200
+  UnionType:
+    type: union
+    anyOf:
+      -
+        type: string
+      -
+        type: integer
+  OrType:
+    (amf-or):
+      -
+        type: string
+      -
+        type: integer
+    type: any
+  AndType:
+    (amf-and):
+      -
+        type: string
+      -
+        type: integer
+    type: any
+  NotType:
+    (amf-not):
+      type: string
+    type: any
+title: test title

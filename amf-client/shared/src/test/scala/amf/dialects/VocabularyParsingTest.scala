@@ -1,11 +1,11 @@
 package amf.dialects
 
 import amf.core.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 
 import scala.concurrent.ExecutionContext
 
-class VocabularyParsingTest extends BuildCycleTests {
+class VocabularyParsingTest extends FunSuiteCycleTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

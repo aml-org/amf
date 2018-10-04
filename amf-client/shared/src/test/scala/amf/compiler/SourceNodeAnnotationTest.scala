@@ -16,7 +16,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("test full raml") {
-    build("file://amf-client/shared/src/test/resources/upanddown/full-example.raml", RamlYamlHint) map {
+    build("file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml", RamlYamlHint) map {
       checkAnnotation
     }
   }

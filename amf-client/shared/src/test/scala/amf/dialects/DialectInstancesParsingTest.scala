@@ -2,11 +2,11 @@ package amf.dialects
 
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 
 import scala.concurrent.ExecutionContext
 
-class DialectInstancesParsingTest extends BuildCycleTests {
+class DialectInstancesParsingTest extends FunSuiteCycleTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

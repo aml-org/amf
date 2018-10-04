@@ -6,7 +6,7 @@ import amf.common.Tests.checkDiff
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import org.mulesoft.common.io.AsyncFile
 
 import scala.concurrent.Future
@@ -14,7 +14,7 @@ import scala.concurrent.Future
 /**
   * Created by hernan.najles on 9/19/17.
   */
-class ReferencesCycleTest extends BuildCycleTests with ListAssertions with CompilerTestBuilder {
+class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with CompilerTestBuilder {
 
   override val basePath = "amf-client/shared/src/test/resources/references/"
 

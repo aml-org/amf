@@ -3,12 +3,13 @@ package amf.dialects
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import amf.plugins.document.vocabularies.AMLPlugin
+import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 
-trait DialectInstanceTester { this: BuildCycleTests =>
+trait DialectInstanceTester { this: FunSuiteCycleTests =>
 
   protected def withDialect(dialect: String,
                             source: String,
@@ -27,7 +28,7 @@ trait DialectInstanceTester { this: BuildCycleTests =>
 
 }
 
-class DialectProductionTest extends BuildCycleTests with DialectInstanceTester {
+class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTester {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -94,7 +95,12 @@ class DialectProductionTest extends BuildCycleTests with DialectInstanceTester {
   }
 
   test("Can parse ABOUT-hosted dialectinstance") {
-    withDialect("ABOUT-hosted-vcs-dialect.yaml", "ABOUT_hosted.yaml", "ABOUT_hosted.jsonld", VocabularyYamlHint, Amf, basePath + "ABOUT/")
+    withDialect("ABOUT-hosted-vcs-dialect.yaml",
+                "ABOUT_hosted.yaml",
+                "ABOUT_hosted.jsonld",
+                VocabularyYamlHint,
+                Amf,
+                basePath + "ABOUT/")
   }
 
   test("Can parse and generate the Instagram dialect") {
@@ -119,8 +125,7 @@ class DialectProductionTest extends BuildCycleTests with DialectInstanceTester {
 
 }
 
-
-class DialectProductionResolutionTest extends BuildCycleTests with DialectInstanceTester {
+class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectInstanceTester {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -130,7 +135,12 @@ class DialectProductionResolutionTest extends BuildCycleTests with DialectInstan
 
   // Order is not predictable
   ignore("Can parse asyncapi overlay instances") {
-    withDialect("dialect6.yaml", "patch6.yaml", "patch6.resolved.yaml", VocabularyYamlHint, Aml, basePath + "asyncapi/")
+    withDialect("dialect6.yaml",
+                "patch6.yaml",
+                "patch6.resolved.yaml",
+                VocabularyYamlHint,
+                Aml,
+                basePath + "asyncapi/")
   }
 
 }

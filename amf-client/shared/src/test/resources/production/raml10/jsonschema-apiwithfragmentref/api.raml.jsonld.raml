@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: test
+types:
+  jsonSchema:
+    properties:
+      street?:
+        type: string
+      number?:
+        type: number
+      location?:
+        properties:
+          state?:
+            type: string
+          country?:
+            type: string

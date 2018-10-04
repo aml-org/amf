@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: API
+baseUri: some.{one}.com
+baseUriParameters:
+  one:
+    description: One base uri param
+    type: string
+/levelzero/some{two}:
+  uriParameters:
+    two?:
+      type: string
+  /level-one:
+    displayName: One display name
+    description: and this description!
+    get:
+      displayName: Some title
+      queryParameters:
+        param1:
+          description: Some descr
+          properties:
+            name:
+              type: string
+        param2?:
+          type: string
+    post:
+      displayName: Some title
+      description: Some description
+      headers:
+        Header-One?:
+          type: string
+        Header-Two:
+          type: string

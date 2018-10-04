@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Ad Exchange Seller
+version: v1.1
+baseUri: https://www.googleapis.com/adexchangeseller/v1.1
+protocols:
+  - HTTPS
+description: Accesses the inventory of Ad Exchange seller users and generates reports.
+types:
+  Report:
+    properties:
+      rows?:
+        description: The output rows of the report. Each row is a list of cells; one for each dimension in the request, followed by one for each metric in the request. The dimension cells contain strings, and the metric cells contain numbers.
+        items:
+          items:
+            type: string

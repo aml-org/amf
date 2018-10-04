@@ -1,0 +1,18 @@
+#%RAML 1.0
+annotationTypes:
+  Wadus:
+    displayName: annotation
+    allowedTargets:
+      - Resource
+    type:
+      properties:
+        wadus:
+          type: string
+types:
+  Person:
+    properties:
+      age:
+        type: integer
+      name:
+        type: string
+title: API

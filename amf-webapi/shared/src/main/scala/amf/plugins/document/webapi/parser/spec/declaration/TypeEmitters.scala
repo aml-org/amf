@@ -922,7 +922,7 @@ case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
     )
   }
 
-  override def position(): Position = pos(shape.fields.getValue(UnionShapeModel.AnyOf).annotations)
+  override def position(): Position = pos(shape.fields.get(UnionShapeModel.AnyOf).annotations)
 }
 
 case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(

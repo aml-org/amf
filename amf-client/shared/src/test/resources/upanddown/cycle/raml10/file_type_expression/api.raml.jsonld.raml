@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: file type
+version: "1.0"
+protocols:
+  - HTTP
+baseUri: myApi.com
+types:
+  wrappedFile:
+    properties:
+      fileprop:
+        type: file
+      stringprop:
+        type: string
+/file:
+  post:
+    description: Retrieve a list of all the users
+    body:
+      application/octet-stream:
+        type: file
+    responses:
+      200:
+        body:
+          application/json:
+            type:
+              - wrappedFile

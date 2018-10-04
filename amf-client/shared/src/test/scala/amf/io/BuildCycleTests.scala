@@ -9,16 +9,20 @@ import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor}
 import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
-import org.scalatest.Assertion
+import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * Cycle tests using temporary file and directory creator
   */
+abstract class FunSuiteCycleTests extends AsyncFunSuite with BuildCycleTests
+
 trait BuildCycleTests extends FileAssertionTest {
 
-  val basePath: String
+  private implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  def basePath: String
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint): Future[Assertion] = cycle(source, hint, basePath)

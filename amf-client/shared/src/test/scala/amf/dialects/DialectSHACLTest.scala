@@ -6,14 +6,14 @@ import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectSHACLTest extends AsyncFunSuite with PlatformSecrets with BuildCycleTests {
+class DialectSHACLTest extends FunSuiteCycleTests with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

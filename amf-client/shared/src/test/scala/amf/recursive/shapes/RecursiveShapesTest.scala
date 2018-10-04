@@ -4,14 +4,14 @@ import amf.core.model.document.BaseUnit
 import amf.{ProfileName, Raml10Profile}
 import amf.core.remote.{Hint, Oas20, RamlYamlHint}
 import amf.facades.Validation
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.validation.MultiPlatformReportGenTest
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
 
-class RecursiveShapesTest extends MultiPlatformReportGenTest with BuildCycleTests {
+class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGenTest {
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/recursives/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/recursives/"
   override val hint: Hint          = RamlYamlHint

@@ -1,0 +1,70 @@
+#%RAML 1.0
+title: test title
+description: test description
+(amf-termsOfService): terms of service
+version: 1.1
+(amf-license):
+  url: licenseUrl
+  name: licenseName
+mediaType:
+  - application/yaml
+protocols:
+  - http
+  - https
+baseUri: api.example.com/path
+(amf-contact):
+  url: contactUrl
+  name: contactName
+  email: contactEmail
+documentation:
+  - title: Home documentation
+    (amf-url): externalDocsUrl
+    content: externalDocsDescription
+  - title: Home another documentation
+    (amf-url): externalDocsUrl2
+    content: externalDocsDescription2
+baseUriParameters:
+  uriParameter1:
+    description: testUriDisplay
+    required: false
+  uriParameter2?:
+    description: testUriDisplay2
+/levelzero:
+  displayName: Name
+/levelzero/{two}/level-one/{three}:
+  displayName: One display name
+  description: and this description!
+  uriParameters:
+    two:
+      required: false
+    three:
+      description: endpoint uri parameter
+  get:
+    displayName: Some title
+    queryParameters:
+      param1:
+        description: Some descr
+      param2?:
+        type: string
+    headers:
+      testHeader:
+        type: string
+        required: true
+    body:
+      application/json: string
+      application/xml: number
+      application/pdf:
+        type: string
+        (amf-format): byte
+    responses:
+      200:
+        description: 200 descr
+        headers:
+          Time-Ago:
+            type: integer
+            required: true
+        body:
+            application/yaml: string
+            application/x-www-form-urlencoded; charset=UTF-8:
+      404:
+        description: Not found!

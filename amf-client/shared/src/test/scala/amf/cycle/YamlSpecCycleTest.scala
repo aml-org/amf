@@ -1,10 +1,10 @@
 package amf.cycle
 
 import amf.core.remote.{Raml, RamlYamlHint}
-import amf.io.BuildCycleTests
+import amf.io.{BuildCycleTests, FunSuiteCycleTests}
 import amf.remote._
 
-class YamlSpecCycleTest extends BuildCycleTests {
+class YamlSpecCycleTest extends FunSuiteCycleTests {
 
   override val basePath = "amf-client/shared/src/test/resources/yaml/"
 
