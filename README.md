@@ -155,7 +155,7 @@ Using this jar you can execute AMF by passing one of the following commands:
 
 - parse <input_file> -in FORMAT
 - translate <input_file> <output_file> -in FORMAT_IN -out FORMAT_OUT
-- validate <input_file> -in FORMAT_IN -p VALIDATION-PROFILE
+- validate <input_file> -in FORMAT_IN -p VALIDATION_PROFILE
 
 An interactive section can be started using the `repl` command.
 
