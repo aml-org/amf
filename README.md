@@ -140,7 +140,7 @@ java -jar amf.jar parse -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
 ```
 or 
 ```bash
-java -jar amf.jar validate -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
+java -jar amf.jar validate -in "RAML 1.0" -mime-in "application/yaml" -p "RAML" yourAPIfile
 ```
 or
 ```bash
@@ -155,7 +155,7 @@ Using this jar you can execute AMF by passing one of the following commands:
 
 - parse <input_file> -in FORMAT
 - translate <input_file> <output_file> -in FORMAT_IN -out FORMAT_OUT
-- validate <input_file> -in FORMAT_IN
+- validate <input_file> -in FORMAT_IN -p VALIDATION-PROFILE
 
 An interactive section can be started using the `repl` command.
 
