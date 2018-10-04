@@ -4,7 +4,7 @@ import amf.io.BuildCycleTests
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.AsyncFreeSpec
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * Steps:
@@ -34,6 +34,8 @@ import scala.concurrent.Future
   */
 trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
 
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
   def dirs: Array[SyncFile] =
     Fs.syncFile(basePath).list.map(l => Fs.syncFile(basePath + "/" + l)).partition(_.isFile)._2
   def origin: Hint
@@ -51,7 +53,11 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
 
         s"Steps for jsonld serialization ${d.name}" - {
           s"Generate jsonld for ${d.name}" in {
-            cycle(d.name + "/api" + fileExtension, d.name + "/api" + fileExtension + ".jsonld", origin, Amf)
+            val t = d.name + "/api" + fileExtension + ".jsonld" + (if (Fs.syncFile(
+                                                                           basePath + d.name + "/api" + fileExtension + ".jsonld" + ".ignore")
+                                                                         .exists) ".ignore"
+                                                                   else "")
+            cycle(d.name + "/api" + fileExtension, t, origin, Amf)
           }
           amfToSpec(d.name,
                     d.name + "/api" + fileExtension + ".jsonld",
@@ -88,7 +94,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
     if (Fs.syncFile(basePath + "/" + o + ".ignore").exists) {
 
       s"Generate golden from jsonld for $name" ignore {
-        cycle(o, tar, AmfJsonHint, target.vendor)
+        cycle(o + ".ignore", tar, AmfJsonHint, target.vendor)
       }
     } else {
       s"Generate golden from jsonld for $name" in {

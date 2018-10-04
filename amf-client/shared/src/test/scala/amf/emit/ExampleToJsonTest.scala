@@ -7,10 +7,11 @@ import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.model.NamedExampleFragment
 import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
 
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   test("Simple yaml scalar example") {
     cycle("simple-yaml-scalar.raml", "simple-yaml-scalar.json")
   }

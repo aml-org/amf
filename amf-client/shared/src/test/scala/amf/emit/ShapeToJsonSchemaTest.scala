@@ -9,9 +9,11 @@ import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test array with object items") {
     val func = (u: BaseUnit) =>

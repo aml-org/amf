@@ -8,10 +8,11 @@ import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTest {
 
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val basePath: String
   val reportsPath: String
   val hint: Hint

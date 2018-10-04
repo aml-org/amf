@@ -16,7 +16,9 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   * Cycle tests using temporary file and directory creator
   */
-abstract class FunSuiteCycleTests extends AsyncFunSuite with BuildCycleTests
+abstract class FunSuiteCycleTests extends AsyncFunSuite with BuildCycleTests {
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+}
 
 trait BuildCycleTests extends FileAssertionTest {
 
