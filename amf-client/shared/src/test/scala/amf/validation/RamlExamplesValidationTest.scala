@@ -232,5 +232,9 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("enums/enum-int-invalid.raml", Some("enum-int-invalid.report"))
   }
 
+  test("External json example of type") {
+    validate("/examples/external-json/api.raml", Some("external-json-example.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

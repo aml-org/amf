@@ -11,4 +11,4 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/image-file-example/in-stringshape.raml#/web-api/end-points/%2Ffile-content/get/200/application%2Foctet-stream/scalar/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(1,0)-(1,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/validations/examples/image-file-example/logo.png

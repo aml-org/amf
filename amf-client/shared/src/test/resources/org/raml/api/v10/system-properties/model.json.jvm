@@ -11,7 +11,7 @@ Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/system-properties/input.raml#/web-api/end-points/%2Fsubscription/post/request/application%2Fjson/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(1,0)-(1,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/system-properties/example.json
 
 Level: Warning
 

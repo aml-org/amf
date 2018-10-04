@@ -1,13 +1,11 @@
 package amf.plugins.document.webapi.references
 
-import java.net.URISyntaxException
-
-import amf.core.utils._
 import amf.core.annotations.SourceAST
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser._
 import amf.core.remote._
+import amf.core.utils._
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.BaseWebApiPlugin
 import amf.plugins.document.webapi.parser.RamlHeader
@@ -173,7 +171,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     node.value match {
       case scalar: YScalar =>
         references += (scalar.text, LinkReference, node)
-      case _               => throw new Exception(s"Unexpected !include with ${node.value}")
+      case _ => throw new Exception(s"Unexpected !include with ${node.value}")
     }
   }
 
@@ -201,7 +199,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                       case other =>
                         ctx.violation("Cannot inline a fragment in a not mutable node", other)
                     }
-                    // not meaning, only for collect all futures, not matter the type
+                  // not meaning, only for collect all futures, not matter the type
                   }
                 })
               case ReferenceResolutionResult(Some(e), _) => Future(Nil)
@@ -209,7 +207,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         })
 
         Future.sequence(externals).map(_ => reference.copy(ast = Some(document.node)))
-      case Left(raw) => Future.successful(reference.copy(ast = Some(YNode(raw))))
+      case Left(raw) =>
+        Future.successful(reference.copy(ast = Some(YNode(raw, reference.unit.location().getOrElse("")))))
     }
   }
 
