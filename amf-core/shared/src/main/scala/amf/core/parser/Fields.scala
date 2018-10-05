@@ -247,16 +247,20 @@ class Value(var value: AmfElement, val annotations: Annotations) {
         // in the declarations of the parser context
         // to be executed when a reference is resolved
         linkable.toFutureRef((resolved) => {
-          value = resolved.resolveUnreferencedLink(
-            linkable.refName,
-            linkable.annotations,
-            linkable,
-            linkable.supportsRecursion.option().getOrElse(false)) // mutation of the field value
+          if (linkable.isLink) {
+            value = resolved
+          } else {
+            value = resolved.resolveUnreferencedLink(
+              linkable.refName,
+              linkable.annotations,
+              linkable,
+              linkable.supportsRecursion.option().getOrElse(false)) // mutation of the field value
+          }
           val syntax = value match {
             case s: Shape => Some(s.ramlSyntaxKey)
             case _        => None
           }
-          linkable.afterResolve(syntax) // triggers the after resolve logic
+          linkable.afterResolve(syntax, resolved.id) // triggers the after resolve logic
         })
 
       case array: AmfArray => // Same for arrays, but iterating through elements and looking for unresolved
@@ -283,7 +287,7 @@ class Value(var value: AmfElement, val annotations: Annotations) {
               }
               // we need to wait until the field inherits of father is mutated, so we can triggers the after resolve parsing with the instance totally parser.If we trigger in the resolve unreferenced link, the value of the father field it would not have changed yet.
               unresolved
-                .foreach { case (ur, key) => ur.afterResolve(key) } //triggers the after resolved logic in all unresolve collected linkables instances.
+                .foreach { case (ur, key) => ur.afterResolve(key, resolved.id) } //triggers the after resolved logic in all unresolve collected linkables instances.
             })
 
           case _ => // ignore

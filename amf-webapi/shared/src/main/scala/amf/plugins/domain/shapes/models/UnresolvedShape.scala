@@ -12,7 +12,9 @@ import org.yaml.model.{YNode, YPart}
 case class UnresolvedShape(override val fields: Fields,
                            override val annotations: Annotations,
                            override val reference: String,
-                           fatherExtensionParser: Option[Option[String] => ShapeExtensionParser] = None)
+                           fatherExtensionParser: Option[Option[String] => ShapeExtensionParser] = None,
+                           updateFatherLink: Option[String => Unit] = None,
+                           override val shouldLink: Boolean = true)
     extends AnyShape(fields, annotations)
     with UnresolvedReference {
 
@@ -24,6 +26,7 @@ case class UnresolvedShape(override val fields: Fields,
     this
   }
    */
+  override def link[T](label: String, annotations: Annotations): T = this.asInstanceOf[T]
 
   /** Resolve [[UnresolvedShape]] as link to specified target. */
   def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name.value())
@@ -33,8 +36,11 @@ case class UnresolvedShape(override val fields: Fields,
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/unresolved"
 
-  override def afterResolve(fatherSyntaxKey: Option[String]): Unit = fatherExtensionParser.foreach { parser =>
-    parser(fatherSyntaxKey).parse()
+  override def afterResolve(fatherSyntaxKey: Option[String], resolvedKey: String): Unit = {
+    fatherExtensionParser.foreach { parser =>
+      parser(fatherSyntaxKey).parse()
+    }
+    updateFatherLink.foreach(f => f(resolvedKey))
   }
 
   // if is unresolved the effective target its himselft, because any real type has been found.

@@ -50,13 +50,19 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
                                  annotations: Annotations = Annotations(),
                                  unresolved: T,
                                  supportsRecursion: Boolean): T = {
-    val linked: T = link(label, annotations)
-    if (supportsRecursion && linked.isInstanceOf[Linkable])
-      linked.asInstanceOf[Linkable].withSupportsRecursion(supportsRecursion)
-    linked
+    if (unresolved.asInstanceOf[Linkable].shouldLink) {
+
+      val linked: T = link(label, annotations)
+      if (supportsRecursion && linked.isInstanceOf[Linkable])
+        linked.asInstanceOf[Linkable].withSupportsRecursion(supportsRecursion)
+      linked
+    } else
+      this.asInstanceOf[T]
   }
 
-  def afterResolve(fatherSyntaxKey: Option[String]): Unit = Unit
+  protected val shouldLink: Boolean = true
+
+  def afterResolve(fatherSyntaxKey: Option[String], resolvedId: String): Unit = Unit
 
   // Unresolved references to things that can be linked
   // TODO: another trait?

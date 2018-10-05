@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations._
-import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
@@ -630,7 +630,12 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               shape.annotations += ExplicitField()
               shape
             case (text: String, _) =>
-              val unresolve = UnresolvedShape(text, node).withName(text)
+              val unresolve = UnresolvedShape(Fields(),
+                                              Annotations(node),
+                                              text,
+                                              None,
+                                              Some((k: String) => shape.set(LinkableElementModel.TargetId, k)),
+                                              shouldLink = false).withName(text)
               unresolve.withContext(ctx)
               adopt(unresolve)
               if (!text.validReferencePath) {
@@ -1185,7 +1190,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               case s =>
                 ctx.declarations.findType(s, SearchScope.All) match {
                   case Some(ancestor) => ancestor
-                  case _              => unresolved(node)
+                  case _              => unresolved(node, shape)
                 }
             }
           }
@@ -1251,7 +1256,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                                            entry.value,
                                            jsonSchemaShape => jsonSchemaShape.withId(shape.id + "/jsonSchema")).parse()
                 case _ =>
-                  unresolved(entry.value)
+                  unresolved(entry.value, shape)
               }
               shape.set(ShapeModel.Inherits, AmfArray(Seq(baseClass), Annotations(entry.value)), Annotations(entry))
           }
@@ -1261,14 +1266,18 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       }
     }
 
-    private def unresolved(node: YNode): UnresolvedShape = {
+    private def unresolved(node: YNode, shape: Shape): UnresolvedShape = {
       val reference = node.as[YScalar].text
       // we need to pass the extension parser to the unresolved, in order to not only have the father at the moment of resolve the future ref in Value, also we need the parser itself, for modular dependency (We cannot create an instance of this parser in core)
       val unresolvedShape = UnresolvedShape(
+        Fields(),
+        Annotations(node),
         reference,
-        node,
         fatherMap.map(m =>
-          (resolvedKey: Option[String]) => ShapeExtensionParser(shape, m, ctx, overrideSyntax = resolvedKey)))
+          (resolvedKey: Option[String]) => ShapeExtensionParser(shape, m, ctx, overrideSyntax = resolvedKey)),
+        Some((k: String) =>
+          if (shape.fields.exists(LinkableElementModel.TargetId)) shape.set(LinkableElementModel.TargetId, k))
+      )
       unresolvedShape.withContext(ctx)
       if (!reference.validReferencePath) {
         ctx.violation(
