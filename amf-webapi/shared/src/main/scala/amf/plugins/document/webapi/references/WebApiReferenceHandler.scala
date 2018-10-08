@@ -17,6 +17,7 @@ import org.yaml.parser.YamlParser
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.util.matching.Regex
 
 class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends ReferenceHandler {
 
@@ -76,7 +77,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def extension(entry: YMapEntry) = {
+  private def extension(entry: YMapEntry): Unit = {
     references += (entry.value, ExtensionReference, entry.value)
   }
 
@@ -150,7 +151,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  val linkRegex = "(\"\\$ref\":\\s*\".*\")".r
+  val linkRegex: Regex = "(\"\\$ref\":\\s*\".*\")".r
 
   private def checkInlined(scalar: YScalar): Unit = {
     val str = scalar.value.asInstanceOf[String]
@@ -187,7 +188,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val updated = context.update(reference.unit.id) // ??
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, None, Cache(), ctx, environment, r.refs.map(_.node), allowRecursiveRefs = true)
+          r.resolve(updated, Cache(), ctx, environment, r.refs.map(_.node), allowRecursiveRefs = true)
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), ctx, updated, environment)
