@@ -112,7 +112,7 @@ class EmissionContext(val prefixes: mutable.Map[String, String],
   def setupContextBase(location: String): Unit = {
     if (Option(location).isDefined) {
       base = if (location.replace("://", "").contains("/")) {
-        var basePre = if (location.contains("#")) {
+        val basePre = if (location.contains("#")) {
           location.split("#").head
         } else {
           location
