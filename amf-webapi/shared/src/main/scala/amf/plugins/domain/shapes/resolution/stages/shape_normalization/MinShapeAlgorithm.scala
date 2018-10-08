@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{DeclaredElement, LexicalInformation}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -426,7 +426,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
 
     var accExamples = List[Example]()
 
-    val unionShapesWithIds = newUnionItems.zipWithIndex.map {
+    newUnionItems.filter(_.annotations.contains(classOf[DeclaredElement])).zipWithIndex.foreach {
       case (shape, i) =>
         shape.id = shape.id + s"_$i"
         shape match {
@@ -439,7 +439,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     }
 
     superUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
-                                   AmfArray(unionShapesWithIds),
+                                   AmfArray(newUnionItems),
                                    superUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
     computeNarrowRestrictions(allShapeFields, baseShape, superUnion, filteredFields = Seq(UnionShapeModel.AnyOf))

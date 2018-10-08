@@ -113,6 +113,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
   protected def canonicalInheritance(shape: Shape): Shape = {
     if (endpointSimpleInheritance(shape)) {
+
       val referencedShape = shape.inherits.head
       aggregateExamples(shape, referencedShape)
       if (!referencedShape
@@ -227,7 +228,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
               superType.fields.entry(f.field) match {
                 case Some(e) if f.field == NodeShapeModel.Closed =>
                   acc && e.value.value.asInstanceOf[AmfScalar].toBool == f.value.value.asInstanceOf[AmfScalar].toBool
-                case _ => false
+                case _ => f.field == NodeShapeModel.Closed && !superType.isInstanceOf[NodeShape]
               }
           }
         } else {
@@ -375,7 +376,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
           case rec: RecursiveShape =>
             rec.fixpointTarget.foreach(target => union.closureShapes ++= Seq(target).filter(_.id != union.id))
             anyOfAcc += rec
-          case other: Shape      =>
+          case other: Shape =>
             union.closureShapes ++= other.closureShapes
             anyOfAcc += other
         }

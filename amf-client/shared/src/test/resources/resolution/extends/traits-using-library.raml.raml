@@ -113,9 +113,9 @@ baseUri: aaa-bbb.com/apis
             application/json:
               anyOf:
                 -
-                  type: object
                   discriminator: type
                   discriminatorValue: Organization
+                  type: object
                   additionalProperties: true
                   properties:
                     type:
@@ -159,9 +159,9 @@ baseUri: aaa-bbb.com/apis
                       type: string
                       required: true
                 -
-                  type: object
                   discriminator: type
                   discriminatorValue: Person
+                  type: object
                   additionalProperties: true
                   properties:
                     type:

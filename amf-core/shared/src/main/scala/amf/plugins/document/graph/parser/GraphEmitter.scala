@@ -98,6 +98,11 @@ class EmissionContext(val prefixes: mutable.Map[String, String],
     this
   }
 
+  def isDeclared(e: AmfElement): Boolean = declarations.contains(e)
+
+  def isDeclared(id: String): Boolean =
+    declarations.collect({ case obj: AmfObject if obj.id.equals(id) => obj }).nonEmpty
+
   def declared: Seq[AmfElement] = declarations.toSeq
 
   def shouldCompact: Boolean                           = options.isCompactUris
@@ -407,7 +412,9 @@ object GraphEmitter extends MetaModelTypeMapping {
                       ctx: EmissionContext): Unit = {
       val scalarEmitter = options.getCustomEmitter.getOrElse(DefaultScalarEmitter)
       t match {
-        case _: ShapeModel if v.value.annotations.contains(classOf[ResolvedInheritance]) && !ctx.declares =>
+        case _: ShapeModel
+            if v.value.annotations.contains(classOf[ResolvedInheritance]) && ((!ctx.declares) || (ctx.declares && ctx
+              .isDeclared(v.value)) && ctx.isDeclared(parent)) =>
           extractToLink(v.value.asInstanceOf[Shape], b, ctx)
         case t: DomainElement with Linkable if t.isLink =>
           link(b, t, inArray = false, ctx)
@@ -475,11 +482,18 @@ object GraphEmitter extends MetaModelTypeMapping {
             sources(v)
             a.element match {
               case _: Obj =>
-                seq.values.asInstanceOf[Seq[AmfObject]].foreach {
-                  case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
-                    link(b, elementInArray, inArray = true, ctx)
-                  case elementInArray =>
-                    obj(b, elementInArray, inArray = true, ctx)
+                seq.values.asInstanceOf[Seq[AmfObject]].foreach { v =>
+                  v match {
+                    case _: Shape
+                        if v.annotations
+                          .contains(classOf[ResolvedInheritance]) && ((!ctx.declares) || (ctx.declares && ctx
+                          .isDeclared(v) && ctx.isDeclared(parent))) =>
+                      extractToLink(v.asInstanceOf[Shape], b, ctx)
+                    case elementInArray: DomainElement with Linkable if elementInArray.isLink =>
+                      link(b, elementInArray, inArray = true, ctx)
+                    case elementInArray =>
+                      obj(b, elementInArray, inArray = true, ctx)
+                  }
                 }
               case Str =>
                 seq.values.asInstanceOf[Seq[AmfScalar]].foreach { e =>
@@ -560,12 +574,14 @@ object GraphEmitter extends MetaModelTypeMapping {
     }
 
     private def extractToLink(shape: Shape, b: PartBuilder, ctx: EmissionContext): Unit = {
-      ctx + shape
-      shape.name.option() match {
-        case Some("schema") | Some("type") | None => shape.withName(ctx.nextTypeName).annotations += InlineElement()
-        case _ if !shape.annotations.contains(classOf[DeclaredElement]) =>
-          shape.withName(ctx.nextTypeName).annotations += InlineElement() // to catch media type named cases.
-        case _ => // ignore
+      if (!ctx.isDeclared(shape)) {
+        ctx + shape
+        shape.name.option() match {
+          case Some("schema") | Some("type") | None => shape.withName(ctx.nextTypeName).annotations += InlineElement()
+          case _ if !shape.annotations.contains(classOf[DeclaredElement]) =>
+            shape.withName(ctx.nextTypeName).annotations += InlineElement() // to catch media type named cases.
+          case _ => // ignore
+        }
       }
       val linked = shape.link[Shape](shape.name.value())
       link(b, linked, inArray = false, ctx)

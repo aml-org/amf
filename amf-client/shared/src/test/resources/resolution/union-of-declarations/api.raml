@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: se-8987-reopen2
+types:
+ UnionType:
+  type: Dog | Cat
+ Dog:
+  type: object
+  properties:
+    name:
+      type: string
+  example:
+    name: Pepe
+ Cat:
+  type: object
+  properties:
+    age:
+      type: integer
+  example:
+    age: 45
+/example1:
+ post:
+  body:
+    application/json:
+      type: Dog | Cat
+  responses:
+    200:
+/example2:
+ post:
+  body:
+    application/json:
+      type: UnionType
+  responses:
+    200:
