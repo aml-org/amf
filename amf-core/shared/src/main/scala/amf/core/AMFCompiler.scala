@@ -2,11 +2,13 @@ package amf.core
 
 import java.net.URISyntaxException
 
+import amf.client.plugins.AMFDocumentPlugin
 import amf.client.remote.Content
 import amf.core
 import amf.core.benchmark.ExecutionLog
-import amf.core.exception.{CyclicReferenceException, UnsupportedVendorException}
-import amf.core.model.document.{BaseUnit, Document, ExternalFragment, RecursiveUnit}
+import amf.core.client.ParsingOptions
+import amf.core.exception.{CyclicReferenceException, UnsupportedMediaTypeException, UnsupportedVendorException}
+import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{
   ParsedDocument,
@@ -16,8 +18,6 @@ import amf.core.parser.{
   ReferenceResolutionResult,
   UnspecifiedReference
 }
-import amf.client.plugins.AMFDocumentPlugin
-import amf.core.client.ParsingOptions
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.RuntimeCompiler
@@ -41,7 +41,7 @@ object AMFCompilerRunCount {
 class AMFCompiler(val rawUrl: String,
                   val remote: Platform,
                   val base: Option[Context],
-                  var mediaType: Option[String],
+                  val mediaType: Option[String],
                   val vendor: Option[String],
                   val referenceKind: ReferenceKind = UnspecifiedReference,
                   private val cache: Cache = Cache(),
@@ -98,56 +98,53 @@ class AMFCompiler(val rawUrl: String,
     }
   }
 
-  private def parseSyntax(inputContent: Content): Either[Content, Root] = {
+  private def parseSyntax(input: Content): Either[Content, Root] = {
     ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing syntax $rawUrl")
-    val content = AMFPluginsRegistry.featurePlugins().foldLeft(inputContent) {
-      case (input, plugin) =>
-        plugin.onBeginDocumentParsing(path, input, referenceKind)
+    val content = AMFPluginsRegistry.featurePlugins().foldLeft(input) {
+      case (c, p) =>
+        p.onBeginDocumentParsing(path, c, referenceKind)
     }
 
-    val parsed = content.mime
-      .orElse(mediaType)
-      .flatMap(mime =>
-        AMFPluginsRegistry.syntaxPluginForMediaType(mime).flatMap(_.parse(mime, content.stream, ctx, parsingOptions)))
-      // if we cannot find a plugin with the resolved media type, we try parsing from file extension
-      .orElse {
-        FileMediaType
-          .extension(content.url)
-          .flatMap(FileMediaType.mimeFromExtension)
-          .flatMap(
-            mime =>
-              AMFPluginsRegistry
-                .syntaxPluginForMediaType(mime)
-                .flatMap { plugin =>
-                  mediaType = Some(mime)
-                  plugin.parse(mime, content.stream, ctx, parsingOptions)
-              })
+    val provided = content.mime.orElse(mediaType)
+
+    val parsed: Option[(String, ParsedDocument)] = provided
+      .flatMap { mime =>
+        AMFPluginsRegistry
+          .syntaxPluginForMediaType(mime)
+          .flatMap(_.parse(mime, content.stream, ctx, parsingOptions))
+          .map((mime, _))
       }
       .orElse {
-        autodetectSyntax(content.stream).flatMap(mime =>
-          try {
-            mediaType = Some(mime)
-            AMFPluginsRegistry
-              .syntaxPluginForMediaType(mime)
-              .flatMap(_.parse(mime, content.stream, ctx, parsingOptions))
-          } catch {
-            case _: Exception => None // This is just a parsing attempt, it can go wrong
-        })
+        provided match {
+          case None =>
+            FileMediaType
+              .extension(content.url)
+              .flatMap(FileMediaType.mimeFromExtension)
+              .flatMap { infered =>
+                AMFPluginsRegistry
+                  .syntaxPluginForMediaType(infered)
+                  .flatMap(_.parse(infered, content.stream, ctx, parsingOptions))
+                  .map((infered, _))
+              }
+              .orElse {
+                autodetectSyntax(content.stream).flatMap { infered =>
+                  AMFPluginsRegistry
+                    .syntaxPluginForMediaType(infered)
+                    .flatMap(_.parse(infered, content.stream, ctx, parsingOptions))
+                    .map((infered, _))
+                }
+              }
+          case _ => None
+        }
       }
 
     parsed match {
-      case Some(inputDocument) =>
-        val document = AMFPluginsRegistry.featurePlugins().foldLeft(inputDocument) {
-          case (doc, plugin) =>
-            plugin.onSyntaxParsed(path, doc)
+      case Some((effective, document)) =>
+        val doc = AMFPluginsRegistry.featurePlugins().foldLeft(document) {
+          case (d, p) =>
+            p.onSyntaxParsed(path, d)
         }
-        Right(
-          Root(document,
-               content.url,
-               mediaType.getOrElse(content.mime.getOrElse("")),
-               Seq(),
-               referenceKind,
-               content.stream.toString))
+        Right(Root(doc, content.url, effective, Seq(), referenceKind, content.stream.toString))
       case None =>
         Left(content)
     }
@@ -161,7 +158,11 @@ class AMFCompiler(val rawUrl: String,
 
   private def parseDomain(parsed: Either[Content, Root]): Future[BaseUnit] = {
     parsed match {
-      case Left(content)   => parseExternalFragment(content)
+      case Left(content) =>
+        mediaType match {
+          case Some(mime) => throw new UnsupportedMediaTypeException(mime) // Fail with root only
+          case _          => parseExternalFragment(content)
+        }
       case Right(document) => parseDomain(document)
     }
   }
@@ -221,7 +222,7 @@ class AMFCompiler(val rawUrl: String,
     val parsed: Seq[Future[Option[ParsedReference]]] = refs.toReferences
       .filter(_.isRemote)
       .map(link => {
-        link.resolve(context, None, cache, ctx, env, link.refs.map(_.node), domainPlugin.allowRecursiveReferences) flatMap {
+        link.resolve(context, cache, ctx, env, link.refs.map(_.node), domainPlugin.allowRecursiveReferences) flatMap {
           case ReferenceResolutionResult(_, Some(unit)) =>
             val reference = ParsedReference(unit, link)
             handler.update(reference, ctx, context, env).map(Some(_))
@@ -231,14 +232,13 @@ class AMFCompiler(val rawUrl: String,
                 ctx
                   .violation(ParserSideValidations.CycleReferenceError.id, link.url, e.getMessage, link.refs.head.node)
                 Future(None)
-              case e =>
+              case _ =>
                 if (!link.isInferred) {
                   link.refs.map(_.node).foreach { ref =>
                     ctx.violation(link.url, e.getMessage, ref)
                   }
                 }
                 Future(None)
-
             }
           case _ => Future(None)
         }

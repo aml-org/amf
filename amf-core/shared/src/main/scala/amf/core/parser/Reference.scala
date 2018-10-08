@@ -27,27 +27,33 @@ case class Reference(url: String, refs: Seq[RefContainer]) extends PlatformSecre
   }
 
   def resolve(base: Context,
-              mediaType: Option[String],
               cache: Cache,
               ctx: ParserContext,
               env: Environment,
               nodes: Seq[YNode],
               allowRecursiveRefs: Boolean): Future[ReferenceResolutionResult] = {
-    val kinds        = refs.map(_.linkType)
-    val kind         = if (kinds.distinct.size > 1) UnspecifiedReference else kinds.distinct.head
+    val kinds = refs.map(_.linkType)
+    val kind  = if (kinds.distinct.size > 1) UnspecifiedReference else kinds.distinct.head
     try {
-      val res: Future[Future[ReferenceResolutionResult]] = RuntimeCompiler(url, mediaType, None, base, kind, cache, Some(ctx), env) map { eventualUnit =>
+      val res: Future[Future[ReferenceResolutionResult]] = RuntimeCompiler(url,
+                                                                           None,
+                                                                           None,
+                                                                           base,
+                                                                           kind,
+                                                                           cache,
+                                                                           Some(ctx),
+                                                                           env) map { eventualUnit =>
         verifyMatchingKind(eventualUnit, kind, nodes, ctx)
         Future(parser.ReferenceResolutionResult(None, Some(eventualUnit)))
       } recover {
-        case e: CyclicReferenceException if allowRecursiveRefs  =>
+        case e: CyclicReferenceException if allowRecursiveRefs =>
           val fulllUrl = e.history.last
           resolveRecursiveUnit(fulllUrl).map(u => ReferenceResolutionResult(None, Some(u)))
         case e: Throwable =>
           Future(ReferenceResolutionResult(Some(e), None))
       }
       res flatMap identity
-    } catch  {
+    } catch {
       case e: Throwable =>
         Future(ReferenceResolutionResult(Some(e), None))
     }
