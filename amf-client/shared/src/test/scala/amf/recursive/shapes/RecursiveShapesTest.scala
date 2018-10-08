@@ -27,7 +27,8 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
       RecursiveShapeFixture("props3.raml", "props3.report", "props3.json"),
       RecursiveShapeFixture("items1.raml", "items1.report", "items1.json"),
       RecursiveShapeFixture("union1.raml", "union1.report", "union1.json"),
-      RecursiveShapeFixture("inherits-and-props.raml", "inherits-and-props.report", "inherits-and-props.json")
+      RecursiveShapeFixture("inherits-and-props.raml", "inherits-and-props.report", "inherits-and-props.json"),
+      RecursiveShapeFixture("response-without-mediatype.raml", "response-without-mediatype.report", "response-without-mediatype.json"),
     )
 
   fixture.foreach { rf =>

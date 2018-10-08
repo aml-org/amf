@@ -1,0 +1,27 @@
+#%RAML 1.0
+
+title: accountmanagement-cfa-exp
+mediaType: application/json
+
+types:
+
+  A:
+      type: object
+      properties:
+        title: string
+        prop?:
+          description: the children of a root category
+          type: array
+          items: A
+
+/endpoint:
+  get:
+    responses:
+      200:
+        body:
+          type: A
+          example: |
+            {
+                "title": "hola",
+                "prop": 2.2
+            }

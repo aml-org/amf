@@ -1371,20 +1371,16 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
   override def emit(b: EntryBuilder): Unit = {
     val pointer = recursive.fixpoint.option() match {
       case Some(id) =>
-        schemaPath.reverse.find(_._1 == id) match {
-          case Some((_, pointer)) => Some(pointer)
-          case _ =>
-            recursive.fixpointTarget match {
-              case Some(shape) =>
-                schemaPath.reverse.find(_._1 == shape.id) match {
-                  case Some((_, pointer)) => Some(pointer)
-                  case _ =>
-                    recursive.fixpointTarget.flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
-                }
-              case _ =>
-                recursive.fixpointTarget.flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
-            }
-        }
+        findInPath(id).orElse({
+          recursive.fixpointTarget match {
+            case Some(shape) =>
+              findInPath(shape.id).orElse {
+                recursive.fixpointTarget
+                  .flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
+              }
+          }
+        })
+
       case _ => None
     }
 
@@ -1396,6 +1392,14 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
         )
       case _ =>
       // ignore
+    }
+  }
+
+  private def findInPath(id: String) = {
+    schemaPath.reverse.find(_._1 == id) match {
+      case Some((_, pointer)) if pointer.equals("#") && !spec.isInstanceOf[JsonSchemaEmitterContext] => None
+      case Some((_, pointer))                                                                        => Some(pointer)
+      case _                                                                                         => None
     }
   }
 

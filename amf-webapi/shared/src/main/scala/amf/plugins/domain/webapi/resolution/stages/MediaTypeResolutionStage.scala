@@ -98,11 +98,9 @@ class MediaTypeResolutionStage(profile: ProfileName, isValidation: Boolean = fal
           val parsedPayload = Payload(payload.annotations)
             .withMediaType(mediaType)
             .adopted(parent)
-          if (Option(payload.schema).isDefined) {
-            parsedPayload.withSchema(payload.schema.cloneShape(Some(errorHandler)))
-          } else {
-            parsedPayload
-          }
+          if (Option(payload.schema).isDefined)
+            parsedPayload.fields.setWithoutId(PayloadModel.Schema, payload.schema)
+          parsedPayload
         }
       }
     }
