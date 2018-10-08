@@ -1257,18 +1257,6 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
-  test("Test validate with string amf pair method") {
-    for {
-      _ <- AMF.init().asFuture
-      unit <- new Raml10Parser()
-        .parseFileAsync(scalarAnnotations)
-        .asFuture
-      v <- AMF.validate(unit, Raml.name, Raml.name).asFuture
-    } yield {
-      assert(v.conforms)
-    }
-  }
-
   test("Test validate with typed enum amf pair method") {
     for {
       _ <- AMF.init().asFuture

@@ -56,10 +56,6 @@ object AMF {
                env: Environment): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle, env)
 
-  @deprecated
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
-    Core.validate(model, profileName, messageStyle)
-
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)

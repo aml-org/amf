@@ -40,10 +40,6 @@ object Core extends PlatformSecrets {
   def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
     validate(model, profileName, messageStyle, DefaultEnvironment())
 
-  @deprecated
-  def validate(model: BaseUnit, profileName: String, messageStyle: String = "AMF"): ClientFuture[ValidationReport] =
-    Validator.validate(model, profileName, messageStyle)
-
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Validator.loadValidationProfile(url)
 
   def registerNamespace(alias: String, prefix: String): Boolean = platform.registerNamespace(alias, prefix).isDefined
