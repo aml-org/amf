@@ -6,7 +6,7 @@ Number of results: 4
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Not a YMap
+  Message: Yaml map expected
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Error node '{
+  Message: Syntax error in the following text: '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Employee",
   "type": "object",
@@ -49,7 +49,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Error node '        }
+  Message: Syntax error in the following text: '        }
 # above '}' should close in its correct indentation'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/invalid-yaml-block-mapping/input.raml

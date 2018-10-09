@@ -6,7 +6,7 @@ Number of results: 6
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Not a YMap
+  Message: Yaml map expected
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/user.json
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: 
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Error node '{
+  Message: Syntax error in the following text: '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "http://jsonschema.net",
   "type": "object",
@@ -37,7 +37,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/user.json
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Error node '{
+  Message: Syntax error in the following text: '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "http://jsonschema.net",
   "type": "object",
@@ -60,7 +60,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/user.json
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Error node '{
+  Message: Syntax error in the following text: '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "http://jsonschema.net",
   "type": "object",
@@ -83,7 +83,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/schemas/json/user.json
 
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Error node '{
+  Message: Syntax error in the following text: '{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "id": "http://jsonschema.net",
   "type": "object",

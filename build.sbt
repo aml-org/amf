@@ -13,7 +13,7 @@ jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
 val settings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
-  resolvers ++= List(Common.releases, Common.snapshots, Resolver.mavenLocal, ivyLocal),
+  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
   resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
@@ -34,7 +34,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.4.5"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.4.6"
     ))
   .in(file("./amf-core"))
   .settings(settings: _*)
