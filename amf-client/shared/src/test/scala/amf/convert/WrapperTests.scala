@@ -1450,7 +1450,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       override def fetch(resource: String): ClientFuture[Content] =
         Future.successful(new Content(lib, resource, Some("text/plain"))).asClient
 
-      override def accepts(resource: String): Boolean = resource == "http://mylib.com"
+      override def accepts(resource: String): Boolean = true
     }
 
     val environment = Environment
@@ -1462,6 +1462,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit <- new RamlParser(environment).parseStringAsync(input).asFuture
       v    <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
     } yield {
+      println("report: " + v.toString)
       v.conforms should be(true)
       val declarations = unit.asInstanceOf[Document].declares.asSeq
       declarations should have size 1
