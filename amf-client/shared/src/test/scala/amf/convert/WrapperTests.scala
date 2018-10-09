@@ -1425,4 +1425,47 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test invalid mime type at lib include") {
+    val include = "amf://types/Person.raml"
+
+    val input = s"""
+                   |#%RAML 1.0
+                   |title: test
+                   |uses:
+                   |  lib: http://mylib.com
+                   |types:
+                   |  Person: lib.A
+    """.stripMargin
+
+    val lib = """|#%RAML 1.0 Library
+                 |types:
+                 |  A:
+                 |    properties:
+                 |      name: string
+                 """.stripMargin
+
+    import amf.client.convert.WebApiClientConverters._
+
+    case class TestResourceLoader() extends ResourceLoader {
+      override def fetch(resource: String): ClientFuture[Content] =
+        Future.successful(new Content(lib, resource, Some("text/plain"))).asClient
+
+      override def accepts(resource: String): Boolean = resource == "http://mylib.com"
+    }
+
+    val environment = Environment
+      .empty()
+      .add(TestResourceLoader().asInstanceOf[ClientLoader])
+
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser(environment).parseStringAsync(input).asFuture
+      v    <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
+    } yield {
+      v.conforms should be(true)
+      val declarations = unit.asInstanceOf[Document].declares.asSeq
+      declarations should have size 1
+    }
+  }
+
 }

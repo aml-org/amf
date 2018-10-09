@@ -105,9 +105,7 @@ class AMFCompiler(val rawUrl: String,
         p.onBeginDocumentParsing(path, c, referenceKind)
     }
 
-    val provided = content.mime.orElse(mediaType)
-
-    val parsed: Option[(String, ParsedDocument)] = provided
+    val parsed: Option[(String, ParsedDocument)] = mediaType
       .flatMap { mime =>
         AMFPluginsRegistry
           .syntaxPluginForMediaType(mime)
@@ -115,16 +113,25 @@ class AMFCompiler(val rawUrl: String,
           .map((mime, _))
       }
       .orElse {
-        provided match {
+        mediaType match {
           case None =>
-            FileMediaType
-              .extension(content.url)
-              .flatMap(FileMediaType.mimeFromExtension)
-              .flatMap { infered =>
+            content.mime
+              .flatMap { mime =>
                 AMFPluginsRegistry
-                  .syntaxPluginForMediaType(infered)
-                  .flatMap(_.parse(infered, content.stream, ctx, parsingOptions))
-                  .map((infered, _))
+                  .syntaxPluginForMediaType(mime)
+                  .flatMap(_.parse(mime, content.stream, ctx, parsingOptions))
+                  .map((mime, _))
+              }
+              .orElse {
+                FileMediaType
+                  .extension(content.url)
+                  .flatMap(FileMediaType.mimeFromExtension)
+                  .flatMap { infered =>
+                    AMFPluginsRegistry
+                      .syntaxPluginForMediaType(infered)
+                      .flatMap(_.parse(infered, content.stream, ctx, parsingOptions))
+                      .map((infered, _))
+                  }
               }
               .orElse {
                 autodetectSyntax(content.stream).flatMap { infered =>

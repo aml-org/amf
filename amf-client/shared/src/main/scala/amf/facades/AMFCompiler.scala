@@ -4,6 +4,7 @@ import amf.core
 import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParsedReference, ParserContext}
+import amf.core.remote.Syntax.{Json, PlainText, Yaml}
 import amf.core.remote._
 import amf.core.{Root, AMFCompiler => ModularCompiler}
 import amf.plugins.document.vocabularies.RamlHeaderExtractor
@@ -28,23 +29,18 @@ class AMFCompiler private (val url: String,
 
   def build(): Future[BaseUnit] = {
 
-    val mediaType = hint match {
-      case VocabularyYamlHint => "application/yaml"
-      case RamlYamlHint       => "application/yaml"
-      case RamlJsonHint       => "application/json"
-      case OasJsonHint        => "application/json"
-      case OasYamlHint        => "application/yaml"
-      case AmfJsonHint        => "application/ld+json"
-      case PayloadJsonHint    => "application/amf+json"
-      case PayloadYamlHint    => "application/amf+yaml"
-      case _                  => "text/plain"
+    val mediaType = hint.syntax match {
+      case Yaml      => Some("application/yaml")
+      case Json      => Some("application/json")
+      case PlainText => Some("text/plain") // we cannot parse this?
+      case _         => None
     }
 
     new ModularCompiler(
       url,
       remote,
       base,
-      Option(mediaType),
+      mediaType,
       Some(hint.vendor.name),
       hint.kind,
       cache,
@@ -56,21 +52,18 @@ class AMFCompiler private (val url: String,
 
   def root(): Future[Root] = {
 
-    val mediaType = hint match {
-      case VocabularyYamlHint => "application/yaml"
-      case RamlYamlHint       => "application/yaml"
-      case RamlJsonHint       => "application/json"
-      case OasJsonHint        => "application/json"
-      case OasYamlHint        => "application/yaml"
-      case AmfJsonHint        => "application/ld+json"
-      case _                  => "text/plain"
+    val mediaType = hint.syntax match {
+      case Yaml      => Some("application/yaml")
+      case Json      => Some("application/json")
+      case PlainText => Some("text/plain") // we cannot parse this?
+      case _         => None
     }
 
     new ModularCompiler(
       url,
       remote,
       base,
-      Option(mediaType),
+      mediaType,
       Some(hint.vendor.name),
       hint.kind,
       cache,
