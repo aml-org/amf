@@ -1,22 +1,14 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/min-properties-error/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: object has too few properties (found 1 but schema requires at least 2)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "minProperties"
-    found: 1
-    required: 2
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: minimum size: [2], found: [1]
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/min-properties-error/input.raml#/declarations/types/Initial_comments/example/default-example
   Property: 
   Position: Some(LexicalInformation([(11,0)-(12,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/min-properties-error/input.raml

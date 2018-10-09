@@ -3,7 +3,6 @@ title: My API With Types
 types:
   Person:
     type: object
-    additionalProperties: true
     properties:
       name:
         type: string
@@ -13,4 +12,4 @@ types:
         required: false
       //:
         type: string
-        required: true
+        required: false

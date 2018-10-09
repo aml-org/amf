@@ -1,14 +1,14 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml#/declarations/types/scalar/when_validation_range/prop
-  Message: Scalar at / must be valid RFC3339 date
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: should match format "date-time"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml#/declarations/types/scalar/when/example/default-example
-  Property: http://a.ml/vocabularies/data#value
+  Property: 
   Position: Some(LexicalInformation([(6,17)-(6,24)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml

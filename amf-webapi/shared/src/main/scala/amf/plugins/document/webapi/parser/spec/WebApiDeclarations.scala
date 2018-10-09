@@ -2,7 +2,16 @@ package amf.plugins.document.webapi.parser.spec
 
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
-import amf.core.parser.{Annotations, Declarations, EmptyFutureDeclarations, ErrorHandler, Fields, FragmentRef, FutureDeclarations, SearchScope}
+import amf.core.parser.{
+  Annotations,
+  Declarations,
+  EmptyFutureDeclarations,
+  ErrorHandler,
+  Fields,
+  FragmentRef,
+  FutureDeclarations,
+  SearchScope
+}
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
@@ -32,15 +41,17 @@ class WebApiDeclarations(val alias: Option[String],
   def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape = {
     fragments.get(text) match {
       case Some(fragmentRef) =>
-        promotedFragments :+= DataTypeFragment().withId(fragmentRef.location.getOrElse(fullRef)).withLocation(fragmentRef.location.getOrElse(fullRef)).withEncodes(shape)
-        fragments +=  (text -> FragmentRef(shape, fragmentRef.location))
-      case _                 =>
+        promotedFragments :+= DataTypeFragment()
+          .withId(fragmentRef.location.getOrElse(fullRef))
+          .withLocation(fragmentRef.location.getOrElse(fullRef))
+          .withEncodes(shape)
+        fragments += (text -> FragmentRef(shape, fragmentRef.location))
+      case _ =>
         promotedFragments :+= DataTypeFragment().withId(fullRef).withLocation(fullRef).withEncodes(shape)
-        fragments +=  (text -> FragmentRef(shape, None))
+        fragments += (text -> FragmentRef(shape, None))
     }
     shape
   }
-
 
   protected def mergeParts(other: WebApiDeclarations, merged: WebApiDeclarations): Unit = {
     libs.foreach { case (k, s)                  => merged.libs += (k            -> s) }
@@ -55,6 +66,8 @@ class WebApiDeclarations(val alias: Option[String],
     other.shapes.foreach { case (k, s)          => merged.shapes += (k          -> s) }
     anns.foreach { case (k, s)                  => merged.anns += (k            -> s) }
     other.anns.foreach { case (k, s)            => merged.anns += (k            -> s) }
+    annotations.foreach { case (k, s)           => merged.annotations += (k     -> s) }
+    other.annotations.foreach { case (k, s)     => merged.annotations += (k     -> s) }
     resourceTypes.foreach { case (k, s)         => merged.resourceTypes += (k   -> s) }
     other.resourceTypes.foreach { case (k, s)   => merged.resourceTypes += (k   -> s) }
     parameters.foreach { case (k, s)            => merged.parameters += (k      -> s) }
@@ -70,9 +83,10 @@ class WebApiDeclarations(val alias: Option[String],
   }
 
   def merge(other: WebApiDeclarations): WebApiDeclarations = {
-    val merged = new WebApiDeclarations(alias = alias,
-                                        errorHandler = errorHandler,
-                                        futureDeclarations = EmptyFutureDeclarations())
+    val merged =
+      new WebApiDeclarations(alias = alias,
+                             errorHandler = errorHandler,
+                             futureDeclarations = EmptyFutureDeclarations())
     mergeParts(other, merged)
     merged
   }

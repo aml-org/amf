@@ -1,29 +1,13 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: instance type (null) does not match any allowed primitive type (allowed: ["string"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/lastname"}
-    instance: {"pointer":"/lastname"}
-    domain: "validation"
-    keyword: "type"
-    found: "null"
-    expected: ["string"]
-
-error: instance type (string) does not match any allowed primitive type (allowed: ["null"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/middlename"}
-    instance: {"pointer":"/middlename"}
-    domain: "validation"
-    keyword: "type"
-    found: "string"
-    expected: ["null"]
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: /lastname expected type: String, found: Null
+/middlename expected: null, found: String
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/wrong-type
@@ -31,18 +15,10 @@ error: instance type (string) does not match any allowed primitive type (allowed
   Position: Some(LexicalInformation([(15,0)-(18,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: object has missing required properties (["middlename"])
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "required"
-    required: ["lastname","middlename","name"]
-    missing: ["middlename"]
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: required key [middlename] not found
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/missing-field
   Property: 
   Position: Some(LexicalInformation([(19,0)-(21,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml

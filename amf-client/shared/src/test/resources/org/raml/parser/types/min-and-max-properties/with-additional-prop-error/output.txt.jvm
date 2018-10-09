@@ -1,22 +1,14 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/with-additional-prop-error/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: object has too few properties (found 3 but schema requires at least 4)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "minProperties"
-    found: 3
-    required: 4
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: minimum size: [4], found: [3]
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/with-additional-prop-error/input.raml#/declarations/types/Initial_comments/example/default-example
   Property: 
   Position: Some(LexicalInformation([(11,0)-(14,0)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/with-additional-prop-error/input.raml

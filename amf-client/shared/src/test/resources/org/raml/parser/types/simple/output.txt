@@ -2,7 +2,6 @@
 title: arrays
 types:
   Human:
-    type: object
     additionalProperties: true
     properties:
       family:
@@ -14,14 +13,14 @@ types:
           members:
             items:
               type: object
-              x-amf-recursive: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple/input.raml#/declarations/types/Human
+              x-amf-recursive: amf://id#1
             required: true
         required: true
       name:
         type: string
         required: true
   Address:
-    type: string
+    type: any
   Email:
     additionalProperties: true
     properties:

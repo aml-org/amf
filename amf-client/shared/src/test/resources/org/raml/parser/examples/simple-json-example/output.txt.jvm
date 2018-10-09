@@ -1,31 +1,13 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: string "Marley" is too short (length: 6, required minimum: 10)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/lastName"}
-    instance: {"pointer":"/lastName"}
-    domain: "validation"
-    keyword: "minLength"
-    value: "Marley"
-    found: 6
-    minLength: 10
-
-error: string "Robert" is too long (length: 6, maximum allowed: 5)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/name"}
-    instance: {"pointer":"/name"}
-    domain: "validation"
-    keyword: "maxLength"
-    value: "Robert"
-    found: 6
-    maxLength: 5
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: /lastName expected minLength: 10, actual: 6
+/name expected maxLength: 5, actual: 6
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/types/User/example/default-example

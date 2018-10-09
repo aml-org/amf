@@ -1,14 +1,20 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/examples/madness/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/examples/madness/input.raml#/declarations/types/HomeAnimal_validation
-  Message: Data at / must be one of the valid union types: HomeAnimal
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: feathers should NOT be longer than 5 characters
+livesInside should be boolean
+should have required property 'bite'
+should have required property 'claw'
+should have required property 'livesOutside'
+should match some schema in anyOf
+
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/madness/input.raml#/declarations/types/union/HomeAnimal/example/default-example
-  Property: 
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/madness/input.raml#/declarations/types/HomeAnimal/union/HomeAnimal/example/default-example
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/madness/input.raml#/declarations/types/HomeAnimal/union/HomeAnimal/example/default-example
   Position: Some(LexicalInformation([(36,0)-(39,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/madness/input.raml

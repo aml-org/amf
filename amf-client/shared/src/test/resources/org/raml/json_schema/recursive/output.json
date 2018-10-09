@@ -1,22 +1,14 @@
-{
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/root",
-  "definitions": {
-    "root": {
-      "type": "object",
-      "additionalProperties": true,
-      "required": [
-        "value",
-        "left",
-        "right"
-      ],
-      "properties": {
-        "value": {
-          "type": "string"
-        },
-        "left": {},
-        "right": {}
-      }
-    }
-  }
-}
+Model: file://amf-client/shared/src/test/resources/org/raml/json_schema/recursive/input.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#recursive-shape
+  Message: Error recursive shape
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/org/raml/json_schema/recursive/input.raml#/declarations/types/root/recursive
+  Property: 
+  Position: Some(LexicalInformation([(4,2)-(9,17)]))
+  Location: file://amf-client/shared/src/test/resources/org/raml/json_schema/recursive/input.raml

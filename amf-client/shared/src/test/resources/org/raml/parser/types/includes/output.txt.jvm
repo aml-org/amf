@@ -1,34 +1,18 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: string "introduction" is too long (length: 12, maximum allowed: 10)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/chapters/items/properties/name"}
-    instance: {"pointer":"/chapters/0/name"}
-    domain: "validation"
-    keyword: "maxLength"
-    value: "introduction"
-    found: 12
-    maxLength: 10
-
-error: string "Never Ending Story" is too long (length: 18, maximum allowed: 10)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":"/properties/name"}
-    instance: {"pointer":"/name"}
-    domain: "validation"
-    keyword: "maxLength"
-    value: "Never Ending Story"
-    found: 18
-    maxLength: 10
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: /chapters/0/name expected maxLength: 10, actual: 12
+/chapters/3/content expected type: String, found: Integer
+/chapters/3/name expected type: String, found: Integer
+/name expected maxLength: 10, actual: 18
 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/shape/example/default-example
   Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml#/shape/example/default-example
   Position: Some(LexicalInformation([(14,0)-(23,16)]))
-  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/input.raml
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/includes/book.raml

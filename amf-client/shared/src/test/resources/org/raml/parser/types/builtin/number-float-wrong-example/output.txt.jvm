@@ -1,54 +1,30 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: remainder of division is not zero (6.002 / 3)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "multipleOf"
-    value: 6.002
-    divisor: 3
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: 6.002 is not a multiple of 3.0
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml#/declarations/types/scalar/MyCustomType/example/default-example
   Property: 
   Position: Some(LexicalInformation([(10,15)-(10,20)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: numeric instance is lower than the required minimum (minimum: 2.5, found: 2.4)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "minimum"
-    minimum: 2.5
-    found: 2.4
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: 2.4 is not greater or equal to 2.5
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml#/declarations/types/scalar/OtherCustomType/example/bad1
   Property: 
   Position: Some(LexicalInformation([(18,14)-(18,17)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#exampleError
-  Message: error: numeric instance is greater than the required maximum (maximum: 5.3, found: 5.4)
-    level: "error"
-    schema: {"loadingURI":"#","pointer":""}
-    instance: {"pointer":""}
-    domain: "validation"
-    keyword: "maximum"
-    maximum: 5.3
-    found: 5.4
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: 5.4 is not less or equal to 5.3
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml#/declarations/types/scalar/OtherCustomType/example/bad2
   Property: 
   Position: Some(LexicalInformation([(19,14)-(19,17)]))
-  Location: 
+  Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml

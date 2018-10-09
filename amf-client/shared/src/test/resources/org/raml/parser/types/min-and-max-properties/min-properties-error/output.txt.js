@@ -1,14 +1,14 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/min-properties-error/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/min-properties-error/input.raml#/declarations/types/Initial_comments_validation_validation_minProperties/prop
-  Message: Expected min properties 2
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: should NOT have less than 2 properties
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/min-properties-error/input.raml#/declarations/types/Initial_comments/example/default-example
-  Property: http://a.ml/vocabularies/amf/validation#/properties
+  Property: 
   Position: Some(LexicalInformation([(11,0)-(12,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/min-properties-error/input.raml

@@ -1,16 +1,14 @@
 Model: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml
-Profile: RAML
+Profile: RAML 1.0
 Conforms? false
 Number of results: 1
 
 Level: Violation
 
-- Source: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/types/Person_validation
-  Message: Object at / must be valid
-Scalar at //name must have data type http://www.w3.org/2001/XMLSchema#integer
-
+- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+  Message: name should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/types/Person/example/default-example
-  Property: http://a.ml/vocabularies/data#name
+  Property: 
   Position: Some(LexicalInformation([(8,0)-(8,18)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml

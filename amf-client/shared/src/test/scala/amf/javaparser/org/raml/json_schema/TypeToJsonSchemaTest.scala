@@ -14,7 +14,7 @@ but resolution for validation normalize shapes.
  */
 
 class TypeToJsonSchemaTest extends ModelValidationTest {
-  override def path: String = "amf-client/shared/src/test/resources/org/raml/json_schema/union_complex"
+  override def path: String = "amf-client/shared/src/test/resources/org/raml/json_schema/"
 
   override def inputFileName: String = "input.raml"
 

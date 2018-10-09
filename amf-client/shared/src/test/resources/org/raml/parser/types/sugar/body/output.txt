@@ -2,18 +2,18 @@
 title: New API
 types:
   Person:
-    type: string
+    type: any
   Another:
-    type: string
+    type: any
 /list:
   get:
     body:
       application/json:
         items:
-          type: string
+          type: any
     responses:
       200:
         body:
           application/json:
             items:
-              type: string
+              type: any

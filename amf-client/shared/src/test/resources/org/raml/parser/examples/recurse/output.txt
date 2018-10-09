@@ -8,6 +8,13 @@ types:
       id:
         type: string
         required: true
+  Persona:
+    type: object
+    additionalProperties: true
+    properties:
+      id:
+        type: string
+        required: true
   User:
     type: object
     additionalProperties: true

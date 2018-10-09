@@ -15,7 +15,9 @@
         "children": {
           "type": "array",
           "uniqueItems": true,
-          "items": {}
+          "items": {
+            "$ref": "#/definitions/root"
+          }
         }
       }
     }
