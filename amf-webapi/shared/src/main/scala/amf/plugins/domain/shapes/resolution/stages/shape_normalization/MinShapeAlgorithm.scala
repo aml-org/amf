@@ -36,10 +36,19 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     }
   }
 
+  private def mergeClojures(derived: Shape, superShape: Shape): Unit = {
+    superShape.closureShapes.foreach { scs =>
+      if (!derived.closureShapes.exists(
+            c => c.id.equals(scs.id) || c.name.option().exists(_.equals(scs.name.option().getOrElse(""))))) {
+        derived.closureShapes += scs
+        context.cache.addClojures(Seq(scs), derived)
+      }
+    }
+  }
   def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
     val superShape   = copy(superShapeOri)
     val derivedShape = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
-    derivedShape.closureShapes ++= superShape.closureShapes
+    mergeClojures(derivedShape, superShape)
 //    context.cache.updateRecursiveTargets(derivedShape)
     try {
       derivedShape match {

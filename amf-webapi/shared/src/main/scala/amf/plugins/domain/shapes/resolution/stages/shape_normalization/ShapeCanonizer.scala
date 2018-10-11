@@ -372,11 +372,16 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
         normalize(shape) match {
           case nestedUnion: UnionShape =>
             union.closureShapes ++= nestedUnion.closureShapes
+            context.cache.addClojures(nestedUnion.closureShapes.toSeq, union)
             nestedUnion.anyOf.foreach(e => anyOfAcc += e)
           case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => union.closureShapes ++= Seq(target).filter(_.id != union.id))
+            rec.fixpointTarget.foreach(target => {
+              union.closureShapes ++= Seq(target).filter(_.id != union.id)
+              context.cache.cacheClojure(target.id, union)
+            })
             anyOfAcc += rec
           case other: Shape =>
+            context.cache.addClojures(other.closureShapes.toSeq, union)
             union.closureShapes ++= other.closureShapes
             anyOfAcc += other
         }
