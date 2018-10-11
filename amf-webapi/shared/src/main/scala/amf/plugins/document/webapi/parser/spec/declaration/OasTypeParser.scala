@@ -227,8 +227,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         Some(parseScalarType(TypeDef.BoolType, name, exclusiveProps, s => s.withId(union.id + "/boolean")))
       case "null" =>
         Some(parseScalarType(TypeDef.NilType, name, exclusiveProps, s => s.withId(union.id + "/nil")))
-      case "any"             => Some(parseAnyType(name, exclusiveProps, s => s.withId(union.id + "/any")))
-      case _                 => None
+      case "any" => Some(parseAnyType(name, exclusiveProps, s => s.withId(union.id + "/any")))
+      case other =>
+        ctx.violation(union.id, s"Invalid type for disjoinUnion $other", map.key("type").get.value)
+        None
     } collect { case Some(t) => t }
 
     if (parsedTypes.nonEmpty) union.setArrayWithoutId(UnionShapeModel.AnyOf, parsedTypes)
@@ -390,6 +392,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   private def parseUnionType(): UnionShape = {
+
     UnionShapeParser(entryOrNode, name).parse()
   }
 

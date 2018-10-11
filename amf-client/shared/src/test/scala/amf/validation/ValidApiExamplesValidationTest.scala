@@ -1,6 +1,5 @@
 package amf.validation
 
-import amf.core.benchmark.{Execution, ExecutionLog}
 import amf.core.remote.{Hint, RamlYamlHint}
 import amf.{AmfProfile, Raml08Profile}
 

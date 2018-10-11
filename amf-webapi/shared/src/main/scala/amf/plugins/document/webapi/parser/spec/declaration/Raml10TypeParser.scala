@@ -588,7 +588,21 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   private def parseUnionType(): UnionShape = {
-    UnionShapeParser(node.as[YMap], adopt).parse()
+    val shape = UnionShape(Annotations(node)).withName(name)
+    adopt(shape)
+    node.tagType match {
+      case YType.Map =>
+        UnionShapeParser(node.as[YMap], shape).parse()
+      case YType.Seq =>
+        InheritanceParser(ast.asInstanceOf[YMapEntry], shape, None).parse()
+        shape
+      case _ =>
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
+                      shape.id,
+                      s"Invalid node for union shape '${node.toString()}",
+                      node)
+        shape
+    }
   }
 
   private def parseObjectType(): Shape = {
@@ -787,11 +801,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   }
 
-  case class UnionShapeParser(override val map: YMap, adopt: Shape => Shape) extends AnyShapeParser {
-    override val shape = UnionShape(Annotations(map))
+  case class UnionShapeParser(override val map: YMap, shape: UnionShape) extends AnyShapeParser {
 
     override def parse(): UnionShape = {
-      adopt(shape)
       super.parse()
 
       map.key(

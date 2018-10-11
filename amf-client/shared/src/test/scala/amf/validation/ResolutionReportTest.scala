@@ -125,5 +125,13 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/overlays/valid-complex/overlay2.raml", None)
   }
 
+  test("Inline single prop inheritance from union") {
+    checkReport("/types/inline-union-inheritance.raml", None)
+  }
+
+  test("Inline single prop inheritance from complex") {
+    checkReport("/types/inline-union-inheritance2.raml", None)
+  }
+
   override val hint: Hint = RamlYamlHint
 }

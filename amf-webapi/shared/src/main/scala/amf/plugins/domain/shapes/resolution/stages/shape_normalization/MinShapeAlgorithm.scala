@@ -435,7 +435,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
 
     var accExamples = List[Example]()
 
-    newUnionItems.filter(_.annotations.contains(classOf[DeclaredElement])).zipWithIndex.foreach {
+    newUnionItems.zipWithIndex.foreach {
       case (shape, i) =>
         shape.id = shape.id + s"_$i"
         shape match {
