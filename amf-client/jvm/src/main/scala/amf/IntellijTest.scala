@@ -43,7 +43,6 @@ object IntellijTest extends PlatformSecrets with App {
         println("** validating")
         validation.validate(model, Raml08Profile) map { report =>
           println("** validation report")
-          println(report)
           model
         }
       } flatMap { model =>

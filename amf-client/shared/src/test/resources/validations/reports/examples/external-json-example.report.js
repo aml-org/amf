@@ -10,5 +10,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/external-json/api.raml#/declarations/types/a/example/default-example
   Property: 
-  Position: Some(LexicalInformation([(1,0)-(1,0)]))
+  Position: Some(LexicalInformation([(1,0)-(4,1)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/external-json/example.json

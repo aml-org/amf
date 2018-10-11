@@ -10,5 +10,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml#/declarations/types/Office/example/default-example
   Property: 
-  Position: Some(LexicalInformation([(15,13)-(21,0)]))
+  Position: Some(LexicalInformation([(16,12)-(20,13)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/simple-inheritance/input.raml

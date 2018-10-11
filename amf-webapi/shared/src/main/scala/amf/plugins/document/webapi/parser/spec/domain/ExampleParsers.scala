@@ -259,7 +259,7 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean, fro
     val dataNode = exampleNode.map { ex =>
       val dataNode = DataNodeParser(ex, parent = Some(parentId)).parse()
       dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
-      dataNode.annotations += LexicalInformation(Range(node.value.range))
+      dataNode.annotations += LexicalInformation(Range(ex.value.range))
       dataNode
     }
     DataNodeParserResult(exampleNode, dataNode)

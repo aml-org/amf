@@ -1462,7 +1462,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit <- new RamlParser(environment).parseStringAsync(input).asFuture
       v    <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
     } yield {
-      println("report: " + v.toString)
+      //println("report: " + v.toString)
       v.conforms should be(true)
       val declarations = unit.asInstanceOf[Document].declares.asSeq
       declarations should have size 1
