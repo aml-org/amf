@@ -742,6 +742,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
          |    get:
          |      parameters:
          |        -
+         |          name: someName
          |          x-amf-mediaType: application/json
          |          in: body
          |          schema:
@@ -851,6 +852,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       .head
       .withRequest()
       .withPayload("application/json")
+      .withName("someName")
       .withSchema(linked)
     doc
   }

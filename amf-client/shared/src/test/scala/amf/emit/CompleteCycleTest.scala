@@ -2,7 +2,7 @@ package amf.emit
 
 import amf.core.remote._
 import amf.facades.Validation
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 
 class CompleteCycleTest extends FunSuiteCycleTests {
 

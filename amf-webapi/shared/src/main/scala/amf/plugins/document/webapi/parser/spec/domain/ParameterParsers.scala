@@ -216,6 +216,18 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
     }
     p
   }
+
+  def validateName(parameter: Parameter) = if (parameter.name.isNullOrEmpty) {
+    ctx.violation(
+      ParserSideValidations.ParsingErrorSpecification.id,
+      parameter.id,
+      "'name' property is required in a parameter.",
+      map
+    )
+
+    parameter.withName("default")
+  }
+
   def parse(): OasParameter = {
     map.key("$ref") match {
       case Some(ref) => parseParameterRef(ref, parentId)
@@ -229,10 +241,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
         map.key("in", ParameterModel.Binding in parameter)
 
         validateBinding(p)
-
-        // This is for in: body parameters that might not have a name
-        if ((p.isBody || p.isFormData) && parameter.name.isNullOrEmpty)
-          parameter.withName("default")
+        validateName(parameter)
 
         // type
         parameter.adopted(parentId)
@@ -244,10 +253,12 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
         if (p.isBody) {
           ctx.closedShape(parameter.id, map, "bodyParameter")
 
+          p.payload.set(PayloadModel.Name, AmfScalar(parameter.name.value()), parameter.name.annotations())
+
           map.key(
             "schema",
             entry => {
-              OasTypeParser(entry, shape => shape.withName("schema").adopted(p.payload.id))
+              OasTypeParser(entry, shape => shape.withName(parameter.name.value()).adopted(p.payload.id))
                 .parse()
                 .map { schema =>
                   shapeFromOasParameter(parameter, schema)
@@ -256,8 +267,6 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
                 }
             }
           )
-
-          p.payload.set(PayloadModel.Name, AmfScalar(parameter.name.value()), Annotations())
 
           map.key("mediaType".asOasExtension, PayloadModel.MediaType in p.payload)
 
@@ -275,7 +284,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
               if (p.isFormData) {
                 shapeFromOasParameter(parameter, schema)
                 p.payload.set(PayloadModel.Schema, tracking(schema, p.payload.id), Annotations(map))
-                p.payload.set(PayloadModel.Name, AmfScalar(parameter.name.value()), Annotations())
+                p.payload.set(PayloadModel.Name, AmfScalar(parameter.name.value()), parameter.name.annotations())
               } else parameter.set(ParameterModel.Schema, schema, Annotations(map))
             }
             .orElse {

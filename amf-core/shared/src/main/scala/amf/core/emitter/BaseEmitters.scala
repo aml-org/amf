@@ -2,7 +2,7 @@ package amf.core.emitter
 
 import amf.core.annotations.{LexicalInformation, SingleValueArray, SourceLocation}
 import amf.core.metamodel.{Field, Type}
-import amf.core.model.domain.AmfScalar
+import amf.core.model.domain.{AmfObject, AmfScalar}
 import amf.core.parser.Position._
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -16,6 +16,12 @@ package object BaseEmitters {
     annotations.find[LexicalInformation](clazz.isInstance(_)).map(_.range.start).getOrElse(ZERO)
 
   protected[amf] def pos(annotations: Annotations): Position = pos(annotations, classOf[LexicalInformation])
+
+  protected[amf] def pos(field: Field, obj: AmfObject, default: Annotations): Position =
+    obj.fields.entry(field) match {
+      case Some(f) => pos(f.value.annotations)
+      case None    => pos(default)
+    }
 
   protected[amf] def traverse(emitters: Seq[EntryEmitter], b: EntryBuilder): Unit = {
     emitters.foreach(e => {

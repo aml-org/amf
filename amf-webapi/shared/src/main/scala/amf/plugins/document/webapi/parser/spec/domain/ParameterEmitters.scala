@@ -416,6 +416,10 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
     b.obj { b =>
       val result = mutable.ListBuffer[EntryEmitter]()
 
+      result += MapEntryEmitter("name",
+                                payload.name.option().getOrElse("generated"),
+                                position = pos(PayloadModel.Name, payload, payload.name.annotations()))
+//      payload.fields.entry(PayloadModel.Name).map(f => result += ValueEmitter("name", f))
       payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType".asOasExtension, f))
       result += MapEntryEmitter("in", binding(), position = bindingPos(payload.schema))
       payload.fields

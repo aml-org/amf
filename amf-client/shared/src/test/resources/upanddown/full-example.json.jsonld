@@ -1299,7 +1299,7 @@
                         ],
                         "http://schema.org/name": [
                           {
-                            "@value": "default"
+                            "@value": "someName"
                           }
                         ],
                         "http://a.ml/vocabularies/http#mediaType": [
@@ -1309,7 +1309,7 @@
                         ],
                         "http://a.ml/vocabularies/http#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/default/default/scalar/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/someName/default/scalar/someName",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1323,12 +1323,12 @@
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
-                                "@value": "schema"
+                                "@value": "someName"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/default/default/scalar/schema/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/someName/default/scalar/someName/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -1336,12 +1336,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/default/default/scalar/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/someName/default/scalar/someName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(91,18)-(91,24)]"
+                                        "@value": "[(92,18)-(92,24)]"
                                       }
                                     ]
                                   }
@@ -1350,24 +1350,36 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                        "@value": "http://www.w3.org/ns/shacl#name"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(88,14)-(88,30)]"
+                                        "@value": "[(87,20)-(87,30)]"
                                       }
                                     ]
                                   },
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/default/default/scalar/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/someName/default/scalar/someName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(87,12)-(89,13)]"
+                                        "@value": "[(88,12)-(90,13)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://www.w3.org/ns/shacl#datatype"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(89,14)-(89,30)]"
                                       }
                                     ]
                                   }
@@ -1376,12 +1388,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/default/default/scalar/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/full-example.json#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request/parameter/someName/default/scalar/someName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(88,14)-(88,20)]"
+                                        "@value": "[(89,14)-(89,20)]"
                                       }
                                     ]
                                   }
@@ -1405,7 +1417,19 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(87,12)-(89,13)]"
+                                    "@value": "[(88,12)-(90,13)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://schema.org/name"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(87,20)-(87,30)]"
                                   }
                                 ]
                               },
@@ -1417,7 +1441,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(86,10)-(92,11)]"
+                                    "@value": "[(86,10)-(93,11)]"
                                   }
                                 ]
                               },
@@ -1429,7 +1453,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(90,12)-(90,49)]"
+                                    "@value": "[(91,12)-(91,49)]"
                                   }
                                 ]
                               }
@@ -1487,7 +1511,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(98,14)-(98,20)]"
+                                        "@value": "[(99,14)-(99,20)]"
                                       }
                                     ]
                                   }
@@ -1501,7 +1525,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(99,14)-(99,31)]"
+                                        "@value": "[(100,14)-(100,31)]"
                                       }
                                     ]
                                   },
@@ -1513,7 +1537,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(97,12)-(100,13)]"
+                                        "@value": "[(98,12)-(101,13)]"
                                       }
                                     ]
                                   },
@@ -1525,7 +1549,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(98,14)-(98,30)]"
+                                        "@value": "[(99,14)-(99,30)]"
                                       }
                                     ]
                                   }
@@ -1549,7 +1573,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(97,12)-(100,13)]"
+                                    "@value": "[(98,12)-(101,13)]"
                                   }
                                 ]
                               },
@@ -1561,7 +1585,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(95,10)-(101,11)]"
+                                    "@value": "[(96,10)-(102,11)]"
                                   }
                                 ]
                               },
@@ -1573,7 +1597,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(96,12)-(96,42)]"
+                                    "@value": "[(97,12)-(97,42)]"
                                   }
                                 ]
                               }
@@ -1631,7 +1655,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(105,14)-(105,20)]"
+                                        "@value": "[(106,14)-(106,20)]"
                                       }
                                     ]
                                   }
@@ -1645,7 +1669,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(106,14)-(106,30)]"
+                                        "@value": "[(107,14)-(107,30)]"
                                       }
                                     ]
                                   },
@@ -1657,7 +1681,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(104,12)-(107,13)]"
+                                        "@value": "[(105,12)-(108,13)]"
                                       }
                                     ]
                                   },
@@ -1669,7 +1693,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(105,14)-(105,30)]"
+                                        "@value": "[(106,14)-(106,30)]"
                                       }
                                     ]
                                   }
@@ -1693,7 +1717,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(104,12)-(107,13)]"
+                                    "@value": "[(105,12)-(108,13)]"
                                   }
                                 ]
                               },
@@ -1705,7 +1729,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(102,10)-(108,11)]"
+                                    "@value": "[(103,10)-(109,11)]"
                                   }
                                 ]
                               },
@@ -1717,7 +1741,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(103,12)-(103,42)]"
+                                    "@value": "[(104,12)-(104,42)]"
                                   }
                                 ]
                               }
@@ -1741,7 +1765,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(67,8)-(93,9)]"
+                                "@value": "[(67,8)-(94,9)]"
                               }
                             ]
                           },
@@ -1753,7 +1777,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(67,8)-(93,9)]"
+                                "@value": "[(67,8)-(94,9)]"
                               }
                             ]
                           }
@@ -1840,7 +1864,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(116,16)-(116,22)]"
+                                        "@value": "[(117,16)-(117,22)]"
                                       }
                                     ]
                                   }
@@ -1854,7 +1878,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(116,16)-(116,33)]"
+                                        "@value": "[(117,16)-(117,33)]"
                                       }
                                     ]
                                   },
@@ -1866,7 +1890,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(114,14)-(117,15)]"
+                                        "@value": "[(115,14)-(118,15)]"
                                       }
                                     ]
                                   }
@@ -1890,7 +1914,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(114,14)-(117,15)]"
+                                    "@value": "[(115,14)-(118,15)]"
                                   }
                                 ]
                               },
@@ -1902,7 +1926,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(114,14)-(117,15)]"
+                                    "@value": "[(115,14)-(118,15)]"
                                   }
                                 ]
                               },
@@ -1914,7 +1938,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(115,16)-(115,32)]"
+                                    "@value": "[(116,16)-(116,32)]"
                                   }
                                 ]
                               }
@@ -1969,7 +1993,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(121,14)-(121,20)]"
+                                        "@value": "[(122,14)-(122,20)]"
                                       }
                                     ]
                                   }
@@ -1983,7 +2007,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(121,14)-(121,30)]"
+                                        "@value": "[(122,14)-(122,30)]"
                                       }
                                     ]
                                   },
@@ -1995,7 +2019,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(120,12)-(122,13)]"
+                                        "@value": "[(121,12)-(123,13)]"
                                       }
                                     ]
                                   }
@@ -2019,7 +2043,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(120,12)-(122,13)]"
+                                    "@value": "[(121,12)-(123,13)]"
                                   }
                                 ]
                               },
@@ -2031,7 +2055,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(119,12)-(119,49)]"
+                                    "@value": "[(120,12)-(120,49)]"
                                   }
                                 ]
                               }
@@ -2065,7 +2089,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(125,16)-(125,79)]"
+                                    "@value": "[(126,16)-(126,79)]"
                                   }
                                 ]
                               },
@@ -2077,7 +2101,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(124,14)-(126,15)]"
+                                    "@value": "[(125,14)-(127,15)]"
                                   }
                                 ]
                               }
@@ -2101,7 +2125,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(113,12)-(118,13)]"
+                                "@value": "[(114,12)-(119,13)]"
                               }
                             ]
                           },
@@ -2113,7 +2137,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(111,10)-(128,11)]"
+                                "@value": "[(112,10)-(129,11)]"
                               }
                             ]
                           },
@@ -2125,7 +2149,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(112,12)-(112,38)]"
+                                "@value": "[(113,12)-(113,38)]"
                               }
                             ]
                           }
@@ -2169,7 +2193,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(130,12)-(130,39)]"
+                                "@value": "[(131,12)-(131,39)]"
                               }
                             ]
                           },
@@ -2181,7 +2205,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(129,10)-(131,11)]"
+                                "@value": "[(130,10)-(132,11)]"
                               }
                             ]
                           }
@@ -2205,7 +2229,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(110,8)-(132,9)]"
+                            "@value": "[(111,8)-(133,9)]"
                           }
                         ]
                       },
@@ -2217,7 +2241,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(65,6)-(133,7)]"
+                            "@value": "[(65,6)-(134,7)]"
                           }
                         ]
                       },
@@ -2669,7 +2693,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(47,4)-(134,5)]"
+                        "@value": "[(47,4)-(135,5)]"
                       }
                     ]
                   },
@@ -2719,7 +2743,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(43,11)-(135,3)]"
+                    "@value": "[(43,11)-(136,3)]"
                   }
                 ]
               },
@@ -2779,7 +2803,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(136,1)]"
+                    "@value": "[(1,0)-(137,1)]"
                   }
                 ]
               },
