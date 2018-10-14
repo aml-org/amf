@@ -21,5 +21,9 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/parameters/multiple-formdata.yaml", OasProfile)
   }
 
+  test("Integer response code") {
+    checkValid("/response/integer-response-code.yaml", OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }
