@@ -31,14 +31,15 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         YMap.empty
     }
 
-    val fragment = (detectType() map {
-      case Oas20DocumentationItem         => DocumentationItemFragmentParser(map).parse()
-      case Oas20DataType                  => DataTypeFragmentParser(map).parse()
-      case Oas20ResourceType              => ResourceTypeFragmentParser(map).parse()
-      case Oas20Trait                     => TraitFragmentParser(map).parse()
-      case Oas20AnnotationTypeDeclaration => AnnotationFragmentParser(map).parse()
-      case Oas20SecurityScheme            => SecuritySchemeFragmentParser(map).parse()
-      case Oas20NamedExample              => NamedExampleFragmentParser(map).parse()
+    val fragment = (detectType() flatMap {
+      case Oas20DocumentationItem         => Some(DocumentationItemFragmentParser(map).parse())
+      case Oas20DataType                  => Some(DataTypeFragmentParser(map).parse())
+      case Oas20ResourceType              => Some(ResourceTypeFragmentParser(map).parse())
+      case Oas20Trait                     => Some(TraitFragmentParser(map).parse())
+      case Oas20AnnotationTypeDeclaration => Some(AnnotationFragmentParser(map).parse())
+      case Oas20SecurityScheme            => Some(SecuritySchemeFragmentParser(map).parse())
+      case Oas20NamedExample              => Some(NamedExampleFragmentParser(map).parse())
+      case _                              => None
     }).getOrElse {
       val fragment = ExternalFragment()
         .withLocation(root.location)
