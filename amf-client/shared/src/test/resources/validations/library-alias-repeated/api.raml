@@ -1,0 +1,11 @@
+#%RAML 1.0
+
+title: icare Portal API
+mediaType: application/json
+
+resourceTypes:
+  r1: !include res1.raml
+  r2: !include res2.raml
+
+/end:
+  type: {r1: {var: !include example.json}}

@@ -218,7 +218,8 @@ object ExtendsHelper {
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
           case (alias, (fullUrl, _)) =>
-            if (m.id == fullUrl) {
+            // If the library alias is already in the context, skip it
+            if (m.id == fullUrl && !ctx.declarations.libraries.exists(_._1 == alias)) {
               val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext())
               m.declares.foreach { declaration =>
                 processDeclaration(declaration, nestedCtx, m)

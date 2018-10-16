@@ -216,5 +216,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/shapes/recursive_shapes_fragments/api.raml")
   }
 
+  test("Libraries with repeated aliases") {
+    checkValid("/library-alias-repeated/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
