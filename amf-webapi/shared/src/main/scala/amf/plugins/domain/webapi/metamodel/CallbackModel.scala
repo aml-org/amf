@@ -2,7 +2,7 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.vocabulary.Namespace.{Http, Schema}
@@ -14,9 +14,9 @@ import amf.plugins.domain.webapi.models.Callback
   */
 object CallbackModel extends DomainElementModel with KeyField with NameFieldSchema {
 
-  val Expression = Field(Str, Http + "expression")
+  val Expression = Field(Str, Http + "expression", ModelDoc(ModelVocabularies.Http, "expression", "structural location of the information to fulfill the callback"))
 
-  val Endpoint = Field(EndPointModel, Http + "endpoint")
+  val Endpoint = Field(EndPointModel, Http + "endpoint", ModelDoc(ModelVocabularies.Http, "endpoint", "Endpoint targeted by the callback"))
 
   override val `type`: List[ValueType] = Http + "Callback" :: DomainElementModel.`type`
 
@@ -25,4 +25,10 @@ object CallbackModel extends DomainElementModel with KeyField with NameFieldSche
   override def modelInstance = Callback()
 
   override val key: Field = Name
+
+  override  val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.Http,
+    "Callback",
+    "Model defining the information for a HTTP callback/ webhook"
+  )
 }

@@ -72,11 +72,13 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
   def removeExtends(document: Document): BaseUnit = {
     document.encodes.asInstanceOf[WebApi].endPoints.foreach { endpoint =>
-      if (!keepEditingInfo)
+      if (!keepEditingInfo) {
         endpoint.fields.removeField(DomainElementModel.Extends)
+      }
       endpoint.operations.foreach { operation =>
-        if (!keepEditingInfo)
+        if (!keepEditingInfo) {
           operation.fields.removeField(DomainElementModel.Extends)
+        }
       }
     }
     document
@@ -180,7 +182,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             extensionId: String,
             extensionLocation: Option[String]): DomainElement = {
     cleanSynthesizedFacets(master)
-    overlay.fields.fields().filter(ignored).foreach {
+    overlay.fields.fields().filter(f => ignored(f,master)).foreach {
       case entry @ FieldEntry(field, value) =>
         master.fields.entry(field) match {
           case None if restrictions allowsNodeInsertionIn field =>
@@ -397,9 +399,10 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     }
   }
 
-  private def ignored(entry: FieldEntry) = entry.field match {
-    case Sources | BaseUnitModel.Usage | ExtensionLikeModel.Extends => false
-    case _                                                          => true
+  private def ignored(entry: FieldEntry, domainElement: DomainElement) = entry.field match {
+    case Sources | BaseUnitModel.Usage                                                => false
+    case ExtensionLikeModel.Extends if domainElement.isInstanceOf[ExtensionLikeModel] => false
+    case _                                                                            => true
   }
 
   def adoptInner(id: String, target: AmfElement): AmfElement = target match {
