@@ -22,10 +22,7 @@ class JsBrowserPlatform extends JsPlatform {
     throw new Exception(s"Unsupported tmpdir operation")
   }
 
-  override def operativeSystem(): String = {
-    // Accept in Node only
-    throw new Exception(s"Unsupported operativeSystem operation")
-  }
+  override def operativeSystem(): String = "web"
 
   override def resolvePath(path: String): String = path
 
