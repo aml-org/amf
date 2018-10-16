@@ -25,5 +25,9 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/response/integer-response-code.yaml", OasProfile)
   }
 
+  test("In body binding param") {
+    checkValid("/parameters/binding-body.json", OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }
