@@ -42,7 +42,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
   private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
-  private val aml_doc = "file://vocabularies/vocabularies/aml_doc.raml"
+  private val aml_doc = "file://vocabularies/vocabularies/aml_doc.yaml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
 
@@ -453,7 +453,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       val properties = declarations.collect { case prop: PropertyTerm => prop }
 
       assert(classes.size == 15)
-      assert(properties.size == 13)
+      assert(properties.size == 28)
     }
   }
 
