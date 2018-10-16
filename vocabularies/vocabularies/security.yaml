@@ -1,0 +1,182 @@
+#%Vocabulary 1.0
+base: http://a.ml/vocabularies/security#
+usage: Vocabulary for HTTP security information
+uses:
+  doc: aml_doc.yaml
+  data: data_model.yaml
+external:
+  schema-org: http://schema.org/
+  hydra: http://www.w3.org/ns/hydra/core#
+  shacl: http://www.w3.org/ns/shacl#
+classTerms:
+  SecurityScheme:
+    displayName: Security Scheme
+    description: Authentication and access control mechanism defined in an API
+    extends: doc.DomainElement
+    properties:
+      - name
+      - type
+      - schema-org.displayName
+      - schema-org.description
+      - hydra.response
+      - settings
+      - doc.link-target
+      - doc.link-label
+      - doc.recursive
+      - doc.extends
+  OpenIdConnectSettings:
+    displayName: OpenID Setings
+    description: Settings for an OpenID security scheme
+    extends:
+      - Settings
+      - doc.DomainElement
+    properties:
+      - openIdConnectUrl
+      - additionalProperties
+      - doc.extends
+  ParametrizedSecurityScheme:
+    displayName: Parametrized Security Scheme
+    extends: doc.DomainElement
+    properties:
+      - name
+      - scheme
+      - settings
+      - doc.extends
+  ApiKeySettings:
+    displayName: API Key Setings
+    description: Settings for an API Key security scheme
+    extends:
+      - Settings
+      - doc.DomainElement
+    properties:
+      - name
+      - in
+      - additionalProperties
+      - doc.extends
+  Scope:
+    displayName: Scope
+    extends: doc.DomainElement
+    properties:
+      - name
+      - description
+      - doc.extends
+  HttpSettings:
+    displayName: HTTP Setings
+    description: Settings for an HTTP security scheme
+    extends:
+      - Settings
+      - doc.DomainElement
+    properties:
+      - scheme
+      - bearerFormat
+      - additionalProperties
+      - doc.extends
+  Settings:
+    displayName: Settings
+    description: Settings for a security scheme
+    extends: doc.DomainElement
+    properties:
+      - additionalProperties
+      - doc.extends
+  OAuth2Settings:
+    displayName: OAuth2 Setings
+    description: Settings for an OAuth2 security scheme
+    extends:
+      - Settings
+      - doc.DomainElement
+    properties:
+      - authorizationUri
+      - accessTokenUri
+      - authorizationGrant
+      - flow
+      - refreshUri
+      - scope
+      - additionalProperties
+      - doc.extends
+  OAuth1Settings:
+    displayName: OAuth1 Setings
+    description: Settings for an OAuth1 security scheme
+    extends:
+      - Settings
+      - doc.DomainElement
+    properties:
+      - requestTokenUri
+      - authorizationUri
+      - tokenCredentialsUri
+      - signature
+      - additionalProperties
+      - doc.extends
+propertyTerms:
+  accessTokenUri:
+    displayName: access token URI
+    range: string
+  additionalProperties:
+    displayName: additional properties
+    range: data.Node
+  authorizationGrant:
+    displayName: authorization grant
+    range: string
+  authorizationUri:
+    displayName: authorization URI
+    range: string
+  bearerFormat:
+    displayName: bearer format
+    range: string
+  description:
+    displayName: description
+    description: Human readable description for the scope
+    extends: schema-org.description
+    range: string
+  flow:
+    displayName: flow
+    range: string
+  in:
+    displayName: in
+    range: string
+  name:
+    displayName: name
+    range: string
+  openIdConnectUrl:
+    displayName: OpenID connect URL
+    range: string
+  refreshUri:
+    displayName: refresh URI
+    range: string
+  requestTokenUri:
+    displayName: request token URI
+    range: string
+  scheme:
+    displayName: scheme
+    range: SecurityScheme
+  scope:
+    displayName: scope
+    range: Scope
+  settings:
+    displayName: settings
+    description: Security scheme settings
+    range: Settings
+  signature:
+    displayName: signature
+    range: string
+  tokenCredentialsUri:
+    displayName: token credentials URI
+    range: string
+  type:
+    displayName: type
+    description: Type of security scheme
+    range: string
+  schema-org.description:
+    displayName: description
+    description: Human readable description of an element
+    range: string
+  schema-org.displayName:
+    displayName: display name
+    description: Human readable name for an entity
+    range: string
+  hydra.response:
+    displayName: response
+    description: Response associated to this security scheme
+  security:
+    displayName: security
+    description: Security information associated to the endpoint
+    range: ParametrizedSecurityScheme

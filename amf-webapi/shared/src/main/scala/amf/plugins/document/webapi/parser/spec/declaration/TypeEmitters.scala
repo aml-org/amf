@@ -5,7 +5,7 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Bool
-import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
 import amf.core.model.domain.extensions.PropertyShape
@@ -19,12 +19,7 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{
-  OasTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlTypeDefMatcher,
-  RamlTypeDefStringValueMatcher
-}
+import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -1339,8 +1334,9 @@ abstract class OasShapeEmitter(shape: Shape,
     shape.annotations.find(classOf[NilUnion]) match {
       case Some(NilUnion(rangeString)) =>
         result += ValueEmitter("nullable",
-                               FieldEntry(Field(Bool, Namespace.Shapes + "nullable"),
-                                          Value(AmfScalar(true), Annotations(LexicalInformation(rangeString)))))
+                               FieldEntry(Field(Bool, Namespace.Shapes + "nullable", ModelDoc(ModelVocabularies.Shapes, "nullable", "This field can accept a null value")),
+                                          Value(AmfScalar(true),
+                                            Annotations(LexicalInformation(rangeString)))))
 
       case _ => // ignore
     }

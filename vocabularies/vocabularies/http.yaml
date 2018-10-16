@@ -1,0 +1,456 @@
+#%Vocabulary 1.0
+base: http://a.ml/vocabularies/http#
+usage: HTTP APIs vocabulary for AMF
+uses:
+  doc: aml_doc.yaml
+  data: data_model.yaml
+  security: security.yaml
+  meta: meta.yaml
+external:
+  schema-org: http://schema.org/
+  hydra: http://www.w3.org/ns/hydra/core#
+  shacl: http://www.w3.org/ns/shacl#
+classTerms:
+  Callback:
+    displayName: Callback
+    description: Model defining the information for a HTTP callback/ webhook
+    extends: doc.DomainElement
+    properties:
+      - schema-org.name
+      - expression
+      - endpoint
+      - doc.extends
+  Tag:
+    displayName: Tag
+    description: Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format.
+    extends: doc.DomainElement
+    properties:
+      - schema-org.name
+      - schema-org.description
+      - schema-org.externalDocs
+      - doc.extends
+  schema-org.CreativeWork:
+    displayName: Creative Work
+    description: he most generic kind of creative work, including books, movies, photographs, software programs, etc.
+    extends:
+      - doc.DomainElement
+      - doc.Linkable
+    properties:
+      - schema-org.url
+      - schema-org.title
+      - schema-org.description
+      - doc.extends
+      - doc.link-target
+      - doc.link-label
+      - doc.recursive
+  Server:
+    displayName: Server
+    description: Information about the network accessible locations where the API is available
+    extends: doc.DomainElement
+    properties:
+      - url
+      - schema-org.description
+      - variable
+      - doc.extends
+  schema-org.Organization:
+    displayName: Organization
+    description: Organization providing an API
+    extends: doc.DomainElement
+    properties:
+      - schema-org.url
+      - schema-org.name
+      - schema-org.email
+      - doc.extends
+  Response:
+    displayName: Response
+    description: Response information for an operation
+    extends:
+      - doc.DomainElement
+      - doc.Linkable
+    properties:
+      - doc.link-target
+      - doc.link-label
+      - doc.recursive
+      - schema-org.name
+      - schema-org.description
+      - hydra.statusCode
+      - header
+      - payload
+      - link
+      - doc.examples
+      - doc.extends
+  EndPoint:
+    displayName: EndPoint
+    description: EndPoint in the API holding a number of executable operations
+    extends: doc.DomainElement
+    properties:
+      - path
+      - schema-org.name
+      - schema-org.summary
+      - schema-org.description
+      - hydra.supportedOperation
+      - parameter
+      - payload
+      - server
+      - security.security
+      - doc.extends
+  hydra.Operation:
+    displayName: Operation
+    description: Action that can be executed using a particular HTTP invocation
+    extends: doc.DomainElement
+    properties:
+      - hydra.method
+      - schema-org.name
+      - schema-org.description
+      - doc.deprecated
+      - guiSummary
+      - schema-org.documentation
+      - scheme
+      - accepts
+      - contentType
+      - hydra.expects
+      - hydra.returns
+      - security.security
+      - tag
+      - callback
+      - server
+      - doc.extends
+  ShapeExtension:
+    displayName: Shape Extension
+    description: Custom extensions for a data shape definition inside an API definition
+    extends: doc.DomainElement
+    properties:
+      - doc.definedBy
+      - doc.extension
+      - doc.extends
+  Payload:
+    displayName: Payload
+    description: Encoded payload using certain media-type
+    extends:
+      - doc.DomainElement
+      - doc.Linkable
+    properties:
+      - schema-org.name
+      - mediaType
+      - schema
+      - example
+      - encoding
+      - doc.extends
+      - doc.link-target
+      - doc.link-label
+      - doc.recursive
+  Encoding:
+    displayName: Encoding
+    extends: doc.DomainElement
+    properties:
+      - propertyName
+      - contentType
+      - header
+      - style
+      - explode
+      - allowReserved
+      - doc.extends
+  schema-org.WebAPI:
+    displayName: Web API
+    description: Top level element describing a HTTP API
+    extends: doc.DomainElement
+    properties:
+      - schema-org.name
+      - schema-org.description
+      - server
+      - accepts
+      - contentType
+      - scheme
+      - schema-org.version
+      - schema-org.termsOfService
+      - schema-org.provider
+      - schema-org.license
+      - schema-org.documentation
+      - endpoint
+      - security.security
+      - tag
+      - doc.extends
+  Request:
+    displayName: Request
+    description: Request information for an operation
+    extends: doc.DomainElement
+    properties:
+      - schema-org.description
+      - required
+      - parameter
+      - header
+      - payload
+      - queryString
+      - uriParameter
+      - cookieParameter
+      - doc.extends
+  hydra.IriTemplateMapping:
+    displayName: Iri Template
+    extends: doc.DomainElement
+    properties:
+      - hydra.variable
+      - linkExpression
+      - doc.extends
+  hydra.TemplatedLink:
+    displayName: Templated Link
+    description: Templated link containing URL template and variables mapping
+    extends:
+      - doc.DomainElement
+      - doc.Linkable
+    properties:
+      - schema-org.name
+      - hydra.template
+      - operationId
+      - hydra.mapping
+      - requestBody
+      - schema-org.description
+      - server
+      - doc.extends
+      - doc.link-target
+      - doc.link-label
+      - doc.recursive
+  License:
+    displayName: License
+    description: Licensing information for an API
+    extends: doc.DomainElement
+    properties:
+      - schema-org.url
+      - schema-org.name
+      - doc.extends
+  Parameter:
+    displayName: Parameter
+    description: Piece of data required or returned by an Operation
+    extends:
+      - doc.DomainElement
+      - doc.Linkable
+    properties:
+      - schema-org.name
+      - paramName
+      - schema-org.description
+      - hydra.required
+      - doc.deprecated
+      - allowEmptyValue
+      - style
+      - explode
+      - allowReserved
+      - binding
+      - schema
+      - payload
+      - example
+      - doc.link-target
+      - doc.link-label
+      - doc.recursive
+      - doc.extends
+propertyTerms:
+  accepts:
+    displayName: accepts
+    description: Media-types accepted in a API request
+    range: string
+  allowEmptyValue:
+    displayName: allow empty value
+    description: Parameter can be passed without value
+    range: boolean
+  allowReserved:
+    displayName: allow reserved
+    range: boolean
+  binding:
+    displayName: binding
+    description: Part of the Request model where the parameter can be encoded (header, path, query param, etc.)
+    range: string
+  callback:
+    displayName: callback
+    description: associated callbacks
+    range: Callback
+  contentType:
+    displayName: content type
+    range: string
+  cookieParameter:
+    displayName: cookie parameter
+    range: Parameter
+  encoding:
+    displayName: encoding
+    range: Encoding
+  endpoint:
+    displayName: endpoint
+    description: Endpoint targeted by the callback
+    range: EndPoint
+  example:
+    displayName: example
+    description: Single example for a particular domain element
+    range: doc.Example
+  explode:
+    displayName: explode
+    range: boolean
+  expression:
+    displayName: expression
+    description: structural location of the information to fulfill the callback
+    range: string
+  guiSummary:
+    displayName: gui summary
+    description: Human readable description of the operation
+    extends: schema-org.description
+    range: string
+  header:
+    displayName: header
+    range: Parameter
+  link:
+    displayName: links
+    description: Structural definition of links on the source data shape AST
+    range: hydra.TemplatedLink
+  linkExpression:
+    displayName: link exprssion
+    description: OAS 3 link expression
+    range: string
+  mediaType:
+    displayName: mediaType
+    description: Media type associated to the encoded fragment information
+    range: string
+  operationId:
+    displayName: operation ID
+    description: Identifier of the target operation
+    range: string
+  paramName:
+    displayName: param name
+    description: Name of a parameter
+    extends: schema-org.name
+    range: string
+  parameter:
+    displayName: parameter
+    description: Additional data required or returned by an operation
+    range: Parameter
+  path:
+    displayName: path
+    description: Path template for an endpoint
+    range: string
+  payload:
+    displayName: payload
+    description: Main payload data required or returned by an operation
+    range: Payload
+  propertyName:
+    displayName: property name
+    range: string
+  queryString:
+    displayName: query string
+    description: Query string associated to this security scheme
+    range: shacl.Shape
+  requestBody:
+    displayName: request body
+    range: string
+  required:
+    displayName: required
+    range: boolean
+  schema:
+    displayName: schema
+    description: Schema associated to this payload
+    range: shacl.Shape
+  scheme:
+    displayName: scheme
+    description: URI scheme for the API protocol
+    range: string
+  server:
+    displayName: servers
+    description: Specific information about the server where the endpoint is accessible
+    range: Server
+  style:
+    displayName: style
+    range: string
+  tag:
+    displayName: tag
+    description: Additionally custom tagged information
+    range: string
+  uriParameter:
+    displayName: uri parameter
+    range: Parameter
+  url:
+    displayName: url
+    description: URL for the server
+    range: string
+  variable:
+    displayName: variable
+    description: Variables in the URL for the server
+    range: Parameter
+  schema-org.description:
+    displayName: description
+    description: Human readable description of an element
+    range: string
+  schema-org.documentation:
+    displayName: documentation
+    description: Documentation for a particular part of the model
+    range: schema-org.CreativeWork
+  schema-org.email:
+    displayName: email
+    description: Contact email for the organization
+    range: string
+  schema-org.externalDocs:
+    displayName: external docs
+    description: Documentation about the tag
+    range: schema-org.CreativeWork
+  schema-org.license:
+    displayName: license
+    description: License for the API
+    range: License
+  schema-org.name:
+    displayName: name
+    description: Name of the shape
+    range: string
+  schema-org.provider:
+    displayName: provider
+    description: The API provider
+    range: schema-org.Organization
+  schema-org.summary:
+    displayName: summary
+    description: Human readable description of the endpoint
+    extends: schema-org.description
+    range: string
+  schema-org.termsOfService:
+    displayName: terms of service
+    description: Terms and conditions when using the API
+    range: string
+  schema-org.title:
+    displayName: title
+    description: Title of the creative work
+    range: string
+  schema-org.url:
+    displayName: url
+    description: URL identifying the organization
+    range: uri
+  schema-org.version:
+    displayName: version
+    description: Version of the API
+    range: string
+  hydra.expects:
+    displayName: expects
+    description: Request information required by the operation
+    range: Request
+  hydra.mapping:
+    displayName: mapping
+    description: Variable mapping for the URL template
+    range: hydra.IriTemplateMapping
+  hydra.method:
+    displayName: method
+    description: HTTP method required to invoke the operation
+    range: string
+  hydra.required:
+    displayName: required
+    description: Marks the parameter as required
+    range: boolean
+  hydra.returns:
+    displayName: returns
+    description: Response data returned by the operation
+    range: Response
+  hydra.statusCode:
+    displayName: status code
+    description: HTTP status code returned by a response
+    range: string
+  hydra.supportedOperation:
+    displayName: supported operation
+    description: Operations supported by an endpoint
+    range: hydra.Operation
+  hydra.template:
+    displayName: template
+    description: URL template for a templated link
+    range: string
+  hydra.variable:
+    displayName: variable
+    description: Variable defined inside an URL tempplate
+    range: string

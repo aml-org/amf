@@ -2,7 +2,7 @@ package amf.core.model.domain
 
 import amf.core.annotations.{DataNodePropertiesAnnotations, LexicalInformation, ScalarType}
 import amf.core.metamodel.Type.{Array, EncodedIri, Str}
-import amf.core.metamodel.domain.DataNodeModel
+import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.DataNodeModel._
 import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
@@ -104,7 +104,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
   override def dynamicFields: List[Field] =
     this.properties.keys.toSeq.sorted
       .map({ p =>
-        Field(DataNodeModel, Namespace.Data + p)
+        Field(DataNodeModel, Namespace.Data + p, ModelDoc(ModelVocabularies.Data, p, ""))
       })
       .toList ++ DataNodeModel.fields
 
@@ -186,7 +186,7 @@ class ScalarNode(var value: String,
                  val annotations: Annotations)
     extends DataNode(annotations) {
 
-  val Value: Field = Field(Str, Namespace.Data + "value")
+  val Value: Field = ScalarNodeModel.Value
 
   override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields
 
@@ -239,7 +239,7 @@ object ScalarNode {
   */
 class ArrayNode(override val fields: Fields, val annotations: Annotations) extends DataNode(annotations) {
 
-  val Member: Field = Field(Array(DataNodeModel), Namespace.Rdf + "member")
+  val Member: Field = ArrayNodeModel.Member
 
   var members: ListBuffer[DataNode] = ListBuffer()
 
@@ -275,7 +275,7 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
 
   def positionFields(): Seq[Field] = members.zipWithIndex.map {
     case (_, i) =>
-      Field(EncodedIri, Namespace.Data + s"pos$i")
+      Field(EncodedIri, Namespace.Data + s"pos$i", ModelDoc(ModelVocabularies.Data, s"pos$i", ""))
   }
 }
 
@@ -300,8 +300,8 @@ object ArrayNode {
 class LinkNode(var alias: String, var value: String, override val fields: Fields, val annotations: Annotations)
     extends DataNode(annotations) {
 
-  val Value: Field                               = Field(Str, Namespace.Data + "value")
-  val Alias: Field                               = Field(Str, Namespace.Data + "alias")
+  val Value: Field                               = Field(Str, Namespace.Data + "value", ModelDoc(ModelVocabularies.Data, "value", ""))
+  val Alias: Field                               = Field(Str, Namespace.Data + "alias", ModelDoc(ModelVocabularies.Data, "alias", ""))
   var linkedDomainElement: Option[DomainElement] = None
 
   override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields

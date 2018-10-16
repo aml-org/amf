@@ -176,6 +176,25 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
 lazy val clientJVM = client.jvm.in(file("./amf-client/jvm"))
 lazy val clientJS  = client.js.in(file("./amf-client/js"))
 
+/** **********************************************
+  * AMF Tools
+  ********************************************** */
+lazy val tools = crossProject(JVMPlatform)
+  .settings(Seq(
+    name := "amf-tools",
+    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
+  .dependsOn(core, webapi, vocabularies, validation)
+  .in(file("./amf-tools"))
+  .settings(settings: _*)
+  .jvmSettings(
+    libraryDependencies += "org.reflections" % "reflections" % "0.9.11",
+    mainClass in Compile := Some("amf.VocabularyExporter"),
+    mainClass in assembly := Some("amf.VocabularyExporter"),
+    assemblyOutputPath in assembly := file(s"./amf-${version.value}.jar")
+  )
+
+lazy val toolsJVM = tools.jvm.in(file("./amf-tools/jvm"))
+
 // Tasks
 
 val buildJS = TaskKey[Unit](

@@ -22,21 +22,26 @@
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
+        "http://test.com/tmp#date": [
+          {
+            "@value": "2017-09-18",
+            "@type": "http://www.w3.org/2001/XMLSchema#date"
+          }
+        ],
         "http://test.com/tmp#str": [
           {
             "@value": "hey"
+          }
+        ],
+        "http://test.com/tmp#float": [
+          {
+            "@value": 12.35
           }
         ],
         "http://test.com/tmp#timestamp": [
           {
             "@value": "2018-08-30T09:00:00Z",
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-          }
-        ],
-        "http://test.com/tmp#date": [
-          {
-            "@value": "2017-09-18",
-            "@type": "http://www.w3.org/2001/XMLSchema#date"
           }
         ],
         "http://test.com/tmp#int": [
@@ -47,11 +52,6 @@
         "http://test.com/tmp#boolean": [
           {
             "@value": true
-          }
-        ],
-        "http://test.com/tmp#float": [
-          {
-            "@value": 12.35
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
