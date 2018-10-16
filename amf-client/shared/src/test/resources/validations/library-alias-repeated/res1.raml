@@ -1,0 +1,10 @@
+#%RAML 1.0 ResourceType
+
+uses:
+  lib: lib1.raml
+
+post:
+  body:
+    application/json:
+      type: lib.ROOT
+      example: <<var>>

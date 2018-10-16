@@ -1,0 +1,20 @@
+#%RAML 1.0 Library
+
+types:
+  ATTRIBUTES:
+    type: object
+  DATA:
+    type: object
+    properties:
+      attributes:
+        type: ATTRIBUTES
+        required: true
+      type:
+        type: string
+        required: true
+  ROOT:
+    type: object
+    properties:
+      data:
+        type: DATA
+        required: true
