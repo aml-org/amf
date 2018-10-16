@@ -80,7 +80,7 @@
                         ],
                         "http://a.ml/vocabularies/http#binding": [
                           {
-                            "@value": "query"
+                            "@value": "qu"
                           }
                         ],
                         "http://a.ml/vocabularies/http#schema": [
@@ -229,7 +229,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(25,12)-(25,22)]"
+                                    "@value": "[(25,18)-(25,22)]"
                                   }
                                 ]
                               }
@@ -252,7 +252,7 @@
                         ],
                         "http://a.ml/vocabularies/http#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -266,7 +266,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#property": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody/property/p1",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody/property/p1",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -279,7 +279,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody/property/p1/scalar/p1",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody/property/p1/scalar/p1",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -298,7 +298,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody/property/p1/scalar/p1/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody/property/p1/scalar/p1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -306,7 +306,7 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody/property/p1/scalar/p1"
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody/property/p1/scalar/p1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -332,7 +332,7 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody/property/p1/scalar/p1"
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody/property/p1/scalar/p1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -358,7 +358,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody/property/p1/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody/property/p1/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -366,7 +366,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody/property/p1"
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody/property/p1"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -387,20 +387,20 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(13,18)-(13,22)]"
+                                        "@value": "[(15,14)-(15,20)]"
                                       }
                                     ]
                                   }
@@ -414,14 +414,14 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(12,20)-(12,28)]"
+                                        "@value": "[(12,12)-(12,28)]"
                                       }
                                     ]
                                   },
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody"
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -439,20 +439,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(16,14)-(20,15)]"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyBody/default/MyBody"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(15,14)-(15,20)]"
                                       }
                                     ]
                                   }
@@ -514,7 +500,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(12,20)-(12,28)]"
+                                    "@value": "[(12,12)-(12,28)]"
                                   }
                                 ]
                               }

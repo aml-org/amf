@@ -1,9 +1,10 @@
 #%RAML 1.0
 (amf-parameters):
   a:
+    name: b
     required: true
+    in: path
     type: string
-    (amf-binding): path
 title: test
 version: "1.0"
 /a/{a}:

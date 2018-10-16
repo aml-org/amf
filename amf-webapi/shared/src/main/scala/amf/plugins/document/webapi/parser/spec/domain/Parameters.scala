@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.plugins.document.webapi.annotations.FormBodyParameter
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import org.yaml.model.YPart
 
@@ -63,16 +65,34 @@ object Parameters {
   }
 }
 
-case class OasParameter(parameter: Parameter, payload: Payload, ast: Option[YPart] = None) {
-  def isFormData: Boolean = parameter.isForm
-  def isBody: Boolean     = parameter.isBody
-  def isQuery: Boolean    = parameter.isQuery
-  def isPath: Boolean     = parameter.isPath
-  def isHeader: Boolean   = parameter.isHeader
+/**
+  * I need to be sure that always i will have either a param or a payload.
+  */
+class OasParameter(element: Either[Parameter, Payload], val ast: Option[YPart] = None) {
 
-  def hasInvalidBinding: Boolean = !isFormData && !isBody && !isQuery && !isPath && !isHeader
+  val isFormData: Boolean = element.right.toOption.exists(
+    p =>
+      (p.isLink && p.effectiveLinkTarget.annotations.contains(classOf[FormBodyParameter])) || p.annotations.contains(
+        classOf[FormBodyParameter]))
+  val isBody: Boolean             = element.isRight && !isFormData
+  private val paramOption         = element.left.toOption
+  def query: Option[Parameter]    = paramOption.filter(_.isQuery)
+  def path: Option[Parameter]     = paramOption.filter(_.isPath)
+  def header: Option[Parameter]   = paramOption.filter(_.isHeader)
+  def invalids: Option[Parameter] = paramOption.filter(p => !p.isQuery && !p.isHeader && !p.isPath)
+
+  def formData: Option[Payload] = if (isFormData) element.right.toOption else None
+  def body: Option[Payload]     = if (!isFormData) element.right.toOption else None
+
+  val domainElement: DomainElement with Linkable with NamedDomainElement = element match {
+    case Left(p)  => p
+    case Right(p) => p
+  }
 }
 
 object OasParameter {
-  def apply(ast: YPart): OasParameter = OasParameter(Parameter(ast), Payload(ast), Some(ast))
+  def apply(parameter: Parameter, ast: Option[YPart]): OasParameter = new OasParameter(Left(parameter), ast)
+  def apply(parameter: Parameter): OasParameter                     = OasParameter(parameter, None)
+  def apply(payload: Payload, ast: Option[YPart]): OasParameter     = new OasParameter(Right(payload), ast)
+  def apply(payload: Payload): OasParameter                         = OasParameter(payload, None)
 }

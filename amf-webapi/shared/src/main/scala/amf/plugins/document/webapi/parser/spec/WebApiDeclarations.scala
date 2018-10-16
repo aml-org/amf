@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec
 
+import amf.core.annotations.DeclaredElement
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.parser.{
@@ -14,6 +15,7 @@ import amf.core.parser.{
 }
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
+import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
@@ -105,6 +107,9 @@ class WebApiDeclarations(val alias: Option[String],
       case p: Parameter =>
         futureDeclarations.resolveRef(aliased(p.name.value()), p)
         parameters = parameters + (p.name.value() -> p)
+      case p: Payload =>
+        futureDeclarations.resolveRef(aliased(p.name.value()), p)
+        payloads = payloads + (p.name.value() -> p)
       case ss: SecurityScheme =>
         futureDeclarations.resolveRef(aliased(ss.name.value()), ss)
         securitySchemes = securitySchemes + (ss.name.value() -> ss)
@@ -132,9 +137,9 @@ class WebApiDeclarations(val alias: Option[String],
     case _                  => super.findEquivalent(element)
   }
 
-  def registerParameter(parameter: Parameter, payload: Payload): Unit = {
-    parameters = parameters + (parameter.name.value() -> parameter)
-    payloads = payloads + (parameter.name.value()     -> payload)
+  def registerOasParameter(oasParameter: OasParameter): Unit = {
+    oasParameter.domainElement.add(DeclaredElement())
+    this += oasParameter.domainElement
   }
 
   def parameterPayload(parameter: Parameter): Payload = payloads(parameter.name.value())
@@ -155,7 +160,7 @@ class WebApiDeclarations(val alias: Option[String],
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values ++ responses.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -168,6 +173,11 @@ class WebApiDeclarations(val alias: Option[String],
   def findParameter(key: String, scope: SearchScope.Scope): Option[Parameter] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].parameters, scope) collect {
       case p: Parameter => p
+    }
+
+  def findPayload(key: String, scope: SearchScope.Scope): Option[Payload] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].payloads, scope) collect {
+      case p: Payload => p
     }
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =

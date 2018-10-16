@@ -10,7 +10,6 @@
         "parameters": [
           {
             "name": "MyBody",
-            "in": "bo",
             "schema": {
               "type": "object",
               "properties": {
@@ -18,7 +17,8 @@
                   "type": "string"
                 }
               }
-            }
+            },
+            "in": "bo"
           },
           {
             "name": "MyQuery",

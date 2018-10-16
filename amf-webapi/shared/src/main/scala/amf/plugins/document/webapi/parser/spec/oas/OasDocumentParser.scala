@@ -619,20 +619,15 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .entries
           .foreach(e => {
             val typeName = e.key
-            val oasParameter = e.value.to[YMap] match {
+            val oasParameter: domain.OasParameter = e.value.to[YMap] match {
               case Right(m) => OasParameterParser(Left(e), parentPath, Some(typeName)).parse()
               case _ =>
                 val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName)).parse()
-                ctx.violation(parameter.parameter.id, "Map needed to parse a parameter declaration", e)
+                ctx.violation(parameter.domainElement.id, "Map needed to parse a parameter declaration", e)
                 parameter
             }
-            val parameter = oasParameter.parameter.add(DeclaredElement())
-            if (Option(oasParameter.payload).isDefined && Option(oasParameter.payload.schema).isDefined) {
-              parameter.withSchema(oasParameter.payload.schema)
-            }
-            if (parameter.fields.exists(ParameterModel.Binding))
-              parameter.fields.getValue(ParameterModel.Binding).annotations += ExplicitField()
-            ctx.declarations.registerParameter(parameter, oasParameter.payload)
+            ctx.declarations.registerOasParameter(oasParameter)
+
           })
       }
     )
@@ -789,15 +784,4 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
             }
       })
   }
-}
-
-case class OasParameter(parameter: Parameter, payload: Payload) {
-  def isBody: Boolean   = parameter.isBody
-  def isQuery: Boolean  = parameter.isQuery
-  def isPath: Boolean   = parameter.isPath
-  def isHeader: Boolean = parameter.isHeader
-}
-
-object OasParameter {
-  def apply(ast: YMap): OasParameter = OasParameter(Parameter(ast), Payload(ast))
 }

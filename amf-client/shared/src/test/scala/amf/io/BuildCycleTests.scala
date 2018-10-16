@@ -27,7 +27,15 @@ trait BuildCycleTests extends FileAssertionTest {
   def basePath: String
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, hint: Hint): Future[Assertion] = cycle(source, hint, basePath)
+  def cycle(source: String, hint: Hint, syntax: Option[Syntax]): Future[Assertion] =
+    cycle(source, hint, basePath, syntax)
+
+  /** Compile source with specified hint. Dump to target and assert against same source file. */
+  def cycle(source: String, hint: Hint): Future[Assertion] = cycle(source, hint, basePath, None)
+
+  /** Compile source with specified hint. Dump to target and assert against same source file. */
+  def cycle(source: String, hint: Hint, directory: String, syntax: Option[Syntax]): Future[Assertion] =
+    cycle(source, source, hint, hint.vendor, directory, None, syntax = syntax)
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String): Future[Assertion] =

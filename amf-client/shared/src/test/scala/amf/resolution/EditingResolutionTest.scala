@@ -126,7 +126,7 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   }
 
   ignore("Github API resolution to Raml") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "github-api-1.0.0-raml/")
+    cycle("api.raml", "api.yaml.jsonld", RamlYamlHint, Amf, productionPath + "github-api-1.0.0-raml/")
   }
 
   test("Google API resolution to Raml") {
@@ -134,7 +134,7 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   }
 
   test("Financial API resolution to Raml") {
-    cycle("infor-financial-api.raml", "infor-financial-api.jsonld", RamlYamlHint, Amf, productionPath + "financial-api/")
+    cycle("infor-financial-api.raml", "infor-financial-api.yaml.jsonld", RamlYamlHint, Amf, productionPath + "financial-api/")
   }
    */
 

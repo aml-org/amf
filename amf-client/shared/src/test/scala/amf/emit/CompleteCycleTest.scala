@@ -579,12 +579,12 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   ignore("Test api_6109_ver_10147 example raml to amf") {
-    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "api_6109_ver_10147/")
+    cycle("api.raml", "api.yaml.jsonld", RamlYamlHint, Amf, productionPath + "api_6109_ver_10147/")
   }
 
   ignore("Test suez-delivery-collection example raml to amf") {
     cycle("api.raml",
-          "api.jsonld",
+          "api.yaml.jsonld",
           RamlYamlHint,
           Amf,
           productionPath + "s-suez-delivery-collection-api-1.0.0-fat-raml/")
@@ -677,6 +677,14 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   /**
   * Please do not add more test for raml to raml or to jsonld in here. You can use Raml10CycleTestByDirectory or Raml08CycleTestByDirectory.
   * Check CycleTestByDirectory for information off how to use.
+  *
+  * Raml10 to raml10 -> Raml10CycleTestByDirectory suit
+  * Raml08 to Raml08 -> Raml08CycleTestByDirectory suit
+  * Production :
+  *   * Raml10 to raml10 -> ProductionRaml10CycleTestByDirectory suit
+  *   * Raml08 to Raml08 -> ProductionRaml08CycleTestByDirectory suit
+  *
+  * Oas20 to Oas20 -> Oas20CycleTestByDirectory
   */
 
 }

@@ -231,26 +231,6 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
 
   implicit val ctx: RamlWebApiContext
 
-  override def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {
-    map.key(
-      key,
-      entry => {
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val parameter =
-              Raml10ParameterParser(e, (p: Parameter) => p.adopted(parentPath)).parse()
-            if (parameter.binding.isNullOrEmpty) {
-              ctx.violation(parameter.id, "Missing binding information in declared parameter", entry.value)
-            }
-            ctx.declarations.registerParameter(parameter.add(DeclaredElement()),
-                                               Payload().withSchema(parameter.schema))
-          })
-      }
-    )
-  }
-
   override protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
     map.key(
       "securitySchemes",
@@ -409,7 +389,28 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
     types.orElse(schemas)
   }
 
-  def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit
+  protected def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+    map.key(
+      key,
+      entry => {
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            val typeName = e.key
+            val oasParameter: domain.OasParameter = e.value.to[YMap] match {
+              case Right(m) => OasParameterParser(Left(e), parentPath, Some(typeName))(toOas(ctx)).parse()
+              case _ =>
+                val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName))(toOas(ctx)).parse() // todo: links??
+
+                ctx.violation(parameter.domainElement.id, "Map needed to parse a parameter declaration", e)
+                parameter
+            }
+            ctx.declarations.registerOasParameter(oasParameter)
+          })
+      }
+    )
+  }
 
 }
 

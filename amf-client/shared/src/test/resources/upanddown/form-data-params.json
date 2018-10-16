@@ -12,17 +12,17 @@
         ],
         "parameters": [
           {
-            "in": "formData",
             "name": "userId",
             "type": "integer",
             "required": true,
-            "description": "some great description"
+            "description": "some great description",
+            "in": "formData"
           },
           {
-            "in": "formData",
             "name": "name",
             "type": "string",
-            "required": false
+            "required": false,
+            "in": "formData"
           }
         ],
         "responses": {}

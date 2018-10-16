@@ -2,7 +2,7 @@ package amf.plugins.domain.webapi.models
 
 import amf.core.metamodel.Obj
 import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
 import amf.plugins.domain.shapes.models.{ArrayShape, Example, NodeShape, ScalarShape}
@@ -13,7 +13,10 @@ import org.yaml.model.YPart
 /**
   * Payload internal model.
   */
-case class Payload(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+case class Payload(fields: Fields, annotations: Annotations)
+    extends DomainElement
+    with Linkable
+    with NamedDomainElement {
 
   def name: StrField          = fields.field(Name)
   def mediaType: StrField     = fields.field(MediaType)

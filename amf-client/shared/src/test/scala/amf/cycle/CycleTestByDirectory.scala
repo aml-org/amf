@@ -71,10 +71,10 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
   private def goldenCycle(name: String, f: String): Unit = {
     if (Fs.syncFile(basePath + "/" + f + ".ignore").exists)
       s"Cycle for golden: $name" ignore {
-        cycle(f + ".ignore", target)
+        cycle(f + ".ignore", target, Some(target.syntax))
       } else
       s"Cycle for golden: $name" in {
-        cycle(f, target)
+        cycle(f, target, Some(target.syntax))
       }
   }
 
@@ -84,7 +84,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
                                                       .exists) ".ignore"
                                                 else "")
     s"Simple cycle for $name" in {
-      cycle(name + "/api" + fileExtension, t, origin, target.vendor)
+      cycle(name + "/api" + fileExtension, t, origin, target.vendor, syntax = Some(target.syntax))
     }
   }
 
@@ -94,11 +94,11 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
     if (Fs.syncFile(basePath + "/" + o + ".ignore").exists) {
 
       s"Generate golden from jsonld for $name" ignore {
-        cycle(o + ".ignore", tar, AmfJsonHint, target.vendor)
+        cycle(o + ".ignore", tar, AmfJsonHint, target.vendor, syntax = Some(target.syntax))
       }
     } else {
       s"Generate golden from jsonld for $name" in {
-        cycle(o, tar, AmfJsonHint, target.vendor)
+        cycle(o, tar, AmfJsonHint, target.vendor, syntax = Some(target.syntax))
       }
     }
   }
@@ -106,11 +106,11 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
   private def specToAmfForAmf(name: String, f: String): Unit = {
     if (Fs.syncFile(basePath + "/" + f + ".ignore").exists) {
       s"Parse golden from jsonld for $name" ignore {
-        cycle(f + ".ignore", f + ".ignore", target, target.vendor)
+        cycle(f + ".ignore", f + ".ignore", target, target.vendor, syntax = Some(target.syntax))
       }
     } else {
       s"Parse golden from jsonld for $name" in {
-        cycle(f, f, target, target.vendor)
+        cycle(f, f, target, target.vendor, syntax = Some(target.syntax))
       }
     }
 

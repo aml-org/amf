@@ -45,6 +45,40 @@ object FormBodyParameter extends AnnotationGraphLoader {
   }
 }
 
+case class ParameterNameForPayload(paramName: String, range: Range)
+    extends SerializableAnnotation
+    with PerpetualAnnotation { // perpetual? after resolution i should have a normal payload
+  override val name: String  = "parameter-name-for-payload"
+  override val value: String = paramName + "->" + range.toString
+}
+
+object ParameterNameForPayload extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    annotatedValue.split("->") match {
+      case Array(req, range) =>
+        new ParameterNameForPayload(req, Range.apply(range))
+    }
+
+  }
+}
+
+case class RequiredParamPayload(required: Boolean, range: Range)
+    extends SerializableAnnotation
+    with PerpetualAnnotation { // perpetual? after resolution i should have a normal payload
+  override val name: String  = "required-param-payload"
+  override val value: String = required + "->" + range.toString
+}
+
+object RequiredParamPayload extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    annotatedValue.split("->") match {
+      case Array(req, range) =>
+        val required = if (req.equals("true")) true else false
+        new RequiredParamPayload(required, Range.apply(range))
+    }
+  }
+}
+
 case class LocalLinkPath(rawPath: String) extends SerializableAnnotation {
   override val name: String  = "local-link-path"
   override val value: String = rawPath

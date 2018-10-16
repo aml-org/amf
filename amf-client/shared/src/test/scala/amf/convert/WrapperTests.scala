@@ -742,9 +742,9 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
          |    get:
          |      parameters:
          |        -
-         |          name: someName
          |          x-amf-mediaType: application/json
          |          in: body
+         |          name: someName
          |          schema:
          |            $ref: "#/definitions/person"
          |      responses:
