@@ -442,7 +442,10 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
           case Some(payload) =>
             OasParameter(payload.link(refUrl, Annotations(map)).asInstanceOf[Payload], Some(ref))
           case None =>
-            val oasParameter = OasParameter(Parameter(), Some(ref))
+            val parameter = Parameter()
+            setName(parameter)
+            parameter.adopted(parentId)
+            val oasParameter = OasParameter(parameter, Some(ref))
             ctx.violation(s"Cannot find parameter or payload reference $refUrl", ref)
             oasParameter
         }

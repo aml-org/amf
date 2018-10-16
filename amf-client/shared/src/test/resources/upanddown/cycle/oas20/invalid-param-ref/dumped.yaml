@@ -1,0 +1,20 @@
+swagger: "2.0"
+info:
+  title: asd
+  version: asddd
+paths:
+  /resource:
+    get:
+      parameters:
+        -
+          name: default
+      responses: {}
+parameters:
+  p1:
+    in: query
+    type: string
+    name: p1
+  p2:
+    in: query
+    type: string
+    name: p2
