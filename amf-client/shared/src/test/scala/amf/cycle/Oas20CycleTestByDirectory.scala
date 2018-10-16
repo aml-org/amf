@@ -12,6 +12,8 @@ class Oas20CycleTestByDirectory extends CycleTestByDirectory {
   override def target: Hint          = OasYamlHint
   override def fileExtension: String = ".yaml"
 
+  override lazy val withEnableValidations: Seq[String] = Seq("multiple-form-data")
+
   override def basePath: String =
     "amf-client/shared/src/test/resources/upanddown/cycle/oas20/" // todo: move one level up
 }

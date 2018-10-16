@@ -381,7 +381,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape].adopted(payload.id)) // i dont need to set param need in here. Its necesary only for form data, because of the properties
+        OasTypeParser(entry, shape => setName(shape).asInstanceOf[Shape].adopted(payload.id)) // i don't need to set param need in here. Its necesary only for form data, because of the properties
           .parse()
           .map { schema =>
             checkNotFileInBody(schema)

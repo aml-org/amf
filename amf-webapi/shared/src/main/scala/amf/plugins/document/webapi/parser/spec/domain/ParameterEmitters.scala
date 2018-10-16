@@ -502,18 +502,18 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
                                             Value(AmfScalar(f.scalar.toNumber.intValue() != 0), f.scalar.annotations)),
                                  Some(Bool)))
 
-      val schema = property.range
+      Option(property.range).foreach { schema =>
+        val fs = schema.fields
 
-      val fs = schema.fields
+        fs.entry(ShapeModel.Name) match {
+          case Some(f) => result += ValueEmitter("name", f)
+          case None    => emitPayloadName(result)
+        }
 
-      fs.entry(ShapeModel.Name) match {
-        case Some(f) => result += ValueEmitter("name", f)
-        case None    => emitPayloadName(result)
+        result += MapEntryEmitter("in", "formData", position = bindingPos(schema))
+        result ++= OasTypeEmitter(schema, ordering, references = references).entries()
+        result ++= AnnotationsEmitter(payload, ordering).emitters
       }
-
-      result += MapEntryEmitter("in", "formData", position = bindingPos(schema))
-      result ++= OasTypeEmitter(schema, ordering, references = references).entries()
-      result ++= AnnotationsEmitter(payload, ordering).emitters
 
       traverse(ordering.sorted(result), b)
     }
