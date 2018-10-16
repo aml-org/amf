@@ -100,5 +100,5 @@ case class TrunkPlatform(content: String,
   override def normalizePath(url: String): String = url
 
   /** Return the OS (win, mac, nux). */
-  override def operativeSystem(): String = throw new Exception("Unsupported operativeSystem operation")
+  override def operativeSystem(): String = "trunk"
 }
