@@ -29,5 +29,9 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/parameters/binding-body.json", OasProfile)
   }
 
+  test("Valid media types") {
+    checkValid("/payloads/valid-media-types.json", OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

@@ -263,7 +263,7 @@ object AMFRawValidations {
       "PropertyShape",
       "sh:path",
       "sh:pattern",
-      "^\\w+\\/[-+.\\w]+$",
+      "^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))(\\s*;\\s*\\w+=[-+\\w.]+)*$",
       "Default media types must be valid",
       "Field 'produces' must be valid",
       "Violation"
@@ -705,7 +705,7 @@ object AMFRawValidations {
       "PropertyShape",
       "sh:path",
       "sh:pattern",
-      "^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))$|^text\\/\\w+; charset=[-\\w]+$",
+      "^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))(\\s*;\\s*\\w+=[-+\\w.]+)*$",
       "Invalid media type for method",
       "Swagger Operation object 'produces' must be a valid media type",
       "Violation"
