@@ -102,7 +102,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
 
   // Private lookup methods
 
-  private def findInEncodedModel(predicate: (DomainElement) => Boolean,
+  protected def findInEncodedModel(predicate: (DomainElement) => Boolean,
                                  encoder: BaseUnit,
                                  first: Boolean = false,
                                  acc: ListBuffer[DomainElement] = ListBuffer.empty: ListBuffer[DomainElement],
@@ -115,7 +115,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
     }
   }
 
-  private def findInDeclaredModel(predicate: (DomainElement) => Boolean,
+  protected def findInDeclaredModel(predicate: (DomainElement) => Boolean,
                                   encoder: BaseUnit,
                                   first: Boolean,
                                   acc: ListBuffer[DomainElement],
@@ -130,7 +130,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
 
   def findInReferences(id: String): Option[BaseUnit] = references.find(_.id == id)
 
-  private def findInReferencedModels(id: String,
+  protected def findInReferencedModels(id: String,
                                      units: Seq[BaseUnit],
                                      cycles: Set[String]): ListBuffer[DomainElement] = {
     if (units.isEmpty) {
@@ -145,7 +145,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
     }
   }
 
-  private def findModelByCondition(predicate: (DomainElement) => Boolean,
+  protected def findModelByCondition(predicate: (DomainElement) => Boolean,
                                    element: DomainElement,
                                    first: Boolean,
                                    acc: ListBuffer[DomainElement],
