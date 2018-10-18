@@ -5,9 +5,13 @@ import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.unsafe.PlatformSecrets
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
 import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFragmentModel, DialectInstanceLibraryModel, DialectInstanceModel, DialectInstancePatchModel}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, External}
+
+import scala.collection.mutable.ListBuffer
 
 trait ComposedInstancesSupport {
   var composedDialects: Map[String, Dialect] = Map()
@@ -20,7 +24,8 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
     with ExternalContext[DialectInstance]
     with DeclaresModel
     with EncodesModel
-    with ComposedInstancesSupport {
+    with ComposedInstancesSupport
+    with PlatformSecrets {
 
   override def meta: Obj = DialectInstanceModel
 
@@ -35,6 +40,25 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   def withDefinedBy(dialectId: String): DialectInstance        = set(DefinedBy, dialectId)
   def withGraphDependencies(ids: Seq[String]): DialectInstance = set(GraphDependencies, ids)
 
+  override def findById(id: String, cycles: Set[String]): Option[DomainElement] = {
+    AMLPlugin.registry.dialectFor(this) match {
+      case Some(dialect) =>
+        if (dialect.documents().selfEncoded().value()) { // avoid top level cycle
+          val predicate = { (element: DomainElement) =>
+            element.id == id
+          }
+          findModelByCondition(predicate, encodes, first = true, ListBuffer.empty, Set.empty).headOption.orElse(
+            findInDeclaredModel(predicate, this, first = true, ListBuffer.empty, cycles).headOption.orElse(
+              findInReferencedModels(id, this.references, cycles).headOption
+            )
+          )
+        } else {
+          super.findById(id, cycles)
+        }
+      case _             =>
+        super.findById(id, cycles)
+    }
+  }
   override def transform(selector: DomainElement => Boolean,
                          transformation: (DomainElement, Boolean) => Option[DomainElement]): BaseUnit = {
     val domainElementAdapter = (o: AmfObject) => {
