@@ -2,19 +2,20 @@ package amf.plugins.document.webapi.validation.remote
 
 import java.time.format.{DateTimeFormatter, DateTimeFormatterBuilder, DateTimeParseException}
 import java.util.Optional
+import java.util.regex.Pattern
 
 import amf.core.model.document.PayloadFragment
 import amf.core.validation.{AMFValidationResult, _}
 import amf.core.vocabulary.Namespace
-import com.google.common.collect.ImmutableList
 import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
 import org.everit.json.schema.loader.SchemaLoader
+import org.everit.json.schema.regexp._
 import org.everit.json.schema.{FormatValidator, ValidationException}
 import org.json.{JSONException, JSONObject, JSONTokener}
 
 class Rfc2616Attribute extends FormatValidator {
 
-  override def formatName = Rfc2616Attribute.name
+  override def formatName: String = Rfc2616Attribute.name
 
   override def validate(value: String): Optional[String] = {
     if (!value.matches(Rfc2616Attribute.pattern)) {
@@ -36,8 +37,7 @@ object Rfc2616AttributeLowerCase extends Rfc2616Attribute {
 }
 
 object DateTimeOnlyFormatValidator extends FormatValidator {
-  private val FORMATS_ACCEPTED = ImmutableList.of("yyyy-MM-ddTHH:mm:ss")
-  private var FORMATTER: DateTimeFormatter =
+  private val FORMATTER: DateTimeFormatter =
     new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd'T'HH:mm:ss").toFormatter
 
   override def formatName = "date-time-only"
@@ -54,7 +54,7 @@ object DateTimeOnlyFormatValidator extends FormatValidator {
 }
 
 object PartialTimeFormatValidator extends FormatValidator {
-  private var PATTERN = "^([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)$"
+  private val PATTERN = "^([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)$"
 
   override def formatName = "time"
 
@@ -85,11 +85,26 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
         println("\n\nValidating...")
         println("  - SCHEMA:")
         println(jsonSchema)
-        */
+         */
+
+        /**
+          * Hack: Manipulate regex so that it works the same as in js. Cases:
+          *
+          * 1) When using "[^]" this means match any character in js, but it is an error in jvm because an empty
+          *    negated (^) set is not allowed. We replace it with [\S\s] which is the same, it means any character.
+          */
+        case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
+          override def createHandler(regexp: String): Regexp = {
+            /* 1) */
+            val str = regexp.replaceAll("\\[\\^\\]", "[\\\\S\\\\s]")
+            super.createHandler(str)
+          }
+        }
 
         val schemaBuilder = SchemaLoader
           .builder()
           .schemaJson(schemaNode)
+          .regexpFactory(CustomJavaUtilRegexpFactory())
           .addFormatValidator(DateTimeOnlyFormatValidator)
           .addFormatValidator(Rfc2616Attribute)
           .addFormatValidator(Rfc2616AttributeLowerCase)
@@ -184,4 +199,19 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
   }
 
   protected def loadJson(text: String): LoadedObj = new JSONTokener(text).nextValue()
+}
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    val pattern = Pattern.compile("(([0-9A-Z]+)([_]?+)*)*")
+    pattern.matcher("FOOOOO_BAAAR_FOOOOOOOOO_BA_ ").matches
+
+    val s = "^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$"
+    val javaOne = Pattern
+      .compile(s)
+      .matcher(
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Marlon_Brando_%28cropped%29.jpg/220px-Marlon_Brando_%28cropped%29.jpg")
+      .find()
+    println(javaOne)
+  }
 }

@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.OasProfile
-import amf.core.remote.{Hint, OasJsonHint}
+import amf.core.remote.{Hint, OasJsonHint, RamlYamlHint}
 
 class ValidOasModelParserTest extends ValidModelTest {
 
@@ -31,6 +31,10 @@ class ValidOasModelParserTest extends ValidModelTest {
 
   test("Valid media types") {
     checkValid("/payloads/valid-media-types.json", OasProfile)
+  }
+
+  test("Hack in pattern facet to validate correctly in jvm and js") {
+    checkValid("/pattern/pattern-with-hack.yaml", OasProfile)
   }
 
   override val hint: Hint = OasJsonHint
