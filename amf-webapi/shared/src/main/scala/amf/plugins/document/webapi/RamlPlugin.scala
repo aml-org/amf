@@ -6,7 +6,16 @@ import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
-import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParsedDocument, ParserContext, RefContainer, SyamlParsedDocument}
+import amf.core.parser.{
+  EmptyFutureDeclarations,
+  LinkReference,
+  ParsedDocument,
+  ParsedReference,
+  ParserContext,
+  RefContainer,
+  Reference,
+  SyamlParsedDocument
+}
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
@@ -16,7 +25,12 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
-import amf.plugins.document.webapi.resolution.pipelines.{Raml08EditingPipeline, Raml08ResolutionPipeline, Raml10EditingPipeline, Raml10ResolutionPipeline}
+import amf.plugins.document.webapi.resolution.pipelines.{
+  Raml08EditingPipeline,
+  Raml08ResolutionPipeline,
+  Raml10EditingPipeline,
+  Raml10ResolutionPipeline
+}
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
@@ -43,10 +57,9 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
                      platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
 
-    inlineExternalReferences(root)
-
     val updated = context(parentContext, root)
-    val clean   = cleanContext(parentContext, root)
+    inlineExternalReferences(root, updated)
+    val clean = cleanContext(parentContext, root)
 
     RamlHeader(root) flatMap { // todo review this, should we use the raml web api context for get the version parser?
 
@@ -64,10 +77,10 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
     }
   }
 
-  private def inlineExternalReferences(root: Root): Unit = {
+  private def inlineExternalReferences(root: Root, ctx: ParserContext): Unit = {
     root.references.foreach { ref =>
       ref.unit match {
-        case e: ExternalFragment => inlineFragment(ref.origin.refs, ref.ast, e.encodes)
+        case e: ExternalFragment => inlineFragment(ref.origin.refs, ref.ast, e.encodes, ref.unit.references, ctx)
         case _                   =>
       }
     }
@@ -75,10 +88,13 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
 
   private def inlineFragment(origins: Seq[RefContainer],
                              document: Option[YNode],
-                             encodes: ExternalDomainElement): Unit = {
+                             encodes: ExternalDomainElement,
+                             elementRef: Seq[BaseUnit],
+                             ctx: ParserContext): Unit = {
     origins.foreach { refContainer =>
       refContainer.node match {
         case mut: MutRef =>
+          elementRef.foreach(u => ctx.addSonRef(u))
           document match {
             case None => mut.target = Some(YNode(encodes.raw.value()))
             case _    => mut.target = document
@@ -148,7 +164,10 @@ object Raml08Plugin extends RamlPlugin {
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
-    new Raml08WebApiContext(root.location, root.references, wrapped, ds.map(d => RamlWebApiDeclarations(d)))
+    new Raml08WebApiContext(root.location,
+                            root.references ++ wrapped.refs,
+                            wrapped,
+                            ds.map(d => RamlWebApiDeclarations(d)))
 
   def specContext: RamlSpecEmitterContext = new Raml08SpecEmitterContext
 
@@ -164,7 +183,6 @@ object Raml08Plugin extends RamlPlugin {
 }
 
 object Raml10Plugin extends RamlPlugin {
-
 
   override protected def vendor: Vendor = amf.core.remote.Raml10
 
@@ -213,7 +231,10 @@ object Raml10Plugin extends RamlPlugin {
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
-    new Raml10WebApiContext(root.location, root.references, wrapped, ds.map(d => RamlWebApiDeclarations(d)))
+    new Raml10WebApiContext(root.location,
+                            root.references ++ wrapped.refs,
+                            wrapped,
+                            ds.map(d => RamlWebApiDeclarations(d)))
 
   def specContext: RamlSpecEmitterContext = new Raml10SpecEmitterContext
 

@@ -133,5 +133,17 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/types/inline-union-inheritance2.raml", None)
   }
 
+  test("Test inner reference inside json schema") {
+    checkReport("/json-inner-ref/case1/api.raml", None)
+  }
+
+  test("Test example and jsonschema with same name in diff folder") {
+    checkReport("/json-inner-ref/repeat-file-folder/api.raml", None)
+  }
+
+  test("Test ref in root at json schema with other ref") {
+    checkReport("/json-inner-ref/ref-in-root-jsonschema/api.raml", None)
+  }
+
   override val hint: Hint = RamlYamlHint
 }

@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "$schema": "http://json-schema.org/draft-04/schema",
+    "additionalProperties": false,
+    "properties": {
+        "contacts": {
+            "type": "array",
+            "id": "#contacts",
+            "items": {
+                "$ref": "contact.json#"
+            }
+        }
+    },
+    "additionalProperties" : false,
+    "required": [
+        "contacts"
+    ]
+}

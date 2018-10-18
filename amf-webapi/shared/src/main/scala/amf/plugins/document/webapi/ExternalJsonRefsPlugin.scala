@@ -4,7 +4,15 @@ import amf.core.Root
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
-import amf.core.parser.{InferredLinkReference, LinkReference, ParsedDocument, ParserContext, ReferenceCollector, ReferenceHandler, SyamlParsedDocument}
+import amf.core.parser.{
+  InferredLinkReference,
+  LinkReference,
+  ParsedDocument,
+  ParserContext,
+  ReferenceCollector,
+  ReferenceHandler,
+  SyamlParsedDocument
+}
 import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.client.ParsingOptions
 import amf.core.remote.Platform
@@ -35,10 +43,13 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
   }
 
   def links(part: YPart, ctx: ParserContext): Unit = {
-    part match {
-      case map: YMap if map.map.get("$ref").isDefined => collectRef(map, ctx)
-      case _                                          => part.children.foreach(c => links(c, ctx))
+    val childrens = part match {
+      case map: YMap if map.map.get("$ref").isDefined =>
+        collectRef(map, ctx)
+        part.children.filter(c => c != map.entries.find(_.key.as[YScalar].text == "$ref").get)
+      case _ => part.children
     }
+    childrens.foreach(c => links(c, ctx))
   }
 
   private def collectRef(map: YMap, ctx: ParserContext): Unit = {
@@ -78,11 +89,17 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, ctx: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = document.parsed match {
+  override def parse(document: Root,
+                     ctx: ParserContext,
+                     platform: Platform,
+                     options: ParsingOptions): Option[BaseUnit] = document.parsed match {
 
     case parsed: SyamlParsedDocument =>
       val result =
-        ExternalDomainElement().withId(document.location + "#/").withRaw(document.raw).withMediaType("application/json")
+        ExternalDomainElement()
+          .withId(document.location + "#/")
+          .withRaw(document.raw)
+          .withMediaType("application/json")
       result.parsed = Some(parsed.document.node)
       val references = document.references.map(_.unit)
       val fragment = ExternalFragment()
@@ -93,7 +110,7 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
       if (references.nonEmpty) fragment.withReferences(references)
       Some(fragment)
 
-    case _                           =>
+    case _ =>
       None
   }
 

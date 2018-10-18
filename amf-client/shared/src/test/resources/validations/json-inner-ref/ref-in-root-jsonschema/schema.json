@@ -1,0 +1,16 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"$ref": "#/definitions/Root",
+	"definitions": {
+		"Root": {
+			"type": "object",
+			"properties": {
+				"DMA_funding_source": {
+					"$ref": "Classes.json#/definitions/DMA_funding_source"
+				}
+      },
+			"additionalProperties": false
+		}
+	}
+}

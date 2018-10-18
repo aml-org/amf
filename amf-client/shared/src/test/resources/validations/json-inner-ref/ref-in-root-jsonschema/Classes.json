@@ -1,0 +1,14 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"additionalProperties": false,
+	"type": "object",
+	"definitions": {
+		"DMA_funding_source": {
+			"enum": [
+				"CreditCard",
+				"DebitCard"
+			],
+			"type": "string"
+		}
+  }
+}

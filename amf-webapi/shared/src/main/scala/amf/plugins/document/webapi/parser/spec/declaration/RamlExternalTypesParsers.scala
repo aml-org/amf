@@ -54,7 +54,10 @@ case class RamlJsonSchemaExpression(key: YNode,
                 s.copyShape().withName(key.as[String])
               case _ =>
                 ctx.violation(s"could not find json schema fragment ${extFrament.get} in file $path", origin.valueAST)
-                UnresolvedShape(url)
+                val empty = AnyShape()
+                adopt(empty)
+                empty
+
             }
             ctx.declarations.fragments
               .get(path)
@@ -144,7 +147,9 @@ case class RamlJsonSchemaExpression(key: YNode,
                              adopt: Shape => Shape,
                              value: YNode,
                              extLocation: Option[String]) = {
-    val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
+    val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location).orElse {
+      Some(valueAST.value.sourceName)
+    }
     val parser =
       if (extLocation.isEmpty)
         YamlParser(text, valueAST.sourceName, (valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
@@ -161,7 +166,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     // we set the local schema entry to be able to resolve local $refs
     ctx.localJSONSchemaContext = Some(schemaEntry.value)
     val jsonSchemaContext = toSchemaContext(ctx, valueAST)
-    val fullRef = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "#")
+    val fullRef           = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "#")
     val tmpShape =
       UnresolvedShape(fullRef, schemaEntry).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
     tmpShape.unresolved(fullRef, schemaEntry, "warning")(jsonSchemaContext)
@@ -193,12 +198,15 @@ case class RamlJsonSchemaExpression(key: YNode,
       case inlined: MutRef =>
         if (inlined.origTag.tagType == YType.Include) {
           // JSON schema file we need to update the context
-          val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("/").last.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
+          val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
           ctx.refs.find(r => r.unit.location().exists(_.endsWith(fileHint))) match {
             case Some(ref) =>
               toOas(ref.unit.location().get,
                     ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None)),
                     ctx)
+            case _
+                if Option(ast.value.sourceName).isDefined => // external fragment from external fragment case. The target value ast has the real source name of the faile. (There is no external fragment because was inlined)
+              toOas(ast.value.sourceName, ctx.refs, ctx)
             case _ => toOas(ctx)
           }
         } else {
