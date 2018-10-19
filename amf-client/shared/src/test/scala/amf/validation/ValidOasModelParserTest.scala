@@ -37,5 +37,9 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/pattern/pattern-with-hack.yaml", OasProfile)
   }
 
+  test("formData payload with ref") {
+    checkValid("/payloads/form-data-with-ref.json", OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

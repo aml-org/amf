@@ -2,7 +2,6 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{ExplicitField, LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
-import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfScalar, DomainElement, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, _}
@@ -14,7 +13,6 @@ import amf.plugins.document.webapi.annotations.{
   RequiredParamPayload
 }
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
-import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{
@@ -217,9 +215,9 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
 
   private def setName(p: DomainElement with NamedDomainElement): DomainElement = {
     p match {
-      case s: Shape if nameNode.isDefined =>
+      case _: Shape if nameNode.isDefined =>
         p.set(ShapeModel.Name, nameNode.map(ScalarNode(_).text()).get)
-      case s: Shape =>
+      case _: Shape =>
         map.key("name", (ShapeModel.Name in p).withAnnotation(Inferred())) // name of the parameter in the HTTP binding (path, request parameter, etc)
       case p: Payload =>
         if (nameNode.nonEmpty)
@@ -245,7 +243,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
     p
   }
 
-  private def buildFromBuilding(in: String, bindingEntry: Option[YMapEntry]): OasParameter = {
+  private def buildFromBinding(in: String, bindingEntry: Option[YMapEntry]): OasParameter = {
     in match {
       case "body" =>
         OasParameter(parseBodyPayload(bindingEntry.map(a => Range(a.range))),
@@ -256,7 +254,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
       case "query" | "header" | "path" =>
         OasParameter(parseCommonParam(), entryOrNode.toOption.orElse(entryOrNode.left.toOption))
       case _ =>
-        val oasParam = buildFromBuilding(defaultBinding, None)
+        val oasParam = buildFromBinding(defaultBinding, None)
         invalidBinding(bindingEntry, in, oasParam)
         oasParam
     }
@@ -283,7 +281,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
         map.key("in") match {
           case Some(entry: YMapEntry) =>
             val in = entry.value.as[YScalar].text
-            buildFromBuilding(in, Some(entry))
+            buildFromBinding(in, Some(entry))
           case _ => // ignore
             /**
               * Binding is required, i'm not setting any default value so It will be some model validation.
@@ -460,7 +458,9 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
     else {
       val schema = NodeShape().withName("formData").adopted(parentId)
 
-      formData.foreach { payload =>
+      formData.foreach { p =>
+        val payload = if (p.isLink) p.effectiveLinkTarget.asInstanceOf[Payload] else p
+
         val property = schema.withProperty(payload.name.value())
         payload.annotations.find(classOf[RequiredParamPayload]) match {
           case None => property.set(PropertyShapeModel.MinCount, 0)
