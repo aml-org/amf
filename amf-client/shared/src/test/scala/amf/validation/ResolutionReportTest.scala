@@ -1,5 +1,7 @@
 package amf.validation
+import amf.Oas20Profile
 import amf.core.remote.{Hint, RamlYamlHint}
+import amf.plugins.document.webapi.Oas20Plugin
 
 class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
@@ -143,6 +145,16 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
   test("Test ref in root at json schema with other ref") {
     checkReport("/json-inner-ref/ref-in-root-jsonschema/api.raml", None)
+  }
+
+  test("Test reference to property and items at declared type oas") {
+    checkReport("/reference-jsonschema-property/api.raml", profile = Oas20Profile)
+  }
+
+  test("Test reference to non existing entry at oas definitions") {
+    checkReport("/reference-jsonschema-property/bad-link.raml",
+                profile = Oas20Profile,
+                golden = Some("ref-jsonschema-bad-link.report"))
   }
 
   override val hint: Hint = RamlYamlHint

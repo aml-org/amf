@@ -11,6 +11,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Lazy, Strings, TemplateUri}
+import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
@@ -77,6 +78,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     document.adopted(root.location).withLocation(root.location)
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+    ctx.localJSONSchemaContext = Some(map)
 
     val references = ReferencesParser(document, "uses".asOasExtension, map, root.references).parse(root.location)
     parseDeclarations(root: Root, map)
@@ -561,7 +563,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
             OasTypeParser(e, shape => {
               shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
               shape.adopted(typesPrefix)
-            }).parse() match {
+            })(toJsonSchema(ctx)).parse() match {
               case Some(shape) =>
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>

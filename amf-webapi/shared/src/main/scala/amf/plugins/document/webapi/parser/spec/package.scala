@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser
 
 import amf.core.parser.ParsedReference
+import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.contexts._
 
 /**
@@ -21,7 +22,8 @@ package object spec {
 
     def stripResponsesDefinitionsPrefix(url: String): String = url.stripPrefix(responsesDefinitionsPrefix)
 
-    def appendDefinitionsPrefix(url: String): String = appendPrefix(definitionsPrefix, url)
+    def appendDefinitionsPrefix(url: String): String =
+      if (!url.startsWith(definitionsPrefix)) appendPrefix(definitionsPrefix, url) else url
 
     def appendParameterDefinitionsPrefix(url: String): String = appendPrefix(parameterDefinitionsPrefix, url)
 
@@ -56,5 +58,9 @@ package object spec {
 
   def toOas(spec: SpecEmitterContext): OasSpecEmitterContext = {
     new Oas2SpecEmitterContext(spec.getRefEmitter)
+  }
+
+  def toJsonSchema(ctx: OasWebApiContext): JsonSchemaWebApiContext = {
+    new JsonSchemaWebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations))
   }
 }

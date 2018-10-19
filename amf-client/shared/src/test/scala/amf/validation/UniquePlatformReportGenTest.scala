@@ -1,12 +1,13 @@
 package amf.validation
 
 import amf._
-import amf.core.remote.{Hint, Oas, Raml, RamlYamlHint}
+import amf.core.remote._
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import _root_.org.scalatest.{Assertion, AsyncFunSuite}
+import amf.core.remote.Syntax.Yaml
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -75,7 +76,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
                             profileFile: Option[String] = None): Future[Assertion] = {
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(basePath + api, platform, RamlYamlHint, validation).build()
+      model      <- AMFCompiler(basePath + api, platform, profileToHint(profile), validation).build()
       report <- {
         new ValidationResolutionPipeline(profile, model).resolve()
         val results = validation.aggregatedReport
@@ -85,6 +86,14 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
       }
     } yield {
       report
+    }
+  }
+
+  private def profileToHint(profile: ProfileName): Hint = {
+    profile match {
+      case OasProfile | Oas20Profile => OasJsonHint
+      case Oas30Profile              => Hint(Oas30, Yaml)
+      case _                         => RamlYamlHint
     }
   }
 }

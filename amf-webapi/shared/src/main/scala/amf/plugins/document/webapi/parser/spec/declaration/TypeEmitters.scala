@@ -19,7 +19,12 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, OasTypeDefStringValueMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.{
+  OasTypeDefMatcher,
+  OasTypeDefStringValueMatcher,
+  RamlTypeDefMatcher,
+  RamlTypeDefStringValueMatcher
+}
 import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -1333,10 +1338,15 @@ abstract class OasShapeEmitter(shape: Shape,
   def emitNullable(result: ListBuffer[EntryEmitter]): Unit = {
     shape.annotations.find(classOf[NilUnion]) match {
       case Some(NilUnion(rangeString)) =>
-        result += ValueEmitter("nullable",
-                               FieldEntry(Field(Bool, Namespace.Shapes + "nullable", ModelDoc(ModelVocabularies.Shapes, "nullable", "This field can accept a null value")),
-                                          Value(AmfScalar(true),
-                                            Annotations(LexicalInformation(rangeString)))))
+        result += ValueEmitter(
+          "nullable",
+          FieldEntry(
+            Field(Bool,
+                  Namespace.Shapes + "nullable",
+                  ModelDoc(ModelVocabularies.Shapes, "nullable", "This field can accept a null value")),
+            Value(AmfScalar(true), Annotations(LexicalInformation(rangeString)))
+          )
+        )
 
       case _ => // ignore
     }
@@ -1411,7 +1421,7 @@ case class OasOrConstraintEmitter(shape: Shape,
 
   val emitters: Seq[OasTypePartEmitter] = shape.or.zipWithIndex map {
     case (s: Shape, i: Int) =>
-      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("allOf", s"$i"), schemaPath)
+      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("anyOf", s"$i"), schemaPath)
   }
 
   override def emit(b: EntryBuilder): Unit = {

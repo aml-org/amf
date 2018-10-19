@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.Root
 import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
-import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
@@ -146,7 +146,7 @@ case class RamlJsonSchemaExpression(key: YNode,
                              valueAST: YNode,
                              adopt: Shape => Shape,
                              value: YNode,
-                             extLocation: Option[String]) = {
+                             extLocation: Option[String]): AnyShape = {
     val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location).orElse {
       Some(valueAST.value.sourceName)
     }
@@ -182,7 +182,8 @@ case class RamlJsonSchemaExpression(key: YNode,
           ctx.futureDeclarations.resolveRef(fullRef, sh)
           tmpShape.resolve(sh) // useless?
           ctx.registerJsonSchema(fullRef, sh)
-          sh
+          if (sh.isLink) sh.effectiveLinkTarget.asInstanceOf[AnyShape]
+          else sh
         case None =>
           val shape = SchemaShape()
           adopt(shape)

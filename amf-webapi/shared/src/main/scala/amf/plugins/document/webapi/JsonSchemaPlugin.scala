@@ -24,7 +24,12 @@ import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, OasTypeParser}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft3SchemaVersion,
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaVersion,
+  OasTypeParser
+}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
@@ -43,6 +48,12 @@ class JsonSchemaWebApiContext(loc: String,
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax
   override val vendor: Vendor                 = Oas30
+  override val linkTypes: Boolean = wrapped match {
+    case raml: RamlWebApiContext => false
+    case oas: OasWebApiContext   => true // definitions tag
+    case _                       => false
+  } // oas definitions
+
 }
 
 class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
@@ -119,8 +130,6 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
-
-
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
@@ -157,8 +166,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
         jsonSchemaContext.localJSONSchemaContext = Some(documentRoot)
         val parsed =
-          OasTypeParser(YMapEntry("schema", rootAst), (shape) => shape.withId(shapeId), version = jsonSchemaContext.computeJsonSchemaVersion(rootAst))(
-            jsonSchemaContext).parse() match {
+          OasTypeParser(YMapEntry("schema", rootAst),
+                        (shape) => shape.withId(shapeId),
+                        version = jsonSchemaContext.computeJsonSchemaVersion(rootAst))(jsonSchemaContext)
+            .parse() match {
             case Some(shape) =>
               shape
             case None =>

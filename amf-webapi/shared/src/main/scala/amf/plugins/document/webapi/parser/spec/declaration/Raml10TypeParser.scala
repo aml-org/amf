@@ -1330,7 +1330,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
       map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
-        OasTypeParser(entry, s => s.adopted(shape.id)).parse().foreach { s =>
+        OasTypeParser(entry, s => s.adopted(shape.id))(toOas(ctx)).parse().foreach { s =>
           shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
         }
       }

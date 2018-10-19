@@ -93,6 +93,11 @@ class WebApiDeclarations(val alias: Option[String],
     merged
   }
 
+  protected def addSchema(s: Shape) = {
+    futureDeclarations.resolveRef(aliased(s.name.value()), s)
+    shapes = shapes + (s.name.value() -> s)
+  }
+
   override def +=(element: DomainElement): WebApiDeclarations = {
     element match {
       case r: ResourceType =>
@@ -102,8 +107,7 @@ class WebApiDeclarations(val alias: Option[String],
         futureDeclarations.resolveRef(aliased(t.name.value()), t)
         traits = traits + (t.name.value() -> t)
       case s: Shape =>
-        futureDeclarations.resolveRef(aliased(s.name.value()), s)
-        shapes = shapes + (s.name.value() -> s)
+        addSchema(s)
       case p: Parameter =>
         futureDeclarations.resolveRef(aliased(p.name.value()), p)
         parameters = parameters + (p.name.value() -> p)
