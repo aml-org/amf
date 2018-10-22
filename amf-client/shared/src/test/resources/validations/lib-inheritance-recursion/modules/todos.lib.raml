@@ -1,0 +1,75 @@
+#%RAML 1.0 Library
+
+uses:
+  PatchLib: patch.lib.raml
+types:
+  Todo:
+    properties:
+      id?: string
+      title: string
+      description?: string
+      subTasks?: Todo[]
+    example:
+      title: hello world
+      description: description of hello world
+      
+  #Todos
+  GetTodosResponse:
+    type: Todo[]
+    example:
+      - id: '1'
+        title: hello world
+        description: description of hello world
+      - id: '2'
+        title: hello world 2
+        description: description of hello world 2
+
+  PostTodosRequest:
+    type: Todo
+    example:
+      title: hello world
+      description: description of hello world
+
+  PutTodosRequest:
+    type: Todo[]
+    example:
+      - id: '1'
+        title: hello world
+        description: description of hello world
+      - id: '2'
+        title: hello world 2
+        description: description of hello world 2
+
+  #Todo
+  GetTodoResponse:
+    type: Todo
+    example:
+      id: '1'
+      title: hello world
+      description: description of hello world
+
+  PutTodoRequest:
+    type: Todo
+
+  PatchOperationsTodoRequest:
+    type: PatchLib.PatchOperationsRequest
+    example:
+      - op: add
+        path: /subTasks
+        value:
+          - title: new subtask
+            description: the description
+      - op: replace
+        path: /title
+        value: new To-Do title
+      - op: remove
+        path: /description
+
+  PatchMergeTodoRequest:
+    type: PatchLib.PatchMergeRequest
+    example:
+      title: new To-Do title
+      description: null
+      subTasks:
+        - title: new subtask
+          description: the description

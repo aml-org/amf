@@ -1,0 +1,109 @@
+#%RAML 1.0 Library
+
+types:
+  BaseOperation:
+    properties:
+      op: 
+        enum: [ test, remove, add, replace, move, copy ]
+      path: string
+      
+  AddOperation:
+    type: BaseOperation
+    properties:
+      op: 
+        enum: [ add ]
+      value: any
+    example:
+      value:
+        op: add
+        path: /a/b/c
+        value: 34
+      
+  RemoveOperation:
+    type: BaseOperation
+    properties:
+      op: 
+        enum: [ remove ]
+    example:
+      value:
+        op: remove
+        path: /a/b/c
+        
+  ReplaceOperation:
+    type: BaseOperation
+    properties:
+      op: 
+        enum: [ replace ]
+      value: any
+    example:
+      value:
+        op: replace
+        path: /a/b/c
+        value: 42
+      
+  MoveOperation:
+    type: BaseOperation
+    properties:
+      op: 
+        enum: [ move ]
+      from:
+    example:
+      value:
+        op: move
+        from: /a/b/c
+        path: /a/b/d
+      
+  CopyOperation:
+    type: BaseOperation
+    properties:
+      op: 
+        enum: [ copy ]
+      from:
+    example:
+      value:
+        op: copy
+        from: /a/b/c
+        path: /a/b/e
+      
+  TestOperation:
+    type: BaseOperation
+    properties:
+      op: 
+        enum: [ test ]
+      value: any
+    example:
+      value:
+        op: test
+        path: /a/b/e
+        value: foo
+      
+  Operation:
+    type: AddOperation | RemoveOperation | ReplaceOperation | MoveOperation | CopyOperation | TestOperation
+      
+  PatchOperationsRequest:
+    type: Operation[]
+#    example:
+#      - op: add
+#        path: /a/b/c
+#        value: 34
+#      - op: remove
+#        path: /a/b/c
+#      - op: replace
+#        path: /a/b/c
+#        value: 42
+#      - op: move
+#        from: /a/b/c
+#        path: /a/b/d
+#      - op: copy
+#        from: /a/b/c
+#        path: /a/b/e
+#      - op: test
+#        path: /a/b/e
+#        value: foo
+        
+  PatchMergeRequest:
+    type: any
+#    example: 
+#      a: z
+#      c:
+#        f: null

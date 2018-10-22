@@ -78,7 +78,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
               rec.fixpointTarget.foreach(target => addClojure(target, shape))
               rec
             case o =>
-              val clojures = o.closureShapes.filter(_.id != shape.id)
+              val clojures = o.closureShapes
               shape.closureShapes ++= clojures
               context.cache.addClojures(clojures.toSeq, shape)
               o
@@ -224,10 +224,8 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   }
 
   private def addClojure(clojure: Shape, s: Shape): Shape = {
-    if (clojure.id != s.id) {
-      s.closureShapes += clojure
-      context.cache.cacheClojure(clojure.id, s)
-    }
+    s.closureShapes += clojure
+    context.cache.cacheClojure(clojure.id, s)
     s
   }
 

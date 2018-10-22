@@ -103,10 +103,10 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
   // Private lookup methods
 
   protected def findInEncodedModel(predicate: (DomainElement) => Boolean,
-                                 encoder: BaseUnit,
-                                 first: Boolean = false,
-                                 acc: ListBuffer[DomainElement] = ListBuffer.empty: ListBuffer[DomainElement],
-                                 cycles: Set[String]) = {
+                                   encoder: BaseUnit,
+                                   first: Boolean = false,
+                                   acc: ListBuffer[DomainElement] = ListBuffer.empty: ListBuffer[DomainElement],
+                                   cycles: Set[String]) = {
     encoder match {
       case _ if cycles.contains(encoder.id) => ListBuffer.empty
       case encoder: EncodesModel if Option(encoder.encodes).isDefined =>
@@ -116,10 +116,10 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
   }
 
   protected def findInDeclaredModel(predicate: (DomainElement) => Boolean,
-                                  encoder: BaseUnit,
-                                  first: Boolean,
-                                  acc: ListBuffer[DomainElement],
-                                  cycles: Set[String]): ListBuffer[DomainElement] = {
+                                    encoder: BaseUnit,
+                                    first: Boolean,
+                                    acc: ListBuffer[DomainElement],
+                                    cycles: Set[String]): ListBuffer[DomainElement] = {
     encoder match {
       case _ if cycles.contains(encoder.id) => ListBuffer.empty
       case encoder: DeclaresModel =>
@@ -131,8 +131,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
   def findInReferences(id: String): Option[BaseUnit] = references.find(_.id == id)
 
   protected def findInReferencedModels(id: String,
-                                     units: Seq[BaseUnit],
-                                     cycles: Set[String]): ListBuffer[DomainElement] = {
+                                       units: Seq[BaseUnit],
+                                       cycles: Set[String]): ListBuffer[DomainElement] = {
     if (units.isEmpty) {
       ListBuffer.empty
     } else if (cycles.contains(units.head.id)) {
@@ -146,10 +146,10 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
   }
 
   protected def findModelByCondition(predicate: (DomainElement) => Boolean,
-                                   element: DomainElement,
-                                   first: Boolean,
-                                   acc: ListBuffer[DomainElement],
-                                   cycles: Set[String]): ListBuffer[DomainElement] = {
+                                     element: DomainElement,
+                                     first: Boolean,
+                                     acc: ListBuffer[DomainElement],
+                                     cycles: Set[String]): ListBuffer[DomainElement] = {
     if (!cycles.contains(element.id)) {
       val found = predicate(element)
       if (found) {
@@ -285,9 +285,18 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
                                          predicate,
                                          transformation,
                                          cycles + element.id)) match {
-                    case Some(transformedValue: AmfObject) => element.fields.setWithoutId(f, transformedValue)
-                    case Some(_)                           => // ignore
-                    case None                              => element.fields.removeField(f)
+                    case Some(transformedValue: AmfObject) =>
+                      element.fields.setWithoutId(f, transformedValue)
+                      element match {
+                        case s: Shape if transformedValue.isInstanceOf[RecursiveShape] =>
+                          transformedValue
+                            .asInstanceOf[RecursiveShape]
+                            .fixpointTarget
+                            .foreach(t => s.closureShapes += t)
+                        case _ => // ignore
+                      }
+                    case Some(_) => // ignore
+                    case None    => element.fields.removeField(f)
                   }
                 case (f, v: Value) if v.value.isInstanceOf[AmfArray] =>
                   val newElements = v.value
@@ -295,7 +304,17 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
                     .values
                     .map {
                       case elem: AmfObject =>
-                        Option(transformByCondition(elem, predicate, transformation, cycles + element.id))
+                        val transformedValue =
+                          transformByCondition(elem, predicate, transformation, cycles + element.id)
+                        element match {
+                          case s: Shape if transformedValue.isInstanceOf[RecursiveShape] =>
+                            transformedValue
+                              .asInstanceOf[RecursiveShape]
+                              .fixpointTarget
+                              .foreach(t => s.closureShapes += t)
+                          case _ => // ignore
+                        }
+                        Some(transformedValue)
                       case other =>
                         Some(other)
                     }

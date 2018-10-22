@@ -220,5 +220,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/library-alias-repeated/api.raml")
   }
 
+  test("Test a lot of inheritance through resource type (valid recursion)") {
+    checkValid("/lib-inheritance-recursion/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
