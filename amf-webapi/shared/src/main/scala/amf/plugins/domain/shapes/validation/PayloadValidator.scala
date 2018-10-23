@@ -59,27 +59,12 @@ object PayloadValidator {
       Future.successful(AMFValidationReport(conforms = false, payload, ProfileNames.AMF, result.results))
     else {
 
-      val f = if ((isString(shape) || unionWithString(shape)) && validationMode == ScalarRelaxedValidationMode) {
-        result.fragment.encodes match {
-          case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
-            PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
-                            result.fragment.mediaType.value())
-          case _ => result.fragment
-        }
+      val f = if (validationMode == ScalarRelaxedValidationMode) {
+        ScalarPayloadForParam(result.fragment)
       } else
         result.fragment
       p.validateSet(ValidationShapeSet(Seq(ValidationCandidate(shape, f))), env)
     }
-  }
-
-  private def isString(shape: Shape): Boolean = shape match {
-    case s: ScalarShape => s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri()))
-    case _              => false
-  }
-
-  private def unionWithString(shape: Shape): Boolean = shape match {
-    case u: UnionShape => u.anyOf.exists(isString)
-    case _             => false
   }
 
   def plugin(mediaType: String, shape: Shape, env: Environment): AMFPayloadValidationPlugin =
@@ -144,3 +129,24 @@ trait ValidationMode
 object StrictValidationMode extends ValidationMode
 
 object ScalarRelaxedValidationMode extends ValidationMode
+
+object ScalarPayloadForParam {
+
+  def apply(fragment: PayloadFragment): PayloadFragment = fragment.encodes match {
+    case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
+      PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
+                      fragment.mediaType.value())
+    case _ => fragment
+  }
+
+  private def isString(shape: Shape): Boolean = shape match {
+    case s: ScalarShape => s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri()))
+    case _              => false
+  }
+
+  private def unionWithString(shape: Shape): Boolean = shape match {
+    case u: UnionShape => u.anyOf.exists(isString)
+    case _             => false
+  }
+
+}

@@ -4,15 +4,12 @@ import java.time.format.{DateTimeFormatter, DateTimeFormatterBuilder, DateTimePa
 import java.util.Optional
 import java.util.regex.Pattern
 
-import amf.core.model.document.PayloadFragment
-import amf.core.utils.RegexConverter
-import amf.core.validation.{AMFValidationResult, _}
-import amf.core.vocabulary.Namespace
-import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
-import org.everit.json.schema.loader.SchemaLoader
-import org.everit.json.schema.regexp._
-import org.everit.json.schema.{FormatValidator, ValidationException}
-import org.json.{JSONException, JSONObject, JSONTokener}
+import amf.plugins.domain.shapes.models.AnyShape
+import org.everit.json.schema.FormatValidator
+
+object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
+  override protected def validatorForShape(s: AnyShape): PlatformPayloadValidator = new JvmPayloadValidator(s)
+}
 
 class Rfc2616Attribute extends FormatValidator {
 
@@ -66,130 +63,6 @@ object PartialTimeFormatValidator extends FormatValidator {
       Optional.empty()
     }
   }
-}
-
-object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
-
-  override type LoadedObj = Object
-
-  override protected def processCandidate(dataNode: Object,
-                                          jsonSchema: String,
-                                          payload: PayloadFragment): Seq[AMFValidationResult] =
-    // hack! TODO: clean json object properly
-    loadJson(jsonSchema.replace("\"type\": \"file\"", "\"type\": \"string\"")) match {
-      case schemaNode: JSONObject =>
-        schemaNode.remove("example")
-        schemaNode.remove("examples")
-        schemaNode.remove("x-amf-examples")
-
-        /*
-        println("\n\nValidating...")
-        println("  - SCHEMA:")
-        println(jsonSchema)
-         */
-
-        case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
-          override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)
-        }
-
-        val schemaBuilder = SchemaLoader
-          .builder()
-          .schemaJson(schemaNode)
-          .regexpFactory(CustomJavaUtilRegexpFactory())
-          .addFormatValidator(DateTimeOnlyFormatValidator)
-          .addFormatValidator(Rfc2616Attribute)
-          .addFormatValidator(Rfc2616AttributeLowerCase)
-          .addFormatValidator(new DateFormatValidator())
-          .addFormatValidator(new URIFormatValidator())
-          .addFormatValidator(new RegexFormatValidator())
-          .addFormatValidator(PartialTimeFormatValidator)
-
-        val schemaLoader = schemaBuilder.build()
-        val schema       = schemaLoader.load().build()
-
-        /*
-        println("  - DATA:")
-        println(dataNode)
-         */
-
-        try {
-          schema.validate(dataNode)
-          /*
-              println(s"  ====> RESULT: true")
-              println("-----------------------\n\n")
-           */
-          Nil
-        } catch {
-          case validationException: ValidationException =>
-            /*
-                println(s"  ====> RESULT: false")
-                println(validationException.getAllMessages)
-                println("-----------------------\n\n")
-             */
-            iterateValidations(validationException, payload)
-          case exception: Error =>
-            reportValidationException(exception, payload)
-        }
-
-      case _ => Nil // schema is not a JSON object
-    }
-
-  def iterateValidations(validationException: ValidationException,
-                         payload: PayloadFragment): Seq[AMFValidationResult] = {
-    var resultsAcc = Seq[AMFValidationResult]()
-    val results    = validationException.getCausingExceptions.iterator()
-    while (results.hasNext) {
-      val result = results.next()
-      resultsAcc = resultsAcc ++ iterateValidations(result, payload)
-    }
-    if (resultsAcc.isEmpty) {
-      resultsAcc = resultsAcc :+ AMFValidationResult(
-        message = makeValidationMessage(validationException),
-        level = SeverityLevels.VIOLATION,
-        targetNode = payload.encodes.id,
-        targetProperty = None,
-        validationId = (Namespace.AmfParser + "example-validation-error").iri(),
-        position = payload.encodes.position(),
-        location = payload.encodes.location(),
-        source = validationException
-      )
-    }
-    resultsAcc
-  }
-
-  def reportValidationException(exception: Throwable, payload: PayloadFragment): Seq[AMFValidationResult] = {
-    Seq(
-      AMFValidationResult(
-        message = s"Internal error during validation ${exception.getMessage}",
-        level = SeverityLevels.VIOLATION,
-        targetNode = payload.encodes.id,
-        targetProperty = None,
-        validationId = (Namespace.AmfParser + "example-validation-error").iri(),
-        position = payload.encodes.position(),
-        location = payload.encodes.location(),
-        source = exception
-      ))
-  }
-
-  private def makeValidationMessage(validationException: ValidationException): String = {
-    val json    = validationException.toJSON
-    var pointer = json.getString("pointerToViolation")
-    if (pointer.startsWith("#")) pointer = pointer.replaceFirst("#", "")
-    (pointer + " " + json.getString("message")).trim
-  }
-
-  protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
-    try {
-      literalRepresentation(payload) map { payloadText =>
-        loadJson(payloadText)
-      }
-    } catch {
-      case _: ExampleUnknownException => None
-      case e: JSONException           => throw new InvalidJsonObject(e)
-    }
-  }
-
-  protected def loadJson(text: String): LoadedObj = new JSONTokener(text).nextValue()
 }
 
 object Main {

@@ -14,7 +14,7 @@ class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath         = "file://amf-client/shared/src/test/resources/validations/"
+  val basePath = "file://amf-client/shared/src/test/resources/validations/"
 
   def findShape(library: BaseUnit, name: String): AnyShape = {
     val found = library.asInstanceOf[Module].declares.find { e =>
@@ -28,11 +28,11 @@ class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
     } yield {
-      val shape = findShape(library, "A")
+      val shape     = findShape(library, "A")
       val validator = shape.payloadValidator()
 
-      assert(validator.validate("application/json", "{\"a\": 10}"))
-      assert(!validator.validate("application/json", "{\"a\": \"10\"}"))
+      assert(validator.fastValidation("application/json", "{\"a\": 10}"))
+      assert(!validator.fastValidation("application/json", "{\"a\": \"10\"}"))
     }
   }
 
@@ -41,10 +41,10 @@ class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
     } yield {
-      val shape = findShape(library, "B")
+      val shape     = findShape(library, "B")
       val validator = shape.payloadValidator()
 
-      assert(validator.validate("application/json", "wadus"))
+      assert(validator.fastValidation("application/json", "wadus"))
     }
   }
 
@@ -53,11 +53,11 @@ class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
     } yield {
-      val resolved = new AmfResolutionPipeline(library).resolve()
-      val shape = findShape(resolved, "D")
+      val resolved  = new AmfResolutionPipeline(library).resolve()
+      val shape     = findShape(resolved, "D")
       val validator = shape.payloadValidator()
 
-      assert(validator.validate("application/json", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}"))
+      assert(validator.fastValidation("application/json", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}"))
     }
   }
 
@@ -66,12 +66,12 @@ class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
     } yield {
-      val resolved = new AmfResolutionPipeline(library).resolve()
-      val shape = findShape(resolved, "D")
+      val resolved  = new AmfResolutionPipeline(library).resolve()
+      val shape     = findShape(resolved, "D")
       val validator = shape.payloadValidator()
 
       try {
-        validator.validate("application/wadus", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}")
+        validator.fastValidation("application/wadus", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}")
         assert(false)
       } catch {
         case _: Exception => assert(true)
