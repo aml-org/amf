@@ -19,25 +19,28 @@ class UrlShortenerStage()(override implicit val errorHandler: ErrorHandler) exte
   def shorten(element: AmfElement, ids: Set[String]): Unit = {
     element match {
       case o: AmfObject =>
-        o.withId(shortener.shorten(o.id))
-        val fieldEntries = o match {
-          case d: DynamicDomainElement => d.dynamicFields.flatMap(f => d.valueForField(f).map(v => FieldEntry(f, v)))
-          case _                       => o.fields.fields()
-        }
-        fieldEntries.foreach {
-          case FieldEntry(f, value: Value) if f == LinkableElementModel.Target =>
-            value.value match {
-              case o: AmfObject => o.withId(shortener.shorten(o.id))
-              case _            => // ignore
-            }
-          case FieldEntry(f, value: Value) if f.`type` == Iri =>
-            shorten(value.annotations)
-            val v = value.value.toString
-            if (ids.exists(i => v.startsWith(i)))
-              value.value = AmfScalar(shortener.shorten(v), value.value.annotations)
-          case FieldEntry(_, value: Value) =>
-            shorten(value.value, ids)
-            shorten(value.annotations)
+        val shorthenId = shortener.shorten(o.id)
+        if (!shorthenId.equals(o.id)) {
+          o.withId(shortener.shorten(o.id))
+          val fieldEntries = o match {
+            case d: DynamicDomainElement => d.dynamicFields.flatMap(f => d.valueForField(f).map(v => FieldEntry(f, v)))
+            case _                       => o.fields.fields()
+          }
+          fieldEntries.foreach {
+            case FieldEntry(f, value: Value) if f == LinkableElementModel.Target =>
+              value.value match {
+                case o: AmfObject => o.withId(shortener.shorten(o.id))
+                case _            => // ignore
+              }
+            case FieldEntry(f, value: Value) if f.`type` == Iri =>
+              shorten(value.annotations)
+              val v = value.value.toString
+              if (ids.exists(i => v.startsWith(i)))
+                value.value = AmfScalar(shortener.shorten(v), value.value.annotations)
+            case FieldEntry(_, value: Value) =>
+              shorten(value.value, ids)
+              shorten(value.annotations)
+          }
         }
       case a: AmfArray =>
         a.values.foreach { v =>
