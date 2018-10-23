@@ -563,7 +563,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
             OasTypeParser(e, shape => {
               shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
               shape.adopted(typesPrefix)
-            })(toJsonSchema(ctx)).parse() match {
+            })(ctx).parse() match {
               case Some(shape) =>
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>

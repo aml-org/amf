@@ -10,7 +10,6 @@ import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.resolution.pipelines.{AmfEditingPipeline, AmfResolutionPipeline}
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
-import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
@@ -252,6 +251,10 @@ class OASProductionResolutionTest extends OasResolutionTest {
           OasYamlHint,
           Amf,
           completeCyclePath)
+  }
+
+  test("OAS with foward references in definitions") {
+    cycle("oas_foward_definitions.json", "oas_foward_definitions.resolved.jsonld", OasJsonHint, Amf, completeCyclePath)
   }
 }
 

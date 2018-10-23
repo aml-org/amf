@@ -2,17 +2,18 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.Root
 import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
+import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
-import amf.plugins.document.webapi.contexts.{Oas2WebApiContext, OasWebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
-import amf.plugins.document.webapi.parser.spec.toOas
+import amf.plugins.document.webapi.parser.spec.toJsonSchema
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
 import org.yaml.model.YNode.MutRef
@@ -116,7 +117,7 @@ case class RamlJsonSchemaExpression(key: YNode,
           ctx.violation("invalid json schema expression", valueAST)
           YDocument(YMap.empty)
       }
-      val context = new Oas2WebApiContext(url, Nil, ctx, None)
+      val context = new JsonSchemaWebApiContext(url, Nil, ctx, None)
       context.localJSONSchemaContext = Some(schemaEntry.node)
 
       Oas2DocumentParser(
@@ -202,20 +203,21 @@ case class RamlJsonSchemaExpression(key: YNode,
           val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
           ctx.refs.find(r => r.unit.location().exists(_.endsWith(fileHint))) match {
             case Some(ref) =>
-              toOas(ref.unit.location().get,
-                    ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None)),
-                    ctx)
+              toJsonSchema(
+                ref.unit.location().get,
+                ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None)),
+                ctx)
             case _
                 if Option(ast.value.sourceName).isDefined => // external fragment from external fragment case. The target value ast has the real source name of the faile. (There is no external fragment because was inlined)
-              toOas(ast.value.sourceName, ctx.refs, ctx)
-            case _ => toOas(ctx)
+              toJsonSchema(ast.value.sourceName, ctx.refs, ctx)
+            case _ => toJsonSchema(ctx)
           }
         } else {
           // Inlined we don't need to update the context for ths JSON schema file
-          toOas(ctx)
+          toJsonSchema(ctx)
         }
       case _ =>
-        toOas(ctx)
+        toJsonSchema(ctx)
     }
   }
 

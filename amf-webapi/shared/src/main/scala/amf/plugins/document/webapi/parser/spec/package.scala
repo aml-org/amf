@@ -60,7 +60,11 @@ package object spec {
     new Oas2SpecEmitterContext(spec.getRefEmitter)
   }
 
-  def toJsonSchema(ctx: OasWebApiContext): JsonSchemaWebApiContext = {
+  def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {
     new JsonSchemaWebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations))
+  }
+
+  def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
+    new JsonSchemaWebApiContext(root, refs, ctx, Some(ctx.declarations))
   }
 }

@@ -9,7 +9,7 @@ import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
-import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{Oas2WebApiContext, Oas3WebApiContext, OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, NodeDataNodeParser, RamlExamplesParser}
@@ -308,25 +308,32 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         adopt(tmpShape)
         ctx.registerJsonSchema(ref, tmpShape)
 
-        ctx.findLocalJSONPath(ref) match {
-          case Some((_, shapeNode)) =>
-            OasTypeParser(YMapEntry(name, shapeNode), adopt, version)
-              .parse()
-              .map { shape =>
-                ctx.futureDeclarations.resolveRef(text, shape)
-                //            tmpShape.resolve(shape) // useless?
-                ctx.registerJsonSchema(ref, shape)
-                if (ctx.linkTypes || ref.equals("#"))
-                  shape.link(ref, Annotations(ast)).asInstanceOf[AnyShape].withName(name)
-                else shape
-              } orElse { Some(tmpShape) }
+        ctx match {
+          case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) if isDeclaration(ref) =>
+            Some(tmpShape) // nothing to do, the unresolved will be resolved after
+          case _ =>
+            ctx.findLocalJSONPath(ref) match {
+              case Some((_, shapeNode)) =>
+                OasTypeParser(YMapEntry(name, shapeNode), adopt, version)
+                  .parse()
+                  .map { shape =>
+                    ctx.futureDeclarations.resolveRef(text, shape)
+                    //            tmpShape.resolve(shape) // useless?
+                    ctx.registerJsonSchema(ref, shape)
+                    if (ctx.linkTypes || ref.equals("#"))
+                      shape.link(ref, Annotations(ast)).asInstanceOf[AnyShape].withName(name)
+                    else shape
+                  } orElse { Some(tmpShape) }
 
-          case None =>
-            //                          ctx.violation(tmpShape.id, s"Cannot find local JSON Schema reference $ref", e.value)
-            Some(tmpShape)
+              case None =>
+                //                          ctx.violation(tmpShape.id, s"Cannot find local JSON Schema reference $ref", e.value)
+                Some(tmpShape)
+            }
         }
     }
   }
+
+  private def isDeclaration(ref: String): Boolean = ref.matches("^(\\#\\/definitions\\/){1}([^/\\n])+$")
 
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
     val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
