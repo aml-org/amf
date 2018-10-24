@@ -1,18 +1,16 @@
 package amf.validation
-
-import amf.core.emitter.RenderOptions
-import amf.core.model.document.{Module, PayloadFragment}
+import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, RamlYamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.ValidationCandidate
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.graph.parser.GraphEmitter
+import amf.plugins.document.graph.parser.JsonLdEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.document.webapi.validation.PayloadValidation
 import amf.{AmfProfile, PayloadProfile}
 import org.scalatest.AsyncFunSuite
-import org.yaml.render.JsonRender
+import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -50,18 +48,16 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
                                                                2,
                                                                PayloadProfile,
                                                                jsNumErrors = Some(3)),
-    ("payloads.raml", "H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("payloads.raml", "PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true,
-                                                                                    0,
-                                                                                    PayloadProfile),
-    ("payloads.raml", "CustomerData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("payloads.raml", "CustomerData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a_valid.json")       -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a_invalid.json")     -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a2_valid.json")      -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a2_invalid.json")    -> ExpectedReport(conforms = false, 1, PayloadProfile)
+    ("payloads.raml", "H", "h_invalid.json")                      -> ExpectedReport(conforms = false, 1, PayloadProfile),
+    ("payloads.raml", "PersonData", "person_valid.yaml")          -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("payloads.raml", "PersonData", "person_invalid.yaml")        -> ExpectedReport(conforms = false, 1, PayloadProfile),
+    ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("payloads.raml", "CustomerData", "person_valid.yaml")        -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("payloads.raml", "CustomerData", "person_invalid.yaml")      -> ExpectedReport(conforms = false, 1, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a_valid.json")            -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a_invalid.json")          -> ExpectedReport(conforms = false, 1, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a2_valid.json")           -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a2_invalid.json")         -> ExpectedReport(conforms = false, 1, PayloadProfile)
   )
 
   for {
@@ -95,8 +91,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation flatMap {
         _ validate ()
       } map { report =>
-        report.results.foreach { result =>
-          assert(result.position.isDefined)
+        report.results.foreach { result => assert(result.position.isDefined)
         }
         assert(report.conforms == expectedReport.conforms)
         if (expectedReport.jsNumErrors.isDefined && platform.name == "js") {
@@ -121,10 +116,15 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
                                  PayloadYamlHint,
                                  validationPayload).build()
     } yield {
-      val fileJson = JsonRender.render(GraphEmitter.emit(filePayload, RenderOptions()))
-      val textJson = JsonRender.render(GraphEmitter.emit(textPayload, RenderOptions()))
+      val fileJson = render(filePayload)
+      val textJson = render(textPayload)
       assert(fileJson == textJson)
     }
 
+  }
+  private def render(filePayload: BaseUnit) = {
+    val builder = JsonOutputBuilder()
+    JsonLdEmitter.emit(filePayload, builder)
+    builder.result.toString
   }
 }

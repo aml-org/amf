@@ -1,10 +1,8 @@
 package amf.plugins.document.webapi.validation.remote
-
 import amf.ProfileName
 import amf.core.model.document.PayloadFragment
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
-import amf.internal.environment.Environment
 import amf.plugins.domain.shapes.models.AnyShape
 
 import scala.scalajs.js
@@ -33,8 +31,8 @@ class JsPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(s
     js.Dynamic.global.JSON.parse(str)
   }
 
-  override protected def loadSchema(jsonSchema: String): Option[LoadedSchema] = {
-    var schemaNode = loadJson(jsonSchema).asInstanceOf[js.Dictionary[js.Dynamic]]
+  override protected def loadSchema(jsonSchema: CharSequence): Option[LoadedSchema] = {
+    var schemaNode = loadJson(jsonSchema.toString).asInstanceOf[js.Dictionary[js.Dynamic]]
     schemaNode -= "x-amf-fragmentType"
     schemaNode -= "example"
     schemaNode -= "examples"

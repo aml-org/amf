@@ -38,10 +38,10 @@ class JvmPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(
     }
   }
 
-  override protected def loadSchema(jsonSchema: String): Option[LoadedSchema] = {
+  override protected def loadSchema(jsonSchema: CharSequence): Option[LoadedSchema] = {
 
     loadJson(
-      jsonSchema
+      jsonSchema.toString
         .replace("\"type\": \"file\"", "\"type\": \"string\"")
         .replace("x-amf-union", "anyOf")) match {
       case schemaNode: JSONObject =>
@@ -60,8 +60,11 @@ class JvmPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(
           .addFormatValidator(new URIFormatValidator())
           .addFormatValidator(new RegexFormatValidator())
           .addFormatValidator(PartialTimeFormatValidator)
-        val schemaLoader = schemaBuilder.build()
-        Some(schemaLoader.load().build())
+        Some(
+          schemaBuilder
+            .build()
+            .load()
+            .build())
       case _ => None
     }
   }
@@ -71,8 +74,7 @@ class JvmPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(
 
   protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
     try {
-      literalRepresentation(payload) map { payloadText =>
-        loadJson(payloadText)
+      literalRepresentation(payload) map { payloadText => loadJson(payloadText)
       }
     } catch {
       case _: ExampleUnknownException => None
@@ -106,21 +108,6 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName) e
         super.processCommonException(other, fragment)
     }
     processResults(results)
-  }
-
-  private def reportValidationException(exception: Throwable,
-                                        payload: Option[PayloadFragment]): Seq[AMFValidationResult] = {
-    Seq(
-      AMFValidationResult(
-        message = s"Internal error during validation ${exception.getMessage}",
-        level = SeverityLevels.VIOLATION,
-        targetNode = payload.map(_.encodes.id).getOrElse(""),
-        targetProperty = None,
-        validationId = (Namespace.AmfParser + "example-validation-error").iri(),
-        position = payload.flatMap(_.encodes.position()),
-        location = payload.flatMap(_.encodes.location()),
-        source = exception
-      ))
   }
 
   private def iterateValidations(validationException: ValidationException,

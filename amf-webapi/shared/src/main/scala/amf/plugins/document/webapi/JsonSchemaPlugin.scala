@@ -9,7 +9,6 @@ import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{
   EmptyFutureDeclarations,
-  ParsedDocument,
   ParsedReference,
   ParserContext,
   Reference,
@@ -24,21 +23,15 @@ import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft3SchemaVersion,
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaVersion,
-  OasTypeParser
-}
+import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
-import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax, _}
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
-import amf.plugins.document.webapi.parser.spec._
 import scala.concurrent.Future
 
 class JsonSchemaWebApiContext(loc: String,
@@ -112,10 +105,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
 
     val doc = Root(
-      SyamlParsedDocument(
-        None,
-        YDocument(encoded)
-      ),
+      SyamlParsedDocument(YDocument(encoded)),
       inputFragment.location().getOrElse(inputFragment.id) + (if (pointer.isDefined) s"#${pointer.get}" else ""),
       "application/json",
       inputFragment.references.map(ref => ParsedReference(ref, Reference(ref.location().getOrElse(""), Nil), None)),
@@ -171,7 +161,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         jsonSchemaContext.localJSONSchemaContext = Some(documentRoot)
         val parsed =
           OasTypeParser(YMapEntry("schema", rootAst),
-                        (shape) => shape.withId(shapeId),
+                        shape => shape.withId(shapeId),
                         version = jsonSchemaContext.computeJsonSchemaVersion(rootAst))(jsonSchemaContext)
             .parse() match {
             case Some(shape) =>
@@ -191,7 +181,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
-  def findRootNode(ast: YNode, ctx: JsonSchemaWebApiContext, path: Option[String]) = {
+  def findRootNode(ast: YNode, ctx: JsonSchemaWebApiContext, path: Option[String]): Option[YNode] = {
     if (path.isDefined) {
       ctx.localJSONSchemaContext = Some(ast)
       val res = ctx.findLocalJSONPath(path.get)
@@ -202,13 +192,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
-  /**
-    * Unparses a model base unit and return a document AST
-    */
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] =
-    firstAnyShape(unit).map(as => JsonSchemaEmitter(as).emitDocument()).map { doc =>
-      SyamlParsedDocument(document = doc)
-    }
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
+    firstAnyShape(unit) map (JsonSchemaEmitter(_).emitDocument())
 
   /**
     * Decides if this plugin can parse the provided document instance.
@@ -234,7 +219,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override def referenceHandler(): ReferenceHandler = SimpleReferenceHandler
 
-  override val ID: String = "JSON Schema" //version?
+  override val ID: String = "JSON Schema" // version?
 
   override def dependencies(): Seq[AMFPlugin] = Nil
 

@@ -50,28 +50,13 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
       if (parts.exists(v => v.isInstanceOf[YDocument])) {
         parts collectFirst { case d: YDocument => d } map { document =>
           val comment = parts collectFirst { case c: YComment => c }
-          SyamlParsedDocument(comment, document)
+          SyamlParsedDocument(document, comment)
         }
       } else {
         parts collectFirst { case d: YComment => d } map { comment =>
-          SyamlParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile))
+          SyamlParsedDocument(YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile), Some(comment))
         }
       }
-    }
-  }
-
-  override def unparse(mediaType: String, doc: ParsedDocument): Option[String] = {
-    doc match {
-      case input: SyamlParsedDocument =>
-        val ast = input.document
-        render(mediaType, ast) { (format, ast) =>
-          {
-            Some(if (format == "yaml") YamlRender.render(ast) else JsonRender.render(ast))
-          }
-        }
-      case input: RdfModelDocument if platform.rdfFramework.isDefined =>
-        platform.rdfFramework.get.rdfModelToSyntax(mediaType, input)
-      case _ => None
     }
   }
 
@@ -80,7 +65,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
       case input: SyamlParsedDocument =>
         val ast = input.document
         render(mediaType, ast) { (format, ast) =>
-          if (format == "yaml") YamlRender.render(writer, ast) else JsonRender.render(ast, writer)
+          if (format == "yaml") YamlRender.render(writer, ast, expandReferences = false) else JsonRender.render(ast, writer)
           Some(writer)
         }
       case input: RdfModelDocument if platform.rdfFramework.isDefined =>

@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.validation.remote
 
 import amf.client.plugins.PayloadParsingResult
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
 import amf.core.parser.SyamlParsedDocument
@@ -18,6 +17,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.domain.shapes.validation.ScalarPayloadForParam
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.{ProfileName, ProfileNames}
+import org.yaml.builder.JsonOutputBuilder
 
 import scala.collection.mutable
 
@@ -67,7 +67,7 @@ trait PlatformSchemaValidator {
 
   protected def loadJson(text: String): LoadedObj
 
-  protected def loadSchema(jsonSchema: String): Option[LoadedSchema]
+  protected def loadSchema(jsonSchema: CharSequence): Option[LoadedSchema]
 
   protected def validateForFragment(fragment: PayloadFragment,
                                     validationProcessor: ValidationProcessor): ValidationProcessor#Return = {
@@ -123,14 +123,8 @@ trait PlatformSchemaValidator {
     val futureText = payload.raw match {
       case Some("") => None
       case _ =>
-        PayloadPlugin.unparse(payload, RenderOptions()) match {
-          case Some(doc) =>
-            SYamlSyntaxPlugin.unparse("application/json", doc) match {
-              case Some(serialized) => Some(serialized)
-              case _                => None
-            }
-          case _ => None
-        }
+        val builder = JsonOutputBuilder()
+        if (PayloadPlugin.emit(payload, builder)) Some(builder.toString) else None
     }
 
     futureText map { text =>
@@ -164,7 +158,8 @@ trait PlatformSchemaValidator {
     }
   }
 
-  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+  protected def buildPayloadNode(mediaType: String,
+                                 payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
     val payloadResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
     if (!payloadResult.hasError) (loadDataNodeString(payloadResult.fragment), Some(payloadResult))
     else (None, Some(payloadResult))

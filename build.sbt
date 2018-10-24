@@ -35,7 +35,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.4.7"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.5.0"
     ))
   .in(file("./amf-core"))
   .settings(settings ++ (parallelExecution in ThisBuild := false) : _*)
@@ -210,3 +210,12 @@ addCommandAlias(
   "buildCommandLine",
   "; clean; clientJVM/assembly"
 )
+
+/** **********************************************
+  * AMF Runner
+  ********************************************** */
+
+lazy val amfRunner = project
+  .in(file("./amf-runner"))
+  .dependsOn(clientJVM)
+  .settings(settings: _*)

@@ -7,7 +7,7 @@ import amf.emit.AMFRenderer
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class ExtendsResolutionTest extends ResolutionTest {
+trait ExtendsResolutionTest extends ResolutionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

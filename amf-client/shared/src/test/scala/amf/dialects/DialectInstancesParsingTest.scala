@@ -2,9 +2,10 @@ package amf.dialects
 
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
+import org.scalatest.Assertion
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class DialectInstancesParsingTest extends FunSuiteCycleTests {
 
@@ -310,7 +311,7 @@ class DialectInstancesParsingTest extends FunSuiteCycleTests {
                             hint: Hint,
                             target: Vendor,
                             directory: String = basePath,
-                            useAmfJsonldSerialisation: Boolean = true) = {
+                            useAmfJsonldSerialisation: Boolean = true): Future[Assertion] = {
     for {
       v   <- Validation(platform).map(_.withEnabledValidation(false))
       _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
@@ -324,7 +325,7 @@ class DialectInstancesParsingTest extends FunSuiteCycleTests {
                                   golden: String,
                                   hint: Hint,
                                   target: Vendor,
-                                  directory: String = basePath) = {
+                                  directory: String = basePath): Future[Assertion] = {
     for {
       _   <- Validation(platform).map(_.withEnabledValidation(false))
       res <- cycle(source, golden, hint, target)

@@ -121,7 +121,7 @@ case class RamlJsonSchemaExpression(key: YNode,
       context.localJSONSchemaContext = Some(schemaEntry.node)
 
       Oas2DocumentParser(
-        Root(SyamlParsedDocument(None, schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
+        Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
         context)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = context.declarations.shapes

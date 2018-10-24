@@ -72,13 +72,11 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def iriToValue(iri: String) = ValueType(iri)
 
   override def dynamicFields: List[Field] = {
-    val mapKeyFields = mapKeyProperties.keys map { propertyId =>
-      Field(Type.Str, iriToValue(propertyId))
+    val mapKeyFields = mapKeyProperties.keys map { propertyId => Field(Type.Str, iriToValue(propertyId))
     }
 
     (literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map {
-      propertyId =>
-        instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get.toField
+      propertyId => instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get.toField
     }.toList ++ mapKeyFields ++ fields
       .fields()
       .filter(f => f.field != LinkableElementModel.Target && f.field != DomainElementModel.CustomDomainProperties)
