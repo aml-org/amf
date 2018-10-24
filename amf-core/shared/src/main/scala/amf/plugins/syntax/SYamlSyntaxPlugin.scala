@@ -50,11 +50,11 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
       if (parts.exists(v => v.isInstanceOf[YDocument])) {
         parts collectFirst { case d: YDocument => d } map { document =>
           val comment = parts collectFirst { case c: YComment => c }
-          SyamlParsedDocument(comment, document)
+          SyamlParsedDocument(document, comment)
         }
       } else {
         parts collectFirst { case d: YComment => d } map { comment =>
-          SyamlParsedDocument(Some(comment), YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile))
+          SyamlParsedDocument(YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile), Some(comment))
         }
       }
     }

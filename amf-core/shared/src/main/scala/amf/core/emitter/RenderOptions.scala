@@ -14,7 +14,7 @@ class RenderOptions {
   private var compactUris: Boolean                 = false
   private var rawSourceMaps: Boolean               = false
   private var validating: Boolean                  = false
-  private var filterFields: (Field) => Boolean     = (_: Field) => false
+  private var filterFields: Field => Boolean     = (_: Field) => false
   private var amfJsonLdSerialization               = true
 
   /** Include source maps when rendering to graph. */
@@ -64,7 +64,7 @@ class RenderOptions {
     this
   }
 
-  def withFilterFieldsFunc(f: (Field) => Boolean): RenderOptions = {
+  def withFilterFieldsFunc(f: Field => Boolean): RenderOptions = {
     filterFields = f
     this
   }
@@ -81,7 +81,7 @@ class RenderOptions {
 
   def isCompactUris: Boolean                  = compactUris
   def isWithSourceMaps: Boolean               = sources
-  def isWithRawSoureMaps: Boolean             = rawSourceMaps
+  def isWithRawSourceMaps: Boolean             = rawSourceMaps
   def getCustomEmitter: Option[ScalarEmitter] = customEmitter
   def isAmfJsonLdSerilization: Boolean        = amfJsonLdSerialization
   def isValidation: Boolean =

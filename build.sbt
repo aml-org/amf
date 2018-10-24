@@ -195,3 +195,12 @@ addCommandAlias(
   "buildCommandLine",
   "; clean; clientJVM/assembly"
 )
+
+/** **********************************************
+  * AMF Runner
+  ********************************************** */
+
+lazy val amfRunner = project
+  .in(file("./amf-runner"))
+  .dependsOn(clientJVM)
+  .settings(settings: _*)

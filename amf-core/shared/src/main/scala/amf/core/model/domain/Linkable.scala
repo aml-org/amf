@@ -80,7 +80,7 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
     this
   }
 
-  def toFutureRef(resolve: (Linkable) => Unit) = {
+  def toFutureRef(resolve: Linkable => Unit) = {
     refCtx match {
       case Some(ctx) =>
         ctx.futureDeclarations.futureRef(
