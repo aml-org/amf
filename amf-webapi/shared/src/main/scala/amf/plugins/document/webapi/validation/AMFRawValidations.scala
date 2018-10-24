@@ -1569,6 +1569,21 @@ object AMFRawValidations {
       "URLs must be valid",
       "URLs must be valid",
       "Violation"
+    ),
+    AMFValidation(
+      "amf-parser:pattern-validation",
+      "Pattern is not valid",
+      Amf.name,
+      "Domain",
+      "raml-shapes:ScalarShape",
+      "sh:pattern",
+      "PropertyShape",
+      "sh:path",
+      "raml-shapes:patternValidation",
+      "0",
+      "Pattern is not valid",
+      "Pattern is not valid",
+      "Violation"
     )
   )
   private val RAML = Seq(

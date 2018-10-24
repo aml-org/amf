@@ -1,10 +1,13 @@
 package amf.plugins.features.validation
 
+import java.util.regex.Pattern
+
 import amf.core.annotations.SourceAST
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.parser.Annotations
 import amf.core.services.ValidationOptions
+import amf.core.utils.RegexConverter
 import amf.core.validation.core._
 import amf.core.validation.{EffectiveValidations, SeverityLevels}
 import amf.core.vocabulary.Namespace
@@ -69,7 +72,7 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
   protected def validateObjectsOf(validationSpecification: ValidationSpecification, element: DomainElement): Unit = {
     validationSpecification.targetObject.foreach { property =>
       findFieldTarget(element, property) match {
-        case Some((annotations: Annotations, objectsOf: AmfArray)) =>
+        case Some((_: Annotations, objectsOf: AmfArray)) =>
           objectsOf.foreach {
             case obj: DomainElement =>
               validationSpecification.nodeConstraints.foreach { nodeConstraint =>
@@ -298,6 +301,19 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
           }
         }
 
+      case Some("patternValidation") =>
+        element.fields
+          .fields()
+          .find(_.field.value.iri().endsWith("pattern"))
+          .map(_.value.value.asInstanceOf[AmfScalar].toString)
+          .foreach { pattern =>
+            try Pattern.compile(pattern.convertRegex)
+            catch {
+              case _: Throwable =>
+                reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+            }
+          }
+
       case Some(other) =>
         throw new Exception(s"Custom function validations not supported in customm SHACL validator: $other")
       case _ =>
@@ -318,7 +334,7 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
           case v if v == shaclIri =>
             validationSpecification.targetObject.foreach { targetObject =>
               extractPredicateValue(targetObject, element) match {
-                case Some((parsedAnnotations, scalar: AmfScalar, Some(value: String))) =>
+                case Some((_, scalar: AmfScalar, Some(value: String))) =>
                   if (!value.contains("://")) {
                     reportFailure(validationSpecification, element.id, scalar.annotations)
                   }
@@ -509,7 +525,7 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
                  propertyConstraint: PropertyConstraint,
                  parentElement: DomainElement): Unit = {
     extractPropertyValue(propertyConstraint, parentElement) match {
-      case Some((_, scalar: AmfScalar, Some(value: String))) =>
+      case Some((_, _: AmfScalar, Some(value: String))) =>
         if (!propertyConstraint.in.contains(value)) {
           reportFailure(validationSpecification, propertyConstraint, parentElement.id, parentElement.annotations)
         }

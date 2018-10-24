@@ -5,6 +5,7 @@ import java.util.Optional
 import java.util.regex.Pattern
 
 import amf.core.model.document.PayloadFragment
+import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, _}
 import amf.core.vocabulary.Namespace
 import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
@@ -87,18 +88,8 @@ object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
         println(jsonSchema)
          */
 
-        /**
-          * Hack: Manipulate regex so that it works the same as in js. Cases:
-          *
-          * 1) When using "[^]" this means match any character in js, but it is an error in jvm because an empty
-          *    negated (^) set is not allowed. We replace it with [\S\s] which is the same, it means any character.
-          */
         case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
-          override def createHandler(regexp: String): Regexp = {
-            /* 1) */
-            val str = regexp.replaceAll("\\[\\^\\]", "[\\\\S\\\\s]")
-            super.createHandler(str)
-          }
+          override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)
         }
 
         val schemaBuilder = SchemaLoader
