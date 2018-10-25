@@ -5,7 +5,7 @@ import amf.plugins.domain.shapes.models.AnyShape
 
 object JsonSchemaValidatorBuilder {
 
-  def apply(): PlatformJsonSchemaValidator = JvmJsonSchemaValidator
+  def apply(): PlatformJsonSchemaValidator = JvmJsonSchemaValidator()
 
   def payloadValidator(shape: AnyShape): PlatformPayloadValidator = new JvmPayloadValidator(shape)
 

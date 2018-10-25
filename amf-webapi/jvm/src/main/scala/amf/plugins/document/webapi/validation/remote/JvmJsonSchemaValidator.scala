@@ -7,7 +7,7 @@ import java.util.regex.Pattern
 import amf.plugins.domain.shapes.models.AnyShape
 import org.everit.json.schema.FormatValidator
 
-object JvmJsonSchemaValidator extends PlatformJsonSchemaValidator {
+case class JvmJsonSchemaValidator() extends PlatformJsonSchemaValidator {
   override protected def validatorForShape(s: AnyShape): PlatformPayloadValidator = new JvmPayloadValidator(s)
 }
 
