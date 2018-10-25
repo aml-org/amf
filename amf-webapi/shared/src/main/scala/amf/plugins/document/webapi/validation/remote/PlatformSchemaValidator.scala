@@ -149,7 +149,10 @@ trait PlatformSchemaValidator {
   private def getOrCreateObj(s: AnyShape): Option[LoadedSchema] = {
     schemas.get(s.id) match {
       case Some(json) => Some(json)
-      case _          => generateShape(s)
+      case _ =>
+        val maybeSchema = generateShape(s)
+        maybeSchema.foreach { schemas.put(s.id, _) }
+        maybeSchema
     }
   }
 
