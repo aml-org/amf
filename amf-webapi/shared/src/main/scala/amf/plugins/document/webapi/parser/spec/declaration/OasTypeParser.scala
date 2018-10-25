@@ -292,7 +292,13 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       }
   }
 
-  private def searchLocalJsonSchema(ref: String, text: String, e: YMapEntry): Option[AnyShape] = {
+  private def searchLocalJsonSchema(r: String, t: String, e: YMapEntry): Option[AnyShape] = {
+    val (ref, text) =
+      if (ctx.linkTypes) (r, t)
+      else {
+        val fullref = ctx.resolvedPath(ctx.rootContextDocument, r)
+        (fullref, fullref)
+      }
     ctx.findJsonSchema(ref) match {
       case Some(s) =>
         val annots = Annotations(ast)
@@ -312,7 +318,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) if isDeclaration(ref) =>
             Some(tmpShape) // nothing to do, the unresolved will be resolved after
           case _ =>
-            ctx.findLocalJSONPath(ref) match {
+            ctx.findLocalJSONPath(r) match {
               case Some((_, shapeNode)) =>
                 OasTypeParser(YMapEntry(name, shapeNode), adopt, version)
                   .parse()
