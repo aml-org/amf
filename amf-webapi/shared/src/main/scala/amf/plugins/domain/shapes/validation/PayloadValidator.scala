@@ -60,7 +60,7 @@ object PayloadValidator {
     else {
 
       val f = if (validationMode == ScalarRelaxedValidationMode) {
-        ScalarPayloadForParam(result.fragment)
+        ScalarPayloadForParam(result.fragment, shape)
       } else
         result.fragment
       p.validateSet(ValidationShapeSet(Seq(ValidationCandidate(shape, f))), env)
@@ -132,11 +132,16 @@ object ScalarRelaxedValidationMode extends ValidationMode
 
 object ScalarPayloadForParam {
 
-  def apply(fragment: PayloadFragment): PayloadFragment = fragment.encodes match {
-    case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
-      PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
-                      fragment.mediaType.value())
-    case _ => fragment
+  def apply(fragment: PayloadFragment, shape: Shape): PayloadFragment = {
+    if (isString(shape) || unionWithString(shape)) {
+
+      fragment.encodes match {
+        case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
+          PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
+                          fragment.mediaType.value())
+        case _ => fragment
+      }
+    } else fragment
   }
 
   private def isString(shape: Shape): Boolean = shape match {

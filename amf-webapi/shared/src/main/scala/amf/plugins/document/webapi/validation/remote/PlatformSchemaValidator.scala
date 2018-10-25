@@ -219,7 +219,7 @@ trait ParameterValidator extends PlatformPayloadValidator {
                                          payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) = {
     buildPayloadNode(mediaType, payload) match {
       case (obj, Some(result)) if !result.hasError =>
-        val frag = ScalarPayloadForParam(result.fragment)
+        val frag = ScalarPayloadForParam(result.fragment, shape)
         (obj, Some(result.copy(fragment = frag)))
       case other => other
     }
