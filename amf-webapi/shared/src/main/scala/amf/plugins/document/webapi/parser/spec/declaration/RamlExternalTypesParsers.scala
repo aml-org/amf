@@ -192,6 +192,7 @@ case class RamlJsonSchemaExpression(key: YNode,
           shape
       }
     ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
+    ctx.globalSpace.clear()
     s
   }
 

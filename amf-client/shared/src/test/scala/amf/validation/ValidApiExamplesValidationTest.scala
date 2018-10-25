@@ -224,5 +224,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/lib-inheritance-recursion/api.raml")
   }
 
+  test("Test same name of definition at to json schemas") {
+    checkValid("/json-inner-ref/repeat-jsonschema-def-name/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

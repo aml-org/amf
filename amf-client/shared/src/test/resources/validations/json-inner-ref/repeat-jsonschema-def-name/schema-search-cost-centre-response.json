@@ -1,0 +1,161 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "description": "Schema definition for the SearchCostCentre response message",
+  "type": "object",
+  "required": [
+    "collection"
+  ],
+  "properties": {
+    "collection": {
+      "type": "array",
+      "description": "Cost centres matching the search request",
+      "items": {
+        "$ref": "#/definitions/costCentre"
+      },
+      "uniqueItems": true
+    }
+  },
+  "definitions": {
+    "costCentre": {
+      "type": "object",
+      "description": "Cost centre definition",
+      "required": [
+        "code",
+        "fullName",
+        "active",
+        "newfield"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The unique cost centre code, e.g. C1009000010"
+        },
+        "fullName": {
+          "type": "string",
+          "description": "The cost centre full name, e.g. School of Management and Marketing"
+        },
+        "shortName": {
+          "type": "string",
+          "description": "The cost centre short name, e.g. Sch of Mgmt & Mktg"
+        },
+        "active": {
+          "type": "boolean",
+          "description": "Indicates whether the cost centre is active"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "The purpose of the cost centre"
+        },
+        "restricted": {
+          "type": "boolean",
+          "description": "If the research monies, donations, prizes and trusts/foundations have specific legal or externally imposed requirements placed on them, then they are classified as restricted funds. For example, a donor may impose the condition that funds are to be spent for a specific purpose."
+        },
+        "newfield": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "staff": {
+      "type": "object",
+      "description": "The staff member definition",
+      "required": [
+        "staffId"
+      ],
+      "properties": {
+        "staffId": {
+          "type": "string",
+          "description": "Unique business identifier for a Curtin staff member"
+        }
+      },
+      "additionalProperties": false
+    },
+    "organisationalUnit": {
+      "type": "object",
+      "description": "Organisational unit definition",
+      "required": [
+        "code",
+        "name",
+        "type",
+        "level"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The organisational unit code, e.g. 3907"
+        },
+        "name": {
+          "type": "string",
+          "description": "The organisational unit name, e.g. Support Services"
+        },
+        "level": {
+          "type": "integer",
+          "description": "The organisational unit level in the institution hierarchy, e.g. 3"
+        }
+      },
+      "additionalProperties": false
+    },
+    "code": {
+      "type": "object",
+      "description": "Definition of a code value pair",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "The code in a code value pair. Unique within the codeset"
+        },
+        "value": {
+          "type": "string",
+          "description": "The value in a code value pair"
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Standard response metadata",
+      "required": [
+        "status",
+        "timestamp",
+        "links"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer",
+          "description": "Status of the response"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Response generated timestamp"
+        }
+      },
+      "additionalProperties": false
+    },
+    "links": {
+      "type": "array",
+      "description": "A list of links",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "link": {
+      "type": "object",
+      "description": "Link definition",
+      "required": [
+        "rel",
+        "href"
+      ],
+      "properties": {
+        "rel": {
+          "type": "string",
+          "description": "Relationship of a link"
+        },
+        "href": {
+          "type": "string",
+          "description": "HTTP reference of a link"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
