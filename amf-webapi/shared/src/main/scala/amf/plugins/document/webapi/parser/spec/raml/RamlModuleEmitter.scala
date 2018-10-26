@@ -28,10 +28,10 @@ case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterC
 
     // TODO invoke traits end resource types
 
-    YDocument(b => {
+    YDocument { b =>
       b.comment(RamlHeader.Raml10Library.text)
-      b.obj(traverse(ordering.sorted(emitters), _))
-    })
+      if (emitters.nonEmpty) b.obj(traverse(ordering.sorted(emitters), _))
+    }
   }
 }
 

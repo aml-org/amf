@@ -197,14 +197,10 @@ object Raml10Plugin extends RamlPlugin {
   }
 
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case _: Overlay         => true
-    case _: Extension       => true
-    case document: Document => document.encodes.isInstanceOf[WebApi]
-    case module: Module =>
-      module.declares exists {
-        case _: DomainElement => true
-        case _                => false
-      }
+    case _: Overlay                           => true
+    case _: Extension                         => true
+    case document: Document                   => document.encodes.isInstanceOf[WebApi]
+    case _: Module                            => true
     case _: DocumentationItemFragment         => true
     case _: DataTypeFragment                  => true
     case _: NamedExampleFragment              => true
