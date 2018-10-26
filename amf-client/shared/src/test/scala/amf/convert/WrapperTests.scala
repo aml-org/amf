@@ -8,6 +8,7 @@ import amf.client.AMF
 import amf.client.convert.NativeOps
 import amf.client.convert.CoreClientConverters._
 import amf.client.environment.{DefaultEnvironment, Environment}
+import amf.client.model.DataTypes
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._

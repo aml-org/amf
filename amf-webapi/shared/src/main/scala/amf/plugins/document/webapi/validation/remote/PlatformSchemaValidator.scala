@@ -54,7 +54,7 @@ trait PlatformSchemaValidator {
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
   val polymorphic: Boolean = shape.supportsInheritance
 
-  private val env = Environment()
+  protected val env = Environment()
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 
@@ -216,6 +216,7 @@ trait PlatformSchemaValidator {
 }
 
 trait ParameterValidator extends PlatformPayloadValidator {
+
   override protected def buildPayloadObj(mediaType: String,
                                          payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) = {
     buildPayloadNode(mediaType, payload) match {
@@ -224,6 +225,18 @@ trait ParameterValidator extends PlatformPayloadValidator {
         (obj, Some(result.copy(fragment = frag)))
       case other => other
     }
+  }
+  override protected def buildPayloadNode(mediaType: String,
+                                          payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+    val fixedResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape) match {
+      case result if !result.hasError =>
+        val frag = ScalarPayloadForParam(result.fragment, shape)
+        result.copy(fragment = frag)
+      case other => other
+    }
+
+    if (!fixedResult.hasError) (loadDataNodeString(fixedResult.fragment), Some(fixedResult))
+    else (None, Some(fixedResult))
   }
 }
 
