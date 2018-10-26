@@ -15,8 +15,6 @@ class JsPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(s
   override type LoadedObj    = js.Dynamic
   override type LoadedSchema = js.Dictionary[js.Dynamic]
 
-  protected val env = Environment()
-
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
     JsReportValidationProcessor(profileName)
 
