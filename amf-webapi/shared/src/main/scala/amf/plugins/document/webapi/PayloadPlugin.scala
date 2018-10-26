@@ -4,7 +4,7 @@ import amf.AmfProfile
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{DocBuilder, SyamlBuilder}
+import amf.core.emitter.{DocBuilder, RenderOptions, YDocumentBuilder}
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.{Payload, Platform}
@@ -75,15 +75,15 @@ object PayloadPlugin extends AMFDocumentPlugin {
   }
 
   /* Unparsing payloads not supported */
-  override def emit[T](unit: BaseUnit, builder: DocBuilder[T]): Boolean = (builder, unit) match {
-    case (sb: SyamlBuilder, p: PayloadFragment) =>
+  override def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions): Boolean = (builder, unit) match {
+    case (sb: YDocumentBuilder, p: PayloadFragment) =>
       sb.document = PayloadEmitter(p.encodes).emitDocument()
       true
     case _ => false
   }
 
 
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] = unit match {
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = unit match {
     case p: PayloadFragment =>
       Some(PayloadEmitter(p.encodes).emitDocument())
     case _ => None

@@ -1,6 +1,5 @@
 package amf.core.emitter
 
-import amf.plugins.document.graph.parser.ScalarEmitter
 import amf.client.render.{RenderOptions => ClientRenderOptions}
 import amf.core.metamodel.Field
 
@@ -9,17 +8,21 @@ import amf.core.metamodel.Field
   */
 class RenderOptions {
 
-  private var sources: Boolean                     = false
-  private var customEmitter: Option[ScalarEmitter] = None
-  private var compactUris: Boolean                 = false
-  private var rawSourceMaps: Boolean               = false
-  private var validating: Boolean                  = false
-  private var filterFields: Field => Boolean     = (_: Field) => false
-  private var amfJsonLdSerialization               = true
+  private var sources: Boolean               = false
+  private var compactUris: Boolean           = false
+  private var rawSourceMaps: Boolean         = false
+  private var validating: Boolean            = false
+  private var filterFields: Field => Boolean = (_: Field) => false
+  private var amfJsonLdSerialization         = true
+  private var useJsonLdEmitter               = true
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
     sources = true
+    this
+  }
+  def withJsonLdEmitter: RenderOptions = {
+    useJsonLdEmitter = true
     this
   }
 
@@ -49,11 +52,6 @@ class RenderOptions {
     this
   }
 
-  def withCustomEmitter(emitter: ScalarEmitter): RenderOptions = {
-    customEmitter = Some(emitter)
-    this
-  }
-
   def withValidation: RenderOptions = {
     validating = true
     this
@@ -79,13 +77,12 @@ class RenderOptions {
     this
   }
 
-  def isCompactUris: Boolean                  = compactUris
-  def isWithSourceMaps: Boolean               = sources
-  def isWithRawSourceMaps: Boolean             = rawSourceMaps
-  def getCustomEmitter: Option[ScalarEmitter] = customEmitter
-  def isAmfJsonLdSerilization: Boolean        = amfJsonLdSerialization
-  def isValidation: Boolean =
-    customEmitter.isDefined || validating // I consider that if CustomEmitter is defined, is a validation
+  def isCompactUris: Boolean             = compactUris
+  def isWithSourceMaps: Boolean          = sources
+  def isWithRawSourceMaps: Boolean       = rawSourceMaps
+  def isAmfJsonLdSerilization: Boolean   = amfJsonLdSerialization
+  def isValidation: Boolean              = validating
+  def isJsonLdEmitter: Boolean           = useJsonLdEmitter
   def renderField(field: Field): Boolean = !filterFields(field)
 }
 

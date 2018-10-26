@@ -3,6 +3,7 @@ package amf.plugins.document.webapi
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
@@ -172,7 +173,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] =
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
     firstAnyShape(unit) map (JsonSchemaEmitter(_).emitDocument())
 
   /**

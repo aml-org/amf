@@ -1,10 +1,10 @@
 package amf.emit
 
 import amf.Core
-import amf.core.emitter.RenderOptions
 import amf.common.ListAssertions
 import amf.core.AMFSerializer
-import amf.core.model.document.{BaseUnit, Document}
+import amf.core.emitter.RenderOptions
+import amf.core.model.document.Document
 import amf.core.parser._
 import amf.core.remote._
 import amf.plugins.document.graph.AMFGraphPlugin
@@ -15,7 +15,7 @@ import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.Matchers._
 import org.scalatest.{Assertion, FunSuite}
-import org.yaml.model.{YDocument, YMap}
+import org.yaml.model.YMap
 
 class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions {
 
@@ -151,8 +151,7 @@ class AMFMakerTest extends FunSuite with AMFUnitFixtureTest with ListAssertions 
     }
 
     new AMFSerializer(document, mediaType, vendor.name, RenderOptions())
-      .make()
-      .asInstanceOf[SyamlParsedDocument]
+      .renderAsYDocument()
       .document
       .node
       .as[YMap]

@@ -2,7 +2,7 @@ package amf.client.plugins
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{DocBuilder, RenderOptions, SyamlBuilder}
+import amf.core.emitter.{DocBuilder, RenderOptions, YDocumentBuilder}
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
@@ -57,9 +57,9 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
   /**
     * Unparses a model base unit and return a document AST
     */
-  def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
-    val builder = new SyamlBuilder(options)
-    if (emit(unit, builder)) Some(builder.result) else None
+  def unparse(unit: BaseUnit, renderOptions: RenderOptions): Option[ParsedDocument] = {
+    val builder = new YDocumentBuilder
+    if (emit(unit, builder, renderOptions)) Some(builder.result) else None
   }
 
   /**
@@ -67,16 +67,16 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
     * The type of Output is Managed by the DocBuilder
     * Returns false if the document cannot be built
     */
-  def emit[T](unit: BaseUnit, builder: DocBuilder[T]): Boolean = builder match {
-    case sb: SyamlBuilder =>
-      unparseAsYDocument(unit) exists { doc =>
+  def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions): Boolean = builder match {
+    case sb: YDocumentBuilder =>
+      unparseAsYDocument(unit, renderOptions) exists { doc =>
         sb.document = doc
         true
       }
     case _ => false
   }
 
-  protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument]
+  protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument]
 
   /**
     * Decides if this plugin can parse the provided document instance.

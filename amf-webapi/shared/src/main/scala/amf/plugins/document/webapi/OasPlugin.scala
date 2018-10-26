@@ -2,6 +2,7 @@ package amf.plugins.document.webapi
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
+import amf.core.emitter.RenderOptions
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
@@ -121,7 +122,7 @@ object Oas20Plugin extends OasPlugin {
     case _           => false
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] = unit match {
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = unit match {
     case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
     case document: Document         => Some(Oas2DocumentEmitter(document)(specContext).emitDocument())
     case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
@@ -175,7 +176,7 @@ object Oas30Plugin extends OasPlugin {
     case _           => false
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] = unit match {
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = unit match {
     case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
     case document: Document         => Some(Oas3DocumentEmitter(document)(specContext).emitDocument())
     case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))

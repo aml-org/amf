@@ -30,23 +30,13 @@ trait CommandHelper {
   }
 
   def ensureUrl(inputFile: String): String =
-    if (!inputFile.startsWith("file:") && !inputFile.startsWith("http:") && !inputFile.startsWith("https:")) {
-      if (inputFile.startsWith("/")) {
-        s"file:/$inputFile"
-      } else {
-        s"file://$inputFile"
-      }
-    } else {
-      inputFile
-    }
+    if (inputFile.startsWith("file:") || inputFile.startsWith("http:") || inputFile.startsWith("https:")) inputFile
+    else if (inputFile.startsWith("/")) s"file:/$inputFile"
+    else s"file://$inputFile"
 
   protected def processDialects(config: ParserConfig): Future[Unit] = {
-    val dialectFutures = config.dialects.map { dialect =>
-      AMLPlugin.registry.registerDialect(dialect)
-    }
-    Future.sequence(dialectFutures).map[Unit] { res =>
-      res
-    }
+    val dialectFutures = config.dialects.map(dialect => AMLPlugin.registry.registerDialect(dialect))
+    Future.sequence(dialectFutures) map [Unit](_ => {})
   }
 
   protected def parseInput(config: ParserConfig): Future[BaseUnit] = {
@@ -58,13 +48,8 @@ trait CommandHelper {
       Context(platform)
     )
     val vendor = effectiveVendor(config.inputFormat)
-    if (config.resolve) {
-      parsed map { unit =>
-        RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE)
-      }
-    } else {
-      parsed
-    }
+    if (config.resolve) parsed map (unit => RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE))
+    else parsed
   }
 
   protected def resolve(config: ParserConfig, unit: BaseUnit): Future[BaseUnit] = {
@@ -77,8 +62,7 @@ trait CommandHelper {
         config.inputFormat,
         Context(platform)
       )
-      parsed map { parsed =>
-        RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE)
+      parsed map { parsed => RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE)
       }
     } else if (config.resolve) {
       Future { RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE) }
@@ -121,7 +105,7 @@ trait CommandHelper {
     }
   }
 
-  def effectiveMediaType(mediaType: Option[String], vendor: Option[String]) = {
+  def effectiveMediaType(mediaType: Option[String], vendor: Option[String]): String = {
     mediaType match {
       case Some(effectiveMediaType) => effectiveMediaType
       case None =>

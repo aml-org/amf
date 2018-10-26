@@ -135,7 +135,7 @@ object Raml08Plugin extends RamlPlugin {
     case _                                    => false
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] = unit match {
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = unit match {
     case document: Document => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
     case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
     case _                  => None
@@ -191,7 +191,7 @@ object Raml10Plugin extends RamlPlugin {
     case _                                    => false
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] = unit match {
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = unit match {
     case module: Module             => Some(RamlModuleEmitter(module)(specContext).emitModule())
     case document: Document         => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
     case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
