@@ -166,6 +166,18 @@ object Namespace {
 
   private def resolve(prefix: String): Option[Namespace] = ns.get(prefix)
 
+  object XsdTypes {
+    val xsdString: ValueType  = Namespace.Xsd + "string"
+    val xsdInteger: ValueType = Namespace.Xsd + "integer"
+    val xsdFloat: ValueType   = Namespace.Xsd + "float"
+    val amlNumber: ValueType  = Namespace.Shapes + "number"
+    val amlLink: ValueType    = Namespace.Shapes + "link"
+    val xsdDouble: ValueType  = Namespace.Xsd + "double"
+    val xsdBoolean: ValueType = Namespace.Xsd + "boolean"
+    val xsdNil: ValueType     = Namespace.Xsd + "nil"
+    val xsdUri: ValueType     = Namespace.Xsd + "anyUri"
+  }
+
 }
 
 /** Value type. */
