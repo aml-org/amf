@@ -31,19 +31,20 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   OasTypeParser
 }
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
-import amf.plugins.document.webapi.parser.spec.{SpecSyntax, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax, WebApiDeclarations}
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
+import amf.plugins.document.webapi.parser.spec._
 import scala.concurrent.Future
 
 class JsonSchemaWebApiContext(loc: String,
                               refs: Seq[ParsedReference],
                               private val wrapped: ParserContext,
-                              private val ds: Option[WebApiDeclarations])
+                              private val ds: Option[OasWebApiDeclarations])
     extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax
@@ -154,7 +155,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
             Some(parentContext.asInstanceOf[WebApiContext].declarations)
           else None
         val jsonSchemaContext =
-          new JsonSchemaWebApiContext(url, document.references, cleanNested, inheritedDeclarations)
+          new JsonSchemaWebApiContext(url,
+                                      document.references,
+                                      cleanNested,
+                                      inheritedDeclarations.map(d => toOasDeclarations(d)))
 
         val documentRoot = parsedDoc.document.node
         val rootAst = findRootNode(documentRoot, jsonSchemaContext, hashFragment).getOrElse {

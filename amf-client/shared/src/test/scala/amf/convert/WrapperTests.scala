@@ -1364,7 +1364,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       // but if you dont have internet connection, you will not reach the a.ml host, so it will be an unknown host exception violation.
 
       statusCode.message should (endWith("Unexpected status code '404' for resource 'https://a.ml/notexists'") or
-        endWith("java.net.UnknownHostException: a.ml") or
+        endWith("Network Error: a.ml") or
         endWith("java.net.SocketTimeoutException: connect timed out") or
         endWith(
           "javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target"))

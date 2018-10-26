@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml",
+    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
       "http://a.ml/vocabularies/document#Fragment",
@@ -9,28 +9,25 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api",
         "@type": [
           "http://schema.org/WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/http#accepts": [
+        "http://schema.org/name": [
           {
-            "@value": "application/json"
+            "@value": "asd"
           }
         ],
-        "http://a.ml/vocabularies/http#contentType": [
+        "http://schema.org/version": [
           {
-            "@value": "application/json"
-          },
-          {
-            "@value": "application/xml"
+            "@value": "asddd"
           }
         ],
         "http://a.ml/vocabularies/http#endpoint": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource",
             "@type": [
               "http://a.ml/vocabularies/http#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -42,58 +39,53 @@
             ],
             "http://www.w3.org/ns/hydra/core#supportedOperation": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource/post",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get",
                 "@type": [
                   "http://www.w3.org/ns/hydra/core#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://www.w3.org/ns/hydra/core#method": [
                   {
-                    "@value": "post"
+                    "@value": "get"
                   }
                 ],
                 "http://www.w3.org/ns/hydra/core#expects": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource/post/request",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/http#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/http#payload": [
+                    "http://a.ml/vocabularies/http#parameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource/post/request/default",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/parameter/default",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Payload",
+                          "http://a.ml/vocabularies/http#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/document#link-target": [
+                        "http://schema.org/name": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp"
+                            "@value": "default"
                           }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document#link-label": [
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@value": "bp"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource/post/request/default/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                            "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource/post/request/default"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(14,10)-(16,0)]"
-                                  }
-                                ]
+                                "@value": "http://a.ml/vocabularies/http#parameter"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(8,6)-(11,0)]"
                               }
                             ]
                           }
@@ -104,7 +96,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource/post/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -112,12 +104,12 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource/post"
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(12,4)-(16,0)]"
+                            "@value": "[(7,4)-(11,0)]"
                           }
                         ]
                       }
@@ -128,7 +120,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -136,12 +128,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/end-points/%2Fresource"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(11,2)-(16,0)]"
+                        "@value": "[(6,2)-(11,0)]"
                       }
                     ]
                   }
@@ -152,7 +144,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -160,7 +152,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -179,43 +171,43 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(10,6)-(16,0)]"
+                    "@value": "[(5,6)-(11,0)]"
                   }
                 ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#accepts"
+                    "@value": "http://schema.org/name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(3,0)-(6,0)]"
+                    "@value": "[(3,2)-(4,0)]"
                   }
                 ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/web-api"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(25,12)]"
+                    "@value": "[(1,0)-(17,16)]"
                   }
                 ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#contentType"
+                    "@value": "http://schema.org/version"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,0)-(10,0)]"
+                    "@value": "[(4,2)-(5,0)]"
                   }
                 ]
               }
@@ -226,51 +218,61 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p1",
         "@type": [
-          "http://a.ml/vocabularies/http#Payload",
+          "http://a.ml/vocabularies/http#Parameter",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://schema.org/name": [
           {
-            "@value": "bp"
+            "@value": "p1"
+          }
+        ],
+        "http://www.w3.org/ns/hydra/core#required": [
+          {
+            "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/http#binding": [
+          {
+            "@value": "query"
           }
         ],
         "http://a.ml/vocabularies/http#schema": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp/bp",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p1/scalar/schema",
             "@type": [
-              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#ScalarShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://www.w3.org/ns/shacl#closed": [
+            "http://www.w3.org/ns/shacl#datatype": [
               {
-                "@value": false
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
               }
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "bp"
+                "@value": "schema"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp/bp/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p1/scalar/schema/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#parameter-binding-in-body-lexical-info": [
+                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp/bp"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p1/scalar/schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(18,4)-(19,0)]"
+                        "@value": "[(14,4)-(14,8)]"
                       }
                     ]
                   }
@@ -279,26 +281,24 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp/bp"
+                        "@value": "http://www.w3.org/ns/shacl#datatype"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(19,4)-(21,0)]"
+                        "@value": "[(14,4)-(15,0)]"
                       }
                     ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                  },
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp/bp"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p1/scalar/schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(20,6)-(20,10)]"
+                        "@value": "[(12,2)-(15,0)]"
                       }
                     ]
                   }
@@ -309,20 +309,20 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p1/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#parameter-name-for-payload": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p1"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "bp->[(21,4)-(22,0)]"
+                    "@value": ""
                   }
                 ]
               }
@@ -336,33 +336,31 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(19,4)-(21,0)]"
+                    "@value": "[(13,0)-(15,0)]"
                   }
                 ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p1"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(17,2)-(22,0)]"
+                    "@value": "[(12,2)-(15,0)]"
                   }
                 ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/bp"
+                    "@value": "http://a.ml/vocabularies/http#binding"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "[(13,4)-(14,0)]"
                   }
                 ]
               }
@@ -371,38 +369,48 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/fp",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p2",
         "@type": [
-          "http://a.ml/vocabularies/http#Payload",
+          "http://a.ml/vocabularies/http#Parameter",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://schema.org/name": [
           {
-            "@value": "fp"
+            "@value": "p2"
+          }
+        ],
+        "http://www.w3.org/ns/hydra/core#required": [
+          {
+            "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/http#binding": [
+          {
+            "@value": "query"
           }
         ],
         "http://a.ml/vocabularies/http#schema": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/fp/fp",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p2/scalar/schema",
             "@type": [
-              "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#ScalarShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://www.w3.org/ns/shacl#closed": [
+            "http://www.w3.org/ns/shacl#datatype": [
               {
-                "@value": false
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
               }
             ],
             "http://www.w3.org/ns/shacl#name": [
               {
-                "@value": "fp"
+                "@value": "schema"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/fp/fp/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p2/scalar/schema/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -410,12 +418,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/fp/fp"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p2/scalar/schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(24,4)-(24,8)]"
+                        "@value": "[(17,4)-(17,8)]"
                       }
                     ]
                   }
@@ -424,12 +432,24 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/fp/fp"
+                        "@value": "http://www.w3.org/ns/shacl#datatype"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(22,2)-(25,12)]"
+                        "@value": "[(17,4)-(17,16)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p2/scalar/schema"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(15,2)-(17,16)]"
                       }
                     ]
                   }
@@ -440,34 +460,20 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/fp/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p2/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#parameter-name-for-payload": [
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "fp->[(25,4)-(25,12)]"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#form-body-parameter": [
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/fp"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "true"
+                    "@value": ""
                   }
                 ]
               }
@@ -481,33 +487,31 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(23,0)-(25,12)]"
+                    "@value": "[(16,0)-(17,16)]"
                   }
                 ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/fp"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(22,2)-(25,12)]"
+                    "@value": "[(15,2)-(17,16)]"
                   }
                 ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/param-in-body-link/api.yaml#/declarations/parameters/fp"
+                    "@value": "http://a.ml/vocabularies/http#binding"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "[(16,4)-(17,0)]"
                   }
                 ]
               }

@@ -20,7 +20,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Parameter, Payload, Response}
-import org.yaml.model.YPart
+import org.yaml.model.{YMap, YNode, YPart}
 
 /**
   * Declarations object.
@@ -328,6 +328,32 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorResponse/"
     withId(idPart).withStatusCode("200")
+  }
+}
+
+class OasWebApiDeclarations(val asts: Map[String, YNode],
+                            override val alias: Option[String],
+                            override val errorHandler: Option[ErrorHandler],
+                            override val futureDeclarations: FutureDeclarations)
+    extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
+
+object OasWebApiDeclarations {
+  def apply(d: WebApiDeclarations): OasWebApiDeclarations = {
+    val declarations = new OasWebApiDeclarations(Map(),
+                                                 d.alias,
+                                                 errorHandler = d.errorHandler,
+                                                 futureDeclarations = d.futureDeclarations)
+    declarations.libs = d.libs
+    declarations.frags = d.frags
+    declarations.shapes = d.shapes
+    declarations.anns = d.anns
+    declarations.resourceTypes = d.resourceTypes
+    declarations.parameters = d.parameters
+    declarations.payloads = d.payloads
+    declarations.traits = d.traits
+    declarations.securitySchemes = d.securitySchemes
+    declarations.responses = d.responses
+    declarations // add withs methods?
   }
 }
 

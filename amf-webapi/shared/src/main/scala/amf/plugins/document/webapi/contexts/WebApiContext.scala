@@ -191,9 +191,23 @@ class ExtensionLikeWebApiContext(loc: String,
 abstract class OasWebApiContext(loc: String,
                                 refs: Seq[ParsedReference],
                                 private val wrapped: ParserContext,
-                                private val ds: Option[WebApiDeclarations] = None)
+                                private val ds: Option[OasWebApiDeclarations] = None)
     extends WebApiContext(loc, refs, wrapped, ds) {
 
+  override val declarations: OasWebApiDeclarations =
+    ds.getOrElse(
+      new OasWebApiDeclarations(
+        refs
+          .flatMap(
+            r =>
+              if (r.isExternalFragment)
+                r.unit.asInstanceOf[ExternalFragment].encodes.parsed.map(node => r.origin.url -> node)
+              else None)
+          .toMap,
+        None,
+        errorHandler = Some(this),
+        futureDeclarations = futureDeclarations
+      ))
   val factory: OasSpecVersionFactory
 
   override def link(node: YNode): Either[String, YNode] = {
@@ -219,7 +233,7 @@ abstract class OasWebApiContext(loc: String,
 class Oas2WebApiContext(loc: String,
                         refs: Seq[ParsedReference],
                         private val wrapped: ParserContext,
-                        private val ds: Option[WebApiDeclarations] = None)
+                        private val ds: Option[OasWebApiDeclarations] = None)
     extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
   override val vendor: Vendor              = Oas20
@@ -229,7 +243,7 @@ class Oas2WebApiContext(loc: String,
 class Oas3WebApiContext(loc: String,
                         refs: Seq[ParsedReference],
                         private val wrapped: ParserContext,
-                        private val ds: Option[WebApiDeclarations] = None)
+                        private val ds: Option[OasWebApiDeclarations] = None)
     extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
   override val vendor: Vendor              = Oas30
