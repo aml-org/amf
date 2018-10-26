@@ -119,5 +119,13 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/types/object-array.raml")
   }
 
+  test("Default type validation") {
+    validate("shapes/default_type.raml")
+  }
+
+  test("Default string type validation") {
+    validate("shapes/default-definition-type.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

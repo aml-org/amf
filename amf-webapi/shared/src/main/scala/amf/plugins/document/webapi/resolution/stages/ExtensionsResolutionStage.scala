@@ -19,7 +19,7 @@ import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
-import amf.plugins.domain.shapes.metamodel.ExampleModel
+import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.metamodel.common._
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
@@ -182,7 +182,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             extensionId: String,
             extensionLocation: Option[String]): DomainElement = {
     cleanSynthesizedFacets(master)
-    overlay.fields.fields().filter(f => ignored(f,master)).foreach {
+    overlay.fields.fields().filter(f => ignored(f, master)).foreach {
       case entry @ FieldEntry(field, value) =>
         master.fields.entry(field) match {
           case None if restrictions allowsNodeInsertionIn field =>
@@ -223,23 +223,25 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
               case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
             }
           case Some(existing) => // cannot be override
-            errorHandler.violation(
-              ParserSideValidations.ResolutionErrorSpecification.id,
-              field.toString,
-              s"Property '${existing.field.toString}' in '${master.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
-              value.annotations
-            )
+            if (!isSameDataType(existing, entry))
+              errorHandler.violation(
+                ParserSideValidations.ResolutionErrorSpecification.id,
+                field.toString,
+                s"Property '${existing.field.toString}' in '${master.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
+                value.annotations
+              )
         }
     }
     master
   }
 
-  def cleanSynthesizedFacets(domain: DomainElement): Unit = {
-    domain match {
-      case shape: Shape =>
-        shape.annotations.reject(_.isInstanceOf[SynthesizedField])
-      case _ => //
-    }
+  def isSameDataType(existing: FieldEntry, master: FieldEntry): Boolean =
+    existing.field == ScalarShapeModel.DataType && existing.value.toString == master.value.toString
+
+  def cleanSynthesizedFacets(domain: DomainElement): Unit = domain match {
+    case shape: Shape =>
+      shape.annotations.reject(_.isInstanceOf[SynthesizedField])
+    case _ => //
   }
 
   private def incompatibleType(master: DomainElement, overlay: DomainElement): Boolean = {

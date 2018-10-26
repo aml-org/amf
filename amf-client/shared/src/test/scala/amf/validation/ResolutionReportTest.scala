@@ -1,7 +1,6 @@
 package amf.validation
 import amf.Oas20Profile
 import amf.core.remote.{Hint, RamlYamlHint}
-import amf.plugins.document.webapi.Oas20Plugin
 
 class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
 
@@ -26,7 +25,7 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Unresolve inheritance from same class") {
-    checkReport("/types/unresolve-inherits-sameclass.raml", None)
+    checkReport("/types/unresolve-inherits-sameclass.raml")
   }
 
   test("Unresolve inheritance from different clases") {
@@ -34,19 +33,19 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Valid recursive optional property with items recursive") {
-    checkReport("/types/optional-prop-item-recursive.raml", None)
+    checkReport("/types/optional-prop-item-recursive.raml")
   }
 
   test("USed from propr recursive optional property with items recursive") {
-    checkReport("/types/optional-prop-item-recursive-used.raml", None)
+    checkReport("/types/optional-prop-item-recursive-used.raml")
   }
 
   test("Valid type with array property with items recursive") {
-    checkReport("/types/recursive-optional-array-item-type.raml", None)
+    checkReport("/types/recursive-optional-array-item-type.raml")
   }
 
   test("Items recursive without min items") {
-    checkReport("/types/arrays/items-recursive-allowed.raml", None)
+    checkReport("/types/arrays/items-recursive-allowed.raml")
   }
 
   test("Items recursive with min items") {
@@ -54,11 +53,11 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Test direct link to future reference") {
-    checkReport("/unresolve.raml", None)
+    checkReport("/unresolve.raml")
   }
 
   test("Test recursives valid") {
-    checkReport("/shapes/valid-recursives.raml", None)
+    checkReport("/shapes/valid-recursives.raml")
   }
 
   test("Test recursives invalid") {
@@ -96,55 +95,55 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
   }
 
   test("Valid annotation insertion in overlay") {
-    checkReport("/overlays/valid-insertion-declaration-annotation/overlay.raml", None)
+    checkReport("/overlays/valid-insertion-declaration-annotation/overlay.raml")
   }
 
   test("Valid declaration insertion in overlay") {
-    checkReport("/overlays/valid-insertion-declaration-type/overlay.raml", None)
+    checkReport("/overlays/valid-insertion-declaration-type/overlay.raml")
   }
 
   test("Valid documentation insertion in overlay") {
-    checkReport("/overlays/valid-insertion-documentation/overlay.raml", None)
+    checkReport("/overlays/valid-insertion-documentation/overlay.raml")
   }
 
   test("Valid documentation insertion in overlay 2") {
-    checkReport("/overlays/valid-insertion-documentation-2/overlay.raml", None)
+    checkReport("/overlays/valid-insertion-documentation-2/overlay.raml")
   }
 
   test("Valid operation example insertion in overlay") {
-    checkReport("/overlays/valid-insertion-operation-example/overlay.raml", None)
+    checkReport("/overlays/valid-insertion-operation-example/overlay.raml")
   }
 
   test("Valid type example insertion in overlay") {
-    checkReport("/overlays/valid-insertion-type-example/overlay.raml", None)
+    checkReport("/overlays/valid-insertion-type-example/overlay.raml")
   }
 
   test("Valid override title insertion in overlay") {
-    checkReport("/overlays/valid-override-title/overlay.raml", None)
+    checkReport("/overlays/valid-override-title/overlay.raml")
   }
 
   test("Valid complex overlay") {
-    checkReport("/overlays/valid-complex/overlay2.raml", None)
+    checkReport("/overlays/valid-complex/overlay2.raml")
   }
 
   test("Inline single prop inheritance from union") {
-    checkReport("/types/inline-union-inheritance.raml", None)
+    checkReport("/types/inline-union-inheritance.raml")
   }
 
   test("Inline single prop inheritance from complex") {
-    checkReport("/types/inline-union-inheritance2.raml", None)
+    checkReport("/types/inline-union-inheritance2.raml")
   }
 
   test("Test inner reference inside json schema") {
-    checkReport("/json-inner-ref/case1/api.raml", None)
+    checkReport("/json-inner-ref/case1/api.raml")
   }
 
   test("Test example and jsonschema with same name in diff folder") {
-    checkReport("/json-inner-ref/repeat-file-folder/api.raml", None)
+    checkReport("/json-inner-ref/repeat-file-folder/api.raml")
   }
 
   test("Test ref in root at json schema with other ref") {
-    checkReport("/json-inner-ref/ref-in-root-jsonschema/api.raml", None)
+    checkReport("/json-inner-ref/ref-in-root-jsonschema/api.raml")
   }
 
   test("Test reference to property and items at declared type oas") {

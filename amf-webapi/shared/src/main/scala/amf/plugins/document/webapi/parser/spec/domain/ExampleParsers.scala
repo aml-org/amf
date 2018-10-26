@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
 import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
@@ -62,7 +62,6 @@ case class RamlExamplesParser(map: YMap,
     RamlMultipleExampleParser(multipleExamplesKey, map, producer, options).parse() ++
       RamlSingleExampleParser(singleExampleKey, map, producer, options).parse()
   }
-
 }
 
 case class RamlMultipleExampleParser(key: String,
@@ -199,7 +198,7 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
     }
 
     node.toOption[YScalar] match {
-      case Some(scalar) if node.tagType == YType.Null =>
+      case Some(_) if node.tagType == YType.Null =>
         example.set(ExampleModel.Raw, AmfScalar("null", Annotations.valueNode(node)), Annotations.valueNode(node))
       case Some(scalar) =>
         example.set(ExampleModel.Raw, AmfScalar(scalar.text, Annotations.valueNode(node)), Annotations.valueNode(node))
@@ -210,7 +209,7 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
 
     }
 
-    val result = NodeDataNodeParser(targetNode, example.id, options.quiet, mutTarget).parse()
+    val result = NodeDataNodeParser(targetNode, example.id, options.quiet, mutTarget, options.isScalar).parse()
 
     result.dataNode.foreach { dataNode =>
       // If this example comes from a 08 param with type string, we force this to be a string
@@ -221,13 +220,17 @@ case class RamlExampleValueAsString(node: YNode, example: Example, options: Exam
   }
 }
 
-case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean, fromExternal: Boolean = false)(
-    implicit ctx: WebApiContext) {
+case class NodeDataNodeParser(node: YNode,
+                              parentId: String,
+                              quiet: Boolean,
+                              fromExternal: Boolean = false,
+                              isScalar: Boolean = false)(implicit ctx: WebApiContext) {
   def parse(): DataNodeParserResult = {
     val errorHandler = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
     var isJson       = false
     val exampleNode: Option[YNode] = node.toOption[YScalar] match {
       case Some(scalar) if scalar.mark.isInstanceOf[QuotedMark] => Some(node)
+      case Some(scalar) if isScalar                             => Some(node)
       case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined =>
         isJson = true
         node
@@ -268,6 +271,12 @@ case class NodeDataNodeParser(node: YNode, parentId: String, quiet: Boolean, fro
 
 case class DataNodeParserResult(exampleNode: Option[YNode], dataNode: Option[DataNode]) {}
 
-case class ExampleOptions(strictDefault: Boolean, quiet: Boolean)
+case class ExampleOptions(strictDefault: Boolean, quiet: Boolean, isScalar: Boolean = false) {
+  def checkScalar(shape: AnyShape): ExampleOptions = shape match {
+    case s: ScalarShape =>
+      ExampleOptions(strictDefault, quiet, isScalar = true)
+    case _ => this
+  }
+}
 
-object DefaultExampleOptions extends ExampleOptions(true, false)
+object DefaultExampleOptions extends ExampleOptions(true, false, false)

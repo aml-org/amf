@@ -232,8 +232,6 @@ class ProductionResolutionTest extends RamlResolutionTest {
     } yield {
       val simpleDeclares = simpleModel.asInstanceOf[Document].declares
       val doubleDeclares = doubleModel.asInstanceOf[Document].declares
-      println(simpleDeclares.length)
-      println(doubleDeclares.length)
       writeTemporaryFile("demo-api1.jsonld")(a)
       writeTemporaryFile("demo-api2.jsonld")(b)
       assert(simpleDeclares.length == doubleDeclares.length)

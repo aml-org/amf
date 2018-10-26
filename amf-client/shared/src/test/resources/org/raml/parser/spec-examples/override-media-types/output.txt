@@ -2,9 +2,9 @@
 title: New API
 types:
   Person:
-    type: any
+    type: string
   Another:
-    type: any
+    type: string
 /list:
   get:
     responses:
@@ -12,12 +12,12 @@ types:
         body:
           application/json:
             items:
-              type: any
+              type: string
           application/xml:
             items:
-              type: any
+              type: string
 /send:
   post:
     body:
       application/json:
-        type: any
+        type: string

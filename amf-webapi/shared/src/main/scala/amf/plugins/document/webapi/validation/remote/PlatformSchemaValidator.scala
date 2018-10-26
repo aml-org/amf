@@ -188,9 +188,7 @@ trait PlatformSchemaValidator {
             case _            => validationProcessor.processResults(Nil)
           }
         } catch {
-          case e: UnknownDiscriminator =>
-            println("processing uknown discriminator at perform validation")
-            validationProcessor.processException(e, fragmentOption)
+          case e: UnknownDiscriminator => validationProcessor.processException(e, fragmentOption)
         }
 
       case _ => validationProcessor.processResults(Nil) // ignore
@@ -236,7 +234,6 @@ object PolymorphicShapeExtractor {
     findPolymorphicEffectiveShape(closure, payload) match {
       case Some(shape: NodeShape) => shape
       case _ => // TODO: structurally can be a valid type, should we fail? By default RAML expects a failure
-        println("throwing exception at polymorpich extractor")
         throw new UnknownDiscriminator()
     }
   }

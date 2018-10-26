@@ -354,8 +354,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
                           AmfScalar(entry.key.as[String], Annotations(entry.key.value)),
                           Annotations(entry.key))
                 shape.adopted(parent)
-              },
-              defaultType = AnyDefaultType
+              }
             )
             parser.parse() match {
               case Some(shape) =>

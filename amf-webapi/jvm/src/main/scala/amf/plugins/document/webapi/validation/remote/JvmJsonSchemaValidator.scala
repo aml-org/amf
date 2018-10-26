@@ -64,18 +64,3 @@ object PartialTimeFormatValidator extends FormatValidator {
     }
   }
 }
-
-object Main {
-  def main(args: Array[String]): Unit = {
-    val pattern = Pattern.compile("(([0-9A-Z]+)([_]?+)*)*")
-    pattern.matcher("FOOOOO_BAAAR_FOOOOOOOOO_BA_ ").matches
-
-    val s = "^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$"
-    val javaOne = Pattern
-      .compile(s)
-      .matcher(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Marlon_Brando_%28cropped%29.jpg/220px-Marlon_Brando_%28cropped%29.jpg")
-      .find()
-    println(javaOne)
-  }
-}

@@ -17,7 +17,7 @@ resourceTypes:
           type: <<resourcePathName>>
 types:
   implemented-post:
-    type: any
+    type: string
 /unimplemented-post:
   get:
     queryParameters:
@@ -33,4 +33,4 @@ types:
   post:
     body:
       application/json:
-        type: any
+        type: string
