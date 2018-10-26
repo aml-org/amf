@@ -19,6 +19,8 @@ object ParametrizedSecuritySchemeModel extends DomainElementModel with KeyField 
 
   val Description = Field(Str, Namespace.Schema + "description", ModelDoc(ModelVocabularies.Security, "description", "Name for the security scheme", Seq((Namespace.Schema + "description").iri())))
 
+  val Description = Field(Str, Namespace.Schema + "description", ModelDoc(ModelVocabularies.Security, "description", "Name for the security scheme", Seq((Namespace.Schema + "description").iri())))
+
   val Scheme = Field(SecuritySchemeModel, Security + "scheme", ModelDoc(ModelVocabularies.Security, "scheme", ""))
 
   val Settings = Field(SettingsModel,
