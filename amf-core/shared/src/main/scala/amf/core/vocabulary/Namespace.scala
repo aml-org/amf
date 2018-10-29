@@ -176,6 +176,8 @@ object Namespace {
     val xsdBoolean: ValueType = Namespace.Xsd + "boolean"
     val xsdNil: ValueType     = Namespace.Xsd + "nil"
     val xsdUri: ValueType     = Namespace.Xsd + "anyUri"
+    val xsdAnyType: ValueType = Namespace.Xsd + "anyType"
+    val amlAnyNode: ValueType = Namespace.Meta + "anyNode"
   }
 
 }

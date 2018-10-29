@@ -1,0 +1,613 @@
+#%Dialect 1.0
+
+dialect: OAS
+version: "2.0"
+
+uses:
+  doc: ../aml_doc.yaml
+  http: ../http.yaml
+  shapes: ../shapes.yaml
+  meta: ../meta.yaml
+  security: ../security.yaml
+
+external:
+  schema-org: http://schema.org/
+  shacl: http://www.w3.org/ns/shacl#
+  hydra: http://www.w3.org/ns/hydra/core#
+  meta: http://a.ml/vocabularies/meta#
+  owl: http://www.w3.org/2002/07/owl#
+
+documents:
+  root:
+    encodes: WebAPIObject
+    declares:
+      definitions: SchemaObject
+      parameters: ParameterObject
+      responses: ResponseObject
+
+nodeMappings:
+
+  WebAPIObject:
+    classTerm: schema-org.WebAPI
+    mapping:
+      swagger:
+        propertyTerm: meta.implicit
+        range: string
+        mandatory: true
+      info:
+        propertyTerm: owl.sameAs
+        range: InfoObject
+        mandatory: true
+      host:
+        propertyTerm: http.url
+        range: string
+      basePath:
+        propertyTerm: http.url
+        range: string
+      schemes:
+        propertyTerm: http.scheme
+        range: string
+        allowMultiple: true
+        enum:
+          - ws
+          - wss
+          - http
+          - https
+      consumes:
+        propertyTerm: http.accepts
+        range: string
+        allowMultiple: true
+      produces:
+        propertyTerm: http.contentType
+        range: string
+        allowMultiple: true
+      securityDefinitions:
+        propertyTerm: doc.declares
+        range:
+          - BasicSecurityScheme
+          - ApiKeySecurityScheme
+          - Oauth2SecurityScheme
+        mapKey: security.name
+        allowMultiple: true
+        typeDiscriminator:
+          basic: BasicSecurityScheme
+          apiKey: ApiKeySecurityScheme
+          oauth2: Oauth2SecurityScheme
+        typeDiscriminatorName: type
+      security:
+        propertyTerm: security.security
+        range: anyNode
+      paths:
+        propertyTerm: http.endpoint
+        range: PathItemObject
+        mapKey: http.path
+        mandatory: true
+        allowMultiple: true
+
+  InfoObject:
+    classTerm: schema-org.WebAPI
+    mapping:
+      title:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.name
+        range: string
+      termsOfService:
+        propertyTerm: schema-org.termsOfService
+        range: string
+      version:
+        propertyTerm: schema-org.version
+        range: string
+      contact:
+        propertyTerm: schema-org.provider
+        range: ContactObject
+      license:
+        propertyTerm: schema-org.license
+        range: LicenseObject
+
+  BodyParameterObject:
+    classTerm: http.Parameter
+    mapping:
+      declarationName:
+        propertyTerm: schema-org.name
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      required:
+        propertyTerm: hydra.required
+        range: boolean
+        mandatory: true
+      name:
+        propertyTerm: http.paramName
+        range: string
+        mandatory: true
+      in:
+        propertyTerm: http.binding
+        range: string
+        mandatory: true
+        enum:
+          - body
+      schema:
+        propertyTerm: http.schema
+        range: SchemaObject
+        mandatory: true
+
+  BasicSecurityScheme:
+    classTerm: security.ParametrizedSecurityScheme
+    mapping:
+      schemeName:
+        propertyTerm: security.name
+        range: string
+        mandatory: true
+      type:
+        propertyTerm: security.scheme
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+
+  LicenseObject:
+    classTerm: http.License
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+        mandatory: true
+      url:
+        propertyTerm: schema-org.url
+        range: uri
+
+  SchemaObject:
+    classTerm: shacl.Shape
+    mapping:
+      title:
+        propertyTerm: shacl.name
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+        mandatory: true
+      required:
+        propertyTerm: shacl.minCount
+        range: boolean
+      readOnly:
+        propertyTerm: shapes.readOnly
+        range: boolean
+      discriminator:
+        propertyTerm: shapes.discriminator
+        range: string
+      type:
+        propertyTerm: meta.implicit
+        range: string
+        mandatory: true
+        enum:
+          - object
+          - string
+          - number
+          - integer
+          - boolean
+          - array
+          - file
+      xml:
+        propertyTerm: shapes.xmlSerialization
+        range: XMLObject
+      externalDocs:
+        propertyTerm: schema-org.documentation
+        range: ExternalDocumentationObject
+      example:
+        propertyTerm: doc.examples
+        range: anyNode
+      format:
+        propertyTerm: shapes.format
+        range: string
+      items:
+        propertyTerm: shapes.items
+        range: SchemaObject
+      collectionFormat:
+        propertyTerm: shapes.collectionFormat
+        range: string
+        enum:
+          - csv
+          - ssv
+          - tsv
+          - pipes
+          - multi
+      default:
+        propertyTerm: shacl.defaultValue
+        range: any
+      maximum:
+        propertyTerm: shacl.maxInclusive
+        range: number
+      exclusiveMaximum:
+        propertyTerm: shacl.maxExclusive
+        range: number
+      minimum:
+        propertyTerm: shacl.minInclusive
+        range: number
+      exclusiveMinimum:
+        propertyTerm: shacl.minExclusive
+        range: number
+      maxLength:
+        propertyTerm: shacl.maxLength
+        range: integer
+      minLength:
+        propertyTerm: shacl.minLength
+        range: integer
+      pattern:
+        propertyTerm: shacl.pattern
+        range: string
+      maxItems:
+        propertyTerm: shacl.maxCount
+        range: integer
+      minItems:
+        propertyTerm: shacl.minCount
+        range: integer
+      uniqueItems:
+        propertyTerm: shapes.uniqueItems
+        range: boolean
+      multipleOf:
+        propertyTerm: shapes.multipleOf
+        range: number
+      enum:
+        propertyTerm: shacl.in
+        range: any
+
+  ParameterObject:
+    classTerm: http.Parameter
+    mapping:
+      declarationName:
+        propertyTerm: schema-org.name
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      required:
+        propertyTerm: hydra.required
+        range: boolean
+        mandatory: true
+      name:
+        propertyTerm: http.paramName
+        range: string
+        mandatory: true
+      in:
+        propertyTerm: http.binding
+        range: string
+        mandatory: true
+        enum:
+          - query
+          - header
+          - path
+          - formData
+      type:
+        propertyTerm: meta.implicit
+        range: string
+        mandatory: true
+        enum:
+          - string
+          - number
+          - integer
+          - boolean
+          - array
+          - file
+      format:
+        propertyTerm: shapes.format
+        range: string
+      allowEmptyValue:
+        propertyTerm: http.allowEmptyValue
+        range: boolean
+      format:
+        propertyTerm: shapes.format
+        range: string
+      items:
+        propertyTerm: shapes.items
+        range: SchemaObject
+      collectionFormat:
+        propertyTerm: shapes.collectionFormat
+        range: string
+        enum:
+          - csv
+          - ssv
+          - tsv
+          - pipes
+          - multi
+      default:
+        propertyTerm: shacl.defaultValue
+        range: any
+      maximum:
+        propertyTerm: shacl.maxInclusive
+        range: number
+      exclusiveMaximum:
+        propertyTerm: shacl.maxExclusive
+        range: number
+      minimum:
+        propertyTerm: shacl.minInclusive
+        range: number
+      exclusiveMinimum:
+        propertyTerm: shacl.minExclusive
+        range: number
+      maxLength:
+        propertyTerm: shacl.maxLength
+        range: integer
+      minLength:
+        propertyTerm: shacl.minLength
+        range: integer
+      pattern:
+        propertyTerm: shacl.pattern
+        range: string
+      maxItems:
+        propertyTerm: shacl.maxCount
+        range: integer
+      minItems:
+        propertyTerm: shacl.minCount
+        range: integer
+      uniqueItems:
+        propertyTerm: shapes.uniqueItems
+        range: boolean
+      multipleOf:
+        propertyTerm: shapes.multipleOf
+        range: number
+      enum:
+        propertyTerm: shacl.in
+        range: any
+
+  ResponseObject:
+    classTerm: http.Response
+    mapping:
+      description:
+        propertyTerm: schema-org.description
+        range: string
+        mandatory: true
+      schema:
+        propertyTerm: http.payload
+        range: SchemaObject
+      headers:
+        propertyTerm: http.header
+        range: ParameterObject
+        mapKey: schema-org.name
+      examples:
+        propertyTerm: doc.examples
+        range: ExampleObject
+        mapKey: http.mediaType
+        mapValue: shacl.raw
+
+  PathItemObject:
+    classTerm: http.EndPoint
+    mapping:
+      name:
+        propertyTerm: http.path
+        range: string
+        mandatory: true
+        pattern: ^\/.*$
+      get:
+        propertyTerm: hydra.supportedOperation
+        range: OperationObject
+      put:
+        propertyTerm: hydra.supportedOperation
+        range: OperationObject
+      post:
+        propertyTerm: hydra.supportedOperation
+        range: OperationObject
+      delete:
+        propertyTerm: hydra.supportedOperation
+        range: OperationObject
+      options:
+        propertyTerm: hydra.supportedOperation
+        range: OperationObject
+      head:
+        propertyTerm: hydra.supportedOperation
+        range: OperationObject
+      patch:
+        propertyTerm: hydra.supportedOperation
+        range: OperationObject
+      parameter:
+        propertyTerm: http.parameter
+        range:
+          - ParameterObject
+          - BodyParameterObject
+        allowMultiple: true
+
+  Oauth2SecurityScheme:
+    classTerm: security.ParametrizedSecurityScheme
+    mapping:
+      name:
+        propertyTerm: security.name
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      type:
+        propertyTerm: security.scheme
+        range: string
+        mandatory: true
+      flow:
+        propertyTerm: security.flow
+        range: string
+        mandatory: true
+        enum:
+          - implicit
+          - password
+          - application
+          - accessCode
+      authorizationUrl:
+        propertyTerm: security.authorizationUri
+        range: uri
+      tokenUrl:
+        propertyTerm: security.accessTokenUri
+        range: uri
+      scopes:
+        propertyTerm: security.scope
+        range: ScopeObject
+        mapKey: security.description
+
+  ScopeObject:
+    classTerm: security.Scope
+    mapping:
+      name:
+        propertyTerm: security.name
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: security.description
+        range: string
+
+  ApiKeySecurityScheme:
+    classTerm: security.ParametrizedSecurityScheme
+    mapping:
+      schemeName:
+        propertyTerm: security.name
+        range: string
+        mandatory: true
+      type:
+        propertyTerm: security.scheme
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      name:
+        propertyTerm: security.name
+        range: string
+        mandatory: true
+      in:
+        propertyTerm: security.in
+        range: string
+        mandatory: true
+        enum:
+          - query
+          - header
+
+  ContactObject:
+    classTerm: schema-org.Organization
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      url:
+        propertyTerm: schema-org.url
+        range: uri
+      email:
+        propertyTerm: schema-org.email
+        range: string
+
+  ExampleObject:
+    classTerm: doc.Example
+    mapping:
+      mediaType:
+        propertyTerm: http.mediaType
+        range: string
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+
+  ExternalDocumentationObject:
+    classTerm: schema-org.CreativeWork
+    mapping:
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      url:
+        propertyTerm: schema-org.url
+        range: string
+        mandatory: true
+
+  OperationObject:
+    classTerm: hydra.Operation
+    mapping:
+      tags:
+        propertyTerm: http.tag
+        range: TagObject
+        allowMultiple: true
+      summary:
+        propertyTerm: http.guiSummary
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      externalDocs:
+        propertyTerm: schema-org.documentation
+        range: ExternalDocumentationObject
+      operationId:
+        propertyTerm: schema-org.name
+        range: string
+      consumes:
+        propertyTerm: http.accepts
+        range: string
+        allowMultiple: true
+      produces:
+        propertyTerm: http.contentType
+        range: string
+        allowMultiple: true
+      parameters:
+        propertyTerm: http.uriParameter
+        range: ParameterObject
+        allowMultiple: true
+      responses:
+        propertyTerm: hydra.returns
+        range: ResponseObject
+        mapKey: hydra.statusCode
+        mandatory: true
+      schemes:
+        propertyTerm: http.scheme
+        range: string
+        allowMultiple: true
+        enum:
+          - ws
+          - wss
+          - http
+          - https
+      deprecated:
+        propertyTerm: doc.deprecated
+        range: boolean
+      security:
+        propertyTerm: security.security
+        range:
+          - BasicSecurityScheme
+          - ApiKeySecurityScheme
+          - Oauth2SecurityScheme
+        mapKey: security.name
+        allowMultiple: true
+        typeDiscriminator:
+          basic: BasicSecurityScheme
+          apiKey: ApiKeySecurityScheme
+          oauth2: Oauth2SecurityScheme
+        typeDiscriminatorName: type
+
+  TagObject:
+    classTerm: http.Tag
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      externalDocs:
+        propertyTerm: schema-org.externalDocs
+        range: ExternalDocumentationObject
+
+  XMLObject:
+    classTerm: shapes.XMLSerializer
+    mapping:
+      name:
+        propertyTerm: shapes.xmlName
+        range: string
+      namespace:
+        propertyTerm: shapes.xmlNamespace
+        range: link
+      prefix:
+        propertyTerm: shapes.xmlPrefix
+        range: string
+      attribute:
+        propertyTerm: shapes.xmlAttribute
+        range: boolean
+      wrapped:
+        propertyTerm: shapes.xmlWrapped
+        range: boolean

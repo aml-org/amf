@@ -24,30 +24,36 @@ trait AliasesConsumer extends DialectEmitterHelper {
   val dialect: Dialect
   val aliases: Map[String, (String, String)]
   def aliasFor(id: String): Option[String] = {
-    maybeFindNodeMappingById(id) match {
-      case Some((_, nodeMapping: NodeMapping)) =>
-        if (id.startsWith(dialect.id)) {
-          Some(nodeMapping.name.value())
-        } else {
-          aliases.keySet.find(id.contains(_)).map { key =>
-            val alias = aliases(key)._1
-            alias + "." + nodeMapping.name.value()
-          } orElse { Some(nodeMapping.name.value()) }
-        }
-
-      case _ =>
-        if (id.startsWith(dialect.id)) {
-          Some(id.split(dialect.id).last.replace("/declarations/", ""))
-        } else {
-          aliases.keySet.find(id.contains(_)) map { key =>
-            val alias = aliases(key)._1
-            val postfix = id.split(key).last match {
-              case i if i.contains("/declarations/") => i.replace("/declarations/", "")
-              case nonLibraryDeclaration             => nonLibraryDeclaration
+    if (Option(id).isEmpty) {
+      None
+    } else {
+      maybeFindNodeMappingById(id) match {
+        case Some((_, nodeMapping: NodeMapping)) =>
+          if (id.startsWith(dialect.id)) {
+            Some(nodeMapping.name.value())
+          } else {
+            aliases.keySet.find(id.contains(_)).map { key =>
+              val alias = aliases(key)._1
+              alias + "." + nodeMapping.name.value()
+            } orElse {
+              Some(nodeMapping.name.value())
             }
-            alias + "." + postfix
           }
-        }
+
+        case _ =>
+          if (id.startsWith(dialect.id)) {
+            Some(id.split(dialect.id).last.replace("/declarations/", ""))
+          } else {
+            aliases.keySet.find(id.contains(_)) map { key =>
+              val alias = aliases(key)._1
+              val postfix = id.split(key).last match {
+                case i if i.contains("/declarations/") => i.replace("/declarations/", "")
+                case nonLibraryDeclaration => nonLibraryDeclaration
+              }
+              alias + "." + postfix
+            }
+          }
+      }
     }
   }
 }
