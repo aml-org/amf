@@ -18,7 +18,7 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
-    "org.scalatest"    %%% "scalatest" % "3.0.0" % Test,
+    "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0"
   )
 )
