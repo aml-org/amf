@@ -26,19 +26,19 @@ resourceTypes:
     put:
       body:
         application/json:
-          example: 80
-          type: number
           minimum: 0
           maximum: 100
           format: int
+          type: number
+          example: 80
     get:
       responses:
         200:
           body:
             application/json:
-              example: 80
-              type: number
               minimum: 0
               maximum: 100
               format: int
+              type: number
+              example: 80
     description: Entity representing a level

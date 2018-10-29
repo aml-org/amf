@@ -10,15 +10,15 @@ title: hola
     queryParameters:
       orderby:
         description: Expression for determining what values are used to order the collection of Entries
-        required: false
         type: string
+        required: false
 /down2:
   get:
     queryParameters:
       orderby:
         description: Expression for determining what values are used to order the collection of Entries
-        required: false
         type: string
+        required: false
 uses:
   lib1: /lib1.raml
   lib2: subdir/lib2.raml

@@ -5,7 +5,7 @@ import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain._
-import amf.core.parser.{ErrorHandler, FragmentRef, ParserContext}
+import amf.core.parser.{Annotations, ErrorHandler, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.{RuntimeValidator, ValidationsMerger}
 import amf.core.validation.AMFValidationResult
@@ -15,6 +15,7 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.features.validation.ParserSideValidations
+import org.mulesoft.lexer.InputRange
 import org.yaml.model._
 
 import scala.collection.mutable
