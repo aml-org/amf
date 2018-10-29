@@ -60,27 +60,12 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
     }
   }
 
-  override def unparse(mediaType: String, doc: ParsedDocument): Option[String] = {
-    doc match {
-      case input: SyamlParsedDocument =>
-        val ast = input.document
-        render(mediaType, ast) { (format, ast) =>
-          {
-            Some(if (format == "yaml") YamlRender.render(ast) else JsonRender.render(ast))
-          }
-        }
-      case input: RdfModelDocument if platform.rdfFramework.isDefined =>
-        platform.rdfFramework.get.rdfModelToSyntax(mediaType, input)
-      case _ => None
-    }
-  }
-
   override def unparse[W: Output](mediaType: String, doc: ParsedDocument, writer: W): Option[W] = {
     doc match {
       case input: SyamlParsedDocument =>
         val ast = input.document
         render(mediaType, ast) { (format, ast) =>
-          if (format == "yaml") YamlRender.render(writer, ast) else JsonRender.render(ast, writer)
+          if (format == "yaml") YamlRender.render(writer, ast, expandReferences = false) else JsonRender.render(ast, writer)
           Some(writer)
         }
       case input: RdfModelDocument if platform.rdfFramework.isDefined =>

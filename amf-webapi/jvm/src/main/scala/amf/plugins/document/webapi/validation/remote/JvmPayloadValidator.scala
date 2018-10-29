@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.validation.remote
 
-import amf.core.emitter.RenderOptions
+import amf.core.emitter.YDocumentBuilder
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
 import amf.core.validation.core.ValidationProfile
@@ -14,8 +14,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, FileShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
 import org.everit.json.schema.loader.SchemaLoader
-import org.everit.json.schema.Validator
-import org.everit.json.schema.{Schema, ValidationException}
+import org.everit.json.schema.{Schema, ValidationException, Validator}
 import org.json.{JSONObject, JSONTokener}
 
 import scala.concurrent.Future
@@ -102,40 +101,37 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    Oas20Plugin.unparse(dataType, RenderOptions()) match {
-      case Some(doc) =>
-        SYamlSyntaxPlugin.unparse("application/json", doc) match {
-          case Some(jsonSchema) =>
-            loadJson(jsonSchema.replace("x-amf-union", "anyOf")) match {
-              case schemaNode: JSONObject =>
-                schemaNode.remove("x-amf-fragmentType")
-                schemaNode.remove("example")
-                schemaNode.remove("examples")
+    val builder = new YDocumentBuilder
+    if (!Oas20Plugin.emit(dataType, builder)) return None
 
-                val schemaBuilder = SchemaLoader
-                  .builder()
-                  .schemaJson(schemaNode)
-                  .addFormatValidator(DateTimeOnlyFormatValidator)
-                  .addFormatValidator(Rfc2616Attribute)
-                  .addFormatValidator(Rfc2616AttributeLowerCase)
-                  .addFormatValidator(new DateFormatValidator())
-                  .addFormatValidator(new URIFormatValidator())
-                  .addFormatValidator(new RegexFormatValidator())
-                  .addFormatValidator(PartialTimeFormatValidator)
+    SYamlSyntaxPlugin.unparse("application/json", builder.result) match {
+      case Some(jsonSchema) =>
+        loadJson(jsonSchema.toString.replace("x-amf-union", "anyOf")) match {
+          case schemaNode: JSONObject =>
+            schemaNode.remove("x-amf-fragmentType")
+            schemaNode.remove("example")
+            schemaNode.remove("examples")
 
-                Some(schemaBuilder.build().load().build())
-              case _ => None
-            }
+            val schemaBuilder = SchemaLoader
+              .builder()
+              .schemaJson(schemaNode)
+              .addFormatValidator(DateTimeOnlyFormatValidator)
+              .addFormatValidator(Rfc2616Attribute)
+              .addFormatValidator(Rfc2616AttributeLowerCase)
+              .addFormatValidator(new DateFormatValidator())
+              .addFormatValidator(new URIFormatValidator())
+              .addFormatValidator(new RegexFormatValidator())
+              .addFormatValidator(PartialTimeFormatValidator)
+
+            Some(schemaBuilder.build().load().build())
           case _ => None
         }
-      case _ =>
-        None
+      case _ => None
     }
   }
 
   protected def loadDataNodeString(payload: PayloadFragment): Object = {
-    literalRepresentation(payload) map { payloadText =>
-      loadJson(payloadText)
+    literalRepresentation(payload) map { payloadText => loadJson(payloadText)
     } match {
       case Some(parsed) => parsed
       case _            => throw new Exception("Cannot parse payload")

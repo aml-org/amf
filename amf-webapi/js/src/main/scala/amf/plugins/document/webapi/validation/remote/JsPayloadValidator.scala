@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.validation.remote
 
-import amf.core.emitter.RenderOptions
+import amf.core.emitter.YDocumentBuilder
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
-import amf.core.validation.{AMFValidationReport, ValidationCandidate}
 import amf.core.validation.core.ValidationProfile
+import amf.core.validation.{AMFValidationReport, ValidationCandidate}
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.Oas20Plugin
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
@@ -89,27 +89,24 @@ class JsPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    Oas20Plugin.unparse(dataType, RenderOptions()) match {
-      case Some(doc) =>
-        SYamlSyntaxPlugin.unparse("application/json", doc) match {
-          case Some(jsonSchema) =>
-            val schemaNode = js.Dynamic.global.JSON
-              .parse(jsonSchema.replace("x-amf-union", "anyOf"))
-              .asInstanceOf[js.Dictionary[js.Dynamic]]
-            schemaNode -= "x-amf-fragmentType"
-            schemaNode -= "example"
-            schemaNode -= "examples"
-            Some(schemaNode.asInstanceOf[js.Object])
-          case _ => None
-        }
-      case _ =>
-        None
+    val builder = new YDocumentBuilder
+    if (!Oas20Plugin.emit(dataType, builder)) return None
+
+    SYamlSyntaxPlugin.unparse("application/json", builder.result) match {
+      case Some(jsonSchema) =>
+        val schemaNode = js.Dynamic.global.JSON
+          .parse(jsonSchema.toString.replace("x-amf-union", "anyOf"))
+          .asInstanceOf[js.Dictionary[js.Dynamic]]
+        schemaNode -= "x-amf-fragmentType"
+        schemaNode -= "example"
+        schemaNode -= "examples"
+        Some(schemaNode.asInstanceOf[js.Object])
+      case _ => None
     }
   }
 
   protected def loadDataNodeString(payload: PayloadFragment): js.Dynamic = {
-    literalRepresentation(payload) map { payloadText =>
-      js.Dynamic.global.JSON.parse(payloadText)
+    literalRepresentation(payload) map { payloadText => js.Dynamic.global.JSON.parse(payloadText)
     } match {
       case Some(parsed) => parsed
       case _            => throw new Exception("Cannot parse payload")

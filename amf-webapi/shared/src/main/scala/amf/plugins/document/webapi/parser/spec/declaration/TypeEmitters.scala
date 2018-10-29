@@ -1359,19 +1359,9 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
             }
           case None => None
         })
-
       case _ => None
     }
-
-    pointer match {
-      case Some(pointerRef) =>
-        b.entry(
-          "$ref",
-          pointerRef
-        )
-      case _ =>
-      // ignore
-    }
+    for (p <- pointer) b.entry("$ref", p)
   }
 
   private def findInPath(id: String) = {

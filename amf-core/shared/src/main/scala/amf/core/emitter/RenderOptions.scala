@@ -15,6 +15,7 @@ class RenderOptions {
   private var filterFields: Field => Boolean = (_: Field) => false
   private var amfJsonLdSerialization         = true
   private var useJsonLdEmitter               = true
+  val direct = true
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
