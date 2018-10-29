@@ -5,12 +5,11 @@ import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.{AmfObject, AmfScalar}
 import amf.core.parser.Position._
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
-import org.mulesoft.lexer.{InputRange, TokenData}
+import org.mulesoft.lexer.InputRange
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model._
 
 import scala.collection.mutable
-import scala.reflect.internal.annotations
 
 package object BaseEmitters {
 
