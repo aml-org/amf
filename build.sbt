@@ -8,6 +8,7 @@ name := "amf"
 version in ThisBuild := "2.1.0-SNAPSHOT"
 
 publish := {}
+parallelExecution in ThisBuild := false
 
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
@@ -16,6 +17,7 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
   resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
+  parallelExecution in ThisBuild := false,
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
