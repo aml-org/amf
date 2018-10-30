@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.core.AMFSerializer
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.services.RuntimeValidator
@@ -8,7 +9,6 @@ import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.TypeDef.{IntType, StrType}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import amf.plugins.domain.shapes.validation.{ScalarRelaxedValidationMode, StrictValidationMode, ValidationMode}
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.AsyncFunSuite

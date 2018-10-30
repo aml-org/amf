@@ -34,7 +34,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
   private def groupResults(report: AMFValidationReport): Seq[AMFValidationResult] = {
     // we can order here or order in each json schema validator pair when ask for the exception causes
 
-    val indexedResults: Map[String, Seq[AMFValidationResult]] = report.results.sorted.groupBy { r =>
+    val indexedResults: Map[String, List[AMFValidationResult]] = report.results.toList.sorted.groupBy { r =>
       r.targetNode
     }
     index.aggregate(indexedResults)
@@ -44,7 +44,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
 
 sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
 
-  def aggregate(indexedResult: Map[String, Seq[AMFValidationResult]]): Option[AMFValidationResult] = {
+  def aggregate(indexedResult: Map[String, List[AMFValidationResult]]): Option[AMFValidationResult] = {
     val sonsResults: Seq[AMFValidationResult] = collectResults(indexedResult)
 
     indexedResult.get(d.id) match {
@@ -69,7 +69,7 @@ sealed case class DataNodeEntry(d: DataNode, sonsKeys: Seq[String]) {
 
   private def sorted(elements: Seq[AMFValidationResult]) = elements.sorted // need order by something of the targetNode
 
-  private def buildRootResult(rootResults: Seq[AMFValidationResult], additionalMessage: Option[String]) = {
+  private def buildRootResult(rootResults: List[AMFValidationResult], additionalMessage: Option[String]) = {
     val sortedResults = sorted(rootResults)
     sortedResults match {
       case rootResult :: Nil if additionalMessage.isDefined =>
@@ -128,6 +128,6 @@ sealed case class DataNodeIndex(private val dataNodes: Seq[DataNode]) {
     }
   }
 
-  def aggregate(indexedResult: Map[String, Seq[AMFValidationResult]]): Seq[AMFValidationResult] =
+  def aggregate(indexedResult: Map[String, List[AMFValidationResult]]): Seq[AMFValidationResult] =
     index.flatMap { case (id, entry) => entry aggregate indexedResult }.toSeq
 }

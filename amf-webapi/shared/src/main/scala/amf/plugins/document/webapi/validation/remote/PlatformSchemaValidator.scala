@@ -1,61 +1,64 @@
 package amf.plugins.document.webapi.validation.remote
 
-import amf.client.plugins.PayloadParsingResult
+import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
-import amf.core.parser.SyamlParsedDocument
-import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
+import amf.core.parser.{ErrorHandler, ParserContext, SyamlParsedDocument}
+import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.document.webapi.annotations.ParsedJSONExample
-import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
+import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, PayloadContext}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
+import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
-import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
-import amf.plugins.domain.shapes.validation.ScalarPayloadForParam
+import amf.plugins.domain.shapes.models._
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.{ProfileName, ProfileNames}
 import org.yaml.builder.YDocumentBuilder
+import org.yaml.model._
+import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
 class UnknownDiscriminator()                extends RuntimeException
 class UnsupportedMediaType(msg: String)     extends Exception(msg)
 
-abstract class PlatformPayloadValidator(shape: AnyShape) extends PlatformSchemaValidator {
+abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
 
+  override val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
 
-  def fastValidation(mediaType: String, payload: String): Boolean = {
+  override def fastValidation(mediaType: String, payload: String): Boolean = {
     validateForPayload(mediaType, payload, BooleanValidationProcessor)
   }
 
-  def validate(mediaType: String, payload: String): AMFValidationReport = {
+  override def validate(mediaType: String, payload: String): AMFValidationReport = {
     validateForPayload(mediaType, payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
   }
 
-  def validate(fragment: PayloadFragment): AMFValidationReport = {
+  override def validate(fragment: PayloadFragment): AMFValidationReport = {
     validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
   }
 
-}
-
-/* trait for all platform natives validations (payload and schema) */
-trait PlatformSchemaValidator {
-
   type LoadedObj
   type LoadedSchema
-  val shape: AnyShape
+  val validationMode: ValidationMode
 
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
-  val polymorphic: Boolean = shape.supportsInheritance
 
-  protected val env = Environment()
+  val polymorphic: Boolean = shape match {
+    case a: AnyShape => a.supportsInheritance
+    case _           => false
+  }
+
+  val env = Environment()
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 
@@ -80,14 +83,15 @@ trait PlatformSchemaValidator {
     }
   }
 
+  /* i need to do this check?? */
   protected def validateForPayload(mediaType: String,
                                    payload: String,
                                    validationProcessor: ValidationProcessor): validationProcessor.Return = {
-    if (mediaType != "application/json" && mediaType != "application/yaml") {
+    if (!PayloadValidatorPlugin.payloadMediaType.contains(mediaType)) {
       validationProcessor.processResults(
         Seq(
           AMFValidationResult(
-            s"Unsupported payload media type '$mediaType', only application/json and application/yaml supported",
+            s"Unsupported payload media type '$mediaType', only ${PayloadValidatorPlugin.payloadMediaType.toString()} supported",
             SeverityLevels.VIOLATION,
             "",
             None,
@@ -145,7 +149,7 @@ trait PlatformSchemaValidator {
   }
 
   private def buildObjPolymorphicShape(payload: DataNode): Option[LoadedSchema] =
-    getOrCreateObj(PolymorphicShapeExtractor(shape, payload))
+    getOrCreateObj(PolymorphicShapeExtractor(shape.asInstanceOf[AnyShape], payload)) // if is polymorphic is an any shape
 
   private def getOrCreateObj(s: AnyShape): Option[LoadedSchema] = {
     schemas.get(s.id) match {
@@ -159,14 +163,60 @@ trait PlatformSchemaValidator {
 
   protected def buildPayloadObj(mediaType: String,
                                 payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) = {
-    if (mediaType == "application/json") (Some(loadJson(payload)), None)
+    if (mediaType == "application/json" && validationMode != ScalarRelaxedValidationMode)
+      (Some(loadJson(payload)), None)
     else {
       buildPayloadNode(mediaType, payload)
     }
   }
 
+  def parsePayloadWithErrorHandler(payload: String,
+                                   mediaType: String,
+                                   env: Environment,
+                                   shape: Shape): PayloadParsingResult = {
+
+    val errorHandler = PayloadErrorHandler()
+    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getErrors)
+  }
+  private def parsePayload(payload: String, mediaType: String, errorHandler: ParseErrorHandler): PayloadFragment = {
+    val defaultCtx = new PayloadContext("", Nil, ParserContext())
+
+    val parser = mediaType match {
+      case "application/json" => JsonParser(payload)(errorHandler)
+      case _                  => YamlParser(payload)(errorHandler)
+    }
+    parser.parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
+      case Some(node: YNode) =>
+        PayloadFragment(DataNodeParser(node)(defaultCtx).parse(), mediaType)
+      case None => PayloadFragment(ScalarNode(payload, None), mediaType)
+    }
+  }
+  case class PayloadErrorHandler() extends ErrorHandler {
+    override val currentFile: String                          = ""
+    override val parserCount: Int                             = 1
+    private val errors: ListBuffer[AMFValidationResult]       = ListBuffer()
+    override def handle(node: YPart, e: SyamlException): Unit = errors += processError(e.getMessage)
+    override def handle[T](error: YError, defaultValue: T): T = {
+      errors += processError(error.error)
+      defaultValue
+    }
+    def getErrors: List[AMFValidationResult] = errors.toList
+    private def processError(message: String): AMFValidationResult =
+      new AMFValidationResult(message, SeverityLevels.VIOLATION, "", None, "", None, None, "")
+  }
+
   protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
-    val payloadResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
+    val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, env, shape) match {
+      case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
+        val frag = ScalarPayloadForParam(result.fragment, shape)
+        result.copy(fragment = frag)
+      case other => other
+    }
+    if (!fixedResult.hasError) (loadDataNodeString(fixedResult.fragment), Some(fixedResult))
+    else (None, Some(fixedResult))
+
+  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+    val payloadResult = parsePayloadWithErrorHandler(payload, mediaType, env, shape)
     if (!payloadResult.hasError) (loadDataNodeString(payloadResult.fragment), Some(payloadResult))
     else (None, Some(payloadResult))
   }
@@ -181,12 +231,25 @@ trait PlatformSchemaValidator {
           {
             resultOption match {
               case Some(result) if polymorphic =>
-                buildObjPolymorphicShape(result.fragment.encodes) // if is polymorphic I already parse the payload
-              case _ => getOrCreateObj(shape)
+                Right(buildObjPolymorphicShape(result.fragment.encodes)) // if is polymorphic I already parse the payload
+              case _ if shape.isInstanceOf[AnyShape] => Right(getOrCreateObj(shape.asInstanceOf[AnyShape]))
+              case _ =>
+                Left(
+                  validationProcessor.processResults(Seq(AMFValidationResult(
+                    "Cannot validate shape that is not an any shape",
+                    defaultSeverity,
+                    "",
+                    Some(shape.id),
+                    (Namespace.AmfParser + "example-validation-error").iri(),
+                    shape.position(),
+                    shape.location(),
+                    null
+                  ))))
             }
           } match {
-            case Some(schema) => callValidator(schema, obj, fragmentOption, validationProcessor)
-            case _            => validationProcessor.processResults(Nil)
+            case Right(Some(schema)) => callValidator(schema, obj, fragmentOption, validationProcessor)
+            case Left(result)        => result
+            case _                   => validationProcessor.processResults(Nil)
           }
         } catch {
           case e: UnknownDiscriminator => validationProcessor.processException(e, fragmentOption)
@@ -214,31 +277,6 @@ trait PlatformSchemaValidator {
     }
   }
 
-}
-
-trait ParameterValidator extends PlatformPayloadValidator {
-
-  override protected def buildPayloadObj(mediaType: String,
-                                         payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) = {
-    buildPayloadNode(mediaType, payload) match {
-      case (obj, Some(result)) if !result.hasError =>
-        val frag = ScalarPayloadForParam(result.fragment, shape)
-        (obj, Some(result.copy(fragment = frag)))
-      case other => other
-    }
-  }
-  override protected def buildPayloadNode(mediaType: String,
-                                          payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
-    val fixedResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape) match {
-      case result if !result.hasError =>
-        val frag = ScalarPayloadForParam(result.fragment, shape)
-        result.copy(fragment = frag)
-      case other => other
-    }
-
-    if (!fixedResult.hasError) (loadDataNodeString(fixedResult.fragment), Some(fixedResult))
-    else (None, Some(fixedResult))
-  }
 }
 
 object PolymorphicShapeExtractor {
@@ -271,4 +309,30 @@ object PolymorphicShapeExtractor {
         }
     }
   }
+}
+
+object ScalarPayloadForParam {
+
+  def apply(fragment: PayloadFragment, shape: Shape): PayloadFragment = {
+    if (isString(shape) || unionWithString(shape)) {
+
+      fragment.encodes match {
+        case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
+          PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
+                          fragment.mediaType.value())
+        case _ => fragment
+      }
+    } else fragment
+  }
+
+  private def isString(shape: Shape): Boolean = shape match {
+    case s: ScalarShape => s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri()))
+    case _              => false
+  }
+
+  private def unionWithString(shape: Shape): Boolean = shape match {
+    case u: UnionShape => u.anyOf.exists(isString)
+    case _             => false
+  }
+
 }

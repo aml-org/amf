@@ -4,13 +4,14 @@ import amf.core.model.document.{BaseUnit, Module}
 import amf.core.remote.RamlYamlHint
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
+import amf.internal.environment.Environment
 import amf.plugins.document.webapi.resolution.pipelines.AmfResolutionPipeline
 import amf.plugins.domain.shapes.models.AnyShape
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 
-class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
+class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -29,7 +30,7 @@ class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
     } yield {
       val shape     = findShape(library, "A")
-      val validator = shape.payloadValidator()
+      val validator = shape.payloadValidator("application/json").get
 
       assert(validator.fastValidation("application/json", "{\"a\": 10}"))
       assert(!validator.fastValidation("application/json", "{\"a\": \"10\"}"))
@@ -42,7 +43,7 @@ class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
     } yield {
       val shape     = findShape(library, "B")
-      val validator = shape.payloadValidator()
+      val validator = shape.payloadValidator("application/json").get
 
       assert(validator.fastValidation("application/json", "wadus"))
     }
@@ -55,7 +56,7 @@ class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       val resolved  = new AmfResolutionPipeline(library).resolve()
       val shape     = findShape(resolved, "D")
-      val validator = shape.payloadValidator()
+      val validator = shape.payloadValidator("application/json").get
 
       assert(validator.fastValidation("application/json", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}"))
     }
@@ -68,7 +69,7 @@ class PlatformPayloadValidatorTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       val resolved  = new AmfResolutionPipeline(library).resolve()
       val shape     = findShape(resolved, "D")
-      val validator = shape.payloadValidator()
+      val validator = shape.payloadValidator("application/json", Environment()).get
 
       try {
         validator.fastValidation("application/wadus", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}")

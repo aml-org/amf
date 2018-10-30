@@ -21,10 +21,11 @@ object ShapesNodesValidator {
     validateEnums(candidates, severity, env).flatMap { r =>
       if (!r.conforms) Future.successful(r)
       else
-      // filter for only enum cases
-        PayloadValidator.validateAll(candidates.filter(_.payload.fields.exists(PayloadFragmentModel.Encodes)),
-                                     severity,
-                                     env) // filter for only enum cases
+        // filter for only enum cases
+        PayloadValidationPluginsHandler.validateAll(
+          candidates.filter(_.payload.fields.exists(PayloadFragmentModel.Encodes)),
+          severity,
+          env) // filter for only enum cases
     }
   }
 
@@ -43,7 +44,7 @@ object ShapesNodesValidator {
         case _ => Nil
       })
     //call to validation
-    PayloadValidator.validateAll(enumsCandidates.toSeq, severity, env).map { r =>
+    PayloadValidationPluginsHandler.validateAll(enumsCandidates.toSeq, severity, env).map { r =>
       restoreEnums(bkpMap)
       r
     }

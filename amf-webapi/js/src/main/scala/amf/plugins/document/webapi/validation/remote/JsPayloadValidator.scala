@@ -1,22 +1,24 @@
 package amf.plugins.document.webapi.validation.remote
 import amf.ProfileName
+import amf.client.plugins.ValidationMode
 import amf.core.model.document.PayloadFragment
+import amf.core.model.domain.Shape
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
-import amf.plugins.domain.shapes.models.AnyShape
 
 import scala.scalajs.js
-import scala.scalajs.js.{JavaScriptException, SyntaxError}
+import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
 
-class JsPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(shape) {
+class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
+    extends PlatformPayloadValidator(shape) {
 
   override type LoadedObj    = js.Dynamic
-  override type LoadedSchema = js.Dictionary[js.Dynamic]
+  override type LoadedSchema = Dictionary[js.Dynamic]
 
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
     JsReportValidationProcessor(profileName)
 
-  override protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
+  override protected def loadDataNodeString(payload: PayloadFragment): Option[js.Dynamic] = {
     try {
       literalRepresentation(payload) map { payloadText =>
         loadJson(payloadText)
@@ -27,20 +29,20 @@ class JsPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(s
     }
   }
 
-  override protected def loadJson(str: String): LoadedObj = {
+  override protected def loadJson(str: String): js.Dynamic = {
     js.Dynamic.global.JSON.parse(str)
   }
 
-  override protected def loadSchema(jsonSchema: CharSequence): Option[LoadedSchema] = {
-    var schemaNode = loadJson(jsonSchema.toString).asInstanceOf[js.Dictionary[js.Dynamic]]
+  override protected def loadSchema(jsonSchema: CharSequence): Option[Dictionary[js.Dynamic]] = {
+    var schemaNode = loadJson(jsonSchema.toString).asInstanceOf[Dictionary[js.Dynamic]]
     schemaNode -= "x-amf-fragmentType"
     schemaNode -= "example"
     schemaNode -= "examples"
     Some(schemaNode)
   }
 
-  override protected def callValidator(schema: LoadedSchema,
-                                       obj: LoadedObj,
+  override protected def callValidator(schema: Dictionary[js.Dynamic],
+                                       obj: js.Dynamic,
                                        fragment: Option[PayloadFragment],
                                        validationProcessor: ValidationProcessor): validationProcessor.Return = {
 
@@ -70,7 +72,7 @@ class JsPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(s
         validationProcessor.processResults(results)
       }
     } catch {
-      case e: scala.scalajs.js.JavaScriptException =>
+      case e: JavaScriptException =>
         validationProcessor.processException(e, fragment)
     }
   }
@@ -103,5 +105,3 @@ case class JsReportValidationProcessor(override val profileName: ProfileName) ex
     processResults(results)
   }
 }
-
-class JsParameterValidator(override val shape: AnyShape) extends JsPayloadValidator(shape) with ParameterValidator

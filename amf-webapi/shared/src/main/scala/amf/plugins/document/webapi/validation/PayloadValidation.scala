@@ -1,11 +1,10 @@
 package amf.plugins.document.webapi.validation
 
-import amf.ProfileNames
 import amf.client.plugins._
 import amf.core.benchmark.ExecutionLog
-import amf.core.model.document.{Module, PayloadFragment}
+import amf.core.model.document.Module
 import amf.core.model.domain._
-import amf.core.parser.{ErrorHandler, ParserContext}
+import amf.core.parser.ParserContext
 import amf.core.services.{DefaultValidationOptions, RuntimeValidator}
 import amf.core.validation.SeverityLevels._
 import amf.core.validation._
@@ -13,30 +12,21 @@ import amf.core.validation.core.{PropertyConstraint, ValidationProfile, Validati
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.contexts.PayloadContext
-import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
-import org.yaml.model._
-import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
-                             validations: EffectiveValidations = EffectiveValidations())
+case class ShaclPayloadValidation(validationCandidates: Seq[ValidationCandidate],
+                                  validations: EffectiveValidations = EffectiveValidations())
     extends WebApiValidations
     with JsonSchemaSecrets {
 
   val profiles: ListBuffer[ValidationProfile]                  = ListBuffer[ValidationProfile]()
   val validationsCache: mutable.Map[String, ValidationProfile] = mutable.Map()
-
-  def validate(): Future[AMFValidationReport] = {
-    // return validateWithShacl()
-    jsonSchemaValidator.validate(validationCandidates,
-                                 profiles.headOption.getOrElse(ValidationProfile(ProfileNames.AMF, None)))
-  }
 
   def validateWithShacl(): Future[AMFValidationReport] = {
     validationCandidates.foreach { vc =>
@@ -168,7 +158,7 @@ case class PayloadValidation(validationCandidates: Seq[ValidationCandidate],
   }
 }
 
-object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
+object PayloadValidatorPlugin extends AMFPayloadValidationPlugin with JsonSchemaSecrets {
 
   override def canValidate(shape: Shape, env: Environment): Boolean = {
     shape match {
@@ -188,50 +178,6 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin {
 
   val defaultCtx = new PayloadContext("", Nil, ParserContext())
 
-  override def parsePayloadWithErrorHandler(payload: String,
-                                            mediaType: String,
-                                            env: Environment,
-                                            shape: Shape): PayloadParsingResult = {
-    val errorHandler = PayloadErrorHandler()
-    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getErrors)
-  }
-
-  override def parsePayload(payload: String, mediaType: String, env: Environment, shape: Shape): PayloadFragment =
-    parsePayload(payload, mediaType, ParseErrorHandler.parseErrorHandler)
-
-  private def parsePayload(payload: String, mediaType: String, errorHandler: ParseErrorHandler): PayloadFragment = {
-
-    val parser = mediaType match {
-      case "application/json" => JsonParser(payload)(errorHandler)
-      case _                  => YamlParser(payload)(errorHandler)
-    }
-    parser.parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
-      case Some(node: YNode) =>
-        PayloadFragment(DataNodeParser(node)(defaultCtx).parse(), mediaType)
-      case None => PayloadFragment(ScalarNode(payload, None), mediaType)
-    }
-
-  }
-
-  override def validateSet(set: ValidationShapeSet, env: Environment): Future[AMFValidationReport] =
-    PayloadValidation(set.candidates).validate()
-
-  case class PayloadErrorHandler() extends ErrorHandler {
-    override val currentFile: String = ""
-    override val parserCount: Int    = 1
-
-    private val errors: ListBuffer[AMFValidationResult] = ListBuffer()
-
-    override def handle(node: YPart, e: SyamlException): Unit = errors += processError(e.getMessage)
-
-    override def handle[T](error: YError, defaultValue: T): T = {
-      errors += processError(error.error)
-      defaultValue
-    }
-
-    def getErrors: List[AMFValidationResult] = errors.toList
-
-    private def processError(message: String): AMFValidationResult =
-      new AMFValidationResult(message, VIOLATION, "", None, "", None, None, "")
-  }
+  override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator =
+    payloadValidator(s, validationMode)
 }

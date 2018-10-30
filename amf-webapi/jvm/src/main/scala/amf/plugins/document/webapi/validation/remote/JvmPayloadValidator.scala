@@ -1,18 +1,20 @@
 package amf.plugins.document.webapi.validation.remote
 
 import amf.ProfileName
+import amf.client.plugins.ValidationMode
 import amf.core.model.document.PayloadFragment
+import amf.core.model.domain.Shape
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
-import amf.plugins.domain.shapes.models.AnyShape
 import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, ValidationException, Validator}
 import org.json.{JSONException, JSONObject, JSONTokener}
 
-class JvmPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(shape) {
+class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
+    extends PlatformPayloadValidator(shape) {
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
     override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)
@@ -86,16 +88,6 @@ class JvmPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
     JvmReportValidationProcessor(profileName)
 }
-
-class JvmParameterValidator(override val shape: AnyShape)
-    extends JvmPayloadValidator(shape: AnyShape)
-    with ParameterValidator
-
-trait ValidationMode
-
-object StrictValidationMode extends ValidationMode
-
-object ScalarRelaxedValidationMode extends ValidationMode
 
 case class JvmReportValidationProcessor(override val profileName: ProfileName) extends ReportValidationProcessor {
 

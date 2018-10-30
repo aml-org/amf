@@ -1,6 +1,7 @@
 package amf.core.registries
 
 import amf.client.plugins._
+import amf.core.validation.AMFPayloadValidationPlugin
 
 import scala.collection.mutable
 
@@ -19,12 +20,12 @@ object AMFPluginsRegistry {
   private val payloadValidationPluginIDRegistry: mutable.HashMap[String, AMFPayloadValidationPlugin] =
     mutable.HashMap()
 
-  def plugins =
+  def plugins: Iterable[AMFPlugin] =
     syntaxPluginIDRegistry.values ++ documentPluginIDRegistry.values ++ domainPluginRegistry.values ++ featurePluginIDRegistry.values
 
-  def documentPlugins = documentPluginIDRegistry.values
+  def documentPlugins: Iterable[AMFDocumentPlugin] = documentPluginIDRegistry.values
 
-  def registerSyntaxPlugin(syntaxPlugin: AMFSyntaxPlugin) = {
+  def registerSyntaxPlugin(syntaxPlugin: AMFSyntaxPlugin): Unit = {
     syntaxPluginIDRegistry.get(syntaxPlugin.ID) match {
       case Some(_) => // ignore
       case None =>
@@ -42,7 +43,7 @@ object AMFPluginsRegistry {
     }
   }
 
-  def cleanMediaType(mediaType: String) =
+  def cleanMediaType(mediaType: String): String =
     if (mediaType.contains(";")) {
       mediaType.split(";").head
     } else {
@@ -57,7 +58,7 @@ object AMFPluginsRegistry {
     }
   }
 
-  def registerFeaturePlugin(featurePlugin: AMFFeaturePlugin) = {
+  def registerFeaturePlugin(featurePlugin: AMFFeaturePlugin): Unit = {
     featurePluginIDRegistry.get(featurePlugin.ID) match {
       case Some(_) => // ignore
       case None =>
@@ -68,7 +69,7 @@ object AMFPluginsRegistry {
 
   def featurePlugins(): Seq[AMFFeaturePlugin] = featurePluginIDRegistry.values.toSeq
 
-  def registerDocumentPlugin(documentPlugin: AMFDocumentPlugin) = {
+  def registerDocumentPlugin(documentPlugin: AMFDocumentPlugin): Unit = {
     documentPluginIDRegistry.get(documentPlugin.ID) match {
       case Some(_) => // ignore
       case None =>
@@ -114,7 +115,7 @@ object AMFPluginsRegistry {
     documentPluginVendorsRegistry.getOrElse(vendor, Seq()).sortBy(_.priority)
   }
 
-  def registerDomainPlugin(domainPlugin: AMFDomainPlugin) = {
+  def registerDomainPlugin(domainPlugin: AMFDomainPlugin): Unit = {
     domainPluginRegistry.get(domainPlugin.ID) match {
       case Some(_) => // ignore
       case None =>
@@ -137,7 +138,7 @@ object AMFPluginsRegistry {
     }
   }
 
-  def registerPayloadValidationPlugin(validationPlugin: AMFPayloadValidationPlugin) = {
+  def registerPayloadValidationPlugin(validationPlugin: AMFPayloadValidationPlugin): Unit = {
     payloadValidationPluginIDRegistry.get(validationPlugin.ID) match {
       case Some(_) =>
       case None =>

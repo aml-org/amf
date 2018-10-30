@@ -3,11 +3,12 @@ import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, RamlYamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
-import amf.core.validation.ValidationCandidate
+import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, Validation}
+import amf.internal.environment.Environment
 import amf.plugins.document.graph.parser.JsonLdEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
-import amf.plugins.document.webapi.validation.PayloadValidation
+import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.{AmfProfile, PayloadProfile}
 import org.scalatest.AsyncFunSuite
 import org.yaml.builder.JsonOutputBuilder
@@ -65,7 +66,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint
       }
-      val validation: Future[PayloadValidation] = for {
+      val candidates: Future[Seq[ValidationCandidate]] = for {
         validation <- Validation(platform).map(_.withEnabledValidation(false))
         library    <- AMFCompiler(payloadsPath + libraryFile, platform, RamlYamlHint, validation).build()
         payload    <- AMFCompiler(payloadsPath + payloadFile, platform, hint, validation).build()
@@ -80,13 +81,11 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
           }
           .get
 
-        val candidates =
-          Seq(ValidationCandidate(targetType.asInstanceOf[Shape], payload.asInstanceOf[PayloadFragment]))
-        PayloadValidation(candidates)
+        Seq(ValidationCandidate(targetType.asInstanceOf[Shape], payload.asInstanceOf[PayloadFragment]))
       }
 
-      validation flatMap {
-        _ validate ()
+      candidates flatMap { c =>
+        PayloadValidationPluginsHandler.validateAll(c, SeverityLevels.VIOLATION, Environment())
       } map { report =>
         report.results.foreach { result => assert(result.position.isDefined)
         }

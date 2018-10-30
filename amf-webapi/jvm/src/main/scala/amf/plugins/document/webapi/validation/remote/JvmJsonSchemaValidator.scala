@@ -2,14 +2,8 @@ package amf.plugins.document.webapi.validation.remote
 
 import java.time.format.{DateTimeFormatter, DateTimeFormatterBuilder, DateTimeParseException}
 import java.util.Optional
-import java.util.regex.Pattern
 
-import amf.plugins.domain.shapes.models.AnyShape
 import org.everit.json.schema.FormatValidator
-
-case class JvmJsonSchemaValidator() extends PlatformJsonSchemaValidator {
-  override protected def validatorForShape(s: AnyShape): PlatformPayloadValidator = new JvmPayloadValidator(s)
-}
 
 class Rfc2616Attribute extends FormatValidator {
 

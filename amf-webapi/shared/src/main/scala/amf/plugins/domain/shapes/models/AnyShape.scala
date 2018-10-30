@@ -1,21 +1,18 @@
 package amf.plugins.domain.shapes.models
 
+import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode}
 import amf.core.annotations.DeclaredElement
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
-import amf.core.validation.{AMFValidationReport, SeverityLevels}
+import amf.core.validation.{AMFValidationReport, PayloadValidator, SeverityLevels}
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.annotations.InlineDefinition
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
-import amf.plugins.document.webapi.validation.remote.{
-  PlatformPayloadValidator,
-  ParameterValidator => InternalParameterValidator
-}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
-import amf.plugins.domain.shapes.validation.{PayloadValidator, ScalarRelaxedValidationMode}
+import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
 import org.yaml.model.YPart
@@ -119,23 +116,33 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
     AnyShape(fields, annotations).withId(id)
 
   def validateParameter(payload: String, env: Environment): Future[AMFValidationReport] =
-    PayloadValidator.validate(this, payload, SeverityLevels.VIOLATION, env, ScalarRelaxedValidationMode)
+    PayloadValidationPluginsHandler.validateWithGuessing(this,
+                                                         payload,
+                                                         SeverityLevels.VIOLATION,
+                                                         env,
+                                                         ScalarRelaxedValidationMode)
 
   def validateParameter(payload: String): Future[AMFValidationReport] = validateParameter(payload, Environment())
 
   def validate(payload: String, env: Environment): Future[AMFValidationReport] =
-    PayloadValidator.validate(this, payload, SeverityLevels.VIOLATION, env)
+    PayloadValidationPluginsHandler.validateWithGuessing(this,
+                                                         payload,
+                                                         SeverityLevels.VIOLATION,
+                                                         env,
+                                                         StrictValidationMode)
 
   def validate(payload: String): Future[AMFValidationReport] = validate(payload, Environment())
 
   def validate(fragment: PayloadFragment, env: Environment): Future[AMFValidationReport] =
-    PayloadValidator.validate(this, fragment, SeverityLevels.VIOLATION, env)
+    PayloadValidationPluginsHandler.validateFragment(this, fragment, SeverityLevels.VIOLATION, env)
 
   def validate(fragment: PayloadFragment): Future[AMFValidationReport] = validate(fragment, Environment())
 
-  def payloadValidator(): PlatformPayloadValidator = payloadValidator(this)
+  def payloadValidator(mediaType: String, env: Environment = Environment()): Option[PayloadValidator] =
+    PayloadValidationPluginsHandler.payloadValidator(this, mediaType, env, StrictValidationMode)
 
-  def parameterValidator(): InternalParameterValidator = parameterValidator(this)
+  def parameterValidator(mediaType: String, env: Environment = Environment()): Option[PayloadValidator] =
+    PayloadValidationPluginsHandler.payloadValidator(this, mediaType, env, ScalarRelaxedValidationMode)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded
