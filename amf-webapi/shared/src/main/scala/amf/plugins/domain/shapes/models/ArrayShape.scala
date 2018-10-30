@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import java.util.Optional
 
-import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.model.domain.{AmfArray, DomainElement, Linkable, Shape}
 import amf.core.model.{BoolField, IntField}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
@@ -54,6 +54,8 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
       case Some(items) =>
         items.value.value match {
           case shape: Shape => shape.adopted(id + "/items")
+          case arr: AmfArray =>
+            simpleAdoption(id + s"/itemsTuple${arr.values.length}")
         }
       case _ => // ignore
     }

@@ -22,14 +22,9 @@
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#name": [
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#isPrivate": [
           {
-            "@value": "maelstrom-artifacts"
-          }
-        ],
-        "http://about.org/ABOUT-vocabulary.yaml#forkedFrom": [
-          {
-            "@value": "false"
+            "@value": true
           }
         ],
         "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#owner": [
@@ -37,14 +32,24 @@
             "@value": "mulesoft"
           }
         ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#stargazersCount": [
+        "http://about.org/ABOUT-vocabulary.yaml#forkedFrom": [
           {
-            "@value": 0
+            "@value": "false"
           }
         ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#isPrivate": [
+        "http://www.w3.org/2002/07/owl#partOf": [
           {
-            "@value": true
+            "@value": "https://github.com/mulesoft/maelstrom-artifacts"
+          }
+        ],
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#name": [
+          {
+            "@value": "maelstrom-artifacts"
+          }
+        ],
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#ownerAvatar": [
+          {
+            "@value": "https://avatars1.githubusercontent.com/u/185740?v=4"
           }
         ],
         "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#createdAt": [
@@ -59,14 +64,9 @@
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
           }
         ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#ownerAvatar": [
+        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#stargazersCount": [
           {
-            "@value": "https://avatars1.githubusercontent.com/u/185740?v=4"
-          }
-        ],
-        "http://www.w3.org/2002/07/owl#partOf": [
-          {
-            "@value": "https://github.com/mulesoft/maelstrom-artifacts"
+            "@value": 0
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

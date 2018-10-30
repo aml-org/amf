@@ -292,23 +292,23 @@ baseUri: aaa-bbb.com/apis
       get:
         queryParameters:
           offset?:
-            description: The `offset` parameter specifies the first entry to return from a collection.
             type: integer
             minimum: 0
+            description: The `offset` parameter specifies the first entry to return from a collection.
             default: 10
+          sort?:
+            type: string
+            example: name,-age
           limit?:
-            description: The `limit` parameter restricts the number of entries returned.
             type: integer
             minimum: 1
+            description: The `limit` parameter restricts the number of entries returned.
             default: 50
           page?:
-            description: The `page` parameter specifies the page of results to return.
             type: integer
             minimum: 1
+            description: The `page` parameter specifies the page of results to return.
             default: 1
-          sort?:
-            example: name,-age
-            type: string
         responses:
           200:
             body:
@@ -467,23 +467,23 @@ baseUri: aaa-bbb.com/apis
       get:
         queryParameters:
           offset?:
-            description: The `offset` parameter specifies the first entry to return from a collection.
             type: integer
             minimum: 0
+            description: The `offset` parameter specifies the first entry to return from a collection.
             default: 10
+          sort?:
+            type: string
+            example: name,-age
           limit?:
-            description: The `limit` parameter restricts the number of entries returned.
             type: integer
             minimum: 1
+            description: The `limit` parameter restricts the number of entries returned.
             default: 50
           page?:
-            description: The `page` parameter specifies the page of results to return.
             type: integer
             minimum: 1
+            description: The `page` parameter specifies the page of results to return.
             default: 1
-          sort?:
-            example: name,-age
-            type: string
         responses:
           200:
             body:

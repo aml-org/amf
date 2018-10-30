@@ -31,16 +31,6 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/cfg#packaging": [
-              {
-                "@value": "vdp"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#version": [
-              {
-                "@value": "1.0.0"
-              }
-            ],
             "http://a.ml/vocabularies/cfg#gavArtifact": [
               {
                 "@value": "vdp-from-exchange"
@@ -54,6 +44,16 @@
             "http://a.ml/vocabularies/cfg#classifier": [
               {
                 "@value": "vdp"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#packaging": [
+              {
+                "@value": "vdp"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#version": [
+              {
+                "@value": "1.0.0"
               }
             ],
             "http://a.ml/vocabularies/cfg#fileName": [
@@ -92,6 +92,21 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
+            "http://a.ml/vocabularies/cfg#secretGroup": [
+              {
+                "@value": "xyz"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#secretId": [
+              {
+                "@value": "44e94628-54ee-11e7-b114-b2f933d5fe66"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#secretType": [
+              {
+                "@value": "sharedSecrets"
+              }
+            ],
             "http://a.ml/vocabularies/cfg#packaging": [
               {
                 "@value": "secret"
@@ -100,21 +115,6 @@
             "http://a.ml/vocabularies/cfg#version": [
               {
                 "@value": "v1"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#secretId": [
-              {
-                "@value": "44e94628-54ee-11e7-b114-b2f933d5fe66"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#secretGroup": [
-              {
-                "@value": "xyz"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#secretType": [
-              {
-                "@value": "sharedSecrets"
               }
             ],
             "http://a.ml/vocabularies/cfg#type": [

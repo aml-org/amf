@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: title
+
+types:
+  a: object
+  b: object
+  c: object
+  d:
+    properties:
+      a: [a,b|c]
+  e:
+    type: d[]

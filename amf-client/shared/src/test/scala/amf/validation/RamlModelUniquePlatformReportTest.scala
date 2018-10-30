@@ -48,10 +48,6 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("library/with-include/api.raml", Some("library-includes-api.report"))
   }
 
-  test("Default type validation") {
-    validate("shapes/default_type.raml", Some("default_type.report"))
-  }
-
   test("Max length validation") {
     validate("shapes/max-length.raml", Some("max-length.report"))
   }

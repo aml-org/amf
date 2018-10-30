@@ -9,7 +9,10 @@ import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.annotations.InlineDefinition
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
-import amf.plugins.document.webapi.validation.remote.PlatformPayloadValidator
+import amf.plugins.document.webapi.validation.remote.{
+  PlatformPayloadValidator,
+  ParameterValidator => InternalParameterValidator
+}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import amf.plugins.domain.shapes.validation.{PayloadValidator, ScalarRelaxedValidationMode}
@@ -131,6 +134,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
   def validate(fragment: PayloadFragment): Future[AMFValidationReport] = validate(fragment, Environment())
 
   def payloadValidator(): PlatformPayloadValidator = payloadValidator(this)
+
+  def parameterValidator(): InternalParameterValidator = parameterValidator(this)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/any/" + name.option().getOrElse("default-any").urlComponentEncoded

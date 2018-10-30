@@ -116,24 +116,4 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
       }
     }
   }
-
-  override def parseParameterDeclarations(key: String, map: YMap, parentPath: String): Unit = {
-    map.key(
-      key,
-      entry => {
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val parameter =
-              Raml08ParameterParser(e, (p: Parameter) => p.adopted(parentPath)).parse()
-            if (Option(parameter.binding).isEmpty) {
-              ctx.violation(parameter.id, "Missing binding information in declared parameter", entry.value)
-            }
-            ctx.declarations.registerParameter(parameter.add(DeclaredElement()),
-                                               Payload().withSchema(parameter.schema))
-          })
-      }
-    )
-  }
 }

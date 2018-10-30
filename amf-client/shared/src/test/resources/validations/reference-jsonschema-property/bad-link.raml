@@ -1,0 +1,39 @@
+{
+    "info":{
+        "title": "test"
+    },
+    "swagger":"2.0",
+    "definitions":{
+        "accounts-collection":{
+            "type":"object",
+            "properties":{
+                "createdTime":{
+                    "$ref":"#/definitions/accounts/properties/createdTime"
+                },
+                "arrayLink":{
+                    "$ref":"#/definitions/accounts/properties/arrayDef/aaa"
+                }
+            }
+        },
+        "accounts":{
+            "type":"object",
+            "properties":{
+                "createdTime":{
+                    "type":"string"
+                },
+                "notificationPending":{
+                    "type":"boolean"
+                },
+                "login":{
+                    "type":"string"
+                },
+                "arrayDef":{
+                    "type":"array",
+                    "items": {
+                      type: "string"
+                    }
+                }
+            }
+        }
+    }
+}

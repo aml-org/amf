@@ -1,8 +1,10 @@
 package amf.cycle
-import amf.core.remote.{Amf, AmfJsonHint, Hint}
+import amf.core.remote.Syntax.Syntax
+import amf.core.remote.{Amf, AmfJsonHint, Hint, Vendor}
+import amf.facades.Validation
 import amf.io.BuildCycleTests
 import org.mulesoft.common.io.{Fs, SyncFile}
-import org.scalatest.AsyncFreeSpec
+import org.scalatest.{Assertion, AsyncFreeSpec}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -42,6 +44,8 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
   def target: Hint // todo: multiple targets, one for each spec
   def fileExtension: String
 
+  protected lazy val withEnableValidations: Seq[String] = Seq()
+
   dirs.foreach { d =>
     if (d.name.endsWith(".ignore")) {
       s"Source: ${d.name}" ignore { Future.successful(succeed) }
@@ -57,7 +61,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
                                                                            basePath + d.name + "/api" + fileExtension + ".jsonld" + ".ignore")
                                                                          .exists) ".ignore"
                                                                    else "")
-            cycle(d.name + "/api" + fileExtension, t, origin, Amf)
+            runCycle(d.name + "/api" + fileExtension, t, origin, AmfJsonHint, None)
           }
           amfToSpec(d.name,
                     d.name + "/api" + fileExtension + ".jsonld",
@@ -71,10 +75,10 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
   private def goldenCycle(name: String, f: String): Unit = {
     if (Fs.syncFile(basePath + "/" + f + ".ignore").exists)
       s"Cycle for golden: $name" ignore {
-        cycle(f + ".ignore", target)
+        runCycle(f + ".ignore", target, Some(target.syntax))
       } else
       s"Cycle for golden: $name" in {
-        cycle(f, target)
+        runCycle(f, target, Some(target.syntax))
       }
   }
 
@@ -84,7 +88,7 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
                                                       .exists) ".ignore"
                                                 else "")
     s"Simple cycle for $name" in {
-      cycle(name + "/api" + fileExtension, t, origin, target.vendor)
+      runCycle(name + "/api" + fileExtension, t, origin, target, syntax = Some(target.syntax))
     }
   }
 
@@ -94,11 +98,11 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
     if (Fs.syncFile(basePath + "/" + o + ".ignore").exists) {
 
       s"Generate golden from jsonld for $name" ignore {
-        cycle(o + ".ignore", tar, AmfJsonHint, target.vendor)
+        runCycle(o + ".ignore", tar, AmfJsonHint, target, syntax = Some(target.syntax))
       }
     } else {
       s"Generate golden from jsonld for $name" in {
-        cycle(o, tar, AmfJsonHint, target.vendor)
+        runCycle(o, tar, AmfJsonHint, target, syntax = Some(target.syntax))
       }
     }
   }
@@ -106,13 +110,28 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
   private def specToAmfForAmf(name: String, f: String): Unit = {
     if (Fs.syncFile(basePath + "/" + f + ".ignore").exists) {
       s"Parse golden from jsonld for $name" ignore {
-        cycle(f + ".ignore", f + ".ignore", target, target.vendor)
+        runCycle(f + ".ignore", f + ".ignore", target, target, syntax = Some(target.syntax))
       }
     } else {
       s"Parse golden from jsonld for $name" in {
-        cycle(f, f, target, target.vendor)
+        runCycle(f, f, target, target, syntax = Some(target.syntax))
       }
     }
 
+  }
+
+  private def runCycle(source: String, target: Hint, syntax: Option[Syntax]): Future[Assertion] =
+    runCycle(source, source, target, target, syntax)
+
+  private def runCycle(source: String,
+                       golden: String,
+                       hint: Hint,
+                       target: Hint,
+                       syntax: Option[Syntax]): Future[Assertion] = {
+    val shouldValidate = withEnableValidations.contains(source.split("/").head)
+    Validation(platform).flatMap { v =>
+      v.withEnabledValidation(shouldValidate)
+      cycle(source, golden, hint, target.vendor, syntax = Some(target.syntax), validation = Some(v))
+    }
   }
 }

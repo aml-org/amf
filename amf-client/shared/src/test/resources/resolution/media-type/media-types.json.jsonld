@@ -65,7 +65,7 @@
                         ],
                         "http://a.ml/vocabularies/http#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -79,7 +79,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#property": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -92,7 +92,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/scalar/one",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/scalar/one",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -111,7 +111,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/scalar/one/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/scalar/one/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -119,12 +119,12 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/scalar/one"
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/scalar/one"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(22,16)-(22,22)]"
+                                                "@value": "[(23,16)-(23,22)]"
                                               }
                                             ]
                                           }
@@ -138,19 +138,19 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(22,16)-(22,33)]"
+                                                "@value": "[(23,16)-(23,33)]"
                                               }
                                             ]
                                           },
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/scalar/one"
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/scalar/one"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(21,14)-(23,15)]"
+                                                "@value": "[(22,14)-(24,15)]"
                                               }
                                             ]
                                           }
@@ -171,7 +171,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -179,12 +179,12 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one"
+                                            "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(21,14)-(23,15)]"
+                                            "@value": "[(22,14)-(24,15)]"
                                           }
                                         ]
                                       }
@@ -193,7 +193,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -206,7 +206,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/scalar/two",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/scalar/two",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -225,7 +225,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/scalar/two/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/scalar/two/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -233,12 +233,12 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/scalar/two"
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/scalar/two"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(25,16)-(25,22)]"
+                                                "@value": "[(26,16)-(26,22)]"
                                               }
                                             ]
                                           }
@@ -252,19 +252,19 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(25,16)-(25,32)]"
+                                                "@value": "[(26,16)-(26,32)]"
                                               }
                                             ]
                                           },
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/scalar/two"
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/scalar/two"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(24,14)-(26,15)]"
+                                                "@value": "[(25,14)-(27,15)]"
                                               }
                                             ]
                                           }
@@ -285,7 +285,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -293,12 +293,12 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two"
+                                            "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(24,14)-(26,15)]"
+                                            "@value": "[(25,14)-(27,15)]"
                                           }
                                         ]
                                       }
@@ -309,12 +309,12 @@
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
-                                "@value": "schema"
+                                "@value": "myOtherName"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -322,12 +322,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(29,16)-(29,22)]"
+                                        "@value": "[(30,10)-(30,22)]"
                                       }
                                     ]
                                   }
@@ -336,12 +336,24 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema"
+                                        "@value": "http://www.w3.org/ns/shacl#name"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(18,10)-(28,11)]"
+                                        "@value": "[(18,10)-(18,31)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(19,10)-(29,11)]"
                                       }
                                     ]
                                   }
@@ -350,12 +362,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(19,12)-(19,18)]"
+                                        "@value": "[(20,12)-(20,18)]"
                                       }
                                     ]
                                   }
@@ -379,7 +391,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(17,8)-(30,9)]"
+                                    "@value": "[(17,8)-(31,9)]"
                                   }
                                 ]
                               }
@@ -400,7 +412,7 @@
                         ],
                         "http://a.ml/vocabularies/http#schema": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema",
+                            "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -414,7 +426,7 @@
                             ],
                             "http://www.w3.org/ns/shacl#property": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -427,7 +439,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/scalar/one",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/scalar/one",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -446,7 +458,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/scalar/one/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/scalar/one/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -454,12 +466,12 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/scalar/one"
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/scalar/one"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(22,16)-(22,22)]"
+                                                "@value": "[(23,16)-(23,22)]"
                                               }
                                             ]
                                           }
@@ -473,19 +485,19 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(22,16)-(22,33)]"
+                                                "@value": "[(23,16)-(23,33)]"
                                               }
                                             ]
                                           },
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/scalar/one"
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/scalar/one"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(21,14)-(23,15)]"
+                                                "@value": "[(22,14)-(24,15)]"
                                               }
                                             ]
                                           }
@@ -506,7 +518,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -514,12 +526,12 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/one"
+                                            "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/one"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(21,14)-(23,15)]"
+                                            "@value": "[(22,14)-(24,15)]"
                                           }
                                         ]
                                       }
@@ -528,7 +540,7 @@
                                 ]
                               },
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
@@ -541,7 +553,7 @@
                                 ],
                                 "http://a.ml/vocabularies/shapes#range": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/scalar/two",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/scalar/two",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
                                       "http://www.w3.org/ns/shacl#Shape",
@@ -560,7 +572,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/scalar/two/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/scalar/two/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
@@ -568,12 +580,12 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/scalar/two"
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/scalar/two"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(25,16)-(25,22)]"
+                                                "@value": "[(26,16)-(26,22)]"
                                               }
                                             ]
                                           }
@@ -587,19 +599,19 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(25,16)-(25,32)]"
+                                                "@value": "[(26,16)-(26,32)]"
                                               }
                                             ]
                                           },
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/scalar/two"
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/scalar/two"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(24,14)-(26,15)]"
+                                                "@value": "[(25,14)-(27,15)]"
                                               }
                                             ]
                                           }
@@ -620,7 +632,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two/source-map",
+                                    "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two/source-map",
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
@@ -628,12 +640,12 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/property/two"
+                                            "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/property/two"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "@value": "[(24,14)-(26,15)]"
+                                            "@value": "[(25,14)-(27,15)]"
                                           }
                                         ]
                                       }
@@ -644,12 +656,12 @@
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
-                                "@value": "schema"
+                                "@value": "myOtherName"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema/source-map",
+                                "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName/source-map",
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
@@ -657,12 +669,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(29,16)-(29,22)]"
+                                        "@value": "[(30,10)-(30,22)]"
                                       }
                                     ]
                                   }
@@ -671,12 +683,24 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema"
+                                        "@value": "http://www.w3.org/ns/shacl#name"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(18,10)-(28,11)]"
+                                        "@value": "[(18,10)-(18,31)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(19,10)-(29,11)]"
                                       }
                                     ]
                                   }
@@ -685,12 +709,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/parameter/default/default/schema"
+                                        "@value": "file://amf-client/shared/src/test/resources/resolution/media-type/media-types.json#/web-api/end-points/%2Flevelzero%2Flevel-one/myOtherName/myOtherName"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(19,12)-(19,18)]"
+                                        "@value": "[(20,12)-(20,18)]"
                                       }
                                     ]
                                   }
@@ -714,7 +738,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(17,8)-(30,9)]"
+                                    "@value": "[(17,8)-(31,9)]"
                                   }
                                 ]
                               }
@@ -793,7 +817,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(37,14)-(37,20)]"
+                                        "@value": "[(38,14)-(38,20)]"
                                       }
                                     ]
                                   }
@@ -807,7 +831,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(37,14)-(37,30)]"
+                                        "@value": "[(38,14)-(38,30)]"
                                       }
                                     ]
                                   },
@@ -819,7 +843,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(36,12)-(38,13)]"
+                                        "@value": "[(37,12)-(39,13)]"
                                       }
                                     ]
                                   }
@@ -874,7 +898,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(37,14)-(37,20)]"
+                                        "@value": "[(38,14)-(38,20)]"
                                       }
                                     ]
                                   }
@@ -888,7 +912,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(37,14)-(37,30)]"
+                                        "@value": "[(38,14)-(38,30)]"
                                       }
                                     ]
                                   },
@@ -900,7 +924,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(36,12)-(38,13)]"
+                                        "@value": "[(37,12)-(39,13)]"
                                       }
                                     ]
                                   }
@@ -926,7 +950,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(35,12)-(35,39)]"
+                                "@value": "[(36,12)-(36,39)]"
                               }
                             ]
                           },
@@ -938,7 +962,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(34,10)-(39,11)]"
+                                "@value": "[(35,10)-(40,11)]"
                               }
                             ]
                           }
@@ -962,7 +986,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(33,8)-(40,9)]"
+                            "@value": "[(34,8)-(41,9)]"
                           }
                         ]
                       },
@@ -974,7 +998,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(32,6)-(41,7)]"
+                            "@value": "[(33,6)-(42,7)]"
                           }
                         ]
                       }
@@ -998,7 +1022,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(15,4)-(42,5)]"
+                        "@value": "[(15,4)-(43,5)]"
                       }
                     ]
                   }
@@ -1036,7 +1060,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(14,11)-(43,3)]"
+                    "@value": "[(14,11)-(44,3)]"
                   }
                 ]
               },
@@ -1048,7 +1072,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(1,0)-(44,1)]"
+                    "@value": "[(1,0)-(45,1)]"
                   }
                 ]
               },

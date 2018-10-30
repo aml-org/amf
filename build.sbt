@@ -5,9 +5,10 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf"
 
-version in ThisBuild := "2.0.0"
+version in ThisBuild := "2.1.0-SNAPSHOT"
 
 publish := {}
+parallelExecution in ThisBuild := false
 
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
@@ -18,7 +19,7 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   credentials ++= Common.credentials(),
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
-    "org.scalatest"    %%% "scalatest" % "3.0.0" % Test,
+    "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0"
   )
 )
@@ -34,10 +35,10 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.4.6"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.4.7"
     ))
   .in(file("./amf-core"))
-  .settings(settings: _*)
+  .settings(settings ++ (parallelExecution in ThisBuild := false) : _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
@@ -46,7 +47,6 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
-    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-core-module.js"
   )
@@ -61,17 +61,16 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-webapi")
   .dependsOn(core)
   .in(file("./amf-webapi"))
-  .settings(settings: _*)
+  .settings(settings ++ (parallelExecution in ThisBuild := false) : _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"         % "3.5.4",
-    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.9.1",
+    libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.9.2",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
-    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js"
   )
@@ -86,7 +85,7 @@ lazy val vocabularies = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-aml")
   .dependsOn(core)
   .in(file("./amf-aml"))
-  .settings(settings: _*)
+  .settings(settings ++ (parallelExecution in ThisBuild := false) : _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
@@ -95,7 +94,6 @@ lazy val vocabularies = crossProject(JSPlatform, JVMPlatform)
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
-    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js"
   )
@@ -110,7 +108,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
   .settings(name := "amf-validation")
   .dependsOn(core, vocabularies)
   .in(file("./amf-validation"))
-  .settings(settings: _*)
+  .settings(settings ++ (parallelExecution in ThisBuild := false) : _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
@@ -123,7 +121,6 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
-    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
   )
@@ -140,7 +137,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
   .dependsOn(core, webapi, vocabularies, validation)
   .in(file("./amf-client"))
-  .settings(settings: _*)
+  .settings(settings ++ (parallelExecution in ThisBuild := false) : _*)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
@@ -173,13 +170,31 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     jsDependencies += ProvidedJS / "shacl.js",
     jsDependencies += ProvidedJS / "ajv.min.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
-    scalaJSOutputMode := org.scalajs.core.tools.linker.backend.OutputMode.ECMAScript6,
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
   )
 
 lazy val clientJVM = client.jvm.in(file("./amf-client/jvm"))
 lazy val clientJS  = client.js.in(file("./amf-client/js"))
+
+/** **********************************************
+  * AMF Tools
+  ********************************************** */
+lazy val tools = crossProject(JVMPlatform)
+  .settings(Seq(
+    name := "amf-tools",
+    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
+  .dependsOn(core, webapi, vocabularies, validation)
+  .in(file("./amf-tools"))
+  .settings(settings ++ (parallelExecution in ThisBuild := false) : _*)
+  .jvmSettings(
+    libraryDependencies += "org.reflections" % "reflections" % "0.9.11",
+    mainClass in Compile := Some("amf.VocabularyExporter"),
+    mainClass in assembly := Some("amf.VocabularyExporter"),
+    assemblyOutputPath in assembly := file(s"./amf-${version.value}.jar")
+  )
+
+lazy val toolsJVM = tools.jvm.in(file("./amf-tools/jvm"))
 
 // Tasks
 

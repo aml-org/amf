@@ -12,5 +12,5 @@ name should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema-multiple-examples/input.raml#/declarations/types/User/example/bob
   Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema-multiple-examples/input.raml#/declarations/types/User/example/bob
-  Position: Some(LexicalInformation([(7,11)-(12,0)]))
+  Position: Some(LexicalInformation([(8,10)-(11,11)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/include-json-schema-multiple-examples/input.raml

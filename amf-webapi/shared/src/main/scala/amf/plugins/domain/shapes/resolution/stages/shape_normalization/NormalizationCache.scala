@@ -35,19 +35,37 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
 }
 
 private[shape_normalization] case class NormalizationCache() {
-  def updateFixPointsAndClojures(canonical: Shape): Unit = {
-    updateRecursiveTargets(canonical)
-    cache.values.foreach { s =>
-      s.closureShapes.find(clo => clo.id == canonical.id && clo != canonical) match {
-        case Some(clo) =>
-          s.closureShapes.remove(clo)
-          s.closureShapes += canonical
-        case _ => // ignore
-      }
+  def addClojures(closureShapes: Seq[Shape], s: Shape) = {
+    closureShapes.foreach { c =>
+      cacheClojure(c.id, s)
     }
   }
 
-  private def updateRecursiveTargets(newShape: Shape): NormalizationCache = {
+  def cacheClojure(id: String, array: Shape): this.type = {
+    cacheWithClojures.get(id) match {
+      case Some(seq) => cacheWithClojures.update(id, seq :+ array)
+      case _         => cacheWithClojures.update(id, Seq(array))
+    }
+    this
+  }
+
+  def updateFixPointsAndClojures(canonical: Shape): Unit = {
+    updateRecursiveTargets(canonical)
+    cacheWithClojures.get(canonical.id) match {
+      case Some(seq) =>
+        seq.foreach { s =>
+          s.closureShapes.find(clo => clo.id == canonical.id && clo != canonical) match {
+            case Some(clo) =>
+              s.closureShapes.remove(clo)
+              s.closureShapes += canonical
+            case _ => // ignore
+          }
+        }
+      case _ => //ignore
+    }
+  }
+
+  def updateRecursiveTargets(newShape: Shape): NormalizationCache = {
     fixPointCache.values.flatten
       .filter(_.fixpointTarget.exists(_.id == newShape.id))
       .foreach(_.fixpointTarget = Some(newShape))
@@ -77,7 +95,10 @@ private[shape_normalization] case class NormalizationCache() {
     this
   }
 
-  private val cache         = mutable.Map[String, Shape]()
+  private val cache = mutable.Map[String, Shape]()
+  /* Shape in the clojure -> Shape that in s.clojures contains the shape */
+  private var cacheWithClojures = mutable.Map[String, Seq[Shape]]()
+
   private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
   private val mappings      = mutable.Map[String, String]()
 

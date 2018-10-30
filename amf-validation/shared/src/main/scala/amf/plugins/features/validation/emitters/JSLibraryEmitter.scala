@@ -52,8 +52,6 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
         |  try {
         |    return innerFn(input, $$value $additionalParams);
         |  } catch(e) {
-        |    console.log("Error in validation function");
-        |    console.log(e);
         |    return false;
         |  }
         |}

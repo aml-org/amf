@@ -65,7 +65,9 @@ object Raml10TypeParser {
 trait ExampleParser {
   def parseExamples(shape: AnyShape, map: YMap, options: ExampleOptions = DefaultExampleOptions)(
       implicit ctx: WebApiContext): Unit = {
-    val examples = RamlExamplesParser(map, "example", "examples", Option(shape.id), shape.withExample, options).parse()
+    val examples =
+      RamlExamplesParser(map, "example", "examples", Option(shape.id), shape.withExample, options.checkScalar(shape))
+        .parse()
     if (examples.nonEmpty)
       shape.setArray(AnyShapeModel.Examples, examples)
   }
@@ -187,7 +189,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
               RamlSingleExampleParser("example",
                                       map,
                                       inherits.withExample,
-                                      ExampleOptions(strictDefault = true, quiet = true))
+                                      ExampleOptions(strictDefault = true, quiet = true).checkScalar(s))
                 .parse()
                 .fold(s)(e => {
                   inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
@@ -412,7 +414,10 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       .dataType
       .option()
       .getOrElse("") == (Namespace.Xsd + "string").iri()
-    RamlSingleExampleParser("example", map, shape.withExample, ExampleOptions(strictDefault = true, quiet = true))
+    RamlSingleExampleParser("example",
+                            map,
+                            shape.withExample,
+                            ExampleOptions(strictDefault = true, quiet = true).checkScalar(shape))
       .parse()
       .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
@@ -588,7 +593,21 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   private def parseUnionType(): UnionShape = {
-    UnionShapeParser(node.as[YMap], adopt).parse()
+    val shape = UnionShape(Annotations(node)).withName(name)
+    adopt(shape)
+    node.tagType match {
+      case YType.Map =>
+        UnionShapeParser(node.as[YMap], shape).parse()
+      case YType.Seq =>
+        InheritanceParser(ast.asInstanceOf[YMapEntry], shape, None).parse()
+        shape
+      case _ =>
+        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
+                      shape.id,
+                      s"Invalid node for union shape '${node.toString()}",
+                      node)
+        shape
+    }
   }
 
   private def parseObjectType(): Shape = {
@@ -695,7 +714,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   case class AnyTypeShapeParser(shape: AnyShape, map: YMap) extends AnyShapeParser {
 
-    override val options: ExampleOptions = ExampleOptions(strictDefault = true, quiet = true)
+    override val options: ExampleOptions = ExampleOptions(strictDefault = true, quiet = true).checkScalar(shape)
 
     override def parse(): AnyShape = {
 
@@ -787,11 +806,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   }
 
-  case class UnionShapeParser(override val map: YMap, adopt: Shape => Shape) extends AnyShapeParser {
-    override val shape = UnionShape(Annotations(map))
+  case class UnionShapeParser(override val map: YMap, shape: UnionShape) extends AnyShapeParser {
 
     override def parse(): UnionShape = {
-      adopt(shape)
       super.parse()
 
       map.key(
@@ -1318,7 +1335,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
       map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
-        OasTypeParser(entry, s => s.adopted(shape.id)).parse().foreach { s =>
+        OasTypeParser(entry, s => s.adopted(shape.id))(toOas(ctx)).parse().foreach { s =>
           shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
         }
       }

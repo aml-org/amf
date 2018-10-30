@@ -12,6 +12,7 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
 import amf.core.utils.{IdCounter, Strings}
+import amf.plugins.document.webapi.annotations.FormBodyParameter
 import amf.plugins.document.webapi.contexts.{
   BaseSpecEmitter,
   OasSpecEmitterContext,
@@ -256,8 +257,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
             fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes", f, ordering))
             fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces", f, ordering))
             fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering, true).emitters())
-            Option(operation.request).foreach(req =>
-              result ++= requestEmitters(req, ordering, endpointPayloadEmitted, references))
+            Option(operation.request).foreach(req => result ++= requestEmitters(req, ordering, references))
             // Annotations collected from the "responses" element that has no direct representation in any model element
             // They will be passed to the ResponsesEmitter
             val orphanAnnotations =
@@ -279,18 +279,21 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
 
     override def position(): Position = pos(operation.annotations)
 
-    def requestEmitters(request: Request,
-                        ordering: SpecOrdering,
-                        endpointPayloadEmitted: Boolean,
-                        references: Seq[BaseUnit]): Seq[EntryEmitter] = {
+    def requestEmitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
 
       val result = mutable.ListBuffer[EntryEmitter]()
 
-      val parameters = request.queryParameters ++ request.uriParameters ++ request.headers
-      val payloads   = OasPayloads(request.payloads, endpointPayloadEmitted)
+      val parameters       = request.queryParameters ++ request.uriParameters ++ request.headers
+      val (body, formData) = request.payloads.partition(p => !p.annotations.contains(classOf[FormBodyParameter]))
 
-      if (parameters.nonEmpty || payloads.default.isDefined)
-        result ++= OasParametersEmitter("parameters", parameters, ordering, payloads.default.toSeq, references)
+      val payloads = OasPayloads(body)
+
+      if (parameters.nonEmpty || payloads.default.isDefined || formData.nonEmpty)
+        result ++= OasParametersEmitter("parameters",
+                                        parameters,
+                                        ordering,
+                                        payloads.default.toSeq ++ formData,
+                                        references)
           .emitters()
 
       if (payloads.other.nonEmpty)

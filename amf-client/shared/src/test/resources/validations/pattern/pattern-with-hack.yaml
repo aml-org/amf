@@ -1,0 +1,9 @@
+swagger: '2.0'
+info:
+  title: some title
+  version: v2
+definitions:
+  bodyText:
+    type: string
+    pattern: "^[^]{1,1000}$"
+    example: some example

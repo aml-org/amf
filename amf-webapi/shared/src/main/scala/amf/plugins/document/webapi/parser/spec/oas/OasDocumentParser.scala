@@ -11,6 +11,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Lazy, Strings, TemplateUri}
+import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
@@ -77,6 +78,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     document.adopted(root.location).withLocation(root.location)
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+    ctx.localJSONSchemaContext = Some(map)
 
     val references = ReferencesParser(document, "uses".asOasExtension, map, root.references).parse(root.location)
     parseDeclarations(root: Root, map)
@@ -242,90 +244,102 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
 
     private def parseEndpoint(endpoint: EndPoint) =
-      entry.value.to[YMap] match {
-        case Left(_) => collector += endpoint
-        case Right(map) =>
-          ctx.closedShape(endpoint.id, map, "pathItem")
-
-          map.key("displayName".asOasExtension, EndPointModel.Name in endpoint)
-          map.key("description".asOasExtension, EndPointModel.Description in endpoint)
-
-          var parameters = Parameters()
-          val entries    = ListBuffer[YMapEntry]()
-
-          // This are the rest of the parameters, this must be simple to be supported by OAS.
-          map
-            .key("parameters")
-            .foreach { entry =>
-              entries += entry
-              parameters = parameters.add(OasParametersParser(entry.value.as[Seq[YNode]], endpoint.id).parse())
-            }
-
-          // This is because there may be complex path parameters coming from RAML1
-          map.key("uriParameters".asOasExtension).foreach { entry =>
-            entries += entry
-            val uriParameters =
-              RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id))(spec.toRaml(ctx))
-                .parse()
-                .map(_.withBinding("path"))
-            parameters = parameters.add(Parameters(path = uriParameters))
+      ctx.link(entry.value) match {
+        case Left(value) =>
+          ctx.declarations.asts.get(value) match {
+            case Some(n) if n.tagType == YType.Map =>
+              parseEndpointMap(endpoint, n.as[YMap])
+            case Some(n) =>
+              ctx.violation("Invalid node for path item", n)
+            case None =>
+              ctx.violation(s"Cannot find fragment path item ref $value", entry.value)
           }
-
-          parameters match {
-            case Parameters(query, path, header, _, _) if query.nonEmpty || path.nonEmpty || header.nonEmpty =>
-              endpoint.set(EndPointModel.Parameters,
-                           AmfArray(query ++ path ++ header, Annotations(entries.head.value)),
-                           Annotations(entries.head))
-            case _ =>
-          }
-
-          if (parameters.body.nonEmpty)
-            endpoint.set(EndPointModel.Payloads, AmfArray(parameters.body), Annotations(entries.head))
-
-          map.key("is".asOasExtension,
-                  (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
-                    .parse(endpoint.withTrait)).allowingSingleValue)
-
-          map.key(
-            "type".asOasExtension,
-            entry =>
-              ParametrizedDeclarationParser(entry.value,
-                                            endpoint.withResourceType,
-                                            ctx.declarations.findResourceTypeOrError(entry.value))
-                .parse()
-          )
-
+        case Right(node) if node.tagType == YType.Map =>
+          parseEndpointMap(endpoint, node.as[YMap])
+        case _ =>
           collector += endpoint
-
-          AnnotationParser(endpoint, map).parse()
-
-          map.key(
-            "security".asOasExtension,
-            entry => {
-              // TODO check for empty array for resolution ?
-              val securedBy = entry.value
-                .as[Seq[YNode]]
-                .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
-                .collect { case Some(s) => s }
-
-              if (securedBy.nonEmpty)
-                endpoint.set(OperationModel.Security,
-                             AmfArray(securedBy, Annotations(entry.value)),
-                             Annotations(entry))
-            }
-          )
-
-          map.regex(
-            "get|patch|put|post|delete|options|head|connect|trace",
-            entries => {
-              val operations = mutable.ListBuffer[Operation]()
-              entries.foreach { entry =>
-                operations += OperationParser(entry, endpoint.withOperation).parse()
-              }
-              endpoint.set(EndPointModel.Operations, AmfArray(operations))
-            }
-          )
       }
+
+    private def parseEndpointMap(endpoint: EndPoint, map: YMap) = {
+      ctx.closedShape(endpoint.id, map, "pathItem")
+
+      map.key("displayName".asOasExtension, EndPointModel.Name in endpoint)
+      map.key("description".asOasExtension, EndPointModel.Description in endpoint)
+
+      var parameters = Parameters()
+      val entries    = ListBuffer[YMapEntry]()
+
+      // This are the rest of the parameters, this must be simple to be supported by OAS.
+      map
+        .key("parameters")
+        .foreach { entry =>
+          entries += entry
+          parameters = parameters.add(OasParametersParser(entry.value.as[Seq[YNode]], endpoint.id).parse())
+        }
+
+      // This is because there may be complex path parameters coming from RAML1
+      map.key("uriParameters".asOasExtension).foreach { entry =>
+        entries += entry
+        val uriParameters =
+          RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id))(spec.toRaml(ctx))
+            .parse()
+            .map(_.withBinding("path"))
+        parameters = parameters.add(Parameters(path = uriParameters))
+      }
+
+      parameters match {
+        case Parameters(query, path, header, _, _) if query.nonEmpty || path.nonEmpty || header.nonEmpty =>
+          endpoint.set(EndPointModel.Parameters,
+                       AmfArray(query ++ path ++ header, Annotations(entries.head.value)),
+                       Annotations(entries.head))
+        case _ =>
+      }
+
+      if (parameters.body.nonEmpty)
+        endpoint.set(EndPointModel.Payloads, AmfArray(parameters.body), Annotations(entries.head))
+
+      map.key("is".asOasExtension,
+              (EndPointModel.Extends in endpoint using ParametrizedDeclarationParser
+                .parse(endpoint.withTrait)).allowingSingleValue)
+
+      map.key(
+        "type".asOasExtension,
+        entry =>
+          ParametrizedDeclarationParser(entry.value,
+                                        endpoint.withResourceType,
+                                        ctx.declarations.findResourceTypeOrError(entry.value))
+            .parse()
+      )
+
+      collector += endpoint
+
+      AnnotationParser(endpoint, map).parse()
+
+      map.key(
+        "security".asOasExtension,
+        entry => {
+          // TODO check for empty array for resolution ?
+          val securedBy = entry.value
+            .as[Seq[YNode]]
+            .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
+            .collect { case Some(s) => s }
+
+          if (securedBy.nonEmpty)
+            endpoint.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        }
+      )
+
+      map.regex(
+        "get|patch|put|post|delete|options|head|connect|trace",
+        entries => {
+          val operations = mutable.ListBuffer[Operation]()
+          entries.foreach { entry =>
+            operations += OperationParser(entry, endpoint.withOperation).parse()
+          }
+          endpoint.set(EndPointModel.Operations, AmfArray(operations))
+        }
+      )
+    }
   }
 
   case class RequestParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
@@ -561,7 +575,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
             OasTypeParser(e, shape => {
               shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
               shape.adopted(typesPrefix)
-            }).parse() match {
+            })(ctx).parse() match {
               case Some(shape) =>
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>
@@ -619,20 +633,15 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .entries
           .foreach(e => {
             val typeName = e.key
-            val oasParameter = e.value.to[YMap] match {
+            val oasParameter: domain.OasParameter = e.value.to[YMap] match {
               case Right(m) => OasParameterParser(Left(e), parentPath, Some(typeName)).parse()
               case _ =>
                 val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName)).parse()
-                ctx.violation(parameter.parameter.id, "Map needed to parse a parameter declaration", e)
+                ctx.violation(parameter.domainElement.id, "Map needed to parse a parameter declaration", e)
                 parameter
             }
-            val parameter = oasParameter.parameter.add(DeclaredElement())
-            if (Option(oasParameter.payload).isDefined && Option(oasParameter.payload.schema).isDefined) {
-              parameter.withSchema(oasParameter.payload.schema)
-            }
-            if (parameter.fields.exists(ParameterModel.Binding))
-              parameter.fields.getValue(ParameterModel.Binding).annotations += ExplicitField()
-            ctx.declarations.registerParameter(parameter, oasParameter.payload)
+            ctx.declarations.registerOasParameter(oasParameter)
+
           })
       }
     )
@@ -789,15 +798,4 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
             }
       })
   }
-}
-
-case class OasParameter(parameter: Parameter, payload: Payload) {
-  def isBody: Boolean   = parameter.isBody
-  def isQuery: Boolean  = parameter.isQuery
-  def isPath: Boolean   = parameter.isPath
-  def isHeader: Boolean = parameter.isHeader
-}
-
-object OasParameter {
-  def apply(ast: YMap): OasParameter = OasParameter(Parameter(ast), Payload(ast))
 }

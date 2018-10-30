@@ -9,6 +9,7 @@
       "post": {
         "x-amf-requestPayloads": [
           {
+            "name": "AnotherBody",
             "schema": {
               "type": "object",
               "properties": {
@@ -16,12 +17,12 @@
                   "type": "string"
                 }
               }
-            },
-            "name": "AnotherBody"
+            }
           }
         ],
         "parameters": [
           {
+            "name": "MyBody",
             "in": "body",
             "schema": {
               "type": "object",

@@ -5,7 +5,7 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Bool
-import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
 import amf.core.model.domain.extensions.PropertyShape
@@ -1338,9 +1338,15 @@ abstract class OasShapeEmitter(shape: Shape,
   def emitNullable(result: ListBuffer[EntryEmitter]): Unit = {
     shape.annotations.find(classOf[NilUnion]) match {
       case Some(NilUnion(rangeString)) =>
-        result += ValueEmitter("nullable",
-                               FieldEntry(Field(Bool, Namespace.Shapes + "nullable"),
-                                          Value(AmfScalar(true), Annotations(LexicalInformation(rangeString)))))
+        result += ValueEmitter(
+          "nullable",
+          FieldEntry(
+            Field(Bool,
+                  Namespace.Shapes + "nullable",
+                  ModelDoc(ModelVocabularies.Shapes, "nullable", "This field can accept a null value")),
+            Value(AmfScalar(true), Annotations(LexicalInformation(rangeString)))
+          )
+        )
 
       case _ => // ignore
     }
@@ -1415,7 +1421,7 @@ case class OasOrConstraintEmitter(shape: Shape,
 
   val emitters: Seq[OasTypePartEmitter] = shape.or.zipWithIndex map {
     case (s: Shape, i: Int) =>
-      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("allOf", s"$i"), schemaPath)
+      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("anyOf", s"$i"), schemaPath)
   }
 
   override def emit(b: EntryBuilder): Unit = {

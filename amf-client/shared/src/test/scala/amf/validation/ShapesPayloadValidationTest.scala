@@ -91,6 +91,13 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
     ShapeInfo(
       Fixture.UnionStrNil,
       Seq(
+        ExampleInfo("SimpleScalarNumberExampleAgainstUnion", "12", valid = true)
+      ),
+      mode = ScalarRelaxedValidationMode
+    ),
+    ShapeInfo(
+      Fixture.SimpleIntScalar,
+      Seq(
         ExampleInfo("SimpleScalarNumberExample", "12", valid = true)
       ),
       mode = ScalarRelaxedValidationMode

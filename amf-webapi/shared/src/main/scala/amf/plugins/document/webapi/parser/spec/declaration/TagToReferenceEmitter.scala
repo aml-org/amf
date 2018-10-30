@@ -9,7 +9,7 @@ import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
-import amf.plugins.domain.webapi.models.{Parameter, Response}
+import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YTag, YType}
 
@@ -25,6 +25,8 @@ case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String]
       case s: Shape if s.annotations.contains(classOf[DeclaredElement]) =>
         spec.ref(b, OasDefinitions.appendDefinitionsPrefix(referenceLabel))
       case p: Parameter if p.annotations.contains(classOf[DeclaredElement]) =>
+        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(referenceLabel))
+      case p: Payload if p.annotations.contains(classOf[DeclaredElement]) =>
         spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(referenceLabel))
       case r: Response if r.annotations.contains(classOf[DeclaredElement]) =>
         spec.ref(b, OasDefinitions.appendResponsesDefinitionsPrefix(referenceLabel))
@@ -72,7 +74,6 @@ case class RamlLocalReferenceEmitter(reference: Linkable) extends PartEmitter {
 
   override def position(): Position = pos(reference.annotations)
 }
-
 
 case class RamlIncludeReferenceEmitter(reference: Linkable, location: String) extends PartEmitter {
 

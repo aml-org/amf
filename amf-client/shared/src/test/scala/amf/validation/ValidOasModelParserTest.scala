@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.OasProfile
-import amf.core.remote.{Hint, OasJsonHint}
+import amf.core.remote.{Hint, OasJsonHint, RamlYamlHint}
 
 class ValidOasModelParserTest extends ValidModelTest {
 
@@ -19,6 +19,26 @@ class ValidOasModelParserTest extends ValidModelTest {
 
   test("Test multiple formData parameters") {
     checkValid("/parameters/multiple-formdata.yaml", OasProfile)
+  }
+
+  test("Integer response code") {
+    checkValid("/response/integer-response-code.yaml", OasProfile)
+  }
+
+  test("In body binding param") {
+    checkValid("/parameters/binding-body.json", OasProfile)
+  }
+
+  test("Valid media types") {
+    checkValid("/payloads/valid-media-types.json", OasProfile)
+  }
+
+  test("Hack in pattern facet to validate correctly in jvm and js") {
+    checkValid("/pattern/pattern-with-hack.yaml", OasProfile)
+  }
+
+  test("formData payload with ref") {
+    checkValid("/payloads/form-data-with-ref.json", OasProfile)
   }
 
   override val hint: Hint = OasJsonHint

@@ -11,12 +11,12 @@ resourceTypes:
             application/json: null
 /orders:
   get:
-    description: List of a
     responses:
       200:
         body:
           application/json:
             type: any
+    description: List of a
   displayName: orders
 uses:
   model: odata.raml

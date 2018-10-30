@@ -8,6 +8,7 @@ import amf.client.AMF
 import amf.client.convert.NativeOps
 import amf.client.convert.CoreClientConverters._
 import amf.client.environment.{DefaultEnvironment, Environment}
+import amf.client.model.DataTypes
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._
@@ -42,7 +43,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
   private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
-  private val aml_doc = "file://vocabularies/vocabularies/aml_doc.raml"
+  private val aml_doc = "file://vocabularies/vocabularies/aml_doc.yaml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
 
@@ -453,7 +454,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       val properties = declarations.collect { case prop: PropertyTerm => prop }
 
       assert(classes.size == 15)
-      assert(properties.size == 13)
+      assert(properties.size == 28)
     }
   }
 
@@ -744,6 +745,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
          |        -
          |          x-amf-mediaType: application/json
          |          in: body
+         |          name: someName
          |          schema:
          |            $ref: "#/definitions/person"
          |      responses:
@@ -851,6 +853,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       .head
       .withRequest()
       .withPayload("application/json")
+      .withName("someName")
       .withSchema(linked)
     doc
   }
@@ -1362,7 +1365,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       // but if you dont have internet connection, you will not reach the a.ml host, so it will be an unknown host exception violation.
 
       statusCode.message should (endWith("Unexpected status code '404' for resource 'https://a.ml/notexists'") or
-        endWith("java.net.UnknownHostException: a.ml") or
+        endWith("Network Error: a.ml") or
         endWith("java.net.SocketTimeoutException: connect timed out") or
         endWith(
           "javax.net.ssl.SSLHandshakeException: sun.security.validator.ValidatorException: PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target"))
@@ -1462,7 +1465,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit <- new RamlParser(environment).parseStringAsync(input).asFuture
       v    <- AMF.validate(unit, Raml10Profile, RAMLStyle).asFuture
     } yield {
-      println("report: " + v.toString)
+      //println("report: " + v.toString)
       v.conforms should be(true)
       val declarations = unit.asInstanceOf[Document].declares.asSeq
       declarations should have size 1

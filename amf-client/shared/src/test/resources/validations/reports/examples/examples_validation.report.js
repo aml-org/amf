@@ -26,7 +26,7 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example
   Property: 
-  Position: Some(LexicalInformation([(51,13)-(56,0)]))
+  Position: Some(LexicalInformation([(52,12)-(55,13)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
 Level: Warning

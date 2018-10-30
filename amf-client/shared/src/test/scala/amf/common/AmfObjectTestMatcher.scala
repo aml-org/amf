@@ -32,10 +32,11 @@ trait AmfObjectTestMatcher extends Assertions {
 
     private def assertRaw(field: Field, a: Any, e: Any): Unit = {
       e match {
-        case _: String | _: Boolean | _: Integer => if (a != e) {
-          fail(s"Expected scalar '$a' but '$e' found for $field")
-        }
-        case obj: AmfObject                      => AmfObjectMatcher(obj).assert(a.asInstanceOf[AmfObject])
+        case _: String | _: Boolean | _: Integer =>
+          if (a != e) {
+            fail(s"Expected scalar '$e' but '$a' found for $field")
+          }
+        case obj: AmfObject => AmfObjectMatcher(obj).assert(a.asInstanceOf[AmfObject])
         case values: Seq[_] =>
           val other = a.asInstanceOf[Seq[_]]
 

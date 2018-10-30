@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: Cost Centre API
+/costCentres:
+  get:
+
+
+    responses:
+      200: # OK
+        body:
+          application/json:
+            type: !include schema-search-cost-centre-response.json
+            example: !include example-search-cost-centre-response.json
+/{code}:
+  get:
+    responses:
+      200: # OK
+        body:
+          application/json:
+            type: !include schema-get-cost-centre-response.json
+            example: !include example-get-cost-centre-response.json

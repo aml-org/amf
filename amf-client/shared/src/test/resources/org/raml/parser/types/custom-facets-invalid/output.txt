@@ -5,17 +5,16 @@ types:
     facets:
       test:
         type: string
-    type: any
   SubType:
+    type: string
     facets:
       test:
         type: number
-    type: any
 /q:
   get:
     queryParameters:
       s:
+        type: string
         facets:
           test:
             type: number
-        type: any
