@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.validation.remote
-
-import amf.core.emitter.YDocumentBuilder
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
+import amf.core.parser.SyamlParsedDocument
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, ValidationCandidate}
 import amf.internal.environment.Environment
@@ -12,6 +11,7 @@ import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models.{AnyShape, FileShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
+import org.yaml.builder.YDocumentBuilder
 
 import scala.concurrent.Future
 import scala.scalajs.js
@@ -92,7 +92,7 @@ class JsPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape
     val builder = new YDocumentBuilder
     if (!Oas20Plugin.emit(dataType, builder)) return None
 
-    SYamlSyntaxPlugin.unparse("application/json", builder.result) match {
+    SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(builder.result)) match {
       case Some(jsonSchema) =>
         val schemaNode = js.Dynamic.global.JSON
           .parse(jsonSchema.toString.replace("x-amf-union", "anyOf"))

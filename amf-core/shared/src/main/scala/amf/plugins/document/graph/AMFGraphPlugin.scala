@@ -3,7 +3,7 @@ package amf.plugins.document.graph
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{DocBuilder, RenderOptions, YDocumentBuilder}
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
@@ -14,6 +14,7 @@ import amf.core.resolution.pipelines.{BasicResolutionPipeline, ResolutionPipelin
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.graph.parser.{GraphDependenciesReferenceHandler, GraphParser, JsonLdEmitter}
+import org.yaml.builder.DocBuilder
 import org.yaml.model.{YDocument, YMap}
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -68,9 +69,6 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override def canUnparse(unit: BaseUnit) = true
 
-  /**
-    * Implemented only for SyamlParsedDocument and RdfModelDocument
-    */
   override def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions): Boolean =
     JsonLdEmitter.emit(unit, builder, renderOptions)
 

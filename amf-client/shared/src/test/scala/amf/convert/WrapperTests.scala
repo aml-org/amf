@@ -554,7 +554,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     } yield {
       e shouldBe a[LimitReachedException]
 
-      buffer.toString() should endWith("\"http://schema.org/WebAPI\"")
+      buffer.toString() should endWith("http://a.ml/vocabularies/document#RootDomainElement\",\n")
     }
   }
 

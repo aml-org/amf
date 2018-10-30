@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
 import amf.core.annotations._
-import amf.core.emitter.{DocBuilder, RenderOptions, YDocumentBuilder}
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, SortedArray, Str}
 import amf.core.metamodel.document.{ModuleModel, SourceMapModel}
 import amf.core.metamodel.domain.extensions.DomainExtensionModel

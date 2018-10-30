@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.validation.remote
-
-import amf.core.emitter.YDocumentBuilder
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
+import amf.core.parser.SyamlParsedDocument
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, ValidationCandidate}
 import amf.internal.environment.Environment
@@ -16,6 +15,7 @@ import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidato
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.{Schema, ValidationException, Validator}
 import org.json.{JSONObject, JSONTokener}
+import org.yaml.builder.YDocumentBuilder
 
 import scala.concurrent.Future
 
@@ -104,7 +104,7 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
     val builder = new YDocumentBuilder
     if (!Oas20Plugin.emit(dataType, builder)) return None
 
-    SYamlSyntaxPlugin.unparse("application/json", builder.result) match {
+    SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(builder.result)) match {
       case Some(jsonSchema) =>
         loadJson(jsonSchema.toString.replace("x-amf-union", "anyOf")) match {
           case schemaNode: JSONObject =>
