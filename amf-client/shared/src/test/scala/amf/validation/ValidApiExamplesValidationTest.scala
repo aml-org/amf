@@ -228,5 +228,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/json-inner-ref/repeat-jsonschema-def-name/api.raml")
   }
 
+  test("Test double with .00 against integer") {
+    checkValid("/examples/double-against-integer/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

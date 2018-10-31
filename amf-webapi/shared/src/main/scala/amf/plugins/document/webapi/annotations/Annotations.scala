@@ -19,6 +19,17 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
   }
 }
 
+case class ParsedJSONExample(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
+  override val name: String  = "parsed-json-example"
+  override val value: String = rawText
+}
+
+object ParsedJSONExample extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    ParsedJSONExample(annotatedValue)
+  }
+}
+
 case class SchemaIsJsonSchema() extends Annotation
 
 case class GeneratedJSONSchema(rawText: String) extends Annotation

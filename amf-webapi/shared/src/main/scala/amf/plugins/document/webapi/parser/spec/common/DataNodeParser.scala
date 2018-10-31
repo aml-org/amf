@@ -8,6 +8,7 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.features.validation.ParserSideValidations
 import org.mulesoft.common.time.SimpleDateTime
+import org.yaml.model
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 

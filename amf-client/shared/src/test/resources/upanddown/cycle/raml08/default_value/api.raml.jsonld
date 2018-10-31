@@ -432,7 +432,7 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -441,7 +441,7 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(18,32)-(21,33)]"
+                                                "@value": "{\n    \"name\": \"Bobby\",\n    \"food\": \"Ice Cream\"\n}"
                                               }
                                             ]
                                           }
@@ -456,6 +456,20 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "food->[(20,36)-(20,55)]#name->[(19,36)-(19,51)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/default_value/api.raml#/web-api/end-points/%2Fpet/get/200/application%2Fjson/any/application%2Fjson/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(18,32)-(21,33)]"
                                               }
                                             ]
                                           }

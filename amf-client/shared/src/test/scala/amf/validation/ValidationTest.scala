@@ -18,10 +18,11 @@ import amf.plugins.features.validation.ParserSideValidations
 
 import scala.concurrent.{ExecutionContext, Future}
 
-case class ExpectedReport(conforms: Boolean,
-                          numErrors: Integer,
-                          profile: ProfileName,
-                          jsNumErrors: Option[Integer] = None)
+case class ExpectedReport(
+    conforms: Boolean,
+    numErrors: Integer,
+    profile: ProfileName,
+    jsNumErrors: Option[Integer] = None) // todo: we should remove this, both platforms should validate the same
 
 class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 

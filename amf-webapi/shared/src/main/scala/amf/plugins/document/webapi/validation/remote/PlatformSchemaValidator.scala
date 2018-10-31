@@ -8,6 +8,7 @@ import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLe
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
+import amf.plugins.document.webapi.annotations.ParsedJSONExample
 import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
@@ -124,12 +125,14 @@ trait PlatformSchemaValidator {
       case Some("") => None
       case _ =>
         val y = new YDocumentBuilder
-        if (PayloadPlugin.emit(payload, y)) {
-          SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(y.document)) match {
-            case Some(serialized) => Some(serialized.toString)
-            case _                => None
-          }
-        } else None
+        payload.encodes.annotations.find(classOf[ParsedJSONExample]).map(_.value).orElse {
+          if (PayloadPlugin.emit(payload, y)){
+            SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(y.document)) match {
+              case Some(serialized) => Some(serialized.toString)
+              case _                => None
+            }
+          } else None
+        }
     }
 
     futureText map { text =>

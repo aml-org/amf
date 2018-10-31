@@ -82,7 +82,7 @@ class JvmPayloadValidator(val shape: AnyShape) extends PlatformPayloadValidator(
     }
   }
 
-  override protected def loadJson(text: String): Object = new JSONTokener(text).nextValue()
+  override protected def loadJson(text: String): Object = new JSONTokenerHack(text).nextValue()
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
     JvmReportValidationProcessor(profileName)
 }

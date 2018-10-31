@@ -2,8 +2,9 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.domain.{AmfScalar, DataNode}
+import amf.core.model.domain.{AmfScalar, Annotation, DataNode}
 import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.plugins.document.webapi.annotations.ParsedJSONExample
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
@@ -226,13 +227,13 @@ case class NodeDataNodeParser(node: YNode,
                               fromExternal: Boolean = false,
                               isScalar: Boolean = false)(implicit ctx: WebApiContext) {
   def parse(): DataNodeParserResult = {
-    val errorHandler = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
-    var isJson       = false
+    val errorHandler             = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
+    var jsonText: Option[String] = None
     val exampleNode: Option[YNode] = node.toOption[YScalar] match {
       case Some(scalar) if scalar.mark.isInstanceOf[QuotedMark] => Some(node)
       case Some(scalar) if isScalar                             => Some(node)
       case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined =>
-        isJson = true
+        jsonText = Some(scalar.text)
         node
           .toOption[YScalar]
           .flatMap { scalar =>
@@ -251,18 +252,23 @@ case class NodeDataNodeParser(node: YNode,
     }
 
     errorHandler match {
-      case wh: WarningOnlyHandler if wh.hasRegister && isJson => parseDataNode(exampleNode)
-      case wh: WarningOnlyHandler if wh.hasRegister           => DataNodeParserResult(exampleNode, None)
-      case _                                                  => parseDataNode(exampleNode)
+      case wh: WarningOnlyHandler if wh.hasRegister && jsonText.isDefined =>
+        parseDataNode(exampleNode, jsonText.map(ParsedJSONExample(_)).toSeq)
+      case wh: WarningOnlyHandler if wh.hasRegister => DataNodeParserResult(exampleNode, None)
+      case _                                        => parseDataNode(exampleNode, jsonText.map(ParsedJSONExample(_)).toSeq)
 
     }
   }
 
-  private def parseDataNode(exampleNode: Option[YNode]) = {
+  private def parseDataNode(exampleNode: Option[YNode], ann: Seq[Annotation] = Seq()) = {
     val dataNode = exampleNode.map { ex =>
       val dataNode = DataNodeParser(ex, parent = Some(parentId)).parse()
       dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
       dataNode.annotations += LexicalInformation(Range(ex.value.range))
+      ann.foreach { a =>
+        dataNode.annotations += a
+      }
+
       dataNode
     }
     DataNodeParserResult(exampleNode, dataNode)

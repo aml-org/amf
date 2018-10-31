@@ -392,7 +392,7 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                    "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
@@ -401,7 +401,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(1,0)-(4,1)]"
+                            "@value": "{\n  \"a\": 1,\n  \"b\": 2\n}"
                           }
                         ]
                       }
@@ -416,6 +416,20 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "b->[(3,2)-(3,8)]#a->[(2,2)-(2,8)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema/example/default-example/object_1"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(1,0)-(4,1)]"
                           }
                         ]
                       }

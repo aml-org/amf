@@ -1268,6 +1268,20 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/any/application%2Fjson/example/default-example/array_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[{\"ID\":1, \"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}, {\"ID\":2,\"code\": \"ER45if\", \"price\": 345.99, \"departureDate\": \"2016/02/11\", \"origin\": \"MUA\", \"destination\": \"LAX\", \"emptySeats\": 52, \"plane\": {\"type\": \"Boeing 777\", \"totalSeats\": 300}}]\n"
+                                              }
+                                            ]
+                                          }
+                                        ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
@@ -1912,7 +1926,7 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -1921,7 +1935,7 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(71,16)-(71,186)]"
+                                                "@value": "{\"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}\n"
                                               }
                                             ]
                                           }
@@ -1936,6 +1950,20 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "plane->[(71,135)-(71,185)]#price->[(71,34)-(71,46)]#emptySeats->[(71,118)-(71,133)]#code->[(71,17)-(71,33)]#origin->[(71,79)-(71,94)]#destination->[(71,96)-(71,116)]#departureDate->[(71,48)-(71,77)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(71,16)-(71,186)]"
                                               }
                                             ]
                                           }
@@ -2177,7 +2205,7 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -2186,7 +2214,7 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(78,20)-(78,64)]"
+                                                "@value": "{\"message\": \"Flight added (but not really)\"}\n"
                                               }
                                             ]
                                           }
@@ -2201,6 +2229,20 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "message->[(78,21)-(78,63)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/post/201/application%2Fjson/any/application%2Fjson/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(78,20)-(78,64)]"
                                               }
                                             ]
                                           }
@@ -2868,7 +2910,7 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -2877,7 +2919,7 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(87,22)-(87,200)]"
+                                                "@value": "{\"ID\":1, \"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing 737\", \"totalSeats\": 150}}\n"
                                               }
                                             ]
                                           }
@@ -2892,6 +2934,20 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "ID->[(87,23)-(87,29)]#plane->[(87,149)-(87,199)]#price->[(87,48)-(87,60)]#emptySeats->[(87,132)-(87,147)]#code->[(87,31)-(87,47)]#origin->[(87,93)-(87,108)]#destination->[(87,110)-(87,130)]#departureDate->[(87,62)-(87,91)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/get/200/application%2Fjson/any/application%2Fjson/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(87,22)-(87,200)]"
                                               }
                                             ]
                                           }
@@ -3191,7 +3247,7 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -3200,7 +3256,7 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(95,22)-(95,68)]"
+                                                "@value": "{\"message\": \"Flight deleted (but not really)\"}\n"
                                               }
                                             ]
                                           }
@@ -3215,6 +3271,20 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "message->[(95,23)-(95,67)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/delete/200/application%2Fjson/any/application%2Fjson/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(95,22)-(95,68)]"
                                               }
                                             ]
                                           }
@@ -3849,7 +3919,7 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -3858,7 +3928,7 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(102,18)-(102,186)]"
+                                                "@value": "{\"code\": \"ER38sd\",\"price\": 400, \"departureDate\": \"2016/03/20\", \"origin\": \"MUA\", \"destination\": \"SFO\", \"emptySeats\": 0, \"plane\": {\"type\": \"Boeing37\", \"totalSeats\": 150}}\n"
                                               }
                                             ]
                                           }
@@ -3873,6 +3943,20 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "plane->[(102,137)-(102,185)]#price->[(102,36)-(102,48)]#emptySeats->[(102,120)-(102,135)]#code->[(102,19)-(102,35)]#origin->[(102,81)-(102,96)]#destination->[(102,98)-(102,118)]#departureDate->[(102,50)-(102,79)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(102,18)-(102,186)]"
                                               }
                                             ]
                                           }
@@ -4114,7 +4198,7 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -4123,7 +4207,7 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(109,22)-(109,68)]"
+                                                "@value": "{\"message\": \"Flight updated (but not really)\"}\n"
                                               }
                                             ]
                                           }
@@ -4138,6 +4222,20 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "message->[(109,23)-(109,67)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/200/application%2Fjson/any/application%2Fjson/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(109,22)-(109,68)]"
                                               }
                                             ]
                                           }

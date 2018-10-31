@@ -332,7 +332,7 @@
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                        "http://a.ml/vocabularies/document-source-maps#parsed-json-example": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -341,7 +341,7 @@
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(1,0)-(10,1)]"
+                                                "@value": "{\n    \"Customer\": {\n        \"name\": \"Bart\",\n        \"lastName\": \"Simpson\",\n        \"address\": {\n            \"street\": \"evergreen\",\n            \"number\": 123\n        }\n    }\n}"
                                               }
                                             ]
                                           }
@@ -356,6 +356,20 @@
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "Customer->[(2,4)-(9,5)]"
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonexample.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/any/schema/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(1,0)-(10,1)]"
                                               }
                                             ]
                                           }
