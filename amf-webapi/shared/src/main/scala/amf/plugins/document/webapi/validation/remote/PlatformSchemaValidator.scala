@@ -17,7 +17,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.domain.shapes.validation.ScalarPayloadForParam
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.{ProfileName, ProfileNames}
-import org.yaml.builder.JsonOutputBuilder
+import org.yaml.builder.YDocumentBuilder
 
 import scala.collection.mutable
 
@@ -123,8 +123,13 @@ trait PlatformSchemaValidator {
     val futureText = payload.raw match {
       case Some("") => None
       case _ =>
-        val builder = JsonOutputBuilder()
-        if (PayloadPlugin.emit(payload, builder)) Some(builder.toString) else None
+        val y = new YDocumentBuilder
+        if (PayloadPlugin.emit(payload, y)) {
+          SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(y.document)) match {
+            case Some(serialized) => Some(serialized.toString)
+            case _                => None
+          }
+        } else None
     }
 
     futureText map { text =>
