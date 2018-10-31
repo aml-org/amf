@@ -1,14 +1,11 @@
 #%Dialect 1.0
 
-dialect: OAS
-version: "2.0"
-
 uses:
-  doc: ../aml_doc.yaml
-  http: ../http.yaml
-  shapes: ../shapes.yaml
-  meta: ../meta.yaml
-  security: ../security.yaml
+  doc: ../vocabularies/aml_doc.yaml
+  http: ../vocabularies/http.yaml
+  shapes: ../vocabularies/shapes.yaml
+  meta: ../vocabularies/meta.yaml
+  security: ../vocabularies/security.yaml
 
 external:
   schema-org: http://schema.org/
@@ -17,18 +14,13 @@ external:
   meta: http://a.ml/vocabularies/meta#
   owl: http://www.w3.org/2002/07/owl#
 
-documents:
-  root:
-    encodes: WebAPIObject
-    declares:
-      definitions: SchemaObject
-      parameters: ParameterObject
-      responses: ResponseObject
+dialect: OAS
+version: "2.0"
 
 nodeMappings:
 
   WebAPIObject:
-    classTerm: schema-org.WebAPI
+    classTerm: meta.WebAPI
     mapping:
       swagger:
         propertyTerm: meta.implicit
@@ -76,7 +68,7 @@ nodeMappings:
         typeDiscriminatorName: type
       security:
         propertyTerm: security.security
-        range: anyNode
+        range: http://a.ml/vocabularies/meta#anyNode
       paths:
         propertyTerm: http.endpoint
         range: PathItemObject
@@ -178,6 +170,10 @@ nodeMappings:
       readOnly:
         propertyTerm: shapes.readOnly
         range: boolean
+      properties:
+        propertyTerm: shacl.property
+        range: SchemaObject
+        mapKey: shacl.name
       discriminator:
         propertyTerm: shapes.discriminator
         range: string
@@ -201,7 +197,7 @@ nodeMappings:
         range: ExternalDocumentationObject
       example:
         propertyTerm: doc.examples
-        range: anyNode
+        range: http://a.ml/vocabularies/meta#anyNode
       format:
         propertyTerm: shapes.format
         range: string
@@ -255,7 +251,8 @@ nodeMappings:
         range: number
       enum:
         propertyTerm: shacl.in
-        range: any
+        range: string
+        allowMultiple: true
 
   ParameterObject:
     classTerm: http.Parameter
@@ -611,3 +608,12 @@ nodeMappings:
       wrapped:
         propertyTerm: shapes.xmlWrapped
         range: boolean
+
+documents:
+  root:
+    encodes: WebAPIObject
+    declares:
+      definitions: SchemaObject
+      parameters: ParameterObject
+      responses: ResponseObject
+

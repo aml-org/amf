@@ -396,6 +396,15 @@ object OAS20Dialect {
           .withLiteralRange(xsdBoolean.iri()),
 
         PropertyMapping()
+          .withId(DialectLocation + s"#/declarations/SchemaObject/properties")
+          .withName("properties")
+          .withNodePropertyMapping(NodeShapeModel.Properties.value.iri())
+          .withMapKeyProperty(PropertyShapeModel.Name.value.iri())
+          .withObjectRange(Seq(
+            SchemaObjectId
+          )),
+
+        PropertyMapping()
           .withId(DialectLocation + "#/declarations/SchemaObject/discriminator")
           .withName("discriminator")
           .withNodePropertyMapping(NodeShapeModel.Discriminator.value.iri())
