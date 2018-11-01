@@ -16,7 +16,7 @@ import amf.plugins.document.graph.parser.JsonLdEmitter
 import amf.plugins.syntax.RdfSyntaxPlugin
 import org.mulesoft.common.io.Output
 import org.mulesoft.common.io.Output._
-import org.yaml.builder.{JsonOutputBuilder, YDocumentBuilder}
+import org.yaml.builder.{DocBuilder, JsonOutputBuilder, YDocumentBuilder}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -27,6 +27,11 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
     val builder      = new YDocumentBuilder
     if (domainPlugin.emit(unit, builder, options)) SyamlParsedDocument(builder.result)
     else throw new Exception(s"Error unparsing syntax $mediaType with domain plugin ${domainPlugin.ID}")
+  }
+
+  /** Render to doc builder. */
+  def renderToBuilder[T](builder: DocBuilder[T])(implicit executor: ExecutionContext): Future[Unit] = Future {
+    if (vendor == Vendor.AMF.name) JsonLdEmitter.emit(unit, builder, options)
   }
 
   /** Print ast to writer. */

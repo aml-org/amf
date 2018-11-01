@@ -1,14 +1,11 @@
 package amf.convert
 
-import java.io.StringWriter
-
 import _root_.org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 import amf._
 import amf.client.AMF
-import amf.client.convert.NativeOps
 import amf.client.convert.CoreClientConverters._
+import amf.client.convert.NativeOps
 import amf.client.environment.{DefaultEnvironment, Environment}
-import amf.client.model.DataTypes
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.parse._
@@ -18,11 +15,12 @@ import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.parser.Range
-import amf.core.remote.{Aml, Oas20, Raml, Raml10}
+import amf.core.remote.{Aml, Oas20, Raml10}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
+import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -556,6 +554,23 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       e shouldBe a[LimitReachedException]
 
       buffer.toString() should endWith("http://a.ml/vocabularies/document#RootDomainElement\",\n")
+    }
+  }
+
+  test("Generate to doc builder") {
+    val input = s"""
+                   |#%RAML 1.0
+                   |title: Environment test
+                   |version: 32.0.7
+    """.stripMargin
+
+    val builder = JsonOutputBuilder()
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseStringAsync(input).asFuture
+      e    <- new AmfGraphRenderer().generateToBuilder(unit, builder).asFuture
+    } yield {
+      builder.result.toString should include("\"http://schema.org/version\"")
     }
   }
 
