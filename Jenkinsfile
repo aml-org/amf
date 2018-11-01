@@ -25,7 +25,7 @@ pipeline {
         }
       }
       steps {
-        sbt publish
+        sh 'sbt publish'
       }
     }
     stage('Trigger amf projects') {
