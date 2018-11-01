@@ -63,7 +63,9 @@ setSonarProperties := {
 
   val p = new Properties()
   p.putAll(JavaConversions.mapAsJavaMap(values))
-  p.store(new FileOutputStream(file("./sonar-project.properties")), null)
+  val stream = new FileOutputStream(file("./sonar-project.properties"))
+  p.store(stream, null)
+  stream.close()
 }
 
 val sonarMe = TaskKey[Unit](
