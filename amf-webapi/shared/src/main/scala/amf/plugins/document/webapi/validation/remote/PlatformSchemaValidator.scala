@@ -125,14 +125,13 @@ trait PlatformSchemaValidator {
       case Some("") => None
       case _ =>
         val y = new YDocumentBuilder
-        payload.encodes.annotations.find(classOf[ParsedJSONExample]).map(_.value).orElse {
-          if (PayloadPlugin.emit(payload, y)){
-            SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(y.document)) match {
-              case Some(serialized) => Some(serialized.toString)
-              case _                => None
-            }
-          } else None
-        }
+        if (PayloadPlugin.emit(payload, y)) {
+          SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(y.document)) match {
+            case Some(serialized) => Some(serialized.toString)
+            case _                => None
+          }
+        } else None
+
     }
 
     futureText map { text =>
@@ -166,8 +165,7 @@ trait PlatformSchemaValidator {
     }
   }
 
-  protected def buildPayloadNode(mediaType: String,
-                                 payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
     val payloadResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
     if (!payloadResult.hasError) (loadDataNodeString(payloadResult.fragment), Some(payloadResult))
     else (None, Some(payloadResult))
