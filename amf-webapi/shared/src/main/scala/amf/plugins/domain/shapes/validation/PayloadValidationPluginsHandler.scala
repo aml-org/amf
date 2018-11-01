@@ -145,8 +145,8 @@ object PayloadValidationPluginsHandler {
       AMFValidationReport("", ProfileName(""), Seq(results))
     }
 
-    override def fastValidation(mediaType: String, payload: String): Boolean = validate(mediaType, payload).conforms
-    override val validationMode: ValidationMode                              = StrictValidationMode
-    override val env: Environment                                            = Environment()
+    override def isValid(mediaType: String, payload: String): Boolean = validate(mediaType, payload).conforms
+    override val validationMode: ValidationMode                       = StrictValidationMode
+    override val env: Environment                                     = Environment()
   }
 }

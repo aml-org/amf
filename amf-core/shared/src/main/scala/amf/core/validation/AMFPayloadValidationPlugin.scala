@@ -25,7 +25,7 @@ trait PayloadValidator {
 
   def validate(payloadFragment: PayloadFragment): AMFValidationReport
 
-  def fastValidation(mediaType: String, payload: String): Boolean
+  def isValid(mediaType: String, payload: String): Boolean
 
 }
 

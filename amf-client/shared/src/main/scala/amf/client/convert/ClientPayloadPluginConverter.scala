@@ -50,8 +50,8 @@ object ClientPayloadPluginConverter {
           override def validate(payloadFragment: InternalPayloadFragment): AMFValidationReport =
             validator.validate(payloadFragment)._internal
 
-          override def fastValidation(payload: String, mediaType: String): Boolean =
-            validator.fastValidation(payload, mediaType)
+          override def isValid(payload: String, mediaType: String): Boolean =
+            validator.isValid(payload, mediaType)
         }
       }
     }

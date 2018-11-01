@@ -32,8 +32,8 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
       val shape     = findShape(library, "A")
       val validator = shape.payloadValidator("application/json").get
 
-      assert(validator.fastValidation("application/json", "{\"a\": 10}"))
-      assert(!validator.fastValidation("application/json", "{\"a\": \"10\"}"))
+      assert(validator.isValid("application/json", "{\"a\": 10}"))
+      assert(!validator.isValid("application/json", "{\"a\": \"10\"}"))
     }
   }
 
@@ -45,7 +45,7 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
       val shape     = findShape(library, "B")
       val validator = shape.payloadValidator("application/json").get
 
-      assert(validator.fastValidation("application/json", "wadus"))
+      assert(validator.isValid("application/json", "wadus"))
     }
   }
 
@@ -58,7 +58,7 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
       val shape     = findShape(resolved, "D")
       val validator = shape.payloadValidator("application/json").get
 
-      assert(validator.fastValidation("application/json", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}"))
+      assert(validator.isValid("application/json", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}"))
     }
   }
 
@@ -72,7 +72,7 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
       val validator = shape.payloadValidator("application/json", Environment()).get
 
       try {
-        validator.fastValidation("application/wadus", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}")
+        validator.isValid("application/wadus", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}")
         assert(false)
       } catch {
         case _: Exception => assert(true)

@@ -10,14 +10,14 @@ trait ClientPayloadValidationTest extends FunSuite with NativeOps {
 
     val test = new ScalarShape().withDataType(DataTypes.String).withName("test")
 
-    assert(test.parameterValidator("application/yaml").asOption.get.fastValidation("application/yaml", "1234"))
+    assert(test.parameterValidator("application/yaml").asOption.get.isValid("application/yaml", "1234"))
   }
 
   test("Test parameter validator boolean payload") {
 
     val test = new ScalarShape().withDataType(DataTypes.String).withName("test")
 
-    assert(test.parameterValidator("application/yaml").asOption.get.fastValidation("application/yaml", "true"))
+    assert(test.parameterValidator("application/yaml").asOption.get.isValid("application/yaml", "true"))
   }
 
 }

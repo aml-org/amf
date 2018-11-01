@@ -32,5 +32,5 @@ trait ClientPayloadValidator extends js.Object {
 
   def validate(payloadFragment: PayloadFragment): ValidationReport
 
-  def fastValidation(payload: String, mediaType: String): Boolean
+  def isValid(payload: String, mediaType: String): Boolean
 }

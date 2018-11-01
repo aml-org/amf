@@ -35,7 +35,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   override val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
 
-  override def fastValidation(mediaType: String, payload: String): Boolean = {
+  override def isValid(mediaType: String, payload: String): Boolean = {
     validateForPayload(mediaType, payload, BooleanValidationProcessor)
   }
 
@@ -178,6 +178,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     val errorHandler = PayloadErrorHandler()
     PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getErrors)
   }
+
   private def parsePayload(payload: String, mediaType: String, errorHandler: ParseErrorHandler): PayloadFragment = {
     val defaultCtx = new PayloadContext("", Nil, ParserContext())
 
@@ -214,11 +215,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     }
     if (!fixedResult.hasError) (loadDataNodeString(fixedResult.fragment), Some(fixedResult))
     else (None, Some(fixedResult))
-
-  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
-    val payloadResult = parsePayloadWithErrorHandler(payload, mediaType, env, shape)
-    if (!payloadResult.hasError) (loadDataNodeString(payloadResult.fragment), Some(payloadResult))
-    else (None, Some(payloadResult))
   }
 
   private def performValidation(payload: (Option[LoadedObj], Option[PayloadParsingResult]),

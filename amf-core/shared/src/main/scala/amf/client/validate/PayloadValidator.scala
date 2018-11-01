@@ -7,7 +7,7 @@ import amf.client.convert.CoreClientConverters._
 
 @JSExportAll
 class PayloadValidator(private[amf] val _internal: InternalPayloadValidator) {
-  def fastValidation(mediaType: String, payload: String): Boolean = _internal.fastValidation(mediaType, payload)
+  def isValid(mediaType: String, payload: String): Boolean = _internal.isValid(mediaType, payload)
 
   def validate(mediaType: String, payload: String): ValidationReport = _internal.validate(mediaType, payload)
   def validate(payloadFragment: PayloadFragment): ValidationReport   = _internal.validate(payloadFragment)
