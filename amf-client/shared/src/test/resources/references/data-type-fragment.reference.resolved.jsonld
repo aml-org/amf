@@ -39,7 +39,7 @@
     ],
     "doc:references": [
       {
-        "@id": "#4",
+        "@id": "#1",
         "@type": [
           "doc:DataType",
           "doc:Fragment",
@@ -47,7 +47,7 @@
         ],
         "doc:encodes": [
           {
-            "@id": "#5",
+            "@id": "#2",
             "@type": [
               "shacl:NodeShape",
               "shacl:Shape",
@@ -61,7 +61,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#2",
+                "@id": "#3",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -74,7 +74,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#3",
+                    "@id": "#4",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "shacl:Shape",
@@ -93,11 +93,11 @@
                     ],
                     "smaps": {
                       "type-property-lexical-info": {
-                        "#3": "[(4,4)-(4,8)]"
+                        "#4": "[(4,4)-(4,8)]"
                       },
                       "lexical": {
                         "shacl:datatype": "[(4,4)-(5,0)]",
-                        "#3": "[(3,2)-(5,0)]"
+                        "#4": "[(3,2)-(5,0)]"
                       }
                     }
                   }
@@ -114,7 +114,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#2": "[(3,2)-(5,0)]"
+                    "#3": "[(3,2)-(5,0)]"
                   }
                 }
               }
@@ -126,24 +126,24 @@
             ],
             "smaps": {
               "source-vendor": {
-                "#5": "RAML 1.0"
+                "#2": "RAML 1.0"
               },
               "lexical": {
-                "#5": "[(2,0)-(5,0)]"
+                "#2": "[(2,0)-(5,0)]"
               }
             }
           }
         ],
         "smaps": {
           "lexical": {
-            "#4": "[(2,0)-(5,0)]"
+            "#1": "[(2,0)-(5,0)]"
           }
         }
       }
     ],
     "doc:declares": [
       {
-        "@id": "#1",
+        "@id": "#5",
         "@type": [
           "shacl:NodeShape",
           "shacl:Shape",
@@ -157,7 +157,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#2",
+            "@id": "#3",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -170,7 +170,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#3",
+                "@id": "#4",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "shacl:Shape",
@@ -189,11 +189,11 @@
                 ],
                 "smaps": {
                   "type-property-lexical-info": {
-                    "#3": "[(4,4)-(4,8)]"
+                    "#4": "[(4,4)-(4,8)]"
                   },
                   "lexical": {
                     "shacl:datatype": "[(4,4)-(5,0)]",
-                    "#3": "[(3,2)-(5,0)]"
+                    "#4": "[(3,2)-(5,0)]"
                   }
                 }
               }
@@ -210,7 +210,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#2": "[(3,2)-(5,0)]"
+                "#3": "[(3,2)-(5,0)]"
               }
             }
           }
@@ -222,16 +222,16 @@
         ],
         "smaps": {
           "declared-element": {
-            "#1": ""
+            "#5": ""
           },
           "source-vendor": {
-            "#1": "RAML 1.0"
+            "#5": "RAML 1.0"
           },
           "lexical": {
-            "#1": "[(2,0)-(5,0)]"
+            "#5": "[(2,0)-(5,0)]"
           },
           "resolved-link": {
-            "#1": "amf://id#1"
+            "#5": "amf://id#5"
           }
         }
       }

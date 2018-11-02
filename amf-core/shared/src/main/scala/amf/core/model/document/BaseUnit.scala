@@ -269,9 +269,11 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
             // we first process declarations, then the encoding
             val effectiveFields: Iterable[FieldEntry] = element match {
               case doc: DeclaresModel =>
-                doc.fields.fields().filter(f => f.field == DocumentModel.Declares) ++ doc.fields
-                  .fields()
-                  .filter(f => f.field != DocumentModel.Declares)
+                doc.fields.fields().filter(f => f.field == DocumentModel.References) ++
+                  doc.fields.fields().filter(f => f.field == DocumentModel.Declares) ++
+                  doc.fields
+                    .fields()
+                    .filter(f => f.field != DocumentModel.Declares && f.field != DocumentModel.References)
               case _ => element.fields.fields()
             }
             effectiveFields
