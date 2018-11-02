@@ -25,7 +25,9 @@ pipeline {
         }
       }
       steps {
-        sh 'sbt publish'
+        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+          sh 'sbt publish'
+        }
       }
     }
     stage('Trigger amf projects') {
