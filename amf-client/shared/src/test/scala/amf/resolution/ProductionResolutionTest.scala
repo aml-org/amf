@@ -8,7 +8,7 @@ import amf.core.remote._
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.webapi.resolution.pipelines.{AmfEditingPipeline, AmfResolutionPipeline}
+import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
 import org.scalatest.Assertion
 
