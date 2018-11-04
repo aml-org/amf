@@ -76,7 +76,6 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         fragment.encodes.parsed.getOrElse {
           JsonParser
             .withSource(fragment.encodes.raw.value(), fragment.location().getOrElse(""))(ctx)
-            .withIncludeTag("!include") // with include tag? in this json plugin?
             .parse(keepTokens = true)
             .head match {
             case doc: YDocument => doc.node
@@ -91,7 +90,6 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
       case fragment: RecursiveUnit if fragment.raw.isDefined =>
         JsonParser
           .withSource(fragment.raw.get, fragment.location().getOrElse(""))(ctx)
-          .withIncludeTag("!include")
           .parse(keepTokens = true)
           .head
           .asInstanceOf[YDocument]

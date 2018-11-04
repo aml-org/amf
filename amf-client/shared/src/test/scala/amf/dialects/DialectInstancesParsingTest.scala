@@ -7,7 +7,7 @@ import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectInstancesParsingTest extends FunSuiteCycleTests {
+trait DialectInstancesParsingTest extends FunSuiteCycleTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -125,27 +125,27 @@ class DialectInstancesParsingTest extends FunSuiteCycleTests {
   }
 
   test("parse 18 test") {
-    withDialect("dialect18.raml", "example18.raml", "example18.json", VocabularyJsonHint, Amf)
+    withDialect("dialect18.raml", "example18.raml", "example18.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 19 test") {
-    withDialect("dialect19.raml", "example19.raml", "example19.json", VocabularyJsonHint, Amf)
+    withDialect("dialect19.raml", "example19.raml", "example19.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 20 test") {
-    withDialect("dialect20.raml", "example20.raml", "example20.json", VocabularyJsonHint, Amf)
+    withDialect("dialect20.raml", "example20.raml", "example20.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 21a test") {
-    withDialect("dialect21.raml", "patch21.raml", "patch21.json", VocabularyJsonHint, Amf)
+    withDialect("dialect21.raml", "patch21.raml", "patch21.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 21b test") {
-    withDialect("dialect21.raml", "patch21b.raml", "patch21b.json", VocabularyJsonHint, Amf)
+    withDialect("dialect21.raml", "patch21b.raml", "patch21b.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 23 test") {
-    withDialect("dialect23.raml", "example23.raml", "example23.json", VocabularyJsonHint, Amf)
+    withDialect("dialect23.raml", "example23.raml", "example23.json", VocabularyYamlHint, Amf)
   }
 
   if (platform.name == "jvm") {
@@ -160,15 +160,15 @@ class DialectInstancesParsingTest extends FunSuiteCycleTests {
   }
 
   test("parse 24 test") {
-    withDialect("dialect24.raml", "example24.raml", "example24.json", VocabularyJsonHint, Amf)
+    withDialect("dialect24.raml", "example24.raml", "example24.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 24b test") {
-    withDialect("dialect24.raml", "example24b.raml", "example24b.json", VocabularyJsonHint, Amf)
+    withDialect("dialect24.raml", "example24b.raml", "example24b.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 24c test") {
-    withDialect("dialect24.raml", "example24c.raml", "example24c.json", VocabularyJsonHint, Amf)
+    withDialect("dialect24.raml", "example24c.raml", "example24c.json", VocabularyYamlHint, Amf)
   }
 
   if (platform.name == "jvm") {

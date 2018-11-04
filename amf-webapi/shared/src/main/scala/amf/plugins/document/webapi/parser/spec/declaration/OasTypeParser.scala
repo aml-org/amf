@@ -11,6 +11,7 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
 import amf.plugins.document.webapi.contexts.{Oas2WebApiContext, Oas3WebApiContext, OasWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.JSONSchema
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
@@ -22,7 +23,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model._
-import org.yaml.render.YamlRender
+import org.yaml.render.{JsonRender, YamlRender}
 
 import scala.collection.mutable
 

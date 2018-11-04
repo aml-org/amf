@@ -14,7 +14,7 @@ import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
-import org.yaml.render.YamlRender
+import org.yaml.render.{JsonRender, YamlRender}
 
 import scala.collection.mutable.ListBuffer
 

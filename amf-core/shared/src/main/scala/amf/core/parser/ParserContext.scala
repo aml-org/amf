@@ -33,7 +33,14 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
                                  lexical: Option[LexicalInformation],
                                  level: String,
                                  location: Option[String]): Unit = {
-    RuntimeValidator.reportConstraintFailure(level, id, node, property, message, lexical, parserCount, location)
+    RuntimeValidator.reportConstraintFailure(level,
+                                             id,
+                                             node,
+                                             property,
+                                             message,
+                                             lexical,
+                                             parserCount,
+                                             location.orElse(Some(currentFile)))
   }
 
   /** Report constraint failure of severity violation. */

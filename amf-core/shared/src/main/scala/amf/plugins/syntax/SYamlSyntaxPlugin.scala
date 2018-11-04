@@ -42,8 +42,9 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
       platform.rdfFramework.get.syntaxToRdfModel(mediaType, text)
     } else {
       val parser = getFormat(mediaType) match {
-        case "json" => JsonParser.withSource(text, ctx.currentFile)(ctx).withIncludeTag("!include")
-        case _      => YamlParser(text, ctx.currentFile)(ctx).withIncludeTag("!include")
+        case "json" =>
+          JsonParser.withSource(text, ctx.currentFile)(ctx) //include tag only for raml right? so only for yaml
+        case _ => YamlParser(text, ctx.currentFile)(ctx).withIncludeTag("!include")
       }
       val parts = parser.parse(true)
 
@@ -65,7 +66,8 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
       case input: SyamlParsedDocument =>
         val ast = input.document
         render(mediaType, ast) { (format, ast) =>
-          if (format == "yaml") YamlRender.render(writer, ast, expandReferences = false) else JsonRender.render(ast, writer)
+          if (format == "yaml") YamlRender.render(writer, ast, expandReferences = false)
+          else JsonRender.render(ast, writer)
           Some(writer)
         }
       case input: RdfModelDocument if platform.rdfFramework.isDefined =>

@@ -17,24 +17,12 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/multiple-tags.json", OasProfile)
   }
 
-  test("Test multiple formData parameters") {
-    checkValid("/parameters/multiple-formdata.yaml", OasProfile)
-  }
-
-  test("Integer response code") {
-    checkValid("/response/integer-response-code.yaml", OasProfile)
-  }
-
   test("In body binding param") {
     checkValid("/parameters/binding-body.json", OasProfile)
   }
 
   test("Valid media types") {
     checkValid("/payloads/valid-media-types.json", OasProfile)
-  }
-
-  test("Hack in pattern facet to validate correctly in jvm and js") {
-    checkValid("/pattern/pattern-with-hack.yaml", OasProfile)
   }
 
   test("formData payload with ref") {

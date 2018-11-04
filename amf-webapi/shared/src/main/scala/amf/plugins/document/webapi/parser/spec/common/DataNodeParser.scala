@@ -81,7 +81,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
       case YType.Int       => parseScalar(node.as[YScalar], "integer")
       case YType.Float     => parseScalar(node.as[YScalar], "double")
       case YType.Bool      => parseScalar(node.as[YScalar], "boolean")
-      case YType.Null      => parseScalar(node.as[YScalar], "nil")
+      case YType.Null      => parseScalar(node.toOption[YScalar].getOrElse(YScalar("null")), "nil")
       case YType.Timestamp =>
         // TODO add time-only type in syaml and amf
         SimpleDateTime.parse(node.toString()).toOption match {

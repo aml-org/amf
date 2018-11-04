@@ -18,7 +18,8 @@ import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
-import org.yaml.parser.YamlParser
+import org.yaml.parser
+import org.yaml.parser.{JsonParser, YamlParser}
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable
@@ -109,7 +110,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       val url       = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
-      val schemaAst = YamlParser(text, valueAST.sourceName)(ctx).withIncludeTag("!include").parse(keepTokens = true)
+      val schemaAst = JsonParser.withSource(text, valueAST.sourceName)(ctx).parse(keepTokens = true)
       val schemaEntry = schemaAst.collectFirst({ case d: YDocument => d }) match {
         case Some(d) => d
         case _       =>
@@ -121,8 +122,7 @@ case class RamlJsonSchemaExpression(key: YNode,
       context.localJSONSchemaContext = Some(schemaEntry.node)
 
       Oas2DocumentParser(
-        Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
-        context)
+        Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(context)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = context.declarations.shapes
       val resolvedShapes = new ReferenceResolutionStage(false)(ctx)
@@ -151,11 +151,11 @@ case class RamlJsonSchemaExpression(key: YNode,
     val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location).orElse {
       Some(valueAST.value.sourceName)
     }
-    val parser =
-      if (extLocation.isEmpty)
-        YamlParser(text, valueAST.sourceName, (valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
-      else YamlParser(text, url.getOrElse(valueAST.sourceName))(ctx)
-    val schemaAst = parser.withIncludeTag("!include").parse(keepTokens = true)
+    val parser = JsonParser.withSourceOffset(text,
+                                             url.getOrElse(value.sourceName),
+                                             (valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
+
+    val schemaAst = parser.parse(keepTokens = true)
     val schemaEntry = schemaAst.head match {
       case d: YDocument => YMapEntry(key, d.node)
       case _            =>
