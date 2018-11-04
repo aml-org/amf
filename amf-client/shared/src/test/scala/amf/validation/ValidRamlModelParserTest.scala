@@ -127,5 +127,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     validate("shapes/default-definition-type.raml")
   }
 
+  test("Float validation") {
+    validate("examples/float-validation/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
