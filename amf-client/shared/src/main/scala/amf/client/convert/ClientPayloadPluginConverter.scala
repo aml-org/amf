@@ -45,13 +45,13 @@ object ClientPayloadPluginConverter {
           override val defaultSeverity: String        = validator.defaultSeverity
           override val validationMode: ValidationMode = validator.validationMode
           override val env: Environment               = validator.env._internal
-          override def validate(payload: String, mediaType: String): AMFValidationReport =
-            validator.validate(payload, mediaType)._internal
-          override def validate(payloadFragment: InternalPayloadFragment): AMFValidationReport =
-            validator.validate(payloadFragment)._internal
+          override def validate(payload: String, mediaType: String): Future[AMFValidationReport] =
+            validator.validate(payload, mediaType).asInternal
+          override def validate(payloadFragment: InternalPayloadFragment): Future[AMFValidationReport] =
+            validator.validate(payloadFragment).asInternal
 
-          override def isValid(payload: String, mediaType: String): Boolean =
-            validator.isValid(payload, mediaType)
+          override def isValid(payload: String, mediaType: String): Future[Boolean] =
+            validator.isValid(payload, mediaType).asInternal
         }
       }
     }

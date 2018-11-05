@@ -27,9 +27,9 @@ trait ClientPayloadValidator {
   val validationMode: ValidationMode
   val env: Environment
 
-  def validate(payload: String, mediaType: String): ValidationReport
+  def validate(payload: String, mediaType: String): ClientFuture[ValidationReport]
 
-  def validate(payloadFragment: PayloadFragment): ValidationReport
+  def validate(payloadFragment: PayloadFragment): ClientFuture[ValidationReport]
 
-  def isValid(payload: String, mediaType: String): Boolean
+  def isValid(payload: String, mediaType: String): ClientFuture[Boolean]
 }

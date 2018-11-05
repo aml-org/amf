@@ -13,6 +13,7 @@ import amf.plugins.features.validation.ParserSideValidations
 
 import scala.collection.mutable
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object PayloadValidationPluginsHandler {
 
@@ -21,7 +22,7 @@ object PayloadValidationPluginsHandler {
                   env: Environment): Future[AMFValidationReport] = {
     val validators: mutable.Map[(Shape, String), PayloadValidator] = mutable.Map()
 
-    val value: Seq[AMFValidationReport] = candidates.map { c =>
+    val futures: Seq[Future[AMFValidationReport]] = candidates.map { c =>
       val validator = validators.get((c.shape, c.payload.mediaType.value())) match {
         case Some(v) => v
         case _ =>
@@ -29,14 +30,15 @@ object PayloadValidationPluginsHandler {
           validators.put((c.shape, c.payload.mediaType.value()), v)
           v
       }
-
       validator.validate(c.payload)
     }
 
-    val seq = value.flatMap { report =>
-      report.results.sorted
-    }.toSeq
-    Future.successful(AMFValidationReport(!seq.exists(_.level == SeverityLevels.VIOLATION), "", ProfileName(""), seq))
+    Future.sequence(futures).map { f =>
+      val seq = f.flatMap { report =>
+        report.results.sorted
+      }
+      AMFValidationReport(!seq.exists(_.level == SeverityLevels.VIOLATION), "", ProfileName(""), seq)
+    }
   }
 
   def validateFragment(shape: Shape,
@@ -46,7 +48,7 @@ object PayloadValidationPluginsHandler {
                        validationMode: ValidationMode = StrictValidationMode): Future[AMFValidationReport] = {
     val p = plugin(fragment.mediaType.value(), shape, env, severity)
 
-    Future.successful(p.validator(shape, env, validationMode).validate(fragment))
+    p.validator(shape, env, validationMode).validate(fragment)
   }
 
   def validateWithGuessing(shape: Shape,
@@ -62,12 +64,9 @@ object PayloadValidationPluginsHandler {
                severity: String,
                env: Environment = Environment(),
                validationMode: ValidationMode = StrictValidationMode): Future[AMFValidationReport] = {
-    Future.successful({
-      val p = plugin(mediaType, shape, env, severity)
 
-      p.validator(shape, env, validationMode).validate(mediaType, payload)
-    })
-
+    val p = plugin(mediaType, shape, env, severity)
+    p.validator(shape, env, validationMode).validate(mediaType, payload)
   }
 
   def payloadValidator(shape: Shape,
@@ -110,7 +109,7 @@ object PayloadValidationPluginsHandler {
   }
 
   case class AnyMathPayloadValidator(shape: Shape, defaultSeverity: String) extends PayloadValidator {
-    override def validate(payload: String, mediaType: String): AMFValidationReport = {
+    override def validate(payload: String, mediaType: String): Future[AMFValidationReport] = {
 
       val results = AMFValidationResult(
         s"Unsupported validation for mediatype: $mediaType and shape ${shape.id}",
@@ -124,11 +123,10 @@ object PayloadValidationPluginsHandler {
         None,
         null
       )
-      AMFValidationReport("", ProfileName(""), Seq(results))
-
+      Future(AMFValidationReport("", ProfileName(""), Seq(results)))
     }
 
-    override def validate(payloadFragment: PayloadFragment): AMFValidationReport = {
+    override def validate(payloadFragment: PayloadFragment): Future[AMFValidationReport] = {
       val results = AMFValidationResult(
         s"Unsupported validation for mediatype: ${payloadFragment.mediaType.value()} and shape ${shape.id}",
         defaultSeverity,
@@ -141,12 +139,12 @@ object PayloadValidationPluginsHandler {
         payloadFragment.encodes.location(),
         null
       )
-
-      AMFValidationReport("", ProfileName(""), Seq(results))
+      Future(AMFValidationReport("", ProfileName(""), Seq(results)))
     }
 
-    override def isValid(mediaType: String, payload: String): Boolean = validate(mediaType, payload).conforms
-    override val validationMode: ValidationMode                       = StrictValidationMode
-    override val env: Environment                                     = Environment()
+    override def isValid(mediaType: String, payload: String): Future[Boolean] =
+      validate(mediaType, payload).map(_.conforms)
+    override val validationMode: ValidationMode = StrictValidationMode
+    override val env: Environment               = Environment()
   }
 }

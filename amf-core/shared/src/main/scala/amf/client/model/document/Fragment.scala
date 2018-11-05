@@ -1,7 +1,9 @@
 package amf.client.model.document
 
 import amf.client.model.domain.{ArrayNode, ObjectNode, ScalarNode}
+import amf.core.model.StrField
 import amf.core.model.document.{Fragment => InternalFragment, PayloadFragment => InternalPayloadFragment}
+import amf.core.model.domain.DataNode
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -18,4 +20,8 @@ case class PayloadFragment(override private[amf] val _internal: InternalPayloadF
 
   @JSExportTopLevel("model.domain.PayloadFragment")
   def this(arr: ArrayNode, mediaType: String) = this(InternalPayloadFragment(arr._internal, mediaType))
+
+  def mediaType: StrField = _internal.mediaType
+
+  def dataNode: DataNode = _internal.encodes
 }

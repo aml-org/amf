@@ -8,7 +8,6 @@ import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
-import amf.plugins.document.webapi.annotations.ParsedJSONExample
 import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, PayloadContext}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
@@ -24,6 +23,8 @@ import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
@@ -35,16 +36,17 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   override val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
 
-  override def isValid(mediaType: String, payload: String): Boolean = {
-    validateForPayload(mediaType, payload, BooleanValidationProcessor)
+  override def isValid(mediaType: String, payload: String): Future[Boolean] = {
+    Future(validateForPayload(mediaType, payload, BooleanValidationProcessor))
   }
 
-  override def validate(mediaType: String, payload: String): AMFValidationReport = {
-    validateForPayload(mediaType, payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
+  override def validate(mediaType: String, payload: String): Future[AMFValidationReport] = {
+    Future(
+      validateForPayload(mediaType, payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
   }
 
-  override def validate(fragment: PayloadFragment): AMFValidationReport = {
-    validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport]
+  override def validate(fragment: PayloadFragment): Future[AMFValidationReport] = {
+    Future(validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
   }
 
   type LoadedObj
@@ -102,10 +104,10 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
           )))
     } else {
       try {
-
         performValidation(buildCandidate(mediaType, payload), validationProcessor)
       } catch {
-        case e: InvalidJsonObject => validationProcessor.processException(e, None)
+        case e: InvalidJsonObject =>
+          validationProcessor.processException(e, None)
       }
 
     }

@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.resolution.pipelines.AmfResolutionPipeline
 import amf.plugins.domain.shapes.models.AnyShape
 import org.scalatest.AsyncFunSuite
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with PlatformSecrets {
 
@@ -28,12 +28,15 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
     for {
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
+      validator <- Future {
+        val shape = findShape(library, "A")
+        shape.payloadValidator("application/json").get
+      }
+      valid   <- validator.isValid("application/json", "{\"a\": 10}")
+      invalid <- validator.isValid("application/json", "{\"a\": \"10\"}").map(!_)
     } yield {
-      val shape     = findShape(library, "A")
-      val validator = shape.payloadValidator("application/json").get
-
-      assert(validator.isValid("application/json", "{\"a\": 10}"))
-      assert(!validator.isValid("application/json", "{\"a\": \"10\"}"))
+      assert(valid)
+      assert(invalid)
     }
   }
 
@@ -41,11 +44,13 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
     for {
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
+      validator <- Future {
+        val shape = findShape(library, "B")
+        shape.payloadValidator("application/json").get
+      }
+      valid <- validator.isValid("application/json", "wadus")
     } yield {
-      val shape     = findShape(library, "B")
-      val validator = shape.payloadValidator("application/json").get
-
-      assert(validator.isValid("application/json", "wadus"))
+      assert(valid)
     }
   }
 
@@ -53,12 +58,14 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
     for {
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
+      validator <- Future {
+        val resolved = new AmfResolutionPipeline(library).resolve()
+        val shape    = findShape(resolved, "D")
+        shape.payloadValidator("application/json").get
+      }
+      valid <- validator.isValid("application/json", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}")
     } yield {
-      val resolved  = new AmfResolutionPipeline(library).resolve()
-      val shape     = findShape(resolved, "D")
-      val validator = shape.payloadValidator("application/json").get
-
-      assert(validator.isValid("application/json", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}"))
+      assert(valid)
     }
   }
 
@@ -66,18 +73,14 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
     for {
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
-    } yield {
-      val resolved  = new AmfResolutionPipeline(library).resolve()
-      val shape     = findShape(resolved, "D")
-      val validator = shape.payloadValidator("application/json", Environment()).get
-
-      try {
-        validator.isValid("application/wadus", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}")
-        assert(false)
-      } catch {
-        case _: Exception => assert(true)
+      validator <- Future {
+        val resolved = new AmfResolutionPipeline(library).resolve()
+        val shape    = findShape(resolved, "D")
+        shape.payloadValidator("application/json", Environment()).get
       }
+      invalid <- validator.isValid("application/wadus", "{\"a\": 10, \"d\": \"10\", \"kind\":\"D\"}").map(!_)
+    } yield {
+      assert(invalid)
     }
   }
-
 }
