@@ -55,11 +55,19 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
   def parse(document: Root, ctx: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit]
 
   /**
+    * Unparses a model base unit and return a document AST
+    */
+  def unparse(unit: BaseUnit, renderOptions: RenderOptions): Option[ParsedDocument] = {
+    val builder = new YDocumentBuilder
+    if (emit(unit, builder, renderOptions)) Some(builder.result) else None
+  }
+
+  /**
     * Emit an Output for a given base unit
     * The type of Output is Managed by the DocBuilder
     * Returns false if the document cannot be built
     */
-  def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions = RenderOptions()): Boolean = builder match {
+  def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions): Boolean = builder match {
     case sb: YDocumentBuilder =>
       unparseAsYDocument(unit, renderOptions) exists { doc =>
         sb.document = doc

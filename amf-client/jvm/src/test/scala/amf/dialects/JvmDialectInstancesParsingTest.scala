@@ -1,3 +1,0 @@
-package amf.dialects
-
-class JvmDialectInstancesParsingTest extends DialectInstancesParsingTest

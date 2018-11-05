@@ -50,8 +50,7 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
       case _    => "application/yaml"
     })
 
-    new AMFSerializer(unit, mediaType, vendor.name, options)
-      .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
+    new AMFSerializer(unit, mediaType, vendor.name, options).renderToString
   }
 }
 

@@ -3,7 +3,7 @@ package amf.plugins.document.graph
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{DocBuilder, RenderOptions, YDocumentBuilder}
+import amf.core.emitter.{DocBuilder, RdfModelBuilder, RenderOptions, YDocumentBuilder}
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
@@ -67,6 +67,13 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
 
   override def canUnparse(unit: BaseUnit) = true
+
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
+    val builder: DocBuilder[_ <: ParsedDocument] =
+      if (options.isAmfJsonLdSerilization || platform.rdfFramework.isEmpty) new YDocumentBuilder
+      else new RdfModelBuilder
+    if (emit(unit, builder, options)) Some(builder.result) else None
+  }
 
   /**
     * Implemented only for SyamlParsedDocument and RdfModelDocument

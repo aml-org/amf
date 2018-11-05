@@ -1,23 +1,24 @@
 package amf.plugins.document.webapi.validation.remote
 
-import amf.core.emitter.YDocumentBuilder
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
 import amf.core.parser.SyamlParsedDocument
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
+import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
@@ -72,17 +73,17 @@ trait PlatformSchemaValidator {
     val futureText = payload.raw match {
       case Some("") => None
       case _ =>
-        val builder = new YDocumentBuilder
-        if (PayloadPlugin.emit(payload, builder)) {
-          SYamlSyntaxPlugin.unparse("application/json", builder.result) match {
-            case Some(serialized) => Some(serialized)
-            case _                => None
-          }
-        } else None
+        PayloadPlugin.unparse(payload, RenderOptions()) match {
+          case Some(doc) =>
+            SYamlSyntaxPlugin.unparse("application/json", doc) match {
+              case Some(serialized) => Some(serialized)
+              case _                => None
+            }
+          case _ => None
+        }
     }
 
-    futureText map { cs =>
-      val text = cs.toString
+    futureText map { text =>
       payload.encodes match {
         case node: ScalarNode
             if node.dataType.getOrElse("") == (Namespace.Xsd + "string").iri() && text.nonEmpty && text.head != '"' =>
@@ -152,13 +153,13 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
 
   def computeJsonSchemaCandidates(validationCandidates: Seq[ValidationCandidate]): Seq[JsonSchemaCandidate] = {
     // already caching in generated json schema annotation? how to ignore the parsed json schema annotation?
-    val cache = mutable.Map[Shape, CharSequence]()
+    val cache = mutable.Map[Shape, String]()
     validationCandidates.map { vc =>
       try {
         if (vc.shape.isInstanceOf[FileShape]) {
           None
         } else {
-          val schemaShape: Option[CharSequence] = vc.shape match {
+          val schemaShape: Option[String] = vc.shape match {
             case anyShape: AnyShape if anyShape.supportsInheritance =>
               generateShape(findPolymorphicShape(anyShape, vc.payload.encodes))
             case anyShape: AnyShape =>
@@ -174,7 +175,8 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
                 new Exception(s"Invalid shape for json schema: ${vc.shape.getClass.getSimpleName}"))
           }
 
-          schemaShape.map { s => JsonSchemaCandidate(vc, s.toString, loadDataNodeString(vc.payload), None)
+          schemaShape.map { s =>
+            JsonSchemaCandidate(vc, s, loadDataNodeString(vc.payload), None)
           }
         }
       } catch {
@@ -185,15 +187,16 @@ trait PlatformJsonSchemaValidator extends PlatformSchemaValidator {
   }
 
   // todo: move to json schema serializer? remove header and examples using comparator by json schema context
-  private def generateShape(fragmentShape: Shape): Option[CharSequence] = {
+  private def generateShape(fragmentShape: Shape): Option[String] = {
     val dataType = DataTypeFragment()
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    SYamlSyntaxPlugin.unparse("application/json",
-                              SyamlParsedDocument(
-                                document = new JsonSchemaValidationFragmentEmitter(dataType)(JsonSchemaEmitterContext())
-                                  .emitFragment())) // todo for logic in serializer. Hoy to handle the root?
+    SYamlSyntaxPlugin.unparse(
+      "application/json",
+      SyamlParsedDocument(
+        document = new JsonSchemaValidationFragmentEmitter(dataType)(JsonSchemaEmitterContext())
+          .emitFragment())) // todo for logic in serializer. Hoy to handle the root?
 
   }
 

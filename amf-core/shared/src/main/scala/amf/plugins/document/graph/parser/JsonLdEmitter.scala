@@ -2,7 +2,7 @@ package amf.plugins.document.graph.parser
 
 import amf.core.annotations._
 import amf.core.emitter.DocBuilder.SType
-import amf.core.emitter.{DocBuilder, RenderOptions, YDocumentBuilder}
+import amf.core.emitter.{DocBuilder, RdfModelBuilder, RenderOptions, YDocumentBuilder}
 import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, SortedArray, Str}
 import amf.core.metamodel.document.{ModuleModel, SourceMapModel}
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -15,6 +15,7 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{Annotations, FieldEntry, SyamlParsedDocument, Value}
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.document.graph.AMFGraphPlugin.platform
 import org.mulesoft.common.time.SimpleDateTime
 
 import scala.collection.mutable
@@ -22,10 +23,13 @@ import scala.collection.mutable.ListBuffer
 
 object JsonLdEmitter {
 
-  def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions = RenderOptions()): Boolean = {
+  def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions = new RenderOptions): Boolean = {
     builder match {
       case sb: YDocumentBuilder =>
         new JsonLdEmitter[SyamlParsedDocument](sb, renderOptions).root(unit)
+        true
+      case rb: RdfModelBuilder =>
+        rb.document = platform.rdfFramework.get.unitToRdfModel(unit, renderOptions)
         true
       case _ => false
     }

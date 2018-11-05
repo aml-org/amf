@@ -1,24 +1,27 @@
 package amf.core
 
-import java.io.StringWriter
-
-import amf.client.plugins.AMFDocumentPlugin
+import amf.client.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.emitter.{RenderOptions, YDocumentBuilder}
 import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.parser.SyamlParsedDocument
-import amf.core.rdf.RdfModelDocument
+import amf.core.parser.{ParsedDocument, SyamlParsedDocument}
 import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote.{Platform, Vendor}
+import amf.core.remote.Platform
 import amf.core.services.RuntimeSerializer
-import amf.plugins.document.graph.AMFGraphPlugin.platform
-import amf.plugins.syntax.RdfSyntaxPlugin
 import org.mulesoft.common.io.Output
 import org.mulesoft.common.io.Output._
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: RenderOptions) {
+
+  def make(): ParsedDocument = {
+    val domainPlugin = getDomainPlugin
+    domainPlugin.unparse(unit, options) match {
+      case Some(ast) => ast
+      case None      => throw new Exception(s"Error unparsing syntax $mediaType with domain plugin ${domainPlugin.ID}")
+    }
+  }
 
   def renderAsYDocument(): SyamlParsedDocument = {
     val domainPlugin = getDomainPlugin
@@ -31,43 +34,56 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   def renderToWriter[W: Output](writer: W)(implicit executor: ExecutionContext): Future[Unit] = Future(render(writer))
 
   /** Print ast to string. */
-  def renderToString(implicit executor: ExecutionContext): Future[String] = Future(render())
+  def renderToString: Future[String] = {
+    Future(render())(scala.concurrent.ExecutionContext.Implicits.global)
+  }
 
   /** Print ast to file. */
-  def renderToFile(remote: Platform, path: String)(implicit executor: ExecutionContext): Future[Unit] =
-    renderToString.map(remote.write(path, _))
+  def renderToFile(remote: Platform, path: String): Future[Unit] = {
+    import scala.concurrent.ExecutionContext.Implicits.global
+    Future(render()).map(remote.write(path, _))
+  }
 
-  private def render[W: Output](writer: W): Unit = {
-    ExecutionLog.log(s"AMFSerializer#render: Rendering to $mediaType ($vendor file) ${unit.location()}")
-    if (vendor == Vendor.AMF.name) {
-      if (!options.isAmfJsonLdSerilization) {
-        parseRdf(writer)
-        return
-      }
-    }
-
-    val ast = renderAsYDocument()
-    AMFPluginsRegistry.syntaxPluginForMediaType(mediaType) match {
-      case Some(syntaxPlugin) => syntaxPlugin.unparse(mediaType, ast, writer)
+  private def render[W: Output](writer: W): Unit =
+    parsed { (syntaxPlugin, mediaType, ast) => syntaxPlugin.unparse(mediaType, ast, writer)
+    } match {
+      case Some(_) =>
       case None if unit.isInstanceOf[ExternalFragment] =>
         writer.append(unit.asInstanceOf[ExternalFragment].encodes.raw.value())
       case _ => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")
     }
-  }
 
-  private def parseRdf[W: Output](writer: W): Unit =
-    platform.rdfFramework match {
-      case Some(r) =>
-        val d = RdfModelDocument(r.unitToRdfModel(unit, options))
-        RdfSyntaxPlugin.unparse(mediaType, d, writer)
+  private def parsed[T](unparse: (AMFSyntaxPlugin, String, ParsedDocument) => Option[T]): Option[T] = {
+    ExecutionLog.log(s"AMFSerializer#render: Rendering to $mediaType ($vendor file) ${unit.location()}")
+    val ast = make()
+
+    // Let's try to find a syntax plugin for the media type and vendor
+    AMFPluginsRegistry.syntaxPluginForMediaType(mediaType) match {
+      case Some(syntaxPlugin) => unparse(syntaxPlugin, mediaType, ast)
+      case None               =>
+        // media type not directly supported, maybe it is supported by the media types of the accepted domain plugin
+        findDomainPlugin() match {
+          case Some(domainPlugin) =>
+            domainPlugin.documentSyntaxes.collectFirst[(String, Option[AMFSyntaxPlugin])] {
+              case mediaType: String =>
+                (mediaType, AMFPluginsRegistry.syntaxPluginForMediaType(mediaType))
+            } flatMap {
+              case (effectiveMediaType, Some(syntaxPlugin)) => unparse(syntaxPlugin, effectiveMediaType, ast)
+              case _                                        => None
+            }
+          case None => None
+        }
       case _ => None
     }
-
-  private def render(): String = {
-    val w = new StringWriter
-    render(w)
-    w.toString
   }
+
+  private def render(): String =
+    parsed { (syntaxPlugin, mediaType, ast) => syntaxPlugin.unparse(mediaType, ast)
+    } match {
+      case Some(doc)                                   => doc.toString
+      case None if unit.isInstanceOf[ExternalFragment] => unit.asInstanceOf[ExternalFragment].encodes.raw.value()
+      case _                                           => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")
+    }
 
   protected def findDomainPlugin(): Option[AMFDocumentPlugin] =
     AMFPluginsRegistry.documentPluginForVendor(vendor).find { plugin =>
@@ -96,10 +112,8 @@ object AMFSerializer {
                                 unit: BaseUnit,
                                 mediaType: String,
                                 vendor: String,
-                                options: RenderOptions): Future[Unit] = {
-          import scala.concurrent.ExecutionContext.Implicits.global
+                                options: RenderOptions): Future[Unit] =
           new AMFSerializer(unit, mediaType, vendor, options).renderToFile(platform, file)
-        }
       })
     }
   }
