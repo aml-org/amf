@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.NullSecurity
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.Strings
@@ -21,7 +22,7 @@ object RamlParametrizedSecuritySchemeParser {
 case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String => ParametrizedSecurityScheme)(
     implicit ctx: WebApiContext) {
   def parse(): ParametrizedSecurityScheme = node.tagType match {
-    case YType.Null => producer("null").add(Annotations(node))
+    case YType.Null => producer("null").add(Annotations(node) += NullSecurity())
     case YType.Str =>
       val name: String = node.as[YScalar].text
       val scheme       = producer(name).add(Annotations(node))

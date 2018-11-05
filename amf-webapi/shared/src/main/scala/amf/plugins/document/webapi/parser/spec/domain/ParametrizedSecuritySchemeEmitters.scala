@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.SingleValueArray
+import amf.core.annotations.{NullSecurity, SingleValueArray}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.{AmfElement, AmfScalar}
@@ -10,6 +10,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.RamlSecuritySettingsV
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.{YNode, YScalar, YType}
 
 /**
   *
@@ -100,10 +101,11 @@ case class RamlParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrize
         b.obj(
           _.entry(parametrizedScheme.name.value(),
                   _.obj(traverse(ordering.sorted(RamlSecuritySettingsValuesEmitters(f, ordering).emitters), _))))
+      case None if parametrizedScheme.annotations.contains(classOf[NullSecurity]) =>
+        b += YNode(YScalar.Null, YType.Null)
       case None =>
-        b.+=(parametrizedScheme.name.value())
+        b += parametrizedScheme.name.value()
     }
-
   }
 
   override def position(): Position = pos(parametrizedScheme.annotations)
