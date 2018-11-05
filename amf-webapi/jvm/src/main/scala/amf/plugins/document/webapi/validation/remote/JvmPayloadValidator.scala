@@ -11,7 +11,7 @@ import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidato
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, ValidationException, Validator}
-import org.json.{JSONException, JSONObject, JSONTokener}
+import org.json.{JSONException, JSONObject}
 
 class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
     extends PlatformPayloadValidator(shape) {
@@ -50,6 +50,7 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
         schemaNode.remove("x-amf-fragmentType")
         schemaNode.remove("example")
         schemaNode.remove("examples")
+        schemaNode.remove("x-amf-examples")
 
         val schemaBuilder = SchemaLoader
           .builder()
@@ -76,7 +77,8 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
 
   protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
     try {
-      literalRepresentation(payload) map { payloadText => loadJson(payloadText)
+      literalRepresentation(payload) map { payloadText =>
+        loadJson(payloadText)
       }
     } catch {
       case _: ExampleUnknownException => None

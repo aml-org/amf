@@ -38,6 +38,7 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
     schemaNode -= "x-amf-fragmentType"
     schemaNode -= "example"
     schemaNode -= "examples"
+    schemaNode -= "x-amf-examples"
     Some(schemaNode)
   }
 

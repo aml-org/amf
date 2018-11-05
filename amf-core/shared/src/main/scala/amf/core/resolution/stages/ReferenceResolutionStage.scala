@@ -1,9 +1,10 @@
 package amf.core.resolution.stages
-import amf.core.annotations.{DeclaredElement, ResolvedInheritance, ResolvedLinkAnnotation, SourceVendor}
+import amf.core.annotations.{DeclaredElement, ResolvedInheritance, ResolvedLinkAnnotation}
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document, EncodesModel}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, ErrorHandler}
+import amf.core.vocabulary.Namespace
 import org.mulesoft.common.core.Strings
 
 import scala.collection.mutable
@@ -96,7 +97,7 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
     resolved match {
       case r: NamedDomainElement
           if r.name.value().notNull.isEmpty || r.name.value() == "schema" || r.name
-            .value() == "type" => // these are default names
+            .value() == "type" || isExample(r) => // these are default names
         source match {
           case s: NamedDomainElement if s.name.value().notNull.nonEmpty => r.withName(s.name.value())
           case _                                                        =>
@@ -130,7 +131,11 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
     resolved
   }
 
-  // Customisation of the resolution transformation for different domains
+  /** Check if it is an example. Special case where NamedExample fragments are used from an 'example' facet. */
+  private def isExample(r: DomainElement) =
+    r.meta.`type`.headOption.contains(Namespace.Document + "Example")
+
+// Customisation of the resolution transformation for different domains
   protected def customDomainElementTransformation(d: DomainElement, source: Linkable): DomainElement = d
 
   def resolveDomainElement[T <: DomainElement](element: T): T = {

@@ -131,5 +131,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     validate("examples/float-validation/api.raml")
   }
 
+  test("Multiple example fragments") {
+    validate("examples/multiple-example-fragments/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

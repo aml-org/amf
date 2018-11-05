@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: some title
+
+/documents:
+  post:
+    body:
+      application/json:
+        type: !include schema.json
+        examples:
+          now: !include ex1.raml
+          hourly: !include ex2.raml
