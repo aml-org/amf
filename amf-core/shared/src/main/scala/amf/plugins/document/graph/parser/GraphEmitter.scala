@@ -677,7 +677,7 @@ object GraphEmitter extends MetaModelTypeMapping {
 
     private def createSourcesNode(id: String, sources: SourceMap, b: EntryBuilder, ctx: EmissionContext): Unit = {
       if (options.isWithSourceMaps && sources.nonEmpty) {
-        if (options.isWithRawSourceMaps) {
+        if (options.isWithRawSoureMaps) {
           b.entry(
             "smaps",
             _.obj { b =>
@@ -709,7 +709,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                                                sources: SourceMap,
                                                ctx: EmissionContext): Unit = {
       if (sources.eternals.nonEmpty)
-        if (options.isWithRawSourceMaps) {
+        if (options.isWithRawSoureMaps) {
           b.entry(
             "smaps",
             _.obj { b =>
@@ -735,7 +735,7 @@ object GraphEmitter extends MetaModelTypeMapping {
                                       ctx: EmissionContext): Unit = {
       annotations.foreach({
         case (a, values) =>
-          if (ctx.options.isWithRawSourceMaps) {
+          if (ctx.options.isWithRawSoureMaps) {
             b.entry(
               a,
               _.obj { o =>

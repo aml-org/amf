@@ -3,7 +3,7 @@ package amf.plugins.document.graph
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{DocBuilder, RdfModelBuilder, RenderOptions, SyamlBuilder}
+import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
@@ -14,7 +14,7 @@ import amf.core.resolution.pipelines.{BasicResolutionPipeline, ResolutionPipelin
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.graph.parser.{GraphDependenciesReferenceHandler, GraphEmitter, GraphParser}
-import org.yaml.model.{YDocument, YMap}
+import org.yaml.model.YMap
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -68,28 +68,13 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override def canUnparse(unit: BaseUnit) = true
 
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
-    val builder: DocBuilder[_ <: ParsedDocument] =
-      if (options.isAmfJsonLdSerilization || platform.rdfFramework.isEmpty) new SyamlBuilder(options)
-      else new RdfModelBuilder(options)
-    if (emit(unit, builder)) Some(builder.result) else None
-  }
-
-  /**
-    * Implemented only for SyamlParsedDocument and RdfModelDocument
-    */
-  override def emit[T](unit: BaseUnit, builder: DocBuilder[T]): Boolean = builder match {
-    case sb: SyamlBuilder =>
-      sb.document = GraphEmitter.emit(unit, builder.renderOptions)
-      true
-    case rb: RdfModelBuilder =>
-      rb.document = platform.rdfFramework.get.unitToRdfModel(unit, builder.renderOptions)
-      true
-    case _ => false
-  }
-
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] =
-    throw new IllegalStateException("Unreachable")
+  override def unparse(unit: BaseUnit, options: RenderOptions): Some[ParsedDocument] =
+    if (options.isAmfJsonLdSerilization || platform.rdfFramework.isEmpty) {
+      Some(SyamlParsedDocument(comment = None, document = GraphEmitter.emit(unit, options)))
+    } else {
+      val rdfModel = platform.rdfFramework.get.unitToRdfModel(unit, options)
+      Some(RdfModelDocument(model = rdfModel))
+    }
 
   override def referenceHandler(): ReferenceHandler = GraphDependenciesReferenceHandler
 

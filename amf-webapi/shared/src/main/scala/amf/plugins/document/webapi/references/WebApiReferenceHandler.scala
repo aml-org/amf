@@ -182,7 +182,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                                          environment: Environment): Future[ParsedReference] = {
     resolveUnitDocument(reference, ctx) match {
       case Right(document) =>
-        val parsed = SyamlParsedDocument(document)
+        val parsed = SyamlParsedDocument(None, document)
 
         val refs    = new WebApiReferenceHandler(vendor, plugin).collect(parsed, ctx)
         val updated = context.update(reference.unit.id) // ??
@@ -203,8 +203,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                   // not meaning, only for collect all futures, not matter the type
                   }
                 })
-              case ReferenceResolutionResult(Some(_), _) => Future(Nil)
-              case _ => Future(Nil)
+              case ReferenceResolutionResult(Some(e), _) => Future(Nil)
             }
         })
 

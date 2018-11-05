@@ -123,7 +123,8 @@ class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shap
                   .addFormatValidator(new RegexFormatValidator())
                   .addFormatValidator(PartialTimeFormatValidator)
 
-                Some(schemaBuilder.build().load().build())
+                val schemaLoader = schemaBuilder.build()
+                Some(schemaLoader.load().build())
               case _ => None
             }
           case _ => None

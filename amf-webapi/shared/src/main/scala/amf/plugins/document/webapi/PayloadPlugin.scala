@@ -2,20 +2,19 @@ package amf.plugins.document.webapi
 
 import amf.AmfProfile
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
-import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{DocBuilder, SyamlBuilder}
 import amf.core.model.document.{BaseUnit, PayloadFragment}
-import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
+import amf.core.parser.{ParsedDocument, ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.{Payload, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.{Root, emitter}
 import amf.plugins.document.webapi.contexts.PayloadContext
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.parser.spec.common.PayloadEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import org.yaml.model.{YDocument, YMap, YScalar}
+import org.yaml.model.{YMap, YScalar}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -74,19 +73,10 @@ object PayloadPlugin extends AMFDocumentPlugin {
       false
   }
 
-  /* Unparsing payloads not supported */
-  override def emit[T](unit: BaseUnit, builder: DocBuilder[T]): Boolean = (builder, unit) match {
-    case (sb: SyamlBuilder, p: PayloadFragment) =>
-      sb.document = PayloadEmitter(p.encodes).emitDocument()
-      true
-    case _ => false
-  }
-
-
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] = unit match {
-    case p: PayloadFragment =>
-      Some(PayloadEmitter(p.encodes).emitDocument())
-    case _ => None
+  // Unparsing payloads not supported
+  override def unparse(unit: BaseUnit, options: emitter.RenderOptions): Option[ParsedDocument] = unit match {
+    case p: PayloadFragment => Some(SyamlParsedDocument(document = PayloadEmitter(p.encodes).emitDocument()))
+    case _                  => None
   }
 
   override def canUnparse(unit: BaseUnit): Boolean = unit.isInstanceOf[PayloadFragment]

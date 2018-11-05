@@ -1,8 +1,9 @@
 package amf.plugins.document.webapi
 
+import amf.{ProfileName, Raml08Profile, RamlProfile}
+import amf.core.emitter.RenderOptions
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.RenderOptions
 import amf.core.model.document._
 import amf.core.model.domain.{DomainElement, ExternalDomainElement}
 import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParsedDocument, ParserContext, RefContainer, SyamlParsedDocument}
@@ -12,12 +13,11 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay, _}
-import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.resolution.pipelines.{Raml08EditingPipeline, Raml08ResolutionPipeline, Raml10EditingPipeline, Raml10ResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
-import amf.{ProfileName, Raml08Profile, RamlProfile}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
@@ -28,7 +28,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
   def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext
 
   // context that opens a new context for declarations and copies the global JSON Schema declarations
-  def cleanContext(wrapped: ParserContext, root: Root): RamlWebApiContext = {
+  def cleanContext(wrapped: ParserContext, root: Root) = {
     val cleanNested =
       ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = wrapped.parserCount)
     val clean = context(cleanNested, root)
@@ -135,10 +135,16 @@ object Raml08Plugin extends RamlPlugin {
     case _                                    => false
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] = unit match {
-    case document: Document => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
-    case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
-    case _                  => None
+  // fix for 08?
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
+    val unparsed = unit match {
+      case document: Document => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
+      case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
+      case _                  => None
+    }
+    unparsed map { doc =>
+      SyamlParsedDocument(document = doc)
+    }
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
@@ -158,6 +164,7 @@ object Raml08Plugin extends RamlPlugin {
 }
 
 object Raml10Plugin extends RamlPlugin {
+
 
   override protected def vendor: Vendor = amf.core.remote.Raml10
 
@@ -191,12 +198,18 @@ object Raml10Plugin extends RamlPlugin {
     case _                                    => false
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] = unit match {
-    case module: Module             => Some(RamlModuleEmitter(module)(specContext).emitModule())
-    case document: Document         => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
-    case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-    case fragment: Fragment         => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
-    case _                          => None
+  // fix for 08?
+  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
+    val unparsed = unit match {
+      case module: Module             => Some(RamlModuleEmitter(module)(specContext).emitModule())
+      case document: Document         => Some(RamlDocumentEmitter(document)(specContext).emitDocument())
+      case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
+      case fragment: Fragment         => Some(new RamlFragmentEmitter(fragment)(specContext).emitFragment())
+      case _                          => None
+    }
+    unparsed map { doc =>
+      SyamlParsedDocument(document = doc)
+    }
   }
 
   override def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext =
