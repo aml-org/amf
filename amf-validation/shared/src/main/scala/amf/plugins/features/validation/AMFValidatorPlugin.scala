@@ -14,6 +14,7 @@ import amf.core.validation.core.{ValidationProfile, ValidationReport, Validation
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
+import amf.plugins.document.graph.parser.ScalarEmitter
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
@@ -121,6 +122,29 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
           computed.someEffective(foundProfile)
         }
       case None => computed
+    }
+  }
+
+  object CustomScalarEmitter extends ScalarEmitter {
+    override def scalar(b: PartBuilder, content: String, tag: YType, inArray: Boolean): Unit = {
+      def emit(b: PartBuilder): Unit = {
+
+        val tg: YType = fixTagIfNeeded(tag, content)
+
+        b.obj { e =>
+          forcedType(tag).foreach(t => e.entry("@type", t))
+          e.entry("@value", raw(_, content, tg))
+        }
+      }
+
+      if (inArray) emit(b) else b.list(emit)
+    }
+
+    private def forcedType(tag: YType): Option[String] = {
+      tag match {
+        case YType.Float => Some("http://www.w3.org/2001/XMLSchema#double")
+        case _           => None
+      }
     }
   }
 

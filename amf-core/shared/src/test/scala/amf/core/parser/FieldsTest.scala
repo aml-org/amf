@@ -50,7 +50,7 @@ class FieldsTest extends FunSuite with Matchers {
     seqStrUndefined shouldBe empty
 
     val seqAnyUndefined: Seq[AnyField] = fields.field(SeqAnyProperty)
-    seqAnyUndefined shouldBe empty
+    seqStrUndefined shouldBe empty
   }
 
   test("Test field method for defined values") {
@@ -148,7 +148,7 @@ class FieldsTest extends FunSuite with Matchers {
     intDefined.isNull should be(true)
     intDefined.is(0) should be(false)
     intDefined.is(_ == 0) should be(false)
-    intDefined.is(_ eq null) should be(false)
+    intDefined.is(_ == null) should be(false)
 
     fields.set("/", DoubleProperty, AmfScalar(null))
     val doubleDefined: DoubleField = fields.field(DoubleProperty)
@@ -158,7 +158,7 @@ class FieldsTest extends FunSuite with Matchers {
     doubleDefined.isNull should be(true)
     doubleDefined.is(0.0) should be(false)
     doubleDefined.is(_ == 0.0) should be(false)
-    doubleDefined.is(_ eq null) should be(false)
+    doubleDefined.is(_ == null) should be(false)
 
     fields.set("/", BoolProperty, AmfScalar(null))
     val boolTrue: BoolField = fields.field(BoolProperty)
@@ -168,7 +168,7 @@ class FieldsTest extends FunSuite with Matchers {
     boolTrue.isNull should be(true)
     boolTrue.is(false) should be(false)
     boolTrue.is(_ == false) should be(false)
-    boolTrue.is(_ eq null) should be(false)
+    boolTrue.is(_ == null) should be(false)
 
     fields.set("/", SeqStrProperty, AmfArray(Seq(AmfScalar(null))))
     val seqStrDefined: Seq[StrField] = fields.field(SeqStrProperty)

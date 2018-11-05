@@ -3,7 +3,6 @@ package amf.plugins.document.vocabularies
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
@@ -199,7 +198,7 @@ object AMLPlugin
     }
   }
 
-  protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = {
+  protected def unparseAsYDocument(unit: BaseUnit): Option[YDocument] = {
     unit match {
       case vocabulary: Vocabulary  => Some(VocabularyEmitter(vocabulary).emitVocabulary())
       case dialect: Dialect        => Some(DialectEmitter(dialect).emitDialect())

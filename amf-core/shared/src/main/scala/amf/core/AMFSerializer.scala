@@ -2,9 +2,9 @@ package amf.core
 
 import amf.client.plugins.{AMFDocumentPlugin, AMFSyntaxPlugin}
 import amf.core.benchmark.ExecutionLog
-import amf.core.emitter.{RenderOptions, YDocumentBuilder}
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, ExternalFragment}
-import amf.core.parser.{ParsedDocument, SyamlParsedDocument}
+import amf.core.parser.ParsedDocument
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.core.services.RuntimeSerializer
@@ -16,18 +16,16 @@ import scala.concurrent.{ExecutionContext, Future}
 class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: RenderOptions) {
 
   def make(): ParsedDocument = {
-    val domainPlugin = getDomainPlugin
-    domainPlugin.unparse(unit, options) match {
-      case Some(ast) => ast
-      case None      => throw new Exception(s"Error unparsing syntax $mediaType with domain plugin ${domainPlugin.ID}")
+    findDomainPlugin() match {
+      case Some(domainPlugin) =>
+        domainPlugin.unparse(unit, options) match {
+          case Some(ast) => ast
+          case None      => throw new Exception(s"Error unparsing syntax $mediaType with domain plugin ${domainPlugin.ID}")
+        }
+      case None =>
+        throw new Exception(
+          s"Cannot serialize domain model '${unit.location()}' for detected media type $mediaType and vendor $vendor")
     }
-  }
-
-  def renderAsYDocument(): SyamlParsedDocument = {
-    val domainPlugin = getDomainPlugin
-    val builder      = new YDocumentBuilder
-    if (domainPlugin.emit(unit, builder, options)) builder.result
-    else throw new Exception(s"Error unparsing syntax $mediaType with domain plugin ${domainPlugin.ID}")
   }
 
   /** Print ast to writer. */
@@ -45,7 +43,8 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   }
 
   private def render[W: Output](writer: W): Unit =
-    parsed { (syntaxPlugin, mediaType, ast) => syntaxPlugin.unparse(mediaType, ast, writer)
+    parsed { (syntaxPlugin, mediaType, ast) =>
+      syntaxPlugin.unparse(mediaType, ast, writer)
     } match {
       case Some(_) =>
       case None if unit.isInstanceOf[ExternalFragment] =>
@@ -78,26 +77,22 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   }
 
   private def render(): String =
-    parsed { (syntaxPlugin, mediaType, ast) => syntaxPlugin.unparse(mediaType, ast)
+    parsed { (syntaxPlugin, mediaType, ast) =>
+      syntaxPlugin.unparse(mediaType, ast)
     } match {
       case Some(doc)                                   => doc.toString
       case None if unit.isInstanceOf[ExternalFragment] => unit.asInstanceOf[ExternalFragment].encodes.raw.value()
       case _                                           => throw new Exception(s"Unsupported media type $mediaType and vendor $vendor")
     }
 
-  protected def findDomainPlugin(): Option[AMFDocumentPlugin] =
+  protected def findDomainPlugin(): Option[AMFDocumentPlugin] = {
     AMFPluginsRegistry.documentPluginForVendor(vendor).find { plugin =>
       plugin.documentSyntaxes.contains(mediaType) && plugin.canUnparse(unit)
     } match {
       case Some(domainPlugin) => Some(domainPlugin)
       case None               => AMFPluginsRegistry.documentPluginForMediaType(mediaType).find(_.canUnparse(unit))
     }
-
-  private def getDomainPlugin: AMFDocumentPlugin =
-    findDomainPlugin().getOrElse {
-      throw new Exception(
-        s"Cannot serialize domain model '${unit.location()}' for detected media type $mediaType and vendor $vendor")
-    }
+  }
 }
 
 object AMFSerializer {

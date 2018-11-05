@@ -202,7 +202,6 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
     if (ctx.isPatch) {
       references.foreach {
         case ParsedReference(f: DialectInstance, origin: Reference, None) => result += (origin.url, f)
-        case _ =>
       }
     }
 
