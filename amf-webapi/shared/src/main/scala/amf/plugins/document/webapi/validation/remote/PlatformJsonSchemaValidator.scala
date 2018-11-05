@@ -1,4 +1,6 @@
 package amf.plugins.document.webapi.validation.remote
+
+import amf.core.emitter.YDocumentBuilder
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
 import amf.core.parser.SyamlParsedDocument
@@ -12,7 +14,6 @@ import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import org.yaml.builder.YDocumentBuilder
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -73,7 +74,7 @@ trait PlatformSchemaValidator {
       case _ =>
         val builder = new YDocumentBuilder
         if (PayloadPlugin.emit(payload, builder)) {
-          SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(builder.result)) match {
+          SYamlSyntaxPlugin.unparse("application/json", builder.result) match {
             case Some(serialized) => Some(serialized)
             case _                => None
           }

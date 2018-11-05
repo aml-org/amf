@@ -37,7 +37,6 @@ class RenderOptions {
 
   /**
     * Emit specific AMF JSON-LD serialization
-    *
     * @return
     */
   def withoutAmfJsonLdSerialization: RenderOptions = {
@@ -47,15 +46,15 @@ class RenderOptions {
 
   /**
     * Emit regular JSON-LD serialization
-    *
     * @return
     */
   def withAmfJsonLdSerialization: RenderOptions = {
     amfJsonLdSerialization = true
     this
   }
-  def isWithCompactUris: Boolean       = compactUris
-  def isWithSourceMaps: Boolean        = sources
+
+  def isWithCompactUris: Boolean = compactUris
+  def isWithSourceMaps: Boolean = sources
   def isAmfJsonLdSerilization: Boolean = amfJsonLdSerialization
 }
 

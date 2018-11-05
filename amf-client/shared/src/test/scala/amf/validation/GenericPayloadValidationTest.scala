@@ -1,4 +1,6 @@
 package amf.validation
+
+import amf.core.emitter.{RenderOptions, YDocumentBuilder}
 import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, RamlYamlHint}
@@ -10,7 +12,7 @@ import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipe
 import amf.plugins.document.webapi.validation.PayloadValidation
 import amf.{AmfProfile, PayloadProfile}
 import org.scalatest.AsyncFunSuite
-import org.yaml.builder.JsonOutputBuilder
+import org.yaml.render.JsonRender
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -123,8 +125,8 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   }
   private def render(filePayload: BaseUnit) = {
-    val builder = JsonOutputBuilder()
+    val builder = new YDocumentBuilder()
     JsonLdEmitter.emit(filePayload, builder)
-    builder.result.toString
+    JsonRender.render(builder.document)
   }
 }

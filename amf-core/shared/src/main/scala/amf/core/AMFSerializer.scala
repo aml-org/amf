@@ -4,7 +4,7 @@ import java.io.StringWriter
 
 import amf.client.plugins.AMFDocumentPlugin
 import amf.core.benchmark.ExecutionLog
-import amf.core.emitter.RenderOptions
+import amf.core.emitter.{RenderOptions, YDocumentBuilder}
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.parser.SyamlParsedDocument
 import amf.core.rdf.RdfModelDocument
@@ -12,11 +12,9 @@ import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.{Platform, Vendor}
 import amf.core.services.RuntimeSerializer
 import amf.plugins.document.graph.AMFGraphPlugin.platform
-import amf.plugins.document.graph.parser.JsonLdEmitter
 import amf.plugins.syntax.RdfSyntaxPlugin
 import org.mulesoft.common.io.Output
 import org.mulesoft.common.io.Output._
-import org.yaml.builder.{JsonOutputBuilder, YDocumentBuilder}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -25,7 +23,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   def renderAsYDocument(): SyamlParsedDocument = {
     val domainPlugin = getDomainPlugin
     val builder      = new YDocumentBuilder
-    if (domainPlugin.emit(unit, builder, options)) SyamlParsedDocument(builder.result)
+    if (domainPlugin.emit(unit, builder, options)) builder.result
     else throw new Exception(s"Error unparsing syntax $mediaType with domain plugin ${domainPlugin.ID}")
   }
 
@@ -42,12 +40,10 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
   private def render[W: Output](writer: W): Unit = {
     ExecutionLog.log(s"AMFSerializer#render: Rendering to $mediaType ($vendor file) ${unit.location()}")
     if (vendor == Vendor.AMF.name) {
-      if (!options.isAmfJsonLdSerilization) parseRdf(writer)
-      else {
-        val b = JsonOutputBuilder[W](writer)
-        JsonLdEmitter.emit(unit, b, options)
+      if (!options.isAmfJsonLdSerilization) {
+        parseRdf(writer)
+        return
       }
-      return
     }
 
     val ast = renderAsYDocument()

@@ -2,17 +2,15 @@ package amf.client.plugins
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.RenderOptions
+import amf.core.emitter.{DocBuilder, RenderOptions, YDocumentBuilder}
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{ParserContext, ReferenceHandler}
+import amf.core.parser.{ParsedDocument, ParserContext, ReferenceHandler}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
 import org.yaml.model.YDocument
-import org.yaml.builder.DocBuilder
-import org.yaml.builder.YDocumentBuilder
 
 object AMFDocumentPluginSettings {
   object PluginPriorities {
