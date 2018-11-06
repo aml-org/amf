@@ -14,6 +14,7 @@ import amf.client.render.{Renderer, _}
 import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
+import amf.core.exception.UnsupportedVendorException
 import amf.core.parser.Range
 import amf.core.remote.{Aml, Oas20, Raml10}
 import amf.core.vocabulary.Namespace
@@ -1487,4 +1488,34 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test yaml swagger 2.0 api") {
+
+    val environment = DefaultEnvironment()
+
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new Oas20YamlParser(environment)
+        .parseFileAsync("file://amf-client/shared/src/test/resources/clients/oas20-yaml.yaml")
+        .asFuture
+    } yield {
+      val location: String = unit.location
+      assert(location != "")
+    }
+  }
+
+  test("Test yaml swagger 2.0 api with json parser") {
+
+    val environment = DefaultEnvironment()
+    recoverToSucceededIf[UnsupportedVendorException] {
+      AMF.init().asFuture.flatMap { _ =>
+        new Oas20Parser(environment)
+          .parseFileAsync("file://amf-client/shared/src/test/resources/clients/oas20-yaml.yaml")
+          .asFuture
+          .map { _ =>
+            succeed
+          }
+      }
+    }
+
+  }
 }
