@@ -19,7 +19,9 @@ pipeline {
     }
     stage('Sonar publish') {
       steps {
-        sonarScan {}
+        script {
+          sonarScan {}
+        }
       }
     }
 
