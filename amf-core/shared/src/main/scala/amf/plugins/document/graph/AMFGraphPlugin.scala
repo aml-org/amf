@@ -13,8 +13,9 @@ import amf.core.remote.{Amf, Platform}
 import amf.core.resolution.pipelines.{BasicResolutionPipeline, ResolutionPipeline}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.graph.parser.{GraphDependenciesReferenceHandler, GraphEmitter, GraphParser}
-import org.yaml.model.YMap
+import amf.plugins.document.graph.parser.{GraphDependenciesReferenceHandler, GraphParser, JsonLdEmitter}
+import org.yaml.builder.DocBuilder
+import org.yaml.model.{YDocument, YMap}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -68,13 +69,11 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   override def canUnparse(unit: BaseUnit) = true
 
-  override def unparse(unit: BaseUnit, options: RenderOptions): Some[ParsedDocument] =
-    if (options.isAmfJsonLdSerilization || platform.rdfFramework.isEmpty) {
-      Some(SyamlParsedDocument(comment = None, document = GraphEmitter.emit(unit, options)))
-    } else {
-      val rdfModel = platform.rdfFramework.get.unitToRdfModel(unit, options)
-      Some(RdfModelDocument(model = rdfModel))
-    }
+  override def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions): Boolean =
+    JsonLdEmitter.emit(unit, builder, renderOptions)
+
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
+    throw new IllegalStateException("Unreachable")
 
   override def referenceHandler(): ReferenceHandler = GraphDependenciesReferenceHandler
 

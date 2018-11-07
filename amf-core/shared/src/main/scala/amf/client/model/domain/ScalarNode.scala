@@ -14,8 +14,8 @@ case class ScalarNode(override private[amf] val _internal: InternalScalarNode) e
   @JSExportTopLevel("model.domain.ScalarNode")
   def this(value: String, dataType: String) = this(InternalScalarNode(value, Option(dataType)))
 
-  val value: String    = _internal.value
-  val dataType: String = _internal.dataType.orNull
+  def value: String    = _internal.value
+  def dataType: String = _internal.dataType.orNull
 
   override def toString = s"${name.value()}:$dataType=$value"
 }

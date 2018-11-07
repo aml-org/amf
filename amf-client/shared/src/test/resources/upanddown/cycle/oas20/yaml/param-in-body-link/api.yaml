@@ -1,0 +1,25 @@
+swagger: '2.0'
+
+consumes:
+  - application/json
+
+produces:
+  - application/json
+  - application/xml
+
+paths:
+  /resource:
+    post:
+      parameters:
+        - $ref: "#/parameters/bp"
+
+parameters:
+  bp:
+    in: body
+    schema:
+      type: object
+    name: bp
+  fp:
+    in: formData
+    type: object
+    name: fp

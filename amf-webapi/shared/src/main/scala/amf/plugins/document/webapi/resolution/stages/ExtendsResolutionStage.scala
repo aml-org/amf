@@ -34,8 +34,11 @@ import scala.collection.mutable.ListBuffer
   * 4) Resolve each trait and merge each one to the operation in the provided order..
   * 5) Remove 'extends' property from the endpoint and from the operations.
   */
-class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean, val fromOverlay: Boolean = false)(
-    override implicit val errorHandler: ErrorHandler)
+class ExtendsResolutionStage(
+    profile: ProfileName,
+    val keepEditingInfo: Boolean,
+    val fromOverlay: Boolean = false,
+    visited: mutable.Set[String] = mutable.Set())(override implicit val errorHandler: ErrorHandler)
     extends ResolutionStage()
     with PlatformSecrets {
 
@@ -130,7 +133,7 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
     val resolver = TraitResolver()
 
     // Iterate operations and resolve extends with inherited traits.
-    endpoint.operations.foreach { operation =>
+    val traitList = endpoint.operations.flatMap { operation =>
       val local = context.add("methodName", operation.method.value())
 
       val branches = ListBuffer[BranchContainer]()
@@ -160,12 +163,17 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
       // This is required in the case where the extension comes from an overlay/extension
       if (!keepEditingInfo && !fromOverlay) operation.fields.removeField(DomainElementModel.Extends)
+
+      traits
     }
 
     // This is required in the case where the extension comes from an overlay/extension
     if (!keepEditingInfo && !fromOverlay) endpoint.fields.removeField(DomainElementModel.Extends)
 
-    new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(endpoint)
+    if (resourceTypes.nonEmpty || traitList.nonEmpty)
+      new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(endpoint)
+    else
+      endpoint
   }
 
   private def resourcePathName(endPoint: EndPoint): String = {
@@ -178,7 +186,13 @@ class ExtendsResolutionStage(profile: ProfileName, val keepEditingInfo: Boolean,
 
   private def resourcePath(endPoint: EndPoint) = endPoint.path.value().replaceAll("\\{ext\\}", "")
 
-  private def findExtendsPredicate(element: DomainElement): Boolean = element.isInstanceOf[EndPoint]
+  private def findExtendsPredicate(element: DomainElement): Boolean = {
+    if (visited.contains(element.id) && !fromOverlay) true
+    else {
+      visited += element.id
+      element.isInstanceOf[EndPoint]
+    }
+  }
 
   object Branches {
     def apply(branches: Seq[Branch]): BranchContainer = BranchContainer(branches)

@@ -3,20 +3,10 @@ package amf.plugins.document.webapi.resolution.pipelines
 import amf.{AmfProfile, ProfileName}
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.stages.{
-  CleanReferencesStage,
-  DeclarationsRemovalStage,
-  ReferenceResolutionStage,
-  ResolutionStage
-}
+import amf.core.resolution.stages._
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
-import amf.plugins.domain.webapi.resolution.stages.{
-  ExamplesResolutionStage,
-  MediaTypeResolutionStage,
-  ParametersNormalizationStage,
-  SecurityResolutionStage
-}
+import amf.plugins.domain.webapi.resolution.stages._
 
 class AmfResolutionPipeline(override val model: BaseUnit) extends ResolutionPipeline[BaseUnit] {
   override def profileName: ProfileName = AmfProfile
@@ -25,6 +15,7 @@ class AmfResolutionPipeline(override val model: BaseUnit) extends ResolutionPipe
 
   override protected val steps: Seq[ResolutionStage] = Seq(
     references,
+    new ExternalSourceRemovalStage,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = false),
     new ShapeNormalizationStage(profileName, keepEditingInfo = false),
     new SecurityResolutionStage(),

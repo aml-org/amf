@@ -19,6 +19,17 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
   }
 }
 
+case class ParsedJSONExample(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
+  override val name: String  = "parsed-json-example"
+  override val value: String = rawText
+}
+
+object ParsedJSONExample extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    ParsedJSONExample(annotatedValue)
+  }
+}
+
 case class SchemaIsJsonSchema() extends Annotation
 
 case class GeneratedJSONSchema(rawText: String) extends Annotation
@@ -42,6 +53,40 @@ case class FormBodyParameter() extends SerializableAnnotation with PerpetualAnno
 object FormBodyParameter extends AnnotationGraphLoader {
   override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
     FormBodyParameter()
+  }
+}
+
+case class ParameterNameForPayload(paramName: String, range: Range)
+    extends SerializableAnnotation
+    with PerpetualAnnotation { // perpetual? after resolution i should have a normal payload
+  override val name: String  = "parameter-name-for-payload"
+  override val value: String = paramName + "->" + range.toString
+}
+
+object ParameterNameForPayload extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    annotatedValue.split("->") match {
+      case Array(req, range) =>
+        new ParameterNameForPayload(req, Range.apply(range))
+    }
+
+  }
+}
+
+case class RequiredParamPayload(required: Boolean, range: Range)
+    extends SerializableAnnotation
+    with PerpetualAnnotation { // perpetual? after resolution i should have a normal payload
+  override val name: String  = "required-param-payload"
+  override val value: String = required + "->" + range.toString
+}
+
+object RequiredParamPayload extends AnnotationGraphLoader {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+    annotatedValue.split("->") match {
+      case Array(req, range) =>
+        val required = if (req.equals("true")) true else false
+        new RequiredParamPayload(required, Range.apply(range))
+    }
   }
 }
 

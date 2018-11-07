@@ -5,9 +5,18 @@ import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.unsafe.PlatformSecrets
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
-import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFragmentModel, DialectInstanceLibraryModel, DialectInstanceModel, DialectInstancePatchModel}
+import amf.plugins.document.vocabularies.metamodel.document.{
+  DialectInstanceFragmentModel,
+  DialectInstanceLibraryModel,
+  DialectInstanceModel,
+  DialectInstancePatchModel
+}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, External}
+
+import scala.collection.mutable.ListBuffer
 
 trait ComposedInstancesSupport {
   var composedDialects: Map[String, Dialect] = Map()
@@ -20,7 +29,8 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
     with ExternalContext[DialectInstance]
     with DeclaresModel
     with EncodesModel
-    with ComposedInstancesSupport {
+    with ComposedInstancesSupport
+    with PlatformSecrets {
 
   override def meta: Obj = DialectInstanceModel
 
@@ -35,6 +45,25 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   def withDefinedBy(dialectId: String): DialectInstance        = set(DefinedBy, dialectId)
   def withGraphDependencies(ids: Seq[String]): DialectInstance = set(GraphDependencies, ids)
 
+  override def findById(id: String, cycles: Set[String]): Option[DomainElement] = {
+    AMLPlugin.registry.dialectFor(this) match {
+      case Some(dialect) =>
+        if (dialect.documents().selfEncoded().value()) { // avoid top level cycle
+          val predicate = { (element: DomainElement) =>
+            element.id == id
+          }
+          findModelByCondition(predicate, encodes, first = true, ListBuffer.empty, Set.empty).headOption.orElse(
+            findInDeclaredModel(predicate, this, first = true, ListBuffer.empty, cycles).headOption.orElse(
+              findInReferencedModels(id, this.references, cycles).headOption
+            )
+          )
+        } else {
+          super.findById(id, cycles)
+        }
+      case _ =>
+        super.findById(id, cycles)
+    }
+  }
   override def transform(selector: DomainElement => Boolean,
                          transformation: (DomainElement, Boolean) => Option[DomainElement]): BaseUnit = {
     val domainElementAdapter = (o: AmfObject) => {
@@ -57,7 +86,8 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
                                               predicate: AmfObject => Boolean,
                                               transformation: (AmfObject, Boolean) => Option[AmfObject],
                                               cycles: Set[String] = Set.empty,
-                                              cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject] = defaultCycleRecoverer): AmfObject = {
+                                              cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject] =
+                                                defaultCycleRecoverer): AmfObject = {
     if (!cycles.contains(element.id)) {
       // not visited yet
       if (predicate(element)) { // matches predicate, we transform
@@ -136,8 +166,8 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
 
   override def componentId: String = ""
 
-  def withDefinedBy(dialectId: String): DialectInstanceFragment        = set(DefinedBy, dialectId)
-  def withGraphDepencies(ids: Seq[String]): DialectInstanceFragment    = set(GraphDependencies, ids)
+  def withDefinedBy(dialectId: String): DialectInstanceFragment     = set(DefinedBy, dialectId)
+  def withGraphDepencies(ids: Seq[String]): DialectInstanceFragment = set(GraphDependencies, ids)
 }
 
 object DialectInstanceFragment {
@@ -168,7 +198,6 @@ object DialectInstanceLibrary {
   def apply(annotations: Annotations): DialectInstanceLibrary = DialectInstanceLibrary(Fields(), annotations)
 }
 
-
 case class DialectInstancePatch(fields: Fields, annotations: Annotations)
     extends BaseUnit
     with ExternalContext[DialectInstancePatch]
@@ -177,12 +206,12 @@ case class DialectInstancePatch(fields: Fields, annotations: Annotations)
 
   override def meta: Obj = DialectInstancePatchModel
 
-  def references: Seq[BaseUnit]         = fields.field(References)
-  def graphDependencies: Seq[StrField]  = fields.field(GraphDependencies)
-  def declares: Seq[DomainElement]      = fields.field(Declares)
-  def definedBy(): StrField             = fields.field(DefinedBy)
-  def extendsModel: StrField            = fields.field(DialectInstancePatchModel.Extends)
-  override def encodes: DomainElement   = fields.field(Encodes)
+  def references: Seq[BaseUnit]        = fields.field(References)
+  def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
+  def declares: Seq[DomainElement]     = fields.field(Declares)
+  def definedBy(): StrField            = fields.field(DefinedBy)
+  def extendsModel: StrField           = fields.field(DialectInstancePatchModel.Extends)
+  override def encodes: DomainElement  = fields.field(Encodes)
 
   override def componentId: String = ""
 

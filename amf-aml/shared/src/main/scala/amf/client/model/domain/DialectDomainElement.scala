@@ -2,6 +2,7 @@ package amf.client.model.domain
 
 import amf.client.convert.VocabulariesClientConverter
 import amf.client.convert.VocabulariesClientConverter._
+import amf.core.model.BoolField
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement => InternalDialectDomainElement}
 import org.yaml.model.YNode
@@ -9,23 +10,24 @@ import org.yaml.model.YNode
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class DialectDomainElement(override private[amf] val _internal: InternalDialectDomainElement) extends DomainElement {
+case class DialectDomainElement(override private[amf] val _internal: InternalDialectDomainElement)
+    extends DomainElement {
 
   @JSExportTopLevel("model.domain.DialectDomainElement")
   def this() = this(InternalDialectDomainElement())
 
-  def isAbstract() = _internal.isAbstract
-  def withAbstract(isAbstract: Boolean) = {
+  def isAbstract(): BoolField = _internal.isAbstract
+  def withAbstract(isAbstract: Boolean): DialectDomainElement = {
     _internal.withAbstract(isAbstract)
     this
   }
 
-  def withInstanceTypes(types: ClientList[String]) = {
+  def withInstanceTypes(types: ClientList[String]): DialectDomainElement = {
     _internal.withInstanceTypes(types.asInternal)
     this
   }
 
-  def withDefinedby(nodeMapping: NodeMapping) = {
+  def withDefinedby(nodeMapping: NodeMapping): DialectDomainElement = {
     _internal.withDefinedBy(nodeMapping._internal)
     this
   }
@@ -36,7 +38,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
 
   def includeName(): String = _internal.includeName
 
-  def setObjectProperty(propertyId: String, value: DialectDomainElement) = {
+  def setObjectProperty(propertyId: String, value: DialectDomainElement): InternalDialectDomainElement = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.expand(propertyId).iri()) match {
       case Some(mapping) =>
         _internal.setObjectField(mapping, value._internal, YNode.Empty)
@@ -45,7 +47,8 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     }
   }
 
-  def setObjectCollectionProperty(propertyId: String, value: ClientList[DialectDomainElement]) = {
+  def setObjectCollectionProperty(propertyId: String,
+                                  value: ClientList[DialectDomainElement]): InternalDialectDomainElement = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.expand(propertyId).iri()) match {
       case Some(mapping) =>
         _internal.setObjectField(mapping, value.asInternal, YNode.Empty)
@@ -65,8 +68,8 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
         _internal.literalProperties.get(mapping.id) flatMap {
           case Some(res: Seq[_]) => Some(res)
           case Some(value)       => Some(Seq(value))
-          case None              =>
-            _internal.mapKeyProperties.get(mapping.id) flatMap  {
+          case None =>
+            _internal.mapKeyProperties.get(mapping.id) flatMap {
               case Some(value) => Some(Seq(value))
               case _           => None
             }
@@ -77,26 +80,26 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     res.getOrElse(Nil).asClient
   }
 
-
   def getObjectPropertyUri(propertyId: String): ClientList[DialectDomainElement] = {
     val expanded = Namespace.expand(propertyId).iri()
-    val res: Option[Seq[InternalDialectDomainElement]] = _internal.findPropertyMappingByTermPropertyId(expanded) match {
-      case Some(mapping) =>
-        _internal.objectProperties.get(mapping.id) match {
-          case Some(value: InternalDialectDomainElement) => Some(Seq(DialectDomainElement(value)))
-          case None                                      => None
-            _internal.objectCollectionProperties.get(mapping.id).map { elems =>
-              elems.map(elem => elem)
-            }
-        }
-      case _ =>
-        None
-    }
+    val res: Option[Seq[InternalDialectDomainElement]] =
+      _internal.findPropertyMappingByTermPropertyId(expanded) match {
+        case Some(mapping) =>
+          _internal.objectProperties.get(mapping.id) match {
+            case Some(value: InternalDialectDomainElement) => Some(Seq(DialectDomainElement(value)))
+            case None =>
+              None
+              _internal.objectCollectionProperties.get(mapping.id).map { elems =>
+                elems.map(elem => elem)
+              }
+          }
+        case _ =>
+          None
+      }
     res.getOrElse(Nil).asClient
   }
 
-
-  def setLiteralProperty(propertyId: String, value: String) = {
+  def setLiteralProperty(propertyId: String, value: String): InternalDialectDomainElement = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.expand(propertyId).iri()) match {
       case Some(mapping) =>
         _internal.setLiteralField(mapping, value, YNode.Empty)
@@ -105,7 +108,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     }
   }
 
-  def setLiteralProperty(propertyId: String, value: Int) = {
+  def setLiteralProperty(propertyId: String, value: Int): InternalDialectDomainElement = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.expand(propertyId).iri()) match {
       case Some(mapping) =>
         _internal.setLiteralField(mapping, value, YNode.Empty)
@@ -114,7 +117,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     }
   }
 
-  def setLiteralProperty(propertyId: String, value: Double) = {
+  def setLiteralProperty(propertyId: String, value: Double): InternalDialectDomainElement = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.expand(propertyId).iri()) match {
       case Some(mapping) =>
         _internal.setLiteralField(mapping, value, YNode.Empty)
@@ -123,7 +126,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     }
   }
 
-  def setLiteralProperty(propertyId: String, value: Float) = {
+  def setLiteralProperty(propertyId: String, value: Float): InternalDialectDomainElement = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.expand(propertyId).iri()) match {
       case Some(mapping) =>
         _internal.setLiteralField(mapping, value, YNode.Empty)
@@ -132,7 +135,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     }
   }
 
-  def setLiteralProperty(propertyId: String, value: Boolean) = {
+  def setLiteralProperty(propertyId: String, value: Boolean): InternalDialectDomainElement = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.expand(propertyId).iri()) match {
       case Some(mapping) =>
         _internal.setLiteralField(mapping, value, YNode.Empty)
@@ -141,7 +144,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     }
   }
 
-  def setLiteralProperty(propertyId: String, value: ClientList[Any]) = {
+  def setLiteralProperty(propertyId: String, value: ClientList[Any]): InternalDialectDomainElement = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.expand(propertyId).iri()) match {
       case Some(mapping) =>
         _internal.setLiteralField(mapping, value.asInternal, YNode.Empty)
@@ -150,7 +153,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     }
   }
 
-  def setMapKeyProperty(propertyId: String, value: String) = {
+  def setMapKeyProperty(propertyId: String, value: String): InternalDialectDomainElement = {
     _internal.setMapKeyField(propertyId, value, YNode.Empty)
   }
 

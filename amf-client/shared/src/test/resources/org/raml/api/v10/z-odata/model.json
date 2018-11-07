@@ -63,146 +63,28 @@ types:
         (odata.key): true
         required: true
 /orders:
-  get:
-    description: List of orders
-    queryParameters:
-      orderby:
-        description: Expression for determining what values are used to order the collection of Entries
-        required: false
-        type: string
-      top:
-        description: Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option
-        required: false
-        type: number
-      skip:
-        description: Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)
-        required: false
-        type: number
-      filter:
-        description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-        required: false
-        type: string
-      expand:
-        description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-        required: false
-        type: string
-      format:
-        description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-        required: false
-        type: string
-      select:
-        description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-        required: false
-        type: string
-      inlinecount:
-        description: Specifies that the response to the request includes a count of the number of Entries in the Collection
-        required: false
-        type: string
-    responses:
-      200:
-        body:
-          application/json:
-            items:
-              (odata.remote): Orders
-              type: object
-              additionalProperties: true
-              properties:
-                OrderID:
-                  type: integer
-                  (odata.key): true
-                  (odata.nullable): false
-                  required: true
-                ShipName:
-                  type: string
-                  (odata.nullable): false
-                  (odata.key): false
-                  required: true
-                ShipAddress:
-                  type: string
-                  (odata.nullable): true
-                  (odata.key): false
-                  required: true
-    body: {}
-  post:
-    description: Create a new order
-    queryParameters:
-      orderby:
-        description: Expression for determining what values are used to order the collection of Entries
-        required: false
-        type: string
-      top:
-        description: Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option
-        required: false
-        type: number
-      skip:
-        description: Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)
-        required: false
-        type: number
-      filter:
-        description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-        required: false
-        type: string
-      expand:
-        description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-        required: false
-        type: string
-      format:
-        description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-        required: false
-        type: string
-      select:
-        description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-        required: false
-        type: string
-      inlinecount:
-        description: Specifies that the response to the request includes a count of the number of Entries in the Collection
-        required: false
-        type: string
-    responses:
-      200:
-        body:
-          application/json:
-            type: object
-            (odata.remote): Orders
-            additionalProperties: true
-            properties:
-              OrderID:
-                type: integer
-                (odata.key): true
-                (odata.nullable): false
-                required: true
-              ShipName:
-                type: string
-                (odata.nullable): false
-                (odata.key): false
-                required: true
-              ShipAddress:
-                type: string
-                (odata.nullable): true
-                (odata.key): false
-                required: true
-    body: {}
   displayName: orders
   /orderId:
+    displayName: order
     get:
-      description: Read order
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-          required: false
           type: string
+          required: false
         expand:
           description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-          required: false
           type: string
+          required: false
         format:
           description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-          required: false
           type: string
+          required: false
         select:
           description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-          required: false
           type: string
+          required: false
+      description: Read order
       responses:
         200:
           body:
@@ -228,24 +110,24 @@ types:
                   required: true
       body: {}
     delete:
-      description: Delete order
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-          required: false
           type: string
+          required: false
         expand:
           description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-          required: false
           type: string
+          required: false
         format:
           description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-          required: false
           type: string
+          required: false
         select:
           description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-          required: false
           type: string
+          required: false
+      description: Delete order
       responses:
         200:
           body:
@@ -298,20 +180,20 @@ types:
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-          required: false
           type: string
+          required: false
         expand:
           description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-          required: false
           type: string
+          required: false
         format:
           description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-          required: false
           type: string
+          required: false
         select:
           description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-          required: false
           type: string
+          required: false
       body:
         application/json:
           type: object
@@ -333,158 +215,148 @@ types:
               (odata.nullable): true
               (odata.key): false
               required: true
-    displayName: order
-/customers:
   get:
-    description: List of customers
     queryParameters:
       orderby:
         description: Expression for determining what values are used to order the collection of Entries
-        required: false
         type: string
+        required: false
       top:
         description: Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option
-        required: false
         type: number
+        required: false
       skip:
         description: Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)
-        required: false
         type: number
+        required: false
       filter:
         description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-        required: false
         type: string
+        required: false
       expand:
         description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-        required: false
         type: string
+        required: false
       format:
         description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-        required: false
         type: string
+        required: false
       select:
         description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-        required: false
         type: string
+        required: false
       inlinecount:
         description: Specifies that the response to the request includes a count of the number of Entries in the Collection
-        required: false
         type: string
+        required: false
+    description: List of orders
     responses:
       200:
         body:
           application/json:
             items:
-              (odata.remote): Customers
+              (odata.remote): Orders
               type: object
               additionalProperties: true
               properties:
-                CustomerID:
+                OrderID:
                   type: integer
                   (odata.key): true
                   (odata.nullable): false
                   required: true
-                CompanyName:
+                ShipName:
                   type: string
-                  (odata.nullable): true
+                  (odata.nullable): false
                   (odata.key): false
                   required: true
-                ContactName:
-                  type: string
-                  (odata.nullable): true
-                  (odata.key): false
-                  required: true
-                ContactTitle:
+                ShipAddress:
                   type: string
                   (odata.nullable): true
                   (odata.key): false
                   required: true
     body: {}
   post:
-    description: Create a new customer
     queryParameters:
       orderby:
         description: Expression for determining what values are used to order the collection of Entries
-        required: false
         type: string
+        required: false
       top:
         description: Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option
-        required: false
         type: number
+        required: false
       skip:
         description: Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)
-        required: false
         type: number
+        required: false
       filter:
         description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-        required: false
         type: string
+        required: false
       expand:
         description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-        required: false
         type: string
+        required: false
       format:
         description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-        required: false
         type: string
+        required: false
       select:
         description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-        required: false
         type: string
+        required: false
       inlinecount:
         description: Specifies that the response to the request includes a count of the number of Entries in the Collection
-        required: false
         type: string
+        required: false
+    description: Create a new order
     responses:
       200:
         body:
           application/json:
             type: object
-            (odata.remote): Customers
+            (odata.remote): Orders
             additionalProperties: true
             properties:
-              CustomerID:
+              OrderID:
                 type: integer
                 (odata.key): true
                 (odata.nullable): false
                 required: true
-              CompanyName:
+              ShipName:
                 type: string
-                (odata.nullable): true
+                (odata.nullable): false
                 (odata.key): false
                 required: true
-              ContactName:
-                type: string
-                (odata.nullable): true
-                (odata.key): false
-                required: true
-              ContactTitle:
+              ShipAddress:
                 type: string
                 (odata.nullable): true
                 (odata.key): false
                 required: true
     body: {}
+/customers:
   displayName: customers
   /customerId:
+    displayName: customer
     get:
-      description: Read customer
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-          required: false
           type: string
+          required: false
         expand:
           description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-          required: false
           type: string
+          required: false
         format:
           description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-          required: false
           type: string
+          required: false
         select:
           description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-          required: false
           type: string
+          required: false
+      description: Read customer
       responses:
         200:
           body:
@@ -515,24 +387,24 @@ types:
                   required: true
       body: {}
     delete:
-      description: Delete customer
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-          required: false
           type: string
+          required: false
         expand:
           description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-          required: false
           type: string
+          required: false
         format:
           description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-          required: false
           type: string
+          required: false
         select:
           description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-          required: false
           type: string
+          required: false
+      description: Delete customer
       responses:
         200:
           body:
@@ -595,20 +467,20 @@ types:
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-          required: false
           type: string
+          required: false
         expand:
           description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-          required: false
           type: string
+          required: false
         format:
           description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-          required: false
           type: string
+          required: false
         select:
           description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-          required: false
           type: string
+          required: false
       body:
         application/json:
           type: object
@@ -635,138 +507,158 @@ types:
               (odata.nullable): true
               (odata.key): false
               required: true
-    displayName: customer
-/Weird-resource_NAMEs:
   get:
-    description: List of Weird-resource_NAMEs
     queryParameters:
       orderby:
         description: Expression for determining what values are used to order the collection of Entries
-        required: false
         type: string
+        required: false
       top:
         description: Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option
-        required: false
         type: number
+        required: false
       skip:
         description: Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)
-        required: false
         type: number
+        required: false
       filter:
         description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-        required: false
         type: string
+        required: false
       expand:
         description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-        required: false
         type: string
+        required: false
       format:
         description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-        required: false
         type: string
+        required: false
       select:
         description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-        required: false
         type: string
+        required: false
       inlinecount:
         description: Specifies that the response to the request includes a count of the number of Entries in the Collection
-        required: false
         type: string
+        required: false
+    description: List of customers
     responses:
       200:
         body:
           application/json:
             items:
-              (odata.remote): Weird-resource_NAME
+              (odata.remote): Customers
               type: object
               additionalProperties: true
               properties:
-                just-A_key:
-                  type: string
-                  (odata.key): true
-                  (odata.nullable): true
-                  required: true
-                ANOTHER-strange_Key:
+                CustomerID:
                   type: integer
-                  (odata.nullable): true
                   (odata.key): true
+                  (odata.nullable): false
+                  required: true
+                CompanyName:
+                  type: string
+                  (odata.nullable): true
+                  (odata.key): false
+                  required: true
+                ContactName:
+                  type: string
+                  (odata.nullable): true
+                  (odata.key): false
+                  required: true
+                ContactTitle:
+                  type: string
+                  (odata.nullable): true
+                  (odata.key): false
                   required: true
     body: {}
   post:
-    description: Create a new Weird-resource_NAME
     queryParameters:
       orderby:
         description: Expression for determining what values are used to order the collection of Entries
-        required: false
         type: string
+        required: false
       top:
         description: Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option
-        required: false
         type: number
+        required: false
       skip:
         description: Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)
-        required: false
         type: number
+        required: false
       filter:
         description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-        required: false
         type: string
+        required: false
       expand:
         description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-        required: false
         type: string
+        required: false
       format:
         description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-        required: false
         type: string
+        required: false
       select:
         description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-        required: false
         type: string
+        required: false
       inlinecount:
         description: Specifies that the response to the request includes a count of the number of Entries in the Collection
-        required: false
         type: string
+        required: false
+    description: Create a new customer
     responses:
       200:
         body:
           application/json:
             type: object
-            (odata.remote): Weird-resource_NAME
+            (odata.remote): Customers
             additionalProperties: true
             properties:
-              just-A_key:
-                type: string
-                (odata.key): true
-                (odata.nullable): true
-                required: true
-              ANOTHER-strange_Key:
+              CustomerID:
                 type: integer
-                (odata.nullable): true
                 (odata.key): true
+                (odata.nullable): false
+                required: true
+              CompanyName:
+                type: string
+                (odata.nullable): true
+                (odata.key): false
+                required: true
+              ContactName:
+                type: string
+                (odata.nullable): true
+                (odata.key): false
+                required: true
+              ContactTitle:
+                type: string
+                (odata.nullable): true
+                (odata.key): false
                 required: true
     body: {}
+/Weird-resource_NAMEs:
   displayName: Weird-resource_NAMEs
   /Weird-resource_NAMEId:
+    displayName: Weird-resource_NAME
     get:
-      description: Read Weird-resource_NAME
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-          required: false
           type: string
+          required: false
         expand:
           description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-          required: false
           type: string
+          required: false
         format:
           description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-          required: false
           type: string
+          required: false
         select:
           description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-          required: false
           type: string
+          required: false
+      description: Read Weird-resource_NAME
       responses:
         200:
           body:
@@ -787,24 +679,24 @@ types:
                   required: true
       body: {}
     delete:
-      description: Delete Weird-resource_NAME
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-          required: false
           type: string
+          required: false
         expand:
           description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-          required: false
           type: string
+          required: false
         format:
           description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-          required: false
           type: string
+          required: false
         select:
           description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-          required: false
           type: string
+          required: false
+      description: Delete Weird-resource_NAME
       responses:
         200:
           body:
@@ -847,20 +739,20 @@ types:
       queryParameters:
         filter:
           description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
-          required: false
           type: string
+          required: false
         expand:
           description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
-          required: false
           type: string
+          required: false
         format:
           description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
-          required: false
           type: string
+          required: false
         select:
           description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
-          required: false
           type: string
+          required: false
       body:
         application/json:
           type: object
@@ -877,6 +769,114 @@ types:
               (odata.nullable): true
               (odata.key): true
               required: true
-    displayName: Weird-resource_NAME
+  get:
+    queryParameters:
+      orderby:
+        description: Expression for determining what values are used to order the collection of Entries
+        type: string
+        required: false
+      top:
+        description: Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option
+        type: number
+        required: false
+      skip:
+        description: Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)
+        type: number
+        required: false
+      filter:
+        description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
+        type: string
+        required: false
+      expand:
+        description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
+        type: string
+        required: false
+      format:
+        description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
+        type: string
+        required: false
+      select:
+        description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
+        type: string
+        required: false
+      inlinecount:
+        description: Specifies that the response to the request includes a count of the number of Entries in the Collection
+        type: string
+        required: false
+    description: List of Weird-resource_NAMEs
+    responses:
+      200:
+        body:
+          application/json:
+            items:
+              (odata.remote): Weird-resource_NAME
+              type: object
+              additionalProperties: true
+              properties:
+                just-A_key:
+                  type: string
+                  (odata.key): true
+                  (odata.nullable): true
+                  required: true
+                ANOTHER-strange_Key:
+                  type: integer
+                  (odata.nullable): true
+                  (odata.key): true
+                  required: true
+    body: {}
+  post:
+    queryParameters:
+      orderby:
+        description: Expression for determining what values are used to order the collection of Entries
+        type: string
+        required: false
+      top:
+        description: Identifies a subset formed by selecting only the first N items of the set, where N is a positive integer specified by this query option
+        type: number
+        required: false
+      skip:
+        description: Identifies a subset defined by seeking N Entries into the Collection and selecting only the remaining Entries (starting with Entry N+1)
+        type: number
+        required: false
+      filter:
+        description: Identifies a subset determined by selecting only the Entries that satisfy the predicate expression specified by the query option
+        type: string
+        required: false
+      expand:
+        description: A URI with a expand System Query Option indicates that Entries associated with the Entry or Collection of Entries identified by the Resource Path section of the URI must be represented inline
+        type: string
+        required: false
+      format:
+        description: If the format query option is present in a request URI it takes precedence over the value(s) specified in the Accept request header. Valid values for the $format query string option are listed in the following table.
+        type: string
+        required: false
+      select:
+        description: Specifies that a response from an OData service should return a subset of the Properties which would have been returned had the URI not included a select query option.
+        type: string
+        required: false
+      inlinecount:
+        description: Specifies that the response to the request includes a count of the number of Entries in the Collection
+        type: string
+        required: false
+    description: Create a new Weird-resource_NAME
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            (odata.remote): Weird-resource_NAME
+            additionalProperties: true
+            properties:
+              just-A_key:
+                type: string
+                (odata.key): true
+                (odata.nullable): true
+                required: true
+              ANOTHER-strange_Key:
+                type: integer
+                (odata.nullable): true
+                (odata.key): true
+                required: true
+    body: {}
 uses:
   odata: libraries/odataLibrary.raml

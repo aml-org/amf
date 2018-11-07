@@ -8,32 +8,32 @@ protocols:
   description: Retrieves type of game entities.
   get:
     headers:
-      X-No-Cache:
-        description: Define if it is cacheable
-        required: false
-        type: boolean
-        default: true
-      X-Reset-Cache:
-        description: Set whether to reset the cache
-        required: false
-        type: boolean
-        default: false
       X-Integration-Id:
         description: Represents the integrator identification.
-        required: false
         type: string
+        required: false
       X-Origin-Id:
         description: Source identification.
-        required: false
         type: string
+        required: false
+      X-No-Cache:
+        description: Define if it is cacheable
+        type: boolean
+        required: false
+        default: true
       X-Origin-Request-Id:
         description: Consumer request identification.
-        required: false
         type: string
+        required: false
+      X-Reset-Cache:
+        description: Set whether to reset the cache
+        type: boolean
+        required: false
+        default: false
       X-Channel-Id:
         description: Channel identification.
-        required: false
         type: string
+        required: false
     displayName: all games
     body: {}
     responses:
@@ -41,37 +41,37 @@ protocols:
         headers:
           X-Integration-Id:
             description: Represents the integrator identification.
-            required: false
             type: string
+            required: false
           X-Origin-Id:
             description: Source identification.
-            required: false
             type: string
+            required: false
           X-Origin-Request-Id:
             description: Consumer request identification.
-            required: false
             type: string
+            required: false
           X-Channel-Id:
             description: Channel identification.
-            required: false
             type: string
+            required: false
         body: {}
       500:
         headers:
           X-Integration-Id:
             description: Represents the integrator identification.
-            required: false
             type: string
+            required: false
           X-Origin-Id:
             description: Source identification.
-            required: false
             type: string
+            required: false
           X-Origin-Request-Id:
             description: Consumer request identification.
-            required: false
             type: string
+            required: false
           X-Channel-Id:
             description: Channel identification.
-            required: false
             type: string
+            required: false
         body: {}

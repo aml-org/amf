@@ -6,12 +6,20 @@ import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.JsonSchemaPlugin
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft3SchemaVersion, JSONSchemaDraft4SchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft3SchemaVersion,
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaUnspecifiedVersion,
+  JSONSchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
-import amf.plugins.document.webapi.parser.spec.{ExtensionWebApiDeclarations, RamlWebApiDeclarations, SpecSyntax, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.features.validation.ParserSideValidations.{ClosedShapeSpecification, DuplicatedPropertySpecification}
+import amf.plugins.features.validation.ParserSideValidations.{
+  ClosedShapeSpecification,
+  DuplicatedPropertySpecification
+}
 import org.yaml.model._
 
 class PayloadContext(loc: String,
@@ -183,9 +191,23 @@ class ExtensionLikeWebApiContext(loc: String,
 abstract class OasWebApiContext(loc: String,
                                 refs: Seq[ParsedReference],
                                 private val wrapped: ParserContext,
-                                private val ds: Option[WebApiDeclarations] = None)
+                                private val ds: Option[OasWebApiDeclarations] = None)
     extends WebApiContext(loc, refs, wrapped, ds) {
 
+  override val declarations: OasWebApiDeclarations =
+    ds.getOrElse(
+      new OasWebApiDeclarations(
+        refs
+          .flatMap(
+            r =>
+              if (r.isExternalFragment)
+                r.unit.asInstanceOf[ExternalFragment].encodes.parsed.map(node => r.origin.url -> node)
+              else None)
+          .toMap,
+        None,
+        errorHandler = Some(this),
+        futureDeclarations = futureDeclarations
+      ))
   val factory: OasSpecVersionFactory
 
   override def link(node: YNode): Either[String, YNode] = {
@@ -200,6 +222,10 @@ abstract class OasWebApiContext(loc: String,
     }
   }
 
+  val linkTypes: Boolean = wrapped match {
+    case raml: RamlWebApiContext => false
+    case _                       => true
+  }
   override def ignore(shape: String, property: String): Boolean =
     property.startsWith("x-") || property == "$ref" || (property.startsWith("/") && shape == "webApi")
 }
@@ -207,7 +233,7 @@ abstract class OasWebApiContext(loc: String,
 class Oas2WebApiContext(loc: String,
                         refs: Seq[ParsedReference],
                         private val wrapped: ParserContext,
-                        private val ds: Option[WebApiDeclarations] = None)
+                        private val ds: Option[OasWebApiDeclarations] = None)
     extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
   override val vendor: Vendor              = Oas20
@@ -217,7 +243,7 @@ class Oas2WebApiContext(loc: String,
 class Oas3WebApiContext(loc: String,
                         refs: Seq[ParsedReference],
                         private val wrapped: ParserContext,
-                        private val ds: Option[WebApiDeclarations] = None)
+                        private val ds: Option[OasWebApiDeclarations] = None)
     extends OasWebApiContext(loc, refs, wrapped, ds) {
   override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
   override val vendor: Vendor              = Oas30
@@ -247,7 +273,7 @@ abstract class WebApiContext(val loc: String,
 
   // JSON Schema has a global namespace
 
-  protected def normalizedJsonPointer(url: String): String = if (url.endsWith("/"))  url.dropRight(1) else url
+  protected def normalizedJsonPointer(url: String): String = if (url.endsWith("/")) url.dropRight(1) else url
 
   def findJsonSchema(url: String): Option[AnyShape] = globalSpace.get(normalizedJsonPointer(url)) match {
     case Some(shape: AnyShape) => Some(shape)
@@ -279,24 +305,27 @@ abstract class WebApiContext(val loc: String,
 
   def computeJsonSchemaVersion(rootAst: YNode): JSONSchemaVersion = {
     rootAst.value match {
-      case map: YMap => map.map.get("$schema") match {
-        case Some(node) =>
-          node.value match {
-            case scalar: YScalar =>
-              scalar.text match {
-                case txt if txt.contains("http://json-schema.org/draft-01/schema") => JSONSchemaDraft3SchemaVersion // 1 -> 3
-                case txt if txt.contains("http://json-schema.org/draft-02/schema") => JSONSchemaDraft3SchemaVersion // 2 -> 3
-                case txt if txt.contains("http://json-schema.org/draft-03/schema") => JSONSchemaDraft3SchemaVersion
-                case _                                                             => JSONSchemaDraft4SchemaVersion // we upgrade anything else to 4
-              }
-            case _               =>
-              violation("JSON Schema version value must be a string", node)
-              JSONSchemaDraft4SchemaVersion
-          }
-        case _          => JSONSchemaUnspecifiedVersion
-      }
+      case map: YMap =>
+        map.map.get("$schema") match {
+          case Some(node) =>
+            node.value match {
+              case scalar: YScalar =>
+                scalar.text match {
+                  case txt if txt.contains("http://json-schema.org/draft-01/schema") =>
+                    JSONSchemaDraft3SchemaVersion // 1 -> 3
+                  case txt if txt.contains("http://json-schema.org/draft-02/schema") =>
+                    JSONSchemaDraft3SchemaVersion // 2 -> 3
+                  case txt if txt.contains("http://json-schema.org/draft-03/schema") => JSONSchemaDraft3SchemaVersion
+                  case _                                                             => JSONSchemaDraft4SchemaVersion // we upgrade anything else to 4
+                }
+              case _ =>
+                violation("JSON Schema version value must be a string", node)
+                JSONSchemaDraft4SchemaVersion
+            }
+          case _ => JSONSchemaUnspecifiedVersion
+        }
 
-      case _         => JSONSchemaUnspecifiedVersion
+      case _ => JSONSchemaUnspecifiedVersion
     }
   }
 

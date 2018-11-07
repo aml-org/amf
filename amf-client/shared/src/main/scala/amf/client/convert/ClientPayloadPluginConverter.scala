@@ -1,13 +1,12 @@
 package amf.client.convert
 
 import amf.client.convert.WebApiClientConverters._
+import amf.client.environment.{Environment => ClientEnvironment}
 import amf.client.plugins._
 import amf.core.model.document.{PayloadFragment => InternalPayloadFragment}
-import amf.client.plugins.{PayloadParsingResult => InternalPayloadParsingResult}
 import amf.core.model.domain.Shape
-import amf.core.validation.{AMFValidationReport, ValidationShapeSet => InternalValidationShapeSet}
+import amf.core.validation.{AMFPayloadValidationPlugin, AMFValidationReport, PayloadValidator}
 import amf.internal.environment.Environment
-import amf.client.environment.{Environment => ClientEnvironment}
 
 import scala.concurrent.Future
 object ClientPayloadPluginConverter {
@@ -26,22 +25,6 @@ object ClientPayloadPluginConverter {
 
   def convert(clientPlugin: ClientAMFPayloadValidationPlugin): AMFPayloadValidationPlugin =
     new AMFPayloadValidationPlugin {
-      override protected def parsePayload(payload: String,
-                                          mediaType: String,
-                                          env: Environment,
-                                          shape: Shape): InternalPayloadFragment =
-        clientPlugin.parsePayload(payload, mediaType, ClientEnvironment(env), ShapeMatcher.asClient(shape))._internal
-
-      override def parsePayloadWithErrorHandler(payload: String,
-                                                mediaType: String,
-                                                env: Environment,
-                                                shape: Shape): InternalPayloadParsingResult =
-        clientPlugin
-          .parsePayloadWithErrorHandler(payload, mediaType, ClientEnvironment(env), ShapeMatcher.asClient(shape))
-          ._internal
-
-      override def validateSet(set: InternalValidationShapeSet, env: Environment): Future[AMFValidationReport] =
-        clientPlugin.validateSet(set, ClientEnvironment(env)).asInternal
 
       override val payloadMediaType: Seq[String] = clientPlugin.payloadMediaType.asInternal
 
@@ -54,5 +37,22 @@ object ClientPayloadPluginConverter {
         new ClientListOps(clientPlugin.dependencies())(AMFPluginConverter).asInternal
 
       override def init(): Future[AMFPlugin] = new ClientFutureOps(clientPlugin.init())(AMFPluginConverter).asInternal
+
+      override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator = {
+        val validator = clientPlugin.validator(s, ClientEnvironment(env), validationMode)
+        new PayloadValidator {
+          override val shape: Shape                   = validator.shape
+          override val defaultSeverity: String        = validator.defaultSeverity
+          override val validationMode: ValidationMode = validator.validationMode
+          override val env: Environment               = validator.env._internal
+          override def validate(payload: String, mediaType: String): Future[AMFValidationReport] =
+            validator.validate(payload, mediaType).asInternal
+          override def validate(payloadFragment: InternalPayloadFragment): Future[AMFValidationReport] =
+            validator.validate(payloadFragment).asInternal
+
+          override def isValid(payload: String, mediaType: String): Future[Boolean] =
+            validator.isValid(payload, mediaType).asInternal
+        }
+      }
     }
 }

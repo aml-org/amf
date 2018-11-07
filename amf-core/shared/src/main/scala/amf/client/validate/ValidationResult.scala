@@ -3,12 +3,12 @@ package amf.client.validate
 import amf.core.annotations.LexicalInformation
 import amf.core.parser.Range
 import amf.core.validation.{AMFValidationResult => InternalValidationResult}
-import amf.client.plugins.{PayloadParsingResult => InternalPayloadParsingResult}
 import amf.core.utils.Strings
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.client.convert.CoreClientConverters._
 import amf.client.model.document.PayloadFragment
+import amf.core.validation.{PayloadParsingResult => InternalPayloadParsingResult}
 
 @JSExportAll
 class ValidationResult(private[amf] val _internal: InternalValidationResult) {

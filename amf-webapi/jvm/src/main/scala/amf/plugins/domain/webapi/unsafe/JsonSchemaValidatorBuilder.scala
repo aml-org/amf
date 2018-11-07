@@ -1,11 +1,11 @@
 package amf.plugins.domain.webapi.unsafe
 
-import amf.plugins.document.webapi.validation.remote.{JvmJsonSchemaValidator, JvmPayloadValidator, PlatformJsonSchemaValidator, PlatformPayloadValidator}
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.client.plugins.ValidationMode
+import amf.core.model.domain.Shape
+import amf.plugins.document.webapi.validation.remote._
 
 object JsonSchemaValidatorBuilder {
 
-  def apply(): PlatformJsonSchemaValidator = JvmJsonSchemaValidator
-
-  def payloadValidator(shape: AnyShape): PlatformPayloadValidator = new JvmPayloadValidator(shape)
+  def payloadValidator(shape: Shape, validationMode: ValidationMode): PlatformPayloadValidator =
+    new JvmPayloadValidator(shape, validationMode)
 }

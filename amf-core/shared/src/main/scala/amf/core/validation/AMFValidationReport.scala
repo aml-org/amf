@@ -26,3 +26,8 @@ case class AMFValidationReport(conforms: Boolean,
 
   override def toString: String = toString(DefaultMax)
 }
+
+object AMFValidationReport {
+  def apply(model: String, profile: ProfileName, results: Seq[AMFValidationResult]) =
+    new AMFValidationReport(!results.exists(_.level == SeverityLevels.VIOLATION), model, profile, results)
+}

@@ -14,6 +14,7 @@ import amf.core.parser.{
   ParsedDocument,
   ParsedReference,
   ParserContext,
+  Reference,
   ReferenceKind,
   ReferenceResolutionResult,
   UnspecifiedReference
@@ -187,7 +188,8 @@ class AMFCompiler(val rawUrl: String,
       case Some(domainPlugin) =>
         ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing domain $rawUrl plugin ${domainPlugin.ID}")
         parseReferences(document, domainPlugin) map { documentWithReferences =>
-          domainPlugin.parse(documentWithReferences, ctx, remote, parsingOptions) match {
+          val newCtx = ctx.copyWithSonsReferences()
+          domainPlugin.parse(documentWithReferences, newCtx, remote, parsingOptions) match {
             case Some(baseUnit) =>
               baseUnit.withRaw(document.raw)
             case None =>
@@ -270,7 +272,6 @@ class AMFCompiler(val rawUrl: String,
     case Left(content) =>
       throw new Exception(s"Cannot parse document with mime type ${content.mime.getOrElse("none")}")
   }
-
 }
 
 object AMFCompiler {

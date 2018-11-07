@@ -7,7 +7,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{ParsedDocument, ParserContext, ReferenceHandler, SyamlParsedDocument}
+import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.{Aml, Platform}
@@ -29,7 +29,11 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReference
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstancePatchResolutionPipeline,
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.{ProfileName, RamlProfile}
 import org.yaml.model._
@@ -199,20 +203,14 @@ object AMLPlugin
     }
   }
 
-  /**
-    * Unparses a model base unit and return a document AST
-    */
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
-    val unparsed = unit match {
+  protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = {
+    unit match {
       case vocabulary: Vocabulary  => Some(VocabularyEmitter(vocabulary).emitVocabulary())
       case dialect: Dialect        => Some(DialectEmitter(dialect).emitDialect())
       case library: DialectLibrary => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
       case instance: DialectInstance =>
         Some(DialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
       case _ => None
-    }
-    unparsed map { doc =>
-      SyamlParsedDocument(document = doc)
     }
   }
 

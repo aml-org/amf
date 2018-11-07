@@ -20,7 +20,7 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
     extends SpecParserOps {
   def parse(): Response = {
 
-    val node = ScalarNode(entry.key)
+    val node = ScalarNode(entry.key).text()
 
     val response: Response = ctx.link(entry.value) match {
       case Left(url) =>
@@ -28,12 +28,12 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
         val response: Response = ctx.declarations
           .findResponseOrError(entry.value)(name, SearchScope.Named)
           .link(OasDefinitions.stripResponsesDefinitionsPrefix(url))
-        adopted(response.set(ResponseModel.Name, node.string()))
+        adopted(response.set(ResponseModel.Name, node))
         response.annotations ++= Annotations(entry)
         response
       case Right(value) =>
         val map = value.as[YMap]
-        val res = Response(entry).set(ResponseModel.Name, node.string())
+        val res = Response(entry).set(ResponseModel.Name, node)
         adopted(res)
 
         map.key("description", ResponseModel.Description in res)
@@ -76,7 +76,7 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
       if (response.name.is("default")) {
         response.set(ResponseModel.StatusCode, "200")
       } else {
-        response.set(ResponseModel.StatusCode, node.string())
+        response.set(ResponseModel.StatusCode, node)
       }
     }
 
@@ -94,7 +94,7 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
     entries.key(
       "schema",
       entry =>
-        OasTypeParser(entry, (shape) => shape.withName("default").adopted(payload.id))
+        OasTypeParser(entry, shape => shape.withName("default").adopted(payload.id))
           .parse()
           .map { s =>
             payload.set(PayloadModel.Schema, tracking(s, payload.id), Annotations(entry))

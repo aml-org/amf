@@ -54,11 +54,11 @@ object OasHeader {
               .orElse(map.key(extensionType))
               .orElse(map.key(swagger))
               .orElse(map.key(openapi))
-              .flatMap(extension => OasHeader(extension.value))
+              .flatMap(extension => OasHeader(extension.value.toOption[String].getOrElse("")))
           case Left(_) => None
         }
       case _ => None
-  }
+    }
 
   def apply(text: String): Option[OasHeader] = text match {
     case Oas20Header.value                    => Some(Oas20Header)

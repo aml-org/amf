@@ -173,4 +173,19 @@ package object utils {
     def toRange: Range     = Range(range)
   }
 
+  /**
+    * Common utility to convert regex into common java grounds.
+    */
+  implicit class RegexConverter(val str: String) {
+
+    /**
+      * Hack: Manipulate regex so that it works the same as in js. Cases:
+      *
+      * 1) When using "[^]" this means match any character in js, but it is an error in jvm because an empty
+      *    negated (^) set is not allowed. We replace it with [\S\s] which is the same, it means any character.
+      *
+      * TODO when to hack opening curly braces? .replaceAll("\\{", "\\\\{")
+      */
+    def convertRegex: String = str.replaceAll("\\[\\^\\]", "[\\\\S\\\\s]")
+  }
 }

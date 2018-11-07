@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
-import amf.core.emitter.BaseEmitters.{ValueEmitter, pos, sourceOr, traverse}
+import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
+import amf.plugins.document.webapi.annotations.ParameterNameForPayload
 import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasSchemaEmitter}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
@@ -24,7 +25,15 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         val fs     = payload.fields
         val result = mutable.ListBuffer[EntryEmitter]()
 
-        fs.entry(PayloadModel.Name).map(f => result += ValueEmitter("name", f))
+        fs.entry(PayloadModel.Name)
+          .map(f => {
+            f.value.annotations.find(classOf[ParameterNameForPayload]) match {
+              case Some(ann) =>
+                result += MapEntryEmitter("name", ann.paramName, position = ann.range.start)
+              case _ =>
+                result += ValueEmitter("name", f)
+            }
+          })
         fs.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType", f))
         fs.entry(PayloadModel.Schema).map { f =>
           if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {

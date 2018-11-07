@@ -1,0 +1,30 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Title",
+    "version": "0.0.1"
+  },
+  "parameters": {
+    "param": {
+      "in": "formData",
+      "name": "paramName",
+      "type": "integer"
+    }
+  },
+  "paths": {
+    "/path": {
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/param"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "some"
+          }
+        }
+      }
+    }
+  }
+}

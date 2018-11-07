@@ -1,151 +1,136 @@
 package amf.plugins.document.webapi.validation.remote
 
-import amf.core.emitter.RenderOptions
+import amf.ProfileName
+import amf.client.plugins.ValidationMode
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.Shape
-import amf.core.validation.core.ValidationProfile
-import amf.core.validation.{AMFValidationReport, ValidationCandidate}
-import amf.internal.environment.Environment
-import amf.plugins.document.webapi.Oas20Plugin
-import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
-import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
-import amf.plugins.domain.shapes.models.{AnyShape, FileShape}
-import amf.plugins.syntax.SYamlSyntaxPlugin
+import amf.core.utils.RegexConverter
+import amf.core.validation.{AMFValidationResult, SeverityLevels}
+import amf.core.vocabulary.Namespace
 import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
 import org.everit.json.schema.loader.SchemaLoader
-import org.everit.json.schema.Validator
-import org.everit.json.schema.{Schema, ValidationException}
-import org.json.{JSONObject, JSONTokener}
+import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
+import org.everit.json.schema.{Schema, ValidationException, Validator}
+import org.json.{JSONException, JSONObject}
 
-import scala.concurrent.Future
+class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
+    extends PlatformPayloadValidator(shape) {
 
-class JvmPayloadValidator(shape: AnyShape) extends PlatformPayloadValidator(shape) with PlatformSchemaValidator {
+  case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
+    override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)
+  }
 
-  val isFileShape: Boolean                = shape.isInstanceOf[FileShape]
-  val polymorphic: Boolean                = shape.supportsInheritance
-  var jsonSchemasMap: Map[String, Schema] = Map()
-  val validator: Validator                = Validator.builder().failEarly().build()
-  private val env                         = Environment()
-
-  override def validate(mediaType: String, payload: String): Boolean = {
-    if (mediaType != "application/json" && mediaType != "application/yaml") {
-      throw new UnsupportedMediaType(
-        s"Unsupported payload media type '$mediaType', only application/json and application/yaml supported")
+  override protected def callValidator(schema: LoadedSchema,
+                                       payload: LoadedObj,
+                                       fragment: Option[PayloadFragment],
+                                       validationProcessor: ValidationProcessor): validationProcessor.Return = {
+    val validator = validationProcessor match {
+      case BooleanValidationProcessor => Validator.builder().failEarly().build()
+      case _                          => Validator.builder().build()
     }
-    if (isFileShape) {
-      true
-    } else if (polymorphic) {
-      validatePolymorphic(mediaType, payload)
-    } else {
-      validateNotPolymorphic(mediaType, payload)
+
+    try {
+      validator.performValidation(schema, payload)
+      validationProcessor.processResults(Nil)
+    } catch {
+      case validationException: ValidationException =>
+        validationProcessor.processException(validationException, fragment)
+      case exception: Error =>
+        validationProcessor.processException(exception, fragment)
     }
   }
 
-  protected def shapeJsonSchema(effectiveShape: Shape): Option[Schema] = {
-    jsonSchemasMap.get(effectiveShape.id) match {
-      case Some(schema) => Some(schema)
-      case None =>
-        parseShape(effectiveShape) map { parsedShape =>
-          jsonSchemasMap += (effectiveShape.id -> parsedShape)
-          parsedShape
-        }
-    }
+  override protected def loadSchema(jsonSchema: CharSequence): Option[LoadedSchema] = {
 
+    loadJson(
+      jsonSchema.toString
+        .replace("\"type\": \"file\"", "\"type\": \"string\"")
+        .replace("x-amf-union", "anyOf")) match {
+      case schemaNode: JSONObject =>
+        schemaNode.remove("x-amf-fragmentType")
+        schemaNode.remove("example")
+        schemaNode.remove("examples")
+        schemaNode.remove("x-amf-examples")
+
+        val schemaBuilder = SchemaLoader
+          .builder()
+          .schemaJson(schemaNode)
+          .regexpFactory(CustomJavaUtilRegexpFactory())
+          .addFormatValidator(DateTimeOnlyFormatValidator)
+          .addFormatValidator(Rfc2616Attribute)
+          .addFormatValidator(Rfc2616AttributeLowerCase)
+          .addFormatValidator(new DateFormatValidator())
+          .addFormatValidator(new URIFormatValidator())
+          .addFormatValidator(new RegexFormatValidator())
+          .addFormatValidator(PartialTimeFormatValidator)
+        Some(
+          schemaBuilder
+            .build()
+            .load()
+            .build())
+      case _ => None
+    }
   }
 
-  protected def validatePolymorphic(mediaType: String, payload: String): Boolean = {
-    val payloadResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
-    if (!payloadResult.hasError) {
-      val payloadFragment = payloadResult.fragment
-      val effectiveShape  = findPolymorphicShape(shape, payloadFragment.encodes)
-      shapeJsonSchema(effectiveShape) match {
-        case None => throw new Exception(s"Cannot parse shape '${effectiveShape.id}' to execute validation")
-        case Some(jsonSchema) =>
-          val dataNode = if (mediaType == "application/json") {
-            loadJson(payload)
-          } else {
-            loadDataNodeString(payloadFragment)
-          }
-          try {
-            validator.performValidation(jsonSchema, dataNode)
-            true
-          } catch {
-            case _: ValidationException => false
-          }
+  override type LoadedObj    = Object
+  override type LoadedSchema = Schema
+
+  protected def loadDataNodeString(payload: PayloadFragment): Option[LoadedObj] = {
+    try {
+      literalRepresentation(payload) map { payloadText =>
+        loadJson(payloadText)
       }
-    } else false
-  }
-
-  protected def validateNotPolymorphic(mediaType: String, payload: String): Boolean = {
-    shapeJsonSchema(shape) match {
-      case None => throw new Exception(s"Cannot parse shape '${shape.id}' to execute validation")
-      case Some(jsonSchema) =>
-        val dataNode =
-          if (mediaType == "application/json") loadJson(payload)
-          else {
-            val payloadResult = PayloadValidatorPlugin.parsePayloadWithErrorHandler(payload, mediaType, env, shape)
-            if (!payloadResult.hasError) loadDataNodeString(payloadResult.fragment)
-            else return false
-          }
-        try {
-          validator.performValidation(jsonSchema, dataNode)
-          true
-        } catch {
-          case _: ValidationException => false
-        }
+    } catch {
+      case _: ExampleUnknownException => None
+      case e: JSONException           => throw new InvalidJsonObject(e)
     }
   }
 
-  protected def parseShape(fragmentShape: Shape): Option[Schema] = {
-    val dataType = DataTypeFragment()
-    dataType.fields
-      .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
+  override protected def loadJson(text: String): Object = new JSONTokenerHack(text).nextValue()
+  override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
+    JvmReportValidationProcessor(profileName)
+}
 
-    Oas20Plugin.unparse(dataType, RenderOptions()) match {
-      case Some(doc) =>
-        SYamlSyntaxPlugin.unparse("application/json", doc) match {
-          case Some(jsonSchema) =>
-            loadJson(jsonSchema.replace("x-amf-union", "anyOf")) match {
-              case schemaNode: JSONObject =>
-                schemaNode.remove("x-amf-fragmentType")
-                schemaNode.remove("example")
-                schemaNode.remove("examples")
+case class JvmReportValidationProcessor(override val profileName: ProfileName) extends ReportValidationProcessor {
 
-                val schemaBuilder = SchemaLoader
-                  .builder()
-                  .schemaJson(schemaNode)
-                  .addFormatValidator(DateTimeOnlyFormatValidator)
-                  .addFormatValidator(Rfc2616Attribute)
-                  .addFormatValidator(Rfc2616AttributeLowerCase)
-                  .addFormatValidator(new DateFormatValidator())
-                  .addFormatValidator(new URIFormatValidator())
-                  .addFormatValidator(new RegexFormatValidator())
-                  .addFormatValidator(PartialTimeFormatValidator)
+  override def processException(r: Throwable, fragment: Option[PayloadFragment]): Return = {
+    val results = r match {
+      case validationException: ValidationException =>
+        iterateValidations(validationException, fragment)
 
-                val schemaLoader = schemaBuilder.build()
-                Some(schemaLoader.load().build())
-              case _ => None
-            }
-          case _ => None
-        }
-      case _ =>
-        None
+      case other =>
+        super.processCommonException(other, fragment)
     }
+    processResults(results)
   }
 
-  protected def loadDataNodeString(payload: PayloadFragment): Object = {
-    literalRepresentation(payload) map { payloadText =>
-      loadJson(payloadText)
-    } match {
-      case Some(parsed) => parsed
-      case _            => throw new Exception("Cannot parse payload")
+  private def iterateValidations(validationException: ValidationException,
+                                 payload: Option[PayloadFragment]): Seq[AMFValidationResult] = {
+    var resultsAcc = Seq[AMFValidationResult]()
+    val results    = validationException.getCausingExceptions.iterator()
+    while (results.hasNext) {
+      val result = results.next()
+      resultsAcc = resultsAcc ++ iterateValidations(result, payload)
     }
+    if (resultsAcc.isEmpty) {
+      resultsAcc = resultsAcc :+ AMFValidationResult(
+        message = makeValidationMessage(validationException),
+        level = SeverityLevels.VIOLATION,
+        targetNode = payload.map(_.encodes.id).getOrElse(""),
+        targetProperty = None,
+        validationId = (Namespace.AmfParser + "example-validation-error").iri(),
+        position = payload.flatMap(_.encodes.position()),
+        location = payload.flatMap(_.encodes.location()),
+        source = validationException
+      )
+    }
+    resultsAcc
   }
 
-  protected def loadJson(text: String): Object = new JSONTokener(text).nextValue()
-
-  override def validate(validationCandidates: Seq[ValidationCandidate],
-                        profile: ValidationProfile): Future[AMFValidationReport] =
-    throw new Exception("Validate not supported in payload validator")
+  private def makeValidationMessage(validationException: ValidationException): String = {
+    val json    = validationException.toJSON
+    var pointer = json.getString("pointerToViolation")
+    if (pointer.startsWith("#")) pointer = pointer.replaceFirst("#", "")
+    (pointer + " " + json.getString("message")).trim
+  }
 }

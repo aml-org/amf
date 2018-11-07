@@ -1,9 +1,11 @@
 package amf.plugins.document.webapi.references
 
 import amf.core.annotations.SourceAST
+import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser._
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.utils._
 import amf.internal.environment.Environment
@@ -11,6 +13,7 @@ import amf.plugins.document.webapi.BaseWebApiPlugin
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration.LibraryLocationParser
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -182,7 +185,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                                          environment: Environment): Future[ParsedReference] = {
     resolveUnitDocument(reference, ctx) match {
       case Right(document) =>
-        val parsed = SyamlParsedDocument(None, document)
+        val parsed = SyamlParsedDocument(document)
 
         val refs    = new WebApiReferenceHandler(vendor, plugin).collect(parsed, ctx)
         val updated = context.update(reference.unit.id) // ??
@@ -196,20 +199,26 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                 resolved.map(res => {
                   r.refs.foreach { refContainer =>
                     refContainer.node match {
-                      case mut: MutRef => mut.target = res.ast
+                      case mut: MutRef =>
+                        res.unit.references.foreach(u => ctx.addSonRef(u))
+                        mut.target = res.ast
                       case other =>
                         ctx.violation("Cannot inline a fragment in a not mutable node", other)
                     }
                   // not meaning, only for collect all futures, not matter the type
                   }
                 })
-              case ReferenceResolutionResult(Some(e), _) => Future(Nil)
+              case ReferenceResolutionResult(Some(_), _) => Future(Nil)
+              case _                                     => Future(Nil)
             }
         })
 
         Future.sequence(externals).map(_ => reference.copy(ast = Some(document.node)))
       case Left(raw) =>
-        Future.successful(reference.copy(ast = Some(YNode(raw, reference.unit.location().getOrElse("")))))
+        Future.successful {
+          reference.unit.references.foreach(u => ctx.addSonRef(u))
+          reference.copy(ast = Some(YNode(raw, reference.unit.location().getOrElse(""))))
+        }
     }
   }
 

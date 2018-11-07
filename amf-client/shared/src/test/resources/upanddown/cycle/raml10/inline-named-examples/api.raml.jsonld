@@ -1654,11 +1654,16 @@
                 ],
                 "http://a.ml/vocabularies/shapes#range": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/alternate_id%3F",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#UnionShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape"
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "alternate_id?"
+                      }
                     ],
                     "http://schema.org/description": [
                       {
@@ -1667,7 +1672,7 @@
                     ],
                     "http://a.ml/vocabularies/shapes#inherits": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/union/default-union",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/alternate_id%3F/union/default-union",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#UnionShape",
                           "http://www.w3.org/ns/shacl#Shape",
@@ -1675,7 +1680,7 @@
                         ],
                         "http://a.ml/vocabularies/shapes#anyOf": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/scalar/scalar-expression-0",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/alternate_id%3F/scalar/scalar-expression-0",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1689,7 +1694,7 @@
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/nil/scalar-expression-2",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/alternate_id%3F/nil/scalar-expression-2",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#NilShape",
                               "http://www.w3.org/ns/shacl#Shape",
@@ -1699,7 +1704,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/union/default-union/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/alternate_id%3F/union/default-union/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
@@ -1707,7 +1712,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/union/default-union"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/alternate_id%3F/union/default-union"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1721,7 +1726,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/default-union/union/default-union"
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/shape/property/alternate_id%3F/union/alternate_id%3F/union/default-union"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1737,7 +1742,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/alternate_id%3F/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -1745,7 +1750,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/alternate_id%3F"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1771,12 +1776,12 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/default-union"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/data-types/organization-data-type.raml#/type/property/alternate_id/union/alternate_id%3F"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(5,0)-(7,0)]"
+                                "@value": "[(4,16)-(7,0)]"
                               }
                             ]
                           },

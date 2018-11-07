@@ -9,6 +9,7 @@ import amf.core.emitter.{RenderOptions => InternalRenderOptions}
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
 import org.mulesoft.common.io.Output._
 import org.mulesoft.common.io.{LimitedStringBuffer, Output}
+import org.yaml.builder.DocBuilder
 
 import scala.concurrent.Future
 import scala.scalajs.js.annotation.JSExport
@@ -16,7 +17,7 @@ import scala.scalajs.js.annotation.JSExport
 /**
   * Base class for a renderer.
   */
-class Renderer(vendor: String, mediaType: String) {
+class Renderer(val vendor: String, val mediaType: String) {
 
   /**
     * Asynchronously renders the syntax text and stores it in the file pointed by the provided URL.
@@ -85,14 +86,25 @@ class Renderer(vendor: String, mediaType: String) {
     * It must throw a UnsupportedOperation exception in platforms without support to write to the file system
     * (like the browser) or if a remote URL is provided.
     */
-  private def generate(unit: InternalBaseUnit, url: String, options: InternalRenderOptions): Future[Unit] =
+  private def generate(unit: InternalBaseUnit, url: String, options: InternalRenderOptions): Future[Unit] = {
+    import scala.concurrent.ExecutionContext.Implicits.global
     new AMFSerializer(unit, mediaType, vendor, options).renderToFile(platform, url)
+  }
 
-  private def generate(unit: InternalBaseUnit, options: InternalRenderOptions): Future[String] =
+  private def generate(unit: InternalBaseUnit, options: InternalRenderOptions): Future[String] = {
+    import scala.concurrent.ExecutionContext.Implicits.global
     new AMFSerializer(unit, mediaType, vendor, options).renderToString
+  }
 
   private def generate[W: Output](unit: InternalBaseUnit, options: InternalRenderOptions, writer: W): Future[Unit] = {
     import scala.concurrent.ExecutionContext.Implicits.global
     new AMFSerializer(unit, mediaType, vendor, options).renderToWriter(writer)
+  }
+
+  protected def generate[T](unit: InternalBaseUnit,
+                            options: InternalRenderOptions,
+                            builder: DocBuilder[T]): Future[Unit] = {
+    import scala.concurrent.ExecutionContext.Implicits.global
+    new AMFSerializer(unit, mediaType, vendor, options).renderToBuilder(builder)
   }
 }

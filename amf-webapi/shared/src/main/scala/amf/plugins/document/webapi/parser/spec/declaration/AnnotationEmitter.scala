@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.annotations.{LexicalInformation, SourceLocation}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -13,7 +14,8 @@ import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.YNode.Parts
+import org.yaml.model._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -150,7 +152,12 @@ case class DataNodeEmitter(dataNode: DataNode,
 
   def objectEmitters(objectNode: ObjectNode): Seq[EntryEmitter] = {
     objectNode.properties.keys.map { property =>
-      DataPropertyEmitter(property, objectNode, ordering, resolvedLinks, referencesCollector)
+      DataPropertyEmitter(property,
+                          objectNode,
+                          ordering,
+                          resolvedLinks,
+                          referencesCollector,
+                          objectNode.propertyAnnotations.getOrElse(property, Annotations()))
     }.toSeq
   }
 
@@ -202,14 +209,15 @@ case class DataPropertyEmitter(property: String,
                                dataNode: ObjectNode,
                                ordering: SpecOrdering,
                                resolvedLinks: Boolean = false,
-                               referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())
+                               referencesCollector: mutable.Map[String, DomainElement] = mutable.Map(),
+                               propertyAnnotations: Annotations)
     extends EntryEmitter {
   val annotations: Annotations = dataNode.propertyAnnotations(property)
   val propertyValue: DataNode  = dataNode.properties(property)
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      property.urlComponentDecoded,
+      YNode(yscalarWithRange(property.urlComponentDecoded, YType.Str, propertyAnnotations), YType.Str),
       b => {
         // In the current implementation ther can only be one value, we are NOT flattening arrays
         DataNodeEmitter(propertyValue, ordering, resolvedLinks, referencesCollector).emit(b)

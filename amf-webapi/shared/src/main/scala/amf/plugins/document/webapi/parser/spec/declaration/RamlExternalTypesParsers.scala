@@ -7,17 +7,19 @@ import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
-import amf.plugins.document.webapi.contexts.{Oas2WebApiContext, OasWebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
-import amf.plugins.document.webapi.parser.spec.toOas
+import amf.plugins.document.webapi.parser.spec.toJsonSchema
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
-import org.yaml.parser.YamlParser
+import org.yaml.parser
+import org.yaml.parser.{JsonParser, YamlParser}
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable
@@ -54,7 +56,10 @@ case class RamlJsonSchemaExpression(key: YNode,
                 s.copyShape().withName(key.as[String])
               case _ =>
                 ctx.violation(s"could not find json schema fragment ${extFrament.get} in file $path", origin.valueAST)
-                UnresolvedShape(url)
+                val empty = AnyShape()
+                adopt(empty)
+                empty
+
             }
             ctx.declarations.fragments
               .get(path)
@@ -105,7 +110,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       val url       = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
-      val schemaAst = YamlParser(text, valueAST.sourceName)(ctx).withIncludeTag("!include").parse(keepTokens = true)
+      val schemaAst = JsonParser.withSource(text, valueAST.sourceName)(ctx).parse(keepTokens = true)
       val schemaEntry = schemaAst.collectFirst({ case d: YDocument => d }) match {
         case Some(d) => d
         case _       =>
@@ -113,12 +118,11 @@ case class RamlJsonSchemaExpression(key: YNode,
           ctx.violation("invalid json schema expression", valueAST)
           YDocument(YMap.empty)
       }
-      val context = new Oas2WebApiContext(url, Nil, ctx, None)
+      val context = new JsonSchemaWebApiContext(url, Nil, ctx, None)
       context.localJSONSchemaContext = Some(schemaEntry.node)
 
       Oas2DocumentParser(
-        Root(SyamlParsedDocument(None, schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
-        context)
+        Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(context)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = context.declarations.shapes
       val resolvedShapes = new ReferenceResolutionStage(false)(ctx)
@@ -143,13 +147,15 @@ case class RamlJsonSchemaExpression(key: YNode,
                              valueAST: YNode,
                              adopt: Shape => Shape,
                              value: YNode,
-                             extLocation: Option[String]) = {
-    val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
-    val parser =
-      if (extLocation.isEmpty)
-        YamlParser(text, valueAST.sourceName, (valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
-      else YamlParser(text, url.getOrElse(valueAST.sourceName))(ctx)
-    val schemaAst = parser.withIncludeTag("!include").parse(keepTokens = true)
+                             extLocation: Option[String]): AnyShape = {
+    val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location).orElse {
+      Some(valueAST.value.sourceName)
+    }
+    val parser = JsonParser.withSourceOffset(text,
+                                             url.getOrElse(value.sourceName),
+                                             (valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
+
+    val schemaAst = parser.parse(keepTokens = true)
     val schemaEntry = schemaAst.head match {
       case d: YDocument => YMapEntry(key, d.node)
       case _            =>
@@ -161,7 +167,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     // we set the local schema entry to be able to resolve local $refs
     ctx.localJSONSchemaContext = Some(schemaEntry.value)
     val jsonSchemaContext = toSchemaContext(ctx, valueAST)
-    val fullRef = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "#")
+    val fullRef           = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "#")
     val tmpShape =
       UnresolvedShape(fullRef, schemaEntry).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
     tmpShape.unresolved(fullRef, schemaEntry, "warning")(jsonSchemaContext)
@@ -177,7 +183,8 @@ case class RamlJsonSchemaExpression(key: YNode,
           ctx.futureDeclarations.resolveRef(fullRef, sh)
           tmpShape.resolve(sh) // useless?
           ctx.registerJsonSchema(fullRef, sh)
-          sh
+          if (sh.isLink) sh.effectiveLinkTarget.asInstanceOf[AnyShape]
+          else sh
         case None =>
           val shape = SchemaShape()
           adopt(shape)
@@ -193,20 +200,24 @@ case class RamlJsonSchemaExpression(key: YNode,
       case inlined: MutRef =>
         if (inlined.origTag.tagType == YType.Include) {
           // JSON schema file we need to update the context
-          val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("/").last.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
+          val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
           ctx.refs.find(r => r.unit.location().exists(_.endsWith(fileHint))) match {
             case Some(ref) =>
-              toOas(ref.unit.location().get,
-                    ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None)),
-                    ctx)
-            case _ => toOas(ctx)
+              toJsonSchema(
+                ref.unit.location().get,
+                ref.unit.references.map(r => ParsedReference(r, Reference(ref.unit.location().get, Nil), None)),
+                ctx)
+            case _
+                if Option(ast.value.sourceName).isDefined => // external fragment from external fragment case. The target value ast has the real source name of the faile. (There is no external fragment because was inlined)
+              toJsonSchema(ast.value.sourceName, ctx.refs, ctx)
+            case _ => toJsonSchema(ctx)
           }
         } else {
           // Inlined we don't need to update the context for ths JSON schema file
-          toOas(ctx)
+          toJsonSchema(ctx)
         }
       case _ =>
-        toOas(ctx)
+        toJsonSchema(ctx)
     }
   }
 

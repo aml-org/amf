@@ -28,7 +28,12 @@ import amf.client.model.{
 }
 import amf.client.remote.Content
 import amf.client.resource.{ResourceLoader => ClientResourceLoader}
-import amf.client.validate.{ValidationReport => ClientValidatorReport, ValidationResult => ClientValidationResult}
+import amf.client.validate.{
+  ValidationCandidate => ClientValidationCandidate,
+  ValidationReport => ClientValidatorReport,
+  ValidationResult => ClientValidationResult,
+  ValidationShapeSet => ClientValidationShapeSet
+}
 import amf.core.model._
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain._
@@ -38,10 +43,6 @@ import amf.core.parser.Annotations
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, ValidationCandidate, ValidationShapeSet}
 import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
-import amf.client.validate.{
-  ValidationCandidate => ClientValidationCandidate,
-  ValidationShapeSet => ClientValidationShapeSet
-}
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -387,13 +388,6 @@ trait ResourceLoaderConverter {
     override def asInternal(from: ClientResourceLoader): ResourceLoader = ResourceLoaderAdapter(from)
   }
 
-//  implicit class ClientLoaderOps[Internal, Client](from: ClientLoader)(
-//    implicit m: ClientInternalMatcher[Client, Internal]) {
-//    def asInternal: ResourceLoader = asInternalLoader(from, m)
-//  }
-//
-//  protected def asInternalLoader[Client, Internal](from: ClientLoader,
-//                                                   matcher: ClientInternalMatcher[Client, Internal]): ResourceLoader
 }
 
 trait ValidationCandidateConverter {

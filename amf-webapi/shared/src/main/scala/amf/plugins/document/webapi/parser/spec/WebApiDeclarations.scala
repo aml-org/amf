@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec
 
+import amf.core.annotations.DeclaredElement
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.parser.{
@@ -14,11 +15,12 @@ import amf.core.parser.{
 }
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
+import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Parameter, Payload, Response}
-import org.yaml.model.YPart
+import org.yaml.model.{YMap, YNode, YPart}
 
 /**
   * Declarations object.
@@ -91,6 +93,11 @@ class WebApiDeclarations(val alias: Option[String],
     merged
   }
 
+  protected def addSchema(s: Shape) = {
+    futureDeclarations.resolveRef(aliased(s.name.value()), s)
+    shapes = shapes + (s.name.value() -> s)
+  }
+
   override def +=(element: DomainElement): WebApiDeclarations = {
     element match {
       case r: ResourceType =>
@@ -100,11 +107,13 @@ class WebApiDeclarations(val alias: Option[String],
         futureDeclarations.resolveRef(aliased(t.name.value()), t)
         traits = traits + (t.name.value() -> t)
       case s: Shape =>
-        futureDeclarations.resolveRef(aliased(s.name.value()), s)
-        shapes = shapes + (s.name.value() -> s)
+        addSchema(s)
       case p: Parameter =>
         futureDeclarations.resolveRef(aliased(p.name.value()), p)
         parameters = parameters + (p.name.value() -> p)
+      case p: Payload =>
+        futureDeclarations.resolveRef(aliased(p.name.value()), p)
+        payloads = payloads + (p.name.value() -> p)
       case ss: SecurityScheme =>
         futureDeclarations.resolveRef(aliased(ss.name.value()), ss)
         securitySchemes = securitySchemes + (ss.name.value() -> ss)
@@ -132,9 +141,9 @@ class WebApiDeclarations(val alias: Option[String],
     case _                  => super.findEquivalent(element)
   }
 
-  def registerParameter(parameter: Parameter, payload: Payload): Unit = {
-    parameters = parameters + (parameter.name.value() -> parameter)
-    payloads = payloads + (parameter.name.value()     -> payload)
+  def registerOasParameter(oasParameter: OasParameter): Unit = {
+    oasParameter.domainElement.add(DeclaredElement())
+    this += oasParameter.domainElement
   }
 
   def parameterPayload(parameter: Parameter): Payload = payloads(parameter.name.value())
@@ -155,7 +164,7 @@ class WebApiDeclarations(val alias: Option[String],
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ securitySchemes.values ++ responses.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -168,6 +177,11 @@ class WebApiDeclarations(val alias: Option[String],
   def findParameter(key: String, scope: SearchScope.Scope): Option[Parameter] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].parameters, scope) collect {
       case p: Parameter => p
+    }
+
+  def findPayload(key: String, scope: SearchScope.Scope): Option[Payload] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].payloads, scope) collect {
+      case p: Payload => p
     }
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
@@ -314,6 +328,32 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorResponse/"
     withId(idPart).withStatusCode("200")
+  }
+}
+
+class OasWebApiDeclarations(val asts: Map[String, YNode],
+                            override val alias: Option[String],
+                            override val errorHandler: Option[ErrorHandler],
+                            override val futureDeclarations: FutureDeclarations)
+    extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
+
+object OasWebApiDeclarations {
+  def apply(d: WebApiDeclarations): OasWebApiDeclarations = {
+    val declarations = new OasWebApiDeclarations(Map(),
+                                                 d.alias,
+                                                 errorHandler = d.errorHandler,
+                                                 futureDeclarations = d.futureDeclarations)
+    declarations.libs = d.libs
+    declarations.frags = d.frags
+    declarations.shapes = d.shapes
+    declarations.anns = d.anns
+    declarations.resourceTypes = d.resourceTypes
+    declarations.parameters = d.parameters
+    declarations.payloads = d.payloads
+    declarations.traits = d.traits
+    declarations.securitySchemes = d.securitySchemes
+    declarations.responses = d.responses
+    declarations // add withs methods?
   }
 }
 

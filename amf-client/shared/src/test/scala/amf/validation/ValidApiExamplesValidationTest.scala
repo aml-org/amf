@@ -216,5 +216,21 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/shapes/recursive_shapes_fragments/api.raml")
   }
 
+  test("Libraries with repeated aliases") {
+    checkValid("/library-alias-repeated/api.raml")
+  }
+
+  test("Test a lot of inheritance through resource type (valid recursion)") {
+    checkValid("/lib-inheritance-recursion/api.raml")
+  }
+
+  test("Test same name of definition at to json schemas") {
+    checkValid("/json-inner-ref/repeat-jsonschema-def-name/api.raml")
+  }
+
+  test("Test double with .00 against integer") {
+    checkValid("/examples/double-against-integer/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

@@ -258,6 +258,17 @@ object JsCustomValidations {
          |  if (minProperties == undefined || maxProperties == undefined) return true;
          |  else return (parseInt(minProperties) <= parseInt(maxProperties));
          |}
+      """.stripMargin,
+    "patternValidation" ->
+      """|function(shape) {
+         |  var pattern = shape["shacl:pattern"];
+         |  try {
+         |    if(pattern) new RegExp(pattern);
+         |    return true;
+         |  } catch(e) {
+         |    return false;
+         |  }
+         |}
       """.stripMargin
   )
 

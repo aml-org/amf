@@ -1,0 +1,15 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Some api"
+  },
+  "paths": {},
+  "definitions": {
+    "RestEntity": {
+      "type": "string",
+      "pattern": "^{[a-z0-9]{8}-([a-z0-9]{4}-){3}[a-z0-9]{12}}$",
+      "example": "{f230aeb4-7d72-435b-8e12-b9240156e098}"
+    }
+  }
+}

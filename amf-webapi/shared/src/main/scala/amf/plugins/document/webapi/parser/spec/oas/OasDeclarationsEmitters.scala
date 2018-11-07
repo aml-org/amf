@@ -3,18 +3,23 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.core.emitter.BaseEmitters.{pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
+import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
+import amf.plugins.document.webapi.parser.spec.{OasDefinitions, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain.{OasResponseEmitter, ParameterEmitter}
+import amf.plugins.document.webapi.parser.spec.domain.{
+  OasParameter,
+  OasResponseEmitter,
+  ParameterEmitter,
+  PayloadAsParameterEmitter
+}
 import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.webapi.models.{Parameter, Response}
+import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer
@@ -46,8 +51,10 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
     if (declarations.securitySchemes.nonEmpty)
       result += OasSecuritySchemesEmitters(declarations.securitySchemes.values.toSeq, ordering)
 
-    if (declarations.parameters.nonEmpty)
-      result += OasDeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, references)
+    val oasParams = declarations.parameters.values.map(OasParameter(_)) ++ declarations.payloads.values
+      .map(OasParameter(_))
+    if (oasParams.nonEmpty)
+      result += OasDeclaredParametersEmitter(oasParams.toSeq, ordering, references)
 
     if (declarations.responses.nonEmpty)
       result += OasDeclaredResponsesEmitter("responses", declarations.responses.values.toSeq, ordering, references)
@@ -55,30 +62,40 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
   }
 }
 
-case class OasDeclaredParametersEmitter(parameters: Seq[Parameter], ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
+case class OasDeclaredParametersEmitter(oasParameters: Seq[OasParameter],
+                                        ordering: SpecOrdering,
+                                        references: Seq[BaseUnit],
+                                        key: String = "parameters")(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      "parameters",
-      _.obj(traverse(ordering.sorted(parameters.map(OasNamedParameterEmitter(_, ordering, references))), _))
+      key,
+      _.obj(traverse(ordering.sorted(oasParameters.map(OasNamedParameterEmitter(_, ordering, references))), _))
     )
   }
 
-  override def position(): Position = parameters.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+  override def position(): Position =
+    oasParameters.headOption.map(o => pos(o.domainElement.annotations)).getOrElse(Position.ZERO)
 }
 
-case class OasNamedParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class OasNamedParameterEmitter(oasParameter: OasParameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
-  override def position(): Position = pos(parameter.annotations)
+
+  override def position(): Position = pos(oasParameter.domainElement.annotations)
 
   override def emit(b: EntryBuilder): Unit = {
+
     b.entry(
-      parameter.name.option().getOrElse(throw new Exception(s"Cannot declare shape without name $parameter")),
-      b => {
-        if (parameter.isLink) OasTagToReferenceEmitter(parameter, parameter.linkLabel.option(), Nil).emit(b)
-        else ParameterEmitter(parameter, ordering, references).emit(b)
+      oasParameter.domainElement.name
+        .option()
+        .getOrElse(throw new Exception(s"Cannot declare parameter without name ${oasParameter.domainElement}")),
+      p => {
+        oasParameter.domainElement match {
+          case param: Parameter => ParameterEmitter(param, ordering, references).emit(p)
+          case payload: Payload => PayloadAsParameterEmitter(payload, ordering, references).emit(p)
+          case _                => // ignore
+        }
       }
     )
   }

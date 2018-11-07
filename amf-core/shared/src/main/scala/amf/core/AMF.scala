@@ -2,6 +2,7 @@ package amf.core
 
 import amf.client.plugins._
 import amf.core.registries.AMFPluginsRegistry
+import amf.core.validation.AMFPayloadValidationPlugin
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.features.validation.ParserSideValidationPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -21,12 +22,12 @@ object AMF {
   def init(): Future[Unit] = {
     AMFCompiler.init()
     AMFSerializer.init()
-    val registeredSYamlPlugin               = SYamlSyntaxPlugin.init()
-    val registeredAMFGraphPlugin            = AMFGraphPlugin.init()
-    val parserSideValidation                = new ParserSideValidationPlugin()
-    val registeredParserSideValidationPugin = parserSideValidation.init()
+    val registeredSYamlPlugin                = SYamlSyntaxPlugin.init()
+    val registeredAMFGraphPlugin             = AMFGraphPlugin.init()
+    val parserSideValidation                 = new ParserSideValidationPlugin()
+    val registeredParserSideValidationPlugin = parserSideValidation.init()
     Future
-      .sequence(Seq(registeredSYamlPlugin, registeredAMFGraphPlugin, registeredParserSideValidationPugin))
+      .sequence(Seq(registeredSYamlPlugin, registeredAMFGraphPlugin, registeredParserSideValidationPlugin))
       .flatMap { _ =>
         processInitializations(AMFPluginsRegistry.plugins.toSeq)
       } map { _ =>
@@ -39,7 +40,7 @@ object AMF {
   /**
     * Registers a plugin in AMF
     */
-  def registerPlugin(plugin: AMFPlugin) = plugin match {
+  def registerPlugin(plugin: AMFPlugin): Unit = plugin match {
     case syntax: AMFSyntaxPlugin             => AMFPluginsRegistry.registerSyntaxPlugin(syntax)
     case document: AMFDocumentPlugin         => AMFPluginsRegistry.registerDocumentPlugin(document)
     case domain: AMFDomainPlugin             => AMFPluginsRegistry.registerDomainPlugin(domain)

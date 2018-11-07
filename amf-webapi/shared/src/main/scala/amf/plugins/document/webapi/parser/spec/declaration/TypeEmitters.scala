@@ -5,11 +5,11 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Bool
-import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
-import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain._
+import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.core.utils.Strings
@@ -19,12 +19,7 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{
-  OasTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlTypeDefMatcher,
-  RamlTypeDefStringValueMatcher
-}
+import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -32,7 +27,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YScalar, YType}
+import org.yaml.model.{YNode, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -1338,9 +1333,15 @@ abstract class OasShapeEmitter(shape: Shape,
   def emitNullable(result: ListBuffer[EntryEmitter]): Unit = {
     shape.annotations.find(classOf[NilUnion]) match {
       case Some(NilUnion(rangeString)) =>
-        result += ValueEmitter("nullable",
-                               FieldEntry(Field(Bool, Namespace.Shapes + "nullable"),
-                                          Value(AmfScalar(true), Annotations(LexicalInformation(rangeString)))))
+        result += ValueEmitter(
+          "nullable",
+          FieldEntry(
+            Field(Bool,
+                  Namespace.Shapes + "nullable",
+                  ModelDoc(ModelVocabularies.Shapes, "nullable", "This field can accept a null value")),
+            Value(AmfScalar(true), Annotations(LexicalInformation(rangeString)))
+          )
+        )
 
       case _ => // ignore
     }
@@ -1371,28 +1372,17 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
   override def emit(b: EntryBuilder): Unit = {
     val pointer = recursive.fixpoint.option() match {
       case Some(id) =>
-        findInPath(id).orElse({
-          recursive.fixpointTarget match {
-            case Some(shape) =>
-              findInPath(shape.id).orElse {
-                recursive.fixpointTarget
-                  .flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
-              }
-          }
+        findInPath(id).orElse(recursive.fixpointTarget match {
+          case Some(shape) =>
+            findInPath(shape.id).orElse {
+              recursive.fixpointTarget
+                .flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
+            }
+          case None => None
         })
-
       case _ => None
     }
-
-    pointer match {
-      case Some(pointerRef) =>
-        b.entry(
-          "$ref",
-          pointerRef
-        )
-      case _ =>
-      // ignore
-    }
+    for (p <- pointer) b.entry("$ref", p)
   }
 
   private def findInPath(id: String) = {
@@ -1415,7 +1405,7 @@ case class OasOrConstraintEmitter(shape: Shape,
 
   val emitters: Seq[OasTypePartEmitter] = shape.or.zipWithIndex map {
     case (s: Shape, i: Int) =>
-      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("allOf", s"$i"), schemaPath)
+      OasTypePartEmitter(s, ordering, ignored = Nil, references, pointer = pointer ++ Seq("anyOf", s"$i"), schemaPath)
   }
 
   override def emit(b: EntryBuilder): Unit = {

@@ -2,9 +2,10 @@ package amf.core.emitter
 
 import amf.core.annotations.{LexicalInformation, SingleValueArray, SourceLocation}
 import amf.core.metamodel.{Field, Type}
-import amf.core.model.domain.AmfScalar
+import amf.core.model.domain.{AmfObject, AmfScalar}
 import amf.core.parser.Position._
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import org.mulesoft.lexer.InputRange
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model._
 
@@ -16,6 +17,12 @@ package object BaseEmitters {
     annotations.find[LexicalInformation](clazz.isInstance(_)).map(_.range.start).getOrElse(ZERO)
 
   protected[amf] def pos(annotations: Annotations): Position = pos(annotations, classOf[LexicalInformation])
+
+  protected[amf] def pos(field: Field, obj: AmfObject, default: Annotations): Position =
+    obj.fields.entry(field) match {
+      case Some(f) => pos(f.value.annotations)
+      case None    => pos(default)
+    }
 
   protected[amf] def traverse(emitters: Seq[EntryEmitter], b: EntryBuilder): Unit = {
     emitters.foreach(e => {
@@ -54,17 +61,38 @@ package object BaseEmitters {
     override def position(): Position = pos(annotations)
   }
 
+  /* helper func to force a YPart of syaml to have certain range (to show correctly the position of resource types and traits errors after resolution */
+  def createPartForRange(lexicalInfo: Option[LexicalInformation], sourceLocation: String): IndexedSeq[YTokens] = {
+    IndexedSeq(
+      new YTokens(
+        lexicalInfo
+          .map(r => InputRange(r.range.start.line, r.range.start.column, r.range.end.line, r.range.end.column))
+          .getOrElse(InputRange.Zero),
+        IndexedSeq()
+      ) {
+        override val sourceName: String = sourceLocation
+      })
+
+  }
+
+  def yscalarWithRange(value: String, tag: YType, annotations: Annotations): YScalar = {
+    val sourceLocation = annotations.find(classOf[SourceLocation]).map(_.location).getOrElse("")
+    new YScalar.Builder(
+      value,
+      tag.tag,
+      sourceName = sourceLocation,
+      parts = createPartForRange(annotations.find(classOf[LexicalInformation]), sourceLocation)).scalar
+  }
+
   case class TextScalarEmitter(value: String, annotations: Annotations, tag: YType = YType.Str) extends PartEmitter {
     override def emit(b: PartBuilder): Unit = {
+      val sourceName = annotations.find(classOf[SourceLocation]).map(_.location).getOrElse("")
       sourceOr(
         annotations, {
-          b += YNode(new YScalar.Builder(
-                       value,
-                       tag.tag,
-                       sourceName = annotations.find(classOf[SourceLocation]).map(_.location).getOrElse("")).scalar,
-                     tag)
+          b += YNode(yscalarWithRange(value, tag, annotations), tag)
         }
       )
+
     }
 
     override def position(): Position = pos(annotations)

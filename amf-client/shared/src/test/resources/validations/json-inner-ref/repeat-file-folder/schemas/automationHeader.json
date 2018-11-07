@@ -1,0 +1,33 @@
+{
+	"$schema": "http://json-schema.org/draft-06/schema#", 
+	
+	"definitions": {
+ 		"automationHeader": {
+	 		"type": "object",
+	 		
+	       	"properties": {
+	       		"warehouse": {
+	       			"maxLength":4,
+	       			"examples": [ "W001" ]
+	       		},
+	       		"sender": {
+	       			"type": "string",
+					"examples": [ "EWM", "AGV", "ASRS" ]
+				},
+				"receiver": {
+					"type": "string",
+					"examples": [ "AGV", "EWM", "ASRS" ] 
+				}, 
+	       		"communicationPoint": {
+					"type": "string",
+					"examples": [ "PL01", "INF1", "NOK1" ]
+				},
+				"sequence_number": {
+					"type": "number" ,
+					"examples": [ 1 ]
+				}
+			},
+		 	"required": [ "warehouse", "sender", "receiver" ]
+		 }
+ 	}
+}

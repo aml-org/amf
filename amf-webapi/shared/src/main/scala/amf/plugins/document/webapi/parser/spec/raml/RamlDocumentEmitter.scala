@@ -16,7 +16,12 @@ import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterC
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredResponsesEmitter, TagsEmitter}
+import amf.plugins.document.webapi.parser.spec.oas.{
+  OasDeclaredParametersEmitter,
+  OasDeclaredResponsesEmitter,
+  OasNamedParameterEmitter,
+  TagsEmitter
+}
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
@@ -158,8 +163,14 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
                                             document.references,
                                             ordering,
                                             spec.factory.namedSecurityEmitter)
-    if (declarations.parameters.nonEmpty)
-      result += DeclaredParametersEmitter(declarations.parameters.values.toSeq, ordering, document.references) // todo here or move to 1.0 only?
+
+    val oasParams = declarations.parameters.values.map(OasParameter(_)) ++ declarations.payloads.values
+      .map(OasParameter(_))
+    if (oasParams.nonEmpty)
+      result += OasDeclaredParametersEmitter(oasParams.toSeq,
+                                             ordering,
+                                             document.references,
+                                             "parameters".asRamlAnnotation)(toOas(spec))
 
     if (declarations.responses.nonEmpty)
       result += OasDeclaredResponsesEmitter("responses".asRamlAnnotation,
@@ -168,18 +179,6 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
                                             document.references)(toOas(spec))
 
     result
-  }
-
-  case class DeclaredParametersEmitter(parameters: Seq[Parameter], ordering: SpecOrdering, references: Seq[BaseUnit])
-      extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      b.entry(
-        "parameters".asRamlAnnotation,
-        _.obj(traverse(ordering.sorted(parameters.map(NamedParameterEmitter(_, ordering, references))), _))
-      )
-    }
-
-    override def position(): Position = parameters.headOption.map(a => pos(a.annotations)).getOrElse(ZERO)
   }
 
   case class NamedParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])

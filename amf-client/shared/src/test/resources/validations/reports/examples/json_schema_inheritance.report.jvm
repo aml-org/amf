@@ -10,7 +10,7 @@ Level: Warning
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml#/declarations/types/Person
   Property: http://a.ml/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(1,0)-(18,1)]))
+  Position: Some(LexicalInformation([(1,0)-(29,11)]))
   Location: file://amf-client/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#json-schema-inheritance
@@ -18,7 +18,7 @@ Level: Warning
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml#/declarations/types/PersonObject/property/a/a
   Property: http://a.ml/vocabularies/shapes#inherits
-  Position: Some(LexicalInformation([(1,0)-(18,1)]))
+  Position: Some(LexicalInformation([(1,0)-(29,11)]))
   Location: file://amf-client/shared/src/test/resources/validations/production/json_schema_inheritance/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#json-schema-inheritance

@@ -5,14 +5,14 @@ import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{LibraryReference, LinkReference, ParsedDocument, ParsedReference, ParserContext, SyamlParsedDocument}
+import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header}
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
+import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.spec.oas._
 import amf.plugins.document.webapi.resolution.pipelines.{OasEditingPipeline, OasResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
@@ -28,14 +28,15 @@ sealed trait OasPlugin extends BaseWebApiPlugin {
   def context(loc: String,
               refs: Seq[ParsedReference],
               wrapped: ParserContext,
-              ds: Option[WebApiDeclarations] = None): OasWebApiContext
+              ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
 
   // We might find $refs in the document pointing to actual shapes in external files in the
   // right positions of the AST.
   // We will try to promote these external fragments to data type fragments instead of just inlining them.
   def promoteFragments(unit: BaseUnit, ctx: OasWebApiContext): BaseUnit = {
-    var oldReferences = unit.references.foldLeft(Map[String, BaseUnit]()) { case (acc: Map[String, BaseUnit], e: BaseUnit ) =>
-      acc + (e.location().getOrElse(e.id) -> e)
+    var oldReferences = unit.references.foldLeft(Map[String, BaseUnit]()) {
+      case (acc: Map[String, BaseUnit], e: BaseUnit) =>
+        acc + (e.location().getOrElse(e.id) -> e)
     }
     ctx.declarations.promotedFragments.foreach { promoted =>
       val key = promoted.location().getOrElse(promoted.id)
@@ -48,7 +49,10 @@ sealed trait OasPlugin extends BaseWebApiPlugin {
       unit
   }
 
-  override def parse(document: Root, parentContext: ParserContext, platform: Platform, options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root,
+                     parentContext: ParserContext,
+                     platform: Platform,
+                     options: ParsingOptions): Option[BaseUnit] = {
     implicit val ctx: OasWebApiContext = context(document.location, document.references, parentContext)
     val parsed = document.referenceKind match {
       case LibraryReference => Some(OasModuleParser(document).parseModule())
@@ -119,18 +123,14 @@ object Oas20Plugin extends OasPlugin {
     case _           => false
   }
 
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
-    val unparsed = unit match {
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
+    unit match {
       case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
       case document: Document         => Some(Oas2DocumentEmitter(document)(specContext).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
       case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
       case _                          => None
     }
-    unparsed map { doc =>
-      SyamlParsedDocument(document = doc)
-    }
-  }
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
@@ -146,7 +146,7 @@ object Oas20Plugin extends OasPlugin {
   override def context(loc: String,
                        refs: Seq[ParsedReference],
                        wrapped: ParserContext,
-                       ds: Option[WebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds)
+                       ds: Option[OasWebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds)
 }
 
 object Oas30Plugin extends OasPlugin {
@@ -178,18 +178,14 @@ object Oas30Plugin extends OasPlugin {
     case _           => false
   }
 
-  override def unparse(unit: BaseUnit, options: RenderOptions): Option[ParsedDocument] = {
-    val unparsed = unit match {
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
+    unit match {
       case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
       case document: Document         => Some(Oas3DocumentEmitter(document)(specContext).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
       case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
       case _                          => None
     }
-    unparsed map { doc =>
-      SyamlParsedDocument(document = doc)
-    }
-  }
 
   /**
     * List of media types used to encode serialisations of
@@ -219,5 +215,5 @@ object Oas30Plugin extends OasPlugin {
   override def context(loc: String,
                        refs: Seq[ParsedReference],
                        wrapped: ParserContext,
-                       ds: Option[WebApiDeclarations]) = new Oas3WebApiContext(loc, refs, wrapped, ds)
+                       ds: Option[OasWebApiDeclarations]) = new Oas3WebApiContext(loc, refs, wrapped, ds)
 }

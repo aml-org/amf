@@ -160,6 +160,9 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
     validate("dialect4.raml", "example4.raml", 0, productionPath + "asyncapi/")
   }
 
+  test("Can validate container configurations") {
+    validate("dialect.raml", "system.raml", numErrors = 0, productionPath + "system/")
+  }
 
   protected def validate(dialect: String, instance: String, numErrors: Int, path: String = basePath) = {
     amf.core.AMF.registerPlugin(AMLPlugin)

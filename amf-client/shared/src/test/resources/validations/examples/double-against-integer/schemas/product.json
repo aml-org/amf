@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://jsonschema.net",
+  "type": "object",
+  "properties": {
+    "unit_price": {
+      "id": "http://jsonschema.net/unit_price",
+      "type": "number"
+    },
+    "unit_original_price": {
+      "id": "http://jsonschema.net/unit_original_price",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "unit_price",
+    "unit_original_price"
+  ]
+}

@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.client.plugins.{StrictValidationMode, ValidationMode}
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
 import amf.core.remote._
@@ -7,7 +8,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.{Raml08Plugin, Raml10Plugin}
-import amf.plugins.domain.shapes.validation.{PayloadValidator, StrictValidationMode, ValidationMode}
+import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.plugins.domain.webapi.models.WebApi
 import org.scalatest.{AsyncFunSuite, Matchers}
 
@@ -86,7 +87,10 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
         .map(transform)
       result <- {
         val shape = findShape(model.asInstanceOf[Document])
-        PayloadValidator.validate(shape, payload, SeverityLevels.VIOLATION, validationMode = validationMode)
+        PayloadValidationPluginsHandler.validateWithGuessing(shape,
+                                                             payload,
+                                                             SeverityLevels.VIOLATION,
+                                                             validationMode = validationMode)
       }
     } yield {
       result
@@ -98,5 +102,5 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
     }
   }
 
-  protected def validationMode: ValidationMode = StrictValidationMode
+  def validationMode: ValidationMode = StrictValidationMode
 }

@@ -1,18 +1,17 @@
 package amf.validation
-
-import amf.core.emitter.RenderOptions
-import amf.core.model.document.{Module, PayloadFragment}
+import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.Shape
 import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, RamlYamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
-import amf.core.validation.ValidationCandidate
+import amf.core.validation.{SeverityLevels, ValidationCandidate}
 import amf.facades.{AMFCompiler, Validation}
-import amf.plugins.document.graph.parser.GraphEmitter
+import amf.internal.environment.Environment
+import amf.plugins.document.graph.parser.JsonLdEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
-import amf.plugins.document.webapi.validation.PayloadValidation
+import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
 import amf.{AmfProfile, PayloadProfile}
 import org.scalatest.AsyncFunSuite
-import org.yaml.render.JsonRender
+import org.yaml.builder.JsonOutputBuilder
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -34,10 +33,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("payloads.raml", "D", "d_valid.json")   -> ExpectedReport(conforms = true, 0, PayloadProfile),
     // jvm reports the failures in the inner node and the failed value for the property connecting the inner node,
     // js only reports the failed properties in the inner node
-    ("payloads.raml", "D", "d_invalid.json") -> ExpectedReport(conforms = false,
-                                                               3,
-                                                               PayloadProfile,
-                                                               jsNumErrors = Some(2)),
+    ("payloads.raml", "D", "d_invalid.json") -> ExpectedReport(conforms = false, 2, PayloadProfile),
     ("payloads.raml", "E", "e_valid.json")   -> ExpectedReport(conforms = true, 0, PayloadProfile),
     ("payloads.raml", "E", "e_invalid.json") -> ExpectedReport(conforms = false, 1, PayloadProfile),
     ("payloads.raml", "F", "f_valid.json")   -> ExpectedReport(conforms = true, 0, PayloadProfile),
@@ -72,7 +68,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "json" => PayloadJsonHint
         case "yaml" => PayloadYamlHint
       }
-      val validation: Future[PayloadValidation] = for {
+      val candidates: Future[Seq[ValidationCandidate]] = for {
         validation <- Validation(platform).map(_.withEnabledValidation(false))
         library    <- AMFCompiler(payloadsPath + libraryFile, platform, RamlYamlHint, validation).build()
         payload    <- AMFCompiler(payloadsPath + payloadFile, platform, hint, validation).build()
@@ -87,13 +83,11 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
           }
           .get
 
-        val candidates =
-          Seq(ValidationCandidate(targetType.asInstanceOf[Shape], payload.asInstanceOf[PayloadFragment]))
-        PayloadValidation(candidates)
+        Seq(ValidationCandidate(targetType.asInstanceOf[Shape], payload.asInstanceOf[PayloadFragment]))
       }
 
-      validation flatMap {
-        _ validate ()
+      candidates flatMap { c =>
+        PayloadValidationPluginsHandler.validateAll(c, SeverityLevels.VIOLATION, Environment())
       } map { report =>
         report.results.foreach { result =>
           assert(result.position.isDefined)
@@ -121,10 +115,15 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
                                  PayloadYamlHint,
                                  validationPayload).build()
     } yield {
-      val fileJson = JsonRender.render(GraphEmitter.emit(filePayload, RenderOptions()))
-      val textJson = JsonRender.render(GraphEmitter.emit(textPayload, RenderOptions()))
+      val fileJson = render(filePayload)
+      val textJson = render(textPayload)
       assert(fileJson == textJson)
     }
 
+  }
+  private def render(filePayload: BaseUnit) = {
+    val builder = JsonOutputBuilder()
+    JsonLdEmitter.emit(filePayload, builder)
+    builder.result.toString
   }
 }

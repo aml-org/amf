@@ -2,19 +2,19 @@ package amf.client.convert
 
 import amf.client.model.domain.{
   ApiKeySettings => ClientApiKeySettings,
-  HttpSettings => ClientHttpSettings,
-  OpenIdConnectSettings => ClientOpenIdConnectSettings,
+  Callback => ClientCallback,
   CreativeWork => ClientCreativeWork,
+  Encoding => ClientEncoding,
   EndPoint => ClientEndPoint,
+  HttpSettings => ClientHttpSettings,
+  IriTemplateMapping => ClientIriTemplatedMaping,
   License => ClientLicense,
   OAuth1Settings => ClientOAuth1Settings,
   OAuth2Settings => ClientOAuth2Settings,
+  OpenIdConnectSettings => ClientOpenIdConnectSettings,
   Operation => ClientOperation,
   Organization => ClientOrganization,
   Parameter => ClientParameter,
-  Server => ClientServer,
-  Callback => ClientCallback,
-  Encoding => ClientEncoding,
   ParametrizedSecurityScheme => ClientParametrizedSecurityScheme,
   Payload => ClientPayload,
   Request => ClientRequest,
@@ -22,12 +22,15 @@ import amf.client.model.domain.{
   Response => ClientResponse,
   Scope => ClientScope,
   SecurityScheme => ClientSecurityScheme,
+  Server => ClientServer,
   Settings => ClientSettings,
-  Trait => ClientTrait,
   TemplatedLink => ClientTemplatedLink,
-  IriTemplateMapping => ClientIriTemplatedMaping
+  Trait => ClientTrait
 }
+import amf.client.plugins._
+import amf.client.validate.{PayloadValidator => ClientInternalPayloadValidator}
 import amf.core.unsafe.PlatformSecrets
+import amf.core.validation.PayloadValidator
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
@@ -55,6 +58,7 @@ trait WebApiBaseConverter
     with TemplatedLinkConverter
     with CallbackConverter
     with EncodingConverter
+    with PayloadValidatorConverter
 
 trait EndPointConverter extends PlatformSecrets {
 
@@ -252,5 +256,16 @@ trait TemplatedLinkConverter extends PlatformSecrets {
   implicit object TemplatedLinkConverter extends BidirectionalMatcher[TemplatedLink, ClientTemplatedLink] {
     override def asClient(from: TemplatedLink): ClientTemplatedLink   = platform.wrap[ClientTemplatedLink](from)
     override def asInternal(from: ClientTemplatedLink): TemplatedLink = from._internal
+  }
+}
+
+trait PayloadValidatorConverter {
+
+  implicit object PayloadValidatorMatcher
+      extends BidirectionalMatcher[PayloadValidator, ClientInternalPayloadValidator] {
+    override def asClient(from: PayloadValidator): ClientInternalPayloadValidator =
+      new ClientInternalPayloadValidator(from)
+
+    override def asInternal(from: ClientInternalPayloadValidator): PayloadValidator = from._internal
   }
 }

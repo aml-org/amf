@@ -8,15 +8,15 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
     description: Lists the user orders
     queryParameters:
       maxResults:
+        displayName: Maximum Number of Records.
         description: |
           The maximum number of entries to return. This is optional.
-        displayName: Maximum Number of Records.
         type: integer
         default: 25
       offset:
+        displayName: Starting from Record
         description: |
           The 1-based index of the first result to be retrieved (for paging).
-        displayName: Starting from Record
         type: integer
         default: 0
       trackingNumber:

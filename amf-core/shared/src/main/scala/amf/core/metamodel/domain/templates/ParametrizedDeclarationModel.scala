@@ -1,17 +1,25 @@
 package amf.core.metamodel.domain.templates
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Iri, Str}
-import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.Type.Array
 import amf.core.metamodel.domain.common.NameFieldSchema
-import amf.core.vocabulary.Namespace.{Document, Schema}
+import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.vocabulary.Namespace.Document
 import amf.core.vocabulary.ValueType
 
 trait ParametrizedDeclarationModel extends DomainElementModel with KeyField with NameFieldSchema {
 
-  val Target = Field(AbstractDeclarationModel, Document + "target")
+  val Target = Field(AbstractDeclarationModel,
+                     Document + "target",
+                     ModelDoc(ModelVocabularies.AmlDoc, "target", "Target node for the parameter"))
 
-  val Variables = Field(Array(VariableValueModel), Document + "variable")
+  val Variables = Field(
+    Array(VariableValueModel),
+    Document + "variable",
+    ModelDoc(ModelVocabularies.AmlDoc,
+             "variable",
+             "Variables to be replaced in the graph template introduced by an AbstractDeclaration")
+  )
 
   override val key: Field = Name
 
@@ -23,4 +31,10 @@ object ParametrizedDeclarationModel extends ParametrizedDeclarationModel {
 
   override def modelInstance =
     throw new Exception("ParametrizedDeclaration is abstract and cannot be instantiated by default")
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.AmlDoc,
+    "Parametrized Declaration",
+    "Generic graph template supporting variables that can be transformed into a domain element"
+  )
 }

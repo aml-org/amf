@@ -2,6 +2,7 @@ package amf.core.parser
 
 import amf.core.{AMFCompilerRunCount, annotations}
 import amf.core.annotations.{LexicalInformation, SourceLocation}
+import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfObject
 import amf.core.services.RuntimeValidator
 import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
@@ -32,7 +33,14 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
                                  lexical: Option[LexicalInformation],
                                  level: String,
                                  location: Option[String]): Unit = {
-    RuntimeValidator.reportConstraintFailure(level, id, node, property, message, lexical, parserCount, location)
+    RuntimeValidator.reportConstraintFailure(level,
+                                             id,
+                                             node,
+                                             property,
+                                             message,
+                                             lexical,
+                                             parserCount,
+                                             location.orElse(Some(currentFile)))
   }
 
   /** Report constraint failure of severity violation. */
@@ -181,6 +189,26 @@ case class ParserContext(rootContextDocument: String = "",
     val copied: ParserContext = this.copy(rootContextDocument = newLocation)
     copied.globalSpace = globalSpace
     copied
+  }
+
+  private val sonsReferences: mutable.Map[String, BaseUnit] = mutable.Map()
+
+  def addSonRef(ref: BaseUnit): this.type = this.synchronized {
+    sonsReferences.get(ref.location().getOrElse(ref.id)) match {
+      case Some(u) => // ignore
+      case _ =>
+        sonsReferences.put(ref.location().getOrElse(ref.id), ref)
+    }
+    this
+  }
+
+  private def getSonsParsedReferences: Seq[ParsedReference] =
+    sonsReferences.values.map(u => ParsedReference(u, new Reference(u.location().getOrElse(u.id), Nil))).toSeq
+
+  def copyWithSonsReferences(): ParserContext = {
+    val context = this.copy(refs = this.refs ++ getSonsParsedReferences)
+    context.globalSpace = this.globalSpace
+    context
   }
 }
 

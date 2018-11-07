@@ -1,0 +1,8 @@
+#%RAML 1.0
+title: test
+/productionReceipt:
+  post:
+    body: 
+      application/json:
+        type: !include ./schemas/retrievalOrderAdvice.json
+        example: !include ./examples/retrievalOrderAdvice.json

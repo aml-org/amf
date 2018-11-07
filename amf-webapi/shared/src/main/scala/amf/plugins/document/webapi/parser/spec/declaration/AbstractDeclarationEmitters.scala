@@ -43,7 +43,7 @@ case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
           declaration.linkTarget.foreach(l =>
             spec.factory.tagToReferenceEmitter(l, declaration.linkLabel.option(), references).emit(b))
         else {
-          var emitters = DataNodeEmitter(declaration.dataNode, ordering).emitters()
+          var emitters = Option(declaration.dataNode).map(DataNodeEmitter(_, ordering).emitters()).getOrElse(Nil)
           declaration.description.option().foreach { description =>
             emitters ++= Seq(
               MapEntryEmitter("usage", description, YType.Str, pos(declaration.description.annotations())))

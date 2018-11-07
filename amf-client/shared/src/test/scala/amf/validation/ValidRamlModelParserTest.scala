@@ -119,5 +119,21 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("/types/object-array.raml")
   }
 
+  test("Default type validation") {
+    validate("shapes/default_type.raml")
+  }
+
+  test("Default string type validation") {
+    validate("shapes/default-definition-type.raml")
+  }
+
+  test("Float validation") {
+    validate("examples/float-validation/api.raml")
+  }
+
+  test("Multiple example fragments") {
+    validate("examples/multiple-example-fragments/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

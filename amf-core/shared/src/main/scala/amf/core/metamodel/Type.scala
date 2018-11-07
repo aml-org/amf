@@ -1,5 +1,6 @@
 package amf.core.metamodel
 
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.vocabulary.Namespace.Xsd
 import amf.core.vocabulary.ValueType
 
@@ -16,6 +17,8 @@ trait Obj extends Type {
 
   // This can be override by dynamic element models to provide
   // the information about fields at parsing time
+
+  val doc: ModelDoc = ModelDoc()
 
   override val dynamic: Boolean = false
 
@@ -53,6 +56,8 @@ object Type {
   object ObjType extends Obj {
     override def fields: List[Field]     = Nil
     override val `type`: List[ValueType] = Nil
+
+    override val doc: ModelDoc = ModelDoc(ModelVocabularies.Parser, "", "")
   }
 
   abstract class ArrayLike(val element: Type) extends Type {

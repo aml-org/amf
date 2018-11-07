@@ -18,6 +18,4 @@ case class ArrayNode(override private[amf] val _internal: InternalArrayNode) ext
     _internal.addMember(member._internal)
     this
   }
-
-  def some: String = "Some"
 }

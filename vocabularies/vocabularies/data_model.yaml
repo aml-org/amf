@@ -1,0 +1,69 @@
+#%Vocabulary 1.0
+base: http://a.ml/vocabularies/data#
+usage: |-
+  Vocabulary defining a default set of classes to map data structures composed of recursive records of fields,
+  like the ones used in JSON or YAML into a RDF graph.
+  They can be validated using data shapes.
+uses:
+  doc: aml_doc.yaml
+external:
+  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
+  schema-org: http://schema.org/
+classTerms:
+  Array:
+    displayName: Array Node
+    description: Node that represents a dynamic array data structure
+    extends:
+      - Node
+      - doc.DomainElement
+    properties:
+      - rdf.member
+      - schema-org.name
+      - doc.extends
+  Link:
+    displayName: Link Node
+    description: Node that represents a dynamic link in a data structure
+    extends:
+      - Node
+      - doc.DomainElement
+    properties:
+      - schema-org.name
+      - doc.extends
+  Object:
+    displayName: Object Node
+    description: Node that represents a dynamic object with records data structure
+    extends:
+      - Node
+      - doc.DomainElement
+    properties:
+      - schema-org.name
+      - doc.extends
+  Scalar:
+    displayName: Scalar Node
+    description: Node that represents a dynamic scalar value data structure
+    extends:
+      - Node
+      - doc.DomainElement
+    properties:
+      - value
+      - schema-org.name
+      - doc.extends
+  Node:
+    displayName: Data Node
+    description: Base class for all data nodes parsed from the data structure
+    extends: doc.DomainElement
+    properties:
+      - schema-org.name
+      - doc.extends
+propertyTerms:
+  value:
+    displayName: value
+    description: value for an scalar dynamic node
+    range: string
+  schema-org.name:
+    displayName: name
+    description: Name of the shape
+    range: string
+  rdf.member:
+    displayName: member
+    range: Node

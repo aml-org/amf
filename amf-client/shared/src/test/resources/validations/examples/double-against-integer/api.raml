@@ -1,0 +1,11 @@
+#%RAML 0.8
+title: test
+
+/products:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              schema: !include schemas/product.json
+              example: !include examples/product.json

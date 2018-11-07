@@ -1,0 +1,12 @@
+#%RAML 0.8
+title: i like to float
+
+/a:
+  put:
+    body:
+      application/json:
+        schema: !include someSchema.json
+        example: |
+          {
+            "some": 0.0000005
+          }

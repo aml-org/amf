@@ -133,7 +133,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "error/overflow-number.raml",
       numberViolation => {
         numberViolation.level should be("Violation")
-        numberViolation.message should startWith("Cannot parse '9223372036854776000' with tag '?'")
+        numberViolation.message should startWith("Cannot parse '9223372036854776000' with tag '!!int'")
       }
     )
   }

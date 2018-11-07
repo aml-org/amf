@@ -16,7 +16,6 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     extends DynamicDomainElement
     with Linkable {
 
-
   val literalProperties: mutable.Map[String, Any]                                = mutable.HashMap()
   val linkProperties: mutable.Map[String, Any]                                   = mutable.HashMap()
   val mapKeyProperties: mutable.Map[String, Any]                                 = mutable.HashMap()
@@ -231,7 +230,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         val id = property.id
         if (mapKeyProperties.contains(id)) {
           mapKeyProperties.put(id, value)
-        } else  {
+        } else {
           objectProperties.put(id, value)
         }
       case _ => // ignore

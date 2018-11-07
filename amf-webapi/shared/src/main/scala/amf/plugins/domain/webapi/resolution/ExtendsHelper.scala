@@ -1,6 +1,5 @@
 package amf.plugins.domain.webapi.resolution
 
-import amf.{ProfileName, Raml08Profile}
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
@@ -15,6 +14,7 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.features.validation.ParserSideValidations
+import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -218,7 +218,8 @@ object ExtendsHelper {
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
           case (alias, (fullUrl, _)) =>
-            if (m.id == fullUrl) {
+            // If the library alias is already in the context, skip it
+            if (m.id == fullUrl && !ctx.declarations.libraries.exists(_._1 == alias)) {
               val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext())
               m.declares.foreach { declaration =>
                 processDeclaration(declaration, nestedCtx, m)

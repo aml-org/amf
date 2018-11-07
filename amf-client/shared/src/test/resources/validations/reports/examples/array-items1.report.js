@@ -10,5 +10,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/arrayItems1.raml#/web-api/end-points/%2Fnotifications%2Femails/post/request/application%2Fjson/schema/example/default-example
   Property: 
-  Position: Some(LexicalInformation([(53,17)-(63,0)]))
+  Position: Some(LexicalInformation([(54,16)-(62,17)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/arrayItems1.raml
