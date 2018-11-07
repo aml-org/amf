@@ -1,9 +1,9 @@
 package amf.client.model.document
 
-import amf.client.model.domain.{ArrayNode, ObjectNode, ScalarNode}
+import amf.client.convert.CoreClientConverters._
+import amf.client.model.domain.{ArrayNode, ObjectNode, ScalarNode, DataNode}
 import amf.core.model.StrField
 import amf.core.model.document.{Fragment => InternalFragment, PayloadFragment => InternalPayloadFragment}
-import amf.core.model.domain.DataNode
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
