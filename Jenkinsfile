@@ -17,7 +17,12 @@ pipeline {
         }
       }
     }
-    sonarScan {}
+    stage('Sonar publish') {
+      steps {
+        sonarScan {}
+      }
+    }
+
     stage('Publish') {
       when {
         anyOf {
