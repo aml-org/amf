@@ -1,0 +1,22 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API"
+  },
+  "basePath": "/asd",
+  "paths": {
+    "/bla": {
+      "get" : {
+        "responses" : {
+          "200": {
+            "description": "Successful Contract response",
+            "schema": {
+              "$ref": "../schemas/a.json"
+            }
+          }
+        }
+      }
+    }
+  }
+}

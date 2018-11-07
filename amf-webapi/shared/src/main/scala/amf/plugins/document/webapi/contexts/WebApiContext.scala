@@ -333,7 +333,7 @@ abstract class WebApiContext(val loc: String,
     if (str.startsWith("/")) str
     else if (str.contains(":")) str
     else if (str.startsWith("#")) base.split("#").head + str
-    else basePath(base) + str
+    else platform.normalizePath(basePath(base) + str)
   }
 
   def basePath(path: String): String = {
