@@ -88,6 +88,7 @@ object RenderOptions {
     val opts = new RenderOptions()
     opts.sources = client.isWithSourceMaps
     opts.amfJsonLdSerialization = client.isAmfJsonLdSerilization
+    opts.compactUris = client.isWithCompactUris
     opts
   }
 }
