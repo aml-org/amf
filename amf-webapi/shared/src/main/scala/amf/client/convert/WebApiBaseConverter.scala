@@ -27,7 +27,6 @@ import amf.client.model.domain.{
   TemplatedLink => ClientTemplatedLink,
   Trait => ClientTrait
 }
-import amf.client.plugins._
 import amf.client.validate.{PayloadValidator => ClientInternalPayloadValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.PayloadValidator
@@ -227,6 +226,8 @@ trait SettingsConverter extends PlatformSecrets {
       case http: HttpSettings            => HttpSettingsMatcher.asClient(http)
       case openId: OpenIdConnectSettings => OpenIdConnectSettingsMatcher.asClient(openId)
       case base: Settings                => new ClientSettings(base)
+      case _ => // noinspection ScalaStyle
+        null
     }
 
     override def asInternal(from: ClientSettings): Settings = from._internal
