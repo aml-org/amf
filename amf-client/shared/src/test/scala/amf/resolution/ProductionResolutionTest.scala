@@ -1,6 +1,5 @@
 package amf.resolution
 
-import amf.client.render.Raml10Renderer
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document}
@@ -258,6 +257,10 @@ class OASProductionResolutionTest extends OasResolutionTest {
 
   test("OAS with external fragment reference in upper folder") {
     cycle("master/master.json", "api.resolved.jsonld", OasJsonHint, Amf, completeCyclePath + "oas-fragment-ref/")
+  }
+
+  test("OAS complex example") {
+    cycle("spec/swagger.json", "api.resolved.jsonld", OasJsonHint, Oas, basePath + "oas-complex-example/")
   }
 }
 

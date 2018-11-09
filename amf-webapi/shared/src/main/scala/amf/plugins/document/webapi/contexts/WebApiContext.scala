@@ -6,15 +6,16 @@ import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.JsonSchemaPlugin
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft3SchemaVersion,
   JSONSchemaDraft4SchemaVersion,
   JSONSchemaUnspecifiedVersion,
   JSONSchemaVersion
 }
+import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
-import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.features.validation.ParserSideValidations.{
   ClosedShapeSpecification,
@@ -301,6 +302,31 @@ abstract class WebApiContext(val loc: String,
         JsonSchemaPlugin.parseFragment(jsonFile, referenceUrl)
     }
     res.flatten
+  }
+
+  def parseRemoteOasParameter(fileUrl: String, parentId: String)(
+      implicit ctx: OasWebApiContext): Option[OasParameter] = {
+    val referenceUrl = getReferenceUrl(fileUrl)
+
+    val baseFileUrl = fileUrl.split("#").head
+    val res: Option[Option[OasParameter]] = refs
+      .filter(r => r.unit.location().isDefined)
+      .filter(_.unit.location().get == baseFileUrl) collectFirst {
+      case ref if ref.unit.isInstanceOf[ExternalFragment] =>
+        val jsonFile = ref.unit.asInstanceOf[ExternalFragment]
+        JsonSchemaPlugin.parseParameterFragment(jsonFile, referenceUrl, parentId, toJsonSchema(ctx))
+      case ref if ref.unit.isInstanceOf[RecursiveUnit] =>
+        val jsonFile = ref.unit.asInstanceOf[RecursiveUnit]
+        JsonSchemaPlugin.parseParameterFragment(jsonFile, referenceUrl, parentId, toJsonSchema(ctx))
+    }
+    res.flatten
+  }
+
+  private def getReferenceUrl(fileUrl: String): Option[String] = {
+    fileUrl.split("#") match {
+      case s: Array[String] if s.size > 1 => Some(s.last)
+      case _                              => None
+    }
   }
 
   def computeJsonSchemaVersion(rootAst: YNode): JSONSchemaVersion = {
