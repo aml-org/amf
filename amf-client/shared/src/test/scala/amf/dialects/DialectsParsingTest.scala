@@ -15,6 +15,10 @@ class DialectsParsingTest extends FunSuiteCycleTests {
     cycle("example1.raml", "example1.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 1b test") {
+    cycle("example1b.raml", "example1b.json", VocabularyYamlHint, Amf)
+  }
+
   test("parse 2 test") {
     cycle("example2.raml", "example2.json", VocabularyYamlHint, Amf)
   }

@@ -203,6 +203,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
           emitIntLiteral(subject, property, v.value.asInstanceOf[AmfScalar].toString)
         case Type.Double =>
           // this will transform the value to double and will not emit @type TODO: ADD YType.Double
+          // @TODO: see also in the Type.Any emitter
           rdfmodel.addTriple(subject,
                              property,
                              v.value.asInstanceOf[AmfScalar].toString,
@@ -225,6 +226,32 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
           v.value.asInstanceOf[AmfArray].values.foreach { e =>
             objectValue(subject, property, a.element, Value(e, Annotations()))
           }
+
+        case Type.Any => {
+          v.value.asInstanceOf[AmfScalar].value match {
+            case bool: Boolean =>
+              rdfmodel.addTriple(subject,
+                property,
+                v.value.asInstanceOf[AmfScalar].toString,
+                Some((Namespace.Xsd + "boolean").iri()))
+            case i: Int        =>
+              emitIntLiteral(subject, property, v.value.asInstanceOf[AmfScalar].toString)
+            case f: Float      =>
+              emitFloatLiteral(subject, property, v.value.asInstanceOf[AmfScalar].toString)
+            case d: Double     =>
+              rdfmodel.addTriple(subject,
+                property,
+                v.value.asInstanceOf[AmfScalar].toString,
+                Some((Namespace.Xsd + "double").iri()))
+            case _             =>
+              v.annotations.find(classOf[ScalarType]) match {
+                case Some(annotation) =>
+                  typedScalar(subject, property, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)
+                case None =>
+                  rdfmodel.addTriple(subject, property, v.value.asInstanceOf[AmfScalar].toString, None)
+              }
+          }
+        }
       }
     }
 
