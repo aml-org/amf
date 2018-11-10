@@ -19,6 +19,7 @@ import scala.util.{Failure, Success, Try}
 class VocabularyDeclarations(var externals: Map[String, External] = Map(),
                              var classTerms: Map[String, ClassTerm] = Map(),
                              var propertyTerms: Map[String, PropertyTerm] = Map(),
+                             var usedVocabs: Map[String, Vocabulary] = Map(),
                              libs: Map[String, VocabularyDeclarations] = Map(),
                              errorHandler: Option[ErrorHandler],
                              futureDeclarations: FutureDeclarations)
@@ -35,6 +36,8 @@ class VocabularyDeclarations(var externals: Map[String, External] = Map(),
       classTerms += (term.name.value() -> term)
     }
   }
+
+  def registerUsedVocabulary(alias: String, vocab: Vocabulary) = usedVocabs += (alias -> vocab)
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): VocabularyDeclarations = {
