@@ -6,7 +6,7 @@ import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, PayloadFragment}
-import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
+import amf.core.parser.{ErrorHandler, ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.{Payload, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts.PayloadContext
@@ -76,27 +76,30 @@ object PayloadPlugin extends AMFDocumentPlugin {
   }
 
   /* Unparsing payloads not supported */
-  override def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions): Boolean = (builder, unit) match {
-    case (sb: YDocumentBuilder, p: PayloadFragment) =>
-      sb.document = PayloadEmitter(p.encodes).emitDocument()
-      true
-    case _ => false
-  }
+  override def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions): Boolean =
+    (builder, unit) match {
+      case (sb: YDocumentBuilder, p: PayloadFragment) =>
+        sb.document = PayloadEmitter(p.encodes).emitDocument()
+        true
+      case _ => false
+    }
 
-
-  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = unit match {
-    case p: PayloadFragment =>
-      Some(PayloadEmitter(p.encodes).emitDocument())
-    case _ => None
-  }
+  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
+    unit match {
+      case p: PayloadFragment =>
+        Some(PayloadEmitter(p.encodes).emitDocument())
+      case _ => None
+    }
 
   override def canUnparse(unit: BaseUnit): Boolean = unit.isInstanceOf[PayloadFragment]
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new ValidationResolutionPipeline(AmfProfile, unit).resolve()
+  override def resolve(unit: BaseUnit,
+                       errorHandler: ErrorHandler,
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+    new ValidationResolutionPipeline(AmfProfile, errorHandler).resolve(unit)
 
   override def init(): Future[AMFPlugin] = Future { this }
 

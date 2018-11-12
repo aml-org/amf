@@ -3,7 +3,7 @@ package amf.resolution
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
-import amf.core.parser.ParserContext
+import amf.core.parser.{DefaultParserSideErrorHandler, ParserContext, UnhandledErrorHandler}
 import amf.core.remote.{Raml, RamlYamlHint}
 import amf.core.services.RuntimeValidator
 import amf.core.vocabulary.Namespace
@@ -213,7 +213,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    Raml10Plugin.resolve(unit)
+    Raml10Plugin.resolve(unit, DefaultParserSideErrorHandler(unit))
   }
 
   val errorExamples = Seq(

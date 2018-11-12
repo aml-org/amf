@@ -34,6 +34,7 @@ import amf.client.validate.{
   ValidationResult => ClientValidationResult,
   ValidationShapeSet => ClientValidationShapeSet
 }
+import amf.core.annotations.LexicalInformation
 import amf.core.model._
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain._

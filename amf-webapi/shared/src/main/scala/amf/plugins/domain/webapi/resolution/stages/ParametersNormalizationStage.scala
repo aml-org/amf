@@ -9,6 +9,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.parser.spec.domain.Parameters
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, ServerModel}
 import amf.plugins.domain.webapi.models.{Operation, Parameter, WebApi}
+import amf.plugins.features.validation.ParserSideValidations
 
 /**
   * Place parameter models in the right locations according to the RAML/OpenAPI specs and our own
@@ -23,7 +24,12 @@ class ParametersNormalizationStage(profile: ProfileName)(override implicit val e
       case RamlProfile                => parametersRaml10(model).asInstanceOf[T]
       case OasProfile | Raml08Profile => parametersOpenApi(model).asInstanceOf[T]
       case AmfProfile                 => parametersAmf(model).asInstanceOf[T]
-      case _                          => throw new Exception(s"Unknown profile ${profile.profile}")
+      case _ =>
+        errorHandler.violation(ParserSideValidations.ResolutionErrorSpecification.id,
+                               s"Unknown profile ${profile.profile}",
+                               None,
+                               None)
+        model
     }
   }
 

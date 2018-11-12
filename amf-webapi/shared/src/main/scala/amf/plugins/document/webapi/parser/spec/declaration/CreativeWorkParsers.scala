@@ -44,7 +44,9 @@ case class RamlCreativeWorkParser(node: YNode)(implicit val ctx: WebApiContext) 
     val url = ctx.vendor match {
       case Oas             => "url"
       case Raml08 | Raml10 => "url".asRamlAnnotation
-      case other           => throw new Exception(s"Unexpected vendor '$other'")
+      case other =>
+        ctx.violation(s"Unexpected vendor '$other'", node)
+        "url"
     }
 
     map.key(url, CreativeWorkModel.Url in documentation)

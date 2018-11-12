@@ -348,7 +348,12 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       val canonicalProperties: Seq[PropertyShape] = node.properties.map { propertyShape =>
         normalize(propertyShape) match {
           case canonicalProperty: PropertyShape => canonicalProperty
-          case other                            => throw new Exception(s"Resolution error: Expecting property shape, found $other")
+          case other =>
+            context.errorHandler.violation(other.id,
+                                           s"Resolution error: Expecting property shape, found $other",
+                                           other.position(),
+                                           other.location())
+            propertyShape
         }
       }
       node.setArrayWithoutId(NodeShapeModel.Properties, canonicalProperties)

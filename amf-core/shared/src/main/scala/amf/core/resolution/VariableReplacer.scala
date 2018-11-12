@@ -18,16 +18,19 @@ object VariableReplacer {
 
   val VariableRegex: Regex = s"<<\\s*([^<<>>|\\s]+)((?:\\s*\\|\\s*!(?:$Transformations)\\s*)*)>>".r
 
-  def replaceVariables(s: ScalarNode, values: Set[Variable], errorFunction: String => Unit): DataNode = {
+  def replaceNodeVariables(s: ScalarNode, values: Set[Variable], errorFunction: String => Unit): DataNode = {
     s.value match {
       case VariableRegex(name, transformations) =>
         values.find(_.name == name) match {
           case Some(Variable(_, scalar: ScalarNode))
               if scalar.dataType.isEmpty || scalar.dataType.get.endsWith("#string") =>
-            s.value = VariableRegex.replaceAllIn(s.value, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
+            s.value = VariableRegex.replaceAllIn(
+              s.value,
+              replaceMatch(values.map(v => v.name -> v.value).toMap)(_, errorFunction))
             s
           case Some(_) if transformations.nonEmpty =>
-            throw new Exception(s"Cannot apply transformations '$transformations' to variable '$name'.")
+            errorFunction(s"Cannot apply transformations '$transformations' to variable '$name'.")
+            s
           case Some(Variable(_, scalar: ScalarNode)) => scalar
           case Some(Variable(_, node))               => node
           case None =>
@@ -39,19 +42,20 @@ object VariableReplacer {
         }
 
       case text =>
-        s.value = VariableRegex.replaceAllIn(text, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
+        s.value =
+          VariableRegex.replaceAllIn(text, replaceMatch(values.map(v => v.name -> v.value).toMap)(_, errorFunction))
         s
     }
   }
 
-  def replaceVariables(s: String, values: Set[Variable]): String =
-    VariableRegex.replaceAllIn(s, replaceMatch(values.map(v => v.name -> v.value).toMap)(_))
+  def replaceVariables(s: String, values: Set[Variable], errorFunction: String => Unit): String =
+    VariableRegex.replaceAllIn(s, replaceMatch(values.map(v => v.name -> v.value).toMap)(_, errorFunction))
 
-  private def replaceMatch(values: Map[String, DataNode])(m: Match): String = {
+  private def replaceMatch(values: Map[String, DataNode])(m: Match, errorFunction: String => Unit): String = {
     val name = m.group(1)
     values
       .get(name)
-      .map {
+      .flatMap {
         case v: ScalarNode =>
           val text: String = v.annotations
             .find(classOf[SourceAST])
@@ -66,8 +70,10 @@ object VariableReplacer {
             .map { transformations =>
               TransformationsRegex.findAllIn(transformations).foldLeft(text)(variableTransformation)
             }
-            .getOrElse(text)
-        case node => throw new Exception(s"Variable '$name' cannot be replaced with type $node")
+            .orElse(Some(text))
+        case node =>
+          errorFunction(s"Variable '$name' cannot be replaced with type $node")
+          None
       }
       .getOrElse(name)
       .replace("$", "\\$")

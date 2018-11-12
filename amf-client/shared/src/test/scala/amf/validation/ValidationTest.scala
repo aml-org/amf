@@ -6,6 +6,7 @@ import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Module
 import amf.core.model.domain.{ObjectNode, RecursiveShape}
+import amf.core.parser.{DefaultParserSideErrorHandler, UnhandledErrorHandler}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.SeverityLevels
@@ -57,7 +58,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc        <- AMFCompiler(productionPath + "recursive.raml", platform, RamlYamlHint, validation).build()
     } yield {
-      val resolved = Raml10Plugin.resolve(doc)
+      val resolved = Raml10Plugin.resolve(doc, DefaultParserSideErrorHandler(doc))
       assert(Option(resolved).isDefined)
     }
   }
@@ -68,7 +69,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       validation <- Validation(platform)
       doc        <- AMFCompiler(productionPath + "recursive2.raml", platform, RamlYamlHint, validation).build()
     } yield {
-      val resolved      = Raml10Plugin.resolve(doc)
+      val resolved      = Raml10Plugin.resolve(doc, DefaultParserSideErrorHandler(doc))
       val A: ArrayShape = resolved.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
       assert(A.items.isInstanceOf[RecursiveShape])
       val AOrig   = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
@@ -84,7 +85,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc        <- AMFCompiler(productionPath + "recursive2.raml", platform, RamlYamlHint, validation).build()
     } yield {
       val A: ArrayShape = doc.asInstanceOf[Module].declares.head.asInstanceOf[ArrayShape]
-      new ValidationResolutionPipeline(RamlProfile, Module().withDeclares(Seq(A))).resolve()
+      new ValidationResolutionPipeline(RamlProfile, UnhandledErrorHandler).resolve(Module().withDeclares(Seq(A)))
       val profile = new AMFShapeValidations(A).profile(ObjectNode())
       assert(profile.violationLevel.size == 1)
       assert(
@@ -171,7 +172,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc <- AMFCompiler(validationsPath + "/securitySchemes/security1.raml", platform, RamlYamlHint, validation)
         .build()
       resolved <- Future {
-        Raml10Plugin.resolve(doc)
+        Raml10Plugin.resolve(doc, DefaultParserSideErrorHandler(doc))
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, RamlProfile)
@@ -188,7 +189,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc <- AMFCompiler(validationsPath + "/missing-annotation-types/api.raml", platform, RamlYamlHint, validation)
         .build()
       resolved <- Future {
-        Raml10Plugin.resolve(doc)
+        Raml10Plugin.resolve(doc, DefaultParserSideErrorHandler(doc))
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, RamlProfile)
@@ -204,7 +205,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, RamlYamlHint, validation)
         .build()
       resolved <- Future {
-        Raml10Plugin.resolve(doc)
+        Raml10Plugin.resolve(doc, DefaultParserSideErrorHandler(doc))
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", "AMF Graph", RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, RamlProfile)
@@ -219,7 +220,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       doc <- AMFCompiler(validationsPath + "/enumeration-arrays/api.raml", platform, RamlYamlHint, validation)
         .build()
       resolved <- Future {
-        Raml10Plugin.resolve(doc)
+        Raml10Plugin.resolve(doc, DefaultParserSideErrorHandler(doc))
       }
       generated <- new AMFSerializer(resolved, "application/ld+json", Amf.name, RenderOptions().withoutSourceMaps).renderToString
       report    <- validation.validate(doc, OasProfile)

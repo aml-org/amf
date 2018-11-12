@@ -15,7 +15,8 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
   val isRaml08: Boolean                        = profile.equals(Raml08Profile)
   private val minShapeClass: MinShapeAlgorithm = new MinShapeAlgorithm()(this)
 
-  def minShape(derivedShape: Shape, superShape: Shape): Shape =
+  def minShape(derivedShape: Shape, superShape: Shape): Shape = {
+
     try {
       minShapeClass.computeMinShape(derivedShape, superShape)
     } catch {
@@ -29,8 +30,18 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
           None
         )
         derivedShape
-      case other: Exception => throw other
+      case other: Throwable =>
+        errorHandler.violation(
+          ParserSideValidations.ResolutionErrorSpecification.id,
+          derivedShape.id,
+          Some(ShapeModel.Inherits.value.iri()),
+          other.getMessage,
+          derivedShape.position(),
+          derivedShape.location()
+        )
+        derivedShape
     }
+  }
 
 }
 

@@ -14,9 +14,16 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaVersion
 }
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft3SchemaVersion,
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaUnspecifiedVersion,
+  JSONSchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
 import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.features.validation.ParserSideValidations
 import amf.plugins.features.validation.ParserSideValidations.{
   ClosedShapeSpecification,
   DuplicatedPropertySpecification
@@ -95,7 +102,10 @@ abstract class RamlWebApiContext(override val loc: String,
       declarations.libraries.get(nextLibrary) match {
         case Some(library: RamlWebApiDeclarations) =>
           findDeclarations(path.tail, library)
-        case _ => throw new Exception(s"Cannot find declarations in context '${path.mkString(".")}")
+        case _ =>
+          violation(ParserSideValidations.ParsingErrorSpecification.id,
+                    s"Cannot find declarations in context '${path.mkString(".")}")
+          declarations
       }
     }
   }
@@ -449,7 +459,8 @@ abstract class WebApiContext(val loc: String,
                       entry)
           }
         }
-      case None => throw new Exception(s"Cannot validate unknown node type $shape for $vendor")
+      case None =>
+        violation(ClosedShapeSpecification.id, node, s"Cannot validate unknown node type $shape for $vendor", ast)
     }
   }
 }

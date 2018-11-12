@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.{Aliases, SynthesizedField}
+import amf.core.annotations.{Aliases, LexicalInformation, SourceLocation, SynthesizedField}
 import amf.core.metamodel.Type.Scalar
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel._
@@ -107,7 +107,11 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       val extensionFullUrl = extensionsAliases.find(_._1 == alias).map(_._2._1).get
       val docFullUrl       = documentAliases.find(_._1 == alias).map(_._2._1).get
       if (extensionFullUrl != docFullUrl)
-        throw new Exception(s"Conflicting urls for alias '$alias' and libraries: '$extensionFullUrl' - '$docFullUrl'")
+        errorHandler.violation(
+          ParserSideValidations.ResolutionErrorSpecification.id,
+          s"Conflicting urls for alias '$alias' and libraries: '$extensionFullUrl' - '$docFullUrl'",
+          document.location().getOrElse(document.id)
+        )
     }
 
     val totalAliases = extensionsAliases.union(documentAliases)
@@ -220,7 +224,13 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                 master.set(field, entry.domainElement, Annotations(ExtensionProvenance(overlay.id, extensionLocation)))
               case _: DomainElementModel =>
                 merge(existing.domainElement, entry.domainElement, extensionId, extensionLocation)
-              case _ => throw new Exception(s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)")
+              case _ =>
+                errorHandler.violation(
+                  ParserSideValidations.ResolutionErrorSpecification.id,
+                  s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)",
+                  value.value.annotations.find(classOf[LexicalInformation]),
+                  value.value.annotations.find(classOf[SourceLocation]).map(_.location)
+                )
             }
           case Some(existing) => // cannot be override
             if (!isSameDataType(existing, entry))
@@ -314,7 +324,11 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       case _: Type.Scalar        => mergeByValue(target, field, m, o, extensionId, extensionLocation)
       case key: KeyField         => mergeByKeyValue(target, field, element, key, m, o, extensionId, extensionLocation)
       case _: DomainElementModel => setDomainElementArrayValue(target, field, o, extensionId, extensionLocation)
-      case _                     => throw new Exception(s"Cannot merge '$element': not a KeyField nor a Scalar")
+      case _ =>
+        errorHandler.violation(ParserSideValidations.ResolutionErrorSpecification.id,
+                               s"Cannot merge '$element': not a KeyField nor a Scalar",
+                               target.position(),
+                               target.location())
     }
   }
 

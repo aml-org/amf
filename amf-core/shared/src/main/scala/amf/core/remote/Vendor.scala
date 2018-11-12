@@ -22,6 +22,11 @@ object Vendor {
     }
   }
 
+  def apply(name: String): Vendor = name match {
+    case Vendor(vendor) => vendor
+    case _              => new UnknowVendor(name)
+  }
+
   val RAML: Vendor    = Raml
   val RAML08: Vendor  = Raml08
   val RAML10: Vendor  = Raml10
@@ -36,6 +41,8 @@ object Vendor {
 sealed trait Vendor {
   val name: String
 }
+
+class UnknowVendor(override val name: String) extends Vendor
 
 trait Raml extends Vendor {
   def version: String

@@ -55,6 +55,5 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    new ValidationResolutionPipeline(Raml10Profile, unit).resolve()
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = ValidationResolutionPipeline(Raml10Profile, unit)
 }

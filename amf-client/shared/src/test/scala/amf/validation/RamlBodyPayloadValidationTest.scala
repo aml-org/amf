@@ -3,6 +3,7 @@ package amf.validation
 import amf.client.plugins.{StrictValidationMode, ValidationMode}
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.Shape
+import amf.core.parser.DefaultParserSideErrorHandler
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, SeverityLevels}
@@ -57,8 +58,8 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
 
   override def transform(unit: BaseUnit): BaseUnit =
     unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].sourceVendor match {
-      case Some(Raml08) => Raml08Plugin.resolve(unit)
-      case _            => Raml10Plugin.resolve(unit)
+      case Some(Raml08) => Raml08Plugin.resolve(unit, DefaultParserSideErrorHandler(unit))
+      case _            => Raml10Plugin.resolve(unit, DefaultParserSideErrorHandler(unit))
     }
 }
 

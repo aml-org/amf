@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser
 
+import amf.core.parser.ErrorHandler
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._
 

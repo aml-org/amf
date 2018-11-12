@@ -3,7 +3,7 @@ package amf.resolution
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.ErrorHandler
+import amf.core.parser.{ErrorHandler, RuntimeErrorHandler, UnhandledErrorHandler}
 import amf.core.remote._
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.emit.AMFRenderer
@@ -23,11 +23,11 @@ abstract class RamlResolutionTest extends ResolutionTest {
 abstract class OasResolutionTest extends ResolutionTest {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {
-      case Raml08        => Raml08Plugin.resolve(unit)
-      case Raml | Raml10 => Raml10Plugin.resolve(unit)
-      case Oas30         => Oas30Plugin.resolve(unit)
-      case Oas | Oas20   => Oas20Plugin.resolve(unit)
-      case Amf           => Oas20Plugin.resolve(unit)
+      case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler)
+      case Raml | Raml10 => Raml10Plugin.resolve(unit, UnhandledErrorHandler)
+      case Oas30         => Oas30Plugin.resolve(unit, UnhandledErrorHandler)
+      case Oas | Oas20   => Oas20Plugin.resolve(unit, UnhandledErrorHandler)
+      case Amf           => Oas20Plugin.resolve(unit, UnhandledErrorHandler)
       case target        => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }
@@ -224,9 +224,9 @@ class ProductionResolutionTest extends RamlResolutionTest {
     val useAmfJsonldSerialization = true
 
     for {
-      simpleModel <- build(config, validation, useAmfJsonldSerialization).map(new AmfEditingPipeline(_).resolve())
+      simpleModel <- build(config, validation, useAmfJsonldSerialization).map(AmfEditingPipeline.unhandled.resolve(_))
       a           <- render(simpleModel, config, useAmfJsonldSerialization)
-      doubleModel <- build(config, validation, useAmfJsonldSerialization).map(new AmfEditingPipeline(_).resolve())
+      doubleModel <- build(config, validation, useAmfJsonldSerialization).map(AmfEditingPipeline.unhandled.resolve(_))
       _           <- render(doubleModel, config, useAmfJsonldSerialization)
       b           <- render(doubleModel, config, useAmfJsonldSerialization)
     } yield {
@@ -360,7 +360,7 @@ class ProductionServiceTest extends RamlResolutionTest {
       AmfJsonHint,
       Raml,
       (u: BaseUnit, _: CycleConfig) => {
-        val resolved = new ReferenceResolutionStage(false)(new ErrorHandler {
+        val resolved = new ReferenceResolutionStage(false)(new RuntimeErrorHandler {
           override val parserCount: Int    = u.parserRun.get
           override val currentFile: String = u.location().get
         }).resolve(u)

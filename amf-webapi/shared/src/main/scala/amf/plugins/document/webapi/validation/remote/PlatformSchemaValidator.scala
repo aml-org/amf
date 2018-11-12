@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.validation.remote
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
-import amf.core.parser.{ErrorHandler, ParserContext, SyamlParsedDocument}
+import amf.core.parser.{ErrorHandler, ParserContext, RuntimeErrorHandler, SyamlParsedDocument}
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
@@ -194,7 +194,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       case None => PayloadFragment(ScalarNode(payload, None), mediaType)
     }
   }
-  case class PayloadErrorHandler() extends ErrorHandler {
+  case class PayloadErrorHandler() extends RuntimeErrorHandler {
     override val currentFile: String                          = ""
     override val parserCount: Int                             = 1
     private val errors: ListBuffer[AMFValidationResult]       = ListBuffer()

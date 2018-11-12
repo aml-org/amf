@@ -21,6 +21,7 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging._
+import amf.plugins.features.validation.ParserSideValidations
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
@@ -116,7 +117,7 @@ class ExtendsResolutionStage(
   /** Apply specified ResourceTypes to given EndPoint. */
   def apply(endpoint: EndPoint, resourceTypes: ListBuffer[EndPoint]): EndPoint = {
     resourceTypes.foldLeft(endpoint) {
-      case (current, resourceType) => merge(current, resourceType)
+      case (current, resourceType) => merge(current, resourceType, errorHandler)
     }
   }
 
@@ -158,7 +159,7 @@ class ExtendsResolutionStage(
 
       // Merge traits into operation
       traits.foldLeft(operation) {
-        case (current, branch) => DomainElementMerging.merge(current, branch.operation)
+        case (current, branch) => DomainElementMerging.merge(current, branch.operation, errorHandler)
       }
 
       // This is required in the case where the extension comes from an overlay/extension
@@ -232,7 +233,7 @@ class ExtendsResolutionStage(
                               parameterized: Seq[ParametrizedTrait],
                               context: Context,
                               subTree: Seq[ElementTree]) = {
-      parameterized.map(resolver.resolve(_, context, ctx(context.model.parserRun.get), subTree))
+      parameterized.flatMap(resolver.resolve(_, context, ctx(context.model.parserRun.get), subTree))
     }
   }
 
@@ -247,25 +248,30 @@ class ExtendsResolutionStage(
     def resolve(t: ParametrizedTrait,
                 context: Context,
                 apiContext: RamlWebApiContext,
-                subTree: Seq[ElementTree]): TraitBranch = {
+                subTree: Seq[ElementTree]): Option[TraitBranch] = {
       val local = context.add(t.variables)
       val key   = Key(t.target.id, local)
-      resolved.getOrElseUpdate(key, resolveOperation(key, t, context, apiContext, subTree))
+      resolveOperation(key, t, context, apiContext, subTree) match {
+        case Some(ro) => Some(resolved.getOrElseUpdate(key, ro))
+        case _ =>
+          resolved -= key
+          None
+      }
     }
 
     private def resolveOperation(key: Key,
                                  parameterized: ParametrizedTrait,
                                  context: Context,
                                  apiContext: RamlWebApiContext,
-                                 subTree: Seq[ElementTree]): TraitBranch = {
+                                 subTree: Seq[ElementTree]): Option[TraitBranch] = {
       val local = context.add(parameterized.variables)
 
       Option(parameterized.target) match {
-        case Some(t: ErrorDeclaration) => TraitBranch(key, Operation(), Seq())
+        case Some(t: ErrorDeclaration) => Some(TraitBranch(key, Operation(), Seq()))
         case Some(potentialTrait: Trait) =>
           potentialTrait.effectiveLinkTarget match {
             case err: ErrorTrait =>
-              TraitBranch(key, Operation().withId(err.id + "_op"), Nil)
+              Some(TraitBranch(key, Operation().withId(err.id + "_op"), Nil))
             case t: Trait =>
               val node: DataNode = t.dataNode.cloneNode()
               node.replaceVariables(local.variables, subTree)((message: String) =>
@@ -282,11 +288,18 @@ class ExtendsResolutionStage(
                 Some(apiContext)
               )
 
-              val children = op.traits.map(resolve(_, context, apiContext, subTree))
+              val children = op.traits.flatMap(resolve(_, context, apiContext, subTree))
 
-              TraitBranch(key, op, children)
+              Some(TraitBranch(key, op, children))
           }
-        case m => throw new Exception(s"Looking for trait but $m was found on model ${context.model}")
+        case m =>
+          errorHandler.violation(
+            ParserSideValidations.ResolutionErrorSpecification.id,
+            parameterized.id,
+            s"Looking for trait but $m was found on model ${context.model}",
+            parameterized.annotations
+          )
+          None
       }
     }
   }

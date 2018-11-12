@@ -132,13 +132,13 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
             (_: String) => Unit
           else reportError) // if its an optional node, ignore the violation of the var not implement
       properties.remove(key)
-      properties += VariableReplacer.replaceVariables(decodedKey, values) -> value
+      properties += VariableReplacer.replaceVariables(decodedKey, values, reportError) -> value
     }
 
     propertyAnnotations.keys.foreach { key =>
       val value = propertyAnnotations(key)
       propertyAnnotations.remove(key)
-      propertyAnnotations += VariableReplacer.replaceVariables(key.urlComponentDecoded, values) -> value
+      propertyAnnotations += VariableReplacer.replaceVariables(key.urlComponentDecoded, values, reportError) -> value
     }
 
     this
@@ -204,7 +204,7 @@ class ScalarNode(var value: String,
 
   override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(
       reportError: (String) => Unit): DataNode = {
-    VariableReplacer.replaceVariables(this, values, reportError)
+    VariableReplacer.replaceNodeVariables(this, values, reportError)
   }
 
   override def cloneNode(): ScalarNode = {

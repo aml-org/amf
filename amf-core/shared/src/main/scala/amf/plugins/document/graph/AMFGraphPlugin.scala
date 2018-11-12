@@ -80,8 +80,10 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new BasicResolutionPipeline(unit).resolve()
+  override def resolve(unit: BaseUnit,
+                       errorHandler: ErrorHandler,
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+    new BasicResolutionPipeline(errorHandler).resolve(unit)
 
   /**
     * Does references in this type of documents be recursive?

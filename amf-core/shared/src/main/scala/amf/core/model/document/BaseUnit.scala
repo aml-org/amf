@@ -7,9 +7,10 @@ import amf.core.metamodel.document.DocumentModel.References
 import amf.core.metamodel.{MetaModelTypeMapping, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain._
-import amf.core.parser.{FieldEntry, ParserContext, Value}
+import amf.core.parser.{DefaultParserSideErrorHandler, ErrorHandler, FieldEntry, ParserContext, Value}
 import amf.core.rdf.{RdfModel, RdfModelParser}
 import amf.core.unsafe.PlatformSecrets
+import amf.plugins.features.validation.ParserSideValidations
 
 import scala.collection.mutable.ListBuffer
 
@@ -83,7 +84,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
   }
 
   def transform(selector: (DomainElement) => Boolean,
-                transformation: (DomainElement, Boolean) => Option[DomainElement]): BaseUnit = {
+                transformation: (DomainElement, Boolean) => Option[DomainElement])(
+      implicit errorHandler: ErrorHandler): BaseUnit = {
     val domainElementAdapter = (o: AmfObject) => {
       o match {
         case e: DomainElement => selector(e)
@@ -96,7 +98,10 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
         case _                => Some(o)
       }
     }
-    transformByCondition(this, domainElementAdapter, transformationAdapter)
+    transformByCondition(this,
+                         domainElementAdapter,
+                         transformationAdapter,
+                         cycleRecoverer = defaultCycleRecoverer(errorHandler))
     this
   }
 
@@ -212,12 +217,20 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
     }
   }
 
-  protected def defaultCycleRecoverer(old: AmfObject, transformed: AmfObject): Option[AmfObject] = {
+  protected def defaultCycleRecoverer(errorHandler: ErrorHandler = DefaultParserSideErrorHandler(this))(
+      old: AmfObject,
+      transformed: AmfObject): Option[AmfObject] = {
     transformed match {
       case s: Shape =>
         Some(RecursiveShape(s))
       case _ =>
-        throw new Exception(s"Recursive loop generated in reference expansion: ${old.id} => ${transformed.id}")
+        errorHandler.violation(
+          ParserSideValidations.RecursiveShapeSpecification.id,
+          old.id,
+          s"Recursive loop generated in reference expansion: ${old.id} => ${transformed.id}",
+          old.annotations
+        )
+        None
     }
   }
 
@@ -225,8 +238,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
                                      predicate: (AmfObject) => Boolean,
                                      transformation: (AmfObject, Boolean) => Option[AmfObject],
                                      cycles: Set[String] = Set.empty,
-                                     cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject] =
-                                       defaultCycleRecoverer): AmfObject = {
+                                     cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject]): AmfObject = {
     if (!cycles.contains(element.id)) {
       // not visited yet
       if (predicate(element)) { // matches predicate, we transform
@@ -246,7 +258,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
           case dataNode: ObjectNode =>
             dataNode.properties.foreach {
               case (prop, value) =>
-                Option(transformByCondition(value, predicate, transformation, cycles + element.id)) match {
+                Option(transformByCondition(value, predicate, transformation, cycles + element.id, cycleRecoverer)) match {
                   case Some(transformed: DataNode) =>
                     dataNode.properties.put(prop, transformed)
                     dataNode
@@ -260,7 +272,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
           case arrayNode: ArrayNode =>
             arrayNode.members = arrayNode.members
               .flatMap { elem: DataNode =>
-                Option(transformByCondition(elem, predicate, transformation, cycles + element.id))
+                Option(
+                  transformByCondition(elem,
+                                       predicate,
+                                       transformation,
+                                       cycles + element.id,
+                                       cycleRecoverer = cycleRecoverer))
               }
               .map(_.adopted(arrayNode.id))
               .collect { case d: DataNode => d }
@@ -286,7 +303,8 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
                     transformByCondition(v.value.asInstanceOf[AmfObject],
                                          predicate,
                                          transformation,
-                                         cycles + element.id)) match {
+                                         cycles + element.id,
+                                         cycleRecoverer = cycleRecoverer)) match {
                     case Some(transformedValue: AmfObject) =>
                       element.fields.setWithoutId(f, transformedValue)
                       element match {
@@ -307,7 +325,11 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
                     .map {
                       case elem: AmfObject =>
                         val transformedValue =
-                          transformByCondition(elem, predicate, transformation, cycles + element.id)
+                          transformByCondition(elem,
+                                               predicate,
+                                               transformation,
+                                               cycles + element.id,
+                                               cycleRecoverer = cycleRecoverer)
                         element match {
                           case s: Shape if transformedValue.isInstanceOf[RecursiveShape] =>
                             transformedValue

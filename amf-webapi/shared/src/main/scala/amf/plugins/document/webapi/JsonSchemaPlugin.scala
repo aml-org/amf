@@ -9,6 +9,7 @@ import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{
   EmptyFutureDeclarations,
+  ErrorHandler,
   ParsedReference,
   ParserContext,
   Reference,
@@ -61,8 +62,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new OasResolutionPipeline(unit).resolve()
+  override def resolve(unit: BaseUnit,
+                       errorHandler: ErrorHandler,
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+    new OasResolutionPipeline(errorHandler).resolve(unit)
 
   /**
     * List of media types used to encode serialisations of

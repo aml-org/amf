@@ -5,6 +5,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
 import amf.core.parser.{
+  ErrorHandler,
   InferredLinkReference,
   LinkReference,
   ParsedDocument,
@@ -78,7 +79,7 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String): BaseUnit = unit
+  override def resolve(unit: BaseUnit, errorHandler: ErrorHandler, pipelineId: String): BaseUnit = unit
 
   /**
     * List of media types used to encode serialisations of

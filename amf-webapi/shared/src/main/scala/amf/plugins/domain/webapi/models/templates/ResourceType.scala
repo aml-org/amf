@@ -4,7 +4,7 @@ import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.{Annotations, DefaultUnhandledError, ErrorHandler, Fields}
+import amf.core.parser.{Annotations, UnhandledErrorHandler, ErrorHandler, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.ResourceTypeModel
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
@@ -20,7 +20,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
 
   def asEndpoint[T <: BaseUnit](unit: T,
                                 profile: ProfileName = RamlProfile,
-                                errorHandler: ErrorHandler = DefaultUnhandledError): EndPoint = {
+                                errorHandler: ErrorHandler = UnhandledErrorHandler): EndPoint = {
     linkTarget match {
       case Some(_) =>
         effectiveLinkTarget.asInstanceOf[ResourceType].asEndpoint(unit, profile, errorHandler)

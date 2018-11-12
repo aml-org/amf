@@ -87,7 +87,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   // todo: we should use vendor.name in every place instead of match handwrited strings
   private def links(part: YPart, ctx: ParserContext): Unit = {
     vendor match {
-      case Raml10.name | Raml08.name | Raml.name => ramlLinks(part)
+      case Raml10.name | Raml08.name | Raml.name => ramlLinks(part, ctx)
       case Oas20.name | Oas30.name               => oasLinks(part, ctx)
       case _                                     => // Ignore
     }
@@ -146,11 +146,11 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  def ramlLinks(part: YPart): Unit = {
+  def ramlLinks(part: YPart, ctx: ParserContext): Unit = {
     part match {
-      case node: YNode if node.tagType == YType.Include         => ramlInclude(node)
+      case node: YNode if node.tagType == YType.Include         => ramlInclude(node, ctx)
       case scalar: YScalar if scalar.value.isInstanceOf[String] => checkInlined(scalar)
-      case _                                                    => part.children.foreach(ramlLinks)
+      case _                                                    => part.children.foreach(ramlLinks(_, ctx))
     }
   }
 
@@ -171,11 +171,11 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     }
   }
 
-  private def ramlInclude(node: YNode): Unit = {
+  private def ramlInclude(node: YNode, ctx: ParserContext): Unit = {
     node.value match {
       case scalar: YScalar =>
         references += (scalar.text, LinkReference, node)
-      case _ => throw new Exception(s"Unexpected !include with ${node.value}")
+      case _ => ctx.violation(s"Unexpected !include with ${node.value}", node)
     }
   }
 
@@ -209,7 +209,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                   }
                 })
               case ReferenceResolutionResult(Some(_), _) => Future(Nil)
-              case _ => Future(Nil)
+              case _                                     => Future(Nil)
             }
         })
 

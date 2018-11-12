@@ -1,6 +1,7 @@
 package amf.validation
 
 import amf.core.model.document.{BaseUnit, Module}
+import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote.RamlYamlHint
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
@@ -59,7 +60,7 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
       validator <- Future {
-        val resolved = new AmfResolutionPipeline(library).resolve()
+        val resolved = AmfResolutionPipeline.unhandled.resolve(library)
         val shape    = findShape(resolved, "D")
         shape.payloadValidator("application/json").get
       }
@@ -74,7 +75,7 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
       validation <- Validation(platform)
       library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
       validator <- Future {
-        val resolved = new AmfResolutionPipeline(library).resolve()
+        val resolved = AmfResolutionPipeline.unhandled.resolve(library)
         val shape    = findShape(resolved, "D")
         shape.payloadValidator("application/json", Environment()).get
       }

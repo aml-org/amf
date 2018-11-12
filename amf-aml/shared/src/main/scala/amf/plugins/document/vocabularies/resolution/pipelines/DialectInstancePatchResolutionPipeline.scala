@@ -1,11 +1,14 @@
 package amf.plugins.document.vocabularies.resolution.pipelines
-import amf.{AmfProfile, ProfileName}
+import amf.core.parser.ErrorHandler
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.{CleanReferencesStage, DeclarationsRemovalStage, ResolutionStage}
-import amf.plugins.document.vocabularies.model.document.DialectInstancePatch
-import amf.plugins.document.vocabularies.resolution.stages.{DialectInstanceReferencesResolutionStage, DialectPatchApplicationStage}
+import amf.plugins.document.vocabularies.resolution.stages.{
+  DialectInstanceReferencesResolutionStage,
+  DialectPatchApplicationStage
+}
+import amf.{AmfProfile, ProfileName}
 
-class DialectInstancePatchResolutionPipeline(override val model: DialectInstancePatch) extends ResolutionPipeline[DialectInstancePatch]() {
+class DialectInstancePatchResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
 
   override protected val steps: Seq[ResolutionStage] = Seq(
     new DialectInstanceReferencesResolutionStage(),

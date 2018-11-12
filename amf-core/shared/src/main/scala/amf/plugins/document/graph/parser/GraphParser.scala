@@ -15,6 +15,7 @@ import amf.core.registries.AMFDomainRegistry
 import amf.core.remote.Platform
 import amf.core.unsafe.TrunkPlatform
 import amf.core.vocabulary.Namespace
+import amf.plugins.features.validation.ParserSideValidations
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.convert.YRead.SeqNodeYRead
 import org.yaml.model._
@@ -82,50 +83,54 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     private def parse(map: YMap): Option[AmfObject] = { // todo fix uses
       retrieveId(map, ctx)
         .flatMap(value => retrieveType(value, map).map(value2 => (value, value2)))
-        .map {
+        .flatMap {
           case (id, model) =>
             val sources = retrieveSources(id, map)
+            buildType(id, map, model)(annotations(nodes, sources, id)) match {
+              case Some(builder) =>
+                val instance: AmfObject = builder
+                instance.withId(id)
 
-            val instance = buildType(model)(annotations(nodes, sources, id))
-            instance.withId(id)
+                checkLinkables(instance)
 
-            checkLinkables(instance)
-
-            // workaround for lazy values in shape
-            val modelFields = model match {
-              case shapeModel: ShapeModel =>
-                shapeModel.fields ++ Seq(
-                  ShapeModel.CustomShapePropertyDefinitions,
-                  ShapeModel.CustomShapeProperties
-                )
-              case _ => model.fields
-            }
-
-            modelFields.foreach(f => {
-              val k = f.value.iri()
-              map.key(k) match {
-                case Some(entry) => traverse(instance, f, value(f.`type`, entry.value), sources, k)
-                case _           =>
-              }
-            })
-
-            // parsing custom extensions
-            instance match {
-              case l: DomainElement with Linkable => parseLinkableProperties(map, l)
-              case ex: ExternalDomainElement if unresolvedExtReferencesMap.get(ex.id).isDefined =>
-                unresolvedExtReferencesMap.get(ex.id).foreach { element =>
-                  ex.raw.option().foreach(element.set(ExternalSourceElementModel.Raw, _))
+                // workaround for lazy values in shape
+                val modelFields = model match {
+                  case shapeModel: ShapeModel =>
+                    shapeModel.fields ++ Seq(
+                      ShapeModel.CustomShapePropertyDefinitions,
+                      ShapeModel.CustomShapeProperties
+                    )
+                  case _ => model.fields
                 }
-                unresolvedExtReferencesMap.remove(ex.id)
-              case _ => // ignore
-            }
-            instance match {
-              case elm: DomainElement => parseCustomProperties(map, elm)
-              case _                  => // ignore
+
+                modelFields.foreach(f => {
+                  val k = f.value.iri()
+                  map.key(k) match {
+                    case Some(entry) => traverse(instance, f, value(f.`type`, entry.value), sources, k)
+                    case _           =>
+                  }
+                })
+
+                // parsing custom extensions
+                instance match {
+                  case l: DomainElement with Linkable => parseLinkableProperties(map, l)
+                  case ex: ExternalDomainElement if unresolvedExtReferencesMap.get(ex.id).isDefined =>
+                    unresolvedExtReferencesMap.get(ex.id).foreach { element =>
+                      ex.raw.option().foreach(element.set(ExternalSourceElementModel.Raw, _))
+                    }
+                    unresolvedExtReferencesMap.remove(ex.id)
+                  case _ => // ignore
+                }
+                instance match {
+                  case elm: DomainElement => parseCustomProperties(map, elm)
+                  case _                  => // ignore
+                }
+
+                nodes = nodes + (id -> instance)
+                Some(instance)
+              case _ => None
             }
 
-            nodes = nodes + (id -> instance)
-            instance
         }
     }
 
@@ -138,7 +143,11 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
               unresolved.withLinkTarget(link)
             case unresolved: LinkNode =>
               unresolved.withLinkedDomainElement(link)
-            case _ => throw new Exception("Only linkable elements can be linked")
+            case _ =>
+              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
+                            instance.id,
+                            "Only linkable elements can be linked",
+                            instance.annotations)
           }
           unresolvedReferences.update(link.id, Nil)
         case ref: ExternalSourceElement =>
@@ -353,17 +362,22 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     types.get(typeString).orElse(AMFDomainRegistry.findType(typeString))
   }
 
-  private def buildType(modelType: Obj): (Annotations) => AmfObject = {
+  private def buildType(id: String, map: YMap, modelType: Obj): (Annotations) => Option[AmfObject] = {
     AMFDomainRegistry.metadataRegistry.get(modelType.`type`.head.iri()) match {
       case Some(modelType: ModelDefaultBuilder) =>
         (annotations: Annotations) =>
           val instance = modelType.modelInstance
           instance.annotations ++= annotations
-          instance
+          Some(instance)
       case _ =>
         AMFDomainRegistry.buildType(modelType) match {
-          case Some(builder) => builder
-          case _             => throw new Exception(s"Cannot find builder for node type $modelType")
+          case Some(builder) =>
+            (a: Annotations) =>
+              Some(builder(a))
+          case _ =>
+            ctx.violation(id, s"Cannot find builder for node type $modelType", map)
+            (_: Annotations) =>
+              None
         }
     }
   }
