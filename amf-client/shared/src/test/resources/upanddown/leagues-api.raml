@@ -1,0 +1,91 @@
+#%RAML 1.0
+---
+title: Leagues API
+description: Stolen from https://github.com/raml-org/raml-java-parser/blob/1.0.5/raml-parser-2/src/test/resources/org/raml/v2/api/v10/leagues/input.raml
+version: v1
+
+/leagues:
+    displayName: Leagues
+    description: World Soccer Leagues
+    get:
+        responses:
+            200:
+                body:
+                    application/json:
+                        example: 'foo'
+    post:
+        body: &league-schema
+            application/json:
+                example: |
+                    { "name": "liga criolla" }
+        responses:
+            201:
+                description: league created
+                body:
+                    text/plain: ~
+    /{leagueId}:
+        uriParameters:
+            leagueId:
+                type: string
+                pattern: '[-a-zA-Z0-9+]*'
+                minLength: 1
+                maxLength: 20
+        get:
+            responses:
+                200:
+                    body: *league-schema
+        put:
+            body: *league-schema
+            responses:
+                204:
+                    description: league modified
+        delete:
+            displayName: Delete a league
+            responses:
+                204:
+                    description: league deleted
+        /badge:
+            displayName: Badge for league
+            put:
+                body:
+                    multipart/form-data:
+                responses:
+                    200:
+                        body:
+                            application/json:
+                                example: 'foo'
+            get:
+                responses:
+                    200:
+                        body:
+                            '*/*':
+                                example: '<foo/>'
+        /teams:
+            get:
+                headers:
+                    preferred:
+                        displayName: Preferred
+                        description: preferred team
+                        type: string
+                        default: BCN
+                queryParameters:
+                    offset:
+                        displayName: Offset
+                        description: result set offset
+                        type: integer
+                        required: false
+                        minimum: 0
+                        default: 0
+                    limit:
+                        displayName: Limit
+                        description: result set size
+                        type: integer
+                        required: false
+                        minimum: 1
+                        maximum: 10
+                        default: 5
+                responses:
+                    200:
+                        body:
+                            application/json:
+                                example: 'foo'
