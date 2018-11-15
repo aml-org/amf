@@ -1186,6 +1186,18 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Generate unit with compact uris") {
+    val options = new RenderOptions().withCompactUris.withSourceMaps
+
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- amf.Core.parser(Raml10.name, "application/yaml").parseFileAsync(banking).asFuture
+      jsonld <- amf.Core.generator("AMF Graph", "application/ld+json").generateString(unit, options).asFuture
+    } yield {
+      jsonld should include("@context")
+    }
+  }
+
   test("banking-api-test") {
     for {
       _    <- AMF.init().asFuture

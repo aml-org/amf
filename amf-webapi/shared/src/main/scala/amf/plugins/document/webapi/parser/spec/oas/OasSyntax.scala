@@ -273,12 +273,10 @@ object Oas2Syntax extends SpecSyntax {
       "pattern",
       "maxItems",
       "minItems",
-      "multipleOf",
       "uniqueItems",
       "enum",
-      "deprecated",
       "multipleOf",
-      "items",
+      "deprecated",
       "example"
     ),
     "bodyParameter" -> Set(

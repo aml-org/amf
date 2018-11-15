@@ -332,7 +332,7 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
             } else {
               result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape],
                                         ordering,
-                                        Seq(ShapeModel.Description),
+                                        Seq(ShapeModel.Description, ShapeModel.DisplayName),
                                         references).entries()
             }
           }

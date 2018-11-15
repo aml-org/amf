@@ -48,7 +48,7 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
                                        validationProcessor: ValidationProcessor): validationProcessor.Return = {
 
     val fast      = validationProcessor.isInstanceOf[BooleanValidationProcessor.type]
-    val validator = if (fast) AjvValidator.fast() else AjvValidator()
+    val validator = if (fast) LazyAjv.fast else LazyAjv.default
 
     try {
       val correct = validator.validate(schema.asInstanceOf[js.Object], obj)

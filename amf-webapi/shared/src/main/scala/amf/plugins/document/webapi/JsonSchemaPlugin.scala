@@ -24,6 +24,7 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
+import amf.plugins.document.webapi.parser.spec.domain.{OasParameter, OasParameterParser}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax, _}
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
@@ -71,7 +72,34 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   def parseFragment(inputFragment: Fragment, pointer: Option[String])(
       implicit ctx: OasWebApiContext): Option[AnyShape] = {
-    val encoded: YNode = inputFragment match {
+
+    val encoded: YNode = getYNode(inputFragment, ctx)
+    val doc: Root      = getRoot(inputFragment, pointer, encoded)
+
+    parse(doc, ctx, platform, new ParsingOptions()).flatMap { parsed =>
+      parsed match {
+        case encoded: EncodesModel if encoded.encodes.isInstanceOf[AnyShape] =>
+          Some(encoded.encodes.asInstanceOf[AnyShape])
+        case _ => None
+      }
+    }
+  }
+
+  def parseParameterFragment(
+      inputFragment: Fragment,
+      pointer: Option[String],
+      parentId: String,
+      jsonContext: JsonSchemaWebApiContext)(implicit ctx: OasWebApiContext): Option[OasParameter] = {
+
+    val encoded: YNode = getYNode(inputFragment, ctx)
+    val doc: Root      = getRoot(inputFragment, pointer, encoded)
+
+    parseOasParameter(doc, ctx, parentId, jsonContext)
+
+  }
+
+  private def getYNode(inputFragment: Fragment, ctx: WebApiContext): YNode = {
+    inputFragment match {
       case fragment: ExternalFragment =>
         fragment.encodes.parsed.getOrElse {
           JsonParser
@@ -101,8 +129,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
                       "Cannot parse JSON Schema from unit with missing syntax information")
         YNode(YMap(IndexedSeq(), ""))
     }
+  }
 
-    val doc = Root(
+  private def getRoot(inputFragment: Fragment, pointer: Option[String], encoded: YNode): Root = {
+    Root(
       SyamlParsedDocument(YDocument(encoded)),
       inputFragment.location().getOrElse(inputFragment.id) + (if (pointer.isDefined) s"#${pointer.get}" else ""),
       "application/json",
@@ -110,13 +140,43 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
       SchemaReference,
       inputFragment.raw.getOrElse("")
     )
-    parse(doc, ctx, platform, new ParsingOptions()).flatMap { parsed =>
-      parsed match {
-        case encoded: EncodesModel if encoded.encodes.isInstanceOf[AnyShape] =>
-          Some(encoded.encodes.asInstanceOf[AnyShape])
-        case _ => None
-      }
+  }
+
+  private def getJsonSchemaContext(document: Root,
+                                   parentContext: ParserContext,
+                                   url: String): JsonSchemaWebApiContext = {
+    val cleanNested =
+      ParserContext(url, document.references, EmptyFutureDeclarations(), parserCount = parentContext.parserCount)
+    cleanNested.globalSpace = parentContext.globalSpace
+
+    // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
+    val inheritedDeclarations =
+      if (parentContext.isInstanceOf[Raml08WebApiContext])
+        Some(parentContext.asInstanceOf[WebApiContext].declarations)
+      else None
+
+    new JsonSchemaWebApiContext(url,
+                                document.references,
+                                cleanNested,
+                                inheritedDeclarations.map(d => toOasDeclarations(d)))
+  }
+
+  private def getRootAst(document: Root,
+                         parsedDoc: SyamlParsedDocument,
+                         shapeId: String,
+                         hashFragment: Option[String],
+                         url: String,
+                         jsonSchemaContext: JsonSchemaWebApiContext): YNode = {
+    val documentRoot = parsedDoc.document.node
+    val rootAst = findRootNode(documentRoot, jsonSchemaContext, hashFragment).getOrElse {
+      jsonSchemaContext.violation(shapeId,
+                                  s"Cannot find fragment $url in JSON schema ${document.location}",
+                                  documentRoot)
+      documentRoot
     }
+
+    jsonSchemaContext.localJSONSchemaContext = Some(documentRoot)
+    rootAst
   }
 
   /**
@@ -126,37 +186,17 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
                      parentContext: ParserContext,
                      platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
+
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
-        val parts        = document.location.split("#")
-        val shapeId      = if (document.location.contains("#")) document.location else document.location + "#/"
-        val url          = parts.head
-        val hashFragment = parts.tail.headOption
+        val shapeId: String              = if (document.location.contains("#")) document.location else document.location + "#/"
+        val parts: Array[String]         = document.location.split("#")
+        val url: String                  = parts.head
+        val hashFragment: Option[String] = parts.tail.headOption
 
-        val cleanNested =
-          ParserContext(url, document.references, EmptyFutureDeclarations(), parserCount = parentContext.parserCount)
-        cleanNested.globalSpace = parentContext.globalSpace
+        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
+        val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
 
-        // Apparently, in a RAML 0.8 API spec the JSON Schema has a closure over the schemas declared in the spec...
-        val inheritedDeclarations =
-          if (parentContext.isInstanceOf[Raml08WebApiContext])
-            Some(parentContext.asInstanceOf[WebApiContext].declarations)
-          else None
-        val jsonSchemaContext =
-          new JsonSchemaWebApiContext(url,
-                                      document.references,
-                                      cleanNested,
-                                      inheritedDeclarations.map(d => toOasDeclarations(d)))
-
-        val documentRoot = parsedDoc.document.node
-        val rootAst = findRootNode(documentRoot, jsonSchemaContext, hashFragment).getOrElse {
-          jsonSchemaContext.violation(shapeId,
-                                      s"Cannot find fragment $url in JSON schema ${document.location}",
-                                      documentRoot)
-          documentRoot
-        }
-
-        jsonSchemaContext.localJSONSchemaContext = Some(documentRoot)
         val parsed =
           OasTypeParser(YMapEntry("schema", rootAst),
                         shape => shape.withId(shapeId),
@@ -174,6 +214,27 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           DataTypeFragment().withId(document.location).withLocation(document.location).withEncodes(parsed)
         unit.withRaw(document.raw)
         Some(unit)
+
+      case _ => None
+    }
+  }
+
+  def parseOasParameter(document: Root,
+                        parentContext: ParserContext,
+                        parentId: String,
+                        ctx: JsonSchemaWebApiContext): Option[OasParameter] = {
+
+    document.parsed match {
+      case parsedDoc: SyamlParsedDocument =>
+        val shapeId: String              = if (document.location.contains("#")) document.location else document.location + "#/"
+        val parts: Array[String]         = document.location.split("#")
+        val url: String                  = parts.head
+        val hashFragment: Option[String] = parts.tail.headOption
+
+        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
+        val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
+
+        Some(OasParameterParser(Right(rootAst), parentId, None)(ctx).parse())
 
       case _ => None
     }

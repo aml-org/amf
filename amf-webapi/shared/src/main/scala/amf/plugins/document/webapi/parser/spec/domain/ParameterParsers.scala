@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{ExplicitField, LexicalInformation, SynthesizedField}
+import amf.core.annotations.{ExplicitField, LexicalInformation, SourceAST, SynthesizedField}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfScalar, DomainElement, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.annotations.{
   FormBodyParameter,
   Inferred,
@@ -13,7 +14,6 @@ import amf.plugins.document.webapi.annotations.{
   RequiredParamPayload
 }
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
-import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   Raml08TypeParser,
@@ -23,8 +23,9 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   _
 }
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
+import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toJsonSchema, toOas}
 import amf.plugins.domain.shapes.models.ExampleTracking._
-import amf.plugins.domain.shapes.models.{FileShape, NodeShape}
+import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
@@ -440,12 +441,16 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
           case Some(payload) =>
             OasParameter(payload.link(refUrl, Annotations(map)).asInstanceOf[Payload], Some(ref))
           case None =>
-            val parameter = Parameter()
-            setName(parameter)
-            parameter.adopted(parentId)
-            val oasParameter = OasParameter(parameter, Some(ref))
-            ctx.violation(s"Cannot find parameter or payload reference $refUrl", ref)
-            oasParameter
+            val fullRef = ctx.resolvedPath(ctx.rootContextDocument, refUrl)
+            ctx.parseRemoteOasParameter(fullRef, parentId)(toJsonSchema(ctx)) match {
+              case Some(oasParameter) => oasParameter
+              case _ =>
+                ctx.violation(s"Cannot find parameter or payload reference $refUrl", ref)
+                val parameter = Parameter()
+                setName(parameter)
+                parameter.adopted(parentId)
+                OasParameter(parameter, Some(ref))
+            }
         }
     }
   }

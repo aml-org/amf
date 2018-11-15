@@ -1,0 +1,195 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Leagues API",
+    "description": "Stolen from https://github.com/raml-org/raml-java-parser/blob/1.0.5/raml-parser-2/src/test/resources/org/raml/v2/api/v10/leagues/input.raml",
+    "version": "v1"
+  },
+  "paths": {
+    "/leagues": {
+      "x-amf-displayName": "Leagues",
+      "x-amf-description": "World Soccer Leagues",
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": "foo"
+            }
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "example": {
+                "name": "liga criolla"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "league created",
+            "x-amf-mediaType": "text/plain"
+          }
+        }
+      }
+    },
+    "/leagues/{leagueId}": {
+      "parameters": [
+        {
+          "name": "leagueId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "pattern": "^[-a-zA-Z0-9+]*$",
+          "minLength": 1,
+          "maxLength": 20
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "name": "liga criolla"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "x-amf-mediaType": "application/json",
+            "in": "body",
+            "name": "generated",
+            "schema": {
+              "example": {
+                "name": "liga criolla"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "league modified"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "Delete a league",
+        "responses": {
+          "204": {
+            "description": "league deleted"
+          }
+        }
+      }
+    },
+    "/leagues/{leagueId}/badge": {
+      "x-amf-displayName": "Badge for league",
+      "parameters": [
+        {
+          "name": "leagueId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "pattern": "^[-a-zA-Z0-9+]*$",
+          "minLength": 1,
+          "maxLength": 20
+        }
+      ],
+      "put": {
+        "parameters": [
+          {
+            "x-amf-mediaType": "multipart/form-data",
+            "in": "body",
+            "name": "generated",
+            "schema": {}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": "foo"
+            }
+          }
+        }
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "*/*",
+            "schema": {
+              "example": "<foo/>"
+            }
+          }
+        }
+      }
+    },
+    "/leagues/{leagueId}/teams": {
+      "parameters": [
+        {
+          "name": "leagueId",
+          "required": true,
+          "in": "path",
+          "type": "string",
+          "pattern": "^[-a-zA-Z0-9+]*$",
+          "minLength": 1,
+          "maxLength": 20
+        }
+      ],
+      "get": {
+        "parameters": [
+          {
+            "name": "offset",
+            "description": "result set offset",
+            "required": false,
+            "in": "query",
+            "default": 0,
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "limit",
+            "description": "result set size",
+            "required": false,
+            "in": "query",
+            "default": 5,
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          {
+            "name": "preferred",
+            "description": "preferred team",
+            "required": true,
+            "in": "header",
+            "default": "BCN",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": "foo"
+            }
+          }
+        }
+      }
+    }
+  }
+}
