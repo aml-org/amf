@@ -160,5 +160,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("/null-value-json.raml", Some("null-value-json.report"))
   }
 
+  test("Error when overriding file schema") {
+    validate("file-schema-override/api.raml", Some("file-override-schema.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

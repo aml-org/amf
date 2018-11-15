@@ -26,7 +26,7 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
-import amf.plugins.domain.shapes.models._
+import amf.plugins.domain.shapes.models.{ScalarType, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.features.validation.ParserSideValidations
@@ -176,13 +176,12 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
         val map = node.as[YMap]
         map
           .key("schema")
-          .fold({
+          .fold {
             Option(SimpleTypeParser(name, adopt, map, defaultType.typeDef).parse())
-          })(_ => {
+          } { _ =>
             val maybeShape = Raml08SchemaParser(map, adopt).parse()
 
-            maybeShape.map(s => {
-
+            maybeShape.map { s =>
               val inherits = s.meta.modelInstance.withName("inherits")
               adopt(inherits)
 
@@ -191,12 +190,12 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
                                       inherits.withExample,
                                       ExampleOptions(strictDefault = true, quiet = true).checkScalar(s))
                 .parse()
-                .fold(s)(e => {
+                .fold(s) { e =>
                   inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
                   inherits.setArray(ScalarShapeModel.Examples, Seq(e))
-                })
-            })
-          })
+                }
+            }
+          }
       case YType.Seq =>
         Option(
           Raml08UnionTypeParser(UnionShape(node).withName(name).adopted(shape.id), node.as[Seq[YNode]], node).parse())
@@ -265,7 +264,6 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
       }
     }
   }
-
 }
 
 case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPart, adopt: Shape => Shape)(
@@ -274,7 +272,9 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
     val product: Option[AnyShape] = defaultType match {
       case NilType =>
         Some(NilShape().withName(name).add(Inferred()))
-      case StrType =>
+      case FileType =>
+        Some(FileShape(ast).withName(name))
+      case _: ScalarType =>
         Some(ScalarShape()
           .withName(name)
           .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
@@ -332,13 +332,15 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
     } else {
       val shape: AnyShape = map
         .key("type")
-        .flatMap(e => {
+        .flatMap { e =>
           e.value.tagType match {
             case YType.Null => None
             case _          => e.value.toOption[YScalar]
           }
-        })
-        .fold(Raml08DefaultTypeParser(defaultType, name, map, adopt).parse())(value => {
+        }
+        .fold {
+          Raml08DefaultTypeParser(defaultType, name, map, adopt).parse()
+        } { value =>
           XsdTypeDefMapping.xsdFromString(value.text) match {
             case (Some(iri: String), format: Option[String])
                 if iri.equals((Shapes + "file").iri()) => // handle file type in 08 as FileShape for compatibility
@@ -355,7 +357,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
               ctx.violation(s"Invalid type def ${value.text} for ${Raml08.name}", value)
               None
           }
-        })
+        }
         .getOrElse(ScalarShape(map).withDataType((Namespace.Xsd + "string").iri()).withName(name))
 
       map.key("type", e => { shape.annotations += TypePropertyLexicalInfo(Range(e.key.range)) })

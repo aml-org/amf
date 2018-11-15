@@ -6,16 +6,16 @@ import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
 import amf.plugins.document.webapi.parser.spec.declaration.{
   AbstractDeclarationParser,
   Raml08TypeParser,
   SecuritySchemeParser
 }
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Parameter, Payload}
-import org.yaml.model.{YMap, YMapEntry, YType}
+import amf.plugins.features.validation.ParserSideValidations
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 /**
   * Raml 0.8 spec parser
@@ -105,6 +105,15 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
   private def parseSchemaEntries(entries: Seq[YMapEntry], parent: String): Unit = {
     entries.foreach { entry =>
+      if (RamlTypeDefMatcher.match08Type(entry.key).isDefined) {
+        ctx.violation(
+          ParserSideValidations.ParsingErrorSpecification.id,
+          parent,
+          s"'${entry.key.as[String]}' cannot be used to name a custom type",
+          entry.key
+        )
+      }
+
       Raml08TypeParser(entry,
                        shape => shape.withName(entry.key).adopted(parent),
                        isAnnotation = false,
