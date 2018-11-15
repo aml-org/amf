@@ -37,25 +37,27 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
                      text: CharSequence,
                      ctx: ParserContext,
                      options: ParsingOptions): Option[ParsedDocument] = {
-
-    if ((mediaType == "application/ld+json" || mediaType == "application/json") && !options.isAmfJsonLdSerilization && platform.rdfFramework.isDefined) {
-      platform.rdfFramework.get.syntaxToRdfModel(mediaType, text)
-    } else {
-      val parser = getFormat(mediaType) match {
-        case "json" =>
-          JsonParser.withSource(text, ctx.currentFile)(ctx) //include tag only for raml right? so only for yaml
-        case _ => YamlParser(text, ctx.currentFile)(ctx).withIncludeTag("!include")
-      }
-      val parts = parser.parse(true)
-
-      if (parts.exists(v => v.isInstanceOf[YDocument])) {
-        parts collectFirst { case d: YDocument => d } map { document =>
-          val comment = parts collectFirst { case c: YComment => c }
-          SyamlParsedDocument(document, comment)
-        }
+    if (text.length() == 0) None
+    else {
+      if ((mediaType == "application/ld+json" || mediaType == "application/json") && !options.isAmfJsonLdSerilization && platform.rdfFramework.isDefined) {
+        platform.rdfFramework.get.syntaxToRdfModel(mediaType, text)
       } else {
-        parts collectFirst { case d: YComment => d } map { comment =>
-          SyamlParsedDocument(YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile), Some(comment))
+        val parser = getFormat(mediaType) match {
+          case "json" =>
+            JsonParser.withSource(text, ctx.currentFile)(ctx) //include tag only for raml right? so only for yaml
+          case _ => YamlParser(text, ctx.currentFile)(ctx).withIncludeTag("!include")
+        }
+        val parts = parser.parse(true)
+
+        if (parts.exists(v => v.isInstanceOf[YDocument])) {
+          parts collectFirst { case d: YDocument => d } map { document =>
+            val comment = parts collectFirst { case c: YComment => c }
+            SyamlParsedDocument(document, comment)
+          }
+        } else {
+          parts collectFirst { case d: YComment => d } map { comment =>
+            SyamlParsedDocument(YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile), Some(comment))
+          }
         }
       }
     }

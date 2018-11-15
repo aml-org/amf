@@ -156,5 +156,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("/securitySchemes/invalid-key.raml", Some("invalid-key.report"))
   }
 
+  test("Test null value in json when expecting scalar value") {
+    validate("/null-value-json.raml", Some("null-value-json.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

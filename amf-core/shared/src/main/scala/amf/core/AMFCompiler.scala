@@ -168,9 +168,9 @@ class AMFCompiler(val rawUrl: String,
     parsed match {
       case Left(content) =>
         mediaType match {
-          case Some(mime) if AMFPluginsRegistry.syntaxPluginForMediaType(mime).isEmpty =>
-            throw new UnsupportedMediaTypeException(mime) // Fail with root only
-          case _ => parseExternalFragment(content)
+          // if is Left (empty or other error) and is root (context.history.length == 1), then return an error
+          case Some(mime) if context.history.length == 1 => throw new UnsupportedMediaTypeException(mime)
+          case _                                         => parseExternalFragment(content)
         }
       case Right(document) => parseDomain(document)
     }
