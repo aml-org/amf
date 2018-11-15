@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: test
+
+resourceTypes:
+  collection:
+    get:
+      securedBy: [oauth_2_0]
+      description: Get a list of <<resourcePathName>>.
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                <<exampleCollection>>
+
+
+/catalogs:
+  type:
+    collection:
+      exampleCollection: !include catalogcollectionexample

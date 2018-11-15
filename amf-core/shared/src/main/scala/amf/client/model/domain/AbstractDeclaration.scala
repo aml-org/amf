@@ -8,7 +8,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 @JSExportTopLevel("model.domain.AbstractDeclaration")
-abstract class AbstractDeclaration(private[amf] val _internal: InternalAbstractDeclaration)
+class AbstractDeclaration(private[amf] val _internal: InternalAbstractDeclaration)
     extends DomainElement
     with Linkable {
 
@@ -36,4 +36,8 @@ abstract class AbstractDeclaration(private[amf] val _internal: InternalAbstractD
     _internal.withVariables(variables.asInternal)
     this
   }
+
+  override def linkTarget: ClientOption[DomainElement] = throw new Exception("AbstractDeclaration is abstract")
+
+  override def linkCopy(): AbstractDeclaration = throw new Exception("AbstractDeclaration is abstract")
 }

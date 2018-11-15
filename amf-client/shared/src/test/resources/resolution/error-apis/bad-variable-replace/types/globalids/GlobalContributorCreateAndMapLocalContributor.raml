@@ -1,0 +1,31 @@
+#%RAML 1.0 DataType
+
+description: Object used for creating a new GlobalContributor and mapping a reference to an existing LocalContributor
+type: object
+properties:
+  localContributorId:
+    description: Unique Idenifier for a local Contributor 
+    type: string
+    required: true
+    example: "42855"
+  owningEntity:
+    description: Legal entity that owns the LocalContributor entity
+    type: string
+    required: true
+    example: HCUS
+  globalDisplayName:
+    description: Contributors globally displayed name within HarperCollins
+    type: string
+    required: true
+    example: Samuel Clemens
+  authorStatus:
+    description: living status of the Contributor
+    enum: [dead, alive]
+    required: true
+    example: dead
+  pseudonym:
+    description: Name that appears on published entities if different from actual name
+    type: string
+    required: true
+    example: Mark Twain
+  

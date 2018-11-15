@@ -44,8 +44,8 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
       } else {
         val parser = getFormat(mediaType) match {
           case "json" =>
-            JsonParser.withSource(text, ctx.currentFile)(ctx) //include tag only for raml right? so only for yaml
-          case _ => YamlParser(text, ctx.currentFile)(ctx).withIncludeTag("!include")
+            JsonParser.withSource(text, ctx.rootContextDocument)(ctx) //include tag only for raml right? so only for yaml
+          case _ => YamlParser(text, ctx.rootContextDocument)(ctx).withIncludeTag("!include")
         }
         val parts = parser.parse(true)
 
@@ -56,7 +56,7 @@ object SYamlSyntaxPlugin extends AMFSyntaxPlugin with PlatformSecrets {
           }
         } else {
           parts collectFirst { case d: YComment => d } map { comment =>
-            SyamlParsedDocument(YDocument(IndexedSeq(YNode(YMap.empty)), ctx.currentFile), Some(comment))
+            SyamlParsedDocument(YDocument(IndexedSeq(YNode(YMap.empty)), ctx.rootContextDocument), Some(comment))
           }
         }
       }

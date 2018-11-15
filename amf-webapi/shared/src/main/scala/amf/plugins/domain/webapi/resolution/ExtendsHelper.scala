@@ -228,7 +228,7 @@ object ExtendsHelper {
           case (alias, (fullUrl, _)) =>
             // If the library alias is already in the context, skip it
             if (m.id == fullUrl && !ctx.declarations.libraries.exists(_._1 == alias)) {
-              val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext())
+              val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(), eh = ctx.eh)
               m.declares.foreach { declaration =>
                 processDeclaration(declaration, nestedCtx, m)
               }

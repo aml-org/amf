@@ -39,8 +39,9 @@ import scala.concurrent.Future
 class JsonSchemaWebApiContext(loc: String,
                               refs: Seq[ParsedReference],
                               private val wrapped: ParserContext,
-                              private val ds: Option[OasWebApiDeclarations])
-    extends OasWebApiContext(loc, refs, wrapped, ds) {
+                              private val ds: Option[OasWebApiDeclarations],
+                              override val eh: Option[ErrorHandler] = None)
+    extends OasWebApiContext(loc, refs, wrapped, ds, eh) {
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax
   override val vendor: Vendor                 = Oas30

@@ -66,8 +66,8 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
-    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext())
-    case _             => new Raml10WebApiContext("", Nil, ParserContext())
+    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(), eh = Some(errorHandler))
+    case _             => new Raml10WebApiContext("", Nil, ParserContext(), eh = Some(errorHandler))
   }
 
   def removeExtends(document: Document): BaseUnit = {

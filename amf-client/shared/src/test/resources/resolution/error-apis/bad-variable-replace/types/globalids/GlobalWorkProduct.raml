@@ -1,0 +1,131 @@
+#%RAML 1.0 DataType
+
+type: object
+description: A product consists of a single format/distribution of a work and can be uniquely identified by its ISBN.
+properties:
+  id:
+    description: The ISBN of the product.
+    required: false
+    type: string
+    example: "9780061656866  "
+  href:
+    description: The unique URI of the product.
+    required: false
+    type: string
+    example: https://svcsqa.harpercollins.com/GlobalIdentifiers/v1/Products/9780061656866
+  authorName:
+    description: The name of the author of the product
+    required: false
+    type: string
+    example: Barb Bersche
+  bisac:
+    description: The BISAC for the product.
+    required: false
+    type: string
+    example: JUV027000
+  currentAuthorIDs:
+    description: The list of local author IDs assigned to the product
+    required: false
+    type: array
+    items: string
+    minItems: 0
+  dateLastUpdated:
+    description: The date the product object was last updated in the global id database.
+    required: false
+    type: string
+    example: 11/24/2015 10:27:28 AM
+  description:
+    description: Description of the product
+    required: false
+    type: string
+    example: "This must be a description"
+  format:
+    description: The format of the product.
+    required: false
+    type: string
+    example: Mrchdse   
+  globalAuthorID:
+    description: The GlobalAuthorID this product is mapped to.
+    required: false
+    type: string
+    example: ""
+  globalWorkID:
+    description: The GlobalWorkID this product is mapped to.
+    required: false
+    type: string
+    example: ""
+  hcusAcquisitionID:
+    description: The HarperCollins US specific acquisition ID.
+    required: false
+    type: string
+    example: "43774"
+  imprint:
+    description: The Imprint of the product.
+    required: false
+    type: string
+    example: "Festival  "
+  isbn:
+    description: The ISBN 13 of the product.
+    required: false
+    type: string
+    example: "9780061656866  "
+  mapped:
+    description: Is this product mapped to a Global Work?
+    required: false
+    type: boolean
+    example: true
+  marketingMaterial:
+    description: Is this product marketing material?
+    required: false
+    type: boolean
+    example: false
+  modifiedBy:
+    description: The ID of the last person to update this product.
+    required: false
+    type: string
+    example: PIX Auto Update
+  onixDisplayTitle:
+    description: The title of the product as distributed in ONIX.
+    required: false
+    type: string
+    example: ""
+  owningEntity:
+    description: The HarperCollins Entity that owns this product.
+    required: false
+    type: string
+    example: HCUS
+  packFlag:
+    description: Is this product a pack?
+    required: false
+    type: boolean
+    example: true
+  publicationYear:
+    description: The year of publication of this product.
+    required: false
+    type: string
+    example: "2009"
+  title1:
+    description: A title for this product.
+    required: false
+    type: string
+    example: "Where The Wild Things Are: The Movie Storybook"
+  title2:
+    description: A title for this product.
+    required: false
+    type: string
+    example: "Where The Wild Things Are: The Movie Storybook"
+  title3:
+    description: A title for this product.
+    required: false
+    type: string
+    example: "Where Wild Things Movie Strybk"
+  title4:
+    description: A title for this product.
+    required: false
+    type: string
+    example: "Where The Wild Things Are: The Movie Storybook"
+  title5:
+    description: A title for this product.
+    required: false
+    type: string
+    example: "Where The Wild Things Are: The Movie Storybook"

@@ -42,7 +42,7 @@ object Raml10TypeParser {
             isAnnotation: Boolean = false,
             defaultType: DefaultType = StringDefaultType)(implicit ctx: RamlWebApiContext): Raml10TypeParser =
     new Raml10TypeParser(Left(entry), entry.key.as[YScalar].text, adopt, isAnnotation, defaultType)(
-      new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
+      new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), ctx.eh))
 
   def apply(node: YNode, name: String, adopt: Shape => Shape, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml10TypeParser =

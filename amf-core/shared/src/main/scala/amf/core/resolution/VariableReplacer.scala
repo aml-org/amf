@@ -72,7 +72,7 @@ object VariableReplacer {
             }
             .orElse(Some(text))
         case node =>
-          errorFunction(s"Variable '$name' cannot be replaced with type $node")
+          errorFunction(s"Variable '$name' cannot be replaced with type ${node.getClass.getName}")
           None
       }
       .getOrElse(name)

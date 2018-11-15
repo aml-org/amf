@@ -1,0 +1,52 @@
+#%RAML 1.0 DataType
+
+description: Root GlobalContributor resource
+type: object
+properties:
+  id:
+    type: string
+    example: "880000030958"
+    required: false
+  href:
+    type: string
+    example: https://svcsqa.harpercollins.com/GlobalIdentifiers/v1/GlobalAuthors/880000030958
+    required: false
+  authorStatus:
+    type: string
+    example: none
+    required: false
+  dateLastUpdated:
+    type: string
+    required: false
+  localAuthors: 
+    type: array
+    items: GlobalContributorLocalContributor
+    required: false
+  displayName:
+    type: string
+    example: Veronica Brady
+    required: false
+  globalWorks:
+    type: string
+    example: https://svcsqa.harpercollins.com/GlobalIdentifiers/v1/GlobalWorks?GlobalAuthorID=880000030958
+    required: false
+  modifiedBy:
+    type: string
+    example: PIX Auto Update
+    required: false
+  pseudonym:
+    type: string
+    example: Mark Twain
+    required: false
+#  mapLocalContributor:
+#    type: url
+#    example: "https://svcsqa.harpercollins.com/globalidentifiers/v1/GlobalAuthors/10100/MapLocalAuthor?AuthorID={0}&OwningEntity={1}"
+#  unMapLocalContributor: 
+#    type: url
+#    example: "https://svcsqa.harpercollins.com/globalidentifiers/v1/GlobalAuthors/10100/UnMapLocalAuthor?AuthorID={0}&OwningEntity={1}"
+#  mapGlobalWork:
+#    type: url
+#   example: "https://svcsqa.harpercollins.com/globalidentifiers/v1/GlobalAuthors/10100/MapWork?WorkID={0}"
+#  unMapGlobalWork:
+#    type: url
+#    example: "https://svcsqa.harpercollins.com/globalidentifiers/v1/GlobalAuthors/10100/UnMapWork?WorkID={0}"

@@ -1,0 +1,49 @@
+#%RAML 1.0 DataType
+
+type: object
+description: A product consists of a single format/distribution of a work and can be uniquely identified by its ISBN.
+properties:
+  id:
+    description: The ISBN of the product.
+    required: false
+    type: string
+    example: "9780061656866  "
+  name:
+    description: The title of the product
+    required: false
+    type: string
+    example: In The End
+  bisac:
+    description: The BISAC for the product.
+    required: false
+    type: string
+    example: JUV027000  
+  globalAuthorID:
+    description: The GlobalAuthorID this product is mapped to.
+    required: false
+    type: string
+    example: ""
+  imprint:
+    description: The Imprint of the product.
+    required: false
+    type: string
+    example: "Festival  "
+  isbn:
+    description: The ISBN 13 of the product.
+    required: false
+    type: string
+    example: "9780061656866  "
+  owningEntity:
+    description: The HarperCollins Entity that owns this product.
+    required: false
+    type: string
+    example: HCUS
+  pubYear:
+    description: The year of publication of this product.
+    required: false
+    type: string
+    example: "2009"
+  entitySpecificAuthorID:
+    description: The Entity Specific Author ID
+    required: false
+    type: string

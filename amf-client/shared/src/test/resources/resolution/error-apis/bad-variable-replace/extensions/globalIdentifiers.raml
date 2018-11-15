@@ -1,0 +1,424 @@
+displayName: GlobalWorks GlobalIdentifiers API
+description: The purpose of this resource is to C.R.U.D relationships between GlobalContributor, LocalContributor and GlobalWorks.
+/localcontributors:
+  get:
+    description: Get any localContributor
+    queryParameters:
+      id:
+        description: id of the local contributor
+        type: number
+        required: false
+        example: 42472    
+      firstName: 
+        description: Contributor's first name
+        type: string
+        required: false
+        example: Samuel
+      lastName:
+        description: Contributor's last name
+        type: string
+        required: false
+        example: Clemens
+      fullName:
+        description: Contributor's full name
+        type: string
+        required: false
+        example: Samuel Clemens
+      owningEntity:
+        description: Legal entity that owns the LocalContributor entity 
+        type: string
+        required: false
+        example: HCUS
+    responses:
+      200:
+        body:
+          application/json:
+            type: LocalContributors
+  post:
+    description: Create a new LocalContributor
+    body:
+      application/json: 
+        type: LocalContributorCreate
+    responses:
+      200: 
+        body:
+          application/json:
+            type: LocalContributor            
+  /{localContributorId}:
+    uriParameters: 
+      localContributorId:
+        type: string
+        required: true
+        description: ID of the localcontributor
+        example: HCUS.42472
+    get:
+      description: Get specific local contributor
+      responses:
+        200:
+          body:
+            application/json:
+              type: LocalContributor
+    put:
+      description: Update LocalContributor
+      body:
+        application/json:
+          type: LocalContributor
+      responses:
+        200:
+          description: Sucessfully Updated LocalContributor
+          body:
+            application/json:
+              type: LocalContributor
+  /_search:
+    post:
+      description: search for localContributors from json
+      body:
+        application/json:
+          type: LocalContributorSearch
+      responses:
+        200:
+          body:
+            application/json:
+              type: LocalContributors
+/globalcontributors:
+  get: 
+      queryParameters: 
+        fullName:
+          type: string
+          required: false
+          description: Authors full name
+        firstName:
+          type: string
+          required: false
+          description: Authors first name
+        lastName:
+          type: string
+          required: false
+          description: Authors last name
+        globalContibutorId:
+          type: number
+          required: false
+          description: GlobalContributor id of existing globalContributor record
+        owningEntity:
+          type: string
+          required: false
+          description: Owning entity within the HarperCollins global organization (e.g. HCUS, HCUK)
+      responses:
+        200:
+          body:
+            application/json:
+              type: GlobalContributors
+  post:
+    description: Create a new Globalcontributor and map it to existing LocalContributor
+    body: 
+      application/json:
+        type: GlobalContributorCreateAndMapLocalContributor
+    responses:
+      200: 
+        description: Successfully Created
+        body:
+          application/json:
+            type: GlobalContributor  
+  
+  /_search:
+    post:
+      description: search for GlobalContributors by body
+      body: 
+        application/json:
+          type: GlobalContributorSearch
+      responses:
+        200: 
+          body: 
+            application/json:
+              type: GlobalContributors
+  /{globalContributorId}:
+    uriParameters: 
+      globalContributorId: 
+        type: number
+        required: true
+        description: GlobalContributor id of existing globalContributor record
+    description: Search for an contributor by GlobalContributorId
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: GlobalContributors
+    put:
+      description: update existing globalContributor
+      body:
+        application/json:
+          type: GlobalContributor
+      responses:
+        200: 
+          description: Successfully Updated globalContributor
+    /mappings:
+      /globalwork/{globalWorkId}:
+        uriParameters: 
+          globalWorkId:
+            type: string
+            required: true
+            description: key used as a reference to the globalWorkId
+        post:
+          description: Map reference between existing GlobalContributor to Exisiting GlobalWork
+          responses:
+            200: 
+              description: Succesfully Mapped GlobalContributor and GlobalWork
+            400:
+              description: Bad Request
+        delete:
+          description: Unmap reference between GlobalContributor and GlobalWork
+          responses:
+            200: 
+              description: Succesfully umapped GlobalContributor and GlobalWork
+            400:
+              description: Bad Request
+      /localcontributor/{localContributorId}:
+        uriParameters: 
+          localContributorId:
+            description: localContributor unique identifier
+            type: string
+            required: true
+        post:
+          description: Map reference between existing GlobalContributor and LocalContrubtor by id
+          responses:
+            200: 
+              description: Successfully unmap GlobalContributor and LocalContributor
+              body:
+                application/json:
+            400:
+              description: Bad Request   
+        delete:
+          description: Unmap GlobalContributor and LocalContrubtor references by Id
+          responses:
+            200: 
+              description: Successfully unmap GlobalContributor and LocalContributor
+              body:
+                application/json:
+            400:
+              description: Bad Request
+/products:
+  get:
+    description: search for product by queryparams, note at least 1 queryParam is required
+    queryParameters:
+      productId:
+        description: The Local ID of the product (usually ISBN).
+        type: number
+        required: false
+      name:
+        description: The title of the product.
+        type: string
+        required: false
+      owningEntity:
+        description: The owning entity of the product.
+        type: string
+        required: false
+      isbn:
+        description: The ISBN to find the product.
+        type: string
+        required: false
+      globalAuthorID:
+        description: The GlobalAuthorID to find product.
+        type: number 
+        required: false 
+      bisac:
+        description: The BISAC to find product.
+        type: string
+        required: false  
+      pubYear:
+        description: The Publication Year to find product.
+        type: number  
+        required: false
+      imprint:
+        description: The Imprint to find Works.
+        type: string  
+        required: false
+      entitySpecificAuthorID:
+        description: The EntitySpecificAuthorID to find Works.
+        type: string 
+        required: false
+    responses:
+      200:
+        body:
+          application/json:
+            type: Products
+  post:
+    description: Create a new Product Instance
+    body:
+      application/json:
+        type: ProductCreate
+    responses:
+      200:
+        description: Succesfully created new product
+        body: 
+          application/json:
+            example: "Succesfully created new product"
+      400:
+        description: Bad Request
+  /{productId}:
+    uriParameters: 
+      productId: 
+        type: string
+        required: true
+        description: unique product identifier
+    get:
+      description: Get unique product record
+      queryParameters: 
+        owningEntity:
+          description: The Owning entity of the Global Work
+          required: false
+          type: string 
+      responses:
+        200:
+          description: Successfully Searched
+          body:
+            application/json:
+              type: Product
+    put:
+      description: update existing product
+      body:
+        application/json:
+          type: Product
+      responses:
+        200:
+          description: Succesfully updated product
+          body: 
+            application/json:
+              type: string
+              example: "Succesfully updated product"
+  /_search:
+    post:
+      description: search for products by json payload. 
+      body: 
+        application/json:
+          type: ProductSearch
+      responses:
+        200:
+          description: Successfully Searched
+          body:
+            application/json:
+              type: Products
+          
+
+/globalworks:
+  get:
+    description: search for globalworks by queryParameters
+    queryParameters: 
+      globalWorkId:
+        description: The GlobalWorkID for the work.
+        required: false
+        type: number  
+      name:
+        description: The title of the Global Work.
+        required: false
+        type: string  
+      owningEntity:
+        description: The Owning entity of the Global Work
+        required: false
+        type: string  
+      isbn:
+        description: An ISBN mapped to the Global Work.
+        required: false
+        type: string  
+      globalAuthorID:
+        description: The GlobalAuthorID to find Works for.
+        required: false
+        type: string  
+      bisac:
+        description: The BISAC to find Works for.
+        required: false
+        type: string  
+      pubYear:
+        description: The Publication Year to find Works for.
+        required: false
+        type: number  
+      imprint:
+        description: The Imprint to find Works for.
+        required: false
+        type: string  
+      entitySpecificAuthorID:
+        description: The EntitySpecificAuthorID to find Works for.
+        required: false
+        type: string
+    responses:
+      200:
+        body:
+          application/json:
+            type: GlobalWorks
+  post:
+    description: Create new globalWork record linked to a Product
+    body:
+      application/json:
+        type: GlobalWork
+    responses:
+      200: 
+        description: Successfully Created GlobalWork and Mapped Product
+        body:
+          application/json:
+            example: "A timestamp-style response passed from SVCS backend"
+  /_search:
+    post:
+      description: search for GlobalWork by json
+      body: 
+        application/json:
+          type: GlobalWorkSearch
+      responses:
+        200: 
+          body:
+            application/json:
+              type: GlobalWorks
+  /{globalWorkId}:
+    uriParameters: 
+      globalWorkId:
+        type: number
+        required: true
+        example: 20901
+    get:
+      description: get GlobalWork by unqiue identifier
+      responses:
+       200:
+         body:
+           application/json: 
+             type: GlobalWork
+    put:
+      description: Update existing GlobalWork
+      body: 
+        application/json:
+          type: GlobalWork
+      responses:
+        200:
+          description: Successfully Updated Globalwork Record
+    /mappings:
+      /product/{productId}:
+        uriParameters:
+          productId:
+            type: string
+            required: true
+            description: Unique identifiers for product
+        post:
+          description: Map reference between existing GlobalWork and Exisiting Product
+          responses:
+            200: 
+              description: Succesfully Mapped GlobalWork and Product
+        delete:
+          description: Unmap reference between GlobalWork and Product
+          responses:
+            200: 
+              description: Succesfully umapped GlobalWork and Product
+      /globalcontributor/{globalContributorId}:
+        uriParameters:
+          globalContributorId: 
+            type: any
+            required: true
+            description: GlobalContributor id of existing globalContributor record
+        post:
+          description: Map reference between existing GlobalWork to Exisiting GlobalContributor
+          responses:
+            200: 
+              description: Succesfully Mapped GlobalWork and GlobalContributor
+        delete:
+          description: Unmap reference between GlobalWork and GlobalContributor
+          responses:
+            200: 
+              description: Succesfully umapped GlobalWork and GlobalContributor
+    

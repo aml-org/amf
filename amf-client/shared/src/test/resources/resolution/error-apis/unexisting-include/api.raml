@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: test
+version: 1.0
+
+uses:
+  emailDomainType: dataTypes/EmailDomainType.raml
+  collectionsTypes: resourceTypes/CollectionTypes.raml
+
+
+/domain/{domainType}:
+  type:  { collectionsTypes.immutableCollection: {collectionItem : Domain, itemType : emailDomainType.EmailDomainType} }

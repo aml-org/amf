@@ -180,17 +180,20 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 object EmptyFutureDeclarations {
   def apply(): FutureDeclarations = new FutureDeclarations {}
 }
+
+case class ParserDefaultErrorHandler(override val parserCount: Int, override val currentFile: String)
+    extends RuntimeErrorHandler
+
 case class ParserContext(rootContextDocument: String = "",
                          refs: Seq[ParsedReference] = Seq.empty,
                          futureDeclarations: FutureDeclarations = EmptyFutureDeclarations(),
-                         parserCount: Int = AMFCompilerRunCount.nextRun())
-    extends RuntimeErrorHandler {
-
-  override val currentFile: String = rootContextDocument
+                         parserCount: Int = AMFCompilerRunCount.nextRun(),
+                         eh: Option[ErrorHandler] = None)
+    extends ErrorHandler {
 
   var globalSpace: mutable.Map[String, Any] = mutable.Map()
 
-  def violation(node: String, message: String): Unit = violation(node, message, currentFile)
+  def violation(node: String, message: String): Unit = violation(node, message, rootContextDocument)
 
   def forLocation(newLocation: String): ParserContext = {
     val copied: ParserContext = this.copy(rootContextDocument = newLocation)
@@ -216,6 +219,33 @@ case class ParserContext(rootContextDocument: String = "",
     val context = this.copy(refs = this.refs ++ getSonsParsedReferences)
     context.globalSpace = this.globalSpace
     context
+  }
+  override def reportConstraint(id: String,
+                                node: String,
+                                property: Option[String],
+                                message: String,
+                                lexical: Option[LexicalInformation],
+                                level: String,
+                                location: Option[String]): Unit = {
+    eh match {
+      case Some(errorHandler) =>
+        errorHandler.reportConstraint(id,
+                                      node,
+                                      property,
+                                      message,
+                                      lexical,
+                                      level,
+                                      location.orElse(Some(rootContextDocument)))
+      case _ =>
+        RuntimeValidator.reportConstraintFailure(level,
+                                                 id,
+                                                 node,
+                                                 property,
+                                                 message,
+                                                 lexical,
+                                                 parserCount,
+                                                 location.orElse(Some(rootContextDocument)))
+    }
   }
 }
 
