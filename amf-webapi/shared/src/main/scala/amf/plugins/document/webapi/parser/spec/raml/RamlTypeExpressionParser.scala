@@ -64,7 +64,9 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
           parsingArray = true
           parseInput(input.tail)
         case ']' =>
-          if (!parsingArray) { throw new Exception("Syntax error, Not matching ]") }
+          if (!parsingArray) {
+            ctx.violation("", "Syntax error, Not matching ]", lexical, location)
+          }
           parsingArray = false
           parsedShape = Some(toArray)
           parseInput(input.tail)

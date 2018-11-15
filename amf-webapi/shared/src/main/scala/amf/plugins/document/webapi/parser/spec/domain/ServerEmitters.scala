@@ -6,7 +6,7 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{FieldEntry, Position, Value}
+import amf.core.parser.{ErrorHandler, FieldEntry, Position, Value}
 import amf.plugins.document.webapi.contexts.{
   OasSpecEmitterContext,
   RamlScalarEmitter,
@@ -184,7 +184,9 @@ private case class OasServerVariablesEmitter(f: FieldEntry, ordering: SpecOrderi
 }
 
 /** This emitter reduces the parameter to the fields that the oas3 variables support. */
-private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecOrdering) extends EntryEmitter {
+private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       variable.name.value(),
@@ -199,12 +201,12 @@ private case class OasServerVariableEmitter(variable: Parameter, ordering: SpecO
 
     fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
 
-    fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering))
+    fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering)(spec))
 
     fs.entry(ShapeModel.Default) match {
       case Some(f) =>
         result += EntryPartEmitter("default",
-                                   DataNodeEmitter(shape.default, ordering),
+                                   DataNodeEmitter(shape.default, ordering)(spec.eh),
                                    position = pos(f.value.annotations))
       case None => result += MapEntryEmitter("default", "")
     }

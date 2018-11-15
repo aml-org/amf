@@ -5,10 +5,10 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.Position
+import amf.core.parser.{ErrorHandler, Position}
 import amf.core.parser.Position.ZERO
 import amf.core.remote.Oas
-import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, OasSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -50,8 +50,8 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     val typeEmitter: OasFragmentTypeEmitter = fragment match {
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)
       case dt: DataTypeFragment                  => DataTypeFragmentEmitter(dt, ordering)
-      case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)
-      case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)
+      case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)(spec.eh)
+      case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)(spec.eh)
       case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
       case sc: SecuritySchemeFragment            => SecuritySchemeFragmentEmitter(sc, ordering)
       case ne: NamedExampleFragment              => NamedExampleFragmentEmitter(ne, ordering)
@@ -105,26 +105,28 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
       }
   }
 
-  case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)
+  case class ResourceTypeFragmentEmitter(resourceTypeFragment: ResourceTypeFragment, ordering: SpecOrdering)(
+      implicit eh: ErrorHandler)
       extends OasFragmentTypeEmitter {
 
     override val header = OasHeaderEmitter(OasHeader.Oas20ResourceType)
 
     val emitters: Seq[EntryEmitter] =
-      DataNodeEmitter(resourceTypeFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)
+      DataNodeEmitter(resourceTypeFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)(eh)
         .emitters() collect {
         case e: EntryEmitter => e
         case other           => throw new Exception(s"Fragment not encoding DataObjectNode but $other")
       }
   }
 
-  case class TraitFragmentEmitter(traitFragment: TraitFragment, ordering: SpecOrdering)
+  case class TraitFragmentEmitter(traitFragment: TraitFragment, ordering: SpecOrdering)(implicit eh: ErrorHandler)
       extends OasFragmentTypeEmitter {
 
     override val header = OasHeaderEmitter(OasHeader.Oas20Trait)
 
     val emitters: Seq[EntryEmitter] =
-      DataNodeEmitter(traitFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering).emitters() collect {
+      DataNodeEmitter(traitFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)(eh)
+        .emitters() collect {
         case e: EntryEmitter => e
         case other           => throw new Exception(s"Fragment not encoding DataObjectNode but $other")
       }
@@ -159,16 +161,20 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
 
 }
 
-class JsonSchemaValidationFragmentEmitter(fragment: DataTypeFragment)(implicit override val spec: JsonSchemaEmitterContext) extends OasFragmentEmitter(fragment) {
+class JsonSchemaValidationFragmentEmitter(fragment: DataTypeFragment)(
+    implicit override val spec: JsonSchemaEmitterContext)
+    extends OasFragmentEmitter(fragment) {
 
   override def emitFragment(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Oas, fragment.annotations)
-    val closureShapes = fragment.encodes.closureShapes.toSeq
+    val closureShapes          = fragment.encodes.closureShapes.toSeq
 
     YDocument {
       _.obj { b =>
-        traverse(DataTypeFragmentEmitter(fragment, ordering).emitters ++ Seq(OasDeclaredTypesEmitters(closureShapes, Nil, ordering)), b)
+        traverse(DataTypeFragmentEmitter(fragment, ordering).emitters ++ Seq(
+                   OasDeclaredTypesEmitters(closureShapes, Nil, ordering)),
+                 b)
       }
     }
   }

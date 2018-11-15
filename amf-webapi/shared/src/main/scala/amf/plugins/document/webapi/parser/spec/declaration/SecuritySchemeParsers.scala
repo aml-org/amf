@@ -27,7 +27,9 @@ object SecuritySchemeParser {
     ctx.vendor match {
       case _: Raml => RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx))
       case _: Oas  => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
-      case other   => throw new IllegalArgumentException(s"Unsupported vendor $other in security scheme parsers")
+      case other =>
+        ctx.violation(s"Unsupported vendor $other in security scheme parsers", entry)
+        RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx)) // use raml as default?
     }
 
 }

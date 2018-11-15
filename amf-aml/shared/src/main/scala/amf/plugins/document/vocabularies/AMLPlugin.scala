@@ -245,7 +245,8 @@ object AMLPlugin
     case _                         => false
   }
 
-  override def referenceHandler(): ReferenceHandler = new SyntaxExtensionsReferenceHandler(registry)
+  override def referenceHandler(eh: ErrorHandler): ReferenceHandler =
+    new SyntaxExtensionsReferenceHandler(registry, eh)
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 

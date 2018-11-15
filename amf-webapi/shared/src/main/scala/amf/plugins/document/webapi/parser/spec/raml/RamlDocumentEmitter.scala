@@ -19,12 +19,12 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{
   OasDeclaredParametersEmitter,
   OasDeclaredResponsesEmitter,
-  OasNamedParameterEmitter,
   TagsEmitter
 }
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.render.YamlRender
@@ -113,7 +113,15 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       extends EntryEmitter {
 
     override def emit(b: EntryBuilder): Unit = {
-      val name = annotation.name.option().orElse(throw new Exception(s"Annotation type without name $annotation")).get
+      val name = annotation.name.option() match {
+        case Some(n) => n
+        case _ =>
+          spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                            s"Annotation type without name $annotation",
+                            annotation.position(),
+                            annotation.location())
+          "default-name"
+      }
       b.entry(name, if (annotation.isLink) emitLink _ else emitInline _)
     }
 
@@ -272,7 +280,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
     val content = spec.factory.rootLevelEmitters(doc, ordering).emitters ++ apiEmitters(ordering)
 
     YDocument(b => {
-      b.comment(spec.factory.retrieveHeader(document))
+      spec.factory.retrieveHeader(document).foreach(b.comment)
       b.obj { b =>
         traverse(ordering.sorted(content), b)
       }

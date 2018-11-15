@@ -4,7 +4,7 @@ import amf.core.parser.{LibraryReference, LinkReference, ReferenceHandler, _}
 import amf.plugins.document.vocabularies.DialectsRegistry
 import org.yaml.model._
 
-class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry) extends ReferenceHandler {
+class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHandler) extends ReferenceHandler {
   private val collector = ReferenceCollector()
 
   override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
@@ -69,7 +69,7 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry) extends Refer
     part match {
       case entry: YMapEntry =>
         entry.key.as[YScalar].text match {
-          case "$target"  => // patch $target link
+          case "$target" => // patch $target link
             val includeRef = entry.value
             ramlInclude(includeRef)
 
@@ -100,7 +100,7 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry) extends Refer
     node.value match {
 
       case scalar: YScalar => collector += (scalar.text, LinkReference, node)
-      case _               => throw new Exception(s"Unexpected !include or dialect with ${node.value}")
+      case _               => eh.violation(s"Unexpected !include or dialect with ${node.value}", node)
     }
   }
 }

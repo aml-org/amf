@@ -167,7 +167,13 @@ abstract class RamlWebApiContext(override val loc: String,
             ) // pointing only to the first failed error
         }
 
-      case None => throw new Exception(s"Cannot validate unknown node type $shapeType for $vendor")
+      case None =>
+        violation(
+          ClosedShapeSpecification.id,
+          node,
+          s"Cannot validate unknown node type $shapeType for $vendor",
+          shape.annotations
+        )
     }
   }
 }

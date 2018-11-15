@@ -226,7 +226,7 @@ class AMFCompiler(val rawUrl: String,
   }
 
   private def parseReferences(root: Root, domainPlugin: AMFDocumentPlugin): Future[Root] = {
-    val handler = domainPlugin.referenceHandler()
+    val handler = domainPlugin.referenceHandler(ctx)
     val refs    = handler.collect(root.parsed, ctx)
     ExecutionLog.log(s"AMFCompiler#parseReferences: ${refs.toReferences.size} references found in $rawUrl")
     val parsed: Seq[Future[Option[ParsedReference]]] = refs.toReferences

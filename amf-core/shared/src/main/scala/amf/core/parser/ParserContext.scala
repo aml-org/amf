@@ -20,13 +20,13 @@ trait RuntimeErrorHandler extends ErrorHandler {
   val parserCount: Int
   val currentFile: String
 
-  protected def reportConstraint(id: String,
-                                 node: String,
-                                 property: Option[String],
-                                 message: String,
-                                 lexical: Option[LexicalInformation],
-                                 level: String,
-                                 location: Option[String]): Unit = {
+  def reportConstraint(id: String,
+                       node: String,
+                       property: Option[String],
+                       message: String,
+                       lexical: Option[LexicalInformation],
+                       level: String,
+                       location: Option[String]): Unit = {
     RuntimeValidator.reportConstraintFailure(level,
                                              id,
                                              node,
@@ -45,13 +45,13 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
     defaultValue
   }
 
-  protected def reportConstraint(id: String,
-                                 node: String,
-                                 property: Option[String],
-                                 message: String,
-                                 lexical: Option[LexicalInformation],
-                                 level: String,
-                                 location: Option[String]): Unit
+  def reportConstraint(id: String,
+                       node: String,
+                       property: Option[String],
+                       message: String,
+                       lexical: Option[LexicalInformation],
+                       level: String,
+                       location: Option[String]): Unit
 
   /** Report constraint failure of severity violation. */
   def violation(id: String,
@@ -243,13 +243,13 @@ object UnhandledErrorHandler extends ErrorHandler {
     throw new Exception(e.getMessage + " at: " + node.range, e)
   }
 
-  override protected def reportConstraint(id: String,
-                                          node: String,
-                                          property: Option[String],
-                                          message: String,
-                                          lexical: Option[LexicalInformation],
-                                          level: String,
-                                          location: Option[String]): Unit = {
+  override def reportConstraint(id: String,
+                                node: String,
+                                property: Option[String],
+                                message: String,
+                                lexical: Option[LexicalInformation],
+                                level: String,
+                                location: Option[String]): Unit = {
     throw new Exception(
       s"  Message: $message\n  Target: $node\nProperty: ${property.getOrElse("")}\n  Position: $lexical\n at location: $location")
   }

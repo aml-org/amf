@@ -21,6 +21,7 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.core.utils.Strings
+import amf.plugins.features.validation.ParserSideValidations
 
 import scala.collection.mutable.ListBuffer
 
@@ -82,9 +83,17 @@ case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
   override def position(): Position = pos(securityScheme.annotations)
 
   override def emit(b: EntryBuilder): Unit = {
-    val name = securityScheme.name
-      .option()
-      .getOrElse(throw new Exception(s"Cannot declare security scheme without name $securityScheme"))
+    val name = securityScheme.name.option() match {
+      case Some(n) => n
+      case None =>
+        spec.eh.violation(
+          ParserSideValidations.EmittionErrorEspecification.id,
+          s"Cannot declare security scheme without name $securityScheme",
+          securityScheme.position(),
+          securityScheme.location()
+        )
+        "default-"
+    }
 
     b.entry(name, if (securityScheme.isLink) emitLink _ else emitInline _)
   }
@@ -231,7 +240,7 @@ case class RamlSecuritySettingsValuesEmitters(f: FieldEntry, ordering: SpecOrder
 
     settings.fields
       .entry(SettingsModel.AdditionalProperties)
-      .foreach(f => results ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering).emitters())
+      .foreach(f => results ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering)(spec.eh).emitters())
     results
   }
 }
@@ -249,7 +258,8 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
         val internals = ListBuffer[EntryEmitter]()
         settings.fields
           .entry(SettingsModel.AdditionalProperties)
-          .foreach(f => internals ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering).emitters())
+          .foreach(f =>
+            internals ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering)(spec.eh).emitters())
         if (internals.nonEmpty)
           Seq(OasSettingsTypeEmitter(internals, settings, ordering))
         else Nil
@@ -257,7 +267,7 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
   }
 }
 
-case class OasApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrdering) {
+case class OasApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
     val fs      = apiKey.fields
     val results = ListBuffer[EntryEmitter]() ++= RamlApiKeySettingsEmitters(apiKey, ordering).emitters()
@@ -265,7 +275,7 @@ case class OasApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrder
     val internals = ListBuffer[EntryEmitter]()
     apiKey.fields
       .entry(SettingsModel.AdditionalProperties)
-      .foreach(f => internals ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering).emitters())
+      .foreach(f => internals ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering)(spec.eh).emitters())
 
     if (internals.nonEmpty)
       results += OasSettingsTypeEmitter(internals, apiKey, ordering)
@@ -293,7 +303,7 @@ case class OasOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering)
 
     o1.fields
       .entry(SettingsModel.AdditionalProperties)
-      .foreach(f => results ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering).emitters())
+      .foreach(f => results ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering)(spec.eh).emitters())
 
     Seq(OasSettingsTypeEmitter(results, o1, ordering))
   }
@@ -337,7 +347,7 @@ case class OasOAuth2SettingsEmitters(settings: Settings, ordering: SpecOrdering)
 
     settings.fields
       .entry(SettingsModel.AdditionalProperties)
-      .foreach(f => internals ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering).emitters())
+      .foreach(f => internals ++= DataNodeEmitter(f.value.value.asInstanceOf[DataNode], ordering)(spec.eh).emitters())
 
     if (internals.nonEmpty)
       externals += OasSettingsTypeEmitter(internals, settings, ordering)
@@ -440,7 +450,10 @@ case class Raml08DescribedByEmitter(key: String,
   override def entries(fs: Fields): Seq[EntryEmitter] = {
     fs.entry(SecuritySchemeModel.QueryString)
       .foreach { _ =>
-        throw new Exception("Cannot emit query string in raml 08 spec")
+        spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                          "Cannot emit query string in raml 08 spec",
+                          securityScheme.position(),
+                          securityScheme.location())
       }
 
     super.entries(fs)

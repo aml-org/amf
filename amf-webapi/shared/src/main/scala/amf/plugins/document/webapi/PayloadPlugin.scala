@@ -56,8 +56,8 @@ object PayloadPlugin extends AMFDocumentPlugin {
     }
   }
 
-  override def canParse(root: Root): Boolean                   = notRAML(root) && notOAS(root) // any document can be parsed as a Payload
-  override def referenceHandler(): SimpleReferenceHandler.type = SimpleReferenceHandler
+  override def canParse(root: Root): Boolean                                   = notRAML(root) && notOAS(root) // any document can be parsed as a Payload
+  override def referenceHandler(eh: ErrorHandler): SimpleReferenceHandler.type = SimpleReferenceHandler
 
   private def notRAML(root: Root) = root.parsed match {
     case parsed: SyamlParsedDocument => parsed.comment.isEmpty || !parsed.comment.get.metaText.startsWith("%")
@@ -79,7 +79,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
   override def emit[T](unit: BaseUnit, builder: DocBuilder[T], renderOptions: RenderOptions): Boolean =
     (builder, unit) match {
       case (sb: YDocumentBuilder, p: PayloadFragment) =>
-        sb.document = PayloadEmitter(p.encodes).emitDocument()
+        sb.document = PayloadEmitter(p.encodes)(renderOptions.errorHandler).emitDocument()
         true
       case _ => false
     }
@@ -87,7 +87,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
   override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
     unit match {
       case p: PayloadFragment =>
-        Some(PayloadEmitter(p.encodes).emitDocument())
+        Some(PayloadEmitter(p.encodes)(renderOptions.errorHandler).emitDocument())
       case _ => None
     }
 

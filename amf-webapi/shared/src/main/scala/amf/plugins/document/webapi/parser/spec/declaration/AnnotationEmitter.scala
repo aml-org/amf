@@ -6,13 +6,19 @@ import amf.core.emitter._
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
-import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import amf.core.parser.{Annotations, ErrorHandler, FieldEntry, Position, Value}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  OasSpecEmitterContext,
+  RamlRefEmitter,
+  RamlSpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YNode.Parts
 import org.yaml.model._
@@ -60,7 +66,7 @@ abstract class AnnotationEmitter(domainExtension: DomainExtension, ordering: Spe
         b += name
       },
       b => {
-        Option(domainExtension.extension).foreach { DataNodeEmitter(_, ordering).emit(b) }
+        Option(domainExtension.extension).foreach { DataNodeEmitter(_, ordering)(spec.eh).emit(b) }
       }
     )
   }
@@ -98,7 +104,7 @@ abstract class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: S
         b += name
       },
       b => {
-        Option(shapeExtension.extension).foreach { DataNodeEmitter(_, ordering).emit(b) }
+        Option(shapeExtension.extension).foreach { DataNodeEmitter(_, ordering)(spec.eh).emit(b) }
       }
     )
   }
@@ -106,10 +112,11 @@ abstract class FacetsInstanceEmitter(shapeExtension: ShapeExtension, ordering: S
   override def position(): Position = pos(shapeExtension.annotations)
 }
 
-case class DataNodeEmitter(dataNode: DataNode,
-                           ordering: SpecOrdering,
-                           resolvedLinks: Boolean = false,
-                           referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())
+case class DataNodeEmitter(
+    dataNode: DataNode,
+    ordering: SpecOrdering,
+    resolvedLinks: Boolean = false,
+    referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())(implicit eh: ErrorHandler)
     extends PartEmitter {
   private val xsdString: String  = (Namespace.Xsd + "string").iri()
   private val xsdInteger: String = (Namespace.Xsd + "integer").iri()
@@ -129,25 +136,33 @@ case class DataNodeEmitter(dataNode: DataNode,
   }
 
   def emitters(): Seq[EntryEmitter] = {
-    (dataNode match {
+    val e: Seq[Option[EntryEmitter]] = (dataNode match {
       case scalar: ScalarNode => Seq(scalarEmitter(scalar))
       case array: ArrayNode   => arrayEmitters(array)
       case obj: ObjectNode    => objectEmitters(obj)
       case link: LinkNode     => linkEmitters(link)
     }) collect {
-      case e: EntryEmitter => e
+      case e: EntryEmitter => Some(e)
       case t: TextScalarEmitter =>
-        new EntryEmitter() {
+        Some(new EntryEmitter() {
           override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), t.value)
           override def position(): Position        = t.position()
-        }
+        })
       case n: NullEmitter =>
-        new EntryEmitter {
+        Some(new EntryEmitter {
           override def emit(b: EntryBuilder): Unit = b.entry(YNode("@value"), n.emit(_))
           override def position(): Position        = n.position()
-        }
-      case other => throw new Exception(s"Unsupported seq of emitter type in data node emitters $other")
+        })
+      case other =>
+        eh.violation(
+          ParserSideValidations.EmittionErrorEspecification.id,
+          s"Unsupported seq of emitter type in data node emitters $other",
+          dataNode.position(),
+          dataNode.location()
+        )
+        None
     }
+    e.flatten
   }
 
   def objectEmitters(objectNode: ObjectNode): Seq[EntryEmitter] = {
@@ -210,7 +225,7 @@ case class DataPropertyEmitter(property: String,
                                ordering: SpecOrdering,
                                resolvedLinks: Boolean = false,
                                referencesCollector: mutable.Map[String, DomainElement] = mutable.Map(),
-                               propertyAnnotations: Annotations)
+                               propertyAnnotations: Annotations)(implicit eh: ErrorHandler)
     extends EntryEmitter {
   val annotations: Annotations = dataNode.propertyAnnotations(property)
   val propertyValue: DataNode  = dataNode.properties(property)
@@ -220,7 +235,7 @@ case class DataPropertyEmitter(property: String,
       YNode(yscalarWithRange(property.urlComponentDecoded, YType.Str, propertyAnnotations), YType.Str),
       b => {
         // In the current implementation ther can only be one value, we are NOT flattening arrays
-        DataNodeEmitter(propertyValue, ordering, resolvedLinks, referencesCollector).emit(b)
+        DataNodeEmitter(propertyValue, ordering, resolvedLinks, referencesCollector)(eh).emit(b)
       }
     )
   }
@@ -245,8 +260,13 @@ case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
             case other                                                      => throw new Exception(s"IllegalTypeDeclarations found: $other")
           }
         case Some(shape: RecursiveShape) => RamlRecursiveShapeEmitter(shape, ordering, Nil).emitters()
-        case Some(x)                     => throw new Exception("Cannot emit raml type for a shape that is not an AnyShape")
-        case _                           => Nil // ignore
+        case Some(x) =>
+          spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                            "Cannot emit raml type for a shape that is not an AnyShape",
+                            x.position(),
+                            x.location())
+          Nil
+        case _ => Nil // ignore
       }
     }) match {
     case Some(emitters) => emitters

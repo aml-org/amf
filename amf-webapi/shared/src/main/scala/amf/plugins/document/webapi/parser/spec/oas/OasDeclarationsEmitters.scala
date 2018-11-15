@@ -20,6 +20,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 }
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer
@@ -85,11 +86,19 @@ case class OasNamedParameterEmitter(oasParameter: OasParameter, ordering: SpecOr
   override def position(): Position = pos(oasParameter.domainElement.annotations)
 
   override def emit(b: EntryBuilder): Unit = {
-
+    val name = oasParameter.domainElement.name.option() match {
+      case Some(n) => n
+      case _ =>
+        spec.eh.violation(
+          ParserSideValidations.EmittionErrorEspecification.id,
+          s"Cannot declare parameter without name ${oasParameter.domainElement}",
+          oasParameter.domainElement.position(),
+          oasParameter.domainElement.location()
+        )
+        "default-name"
+    }
     b.entry(
-      oasParameter.domainElement.name
-        .option()
-        .getOrElse(throw new Exception(s"Cannot declare parameter without name ${oasParameter.domainElement}")),
+      name,
       p => {
         oasParameter.domainElement match {
           case param: Parameter => ParameterEmitter(param, ordering, references).emit(p)

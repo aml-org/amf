@@ -1,12 +1,12 @@
 package amf.recursive.shapes
 
 import amf.core.model.document.BaseUnit
-import amf.{ProfileName, Raml10Profile}
 import amf.core.remote.{Hint, Oas20, RamlYamlHint}
 import amf.facades.Validation
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.validation.MultiPlatformReportGenTest
+import amf.{ProfileName, Raml10Profile}
 import org.scalatest.Assertion
 
 import scala.concurrent.Future

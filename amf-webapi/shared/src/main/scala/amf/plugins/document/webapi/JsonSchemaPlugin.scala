@@ -255,7 +255,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   }
 
   override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
-    firstAnyShape(unit) map (JsonSchemaEmitter(_).emitDocument())
+    firstAnyShape(unit) map (JsonSchemaEmitter(_, eh = renderOptions.errorHandler).emitDocument())
 
   /**
     * Decides if this plugin can parse the provided document instance.
@@ -279,7 +279,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     case _                => None
   }
 
-  override def referenceHandler(): ReferenceHandler = SimpleReferenceHandler
+  override def referenceHandler(eh: ErrorHandler): ReferenceHandler = SimpleReferenceHandler
 
   override val ID: String = "JSON Schema" // version?
 

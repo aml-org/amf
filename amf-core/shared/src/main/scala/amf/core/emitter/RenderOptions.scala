@@ -2,6 +2,8 @@ package amf.core.emitter
 
 import amf.client.render.{RenderOptions => ClientRenderOptions}
 import amf.core.metamodel.Field
+import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
+import amf.client.resolve.ClientErrorHandlerConverter._
 
 /**
   * Render options
@@ -15,6 +17,7 @@ class RenderOptions {
   private var filterFields: Field => Boolean = (_: Field) => false
   private var amfJsonLdSerialization         = true
   private var useJsonLdEmitter               = false
+  private var eh: ErrorHandler               = UnhandledErrorHandler
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
@@ -73,12 +76,18 @@ class RenderOptions {
     this
   }
 
+  def withErrorHandler(errorHandler: ErrorHandler): RenderOptions = {
+    eh = errorHandler
+    this
+  }
+
   def isCompactUris: Boolean             = compactUris
   def isWithSourceMaps: Boolean          = sources
   def isWithRawSourceMaps: Boolean       = rawSourceMaps
   def isAmfJsonLdSerilization: Boolean   = amfJsonLdSerialization
   def isValidation: Boolean              = validating
   def renderField(field: Field): Boolean = !filterFields(field)
+  def errorHandler: ErrorHandler         = eh
 }
 
 object RenderOptions {
@@ -89,6 +98,7 @@ object RenderOptions {
     opts.sources = client.isWithSourceMaps
     opts.amfJsonLdSerialization = client.isAmfJsonLdSerilization
     opts.compactUris = client.isWithCompactUris
+    opts.withErrorHandler(ErrorHandlerConverter.asInternal(client.errorHandler))
     opts
   }
 }

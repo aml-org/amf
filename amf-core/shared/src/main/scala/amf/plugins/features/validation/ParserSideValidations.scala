@@ -276,6 +276,14 @@ object ParserSideValidations {
     Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
   )
 
+  val EmittionErrorEspecification = ValidationSpecification(
+    (Namespace.AmfParser + "emittion-error").iri(),
+    "Error during emittion stage",
+    None,
+    None,
+    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  )
+
   val PatternPropertiesOnClosedNodeSpecification = ValidationSpecification(
     (Namespace.AmfParser + "pattern-properties-on-closed-node").iri(),
     "Closed node cannot define pattern properties",
@@ -586,6 +594,15 @@ object ParserSideValidations {
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
+    EmittionErrorEspecification.id -> Map(
+      RamlProfile   -> SeverityLevels.VIOLATION,
+      Raml10Profile -> SeverityLevels.VIOLATION,
+      Raml08Profile -> SeverityLevels.VIOLATION,
+      OasProfile    -> SeverityLevels.VIOLATION,
+      Oas20Profile  -> SeverityLevels.VIOLATION,
+      Oas30Profile  -> SeverityLevels.VIOLATION,
+      AmfProfile    -> SeverityLevels.VIOLATION
+    ),
     PatternPropertiesOnClosedNodeSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
       Raml10Profile -> SeverityLevels.VIOLATION,
@@ -646,6 +663,7 @@ object ParserSideValidations {
     MissingPropertySpecification,
     OasInvalidBodyParameter,
     ResolutionErrorSpecification,
+    EmittionErrorEspecification,
     PatternPropertiesOnClosedNodeSpecification,
     DiscriminatorOnExtendedUnionSpecification,
     InvalidDeclarationPathComponent

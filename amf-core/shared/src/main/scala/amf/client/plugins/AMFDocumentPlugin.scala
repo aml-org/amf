@@ -103,5 +103,5 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
     */
   def canUnparse(unit: BaseUnit): Boolean
 
-  def referenceHandler(): ReferenceHandler
+  def referenceHandler(eh: ErrorHandler): ReferenceHandler
 }

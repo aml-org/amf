@@ -338,7 +338,8 @@ class ExtendsResolutionStage(
 
   private case class EndPointTreeBuilder(endpoint: EndPoint) extends ElementTreeBuilder(endpoint) {
     override protected def astFromEmition: YNode =
-      YDocument(f => f.obj(Raml10EndPointEmitter(endpoint, SpecOrdering.Lexical)(new Raml10SpecEmitterContext()).emit)).node
+      YDocument(f =>
+        f.obj(Raml10EndPointEmitter(endpoint, SpecOrdering.Lexical)(new Raml10SpecEmitterContext(errorHandler)).emit)).node
         .toOption[YMap]
         .map(_.entries)
         .getOrElse(Nil)
@@ -351,8 +352,10 @@ class ExtendsResolutionStage(
 
   private case class OperationTreeBuilder(operation: Operation) extends ElementTreeBuilder(operation) {
     override protected def astFromEmition: YNode =
-      YDocument(f =>
-        f.obj(Raml10OperationEmitter(operation, SpecOrdering.Lexical, Nil)(new Raml10SpecEmitterContext()).emit)).node
+      YDocument(
+        f =>
+          f.obj(Raml10OperationEmitter(operation, SpecOrdering.Lexical, Nil)(
+            new Raml10SpecEmitterContext(errorHandler)).emit)).node
         .as[YMap]
         .entries
         .headOption

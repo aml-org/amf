@@ -60,11 +60,11 @@ package object spec {
   }
 
   def toRaml(spec: SpecEmitterContext): RamlSpecEmitterContext = {
-    new Raml10SpecEmitterContext(spec.getRefEmitter)
+    new Raml10SpecEmitterContext(spec.eh, spec.getRefEmitter)
   }
 
   def toOas(spec: SpecEmitterContext): OasSpecEmitterContext = {
-    new Oas2SpecEmitterContext(spec.getRefEmitter)
+    new Oas2SpecEmitterContext(spec.eh, spec.getRefEmitter)
   }
 
   def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {

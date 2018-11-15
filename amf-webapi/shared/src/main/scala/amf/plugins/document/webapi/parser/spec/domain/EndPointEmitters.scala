@@ -131,7 +131,7 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
 
     fs.entry(EndPointModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
-    fs.entry(EndPointModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering).emitters())
+    fs.entry(EndPointModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering)(spec.eh).emitters())
 
     fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 

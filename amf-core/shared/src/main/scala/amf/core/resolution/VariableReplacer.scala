@@ -68,7 +68,7 @@ object VariableReplacer {
 
           Option(m.group(2))
             .map { transformations =>
-              TransformationsRegex.findAllIn(transformations).foldLeft(text)(variableTransformation)
+              TransformationsRegex.findAllIn(transformations).foldLeft(text)(variableTransformation(errorFunction))
             }
             .orElse(Some(text))
         case node =>
@@ -79,7 +79,8 @@ object VariableReplacer {
       .replace("$", "\\$")
   }
 
-  protected[amf] def variableTransformation(value: String, transformation: String): String = transformation match {
+  protected[amf] def variableTransformation(
+      errorFunction: String => Unit)(value: String, transformation: String): String = transformation match {
     case "singularize"         => value.singularize
     case "pluralize"           => value.pluralize
     case "uppercase"           => value.toUpperCase
@@ -90,6 +91,8 @@ object VariableReplacer {
     case "upperunderscorecase" => value.camelToScoreSing().toUpperCase
     case "lowerhyphencase"     => value.camelToScoreSing("-").toLowerCase
     case "upperhyphencase"     => value.camelToScoreSing("-").toUpperCase
-    case _                     => throw new Exception(s"Transformation '$transformation' on '$value' is not valid.")
+    case _ =>
+      errorFunction(s"Transformation '$transformation' on '$value' is not valid.")
+      value
   }
 }

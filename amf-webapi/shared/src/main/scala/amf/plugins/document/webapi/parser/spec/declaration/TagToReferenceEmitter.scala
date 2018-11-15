@@ -10,6 +10,7 @@ import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmit
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YTag, YType}
 
@@ -40,7 +41,12 @@ case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String]
       case s: Linkable if s.isLink =>
         s.linkTarget match {
           case Some(t) => t
-          case _       => throw new Exception(s"Expected shape link target on $target")
+          case _ =>
+            spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                              s"Expected shape link target on $target",
+                              target.position(),
+                              target.location())
+            s
         }
       case other => other
     }

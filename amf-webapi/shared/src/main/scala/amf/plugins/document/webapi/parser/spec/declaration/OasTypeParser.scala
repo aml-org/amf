@@ -9,33 +9,39 @@ import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
-import amf.plugins.document.webapi.contexts.{Oas2WebApiContext, Oas3WebApiContext, OasWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.JSONSchema
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
-import amf.plugins.document.webapi.parser.spec.{OasDefinitions, _}
 import amf.plugins.domain.shapes.annotations.NilUnion
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model._
-import org.yaml.render.{JsonRender, YamlRender}
+import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 
 abstract class JSONSchemaVersion(val name: String)
-class OASSchemaVersion(override val name: String, val position: String) extends JSONSchemaVersion(name) {
+class OASSchemaVersion(override val name: String, val position: String)(implicit eh: ErrorHandler)
+    extends JSONSchemaVersion(name) {
   if (position != "schema" && position != "parameter")
-    throw new Exception(s"Invalid schema position '$position', only 'schema' and 'parameter' are valid")
+    eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                 s"Invalid schema position '$position', only 'schema' and 'parameter' are valid",
+                 None,
+                 None)
 }
-class OAS20SchemaVersion(override val position: String) extends OASSchemaVersion("oas2.0", position)
-object OAS20SchemaVersion { def apply(position: String) = new OAS20SchemaVersion(position) }
-class OAS30SchemaVersion(override val position: String) extends OASSchemaVersion("oas3.0.0", position)
-object OAS30SchemaVersion { def apply(position: String) = new OAS20SchemaVersion(position) }
+class OAS20SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
+    extends OASSchemaVersion("oas2.0", position)
+object OAS20SchemaVersion { def apply(position: String)(implicit eh: ErrorHandler) = new OAS20SchemaVersion(position) }
+class OAS30SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
+    extends OASSchemaVersion("oas3.0.0", position)
+object OAS30SchemaVersion { def apply(position: String, eh: ErrorHandler) = new OAS20SchemaVersion(position)(eh) }
 object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3")
 object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4")
 object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
@@ -50,14 +56,18 @@ object OasTypeParser {
     new OasTypeParser(Left(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
 
   def apply(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: OasWebApiContext): OasTypeParser =
-    new OasTypeParser(Left(entry), entry.key.as[String], entry.value.as[YMap], adopt, OAS20SchemaVersion("schema"))
+    new OasTypeParser(Left(entry),
+                      entry.key.as[String],
+                      entry.value.as[YMap],
+                      adopt,
+                      OAS20SchemaVersion("schema")(ctx))
 
   def apply(node: YNode, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
       implicit ctx: OasWebApiContext): OasTypeParser =
     new OasTypeParser(Right(node), name, node.as[YMap], adopt, version)
 
   def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasWebApiContext): OasTypeParser =
-    new OasTypeParser(Right(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema"))
+    new OasTypeParser(Right(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx))
 
 }
 

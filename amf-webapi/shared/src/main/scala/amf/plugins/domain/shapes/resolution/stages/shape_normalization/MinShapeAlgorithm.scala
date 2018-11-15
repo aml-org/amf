@@ -338,13 +338,13 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
       throw new Exception("raising exceptions in union processing")
     }
 
-    override protected def reportConstraint(id: String,
-                                            node: String,
-                                            property: Option[String],
-                                            message: String,
-                                            lexical: Option[LexicalInformation],
-                                            level: String,
-                                            location: Option[String]): Unit = {
+    override def reportConstraint(id: String,
+                                  node: String,
+                                  property: Option[String],
+                                  message: String,
+                                  lexical: Option[LexicalInformation],
+                                  level: String,
+                                  location: Option[String]): Unit = {
       throw new Exception("raising exceptions in union processing")
     }
 

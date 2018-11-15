@@ -29,7 +29,8 @@ class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
 
   examples.foreach { example =>
     test(s"Test transformation : ${example.transformation} of Raml spec example") {
-      VariableReplacer.variableTransformation(example.base, example.transformation) should be(example.result)
+      VariableReplacer.variableTransformation((e: String) => fail(e))(example.base, example.transformation) should be(
+        example.result)
     }
   }
 

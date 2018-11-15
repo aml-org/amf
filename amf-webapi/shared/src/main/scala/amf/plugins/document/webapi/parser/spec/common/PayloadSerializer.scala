@@ -4,6 +4,7 @@ import amf.core.AMFSerializer
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.DataNode
+import amf.core.parser.ErrorHandler
 import amf.core.remote.Payload
 import amf.core.services.RuntimeSerializer
 import amf.core.utils._
@@ -43,9 +44,9 @@ trait PayloadSerializer {
   }
 }
 
-case class PayloadEmitter(dataNode: DataNode, ordering: SpecOrdering = SpecOrdering.Lexical) {
+case class PayloadEmitter(dataNode: DataNode, ordering: SpecOrdering = SpecOrdering.Lexical)(implicit eh: ErrorHandler) {
   def emitDocument(): YDocument = {
-    val f: YDocument.PartBuilder => Unit = DataNodeEmitter(dataNode, ordering).emit
+    val f: YDocument.PartBuilder => Unit = DataNodeEmitter(dataNode, ordering)(eh).emit
     YDocument(f)
   }
 }

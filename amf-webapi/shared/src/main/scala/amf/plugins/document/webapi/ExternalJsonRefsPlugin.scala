@@ -117,7 +117,7 @@ class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
 
   override def canParse(document: Root): Boolean = document.raw.isJson
 
-  override def referenceHandler(): ReferenceHandler = new JsonRefsReferenceHandler()
+  override def referenceHandler(eh: ErrorHandler): ReferenceHandler = new JsonRefsReferenceHandler()
 
   override def dependencies(): Seq[AMFPlugin] = Nil
 

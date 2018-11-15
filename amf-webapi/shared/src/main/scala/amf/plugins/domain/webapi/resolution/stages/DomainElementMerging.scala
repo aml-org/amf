@@ -177,7 +177,10 @@ object DomainElementMerging {
       case key: KeyField  => mergeByKeyValue(target, field, element, key, m, o, errorHandler)
       case DataNodeModel  => mergeDataNodes(target, field, m, o)
       case _ =>
-        throw new Exception(s"Cannot merge '$element': not a KeyField nor a Scalar")
+        errorHandler.violation(ParserSideValidations.ResolutionErrorSpecification.id,
+                               target.id,
+                               s"Cannot merge '$element': not a KeyField nor a Scalar",
+                               target.annotations)
 
     }
   }

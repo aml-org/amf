@@ -4,7 +4,7 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.AmfElement
 import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.parser.{ErrorHandler, FieldEntry, Position}
 import amf.plugins.document.webapi.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -16,7 +16,8 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-case class ExtendsEmitter(field: FieldEntry, ordering: SpecOrdering, oasExtension: Boolean = false) {
+case class ExtendsEmitter(field: FieldEntry, ordering: SpecOrdering, oasExtension: Boolean = false)(
+    implicit eh: ErrorHandler) {
   def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
 
@@ -34,7 +35,8 @@ case class ExtendsEmitter(field: FieldEntry, ordering: SpecOrdering, oasExtensio
   private def extension(key: String) = if (oasExtension) key.asOasExtension else key
 }
 
-case class TraitExtendsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends SingleValueArrayEmitter {
+case class TraitExtendsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(implicit eh: ErrorHandler)
+    extends SingleValueArrayEmitter {
   override type Element = ParametrizedTrait
 
   override protected def collect(elements: Seq[AmfElement]): Seq[ParametrizedTrait] = elements.collect {
@@ -44,12 +46,13 @@ case class TraitExtendsEmitter(key: String, f: FieldEntry, ordering: SpecOrderin
   override def emit(element: ParametrizedTrait): PartEmitter = ParametrizedDeclarationEmitter(element, ordering)
 }
 
-case class EndPointExtendsEmitter(key: String, resourceTypes: Seq[ParametrizedResourceType], ordering: SpecOrdering)
+case class EndPointExtendsEmitter(key: String, resourceTypes: Seq[ParametrizedResourceType], ordering: SpecOrdering)(
+    implicit eh: ErrorHandler)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       key,
-      ParametrizedDeclarationEmitter(resourceTypes.head, ordering).emit(_)
+      ParametrizedDeclarationEmitter(resourceTypes.head, ordering)(eh).emit(_)
     )
   }
 
@@ -57,7 +60,8 @@ case class EndPointExtendsEmitter(key: String, resourceTypes: Seq[ParametrizedRe
     resourceTypes.headOption.map(rt => pos(rt.annotations)).getOrElse(Position.ZERO)
 }
 
-case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, ordering: SpecOrdering)
+case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, ordering: SpecOrdering)(
+    implicit eh: ErrorHandler)
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     if (declaration.variables.nonEmpty) {
@@ -65,7 +69,7 @@ case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, 
         _.entry(
           declaration.name.value(),
           _.obj { b =>
-            val result = declaration.variables.map(variable => VariableEmitter(variable, ordering))
+            val result = declaration.variables.map(variable => VariableEmitter(variable, ordering)(eh))
 
             traverse(ordering.sorted(result), b)
           }
@@ -79,7 +83,8 @@ case class ParametrizedDeclarationEmitter(declaration: ParametrizedDeclaration, 
   override def position(): Position = pos(declaration.annotations)
 }
 
-case class VariableEmitter(variable: VariableValue, ordering: SpecOrdering) extends EntryEmitter {
+case class VariableEmitter(variable: VariableValue, ordering: SpecOrdering)(implicit eh: ErrorHandler)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       variable.name.value(),

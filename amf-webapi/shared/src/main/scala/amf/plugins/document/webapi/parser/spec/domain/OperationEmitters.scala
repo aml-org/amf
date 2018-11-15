@@ -13,6 +13,7 @@ import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
 import amf.plugins.domain.webapi.models.Operation
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.Strings
+import amf.plugins.features.validation.ParserSideValidations
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -35,8 +36,12 @@ case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, 
           Option(f.value.value) match {
             case Some(shape: AnyShape) =>
               results += RamlNamedTypeEmitter(shape, ordering, references, Raml10TypePartEmitter.apply)
-            case Some(_) => throw new Exception("Cannot emit non WebApi Shape")
-            case _       => // ignore
+            case Some(other) =>
+              spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                                "Cannot emit non WebApi Shape",
+                                other.position(),
+                                other.location())
+            case _ => // ignore
           }
 
         }
@@ -88,7 +93,7 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
 
     fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces".asRamlAnnotation, f, ordering))
 
-    fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering).emitters())
+    fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering)(spec.eh).emitters())
 
     Option(operation.request).foreach { req =>
       val fields = req.fields
