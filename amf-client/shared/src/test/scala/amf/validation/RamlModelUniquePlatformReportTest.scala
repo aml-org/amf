@@ -164,5 +164,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("file-schema-override/api.raml", Some("file-override-schema.report"))
   }
 
+  test("Security schemes with empty type") {
+    validate("securitySchemes/empty-type.raml", Some("empty-type.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }
