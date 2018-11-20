@@ -71,7 +71,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
             .key(u)
             .foreach(entry =>
               entry.value.tagType match {
-                case YType.Map | YType.Seq =>
+                case YType.Map | YType.Seq | YType.Null =>
                   ctx.violation("", s"Expected scalar but found: ${entry.value}", entry.value)
                 case _ => extension(entry) // assume scalar
             })
@@ -81,7 +81,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   }
 
   private def extension(entry: YMapEntry): Unit = {
-    references += (entry.value, ExtensionReference, entry.value)
+    references += (entry.value.as[YScalar].text, ExtensionReference, entry.value)
   }
 
   // todo: we should use vendor.name in every place instead of match handwrited strings
