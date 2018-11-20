@@ -666,6 +666,9 @@ object ParserSideValidations {
     EmittionErrorEspecification,
     PatternPropertiesOnClosedNodeSpecification,
     DiscriminatorOnExtendedUnionSpecification,
-    InvalidDeclarationPathComponent
+    InvalidDeclarationPathComponent,
+    OasFormDataNotFileSpecification,
+    OasBodyAndFormDataParameterSpecification,
+    OasInvalidParameterBinding
   )
 }
