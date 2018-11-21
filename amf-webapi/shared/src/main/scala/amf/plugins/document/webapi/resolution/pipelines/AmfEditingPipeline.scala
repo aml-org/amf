@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.resolution.pipelines
 import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage, UrlShortenerStage}
-import amf.plugins.document.webapi.resolution.stages.{ExtendsResolutionStage, ExtensionsResolutionStage}
+import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages.{
   ExamplesResolutionStage,
@@ -21,7 +21,6 @@ class AmfEditingPipeline(override val eh: ErrorHandler) extends ResolutionPipeli
     references,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = true),
     new ShapeNormalizationStage(profileName, keepEditingInfo = true),
-    new ExtendsResolutionStage(profileName, keepEditingInfo = true),
     new SecurityResolutionStage(),
     new ParametersNormalizationStage(profileName),
     new MediaTypeResolutionStage(profileName),
