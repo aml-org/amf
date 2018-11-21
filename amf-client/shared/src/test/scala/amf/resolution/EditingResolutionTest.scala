@@ -122,7 +122,7 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     cycle("api.raml", "api.raml.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "/union-of-declarations/")
   }
 
-  test("stackoverflow") {
+  test("Check for stack overflow in event api") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, productionPath + "event-api/")
   }
 
