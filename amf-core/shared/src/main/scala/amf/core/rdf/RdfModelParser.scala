@@ -328,7 +328,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
             case _: DomainElementModel if f == DocumentModel.Declares =>
               instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
             case _: BaseUnitModel => instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
-            case _                => instance.setArray(f, values, annotations(nodes, sources, key))
+            case _                => instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
           }
       }
     } else {
