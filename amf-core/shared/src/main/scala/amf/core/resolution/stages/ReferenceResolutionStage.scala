@@ -95,16 +95,20 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
 
   private def withName(resolved: DomainElement, source: DomainElement): DomainElement = {
     resolved match {
-      case r: NamedDomainElement
-          if r.name.value().notNull.isEmpty || r.name.value() == "schema" || r.name
-            .value() == "type" || isExample(r) => // these are default names
-        source match {
-          case s: NamedDomainElement if s.name.value().notNull.nonEmpty => r.withName(s.name.value())
-          case _                                                        =>
+      case r: NamedDomainElement =>
+        if (isExample(r)) {
+          source match {
+            case s: NamedDomainElement if s.name.value().notNull.nonEmpty => r.withName(s.name.value())
+            case _                                                        =>
+          }
+        } else if (r.name.value().notNull.isEmpty || r.name.value() == "schema" || r.name.value() == "type") {
+          source match {
+            case s: Linkable => innerName(s, r)
+            case _           =>
+          }
         }
       case _ =>
     }
-
     // let's annotate the resolved name
     source match {
 
@@ -130,6 +134,21 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
 
     resolved
   }
+
+  private def innerName(source: DomainElement with Linkable, resolved: DomainElement with NamedDomainElement): Unit =
+    source match {
+      case s: NamedDomainElement =>
+        s.name.option() match {
+          case Some("schema" | "type") | None if source.isLink =>
+            source.linkTarget match {
+              case Some(target: Linkable) => innerName(target, resolved)
+              case _                      =>
+            }
+          case Some(other) => resolved.withName(other)
+          case _           =>
+        }
+      case _ =>
+    }
 
   /** Check if it is an example. Special case where NamedExample fragments are used from an 'example' facet. */
   private def isExample(r: DomainElement) =
