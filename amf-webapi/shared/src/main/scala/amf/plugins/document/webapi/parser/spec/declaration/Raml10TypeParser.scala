@@ -748,11 +748,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
       parseOASFields(map, shape)
 
+      val validatedTypeDef: TypeDef = ScalarFormatType(shape, typeDef).parse(map)
       typeOrSchema(map)
         .fold(
           shape
-            .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
-          entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
+            .set(ScalarShapeModel.DataType,
+                 AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
+                 Annotations() += Inferred()))(entry =>
+          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
 
       // todo: should i parse double type values as value.double()? when emit it the values will appear with .0 (if they where ints)
       map.key(
@@ -772,8 +775,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             shape.set(ScalarShapeModel.Maximum, value.text(), Annotations(entry))
         }
       )
-
-      ScalarFormatParser(shape, typeDef).parse(map)
       // We don't need to parse (format) extension because in oas must not be emitted, and in raml will be emitted.
 
       map.key(

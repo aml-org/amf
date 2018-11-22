@@ -535,11 +535,6 @@ class RamlParserErrorTest extends ParserErrorTest {
   test("Invalid ints formats") {
     validate(
       "warning/invalid-number-formats.raml",
-      int64Warning => {
-        int64Warning.level should be("Warning")
-        int64Warning.message should startWith(
-          "Format int64 is not valid for type http://www.w3.org/2001/XMLSchema#integer")
-      },
       doubleWarning => {
         doubleWarning.level should be("Warning")
         doubleWarning.message should startWith(

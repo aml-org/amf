@@ -438,7 +438,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   trait CommonScalarParsingLogic {
-    def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): Unit = {
+    def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): TypeDef = {
       map.key("pattern", ScalarShapeModel.Pattern in shape)
       map.key("minLength", ScalarShapeModel.MinLength in shape)
       map.key("maxLength", ScalarShapeModel.MaxLength in shape)
@@ -455,10 +455,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
       map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
       map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
-      map.key("format", ScalarShapeModel.Format in shape)
-      ScalarFormatParser(shape, typeDef).parse(map)
       map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
 
+      ScalarFormatType(shape, typeDef).parse(map)
 //      shape.set(ScalarShapeModel.Repeat, value = false)
 
     }
@@ -469,13 +468,16 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       with CommonScalarParsingLogic {
     override def parse(): ScalarShape = {
       super.parse()
+      val validatedTypeDef = parseScalar(map, shape, typeDef)
+
       map
         .key("type")
-        .fold(shape
-          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations() += Inferred()))(
-          entry => shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry)))
-
-      parseScalar(map, shape, typeDef)
+        .fold(
+          shape
+            .set(ScalarShapeModel.DataType,
+                 AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
+                 Annotations() += Inferred()))(entry =>
+          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
 
       shape
     }
