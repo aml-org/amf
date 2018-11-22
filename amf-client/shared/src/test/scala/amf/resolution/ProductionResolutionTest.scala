@@ -260,7 +260,11 @@ class OASProductionResolutionTest extends OasResolutionTest {
   }
 
   test("OAS complex example") {
-    cycle("spec/swagger.json", "api.resolved.jsonld", OasJsonHint, Oas, basePath + "oas-complex-example/")
+    cycle("spec/swagger.json", "api.resolved.jsonld", OasJsonHint, Amf, basePath + "oas-complex-example/")
+  }
+
+  test("OAS examples test") {
+    cycle("oas-example.json", "oas-example.json.jsonld", OasJsonHint, Amf)
   }
 }
 
