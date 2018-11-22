@@ -12,9 +12,10 @@ import org.mulesoft.common.io.Fs
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.core.utils.Strings
 
+@JSExportTopLevel("JsServerFileResourceLoader")
 @JSExportAll
 case class JsServerFileResourceLoader() extends BaseFileResourceLoader {
   override def fetchFile(resource: String): js.Promise[Content] =
