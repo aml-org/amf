@@ -5,7 +5,16 @@ import org.mulesoft.common.io.Output
 class PropertyObject(val value: String)
 case class Literal(override val value: String, literalType: Option[String]) extends PropertyObject(value)
 case class Uri(override val value: String)                                  extends PropertyObject(value)
-case class Node(subject: String, classes: Seq[String], properties: Map[String, Seq[PropertyObject]])
+case class Node(subject: String, classes: Seq[String], private val properties: Map[String, Seq[PropertyObject]]) {
+
+  def getProperties(iri: String): Option[Seq[PropertyObject]] = {
+    properties.get(iri).map(_.sortWith((t1, t2) => (t1.value compareTo t2.value) > 0))
+  }
+
+  def getKeys(): Seq[String] = {
+    properties.keys.toSeq.sortWith((t1, t2) => { (t1 compare t2) > 0 })
+  }
+}
 
 /**
   * Base class for all the RDF native models in different platforms

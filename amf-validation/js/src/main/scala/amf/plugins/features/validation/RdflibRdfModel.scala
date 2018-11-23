@@ -71,40 +71,43 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
             var resourceProperties = Map[String, Seq[PropertyObject]]()
             var resourceClasses    = Seq[String]()
 
-            statements.foreach { statement =>
-              val property = statement.predicate.uri.asInstanceOf[String]
+            statements
+              .sortWith((t1, t2) =>
+                (t1.predicate.uri.asInstanceOf[String] compareTo t2.predicate.uri.asInstanceOf[String]) > 0)
+              .foreach { statement =>
+                val property = statement.predicate.uri.asInstanceOf[String]
 
-              val obj      = statement.`object`
-              val oldProps = resourceProperties.getOrElse(property, Nil)
+                val obj      = statement.`object`
+                val oldProps = resourceProperties.getOrElse(property, Nil)
 
-              if (property == (Namespace.Rdf + "type").iri()) {
-                resourceClasses ++= Seq(obj.uri.asInstanceOf[String])
-              } else if (obj.termType.asInstanceOf[String] == "Literal") {
+                if (property == (Namespace.Rdf + "type").iri()) {
+                  resourceClasses ++= Seq(obj.uri.asInstanceOf[String])
+                } else if (obj.termType.asInstanceOf[String] == "Literal") {
 
-                resourceProperties = resourceProperties.updated(
-                  property,
-                  oldProps ++ Seq(
-                    Literal(
-                      value = s"${obj.value}",
-                      literalType = if (Option(obj.datatype).isDefined) {
-                        Some(obj.datatype.uri.asInstanceOf[String])
-                      } else {
-                        None
-                      }
+                  resourceProperties = resourceProperties.updated(
+                    property,
+                    oldProps ++ Seq(
+                      Literal(
+                        value = s"${obj.value}",
+                        literalType = if (Option(obj.datatype).isDefined) {
+                          Some(obj.datatype.uri.asInstanceOf[String])
+                        } else {
+                          None
+                        }
+                      )
                     )
                   )
-                )
 
-              } else {
-                resourceProperties =
-                  resourceProperties.updated(property,
-                                             oldProps ++ Seq(
-                                               Uri(
-                                                 value = s"${Option(obj.uri).getOrElse(obj.toCanonical())}"
-                                               )
-                                             ))
+                } else {
+                  resourceProperties =
+                    resourceProperties.updated(property,
+                                               oldProps ++ Seq(
+                                                 Uri(
+                                                   value = s"${Option(obj.uri).getOrElse(obj.toCanonical())}"
+                                                 )
+                                               ))
+                }
               }
-            }
 
             val newNode = Node(uri, resourceClasses, resourceProperties)
             nodesCache = nodesCache.updated(id, newNode)
