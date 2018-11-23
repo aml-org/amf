@@ -5,7 +5,7 @@ import java.util.UUID
 import amf.core.metamodel.domain.ShapeModel._
 import amf.core.model.StrField
 import amf.core.model.domain.extensions.{PropertyShape, ShapeExtension}
-import amf.core.parser.ErrorHandler
+import amf.core.parser.{Annotations, ErrorHandler}
 
 import scala.collection.mutable
 
@@ -16,7 +16,6 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
 
   // used at runtime during validation
   val closureShapes: mutable.Set[Shape] = mutable.Set()
-
 
   def name: StrField                                     = fields.field(Name)
   def displayName: StrField                              = fields.field(DisplayName)
@@ -60,7 +59,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
     val updatedClosure = closure :+ shapeId
     withClosure(updatedClosure)
   }
-  */
+   */
   def withDefaultStr(value: String): Shape.this.type = set(DefaultValueString, value)
 
   def effectiveInherits: Seq[Shape] = {
@@ -155,8 +154,10 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
 
   def ramlSyntaxKey: String = "shape"
 
-  def copyShape(): this.type = {
-    val copiedShape = copyElement().asInstanceOf[this.type]
+  def copyShape(): this.type = copyShape(annotations.copy())
+
+  def copyShape(a: Annotations): this.type = {
+    val copiedShape = copyElement(a).asInstanceOf[this.type]
     copiedShape.closureShapes ++= closureShapes
     copiedShape
   }

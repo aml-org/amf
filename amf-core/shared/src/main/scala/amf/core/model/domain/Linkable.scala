@@ -110,6 +110,8 @@ trait Linkable extends AmfObject { this: DomainElement with Linkable =>
   /** Do not generates a new link.*/
   def copyElement(): Linkable with DomainElement = classConstructor(fields.copy(), annotations.copy())
 
+  def copyElement(a: Annotations): Linkable with DomainElement = classConstructor(fields.copy(), a)
+
   /** apply method for create a new instance with fields and annotations. Aux method for copy*/
   protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement
 }

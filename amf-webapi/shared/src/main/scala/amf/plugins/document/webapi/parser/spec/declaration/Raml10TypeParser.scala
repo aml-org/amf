@@ -30,6 +30,7 @@ import amf.plugins.domain.shapes.models.{ScalarType, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.features.validation.ParserSideValidations
+import org.mulesoft.lexer.InputRange
 import org.yaml.model.{YPart, _}
 import org.yaml.render.YamlRender
 
@@ -1039,7 +1040,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         item       <- Raml10TypeParser(itemsEntry, items => items.adopted(shape.id), defaultType = defaultType).parse()
       } yield {
         // we check we are not using schemas for items
-        checkSchemaInProperty(Seq(item), shape.location())
+        checkSchemaInProperty(Seq(item), shape.location(), amf.core.parser.Range(itemsEntry.range))
         item match {
           case array: ArrayShape   => shape.withItems(array).toMatrixShape
           case matrix: MatrixShape => shape.withItems(matrix).toMatrixShape
@@ -1114,7 +1115,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   trait SchemaUsageRestrictions {
 
-    protected def checkSchemaInProperty(elements: Seq[AmfElement], location: Option[String] = None): Unit = {
+    protected def checkSchemaInProperty(elements: Seq[AmfElement],
+                                        location: Option[String] = None,
+                                        entryRange: Range): Unit = {
       elements.foreach {
         case shape: AnyShape
             if shape.annotations.contains(classOf[ParsedJSONSchema]) ||
@@ -1124,7 +1127,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             shape.id,
             Some(ShapeModel.Inherits.value.iri()),
             "Invalid reference to JSON Schema",
-            shape.annotations.find(classOf[LexicalInformation]),
+            Some(LexicalInformation(entryRange)),
             location.orElse(shape.location())
           )
 
@@ -1134,13 +1137,13 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             xml.id,
             Some(ShapeModel.Inherits.value.iri()),
             "Invalid reference to XML Schema",
-            xml.annotations.find(classOf[LexicalInformation]),
+            Some(LexicalInformation(entryRange)),
             location.orElse(xml.location())
           )
         case _ => // ignore
       }
     }
-    protected def checkSchemaInheritance(base: Shape, elements: Seq[AmfElement]): Unit = {
+    protected def checkSchemaInheritance(base: Shape, elements: Seq[AmfElement], entryRange: Range): Unit = {
       if (base.meta != AnyShapeModel && !emptyObjectType(base) && !emptyScalarType(base) && !emptyArrayType(base)) {
         elements.foreach {
           case shape: AnyShape
@@ -1151,7 +1154,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               shape.id,
               Some(ShapeModel.Inherits.value.iri()),
               "Inheritance from JSON Schema",
-              shape.annotations.find(classOf[LexicalInformation]),
+              Some(LexicalInformation(entryRange)),
               base.location()
             )
 
@@ -1161,7 +1164,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               xml.id,
               Some(ShapeModel.Inherits.value.iri()),
               "Inheritance from XML Schema",
-              xml.annotations.find(classOf[LexicalInformation]),
+              Some(LexicalInformation(entryRange)),
               base.location()
             )
           case _ => // ignore
@@ -1214,7 +1217,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
             }
           }
-          checkSchemaInheritance(shape, inherits)
+          checkSchemaInheritance(shape, inherits, Range(node.range))
           shape.fields.setWithoutId(ShapeModel.Inherits,
                                     AmfArray(inherits, Annotations(entry.value)),
                                     Annotations(entry))
@@ -1222,7 +1225,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           Raml10TypeParser(entry, s => s.adopted(shape.id))
             .parse()
             .foreach { s =>
-              checkSchemaInheritance(shape, Seq(s))
+              checkSchemaInheritance(shape, Seq(s), Range(entry.range))
               shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry))
             }
 
@@ -1230,7 +1233,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           Raml10TypeParser(entry, s => s.adopted(shape.id))
             .parse()
             .foreach { s =>
-              checkSchemaInheritance(shape, Seq(s))
+              checkSchemaInheritance(shape, Seq(s), Range(entry.range))
               shape.set(ShapeModel.Inherits, AmfArray(Seq(s), Annotations(entry.value)), Annotations(entry))
             }
 
@@ -1239,7 +1242,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             RamlXmlSchemaExpression("schema",
                                     entry.value,
                                     xmlSchemaShape => xmlSchemaShape.withId(shape.id + "/xmlSchema")).parse()
-          checkSchemaInheritance(shape, Seq(parsed))
+          checkSchemaInheritance(shape, Seq(parsed), Range(entry.range))
           shape.set(ShapeModel.Inherits, AmfArray(Seq(parsed), Annotations(entry.value)), Annotations(entry))
 
         case _ if !wellKnownType(entry.value.as[YScalar].text) =>
@@ -1248,7 +1251,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           // only search for named ref, ex Person: !include. We dont handle inherits from an anonymous type like type: !include
           ctx.declarations.findType(text, SearchScope.All) match {
             case Some(ancestor) =>
-              checkSchemaInheritance(shape, Seq(ancestor))
+              checkSchemaInheritance(shape, Seq(ancestor), Range(entry.range))
               // set without ID!, we keep the ID of the referred element
               shape.fields.setWithoutId(
                 ShapeModel.Inherits,
@@ -1364,7 +1367,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               }
               // We check we are not using schemas in properties
               properties.foreach { prop =>
-                checkSchemaInProperty(Seq(prop.range), prop.location())
+                checkSchemaInProperty(Seq(prop.range), prop.location(), Range(entry.range))
               }
               if (hasPatternProperties) {
                 shape.set(NodeShapeModel.Closed, true) // we close by default, additional properties must match one patter or fail

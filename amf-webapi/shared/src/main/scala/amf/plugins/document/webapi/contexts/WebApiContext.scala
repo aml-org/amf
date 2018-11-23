@@ -302,6 +302,16 @@ abstract class WebApiContext(val loc: String,
     case _                  => None
   }
 
+  private var jsonSchemaIndex: Option[JsonSchemaAstIndex] = wrapped match {
+    case wac: WebApiContext => wac.jsonSchemaIndex
+    case _                  => None
+  }
+
+  def setJsonSchemaAST(value: YNode): Unit = {
+    localJSONSchemaContext = Some(value)
+    jsonSchemaIndex = Some(new JsonSchemaAstIndex(value))
+  }
+
   globalSpace = wrapped.globalSpace
 
   // JSON Schema has a global namespace
@@ -400,47 +410,20 @@ abstract class WebApiContext(val loc: String,
   }
 
   def findLocalJSONPath(path: String): Option[(String, YNode)] = {
-    localJSONSchemaContext match {
-      case None => None
-      case Some(schema) =>
-        var tmp: YNode = schema
-        var name       = "schema"
-        var parts      = path.replace("#", "").split("/").filter(_ != "")
-        var error      = false
+    // todo: past uri?
+    jsonSchemaIndex match {
+      case Some(jsi) =>
+        val p: String = if (path.startsWith("#")) {
+          val str = path.replace("#", "")
+          if (str.startsWith("/")) str.stripPrefix("/")
+          else str
+        } else path
 
-        while (parts.nonEmpty && !error) {
-          tmp.tagType match {
-            case YType.Map =>
-              val nextPart = parts.head
-              parts = parts.tail
-              val map = tmp.as[YMap]
-              map.key(nextPart) match {
-                case Some(entry) =>
-                  name = nextPart
-                  tmp = entry.value
-                case _ =>
-                  error = true
-              }
-            case YType.Seq =>
-              val nextPart = parts.head
-              parts = parts.tail
-              val seq = tmp.as[YSequence]
-              if (nextPart.matches("[0-9]+")) {
-                val pos = Integer.parseInt(nextPart)
-                if (seq.nodes.size <= pos) {
-                  error = true
-                } else {
-                  tmp = seq.nodes(pos)
-                }
-              } else {
-                error = true
-              }
-            case _ =>
-              error = true
-          }
+        jsi.getNode(p).map { n =>
+          (path, n)
         }
+      case _ => None
 
-        if (!error) Some((name, tmp)) else None
     }
   }
 

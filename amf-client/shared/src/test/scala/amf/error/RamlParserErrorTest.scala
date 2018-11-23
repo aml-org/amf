@@ -557,6 +557,10 @@ class RamlParserErrorTest extends ParserErrorTest {
       }
     )
   }
+
+  test("Test reference by id at json schema") {
+    validate("valid/reference-by-id/api.raml")
+  }
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =
