@@ -557,6 +557,17 @@ class RamlParserErrorTest extends ParserErrorTest {
       }
     )
   }
+
+  test("Test invalid string format in jsonschema number") {
+    validate(
+      "error/invalid-number-format/api.raml",
+      formatWarning => {
+        formatWarning.level should be("Warning")
+        formatWarning.message should endWith(
+          "Format UTC_MILLISEC is not valid for type http://a.ml/vocabularies/shapes#number")
+      }
+    )
+  }
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =
