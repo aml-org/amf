@@ -1,0 +1,24 @@
+  {
+    "required" : true ,
+    "$schema" : "http://json-schema.org/draft-03/schema",
+    "type" : "object",
+    "properties" : {
+      "id" : {
+        "type" : "string"
+      },
+      "httpBaseUrl" : {
+        "type" : "string"
+      },
+      "uploadDate" : {
+        "type" : "number",
+        "format" : "UTC_MILLISEC",
+        "type" : "integer"
+      },
+      "html" : {
+        "type" : "string"
+      },
+      "metadata" : {
+        "type" : "object"
+      }
+    }
+  }
