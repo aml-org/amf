@@ -24,7 +24,7 @@ object SourceVendor extends AnnotationGraphLoader {
   override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
     annotatedValue match {
       case Vendor(vendor) => SourceVendor(vendor)
-      case _              => throw new RuntimeException(s"Illegal vendor: '$annotatedValue'")
+      case _              => SourceVendor(Vendor(annotatedValue))
     }
   }
 }

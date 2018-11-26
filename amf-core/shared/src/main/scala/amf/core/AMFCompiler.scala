@@ -14,7 +14,6 @@ import amf.core.parser.{
   ParsedDocument,
   ParsedReference,
   ParserContext,
-  Reference,
   ReferenceKind,
   ReferenceResolutionResult,
   UnspecifiedReference
@@ -64,9 +63,9 @@ class AMFCompiler(val rawUrl: String,
   private val context: Context = base.map(_.update(path)).getOrElse(core.remote.Context(remote, path))
   private val location         = context.current
   private val ctx: ParserContext = baseContext match {
-    case Some(given) if given.currentFile.equals(location) => given
-    case Some(given)                                       => given.forLocation(location)
-    case None                                              => ParserContext(location)
+    case Some(given) if given.rootContextDocument.equals(location) => given
+    case Some(given)                                               => given.forLocation(location)
+    case None                                                      => ParserContext(location)
   }
 
   def build(): Future[BaseUnit] = {
@@ -168,9 +167,9 @@ class AMFCompiler(val rawUrl: String,
     parsed match {
       case Left(content) =>
         mediaType match {
-          case Some(mime) if AMFPluginsRegistry.syntaxPluginForMediaType(mime).isEmpty =>
-            throw new UnsupportedMediaTypeException(mime) // Fail with root only
-          case _ => parseExternalFragment(content)
+          // if is Left (empty or other error) and is root (context.history.length == 1), then return an error
+          case Some(mime) if context.history.length == 1 => throw new UnsupportedMediaTypeException(mime)
+          case _                                         => parseExternalFragment(content)
         }
       case Right(document) => parseDomain(document)
     }
@@ -226,7 +225,7 @@ class AMFCompiler(val rawUrl: String,
   }
 
   private def parseReferences(root: Root, domainPlugin: AMFDocumentPlugin): Future[Root] = {
-    val handler = domainPlugin.referenceHandler()
+    val handler = domainPlugin.referenceHandler(ctx)
     val refs    = handler.collect(root.parsed, ctx)
     ExecutionLog.log(s"AMFCompiler#parseReferences: ${refs.toReferences.size} references found in $rawUrl")
     val parsed: Seq[Future[Option[ParsedReference]]] = refs.toReferences

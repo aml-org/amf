@@ -22,7 +22,7 @@ class OasReferenceResolutionStage(keepEditingInfo: Boolean = false)(override imp
   }
 }
 
-class OasResolutionPipeline(override val model: BaseUnit) extends AmfResolutionPipeline(model) {
+class OasResolutionPipeline(override val eh: ErrorHandler) extends AmfResolutionPipeline(eh) {
   override def profileName: ProfileName = OasProfile
   override lazy val references          = new OasReferenceResolutionStage()
 }

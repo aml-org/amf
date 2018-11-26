@@ -9,6 +9,7 @@ import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{
   EmptyFutureDeclarations,
+  ErrorHandler,
   ParsedReference,
   ParserContext,
   Reference,
@@ -38,8 +39,9 @@ import scala.concurrent.Future
 class JsonSchemaWebApiContext(loc: String,
                               refs: Seq[ParsedReference],
                               private val wrapped: ParserContext,
-                              private val ds: Option[OasWebApiDeclarations])
-    extends OasWebApiContext(loc, refs, wrapped, ds) {
+                              private val ds: Option[OasWebApiDeclarations],
+                              override val eh: Option[ErrorHandler] = None)
+    extends OasWebApiContext(loc, refs, wrapped, ds, eh) {
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax
   override val vendor: Vendor                 = Oas30
@@ -61,8 +63,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new OasResolutionPipeline(unit).resolve()
+  override def resolve(unit: BaseUnit,
+                       errorHandler: ErrorHandler,
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+    new OasResolutionPipeline(errorHandler).resolve(unit)
 
   /**
     * List of media types used to encode serialisations of
@@ -252,7 +256,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   }
 
   override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
-    firstAnyShape(unit) map (JsonSchemaEmitter(_).emitDocument())
+    firstAnyShape(unit) map (JsonSchemaEmitter(_, eh = renderOptions.errorHandler).emitDocument())
 
   /**
     * Decides if this plugin can parse the provided document instance.
@@ -276,7 +280,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     case _                => None
   }
 
-  override def referenceHandler(): ReferenceHandler = SimpleReferenceHandler
+  override def referenceHandler(eh: ErrorHandler): ReferenceHandler = SimpleReferenceHandler
 
   override val ID: String = "JSON Schema" // version?
 

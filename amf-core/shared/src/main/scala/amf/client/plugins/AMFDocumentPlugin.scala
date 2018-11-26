@@ -6,7 +6,13 @@ import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{ParserContext, ReferenceHandler}
+import amf.core.parser.{
+  DefaultParserSideErrorHandler,
+  ErrorHandler,
+  ParserContext,
+  ReferenceHandler,
+  UnhandledErrorHandler
+}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Platform
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -43,7 +49,15 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit
+  final def resolveWithHandle(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+    resolve(unit, DefaultParserSideErrorHandler(unit), pipelineId)
+
+  /**
+    * Resolves the provided base unit model, according to the semantics of the domain of the document
+    */
+  def resolve(unit: BaseUnit,
+              errorHandler: ErrorHandler,
+              pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit
 
   /**
     * List of media types used to encode serialisations of
@@ -89,5 +103,5 @@ abstract class AMFDocumentPlugin extends AMFPlugin {
     */
   def canUnparse(unit: BaseUnit): Boolean
 
-  def referenceHandler(): ReferenceHandler
+  def referenceHandler(eh: ErrorHandler): ReferenceHandler
 }

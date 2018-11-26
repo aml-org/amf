@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{LexicalInformation, SourceVendor}
 import amf.core.model.domain.{AmfArray, Shape}
-import amf.core.parser.{Annotations, Range, SearchScope}
+import amf.core.parser.{Annotations, Position, Range, SearchScope}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -51,7 +51,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
           parseInput(result.remaining)
         case '|' =>
           if (acc == "" && this.parsedShape.isEmpty) {
-            throw new Exception("Syntax error, cannot parse Union with empty values")
+            ctx.violation("", "Syntax error, cannot parse Union with empty values", lexical, location)
           }
           processChars()
           parsedShape = Some(toUnion)
@@ -60,11 +60,13 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
           parseInput(result.remaining)
         case '[' =>
           processChars()
-          if (parsingArray) { throw new Exception("Syntax error, duplicated [") }
+          if (parsingArray) { ctx.violation("", "Syntax error, duplicated [", lexical, location) }
           parsingArray = true
           parseInput(input.tail)
         case ']' =>
-          if (!parsingArray) { throw new Exception("Syntax error, Not matching ]") }
+          if (!parsingArray) {
+            ctx.violation("", "Syntax error, Not matching ]", lexical, location)
+          }
           parsingArray = false
           parsedShape = Some(toArray)
           parseInput(input.tail)

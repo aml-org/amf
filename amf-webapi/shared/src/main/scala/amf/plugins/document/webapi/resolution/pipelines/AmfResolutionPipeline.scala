@@ -1,14 +1,14 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
-import amf.{AmfProfile, ProfileName}
-import amf.core.model.document.BaseUnit
+import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages._
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages._
+import amf.{AmfProfile, ProfileName}
 
-class AmfResolutionPipeline(override val model: BaseUnit) extends ResolutionPipeline[BaseUnit] {
+class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
   override def profileName: ProfileName = AmfProfile
 
   protected lazy val references = new ReferenceResolutionStage(keepEditingInfo = false)
@@ -26,4 +26,8 @@ class AmfResolutionPipeline(override val model: BaseUnit) extends ResolutionPipe
     new DeclarationsRemovalStage()
   )
 
+}
+
+object AmfResolutionPipeline {
+  def unhandled = new AmfResolutionPipeline(UnhandledErrorHandler)
 }

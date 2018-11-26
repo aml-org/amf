@@ -131,7 +131,7 @@ object WebApiAnnotations {
   private def sourceVendor(value: String, objects: Map[String, AmfElement]) = {
     value match {
       case Vendor(vendor) => SourceVendor(vendor)
-      case _              => throw new RuntimeException(s"Illegal vendor: '$value'")
+      case _              => SourceVendor(Vendor(value))
     }
   }
 

@@ -1,0 +1,38 @@
+#%RAML 1.0 DataType
+
+type: object
+description: A GlobalWork maps all of the products from the different HarperCollins entities, that are related to a single work, to a globally unique identifier.
+properties:
+#  href: 
+#    description: The unique URI for this Global Work.
+#    required: false
+#    type: string  
+  id:
+    description: The Globally unique ID for this work.
+    required: false
+    type: string  
+  title:
+    description: The display title for this work.
+    required: false
+    type: string
+  owningEntity:
+    description: The HC entity that originally owns this work.
+    required: false
+    type: string
+  products:
+    description: The world wide products that have been mapped to this work.
+    required: false
+    type: array
+    items: GlobalWorkProduct
+  globalAuthorId:
+    description: The Global Author that this work has been mapped to.
+    required: false
+    type: string  
+#  mapProduct:
+#    description: Map a product to this GlobalWorkID
+#    required: false
+#    type: string  
+#  unmapProduct:
+#    description: UnMap a product to from GlobalWorkID
+#    required: false
+#    type: string  

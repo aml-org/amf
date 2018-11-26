@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.contexts
 
 import amf.core.model.document.{ExternalFragment, RecursiveUnit}
 import amf.core.model.domain.Shape
-import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
+import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.JsonSchemaPlugin
@@ -14,9 +14,16 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaVersion
 }
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft3SchemaVersion,
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaUnspecifiedVersion,
+  JSONSchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
 import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.features.validation.ParserSideValidations
 import amf.plugins.features.validation.ParserSideValidations.{
   ClosedShapeSpecification,
   DuplicatedPropertySpecification
@@ -26,10 +33,11 @@ import org.yaml.model._
 class PayloadContext(loc: String,
                      refs: Seq[ParsedReference],
                      private val wrapped: ParserContext,
-                     private val ds: Option[RamlWebApiDeclarations] = None)
-    extends RamlWebApiContext(loc, refs, wrapped, ds) {
+                     private val ds: Option[RamlWebApiDeclarations] = None,
+                     override val eh: Option[ErrorHandler] = None)
+    extends RamlWebApiContext(loc, refs, wrapped, ds, eh) {
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext = {
-    new PayloadContext(loc, refs, wrapped, Some(declarations))
+    new PayloadContext(loc, refs, wrapped, Some(declarations), eh)
   }
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val syntax: SpecSyntax = new SpecSyntax {
@@ -41,34 +49,37 @@ class PayloadContext(loc: String,
 class Raml10WebApiContext(loc: String,
                           refs: Seq[ParsedReference],
                           private val wrapped: ParserContext,
-                          private val ds: Option[RamlWebApiDeclarations] = None)
-    extends RamlWebApiContext(loc, refs, wrapped, ds) {
+                          private val ds: Option[RamlWebApiDeclarations] = None,
+                          override val eh: Option[ErrorHandler] = None)
+    extends RamlWebApiContext(loc, refs, wrapped, ds, eh) {
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val vendor: Vendor                  = Raml10
   override val syntax: SpecSyntax              = Raml10Syntax
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
-    new Raml10WebApiContext(loc, refs, wrapped, Some(declarations))
+    new Raml10WebApiContext(loc, refs, wrapped, Some(declarations), eh)
 }
 
 class Raml08WebApiContext(loc: String,
                           refs: Seq[ParsedReference],
                           private val wrapped: ParserContext,
-                          private val ds: Option[RamlWebApiDeclarations] = None)
-    extends RamlWebApiContext(loc, refs, wrapped, ds) {
+                          private val ds: Option[RamlWebApiDeclarations] = None,
+                          override val eh: Option[ErrorHandler] = None)
+    extends RamlWebApiContext(loc, refs, wrapped, ds, eh) {
   override val factory: RamlSpecVersionFactory = new Raml08VersionFactory()(this)
   override val vendor: Vendor                  = Raml08
   override val syntax: SpecSyntax              = Raml08Syntax
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
-    new Raml08WebApiContext(loc, refs, wrapped, Some(declarations))
+    new Raml08WebApiContext(loc, refs, wrapped, Some(declarations), eh)
 }
 
 abstract class RamlWebApiContext(override val loc: String,
                                  refs: Seq[ParsedReference],
                                  private val wrapped: ParserContext,
-                                 private val ds: Option[RamlWebApiDeclarations] = None)
-    extends WebApiContext(loc, refs, wrapped, ds)
+                                 private val ds: Option[RamlWebApiDeclarations] = None,
+                                 override val eh: Option[ErrorHandler] = None)
+    extends WebApiContext(loc, refs, wrapped, ds, eh)
     with RamlSpecAwareContext {
 
   var globalMediatype: Boolean = false
@@ -95,7 +106,14 @@ abstract class RamlWebApiContext(override val loc: String,
       declarations.libraries.get(nextLibrary) match {
         case Some(library: RamlWebApiDeclarations) =>
           findDeclarations(path.tail, library)
-        case _ => throw new Exception(s"Cannot find declarations in context '${path.mkString(".")}")
+        case _ =>
+          violation(ParserSideValidations.ParsingErrorSpecification.id,
+                    "",
+                    None,
+                    s"Cannot find declarations in context '${path.mkString(".")}",
+                    None,
+                    None)
+          declarations
       }
     }
   }
@@ -157,7 +175,13 @@ abstract class RamlWebApiContext(override val loc: String,
             ) // pointing only to the first failed error
         }
 
-      case None => throw new Exception(s"Cannot validate unknown node type $shapeType for $vendor")
+      case None =>
+        violation(
+          ClosedShapeSpecification.id,
+          node,
+          s"Cannot validate unknown node type $shapeType for $vendor",
+          shape.annotations
+        )
     }
   }
 }
@@ -192,8 +216,9 @@ class ExtensionLikeWebApiContext(loc: String,
 abstract class OasWebApiContext(loc: String,
                                 refs: Seq[ParsedReference],
                                 private val wrapped: ParserContext,
-                                private val ds: Option[OasWebApiDeclarations] = None)
-    extends WebApiContext(loc, refs, wrapped, ds) {
+                                private val ds: Option[OasWebApiDeclarations] = None,
+                                override val eh: Option[ErrorHandler] = None)
+    extends WebApiContext(loc, refs, wrapped, ds, eh) {
 
   override val declarations: OasWebApiDeclarations =
     ds.getOrElse(
@@ -234,8 +259,9 @@ abstract class OasWebApiContext(loc: String,
 class Oas2WebApiContext(loc: String,
                         refs: Seq[ParsedReference],
                         private val wrapped: ParserContext,
-                        private val ds: Option[OasWebApiDeclarations] = None)
-    extends OasWebApiContext(loc, refs, wrapped, ds) {
+                        private val ds: Option[OasWebApiDeclarations] = None,
+                        override val eh: Option[ErrorHandler] = None)
+    extends OasWebApiContext(loc, refs, wrapped, ds, eh) {
   override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
   override val vendor: Vendor              = Oas20
   override val syntax: SpecSyntax          = Oas2Syntax
@@ -244,8 +270,9 @@ class Oas2WebApiContext(loc: String,
 class Oas3WebApiContext(loc: String,
                         refs: Seq[ParsedReference],
                         private val wrapped: ParserContext,
-                        private val ds: Option[OasWebApiDeclarations] = None)
-    extends OasWebApiContext(loc, refs, wrapped, ds) {
+                        private val ds: Option[OasWebApiDeclarations] = None,
+                        override val eh: Option[ErrorHandler] = None)
+    extends OasWebApiContext(loc, refs, wrapped, ds, eh) {
   override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
   override val vendor: Vendor              = Oas30
   override val syntax: SpecSyntax          = Oas3Syntax
@@ -254,8 +281,13 @@ class Oas3WebApiContext(loc: String,
 abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
                              private val wrapped: ParserContext,
-                             private val ds: Option[WebApiDeclarations] = None)
-    extends ParserContext(loc, refs, wrapped.futureDeclarations, parserCount = wrapped.parserCount)
+                             private val ds: Option[WebApiDeclarations] = None,
+                             override val eh: Option[ErrorHandler])
+    extends ParserContext(loc,
+                          refs,
+                          wrapped.futureDeclarations,
+                          parserCount = wrapped.parserCount,
+                          eh.orElse(wrapped.eh))
     with SpecAwareContext
     with PlatformSecrets {
 
@@ -449,7 +481,8 @@ abstract class WebApiContext(val loc: String,
                       entry)
           }
         }
-      case None => throw new Exception(s"Cannot validate unknown node type $shape for $vendor")
+      case None =>
+        violation(ClosedShapeSpecification.id, node, s"Cannot validate unknown node type $shape for $vendor", ast)
     }
   }
 }

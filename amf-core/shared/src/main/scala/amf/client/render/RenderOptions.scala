@@ -1,6 +1,11 @@
 package amf.client.render
 
+import amf.client.resolve.{ClientErrorHandler, ClientErrorHandlerConverter}
+
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+import amf.client.convert.CoreClientConverters._
+import ClientErrorHandlerConverter._
+import amf.core.parser.UnhandledErrorHandler
 
 /**
   * Render options
@@ -12,6 +17,7 @@ class RenderOptions {
   private var sources: Boolean       = false
   private var compactUris: Boolean   = false
   private var amfJsonLdSerialization = true
+  private var eh: ClientErrorHandler = ErrorHandlerConverter.asClient(UnhandledErrorHandler)
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
@@ -32,6 +38,11 @@ class RenderOptions {
 
   def withoutCompactUris: RenderOptions = {
     compactUris = false
+    this
+  }
+
+  def withErrorHandler(errorHandler: ClientErrorHandler): RenderOptions = {
+    eh = errorHandler
     this
   }
 
@@ -57,6 +68,7 @@ class RenderOptions {
   def isWithCompactUris: Boolean       = compactUris
   def isWithSourceMaps: Boolean        = sources
   def isAmfJsonLdSerilization: Boolean = amfJsonLdSerialization
+  def errorHandler: ClientErrorHandler = eh
 }
 
 object RenderOptions {

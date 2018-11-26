@@ -3,6 +3,7 @@ package amf.client.commands
 import amf.core.client.ParserConfig
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
+import amf.core.parser.UnhandledErrorHandler
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -48,7 +49,9 @@ trait CommandHelper {
       Context(platform)
     )
     val vendor = effectiveVendor(config.inputFormat)
-    if (config.resolve) parsed map (unit => RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE))
+    if (config.resolve)
+      parsed map (unit =>
+        RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler))
     else parsed
   }
 
@@ -63,10 +66,10 @@ trait CommandHelper {
         Context(platform)
       )
       parsed map { parsed =>
-        RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE)
+        RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
       }
     } else if (config.resolve) {
-      Future { RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE) }
+      Future { RuntimeResolver.resolve(vendor, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler) }
     } else {
       Future { unit }
     }

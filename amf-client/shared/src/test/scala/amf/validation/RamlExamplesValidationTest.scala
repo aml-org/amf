@@ -208,7 +208,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Test invalid int64 format with int example") {
-    validate("/examples/invalid-format-example.raml", Some("invalid-format-example.report"))
+    validate("/examples/invalid-format-example.raml")
   }
 
   test("Test invalid string hierarchy examples") {

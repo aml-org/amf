@@ -9,7 +9,12 @@ import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity
 import amf.core.services.{RuntimeValidator, ValidationsMerger}
 import amf.core.validation.AMFValidationResult
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.contexts.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlSpecEmitterContext,
+  RamlWebApiContext
+}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
@@ -37,14 +42,17 @@ object ExtendsHelper {
     val ctx = context.getOrElse(custom(profile))
 
     val referencesCollector = mutable.Map[String, DomainElement]()
-    val document = YDocument({
-      _.obj {
-        _.entry(
-          "extends",
-          DataNodeEmitter(node, SpecOrdering.Default, resolvedLinks = true, referencesCollector).emit(_)
-        )
-      }
-    }, node.location().getOrElse(""))
+    val document = YDocument(
+      {
+        _.obj {
+          _.entry(
+            "extends",
+            DataNodeEmitter(node, SpecOrdering.Default, resolvedLinks = true, referencesCollector)(ctx).emit(_)
+          )
+        }
+      },
+      node.location().getOrElse("")
+    )
 
     val entry = document.as[YMap].entries.head
     declarations(ctx, unit)
@@ -115,7 +123,7 @@ object ExtendsHelper {
         _.obj {
           _.entry(
             "/endpoint",
-            DataNodeEmitter(dataNode, SpecOrdering.Default, resolvedLinks = true, referencesCollector).emit(_)
+            DataNodeEmitter(dataNode, SpecOrdering.Default, resolvedLinks = true, referencesCollector)(ctx).emit(_)
           )
         }
       },
@@ -220,7 +228,7 @@ object ExtendsHelper {
           case (alias, (fullUrl, _)) =>
             // If the library alias is already in the context, skip it
             if (m.id == fullUrl && !ctx.declarations.libraries.exists(_._1 == alias)) {
-              val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext())
+              val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(), eh = ctx.eh)
               m.declares.foreach { declaration =>
                 processDeclaration(declaration, nestedCtx, m)
               }

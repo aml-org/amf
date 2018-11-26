@@ -4,7 +4,6 @@ import amf.core.Root
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.Annotation
-import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.{
   Annotations,
   BaseSpecParser,
@@ -24,20 +23,18 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
-import amf.plugins.document.vocabularies.parser.DynamicExtensionParser
-import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
+import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
 import amf.plugins.features.validation.ParserSideValidations
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 
 import scala.collection.mutable
-import scala.util.{Failure, Success}
 
 class DialectInstanceDeclarations(var dialectDomainElements: Map[String, DialectDomainElement] = Map(),
                                   errorHandler: Option[ErrorHandler],
                                   futureDeclarations: FutureDeclarations)
-    extends VocabularyDeclarations(Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
+    extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): DialectInstanceDeclarations = {
@@ -164,6 +161,9 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
     implicit ctx: DialectInstanceContext) {
   def +=(alias: String, unit: BaseUnit): Unit = {
     references += (alias -> unit)
+    // useful for annotations
+    if (unit.isInstanceOf[Vocabulary]) ctx.declarations.registerUsedVocabulary(alias, unit.asInstanceOf[Vocabulary])
+    // register declared units properly
     unit match {
       case m: DeclaresModel =>
         val library = ctx.declarations.getOrCreateLibrary(alias)
@@ -289,7 +289,8 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
 
 class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstanceContext)
     extends BaseSpecParser
-    with PlatformSecrets {
+    with PlatformSecrets
+    with AnnotationsParser {
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
   def parseDocument(): Option[DialectInstance] = {
@@ -488,57 +489,6 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
-  protected def parseAnnotations(ast: YMap, node: DialectDomainElement) = {
-    val parsedAnnotationProperties: Iterable[((Option[String], String), String, YNode)] = ast.map.map {
-      case (k, v) =>
-        val key = k.as[String]
-        if (key.startsWith("(") && key.endsWith(")")) {
-          val base = key.replace("(", "").replace(")", "")
-          base.split("\\.") match {
-            case Array(prefix, suffix) => Some(((Some(prefix), suffix), key, v))
-            case Array(suffix)         => Some(((None, suffix), key, v))
-            case _                     => None
-          }
-        } else if (key.startsWith("x-")) {
-          val base = key.replace("x-", "")
-          base.split("-") match {
-            case Array(prefix, suffix) => Some(((Some(prefix), suffix), key, v))
-            case Array(suffix)         => Some(((None, suffix), key, v))
-            case _                     => None
-          }
-        } else {
-          None
-        }
-    } collect {
-      case Some(parsed) =>
-        parsed
-    }
-
-    val parsedExtensions = parsedAnnotationProperties map {
-      case ((prefix, suffix), k, v) =>
-        ctx.declarations.resolveExternalNamespace(prefix, suffix) match {
-          case Success(propertyId) =>
-            val id               = node.id + s"/${prefix.getOrElse("")}$suffix"
-            val parsedAnnotation = DynamicExtensionParser(v, Some(id)).parse()
-            val property         = CustomDomainProperty(Annotations(v)).withId(propertyId).withName(k)
-            val extension = DomainExtension()
-              .withId(id)
-              .withExtension(parsedAnnotation)
-              .withDefinedBy(property)
-              .withName(k)
-              .add(Annotations(v))
-            Some(extension)
-          case Failure(ex) =>
-            ctx.violation(ex.getMessage, v)
-            None
-        }
-    } collect { case Some(parsed) => parsed }
-
-    if (parsedExtensions.nonEmpty) {
-      node.withCustomDomainProperties(parsedExtensions.toSeq)
-    }
-  }
-
   protected def parseNode(path: String,
                           defaultId: String,
                           ast: YNode,
@@ -564,7 +514,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             val finalId                    = generateNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties, rootNode)
             node.withId(finalId)
             node.withInstanceTypes(Seq(mapping.nodetypeMapping.value(), mapping.id))
-            parseAnnotations(nodeMap, node)
+            parseAnnotations(nodeMap, node, ctx.declarations)
             mapping.propertiesMapping().foreach { propertyMapping =>
               val propertyName = propertyMapping.name().value()
               nodeMap.entries.find(_.key.as[YScalar].text == propertyName) match {

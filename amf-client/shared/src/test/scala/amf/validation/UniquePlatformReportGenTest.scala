@@ -78,7 +78,7 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
       validation <- Validation(platform)
       model      <- AMFCompiler(basePath + api, platform, profileToHint(profile), validation).build()
       report <- {
-        new ValidationResolutionPipeline(profile, model).resolve()
+        ValidationResolutionPipeline(profile, model)
         val results = validation.aggregatedReport
         val report =
           AMFValidationReport(!results.exists(_.level == SeverityLevels.VIOLATION), model.id, profile, results)

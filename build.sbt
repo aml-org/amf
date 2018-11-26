@@ -10,7 +10,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf"
 
-version in ThisBuild := "3.0.1"
+version in ThisBuild := "3.0.2"
 
 publish := {}
 
@@ -61,7 +61,8 @@ setSonarProperties := {
   sonarProperties := values
 
   val p = new Properties()
-  p.putAll(JavaConversions.mapAsJavaMap(values))
+  val m = JavaConversions.mapAsJavaMap(values)
+  p.putAll(m)
   val stream = new FileOutputStream(file("./sonar-project.properties"))
   p.store(stream, null)
   stream.close()
@@ -108,7 +109,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.0"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.1"
     ))
   .in(file("./amf-core"))
   .settings(settings)

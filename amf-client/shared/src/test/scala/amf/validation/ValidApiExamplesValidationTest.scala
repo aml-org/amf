@@ -232,5 +232,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/examples/double-against-integer/api.raml")
   }
 
+  test("Test raml 08 with 2 schemas that contains definitions with same name but different content") {
+    checkValid("/examples/schemas-with-definition.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

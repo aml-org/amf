@@ -9,6 +9,7 @@ import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.resolution.stages.RecursionErrorRegister
+import amf.plugins.features.validation.ParserSideValidations
 
 private[stages] object ShapeExpander {
   def apply(s: Shape, context: NormalizationContext, recursionRegister: RecursionErrorRegister): Shape =
@@ -26,7 +27,10 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
   protected def ensureCorrect(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {
-      throw new Exception(s"Resolution error: Found shape without ID: $shape")
+      context.errorHandler.violation(ParserSideValidations.ResolutionErrorSpecification.id,
+                                     s"Resolution error: Found shape without ID: $shape",
+                                     shape.position(),
+                                     shape.location())
     }
   }
 
@@ -284,7 +288,12 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
       property.fields.setWithoutId(PropertyShapeModel.Range, expandedRange, oldRange.annotations)
     } else {
-      throw new Exception(s"Resolution error: Property shape with missing range: $property")
+      context.errorHandler.violation(
+        ParserSideValidations.ResolutionErrorSpecification.id,
+        property.id,
+        s"Resolution error: Property shape with missing range: $property",
+        property.annotations
+      )
     }
     property
   }
@@ -314,7 +323,10 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       }
       union.setArrayWithoutId(UnionShapeModel.AnyOf, newAnyOf, oldAnyOf.annotations)
     } else if (Option(union.inherits).isEmpty || union.inherits.isEmpty) {
-      throw new Exception(s"Resolution error: Union shape with missing anyof: $union")
+      context.errorHandler.violation(ParserSideValidations.ResolutionErrorSpecification.id,
+                                     union.id,
+                                     s"Resolution error: Union shape with missing anyof: $union",
+                                     union.annotations)
     }
 
     union

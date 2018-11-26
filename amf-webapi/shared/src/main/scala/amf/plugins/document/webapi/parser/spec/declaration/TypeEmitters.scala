@@ -26,6 +26,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YType}
 
@@ -59,7 +60,13 @@ case class RamlNamedTypeEmitter(shape: AnyShape,
 
   private def emitInline(b: PartBuilder): Unit = shape match {
     case s: Shape with ShapeHelpers => typesEmitter(s, ordering, None, Seq(), references).emit(b)
-    case _                          => throw new Exception("Cannot emit inline shape that doesnt support type expressions")
+    case _ =>
+      spec.eh.violation(
+        ParserSideValidations.EmittionErrorEspecification.id,
+        "Cannot emit inline shape that doesnt support type expressions",
+        shape.position(),
+        shape.location()
+      )
   }
 
   override def position(): Position = pos(shape.annotations)
@@ -131,12 +138,18 @@ abstract class RamlTypePartEmitter(shape: Shape,
   val emitter: Either[PartEmitter, Seq[EntryEmitter]] = emitters match {
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
-    case other                                         => throw new Exception(s"IllegalTypeDeclarations found: $other")
+    case other =>
+      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                        s"IllegalTypeDeclarations found: $other",
+                        shape.position(),
+                        shape.location())
+      Right(Nil)
   }
 }
 
-case class RamlTypeExpressionEmitter(shape: Shape with ShapeHelpers) extends PartEmitter {
-  override def emit(b: PartBuilder): Unit = raw(b, shape.typeExpression)
+case class RamlTypeExpressionEmitter(shape: Shape with ShapeHelpers)(implicit spec: SpecEmitterContext)
+    extends PartEmitter {
+  override def emit(b: PartBuilder): Unit = raw(b, shape.typeExpression(spec.eh))
 
   override def position(): Position = pos(shape.annotations)
 }
@@ -249,7 +262,7 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
     fs.entry(ShapeModel.Default) match {
       case Some(f) =>
         result += EntryPartEmitter("default",
-                                   DataNodeEmitter(shape.default, ordering),
+                                   DataNodeEmitter(shape.default, ordering)(spec.eh),
                                    position = pos(f.value.annotations))
       case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
     }
@@ -572,7 +585,12 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
             traverse(
               ordering.sorted(inlineShapes.flatMap {
                 case s: AnyShape => Raml10TypeEmitter(s, ordering, references = references).entries()
-                case _           => throw new Exception("Cannot emit for type shapes without WebAPI Shape support")
+                case other =>
+                  spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                                    "Cannot emit for type shapes without WebAPI Shape support",
+                                    other.position(),
+                                    other.location())
+                  Nil
               }),
               _
             ))
@@ -1294,7 +1312,7 @@ abstract class OasShapeEmitter(shape: Shape,
     fs.entry(ShapeModel.Default) match {
       case Some(f) =>
         result += EntryPartEmitter("default",
-                                   DataNodeEmitter(shape.default, ordering),
+                                   DataNodeEmitter(shape.default, ordering)(spec.eh),
                                    position = pos(f.value.annotations))
       case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
     }
@@ -2223,7 +2241,7 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
     fs.entry(ShapeModel.Default)
       .map(f => {
         result += EntryPartEmitter("default",
-                                   DataNodeEmitter(shape.default, ordering),
+                                   DataNodeEmitter(shape.default, ordering)(spec.eh),
                                    position = pos(f.value.annotations))
       })
 
@@ -2246,11 +2264,12 @@ object NumberTypeToYTypeConverter {
   }
 }
 
-case class EnumValuesEmitter(key: String, value: Value, ordering: SpecOrdering) extends EntryEmitter {
+case class EnumValuesEmitter(key: String, value: Value, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val nodes = value.value.asInstanceOf[AmfArray].values.asInstanceOf[Seq[DataNode]]
     val emitters = nodes.map { d =>
-      DataNodeEmitter(d, ordering)
+      DataNodeEmitter(d, ordering)(spec.eh)
     }
     b.entry(key, _.list(traverse(ordering.sorted(emitters), _)))
   }

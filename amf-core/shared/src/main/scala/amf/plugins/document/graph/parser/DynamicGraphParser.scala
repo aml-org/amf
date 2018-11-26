@@ -17,7 +17,10 @@ import scala.collection.mutable.ListBuffer
   * @param nodes entry nodes for the parser
   * @param ctx parsing context
   */
-class DynamicGraphParser(var nodes: Map[String, AmfElement], referencesMap: mutable.Map[String, DomainElement], unresolvedReferences: mutable.Map[String, Seq[DomainElement]])(implicit ctx: ParserContext) extends GraphParserHelpers {
+class DynamicGraphParser(var nodes: Map[String, AmfElement],
+                         referencesMap: mutable.Map[String, DomainElement],
+                         unresolvedReferences: mutable.Map[String, Seq[DomainElement]])(implicit ctx: ParserContext)
+    extends GraphParserHelpers {
 
   /**
     * Finds the type of dynamic node model to build based on the JSON-LD @type information
@@ -40,7 +43,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement], referencesMap: muta
     * @return the parsed dynamic node model
     */
   def parseDynamicType(map: YMap): Option[DataNode] = {
-    retrieveId(map, ctx).map(id => {
+    retrieveId(map, ctx).flatMap(id => {
       val sources = retrieveSources(id, map)
       val builder = retrieveType(id, map).get
 
@@ -66,7 +69,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement], referencesMap: muta
               }
           }
 
-          obj
+          Some(obj)
 
         case scalar: ScalarNode =>
           scalar.withId(id)
@@ -85,25 +88,24 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement], referencesMap: muta
                 case _ => // ignore
               }
           }
-          scalar
+          Some(scalar)
 
         case link: LinkNode =>
           link.withId(id)
-          map.entries.foreach {
-            entry =>
-              val uri = entry.key.as[String]
-              uri match {
+          map.entries.foreach { entry =>
+            val uri = entry.key.as[String]
+            uri match {
 
-                case _ if uri == link.Alias.value.iri() =>
-                  val parsedScalar = parseJSONLDScalar(entry.value)
-                  link.alias = parsedScalar.value
+              case _ if uri == link.Alias.value.iri() =>
+                val parsedScalar = parseJSONLDScalar(entry.value)
+                link.alias = parsedScalar.value
 
-                case _ if uri == link.Value.value.iri() =>
-                  val parsedScalar = parseJSONLDScalar(entry.value)
-                  link.value = parsedScalar.value
+              case _ if uri == link.Value.value.iri() =>
+                val parsedScalar = parseJSONLDScalar(entry.value)
+                link.value = parsedScalar.value
 
-                case _ => // ignore
-              }
+              case _ => // ignore
+            }
           }
           referencesMap.get(link.alias) match {
             case Some(target) => link.withLinkedDomainElement(target)
@@ -111,7 +113,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement], referencesMap: muta
               val unresolved: Seq[DomainElement] = unresolvedReferences.getOrElse(link.alias, Nil)
               unresolvedReferences += (link.alias -> (unresolved ++ Seq(link)))
           }
-          link
+          Some(link)
 
         case array: ArrayNode =>
           array.withId(id)
@@ -124,10 +126,11 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement], referencesMap: muta
               case _ => // ignore
             }
           }
-          array
+          Some(array)
 
         case other =>
-          throw new Exception(s"Cannot parse object data node from non object JSON structure $other")
+          ctx.violation(id, s"Cannot parse object data node from non object JSON structure $other", map)
+          None
       }
 
     })

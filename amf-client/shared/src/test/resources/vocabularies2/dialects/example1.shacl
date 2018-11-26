@@ -31,6 +31,9 @@
 <http://a.ml/vocabularies/amf/parser#duplicated-property> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#duplicated-property> <http://www.w3.org/ns/shacl#message> "Duplicated property in node" .
 <http://a.ml/vocabularies/amf/parser#duplicated-property> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#emittion-error> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#emittion-error> <http://www.w3.org/ns/shacl#message> "Error during emittion stage" .
+<http://a.ml/vocabularies/amf/parser#emittion-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#example-validation-error> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#example-validation-error> <http://www.w3.org/ns/shacl#message> "Example does not validate type" .
 <http://a.ml/vocabularies/amf/parser#example-validation-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -73,9 +76,18 @@
 <http://a.ml/vocabularies/amf/parser#named-example-used-inlined-example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#named-example-used-inlined-example> <http://www.w3.org/ns/shacl#message> "Named example should not be used as inline examples" .
 <http://a.ml/vocabularies/amf/parser#named-example-used-inlined-example> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#oas-file-not-form-data-parameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#oas-file-not-form-data-parameters> <http://www.w3.org/ns/shacl#message> "Parameters with type file must be in formData" .
+<http://a.ml/vocabularies/amf/parser#oas-file-not-form-data-parameters> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#oas-invalid-body-parameter> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#oas-invalid-body-parameter> <http://www.w3.org/ns/shacl#message> "Only one body parameter is allowed" .
 <http://a.ml/vocabularies/amf/parser#oas-invalid-body-parameter> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#oas-invalid-parameter-binding> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#oas-invalid-parameter-binding> <http://www.w3.org/ns/shacl#message> "Parameter has invalid binding" .
+<http://a.ml/vocabularies/amf/parser#oas-invalid-parameter-binding> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#oas-not-body-and-form-data-parameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#oas-not-body-and-form-data-parameters> <http://www.w3.org/ns/shacl#message> "Operation cannot have a body parameter and a formData parameter" .
+<http://a.ml/vocabularies/amf/parser#oas-not-body-and-form-data-parameters> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#parsing-error> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#parsing-error> <http://www.w3.org/ns/shacl#message> "Parsing error" .
 <http://a.ml/vocabularies/amf/parser#parsing-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

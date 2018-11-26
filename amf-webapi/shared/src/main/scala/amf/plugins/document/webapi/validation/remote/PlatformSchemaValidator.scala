@@ -3,7 +3,13 @@ package amf.plugins.document.webapi.validation.remote
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
-import amf.core.parser.{ErrorHandler, ParserContext, SyamlParsedDocument}
+import amf.core.parser.{
+  DefaultParserSideErrorHandler,
+  ErrorHandler,
+  ParserContext,
+  RuntimeErrorHandler,
+  SyamlParsedDocument
+}
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
@@ -119,10 +125,13 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
     SYamlSyntaxPlugin
-      .unparse("application/json",
-               SyamlParsedDocument(
-                 document = new JsonSchemaValidationFragmentEmitter(dataType)(JsonSchemaEmitterContext())
-                   .emitFragment()))
+      .unparse(
+        "application/json",
+        SyamlParsedDocument(
+          document = new JsonSchemaValidationFragmentEmitter(dataType)(
+            JsonSchemaEmitterContext(DefaultParserSideErrorHandler(dataType)))
+            .emitFragment())
+      )
       .flatMap(loadSchema) // todo for logic in serializer. Hoy to handle the root?
   }
 
@@ -194,7 +203,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       case None => PayloadFragment(ScalarNode(payload, None), mediaType)
     }
   }
-  case class PayloadErrorHandler() extends ErrorHandler {
+  case class PayloadErrorHandler() extends RuntimeErrorHandler {
     override val currentFile: String                          = ""
     override val parserCount: Int                             = 1
     private val errors: ListBuffer[AMFValidationResult]       = ListBuffer()

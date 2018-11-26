@@ -6,7 +6,7 @@ import amf.core.emitter._
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, FieldEntry, Position}
+import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YMap, YNode, YType}
 
@@ -37,8 +38,11 @@ case class Raml10PayloadEmitter(payload: Payload, ordering: SpecOrdering, refere
                                     references = references).emit(_)
             )
           })
-      case Some(_) =>
-        throw new Exception("Cannot emit a non WebAPI Shape")
+      case Some(other) =>
+        spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                          "Cannot emit a non WebAPI Shape",
+                          other.position(),
+                          other.location())
       case None =>
         fs.entry(PayloadModel.MediaType)
           .foreach(mediaType => {
@@ -102,7 +106,11 @@ case class Raml08PayloadEmitter(payload: Payload, ordering: SpecOrdering)(implic
                     case Seq(pe: PartEmitter) => pe.emit(p)
                     case es if es.forall(_.isInstanceOf[EntryEmitter]) =>
                       p.obj(traverse(ordering.sorted(es.collect({ case e: EntryEmitter => e })), _))
-                    case other => throw new Exception(s"IllegalTypeDeclarations found: $other")
+                    case other =>
+                      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                                        s"IllegalTypeDeclarations found: $other",
+                                        payload.position(),
+                                        payload.location())
                   }
                 }
               )
@@ -147,27 +155,33 @@ case class Raml08FormPropertiesEmitter(nodeShape: NodeShape, ordering: SpecOrder
       "formParameters",
       builder => {
         builder.obj(ob => {
-          nodeShape.properties.foreach { p =>
-            p.range match {
-              case anyShape: AnyShape =>
-                ob.entry(p.name.value(), pb => {
-                  Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emitter match {
-                    case Left(p)        => p.emit(pb)
-                    case Right(entries) =>
-                      val additionalEmitters: Seq[EntryEmitter] = RequiredShapeEmitter(shape = p.range, p.fields.entry(PropertyShapeModel.MinCount)).emitter() match {
-                        case Some(emitter) => Seq(emitter)
-                        case None          => Nil
+          nodeShape.properties.foreach {
+            p =>
+              p.range match {
+                case anyShape: AnyShape =>
+                  ob.entry(
+                    p.name.value(),
+                    pb => {
+                      Raml08TypePartEmitter(anyShape, ordering, None, Seq(), Seq()).emitter match {
+                        case Left(p) => p.emit(pb)
+                        case Right(entries) =>
+                          val additionalEmitters: Seq[EntryEmitter] =
+                            RequiredShapeEmitter(shape = p.range, p.fields.entry(PropertyShapeModel.MinCount))
+                              .emitter() match {
+                              case Some(emitter) => Seq(emitter)
+                              case None          => Nil
+                            }
+                          pb.obj(traverse(ordering.sorted(entries ++ additionalEmitters), _))
                       }
-                      pb.obj(traverse(ordering.sorted(entries ++ additionalEmitters), _))
-                  }
-                })
+                    }
+                  )
 
-              case other =>
-                ob.entry(p.name.value(),
-                         CommentEmitter(
-                           other,
-                           s"Cannot emit property ${other.getClass.toString} in raml 08 form properties").emit(_))
-            }
+                case other =>
+                  ob.entry(p.name.value(),
+                           CommentEmitter(
+                             other,
+                             s"Cannot emit property ${other.getClass.toString} in raml 08 form properties").emit(_))
+              }
 
           }
         })
@@ -210,8 +224,13 @@ case class Raml10Payloads(payload: Payload, ordering: SpecOrdering, references: 
     } else {
       Option(payload.schema) match {
         case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = references).emitters()
-        case Some(_)               => throw new Exception("Cannot emit a non WebAPI shape")
-        case _                     => Nil // ignore
+        case Some(_) =>
+          spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                            "Cannot emit a non WebAPI shape",
+                            payload.position(),
+                            payload.location())
+          Nil
+        case _ => Nil // ignore
       }
     }
   }

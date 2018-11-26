@@ -149,7 +149,7 @@ private[shape_normalization] trait RestrictionComputation {
             } else {
               lvalue
             }
-          case _ => throw new Exception(s"Unknown numeric comparison $comparison")
+          case _ => throw new InheritanceIncompatibleShapeError(s"Unknown numeric comparison $comparison")
         }
       case _ =>
         throw new InheritanceIncompatibleShapeError("Cannot compare non numeric or missing values")

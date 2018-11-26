@@ -409,7 +409,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     foundType match {
       case Some(t) => findType(t)
       case None =>
-        ctx.violation(id, s"Error parsing JSON-LD node, unknown @types $stringTypes", ctx.currentFile)
+        ctx.violation(id, s"Error parsing JSON-LD node, unknown @types $stringTypes", ctx.rootContextDocument)
         None
     }
   }

@@ -7,7 +7,13 @@ import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument}
+import amf.core.parser.{
+  DefaultParserSideErrorHandler,
+  ErrorHandler,
+  ParserContext,
+  ReferenceHandler,
+  SyamlParsedDocument
+}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.{Aml, Platform}
@@ -147,11 +153,13 @@ object AMLPlugin
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+  override def resolve(unit: BaseUnit,
+                       errorHandler: ErrorHandler,
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
     unit match {
-      case patch: DialectInstancePatch => new DialectInstancePatchResolutionPipeline(patch).resolve()
-      case dialect: Dialect            => new DialectResolutionPipeline(dialect).resolve()
-      case dialect: DialectInstance    => new DialectInstanceResolutionPipeline(dialect).resolve()
+      case patch: DialectInstancePatch => new DialectInstancePatchResolutionPipeline(errorHandler).resolve(patch)
+      case dialect: Dialect            => new DialectResolutionPipeline(errorHandler).resolve(dialect)
+      case dialect: DialectInstance    => new DialectInstanceResolutionPipeline(errorHandler).resolve(dialect)
       case _                           => unit
     }
 
@@ -237,7 +245,8 @@ object AMLPlugin
     case _                         => false
   }
 
-  override def referenceHandler(): ReferenceHandler = new SyntaxExtensionsReferenceHandler(registry)
+  override def referenceHandler(eh: ErrorHandler): ReferenceHandler =
+    new SyntaxExtensionsReferenceHandler(registry, eh)
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
@@ -287,7 +296,7 @@ object AMLPlugin
     validationsProfilesMap.get(profileName) match {
       case Some(profile) => profile
       case _ =>
-        val resolvedDialect = new DialectResolutionPipeline(dialect).resolve()
+        val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
         val profile         = new AMFDialectValidations(resolvedDialect).profile()
         validationsProfilesMap += (profileName -> profile)
         profile
@@ -311,7 +320,8 @@ object AMLPlugin
                                  env: Environment): Future[AMFValidationReport] = {
     baseUnit match {
       case dialectInstance: DialectInstance =>
-        val resolvedModel = new DialectInstanceResolutionPipeline(dialectInstance).resolve()
+        val resolvedModel =
+          new DialectInstanceResolutionPipeline(DefaultParserSideErrorHandler(baseUnit)).resolve(dialectInstance)
 
         val dependenciesValidations: Future[Seq[ValidationProfile]] = Future.sequence(
           dialectInstance.graphDependencies.map { instance =>

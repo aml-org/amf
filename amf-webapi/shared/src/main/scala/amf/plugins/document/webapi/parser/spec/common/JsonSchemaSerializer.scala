@@ -4,7 +4,7 @@ import amf.core.AMFSerializer
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.Document
-import amf.core.parser.Position
+import amf.core.parser.{ErrorHandler, Position}
 import amf.core.remote.JsonSchema
 import amf.core.services.RuntimeSerializer
 import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, ParsedJSONSchema}
@@ -57,7 +57,7 @@ object JsonSchemaEntry extends EntryEmitter {
   override def position(): Position = Position.ZERO
 }
 
-case class JsonSchemaEmitter(shape: AnyShape, ordering: SpecOrdering = SpecOrdering.Lexical) {
+case class JsonSchemaEmitter(shape: AnyShape, ordering: SpecOrdering = SpecOrdering.Lexical, eh: ErrorHandler) {
   def emitDocument(): YDocument = {
     YDocument(b => {
       b.obj { b =>
@@ -75,7 +75,7 @@ case class JsonSchemaEmitter(shape: AnyShape, ordering: SpecOrdering = SpecOrder
 
   private def sortedTypeEntries =
     ordering.sorted(
-      OasDeclarationsEmitter(Seq(shape), SpecOrdering.Lexical, Seq())(JsonSchemaEmitterContext()).emitters) // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
+      OasDeclarationsEmitter(Seq(shape), SpecOrdering.Lexical, Seq())(JsonSchemaEmitterContext(eh)).emitters) // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
 
   private val emitters = Seq(JsonSchemaEntry, jsonSchemaRefEntry) ++ sortedTypeEntries
 }

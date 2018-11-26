@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
-import amf.core.parser.{Annotations, ErrorHandler, Value}
+import amf.core.parser.{Annotations, ErrorHandler, RuntimeErrorHandler, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
@@ -330,7 +330,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     clonedProp
   }
 
-  val unionErrorHandler = new ErrorHandler {
+  val unionErrorHandler = new RuntimeErrorHandler {
     override val parserCount: Int    = 0
     override val currentFile: String = ""
 
@@ -338,13 +338,13 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
       throw new Exception("raising exceptions in union processing")
     }
 
-    override protected def reportConstraint(id: String,
-                                            node: String,
-                                            property: Option[String],
-                                            message: String,
-                                            lexical: Option[LexicalInformation],
-                                            level: String,
-                                            location: Option[String]): Unit = {
+    override def reportConstraint(id: String,
+                                  node: String,
+                                  property: Option[String],
+                                  message: String,
+                                  lexical: Option[LexicalInformation],
+                                  level: String,
+                                  location: Option[String]): Unit = {
       throw new Exception("raising exceptions in union processing")
     }
 

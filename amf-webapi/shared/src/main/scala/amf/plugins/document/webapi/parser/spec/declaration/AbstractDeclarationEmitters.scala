@@ -6,6 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 
@@ -32,9 +33,17 @@ case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val name = declaration.name
-      .option()
-      .getOrElse(throw new Exception(s"Cannot declare abstract declaration without name $declaration"))
+    val name = declaration.name.option() match {
+      case Some(n) => n
+      case _ =>
+        spec.eh.violation(
+          ParserSideValidations.EmittionErrorEspecification.id,
+          s"Cannot declare abstract declaration without name $declaration",
+          declaration.position(),
+          declaration.location()
+        )
+        "default-name"
+    }
 
     b.entry(
       name,
@@ -43,7 +52,8 @@ case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
           declaration.linkTarget.foreach(l =>
             spec.factory.tagToReferenceEmitter(l, declaration.linkLabel.option(), references).emit(b))
         else {
-          var emitters = Option(declaration.dataNode).map(DataNodeEmitter(_, ordering).emitters()).getOrElse(Nil)
+          var emitters =
+            Option(declaration.dataNode).map(DataNodeEmitter(_, ordering)(spec.eh).emitters()).getOrElse(Nil)
           declaration.description.option().foreach { description =>
             emitters ++= Seq(
               MapEntryEmitter("usage", description, YType.Str, pos(declaration.description.annotations())))

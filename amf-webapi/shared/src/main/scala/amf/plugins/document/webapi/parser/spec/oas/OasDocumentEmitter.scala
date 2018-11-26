@@ -27,6 +27,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
@@ -40,7 +41,12 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
 
   private def retrieveWebApi(): WebApi = document match {
     case document: Document => document.encodes.asInstanceOf[WebApi]
-    case _                  => throw new Exception("BaseUnit doesn't encode a WebApi.")
+    case _ =>
+      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                        "BaseUnit doesn't encode a WebApi.",
+                        document.position(),
+                        document.location())
+      WebApi()
   }
 
   def extensionEmitter(): Seq[EntryEmitter] =
@@ -190,7 +196,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
             fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName".asOasExtension, f))
             fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description".asOasExtension, f))
             fs.entry(DomainElementModel.Extends)
-              .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true).emitters())
+              .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true)(spec.eh).emitters())
 
             val parameters =
               Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads)
@@ -256,7 +262,8 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
             fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
             fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes", f, ordering))
             fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces", f, ordering))
-            fs.entry(DomainElementModel.Extends).map(f => result ++= ExtendsEmitter(f, ordering, true).emitters())
+            fs.entry(DomainElementModel.Extends)
+              .map(f => result ++= ExtendsEmitter(f, ordering, true)(spec.eh).emitters())
             Option(operation.request).foreach(req => result ++= requestEmitters(req, ordering, references))
             // Annotations collected from the "responses" element that has no direct representation in any model element
             // They will be passed to the ResponsesEmitter
@@ -302,12 +309,16 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
       val fs = request.fields
 
       fs.entry(RequestModel.QueryString)
-        .map { f =>
+        .foreach { f =>
           Option(f.value.value) match {
             case Some(shape: AnyShape) =>
               result += RamlNamedTypeEmitter(shape, ordering, Nil, ramlTypesEmitter)
-            case Some(_) => throw new Exception("Cannot emit a non WebApi Shape")
-            case None    => // ignore
+            case Some(other) =>
+              spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                                "Cannot emit a non WebApi Shape",
+                                other.position(),
+                                other.location())
+            case None => // ignore
           }
         }
 
@@ -321,7 +332,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
                          a: Option[AnnotationsEmitter],
                          fs: Seq[Field],
                          us: Seq[BaseUnit]): RamlTypePartEmitter = {
-      Raml10TypePartEmitter(s, o, a, fs, us)(new Raml10SpecEmitterContext())
+      Raml10TypePartEmitter(s, o, a, fs, us)(new Raml10SpecEmitterContext(spec.eh))
     }
 
   }

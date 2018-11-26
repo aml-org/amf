@@ -13,6 +13,7 @@ import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml
 import amf.resolution.ResolutionTest
 import _root_.org.mulesoft.common.io.{Fs, SyncFile}
 import _root_.org.scalatest.compatible.Assertion
+import amf.core.parser.{DefaultParserSideErrorHandler, UnhandledErrorHandler}
 import amf.core.vocabulary.Namespace
 import amf.emit.AMFRenderer
 
@@ -97,11 +98,12 @@ trait ModelResolutionTest extends ModelValidationTest {
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val res = config.target match {
-      case Raml08        => Raml08Plugin.resolve(unit, EDITING_PIPELINE) // use edition pipeline to avoid remove declarations
-      case Raml | Raml10 => Raml10Plugin.resolve(unit, EDITING_PIPELINE)
-      case Oas30         => Oas30Plugin.resolve(unit, EDITING_PIPELINE)
-      case Oas | Oas20   => Oas20Plugin.resolve(unit, EDITING_PIPELINE)
-      case Amf           => new AmfEditingPipeline(unit).resolve()
+      case Raml08 =>
+        Raml08Plugin.resolve(unit, DefaultParserSideErrorHandler(unit), EDITING_PIPELINE) // use edition pipeline to avoid remove declarations
+      case Raml | Raml10 => Raml10Plugin.resolve(unit, DefaultParserSideErrorHandler(unit), EDITING_PIPELINE)
+      case Oas30         => Oas30Plugin.resolve(unit, DefaultParserSideErrorHandler(unit), EDITING_PIPELINE)
+      case Oas | Oas20   => Oas20Plugin.resolve(unit, DefaultParserSideErrorHandler(unit), EDITING_PIPELINE)
+      case Amf           => AmfEditingPipeline.unhandled.resolve(unit)
       case target        => throw new Exception(s"Cannot resolve $target")
       //    case _ => unit
     }

@@ -34,15 +34,15 @@ package object spec {
 
   // TODO oas2? raml10?
   def toOas(ctx: WebApiContext): OasWebApiContext = {
-    new Oas2WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new Oas2WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.eh)
   }
 
   def toOas(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.eh)
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
-    new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toRamlDeclarations(ctx.declarations)))
+    new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toRamlDeclarations(ctx.declarations)), ctx.eh)
   }
 
   private def toRamlDeclarations(ds: WebApiDeclarations) = {
@@ -60,18 +60,22 @@ package object spec {
   }
 
   def toRaml(spec: SpecEmitterContext): RamlSpecEmitterContext = {
-    new Raml10SpecEmitterContext(spec.getRefEmitter)
+    new Raml10SpecEmitterContext(spec.eh, spec.getRefEmitter)
   }
 
   def toOas(spec: SpecEmitterContext): OasSpecEmitterContext = {
-    new Oas2SpecEmitterContext(spec.getRefEmitter)
+    new Oas2SpecEmitterContext(spec.eh, spec.getRefEmitter)
   }
 
   def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {
-    new JsonSchemaWebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new JsonSchemaWebApiContext(ctx.rootContextDocument,
+                                ctx.refs,
+                                ctx,
+                                Some(toOasDeclarations(ctx.declarations)),
+                                ctx.eh)
   }
 
   def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new JsonSchemaWebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new JsonSchemaWebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.eh)
   }
 }

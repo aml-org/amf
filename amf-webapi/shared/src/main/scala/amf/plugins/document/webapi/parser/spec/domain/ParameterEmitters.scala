@@ -10,12 +10,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{FieldEntry, Fields, Position, Value}
 import amf.core.utils.Strings
-import amf.plugins.document.webapi.annotations.{
-  FormBodyParameter,
-  Inferred,
-  ParameterNameForPayload,
-  RequiredParamPayload
-}
+import amf.plugins.document.webapi.annotations.{FormBodyParameter, ParameterNameForPayload, RequiredParamPayload}
 import amf.plugins.document.webapi.contexts.{
   OasSpecEmitterContext,
   RamlScalarEmitter,
@@ -31,10 +26,11 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType.Bool
 import org.yaml.model.{YNode, YType}
-import amf.plugins.document.webapi.parser._
+
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -103,7 +99,11 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
                 }
             case Some(shape: AnyShape) =>
               result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references).entries()
-            case Some(_) => throw new Exception("Cannot emit parameter for a non WebAPI shape")
+            case Some(other) =>
+              spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                                "Cannot emit parameter for a non WebAPI shape",
+                                other.position(),
+                                other.location())
             // Emit annotations for parameter only if those have not been emitted by shape
             case None => result ++= AnnotationsEmitter(parameter, ordering).emitters
           }
@@ -280,7 +280,7 @@ case class OasParametersEmitter(key: String,
           key,
           _.obj(
             traverse(ramlParameters.map(p =>
-                       Raml10ParameterEmitter(p, ordering, Nil)(new XRaml10SpecEmitterContext())),
+                       Raml10ParameterEmitter(p, ordering, Nil)(new XRaml10SpecEmitterContext(spec.eh))),
                      _))
         )
     }

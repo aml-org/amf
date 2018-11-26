@@ -4,7 +4,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement, Linkable}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.parser.{Annotations, ErrorHandler, Fields}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
@@ -65,7 +65,8 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
     }
   }
   override def transform(selector: DomainElement => Boolean,
-                         transformation: (DomainElement, Boolean) => Option[DomainElement]): BaseUnit = {
+                         transformation: (DomainElement, Boolean) => Option[DomainElement])(
+      implicit errorHandler: ErrorHandler): BaseUnit = {
     val domainElementAdapter = (o: AmfObject) => {
       o match {
         case e: DomainElement => selector(e)
@@ -78,16 +79,19 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
         case _                => Some(o)
       }
     }
-    transformByCondition(this, domainElementAdapter, transformationAdapter)
+    transformByCondition(this,
+                         domainElementAdapter,
+                         transformationAdapter,
+                         cycleRecoverer = defaultCycleRecoverer(errorHandler))
     this
   }
 
-  override protected def transformByCondition(element: AmfObject,
-                                              predicate: AmfObject => Boolean,
-                                              transformation: (AmfObject, Boolean) => Option[AmfObject],
-                                              cycles: Set[String] = Set.empty,
-                                              cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject] =
-                                                defaultCycleRecoverer): AmfObject = {
+  override protected def transformByCondition(
+      element: AmfObject,
+      predicate: AmfObject => Boolean,
+      transformation: (AmfObject, Boolean) => Option[AmfObject],
+      cycles: Set[String] = Set.empty,
+      cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject]): AmfObject = {
     if (!cycles.contains(element.id)) {
       // not visited yet
       if (predicate(element)) { // matches predicate, we transform
@@ -99,7 +103,12 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
           case dataNode: DialectDomainElement =>
             dataNode.objectProperties.foreach {
               case (prop, value) =>
-                Option(transformByCondition(value, predicate, transformation, cycles + element.id)) match {
+                Option(
+                  transformByCondition(value,
+                                       predicate,
+                                       transformation,
+                                       cycles + element.id,
+                                       cycleRecoverer = cycleRecoverer)) match {
                   case Some(transformed: DialectDomainElement) =>
                     dataNode.objectProperties.put(prop, transformed)
                     dataNode
@@ -111,7 +120,12 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
             dataNode.objectCollectionProperties.foreach {
               case (prop, values: Seq[DialectDomainElement]) =>
                 val newValues = values.map { value =>
-                  Option(transformByCondition(value, predicate, transformation, cycles + element.id)) match {
+                  Option(
+                    transformByCondition(value,
+                                         predicate,
+                                         transformation,
+                                         cycles + element.id,
+                                         cycleRecoverer = cycleRecoverer)) match {
                     case Some(transformed: DialectDomainElement) => Some(transformed)
                     case _                                       => None
                   }
@@ -125,7 +139,8 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
               case _ => dataNode
             }
 
-          case other => super.transformByCondition(other, predicate, transformation, cycles)
+          case other =>
+            super.transformByCondition(other, predicate, transformation, cycles, cycleRecoverer = cycleRecoverer)
         }
         element
       }

@@ -535,11 +535,6 @@ class RamlParserErrorTest extends ParserErrorTest {
   test("Invalid ints formats") {
     validate(
       "warning/invalid-number-formats.raml",
-      int64Warning => {
-        int64Warning.level should be("Warning")
-        int64Warning.message should startWith(
-          "Format int64 is not valid for type http://www.w3.org/2001/XMLSchema#integer")
-      },
       doubleWarning => {
         doubleWarning.level should be("Warning")
         doubleWarning.message should startWith(
@@ -559,6 +554,17 @@ class RamlParserErrorTest extends ParserErrorTest {
       notYmap => {
         notYmap.level should be("Violation")
         notYmap.location.get should endWith("error-fragment/fragment.raml")
+      }
+    )
+  }
+
+  test("Test invalid string format in jsonschema number") {
+    validate(
+      "error/invalid-number-format/api.raml",
+      formatWarning => {
+        formatWarning.level should be("Warning")
+        formatWarning.message should endWith(
+          "Format UTC_MILLISEC is not valid for type http://a.ml/vocabularies/shapes#number")
       }
     )
   }

@@ -6,9 +6,9 @@ import amf.core.emitter.SpecOrdering.Default
 import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document, EncodesModel}
-import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
+import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.parser.{ErrorHandler, FieldEntry, Position}
 import amf.core.remote._
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.model.{Extension, Overlay}
@@ -30,6 +30,7 @@ import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
 
@@ -39,7 +40,7 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-abstract class SpecEmitterContext(refEmitter: RefEmitter) {
+abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter) {
 
   def ref(b: PartBuilder, url: String): Unit = refEmitter.ref(url, b)
 
@@ -207,7 +208,7 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
 
   implicit val spec: RamlSpecEmitterContext
 
-  def retrieveHeader(document: BaseUnit): String
+  def retrieveHeader(document: BaseUnit): Option[String]
 
   def endpointEmitter
     : (EndPoint, SpecOrdering, mutable.ListBuffer[RamlEndPointEmitter], Seq[BaseUnit]) => RamlEndPointEmitter
@@ -243,11 +244,16 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
 }
 
 class Raml10EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) extends RamlEmitterVersionFactory {
-  override def retrieveHeader(document: BaseUnit): String = document match {
-    case _: Extension => RamlHeader.Raml10Extension.text
-    case _: Overlay   => RamlHeader.Raml10Overlay.text
-    case _: Document  => RamlHeader.Raml10.text
-    case _            => throw new Exception("Document has no header.")
+  override def retrieveHeader(document: BaseUnit): Option[String] = document match {
+    case _: Extension => Some(RamlHeader.Raml10Extension.text)
+    case _: Overlay   => Some(RamlHeader.Raml10Overlay.text)
+    case _: Document  => Some(RamlHeader.Raml10.text)
+    case _ =>
+      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                        "Document has no header.",
+                        document.position(),
+                        document.location())
+      None
   }
 
   override def endpointEmitter
@@ -292,9 +298,14 @@ class Raml10EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
 }
 
 class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) extends RamlEmitterVersionFactory {
-  override def retrieveHeader(document: BaseUnit): String = document match {
-    case _: Document => RamlHeader.Raml08.text
-    case _           => throw new Exception("Document has no header.")
+  override def retrieveHeader(document: BaseUnit): Option[String] = document match {
+    case _: Document => Some(RamlHeader.Raml08.text)
+    case _ =>
+      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                        "Document has no header.",
+                        document.position(),
+                        document.location())
+      None
   }
 
   override def endpointEmitter
@@ -313,17 +324,72 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
   override def rootLevelEmitters: (BaseUnit with DeclaresModel, SpecOrdering) => RamlRootLevelEmitters =
     Raml08RootLevelEmitters.apply
 
-  override def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter =
-    throw new Exception(s"Custom facets not supported for vendor ${spec.vendor}")
+  override def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter = {
+    (f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =>
+      new CustomFacetsEmitter(f, ordering, Nil) {
+        override val key: String                                                                = ""
+        override def shapeEmitter: (PropertyShape, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = ???
 
-  override def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter =
-    throw new Exception(s"Facerts not supported for vendor ${spec.vendor}")
+        override def emit(b: EntryBuilder): Unit = {
+          spec.eh.violation(
+            ParserSideValidations.EmittionErrorEspecification.id,
+            s"Custom facets not supported for vendor ${spec.vendor}",
+            f.value.value.position(),
+            f.value.value.location()
+          )
+        }
+      }
+  }
 
-  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter =
-    throw new Exception(s"Annotations not supported for vendor ${spec.vendor}")
+  override def facetsInstanceEmitter: (ShapeExtension, SpecOrdering) => FacetsInstanceEmitter = {
+    (shapeExtension: ShapeExtension, ordering: SpecOrdering) =>
+      new FacetsInstanceEmitter(shapeExtension, ordering) {
 
-  override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter =
-    throw new Exception(s"Annotation types not supported for vendor ${spec.vendor}")
+        override def emit(b: EntryBuilder): Unit = {
+          spec.eh.violation(
+            ParserSideValidations.EmittionErrorEspecification.id,
+            s"Custom facets not supported for vendor ${spec.vendor}",
+            shapeExtension.position(),
+            shapeExtension.location()
+          )
+        }
+        override val name: String = ""
+      }
+  }
+
+  override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = {
+    (domainExtension: DomainExtension, ordering: SpecOrdering) =>
+      new AnnotationEmitter(domainExtension: DomainExtension, ordering: SpecOrdering) {
+
+        override def emit(b: EntryBuilder): Unit = {
+          spec.eh.violation(
+            ParserSideValidations.EmittionErrorEspecification.id,
+            s"Custom facets not supported for vendor ${spec.vendor}",
+            domainExtension.position(),
+            domainExtension.location()
+          )
+        }
+        override val name: String = ""
+      }
+  }
+
+  override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter = {
+    (property: CustomDomainProperty, ordering: SpecOrdering) =>
+      new AnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering) {
+
+        override def emitters(): Either[Seq[EntryEmitter], PartEmitter] =
+          Left(shapeEmitters.asInstanceOf[Seq[EntryEmitter]])
+        override protected val shapeEmitters: Seq[Emitter] = Seq(new EntryEmitter {
+          override def emit(b: EntryBuilder): Unit = {
+            spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                              s"Custom facets not supported for vendor ${spec.vendor}",
+                              property.position(),
+                              property.location())
+          }
+          override def position(): Position = pos(property.annotations)
+        })
+      }
+  }
 
   override def parameterEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => RamlParameterEmitter =
     Raml08ParameterEmitter.apply
@@ -339,25 +405,28 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
 
 }
 
-class Raml10SpecEmitterContext(refEmitter: RefEmitter = RamlRefEmitter) extends RamlSpecEmitterContext(refEmitter) {
+class Raml10SpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = RamlRefEmitter)
+    extends RamlSpecEmitterContext(eh, refEmitter) {
   override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml10
 }
 
-class XRaml10SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends Raml10SpecEmitterContext(refEmitter) {
+class XRaml10SpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = OasRefEmitter)
+    extends Raml10SpecEmitterContext(eh, refEmitter) {
   override def localReference(reference: Linkable): PartEmitter =
     oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
-  val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(new Oas2SpecEmitterContext(refEmitter))
+  val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(new Oas2SpecEmitterContext(eh, refEmitter))
 }
 
-class Raml08SpecEmitterContext extends RamlSpecEmitterContext(RamlRefEmitter) {
+class Raml08SpecEmitterContext(eh: ErrorHandler) extends RamlSpecEmitterContext(eh, RamlRefEmitter) {
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml08
 
 }
 
-abstract class RamlSpecEmitterContext(refEmitter: RefEmitter) extends SpecEmitterContext(refEmitter) {
+abstract class RamlSpecEmitterContext(override val eh: ErrorHandler, refEmitter: RefEmitter)
+    extends SpecEmitterContext(eh, refEmitter) {
 
   import BaseEmitters._
 
@@ -374,7 +443,8 @@ abstract class RamlSpecEmitterContext(refEmitter: RefEmitter) extends SpecEmitte
 
 }
 
-abstract class OasSpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends SpecEmitterContext(refEmitter) {
+abstract class OasSpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = OasRefEmitter)
+    extends SpecEmitterContext(eh, refEmitter) {
 
   def schemasDeclarationsPath: String
 
@@ -389,7 +459,7 @@ abstract class OasSpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) ext
   val anyOfKey: String = "union".asOasExtension
 }
 
-final case class JsonSchemaEmitterContext() extends Oas2SpecEmitterContext {
+final case class JsonSchemaEmitterContext(override val eh: ErrorHandler) extends Oas2SpecEmitterContext(eh = eh) {
   override val typeDefMatcher: OasTypeDefStringValueMatcher = JsonSchemaTypeDefMatcher
 
   override val anyOfKey: String = "anyOf"
@@ -397,15 +467,17 @@ final case class JsonSchemaEmitterContext() extends Oas2SpecEmitterContext {
   override def schemasDeclarationsPath: String = "/definitions/"
 }
 
-class Oas3SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
-  override val factory: OasSpecEmitterFactory = Oas3SpecEmitterFactory()(this)
-  override val vendor: Vendor                 = Oas30
+class Oas3SpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = OasRefEmitter)
+    extends OasSpecEmitterContext(eh, refEmitter) {
+  override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory()(this)
+  override val vendor: Vendor                  = Oas30
   override def schemasDeclarationsPath: String = "/components/schemas/"
 }
 
-class Oas2SpecEmitterContext(refEmitter: RefEmitter = OasRefEmitter) extends OasSpecEmitterContext(refEmitter) {
-  override val factory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(this)
-  override val vendor: Vendor                 = Oas20
+class Oas2SpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = OasRefEmitter)
+    extends OasSpecEmitterContext(eh, refEmitter) {
+  override val factory: OasSpecEmitterFactory  = Oas2SpecEmitterFactory()(this)
+  override val vendor: Vendor                  = Oas20
   override def schemasDeclarationsPath: String = "/definitions/"
 }
 

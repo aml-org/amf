@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#parsing-error
   Message: Yaml sequence expected
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/enum-not-seq.raml
+  Target: 
   Property: 
   Position: Some(LexicalInformation([(20,29)-(20,57)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/enum-not-seq.raml

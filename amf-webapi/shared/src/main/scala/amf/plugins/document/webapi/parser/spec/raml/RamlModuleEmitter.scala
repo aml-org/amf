@@ -5,6 +5,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{BaseUnit, Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.parser.ErrorHandler
 import amf.core.remote.Raml
 import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
 import amf.plugins.document.webapi.model._
@@ -12,6 +13,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument
 
 /**
@@ -44,8 +46,8 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)
       case dt: DataTypeFragment                  => DataTypeFragmentEmitter(dt, ordering)
       case ne: NamedExampleFragment              => FragmentNamedExampleEmitter(ne, ordering)
-      case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)
-      case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)
+      case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)(spec.eh)
+      case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)(spec.eh)
       case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
       case sc: SecuritySchemeFragment            => SecuritySchemeFragmentEmitter(sc, ordering)
       case _                                     => throw new UnsupportedOperationException(s"Unsupported fragment type: $fragment")
@@ -84,8 +86,13 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
     def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
       Option(dataType.encodes) match {
         case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = Nil).entries()
-        case Some(_)               => throw new Exception("Cannot emit non WebApi Shape")
-        case _                     => Nil // ignore
+        case Some(other) =>
+          spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                            "Cannot emit non WebApi Shape",
+                            other.position(),
+                            other.location())
+          Nil
+        case _ => Nil // ignore
       }
 
   }
@@ -111,7 +118,8 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
       Raml10SecuritySchemeEmitter(securityScheme.encodes, references, ordering).emitters()
   }
 
-  case class ResourceTypeFragmentEmitter(fragment: ResourceTypeFragment, ordering: SpecOrdering)
+  case class ResourceTypeFragmentEmitter(fragment: ResourceTypeFragment, ordering: SpecOrdering)(
+      implicit eh: ErrorHandler)
       extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10ResourceType
@@ -124,7 +132,8 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
       }
   }
 
-  case class TraitFragmentEmitter(fragment: TraitFragment, ordering: SpecOrdering) extends RamlFragmentTypeEmitter {
+  case class TraitFragmentEmitter(fragment: TraitFragment, ordering: SpecOrdering)(implicit eh: ErrorHandler)
+      extends RamlFragmentTypeEmitter {
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10Trait
 

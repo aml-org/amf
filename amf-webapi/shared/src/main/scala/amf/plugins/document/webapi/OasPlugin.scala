@@ -5,7 +5,7 @@ import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
+import amf.core.parser.{ErrorHandler, LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts._
@@ -23,7 +23,7 @@ sealed trait OasPlugin extends BaseWebApiPlugin {
 
   override val vendors = Seq(vendor.name, Oas.name)
 
-  override def specContext: OasSpecEmitterContext
+  override def specContext(options: RenderOptions): OasSpecEmitterContext
 
   def context(loc: String,
               refs: Seq[ParsedReference],
@@ -96,7 +96,8 @@ sealed trait OasPlugin extends BaseWebApiPlugin {
 
 object Oas20Plugin extends OasPlugin {
 
-  override def specContext: OasSpecEmitterContext = new Oas2SpecEmitterContext()
+  override def specContext(options: RenderOptions): OasSpecEmitterContext =
+    new Oas2SpecEmitterContext(options.errorHandler)
 
   override protected def vendor: Vendor = Oas20
 
@@ -125,20 +126,22 @@ object Oas20Plugin extends OasPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
     unit match {
-      case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
-      case document: Document         => Some(Oas2DocumentEmitter(document)(specContext).emitDocument())
+      case module: Module             => Some(OasModuleEmitter(module)(specContext(renderOptions)).emitModule())
+      case document: Document         => Some(Oas2DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
+      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
       case _                          => None
     }
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
+  override def resolve(unit: BaseUnit,
+                       errorHandler: ErrorHandler,
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
     pipelineId match {
-      case ResolutionPipeline.DEFAULT_PIPELINE => new OasResolutionPipeline(unit).resolve()
-      case ResolutionPipeline.EDITING_PIPELINE => new OasEditingPipeline(unit).resolve()
+      case ResolutionPipeline.DEFAULT_PIPELINE => new OasResolutionPipeline(errorHandler).resolve(unit)
+      case ResolutionPipeline.EDITING_PIPELINE => new OasEditingPipeline(errorHandler).resolve(unit)
     }
 
   }
@@ -151,7 +154,8 @@ object Oas20Plugin extends OasPlugin {
 
 object Oas30Plugin extends OasPlugin {
 
-  override def specContext: Oas3SpecEmitterContext = new Oas3SpecEmitterContext()
+  override def specContext(options: RenderOptions): Oas3SpecEmitterContext =
+    new Oas3SpecEmitterContext(options.errorHandler)
 
   override protected def vendor: Vendor = Oas30
 
@@ -180,10 +184,10 @@ object Oas30Plugin extends OasPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
     unit match {
-      case module: Module             => Some(OasModuleEmitter(module)(specContext).emitModule())
-      case document: Document         => Some(Oas3DocumentEmitter(document)(specContext).emitDocument())
+      case module: Module             => Some(OasModuleEmitter(module)(specContext(renderOptions)).emitModule())
+      case document: Document         => Some(Oas3DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
       case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
-      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext).emitFragment())
+      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
       case _                          => None
     }
 
@@ -209,8 +213,10 @@ object Oas30Plugin extends OasPlugin {
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new OasResolutionPipeline(unit).resolve()
+  override def resolve(unit: BaseUnit,
+                       errorHandler: ErrorHandler,
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+    new OasResolutionPipeline(errorHandler).resolve(unit)
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],

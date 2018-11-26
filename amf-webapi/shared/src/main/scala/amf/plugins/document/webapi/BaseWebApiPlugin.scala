@@ -3,7 +3,9 @@ package amf.plugins.document.webapi
 import amf.ProfileName
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.annotations.{DeclaredElement, ExternalFragmentRef, InlineElement}
+import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
+import amf.core.parser.ErrorHandler
 import amf.core.remote.{Platform, Vendor}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
@@ -26,11 +28,11 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
 
   override val ID: String = vendor.name
 
-  override def referenceHandler() = new WebApiReferenceHandler(ID, this)
+  override def referenceHandler(eh: ErrorHandler) = new WebApiReferenceHandler(ID, this)
 
   override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin, ExternalJsonRefsPlugin)
 
-  def specContext: SpecEmitterContext
+  def specContext(options: RenderOptions): SpecEmitterContext
 
   /**
     * Does references in this type of documents be recursive?

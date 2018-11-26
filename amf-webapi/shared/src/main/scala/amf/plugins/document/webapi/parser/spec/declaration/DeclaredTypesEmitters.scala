@@ -8,6 +8,7 @@ import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(
@@ -18,10 +19,15 @@ case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit
       spec.factory.typesKey,
       _.obj { b =>
         traverse(
-          ordering.sorted(types.map {
-            case s: AnyShape       => RamlNamedTypeEmitter(s, ordering, references, spec.factory.typesEmitter)
-            case r: RecursiveShape => RamlRecursiveShapeTypeEmitter(r, ordering, references)
-            case _                 => throw new Exception("Cannot emit non WebApi shape")
+          ordering.sorted(types.flatMap {
+            case s: AnyShape       => Some(RamlNamedTypeEmitter(s, ordering, references, spec.factory.typesEmitter))
+            case r: RecursiveShape => Some(RamlRecursiveShapeTypeEmitter(r, ordering, references))
+            case other =>
+              spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                                "Cannot emit non WebApi shape",
+                                other.position(),
+                                other.location())
+              None
           }),
           b
         )

@@ -18,8 +18,7 @@ import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
-import org.yaml.parser
-import org.yaml.parser.{JsonParser, YamlParser}
+import org.yaml.parser.JsonParser
 import org.yaml.render.YamlRender
 
 import scala.collection.mutable
@@ -191,6 +190,11 @@ case class RamlJsonSchemaExpression(key: YNode,
           ctx.violation(shape.id, "Cannot parse JSON Schema", value)
           shape
       }
+    // we clean from globalSpace the local references
+    ctx.globalSpace.foreach { e =>
+      val refPath = e._1.split("#").headOption.getOrElse("")
+      if (refPath == ctx.localJSONSchemaContext.get.sourceName) ctx.globalSpace.remove(e._1)
+    }
     ctx.localJSONSchemaContext = None // we reset the JSON schema context after parsing
     s
   }

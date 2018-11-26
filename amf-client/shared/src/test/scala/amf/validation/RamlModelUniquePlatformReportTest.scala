@@ -156,5 +156,21 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("/securitySchemes/invalid-key.raml", Some("invalid-key.report"))
   }
 
+  test("Test null value in json when expecting scalar value") {
+    validate("/null-value-json.raml", Some("null-value-json.report"))
+  }
+
+  test("Error when overriding file schema") {
+    validate("file-schema-override/api.raml", Some("file-override-schema.report"))
+  }
+
+  test("Security schemes with empty type") {
+    validate("securitySchemes/empty-type.raml", Some("empty-type.report"))
+  }
+
+  test("Extension with empty extends") {
+    validate("extends/empty-extends.raml", Some("empty-extends.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

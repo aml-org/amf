@@ -75,13 +75,15 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
   override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
     throw new IllegalStateException("Unreachable")
 
-  override def referenceHandler(): ReferenceHandler = GraphDependenciesReferenceHandler
+  override def referenceHandler(eh: ErrorHandler): ReferenceHandler = GraphDependenciesReferenceHandler
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit, pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new BasicResolutionPipeline(unit).resolve()
+  override def resolve(unit: BaseUnit,
+                       errorHandler: ErrorHandler,
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+    new BasicResolutionPipeline(errorHandler).resolve(unit)
 
   /**
     * Does references in this type of documents be recursive?

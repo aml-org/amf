@@ -1,0 +1,15 @@
+#%RAML 1.0 DataType
+
+description: Root batchnumbers update resource
+type: object
+properties:
+  interface:
+    required: false
+    type: string
+    example: "JDE_123_INBOUND"
+  batchnumber:
+    type: string
+    example: "00001"
+  locked:
+    type: boolean
+    example: false

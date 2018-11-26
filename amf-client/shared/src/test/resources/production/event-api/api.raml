@@ -1,0 +1,35 @@
+#%RAML 1.0
+title: Api
+
+types:
+  Error:
+    displayName: Error
+    properties:
+      errorCode: string
+      errorDescription: string
+      details?:
+        type: array
+        items:
+          properties:
+            errorDescription: string
+            errorSeverity: string
+resourceTypes:
+  ItemResource:
+    get:
+      responses:
+        403:
+          body:
+            application/json:
+              type: Error
+        404:
+          body:
+            application/json:
+              type: Error
+        500:
+          body:
+            application/json:
+              type: Error
+
+/events:
+  /{id}:
+    type: ItemResource

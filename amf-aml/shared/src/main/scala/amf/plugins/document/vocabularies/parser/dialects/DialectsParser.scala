@@ -13,7 +13,7 @@ import amf.plugins.document.vocabularies.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, NodeMappingModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
-import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
+import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
 import org.yaml.model._
 
@@ -22,7 +22,7 @@ import scala.collection.mutable
 class DialectDeclarations(var nodeMappings: Map[String, NodeMapping] = Map(),
                           errorHandler: Option[ErrorHandler],
                           futureDeclarations: FutureDeclarations)
-    extends VocabularyDeclarations(Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
+    extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): DialectDeclarations = {
@@ -141,9 +141,11 @@ trait DialectSyntax { this: DialectContext =>
       case "documentsMappingOptions" => documentsMappingOptions
     }
     map.map.keySet.map(_.as[YScalar].text).foreach { property =>
-      allowedProps.get(property) match {
-        case Some(_) => // correct
-        case None    => closedNodeViolation(id, property, nodeType, map)
+      if (!isAnnotation(property)) {
+        allowedProps.get(property) match {
+          case Some(_) => // correct
+          case None    => closedNodeViolation(id, property, nodeType, map)
+        }
       }
     }
 
@@ -157,6 +159,9 @@ trait DialectSyntax { this: DialectContext =>
         }
     }
   }
+
+  private def isAnnotation(property: String): Boolean =
+    (property.startsWith("(") && property.endsWith(")")) || property.startsWith("x-")
 
   private def isInclude(node: YNode) = node.tagType == YType.Include
 
@@ -183,6 +188,8 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
     references += (alias -> unit)
     unit match {
       case d: Vocabulary =>
+        ctx.declarations
+          .registerUsedVocabulary(alias, d) // to keep track of the uses: alias -> vocab, useful for annotations
         val library = ctx.declarations.getOrCreateLibrary(alias)
         d.declares.foreach {
           case prop: PropertyTerm => library.registerTerm(prop)
@@ -283,7 +290,9 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
   }
 }
 
-class DialectsParser(root: Root)(implicit override val ctx: DialectContext) extends BaseSpecParser {
+class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
+    extends BaseSpecParser
+    with AnnotationsParser {
 
   val map: YMap        = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
   val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location)
@@ -725,6 +734,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
 
     // TODO: check dependencies among properties
 
+    parseAnnotations(map, propertyMapping, ctx.declarations)
+
     propertyMapping
   }
 
@@ -802,6 +813,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext) exte
             nodeMapping.withIdTemplate(template)
           }
         )
+
+        parseAnnotations(map, nodeMapping, ctx.declarations)
 
         Some(nodeMapping)
 

@@ -74,7 +74,7 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         payload    <- AMFCompiler(payloadsPath + payloadFile, platform, hint, validation).build()
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
-        new ValidationResolutionPipeline(AmfProfile, library).resolve()
+        ValidationResolutionPipeline(AmfProfile, library)
         val targetType = library
           .asInstanceOf[Module]
           .declares

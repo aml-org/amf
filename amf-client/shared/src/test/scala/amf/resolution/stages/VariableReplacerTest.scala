@@ -29,7 +29,8 @@ class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
 
   examples.foreach { example =>
     test(s"Test transformation : ${example.transformation} of Raml spec example") {
-      VariableReplacer.variableTransformation(example.base, example.transformation) should be(example.result)
+      VariableReplacer.variableTransformation((e: String) => fail(e))(example.base, example.transformation) should be(
+        example.result)
     }
   }
 
@@ -56,7 +57,7 @@ class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
     forAll(replacements) { replacement =>
       val node      = ScalarNode(replacement.expression, None)
       val variables = Set(Variable(replacement.variable._1, ScalarNode(replacement.variable._2, None)))
-      val result    = VariableReplacer.replaceVariables(node, variables, (message: String) => errors ++ message)
+      val result    = VariableReplacer.replaceNodeVariables(node, variables, (message: String) => errors ++ message)
       errors.isEmpty should be(true)
       result.asInstanceOf[ScalarNode].value should be(replacement.expected)
     }

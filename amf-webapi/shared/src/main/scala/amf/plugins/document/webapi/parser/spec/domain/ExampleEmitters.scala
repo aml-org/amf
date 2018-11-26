@@ -11,6 +11,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, 
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.domain.shapes.models.Example
+import amf.plugins.features.validation.ParserSideValidations
 import org.yaml.model.YDocument._
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -20,24 +21,27 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
     val examples = f.array.values.collect({ case e: Example => e })
-    b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering))), _)))
+    b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering)(spec))), _)))
   }
 
   override def position(): Position = f.array.values.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
 }
 
-case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering) extends EntryEmitter {
+case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     example.fields
       .entry(ExampleModel.StructuredValue)
       .fold({
         example.raw.option().foreach(s => b.entry(example.mediaType.value(), StringToAstEmitter(s).emit(_)))
       })(_ => {
-        b.entry(example.mediaType.value(), DataNodeEmitter(example.structuredValue, ordering).emit(_))
+        b.entry(example.mediaType.value(), DataNodeEmitter(example.structuredValue, ordering)(spec.eh).emit(_))
       })
   }
 
@@ -147,7 +151,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
           }
         })(f => {
           results += EntryPartEmitter("value",
-                                      DataNodeEmitter(example.structuredValue, ordering),
+                                      DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
                                       position = pos(f.value.annotations))
         })
 
@@ -159,7 +163,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
           example.raw.option().foreach { s =>
             results += StringToAstEmitter(s)
           }
-        })(f => results += DataNodeEmitter(example.structuredValue, ordering))
+        })(f => results += DataNodeEmitter(example.structuredValue, ordering)(spec.eh))
     }
 
     results
@@ -168,7 +172,12 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
   private val emitters: Either[PartEmitter, Seq[EntryEmitter]] = entries match {
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
-    case other                                         => throw new Exception(s"IllegalTypeDeclarations found: $other")
+    case other =>
+      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                        s"IllegalTypeDeclarations found: $other",
+                        example.position(),
+                        example.location())
+      Right(Nil)
   }
 
   override def position(): Position = pos(example.annotations)

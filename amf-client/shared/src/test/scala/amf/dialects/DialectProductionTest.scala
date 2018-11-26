@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.core.model.document.BaseUnit
+import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.{BuildCycleTests, FunSuiteCycleTests}
@@ -129,7 +130,8 @@ class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectIns
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = AMLPlugin.resolve(unit)
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
+    AMLPlugin.resolve(unit, UnhandledErrorHandler)
 
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/production/"
 

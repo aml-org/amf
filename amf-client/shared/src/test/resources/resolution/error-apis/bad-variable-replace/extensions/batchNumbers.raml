@@ -1,0 +1,50 @@
+displayName: BatchNumbers API
+description: The purpose of this resource is to generate, issue, and manage batch number IDs on behalf of another application.
+/interfaces:
+  displayName: Interfaces
+  post:
+    description: Creates a new Interface.  Default is unlocked and batch number is 00001.
+    body:
+      application/json:
+        type: BatchNumbersCreate
+    responses:
+      200:
+        body:
+          application/json:
+            type: BatchNumbersCreateOutput   
+  /{interface}: 
+    uriParameters: 
+      interface:
+        type: string
+        required: true
+        description: Name of the interface
+        example: "JDE_123_INBOUND"
+    put:
+      description: Administrative override.  Updates an interface to set a specific batch number or unlock it.
+      body: 
+        application/json:
+          type: BatchNumbersUpdate
+      responses: 
+        200:
+          body: 
+            application/json:
+              type: BatchNumbersDefaultOutput
+    get:
+      description: Returns the batch number.  If the batch is locked, it returns the current batch number.  If the batch is not locked it returns the current batch number and locks it.
+      responses: 
+        200:
+          body: 
+            application/json:
+              example: |
+                {
+                "batchnumber": "00001"
+                }
+    /locked: 
+      displayName: Locked
+      put:
+        description: Used to confirm that a batch number has been used.  This will unlock the interface and increment the batch number so the next call returns a new batch number.
+        responses: 
+          200:
+            body: 
+              application/json:
+                type: BatchNumbersDefaultOutput

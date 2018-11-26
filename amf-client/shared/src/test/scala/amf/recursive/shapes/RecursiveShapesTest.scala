@@ -1,12 +1,12 @@
 package amf.recursive.shapes
 
 import amf.core.model.document.BaseUnit
-import amf.{ProfileName, Raml10Profile}
 import amf.core.remote.{Hint, Oas20, RamlYamlHint}
 import amf.facades.Validation
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.validation.MultiPlatformReportGenTest
+import amf.{ProfileName, Raml10Profile}
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
@@ -55,6 +55,5 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    new ValidationResolutionPipeline(Raml10Profile, unit).resolve()
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = ValidationResolutionPipeline(Raml10Profile, unit)
 }

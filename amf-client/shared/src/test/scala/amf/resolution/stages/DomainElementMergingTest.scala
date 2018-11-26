@@ -1,5 +1,6 @@
 package amf.resolution.stages
 
+import amf.core.parser.UnhandledErrorHandler
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.models.templates.{ParametrizedTrait, Trait}
@@ -46,7 +47,7 @@ class DomainElementMergingTest extends FunSuite {
     other.withOperation("put").withSummary("Put other operation")
     other.withOperation("head").withSummary("Head other operation")
 
-    merge(main, other)
+    merge(main, other, UnhandledErrorHandler)
 
     main.operations.size should be(4)
 
@@ -94,7 +95,7 @@ class DomainElementMergingTest extends FunSuite {
       .withPath("/other")
       .withExtends(Seq(b))
 
-    merge(main, other)
+    merge(main, other, UnhandledErrorHandler)
 
     main.extend.size should be(1)
     main.extend.head should be(a)

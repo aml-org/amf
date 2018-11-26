@@ -16,23 +16,17 @@ import scala.collection.mutable
 /**
   * Parser context
   */
-trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
-
+trait RuntimeErrorHandler extends ErrorHandler {
   val parserCount: Int
   val currentFile: String
 
-  override def handle[T](error: YError, defaultValue: T): T = {
-    violation("", error.error, part(error))
-    defaultValue
-  }
-
-  protected def reportConstraint(id: String,
-                                 node: String,
-                                 property: Option[String],
-                                 message: String,
-                                 lexical: Option[LexicalInformation],
-                                 level: String,
-                                 location: Option[String]): Unit = {
+  def reportConstraint(id: String,
+                       node: String,
+                       property: Option[String],
+                       message: String,
+                       lexical: Option[LexicalInformation],
+                       level: String,
+                       location: Option[String]): Unit = {
     RuntimeValidator.reportConstraintFailure(level,
                                              id,
                                              node,
@@ -42,6 +36,22 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
                                              parserCount,
                                              location.orElse(Some(currentFile)))
   }
+}
+
+trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
+
+  override def handle[T](error: YError, defaultValue: T): T = {
+    violation("", error.error, part(error))
+    defaultValue
+  }
+
+  def reportConstraint(id: String,
+                       node: String,
+                       property: Option[String],
+                       message: String,
+                       lexical: Option[LexicalInformation],
+                       level: String,
+                       location: Option[String]): Unit
 
   /** Report constraint failure of severity violation. */
   def violation(id: String,
@@ -84,20 +94,17 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 
   /** Report constraint failure of severity violation. */
   def violation(node: String, message: String, ast: YPart): Unit = {
-    val errorLocation = if (node == "") currentFile else node
-    violation(ParsingErrorSpecification.id, errorLocation, message, ast)
+    violation(ParsingErrorSpecification.id, node, message, ast)
   }
 
   /** Report constraint failure of severity violation with location file. */
   def violation(node: String, message: String, location: String): Unit = {
-    val errorLocation = if (node == "") currentFile else node
-    violation(ParsingErrorSpecification.id, errorLocation, None, message, None, location.option)
+    violation(ParsingErrorSpecification.id, node, None, message, None, location.option)
   }
 
   /** Report constraint failure of severity violation. */
   def violation(node: String, message: String, lexical: Option[LexicalInformation], location: Option[String]): Unit = {
-    val errorLocation = if (node == "") currentFile else node
-    violation(ParsingErrorSpecification.id, errorLocation, None, message, lexical, location)
+    violation(ParsingErrorSpecification.id, node, None, message, lexical, location)
   }
 
   /** Report constraint failure of severity warning. */
@@ -173,17 +180,20 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
 object EmptyFutureDeclarations {
   def apply(): FutureDeclarations = new FutureDeclarations {}
 }
+
+case class ParserDefaultErrorHandler(override val parserCount: Int, override val currentFile: String)
+    extends RuntimeErrorHandler
+
 case class ParserContext(rootContextDocument: String = "",
                          refs: Seq[ParsedReference] = Seq.empty,
                          futureDeclarations: FutureDeclarations = EmptyFutureDeclarations(),
-                         parserCount: Int = AMFCompilerRunCount.nextRun())
+                         parserCount: Int = AMFCompilerRunCount.nextRun(),
+                         eh: Option[ErrorHandler] = None)
     extends ErrorHandler {
-
-  override val currentFile: String = rootContextDocument
 
   var globalSpace: mutable.Map[String, Any] = mutable.Map()
 
-  def violation(node: String, message: String): Unit = violation(node, message, currentFile)
+  def violation(node: String, message: String): Unit = violation(node, message, rootContextDocument)
 
   def forLocation(newLocation: String): ParserContext = {
     val copied: ParserContext = this.copy(rootContextDocument = newLocation)
@@ -210,9 +220,36 @@ case class ParserContext(rootContextDocument: String = "",
     context.globalSpace = this.globalSpace
     context
   }
+  override def reportConstraint(id: String,
+                                node: String,
+                                property: Option[String],
+                                message: String,
+                                lexical: Option[LexicalInformation],
+                                level: String,
+                                location: Option[String]): Unit = {
+    eh match {
+      case Some(errorHandler) =>
+        errorHandler.reportConstraint(id,
+                                      node,
+                                      property,
+                                      message,
+                                      lexical,
+                                      level,
+                                      location.orElse(Some(rootContextDocument)))
+      case _ =>
+        RuntimeValidator.reportConstraintFailure(level,
+                                                 id,
+                                                 node,
+                                                 property,
+                                                 message,
+                                                 lexical,
+                                                 parserCount,
+                                                 location.orElse(Some(rootContextDocument)))
+    }
+  }
 }
 
-case class WarningOnlyHandler(override val currentFile: String) extends ErrorHandler {
+case class WarningOnlyHandler(override val currentFile: String) extends RuntimeErrorHandler {
   override val parserCount: Int = AMFCompilerRunCount.count
 
   override def handle(node: YPart, e: SyamlException): Unit = {
@@ -231,24 +268,38 @@ case class WarningOnlyHandler(override val currentFile: String) extends ErrorHan
   def hasRegister: Boolean = warningRegister
 }
 
-trait UnhandledError extends ErrorHandler {
+object UnhandledErrorHandler extends ErrorHandler {
   override def handle(node: YPart, e: SyamlException): Unit = {
     throw new Exception(e.getMessage + " at: " + node.range, e)
   }
 
-  override protected def reportConstraint(id: String,
-                                          node: String,
-                                          property: Option[String],
-                                          message: String,
-                                          lexical: Option[LexicalInformation],
-                                          level: String,
-                                          location: Option[String]): Unit = {
+  override def reportConstraint(id: String,
+                                node: String,
+                                property: Option[String],
+                                message: String,
+                                lexical: Option[LexicalInformation],
+                                level: String,
+                                location: Option[String]): Unit = {
     throw new Exception(
       s"  Message: $message\n  Target: $node\nProperty: ${property.getOrElse("")}\n  Position: $lexical\n at location: $location")
   }
 }
-object DefaultUnhandledError extends UnhandledError {
-  override val parserCount: Int    = AMFCompilerRunCount.count
-  override val currentFile: String = ""
 
+class DefaultParserSideErrorHandler(override val parserCount: Int, override val currentFile: String)
+    extends RuntimeErrorHandler
+
+object DefaultParserSideErrorHandler {
+  def apply(model: BaseUnit): DefaultParserSideErrorHandler = {
+    val parserCount: Int = {
+      // this can get not set if the model has been created manually without parsing
+      model.parserRun match {
+        case Some(run) => run
+        case None =>
+          model.parserRun = Some(AMFCompilerRunCount.nextRun())
+          model.parserRun.get
+      }
+    }
+
+    new DefaultParserSideErrorHandler(parserCount, model.location().getOrElse(model.id))
+  }
 }

@@ -16,9 +16,11 @@ trait ShapeHelpers { this: Shape =>
     case _             => false
   }
 
-  def typeExpression: String = this.annotations.find(classOf[ParsedFromTypeExpression]) match {
+  def typeExpression(eh: ErrorHandler): String = this.annotations.find(classOf[ParsedFromTypeExpression]) match {
     case Some(expr: ParsedFromTypeExpression) => expr.value
-    case _                                    => throw new Exception("Trying to extract non existent type expression")
+    case _ =>
+      eh.violation(this.id, "Trying to extract non existent type expression", position(), location())
+      ""
   }
 
   def externalSourceID: Option[String] = this match {

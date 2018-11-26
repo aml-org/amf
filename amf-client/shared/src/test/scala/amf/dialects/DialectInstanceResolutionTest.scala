@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.core.model.document.BaseUnit
+import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote.{Aml, Hint, Vendor, VocabularyYamlHint}
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.{BuildCycleTests, FunSuiteCycleTests}
@@ -10,7 +11,7 @@ import scala.concurrent.ExecutionContext
 
 abstract class DialectInstanceResolutionCycleTests extends FunSuiteCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    AMLPlugin.resolve(unit)
+    AMLPlugin.resolve(unit, UnhandledErrorHandler)
 }
 
 class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests {
