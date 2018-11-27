@@ -8,8 +8,6 @@ This project aims to provide a common programming interface that lets developers
 
 The API Modeling Framework (AMF) allows users to formally describe different kinds of APIs, parse and generate instances of those APIS as sets of modular documents and  store those connected descriptions into a single unified data graph.
 
-![Overview](https://raw.githubusercontent.com/raml-org/api-modeling-framework/gh-pages/images/diagram.png)
-
 ## Goals
 
 - Support for multiple languages with a unified output API/model for clients
@@ -56,7 +54,7 @@ sbt coverage test coverageReport
 ```sh
 sbt package
 ```
-This will generate *jvm* jars in each of the module's targets.
+This will generate *jvm* JARs in each of the module's targets.
 
 ```sh
 sbt buildJS
@@ -71,7 +69,7 @@ Gradle example:
 
 ```groovy
 dependencies {
-    compile 'amf:amf-client_2.12:1.4.0'
+    compile 'com.github.amlorg:amf-client_2.12:x.y.z'
 }
 ```
 
@@ -89,9 +87,9 @@ Maven example:
 
 ```xml
 <dependency>
-    <groupId>amf</groupId>
+    <groupId>com.github.amlorg</groupId>
     <artifactId>amf-client_2.12</artifactId>
-    <version>1.4.0</version>
+    <version>x.y.z</version>
 </dependency>
 ```
 
@@ -123,35 +121,31 @@ amf.Core.init().then(function () {
 
 ### Command line usage
 
-You can build a standalone Java executable running the following SBT target:
-
+You can build a standalone Java executable (JAR) running the following SBT target:
 ```bash
 sbt buildCommandLine
 ```
-This will create a set of jars:
-```bash
-/amf/amf.jar
-```
-This will generate an executable jar at the top level directory that can be used to execute AMF from the command line.
 
-Using this jar, you can run tasks from command line, for instance:
+This will generate an executable JAR at the top level directory that can be used to execute AMF from the command line.
+
+Using this JAR, you can run tasks from command line, for instance:
 ```bash
-java -jar amf.jar parse -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
+java -jar amf-x.y.z.jar parse -in "RAML 1.0" -mime-in "application/yaml" yourAPIfile
 ```
 or 
 ```bash
-java -jar amf.jar validate -in "RAML 1.0" -mime-in "application/yaml" -p "RAML" yourAPIfile
+java -jar amf-x.y.z.jar validate -in "RAML 1.0" -mime-in "application/yaml" -p "RAML" yourAPIfile
 ```
 or
 ```bash
-java -jar amf.jar translate  yourAPIOASfile --format-in "OAS 2.0" -mime-in "application/json" --format-out "RAML 1.0" -mime-out "application/raml+yaml"
+java -jar amf-x.y.z.jar translate  yourAPIOASfile --format-in "OAS 2.0" -mime-in "application/json" --format-out "RAML 1.0" -mime-out "application/raml+yaml"
 ```
 To get all available options:
 ```bash
-java -jar amf.jar
+java -jar amf-x.y.z.jar
 ```
 
-Using this jar you can execute AMF by passing one of the following commands:
+Using this JAR you can execute AMF by passing one of the following commands:
 
 - parse <input_file> -in FORMAT
 - translate <input_file> <output_file> -in FORMAT_IN -out FORMAT_OUT
@@ -165,7 +159,7 @@ Refer to the usage of the application for additional commands and explanations.
 
 ## Examples
 
-Go to [amf examples repository](https://github.com/mulesoft/amf-byExample) There are examples for each one of the three usages and a *converter* project that add some UI on top of the library.
+Go to [amf examples repository](https://github.com/mulesoft/amf-examples) There are examples for each one of the three usages and a *converter* project that add some UI on top of the library.
 
 ## Validation
 
