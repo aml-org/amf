@@ -4,7 +4,7 @@ import amf.core.parser._
 
 import scala.collection.mutable
 
-class JsonSchemaAstIndex(root: YNode) {
+class JsonSchemaAstIndex(root: YNode)(implicit val contx: WebApiContext) {
 
   private val index: mutable.Map[String, YNode] = mutable.Map.empty
 

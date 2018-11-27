@@ -309,7 +309,7 @@ abstract class WebApiContext(val loc: String,
 
   def setJsonSchemaAST(value: YNode): Unit = {
     localJSONSchemaContext = Some(value)
-    jsonSchemaIndex = Some(new JsonSchemaAstIndex(value))
+    jsonSchemaIndex = Some(new JsonSchemaAstIndex(value)(this))
   }
 
   globalSpace = wrapped.globalSpace
