@@ -72,13 +72,13 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
         res
     }
 
-    if (!response.annotations.contains(classOf[DeclaredElement])) {
-      if (response.name.is("default")) {
-        response.set(ResponseModel.StatusCode, "200")
-      } else {
-        response.set(ResponseModel.StatusCode, node)
-      }
-    }
+//    if (!response.annotations.contains(classOf[DeclaredElement])) {
+//      if (response.name.is("default")) {
+//        response.set(ResponseModel.StatusCode, "200")
+//      } else {
+//        response.set(ResponseModel.StatusCode, node)
+//      }
+//    }
 
     response
   }

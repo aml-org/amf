@@ -1,0 +1,59 @@
+#%RAML 1.0
+types:
+  Profile:
+    type: object
+    properties:
+      first_name:
+        description: First name of the Uber user.
+        type: string
+        required: false
+      last_name:
+        description: Last name of the Uber user.
+        type: string
+        required: false
+      email:
+        description: Email address of the Uber user
+        type: string
+        required: false
+      picture:
+        description: Image URL of the Uber user.
+        type: string
+        required: false
+      promo_code:
+        description: Promo code of the Uber user.
+        type: string
+        required: false
+  Error:
+    type: object
+    properties:
+      code:
+        type: number
+        format: int32
+        required: false
+      message:
+        type: string
+        required: false
+      fields:
+        type: string
+        required: false
+title: Uber API
+baseUri: api.uber.com/v1
+description: Move your app forward with the Uber API
+mediaType:
+  - application/json
+version: 1.0.0
+protocols:
+  - https
+/me:
+  get:
+    description: The User Profile endpoint returns information about the Uber user that has authorized with the application.
+    (amf-summary): User Profile
+    (amf-tags):
+      - User
+    responses:
+      200:
+        description: Profile information for a user
+        body: Profile
+      default:
+        description: Unexpected error
+        body: Error

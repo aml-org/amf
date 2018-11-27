@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.ResolutionPipeline.EDITING_PIPELINE
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage, UrlShortenerStage}
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
@@ -28,7 +29,7 @@ class AmfEditingPipeline(override val eh: ErrorHandler) extends ResolutionPipeli
     new UrlShortenerStage()
   )
 
-  val ID: String                        = "editing"
+  val ID: String                        = EDITING_PIPELINE
   override def profileName: ProfileName = AmfProfile
 }
 

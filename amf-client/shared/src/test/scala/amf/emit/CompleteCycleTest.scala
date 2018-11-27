@@ -25,6 +25,18 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("full-example.json", "full-example.json.raml", OasJsonHint, Raml)
   }
 
+  test("Default response to raml test") {
+    cycle("default-response.json", "default-response.json.raml", OasJsonHint, Raml)
+  }
+
+  test("Default response to raml test 2") {
+    cycle("default-response.json", OasJsonHint)
+  }
+
+  test("Parse default response example form raml from oas test") {
+    cycle("default-response.json.raml", RamlYamlHint)
+  }
+
   test("Full oas to amf test") {
     cycle("full-example.json", "full-example.json.jsonld", OasJsonHint, Amf)
   }

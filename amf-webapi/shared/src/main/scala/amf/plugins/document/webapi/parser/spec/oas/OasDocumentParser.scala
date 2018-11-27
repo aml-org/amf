@@ -92,6 +92,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     if (declarable.nonEmpty) document.withDeclares(declarable)
     if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
 
+    ctx.futureDeclarations.resolve()
     document
   }
 
@@ -498,11 +499,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
               entries => {
                 val responses = mutable.ListBuffer[Response]()
                 entries.foreach(entry => {
-                  responses += OasResponseParser(
-                    entry,
-                    (r: Response) =>
-                      r.adopted(operation.id)
-                        .withStatusCode(if (r.name.value() == "default") "200" else r.name.value())).parse()
+                  responses += OasResponseParser(entry,
+                                                 (r: Response) =>
+                                                   r.adopted(operation.id)
+                                                     .withStatusCode(r.name.value())).parse()
                 })
                 operation.set(OperationModel.Responses,
                               AmfArray(responses, Annotations(entry.value)),
@@ -537,8 +537,6 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations(map, parent + "/parameters")
     parseResponsesDeclarations("responses", map, parent + "/responses")
-    ctx.futureDeclarations.resolve()
-
   }
 
   def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {

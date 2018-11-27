@@ -1,5 +1,4 @@
 package amf.plugins.document.webapi.resolution.pipelines
-import amf.core.model.document.BaseUnit
 import amf.core.parser.ErrorHandler
 import amf.{OasProfile, ProfileName}
 

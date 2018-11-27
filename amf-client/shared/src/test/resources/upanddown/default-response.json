@@ -1,0 +1,83 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Uber API",
+    "description": "Move your app forward with the Uber API",
+    "version": "1.0.0"
+  },
+  "host": "api.uber.com",
+  "schemes": [
+    "https"
+  ],
+  "basePath": "/v1",
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+   "/me": {
+      "get": {
+        "summary": "User Profile",
+        "description": "The User Profile endpoint returns information about the Uber user that has authorized with the application.",
+        "tags": [
+          "User"
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile information for a user",
+            "schema": {
+              "$ref": "#/definitions/Profile"
+            }
+          },
+          "default": {
+            "description": "Unexpected error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Profile": {
+      "type": "object",
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "description": "First name of the Uber user."
+        },
+        "last_name": {
+          "type": "string",
+          "description": "Last name of the Uber user."
+        },
+        "email": {
+          "type": "string",
+          "description": "Email address of the Uber user"
+        },
+        "picture": {
+          "type": "string",
+          "description": "Image URL of the Uber user."
+        },
+        "promo_code": {
+          "type": "string",
+          "description": "Promo code of the Uber user."
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "fields": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
