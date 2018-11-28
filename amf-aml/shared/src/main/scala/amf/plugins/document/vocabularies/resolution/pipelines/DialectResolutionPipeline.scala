@@ -8,6 +8,6 @@ import amf.{AmfProfile, ProfileName}
 
 class DialectResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
 
-  override protected val steps: Seq[ResolutionStage] = Seq(new DialectReferencesResolutionStage())
-  override def profileName: ProfileName              = AmfProfile
+  override val steps: Seq[ResolutionStage] = Seq(new DialectReferencesResolutionStage())
+  override def profileName: ProfileName    = AmfProfile
 }

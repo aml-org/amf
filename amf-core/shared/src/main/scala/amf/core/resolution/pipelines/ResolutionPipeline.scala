@@ -31,7 +31,7 @@ abstract class ResolutionPipeline(val eh: ErrorHandler) {
 //  }
 //
 //  def profileName: ProfileName
-  protected val steps: Seq[ResolutionStage]
+  val steps: Seq[ResolutionStage]
 
   final def resolve[T <: BaseUnit](model: T): T = {
     ExecutionLog.log(s"${this.getClass.getName}#resolve: resolving ${model.location().getOrElse("")}")

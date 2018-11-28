@@ -6,7 +6,7 @@ import amf.core.remote._
 import amf.core.validation.AMFValidationReport
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.webapi.resolution.pipelines.RamlCompatibilityPipeline
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.RamlCompatibilityPipeline
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 

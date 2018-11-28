@@ -18,7 +18,7 @@ class AmfEditingPipeline(override val eh: ErrorHandler) extends ResolutionPipeli
 
   val references = new ReferenceResolutionStage(keepEditingInfo = true)
 
-  override protected lazy val steps: Seq[ResolutionStage] = Seq(
+  override lazy val steps: Seq[ResolutionStage] = Seq(
     references,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = true),
     new ShapeNormalizationStage(profileName, keepEditingInfo = true),

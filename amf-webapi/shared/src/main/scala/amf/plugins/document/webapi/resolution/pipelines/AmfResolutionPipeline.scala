@@ -13,7 +13,7 @@ class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPip
 
   protected lazy val references = new ReferenceResolutionStage(keepEditingInfo = false)
 
-  override protected val steps: Seq[ResolutionStage] = Seq(
+  override val steps: Seq[ResolutionStage] = Seq(
     references,
     new ExternalSourceRemovalStage,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = false),
