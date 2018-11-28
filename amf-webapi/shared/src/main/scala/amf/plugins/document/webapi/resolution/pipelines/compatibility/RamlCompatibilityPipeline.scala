@@ -14,7 +14,8 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
     new MandatoryDocumentationTitle(),
     new SanitizeCustomTypeNames(),
     new MandatoryAnnotationType(),
-    new DefaultPayloadMediaType()
+    new DefaultPayloadMediaType(),
+    new DefaultToNumericDefaultResponse()
   )
 
   override def profileName: ProfileName = RamlProfile

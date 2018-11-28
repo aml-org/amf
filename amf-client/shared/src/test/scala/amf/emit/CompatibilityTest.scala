@@ -22,6 +22,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   test("leagues oas to raml") {
+
     compatibility("leagues-api.json", OasJsonHint, RamlYamlHint)
   }
 
