@@ -18,27 +18,27 @@ class MandatoryDocumentationTitle()(override implicit val errorHandler: ErrorHan
   }
 
   protected def ensureDocumentationTitle(api: WebApi) = {
-    if (missingDocumentationTitle(api)) {
-      addMissingDocumentationTitle(api)
+    if (missingTitle(api)) {
+      addMissingTitle(api)
+    }
+    api.documentations.foreach { documentation =>
+      if (documentation.title.isNullOrEmpty) {
+        documentation.withTitle("")
+      }
     }
     api.tags.foreach { tag =>
       ensureDocumentationTitleInTag(tag)
     }
   }
 
-  protected def missingDocumentationTitle(webApi: WebApi): Boolean = !webApi.documentations.exists(_.title.nonEmpty)
+  protected def missingTitle(webApi: WebApi): Boolean = webApi.name.option().isEmpty
 
 
-  protected def addMissingDocumentationTitle(webApi: WebApi): Unit = {
-    if (webApi.documentations.isEmpty) {
-      webApi.withDocumentationTitle("")
-    } else {
-      webApi.documentations.foreach { documentation =>
-        if (documentation.title.isNullOrEmpty) {
-          documentation.withTitle("")
-        }
-      }
+  protected def addMissingTitle(webApi: WebApi): Unit = {
+    if (webApi.name.isNullOrEmpty) {
+      webApi.withName("")
     }
+
   }
 
 
