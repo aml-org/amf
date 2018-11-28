@@ -11,6 +11,7 @@ import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 
 import scala.concurrent.Future
+import scala.concurrent.Future.successful
 
 class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
 
@@ -27,7 +28,8 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
       println(s"About to convert $path")
       for {
         origin   <- build(c, None, useAmfJsonldSerialisation = true)
-        rendered <- render(origin, c, useAmfJsonldSerialization = true)
+        resolved <- successful(transform(origin, c))
+        rendered <- render(resolved, c, useAmfJsonldSerialization = true)
         tmp      <- writeTemporaryFile(path)(rendered)
         report   <- validate(tmp, RamlYamlHint)
       } yield {
