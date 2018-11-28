@@ -11,7 +11,11 @@ class MandatoryDocumentationTitle()(override implicit val errorHandler: ErrorHan
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
       case d: Document if d.encodes.isInstanceOf[WebApi] =>
-        ensureDocumentationTitle(d.encodes.asInstanceOf[WebApi])
+        try {
+          ensureDocumentationTitle(d.encodes.asInstanceOf[WebApi])
+        } catch {
+          case e: Throwable => // ignore: we don't want this to break anything
+        }
         model
       case _ => model
     }
