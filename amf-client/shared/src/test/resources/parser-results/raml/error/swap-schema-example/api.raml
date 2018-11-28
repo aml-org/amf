@@ -1,0 +1,16 @@
+#%RAML 0.8
+title: Api
+version: 1.0
+/endpoint:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include employee_schema.json
+            schema: !include employee.json
+      300:
+        body:
+          application/json:
+            example: !include employee.json
+            schema: !include employee_schema.json

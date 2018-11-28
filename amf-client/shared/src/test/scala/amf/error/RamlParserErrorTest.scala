@@ -1,5 +1,6 @@
 package amf.error
 
+import amf.core.annotations.LexicalInformation
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.Range
 import amf.core.remote.RamlYamlHint
@@ -569,6 +570,16 @@ class RamlParserErrorTest extends ParserErrorTest {
         formatWarning.level should be("Warning")
         formatWarning.message should endWith(
           "Format UTC_MILLISEC is not valid for type http://a.ml/vocabularies/shapes#number")
+      }
+    )
+  }
+
+  test("Test swap between referenced schema and example") {
+    validate(
+      "error/swap-schema-example/api.raml",
+      notYmap => {
+        notYmap.level should be("Violation")
+        notYmap.message should be("Yaml map expected")
       }
     )
   }

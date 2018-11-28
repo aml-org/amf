@@ -4,14 +4,18 @@ import amf.core.parser._
 
 import scala.collection.mutable
 
-class JsonSchemaAstIndex(root: YNode)(implicit val contx: WebApiContext) {
+class JsonSchemaAstIndex(root: YNode)(implicit val ctx: WebApiContext) {
 
   private val index: mutable.Map[String, YNode] = mutable.Map.empty
 
   init()
-  def init(): Unit = {
+  def init(): Unit = root.to[YMap] match {
+    case Right(value) => indexMap(value)
+    case _ => // ignore
+  }
+
+  private def indexMap(m: YMap): Unit = {
     // root base id
-    val m     = root.as[YMap]
     val idOpt = m.key("id").orElse(m.key("$id")).flatMap(_.value.asScalar.map(_.text))
     idOpt.foreach { id =>
       index.put(id, m)
