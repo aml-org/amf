@@ -119,7 +119,10 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
     }
 
     fs.entry(OperationModel.Responses)
-      .map(f => result += RamlResponsesEmitter("responses", f, ordering, references))
+      .map(f => result += RamlResponsesEmitter("responses", f, ordering, references, defaultResponse = false))
+
+    fs.entry(OperationModel.Responses)
+      .map(f => result += RamlResponsesEmitter("(amf-defaultResponse)", f, ordering, references, defaultResponse = true))
 
     fs.entry(OperationModel.Security)
       .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))

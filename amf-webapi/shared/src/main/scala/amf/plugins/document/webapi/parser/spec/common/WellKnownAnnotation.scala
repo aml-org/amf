@@ -15,6 +15,7 @@ object WellKnownAnnotation {
     "oasDeprecated",
     "summary",
     "externalDocs",
+    "defaultResponse",
     "payloads",
     "readOnly",
     "dependencies",

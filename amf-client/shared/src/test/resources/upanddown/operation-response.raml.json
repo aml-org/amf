@@ -28,7 +28,10 @@
       "get": {
         "operationId": "Some title",
         "responses": {
-          "200": {
+          "404": {
+            "description": "Not found!"
+          },
+          "default": {
             "description": "200 descr",
             "headers": {
               "Time-Ago": {
@@ -36,9 +39,6 @@
                 "type": "integer"
               }
             }
-          },
-          "404": {
-            "description": "Not found!"
           }
         }
       }

@@ -62,7 +62,8 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
         val map = entry.value.as[YMap] // if not scalar, must be the response, if not, violation.
         val res = Response(entry).set(ResponseModel.Name, node)
         adopt(res)
-        res.withStatusCode(if (res.name.value() == "default") "200" else res.name.value())
+        // res.withStatusCode(if (res.name.value() == "default") "200" else res.name.value())
+        res.withStatusCode(res.name.value())
 
         if (parseOptional && node.toString.endsWith("?")) { // only in raml the method can be optional, check?
           res.set(ResponseModel.Optional, value = true)

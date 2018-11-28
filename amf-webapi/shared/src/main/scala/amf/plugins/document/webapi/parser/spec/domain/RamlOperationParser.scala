@@ -68,6 +68,17 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
 
     val optionalMethod = if (parseOptional) "\\??" else ""
 
+    map.key("(amf-defaultResponse)",
+      entry => {
+        if (entry.value.tagType == YType.Map) {
+          val responses = mutable.ListBuffer[Response]()
+          entry.value.as[YMap].entries.foreach { entry =>
+            responses += ctx.factory.responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional).parse()
+          }
+          operation.withResponses(responses)
+        }
+      }
+    )
     map.key(
       "responses",
       entry => {
@@ -92,8 +103,9 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
                   .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
                   .parse()
               })
+              val defaultResponses = operation.responses
               operation.set(OperationModel.Responses,
-                AmfArray(responses, Annotations(entry.value)),
+                AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
                 Annotations(entry))
             } else {
               ctx.violation(MissingOperationStatusCodeSpecification.id, operation.id, None,"RAML Responses must have a valid status code", entry.value)
@@ -101,6 +113,8 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
         }
       }
     )
+
+
 
     val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(operation.withSecurity) _
     map.key("securedBy", (OperationModel.Security in operation using SchemeParser).allowingSingleValue)

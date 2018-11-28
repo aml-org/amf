@@ -144,7 +144,8 @@ protocols:
       200:
         description: History information for the given user
         body: Activities
-      200:
+    (amf-defaultResponse):
+      default:
         description: Unexpected error
         body: Error
 /me:
@@ -155,7 +156,8 @@ protocols:
       200:
         description: Profile information for a user
         body: Profile
-      200:
+    (amf-defaultResponse):
+      default:
         description: Unexpected error
         body: Error
 /products:
@@ -183,7 +185,8 @@ protocols:
         body:
           type: array
           items: Product
-      200:
+    (amf-defaultResponse):
+      default:
         description: Unexpected error
         body: Error
 /estimates/price:
@@ -225,7 +228,8 @@ protocols:
         body:
           type: array
           items: PriceEstimate
-      200:
+    (amf-defaultResponse):
+      default:
         description: Unexpected error
         body: Error
 /estimates/time:
@@ -256,6 +260,7 @@ protocols:
         body:
           type: array
           items: Product
-      200:
+    (amf-defaultResponse):
+      default:
         description: Unexpected error
         body: Error
