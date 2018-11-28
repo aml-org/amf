@@ -17,13 +17,14 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
 
   override val basePath = "amf-client/shared/src/test/resources/compatibility/"
 
+  // HERE_HERE Test oas20/documentation-title-mandatory.json
   for {
     file <- platform.fs.syncFile(basePath + "oas20").list
   } {
     // For each oas -> render raml and validate
     val path = s"oas20/$file"
 
-    test(s"Test $path") {
+    test(s"HERE_HERE Test $path") {
       val c = CycleConfig(path, path, OasJsonHint, Raml, basePath, None)
       println(s"About to convert $path")
       for {
