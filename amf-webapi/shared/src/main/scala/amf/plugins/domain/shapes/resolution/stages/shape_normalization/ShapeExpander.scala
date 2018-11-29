@@ -58,7 +58,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
             case nil: NilShape           => nil
             case node: NodeShape         => expandNode(node)
             case recursive: RecursiveShape =>
-              recursionRegister.recursionError(recursive, recursive, recursive.id, traversed)
+              recursionRegister.recursionError(recursive, recursive, traversed)
             case any: AnyShape => expandAny(any)
           }
         })
@@ -72,7 +72,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       val newInherits = shape.inherits.map {
         case r: RecursiveShape if r.fixpoint.option().exists(_.equals(shape.id)) =>
           r.fixpointTarget.foreach(target => addClojure(target, shape))
-          recursionRegister.recursionError(shape, r, r.id, traversed) // direct recursion
+          recursionRegister.recursionError(shape, r, traversed) // direct recursion
         case r: RecursiveShape =>
           r.fixpointTarget.foreach(target => addClojure(target, shape))
           r
@@ -165,7 +165,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (mandatory)
       array.inherits.collect({ case arr: ArrayShape if arr.items.isInstanceOf[RecursiveShape] => arr }).foreach { f =>
         val r = f.items.asInstanceOf[RecursiveShape]
-        recursionRegister.recursionError(array, r, array.id, traversed)
+        recursionRegister.recursionError(array, r, traversed, Some(array.id))
         r.fixpointTarget.foreach(target => addClojure(target, array))
       }
     if (Option(oldItems).isDefined) {
@@ -303,7 +303,8 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       case Some(t) => traversed.runWithIgnoredIds(() => normalize(shape), Set(root.id, t.id))
       case None if shape.inherits.nonEmpty =>
         traversed.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
-      case _ => traversed.runWithIgnoredIds(() => normalize(shape), Set(root.id, shape.id))
+      case _ if shape.isInstanceOf[RecursiveShape] => shape
+      case _ => traversed.runWithIgnoredIds(() => normalize(shape), Set(root.id))
     }
   }
 

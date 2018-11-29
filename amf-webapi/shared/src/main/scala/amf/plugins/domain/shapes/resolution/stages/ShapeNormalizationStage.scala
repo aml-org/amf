@@ -62,16 +62,16 @@ private[stages] case class RecursionErrorRegister() {
   def recursionAndError(root: Shape, base: Option[String], s: Shape, traversed: IdsTraversionCheck)(
       implicit context: NormalizationContext): RecursiveShape = {
     val recursion = buildRecursion(base, s)
-    recursionError(root, recursion, root.id, traversed: IdsTraversionCheck)
+    recursionError(root, recursion,  traversed: IdsTraversionCheck, Some(root.id))
   }
 
-  def recursionError(original: Shape, r: RecursiveShape, checkId: String, traversed: IdsTraversionCheck)(
+  def recursionError(original: Shape, r: RecursiveShape, traversed: IdsTraversionCheck, checkId: Option[String] = None)(
       implicit context: NormalizationContext): RecursiveShape = {
 
     val canRegister = !avoidRegister.contains(r.id)
     if (!r.supportsRecursion
           .option()
-          .getOrElse(false) && !traversed.avoidError(r, Some(checkId)) && canRegister) {
+          .getOrElse(false) && !traversed.avoidError(r, checkId) && canRegister) {
       context.errorHandler.violation(
         ParserSideValidations.RecursiveShapeSpecification.id,
         original.id,
@@ -81,6 +81,8 @@ private[stages] case class RecursionErrorRegister() {
         original.location()
       )
       avoidRegister += r.id
+    } else if(traversed.avoidError(r, checkId)) {
+      r.withSupportsRecursion(true)
     }
     r
   }
