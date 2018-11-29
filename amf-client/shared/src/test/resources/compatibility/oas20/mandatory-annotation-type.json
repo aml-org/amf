@@ -15,6 +15,9 @@
   },
   "host": "petstore.swagger.io",
   "basePath": "/v2",
+  "consumes": [
+    "application/xml"
+  ],
   "schemes": [
     "http"
   ],
@@ -27,10 +30,6 @@
         "summary": "Add a new pet to the store",
         "description": "",
         "operationId": "addPet",
-        "consumes": [
-          "application/xml",
-          "application/json"
-        ],
         "produces": [
           "application/xml",
           "application/json"

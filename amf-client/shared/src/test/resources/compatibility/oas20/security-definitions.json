@@ -1,0 +1,52 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Secured API"
+  },
+  "host": "secured.api.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/ping": {
+      "get": {
+        "tags": [
+          "ping"
+        ],
+        "summary": "Checks if service is capable of responding to requests",
+        "operationId": "ping",
+        "consumes": [],
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "basic": {
+      "type": "basic",
+      "description": "Basic HTTP Authentication"
+    },
+    "apiKey": {
+      "type": "apiKey",
+      "description": "API Key"
+    }
+  },
+  "security": [
+    {
+      "basic": [],
+      "apiKey": []
+    }
+  ]
+}

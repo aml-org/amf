@@ -17,7 +17,6 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
 
   override val basePath = "amf-client/shared/src/test/resources/compatibility/"
 
-  // HERE_HERE Test oas20/documentation-title-mandatory.json
   for {
     file <- platform.fs.syncFile(basePath + "oas20").list
   } {
