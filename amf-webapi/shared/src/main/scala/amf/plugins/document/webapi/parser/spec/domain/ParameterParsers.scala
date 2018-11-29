@@ -287,7 +287,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
             /**
               * Binding is required, i'm not setting any default value so It will be some model validation.
               * */
-            val parameter = Parameter()
+            val parameter = Parameter(map)
             setName(parameter)
             parameter.adopted(parentId)
             OasParameter(parameter)
