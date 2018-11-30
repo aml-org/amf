@@ -19,8 +19,8 @@ import scala.collection.mutable
   *
   */
 case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, parseOptional: Boolean = false)(
-  implicit ctx: RamlWebApiContext)
-  extends SpecParserOps {
+    implicit ctx: RamlWebApiContext)
+    extends SpecParserOps {
 
   def parse(): Operation = {
     val method: String = entry.key.as[YScalar].text
@@ -53,7 +53,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
     map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)
     map.key("summary".asRamlAnnotation, OperationModel.Summary in operation)
     map.key("externalDocs".asRamlAnnotation,
-      OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
+            OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
     map.key("consumes".asRamlAnnotation, OperationModel.Accepts in operation)
     map.key("produces".asRamlAnnotation, OperationModel.ContentType in operation)
@@ -66,12 +66,15 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       .parse()
       .foreach(operation.set(OperationModel.Request, _))
 
-    map.key("defaultResponse".asRamlAnnotation,
+    map.key(
+      "defaultResponse".asRamlAnnotation,
       entry => {
         if (entry.value.tagType == YType.Map) {
           val responses = mutable.ListBuffer[Response]()
           entry.value.as[YMap].entries.foreach { entry =>
-            responses += ctx.factory.responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional).parse()
+            responses += ctx.factory
+              .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
+              .parse()
           }
           operation.withResponses(responses)
         }
@@ -80,6 +83,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
     map.key(
       "responses",
       entry => {
+        val responses = mutable.ListBuffer[Response]()
         entry.value.tagType match {
           case YType.Null => // ignore
           case _ =>
@@ -88,31 +92,29 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
               .entries
               .filter(y => !isRamlAnnotation(y.key.as[YScalar].text))
 
-            val keys = entries.map(_.key.as[YScalar].text)
+            val keys   = entries.map(_.key.as[YScalar].text)
             val keySet = keys.toSet
             if (keys.size > keySet.size) {
-              ctx.violation(DuplicatedOperationStatusCodeSpecification.id, operation.id, None,"RAML Responses must not have duplicated status codes", entry.value)
+              ctx.violation(DuplicatedOperationStatusCodeSpecification.id,
+                            operation.id,
+                            None,
+                            "RAML Responses must not have duplicated status codes",
+                            entry.value)
             }
 
-            if (entries.nonEmpty) {
-              val responses = mutable.ListBuffer[Response]()
-              entries.foreach(entry => {
-                responses += ctx.factory
-                  .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
-                  .parse()
-              })
-              val defaultResponses = operation.responses
-              operation.set(OperationModel.Responses,
-                AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
-                Annotations(entry))
-            } else {
-              ctx.violation(MissingOperationStatusCodeSpecification.id, operation.id, None,"RAML Responses must have a valid status code", entry.value)
+            entries.foreach { entry =>
+              responses += ctx.factory
+                .responseParser(entry, _.adopted(operation.id), parseOptional)
+                .parse()
             }
         }
+
+        val defaultResponses = operation.responses
+        operation.set(OperationModel.Responses,
+                      AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
+                      Annotations(entry))
       }
     )
-
-
 
     val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(operation.withSecurity) _
     map.key("securedBy", (OperationModel.Security in operation using SchemeParser).allowingSingleValue)

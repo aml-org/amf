@@ -129,7 +129,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(16,12)-(16,18)]"
+"@value": "[(17,12)-(17,18)]"
 }
 ]
 }
@@ -143,7 +143,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(18,12)-(18,27)]"
+"@value": "[(19,12)-(19,27)]"
 }
 ]
 },
@@ -155,7 +155,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(16,12)-(16,20)]"
+"@value": "[(17,12)-(17,20)]"
 }
 ]
 },
@@ -167,7 +167,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(14,10)-(20,11)]"
+"@value": "[(15,10)-(21,11)]"
 }
 ]
 },
@@ -179,7 +179,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(15,12)-(15,20)]"
+"@value": "[(16,12)-(16,20)]"
 }
 ]
 }
@@ -240,7 +240,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(23,12)-(23,18)]"
+"@value": "[(24,12)-(24,18)]"
 }
 ]
 }
@@ -254,7 +254,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(22,12)-(22,20)]"
+"@value": "[(23,12)-(23,20)]"
 }
 ]
 },
@@ -266,7 +266,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(21,10)-(26,11)]"
+"@value": "[(22,10)-(27,11)]"
 }
 ]
 },
@@ -278,7 +278,7 @@
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(23,12)-(23,20)]"
+"@value": "[(24,12)-(24,20)]"
 }
 ]
 }
@@ -332,6 +332,7 @@
 ]
 }
 ],
+"http://www.w3.org/ns/hydra/core#returns": [],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
 "@id": "file://amf-client/shared/src/test/resources/upanddown/form-data-params.json#/web-api/end-points/%2Fusers/post/source-map",
@@ -342,12 +343,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/http#accepts"
+"@value": "http://www.w3.org/ns/hydra/core#returns"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(10,8)-(10,20)]"
+"@value": "[(13,8)-(13,21)]"
 }
 ]
 },
@@ -360,6 +361,18 @@
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
 "@value": "[(9,6)-(9,14)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/http#accepts"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(10,8)-(10,20)]"
 }
 ]
 }
