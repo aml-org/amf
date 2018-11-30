@@ -22,21 +22,23 @@ class ExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler
   def resolveWebApi(webApi: WebApi): WebApi = {
     val allResponses = webApi.endPoints.flatMap(e => e.operations).flatMap(o => o.responses)
 
-    allResponses.foreach { response =>
-      val mappedExamples = response.examples.map(e => e.mediaType.value() -> e).toMap
-      response.fields.removeField(ResponseModel.Examples)
-      mappedExamples.foreach(e => {
-        response.payloads.find(_.mediaType.value() == e._1) match {
-          case Some(p) =>
-            p.schema match {
-              case shape: AnyShape =>
-                e._2.withName(e._2.mediaType.value())
-                shape.withExamples(shape.examples ++ Seq(e._2))
-              case _ => response.withExamples(response.examples ++ Seq(e._2))
+    allResponses.zipWithIndex.foreach {
+      case (response, index) =>
+        val mappedExamples = response.examples.map(e => e.mediaType.value() -> e).toMap
+        response.fields.removeField(ResponseModel.Examples)
+        mappedExamples.foreach {
+          case (mediaType, example) =>
+            response.payloads.find(_.mediaType.value() == mediaType) match {
+              case Some(p) =>
+                p.schema match {
+                  case shape: AnyShape =>
+                    example.withName(example.mediaType.value() + index)
+                    shape.withExamples(shape.examples ++ Seq(example))
+                  case _ => response.withExamples(response.examples ++ Seq(example))
+                }
+              case _ => response.withExamples(response.examples ++ Seq(example))
             }
-          case _ => response.withExamples(response.examples ++ Seq(e._2))
         }
-      })
     }
     webApi
   }

@@ -266,6 +266,10 @@ class OASProductionResolutionTest extends OasResolutionTest {
   test("OAS examples test") {
     cycle("oas-example.json", "oas-example.json.jsonld", OasJsonHint, Amf)
   }
+
+  test("OAS multiple examples test") {
+    cycle("oas-multiple-example.json", "oas-multiple-example.json.jsonld", OasJsonHint, Amf)
+  }
 }
 
 class Raml08ResolutionTest extends RamlResolutionTest {
