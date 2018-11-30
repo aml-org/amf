@@ -37,17 +37,15 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
     }
   }
 
-  private def validate(source: AsyncFile, hint: Hint): Future[AMFValidationReport] = {
-    println(s"About to validate ${source.path}")
+  private def validate(source: AsyncFile, hint: Hint): Future[AMFValidationReport] =
     Validation(platform)
       .map(_.withEnabledValidation(false))
-      .flatMap(validation => {
+      .flatMap { validation =>
         val config = CycleConfig(source.path, source.path, hint, hint.vendor, "", None)
-        build(config, Some(validation), useAmfJsonldSerialisation = true).flatMap(unit => {
+        build(config, Some(validation), useAmfJsonldSerialisation = true).flatMap { unit =>
           validation.validate(unit, ProfileNames.RAML)
-        })
-      })
-  }
+        }
+      }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
     case Raml | Raml08 | Raml10 => RamlCompatibilityPipeline.unhandled.resolve(unit)
