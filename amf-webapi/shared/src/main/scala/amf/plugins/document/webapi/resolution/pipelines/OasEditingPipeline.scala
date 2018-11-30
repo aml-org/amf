@@ -4,5 +4,5 @@ import amf.{OasProfile, ProfileName}
 
 class OasEditingPipeline(override val eh: ErrorHandler) extends AmfEditingPipeline(eh) {
   override def profileName: ProfileName = OasProfile
-  override val references               = new OasReferenceResolutionStage() // should be resolution pipeline true right?
+  override def references               = new WebApiReferenceResolutionStage(true)
 }

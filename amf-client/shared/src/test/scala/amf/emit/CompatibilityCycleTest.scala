@@ -25,7 +25,6 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
 
     test(s"Test $path") {
       val c = CycleConfig(path, path, OasJsonHint, Raml, basePath, None)
-      // println(s"About to convert $path")
       for {
         origin   <- build(c, None, useAmfJsonldSerialisation = true)
         resolved <- successful(transform(origin, c))

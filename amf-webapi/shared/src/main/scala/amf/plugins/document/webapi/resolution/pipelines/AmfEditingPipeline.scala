@@ -16,7 +16,7 @@ import amf.{AmfProfile, ProfileName}
 
 class AmfEditingPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
 
-  val references = new ReferenceResolutionStage(keepEditingInfo = true)
+  protected def references = new ReferenceResolutionStage(keepEditingInfo = true)
 
   override lazy val steps: Seq[ResolutionStage] = Seq(
     references,

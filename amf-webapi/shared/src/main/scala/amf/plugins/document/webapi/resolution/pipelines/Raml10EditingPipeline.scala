@@ -5,4 +5,5 @@ import amf.{ProfileName, RamlProfile}
 
 class Raml10EditingPipeline(override val eh: ErrorHandler) extends AmfEditingPipeline(eh) {
   override def profileName: ProfileName = RamlProfile
+  override def references               = new WebApiReferenceResolutionStage(true)
 }
