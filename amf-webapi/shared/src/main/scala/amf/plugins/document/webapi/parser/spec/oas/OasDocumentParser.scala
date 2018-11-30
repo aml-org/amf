@@ -27,6 +27,7 @@ import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import org.yaml.model.{YNode, _}
 
 import scala.collection.mutable
@@ -492,23 +493,21 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key(
         "responses",
         entry => {
+          val responses = mutable.ListBuffer[Response]()
+
           entry.value
             .as[YMap]
-            .regex(
-              "default|\\d{3}",
-              entries => {
-                val responses = mutable.ListBuffer[Response]()
-                entries.foreach(entry => {
-                  responses += OasResponseParser(entry,
-                                                 (r: Response) =>
-                                                   r.adopted(operation.id)
-                                                     .withStatusCode(r.name.value())).parse()
-                })
-                operation.set(OperationModel.Responses,
-                              AmfArray(responses, Annotations(entry.value)),
-                              Annotations(entry))
-              }
-            )
+            .entries
+            .filter(y => !isOasAnnotation(y.key.as[YScalar].text))
+            .foreach(entry => {
+              responses += OasResponseParser(
+                entry,
+                r =>
+                  r.adopted(operation.id)
+                    .withStatusCode(r.name.value())).parse()
+            })
+
+            if(responses.nonEmpty) operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))
         }
       )
 

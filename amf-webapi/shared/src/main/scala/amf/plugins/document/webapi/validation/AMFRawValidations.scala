@@ -549,9 +549,9 @@ object AMFRawValidations {
       "PropertyShape",
       "sh:path",
       "sh:pattern",
-      "^([0-9]{3})$|^(default)$",
-      "Status code for a Response must be valid (match '^([0-9]{3})$|^(default)$')",
-      "Status code for a Response must be valid (match '^([0-9]{3})$|^(default)$')",
+      "^([1-5]{1}[0-9]{2})$|^(default)$",
+      "Status code for a Response must be valid be between 100 and 599",
+      "Status code for a Response must be valid be between 100 and 599 or 'default'",
       "Violation"
     ),
     AMFValidation(
@@ -1665,21 +1665,6 @@ object AMFRawValidations {
       "http,https,HTTP,HTTPS",
       "Protocols must have a case insensitive value matching http or https",
       "Swagger object 'schemes' property must have a case insensitive value matching http or https",
-      "Violation"
-    ),
-    AMFValidation(
-      "amf-parser:raml-status-code",
-      "Status code must match a valid numeric status code",
-      Raml.name,
-      "Domain",
-      "raml-http:Response",
-      "hydra:statusCode",
-      "PropertyShape",
-      "sh:path",
-      "sh:pattern",
-      "^([1-5]{1}[0-9]{2})$",
-      "Status code must be numeric and in the 1xx-5xx range",
-      "Status code must be numeric and in the 1xx-5xx range",
       "Violation"
     ),
     AMFValidation(

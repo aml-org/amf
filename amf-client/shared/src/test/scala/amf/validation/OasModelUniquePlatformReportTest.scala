@@ -11,5 +11,9 @@ class OasModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("/webapi/tags.json", Some("webapi-tags.report"))
   }
 
+  test("Parse and validate invalid responses") {
+    validate("invalid-status-code-string/api.json", Some("invalid-status-code-string-oas.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }

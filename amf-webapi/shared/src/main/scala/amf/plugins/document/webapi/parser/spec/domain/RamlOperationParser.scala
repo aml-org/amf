@@ -12,15 +12,15 @@ import amf.plugins.domain.webapi.metamodel.OperationModel.Method
 import amf.plugins.domain.webapi.models.{Operation, Response}
 import org.yaml.model._
 import amf.core.utils.Strings
-
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import scala.collection.mutable
 
 /**
   *
   */
 case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext)
-    extends SpecParserOps {
+  implicit ctx: RamlWebApiContext)
+  extends SpecParserOps {
 
   def parse(): Operation = {
     val method: String = entry.key.as[YScalar].text
@@ -53,7 +53,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
     map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)
     map.key("summary".asRamlAnnotation, OperationModel.Summary in operation)
     map.key("externalDocs".asRamlAnnotation,
-            OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
+      OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
     map.key("consumes".asRamlAnnotation, OperationModel.Accepts in operation)
     map.key("produces".asRamlAnnotation, OperationModel.ContentType in operation)
@@ -66,9 +66,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       .parse()
       .foreach(operation.set(OperationModel.Request, _))
 
-    val optionalMethod = if (parseOptional) "\\??" else ""
-
-    map.key("(amf-defaultResponse)",
+    map.key("defaultResponse".asRamlAnnotation,
       entry => {
         if (entry.value.tagType == YType.Map) {
           val responses = mutable.ListBuffer[Response]()
@@ -87,9 +85,9 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
           case _ =>
             val entries = entry.value
               .as[YMap]
-              .regex(
-                s"(\\d{3})$optionalMethod"
-              )
+              .entries
+              .filter(y => !isRamlAnnotation(y.key.as[YScalar].text))
+
             val keys = entries.map(_.key.as[YScalar].text)
             val keySet = keys.toSet
             if (keys.size > keySet.size) {
