@@ -6,7 +6,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.resolution.pipelines.Raml10ResolutionPipeline
 import amf.{ProfileName, RamlProfile}
 
-class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
+class CompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
 
   private val resolution = new Raml10ResolutionPipeline(eh)
 
@@ -21,6 +21,6 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
   override def profileName: ProfileName = RamlProfile
 }
 
-object RamlCompatibilityPipeline {
-  def unhandled = new RamlCompatibilityPipeline(UnhandledErrorHandler)
+object CompatibilityPipeline {
+  def unhandled = new CompatibilityPipeline(UnhandledErrorHandler)
 }
