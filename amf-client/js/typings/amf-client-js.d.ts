@@ -4,6 +4,12 @@ declare module 'amf-client-js' {
     constructor(error: String)
   }
 
+  export class ResolutionPipeline {
+      static DEFAULT_PIPELINE : string
+      static EDITING_PIPELINE : string
+      static COMPATIBILITY_PIPELINE : string
+  }
+
   export class AMF {
     static init(): Promise<void>
 

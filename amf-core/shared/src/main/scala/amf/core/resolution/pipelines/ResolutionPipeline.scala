@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 
-import scala.scalajs.js.annotation.JSExportAll
+import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
 
 abstract class ResolutionPipeline(val eh: ErrorHandler) {
 
@@ -52,6 +52,7 @@ abstract class ResolutionPipeline(val eh: ErrorHandler) {
   }
 }
 
+@JSExportTopLevel("ResolutionPipeline")
 @JSExportAll
 object ResolutionPipeline {
   val DEFAULT_PIPELINE       = "default"
