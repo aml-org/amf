@@ -317,14 +317,6 @@ object ParserSideValidations {
       Oas30Profile  -> SeverityLevels.VIOLATION,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
-    MissingOperationStatusCodeSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.WARNING,
-      Oas20Profile  -> SeverityLevels.WARNING,
-      Oas30Profile  -> SeverityLevels.WARNING,
-      AmfProfile    -> SeverityLevels.INFO
-    ),
     RecursiveShapeSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
       Raml10Profile -> SeverityLevels.VIOLATION,
@@ -634,7 +626,6 @@ object ParserSideValidations {
 
   def validations: List[ValidationSpecification] = List(
     DuplicatedOperationStatusCodeSpecification,
-    MissingOperationStatusCodeSpecification,
     RecursiveShapeSpecification,
     NamedExampleUsedInExample,
     ChainedReferenceSpecification,

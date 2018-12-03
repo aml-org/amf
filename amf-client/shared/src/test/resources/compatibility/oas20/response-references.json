@@ -1,0 +1,120 @@
+{
+  "info": {
+    "title": "Response references",
+    "version": "v1-PROD"
+  },
+  "host": "responses.cloudhub.io",
+  "basePath": "/api/responses/v1",
+  "schemes": [
+    "https"
+  ],
+  "swagger": "2.0",
+  "responses": {
+    "trait:errorHandled:Reused": {
+      "description": "Response reused with different status codes.\n"
+    },
+    "trait:errorHandled:400": {
+      "description": "The request was invalid or cannot be otherwise served. An accompanying \nerror message will explain further.\n"
+    },
+    "trait:errorHandled:401": {
+      "description": "This is a 401\n"
+    },
+    "trait:errorHandled:403": {
+      "description": "This is a 403\n"
+    },
+    "trait:errorHandled:404": {
+      "description": "This is a 404\n",
+      "schema": {
+        "example": "Grrr 404"
+      }
+    },
+    "trait:errorHandled:500": {
+      "description": "This is a 500\n",
+      "schema": {
+        "example": "Grrr 500"
+      }
+    }
+  },
+  "paths": {
+    "/customers": {
+      "get": {
+        "description": "Customers",
+        "schemes": [
+          "https"
+        ],
+        "operationId": "customers",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": "OK"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/trait:errorHandled:400"
+          },
+          "401": {
+            "$ref": "#/responses/trait:errorHandled:401"
+          },
+          "403": {
+            "$ref": "#/responses/trait:errorHandled:403"
+          },
+          "404": {
+            "$ref": "#/responses/trait:errorHandled:404"
+          },
+          "500": {
+            "$ref": "#/responses/trait:errorHandled:500"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "description": "Orders",
+        "schemes": [
+          "https"
+        ],
+        "operationId": "orders",
+        "produces": [
+          "application/json",
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": "OK"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/trait:errorHandled:Reused"
+          },
+          "401": {
+            "$ref": "#/responses/trait:errorHandled:Reused"
+          },
+          "403": {
+            "$ref": "#/responses/trait:errorHandled:Reused"
+          },
+          "404": {
+            "$ref": "#/responses/trait:errorHandled:Reused"
+          },
+          "500": {
+            "$ref": "#/responses/trait:errorHandled:500"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "in": "path",
+          "name": "name",
+          "description": "name"
+        }
+      ]
+    },
+  }
+}

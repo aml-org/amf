@@ -536,6 +536,7 @@
 ]
 }
 ],
+"http://www.w3.org/ns/hydra/core#returns": [],
 "http://a.ml/vocabularies/document-source-maps#sources": [
 {
 "@id": "file://amf-client/shared/src/test/resources/upanddown/query-string.json#/web-api/end-points/%2Flocations/get/source-map",
@@ -543,6 +544,18 @@
 "http://a.ml/vocabularies/document-source-maps#SourceMap"
 ],
 "http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://www.w3.org/ns/hydra/core#returns"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(48,8)-(48,21)]"
+}
+]
+},
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {

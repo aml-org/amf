@@ -1,5 +1,6 @@
 package amf.error
 
+import amf.core.annotations.LexicalInformation
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.Range
 import amf.core.remote.RamlYamlHint
@@ -558,6 +559,10 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Test reference by id at json schema") {
+    validate("valid/reference-by-id/api.raml")
+  }
+
   test("Test invalid string format in jsonschema number") {
     validate(
       "error/invalid-number-format/api.raml",
@@ -568,6 +573,17 @@ class RamlParserErrorTest extends ParserErrorTest {
       }
     )
   }
+
+  test("Test swap between referenced schema and example") {
+    validate(
+      "error/swap-schema-example/api.raml",
+      notYmap => {
+        notYmap.level should be("Violation")
+        notYmap.message should be("Yaml map expected")
+      }
+    )
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =

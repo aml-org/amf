@@ -172,5 +172,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("extends/empty-extends.raml", Some("empty-extends.report"))
   }
 
+  test("Parse and validate invalid responses") {
+    validate("invalid-status-code-string/api.raml", Some("invalid-status-code-string-raml.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

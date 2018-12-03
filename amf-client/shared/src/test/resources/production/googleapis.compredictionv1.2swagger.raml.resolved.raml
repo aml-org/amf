@@ -27,6 +27,20 @@ description: Lets you access a cloud hosted machine learning service that makes 
     url: https://google.com
 (oas-externalDocs):
   url: https://developers.google.com/prediction/docs/developer-guide
+securitySchemes:
+  Oauth2:
+    type: OAuth 2.0
+    description: Oauth 2.0 authentication
+    settings:
+      authorizationUri: https://accounts.google.com/o/oauth2/auth
+      accessTokenUri:
+      authorizationGrants:
+        - implicit
+      scopes:
+        - https://www.googleapis.com/auth/devstorage.full_control
+        - https://www.googleapis.com/auth/devstorage.read_only
+        - https://www.googleapis.com/auth/devstorage.read_write
+        - https://www.googleapis.com/auth/prediction
 /training:
   displayName: training
   /{data}:

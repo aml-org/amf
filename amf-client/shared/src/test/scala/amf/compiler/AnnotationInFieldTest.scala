@@ -46,6 +46,20 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
+  test("test empty oas parameter") {
+    for {
+      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/empty-parameter.json",
+                    OasYamlHint)
+    } yield {
+      val document = unit.asInstanceOf[Document]
+      document.encodes.asInstanceOf[WebApi].endPoints.head.parameters.headOption match {
+        case Some(p) => findLexical(p.id, p.annotations)
+        case None    => fail("Any parameter declared found")
+      }
+      succeed
+    }
+  }
+
   private def assertAnnotationsInName(id: String, element: NamedDomainElement): Unit = {
     val annotations = element.name.annotations()
     findLexical(id, annotations)

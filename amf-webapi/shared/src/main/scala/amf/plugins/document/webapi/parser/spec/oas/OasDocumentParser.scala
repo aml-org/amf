@@ -27,6 +27,7 @@ import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import org.yaml.model.{YNode, _}
 
 import scala.collection.mutable
@@ -78,7 +79,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     document.adopted(root.location).withLocation(root.location)
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
-    ctx.localJSONSchemaContext = Some(map)
+    ctx.setJsonSchemaAST(map)
 
     val references = ReferencesParser(document, "uses".asOasExtension, map, root.references).parse(root.location)
     parseDeclarations(root: Root, map)
@@ -92,6 +93,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     if (declarable.nonEmpty) document.withDeclares(declarable)
     if (references.references.nonEmpty) document.withReferences(references.solvedReferences())
 
+    ctx.futureDeclarations.resolve()
     document
   }
 
@@ -491,24 +493,20 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key(
         "responses",
         entry => {
+          val responses = mutable.ListBuffer[Response]()
+
           entry.value
             .as[YMap]
-            .regex(
-              "default|\\d{3}",
-              entries => {
-                val responses = mutable.ListBuffer[Response]()
-                entries.foreach(entry => {
-                  responses += OasResponseParser(
-                    entry,
-                    (r: Response) =>
-                      r.adopted(operation.id)
-                        .withStatusCode(if (r.name.value() == "default") "200" else r.name.value())).parse()
-                })
-                operation.set(OperationModel.Responses,
-                              AmfArray(responses, Annotations(entry.value)),
-                              Annotations(entry))
-              }
-            )
+            .entries
+            .filter(y => !isOasAnnotation(y.key.as[YScalar].text))
+            .foreach { entry =>
+              responses += OasResponseParser(entry,
+                                             r =>
+                                               r.adopted(operation.id)
+                                                 .withStatusCode(r.name.value())).parse()
+            }
+
+          operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))
         }
       )
 
@@ -537,8 +535,6 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
     parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
     parseParameterDeclarations(map, parent + "/parameters")
     parseResponsesDeclarations("responses", map, parent + "/responses")
-    ctx.futureDeclarations.resolve()
-
   }
 
   def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {

@@ -1,0 +1,157 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MockingServiceProxyAutomationTests",
+    "description": "Mocking service proxy test API",
+    "version": "v1"
+  },
+  "definitions": {
+    "exampleType": {
+      "example": {
+        "prop1": "John Doe",
+        "prop2": 1
+      },
+      "type": "object",
+      "properties": {
+        "prop1": {
+          "type": "string"
+        },
+        "prop2": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "prop1",
+        "prop2"
+      ]
+    }
+  },
+  "paths": {
+    "/examples": {
+      "get": {
+        "operationId": "GET_examples",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "prop1": "example5",
+                "prop2": 5
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/exampleType"
+            }
+          }
+        }
+      }
+    },
+    "/exampleType": {
+      "get": {
+        "operationId": "GET_exampleType",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/exampleType"
+            }
+          }
+        }
+      }
+    },
+    "/exampleInTypeAndResource": {
+      "get": {
+        "operationId": "GET_exampleInTypeAndResource",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "prop1": "resource example",
+                "prop2": 10
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/exampleType"
+            }
+          }
+        }
+      }
+    },
+    "/examplesInResource": {
+      "get": {
+        "operationId": "GET_examplesInResource",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "example": {
+                "one": {
+                  "prop1": "something",
+                  "prop2": 20
+                },
+                "two": {
+                  "prop1": "other",
+                  "prop2": 21
+                }
+              },
+              "type": "object",
+              "properties": {
+                "prop1": {
+                  "type": "string"
+                },
+                "prop2": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "prop1",
+                "prop2"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "/examplesInResourceAndType": {
+      "get": {
+        "operationId": "GET_examplesInResourceAndType",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "examples": {
+              "application/json": {
+                "one": {
+                  "prop1": "something else",
+                  "prop2": 30
+                },
+                "two": {
+                  "prop1": "another",
+                  "prop2": 31
+                }
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/exampleType"
+            }
+          }
+        }
+      }
+    }
+  }
+}

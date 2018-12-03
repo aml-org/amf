@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: test
+
+/category:
+  /{categoryId}:
+
+    get:
+      responses:
+        200:
+          body: 
+            application/json:
+              type: !include schemas/proc_search_category.schema.json

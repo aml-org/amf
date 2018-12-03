@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.resolution.stages.MediaTypeResolutionStage
 class ValidationResolutionPipeline(profile: ProfileName, override val eh: ErrorHandler)
     extends ResolutionPipeline(eh) {
 
-  override protected val steps: Seq[ResolutionStage] = Seq(
+  override val steps: Seq[ResolutionStage] = Seq(
     new ReferenceResolutionStage(keepEditingInfo = false),
     new ExternalSourceRemovalStage,
     new ExtensionsResolutionStage(profile, keepEditingInfo = false),

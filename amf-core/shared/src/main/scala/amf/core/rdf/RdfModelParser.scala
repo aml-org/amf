@@ -92,11 +92,11 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   }
 
   protected def key(node: Node, property: String): Seq[PropertyObject] =
-    node.properties.getOrElse(property, Nil)
+    node.getProperties(property).getOrElse(Nil)
 
   private def parseLinkableProperties(node: Node, instance: DomainElement with Linkable): Unit = {
-    node.properties
-      .get(LinkableElementModel.TargetId.value.iri())
+    node
+      .getProperties(LinkableElementModel.TargetId.value.iri())
       .flatMap(entries => {
         entries.headOption match {
           case Some(Uri(id)) => Some(id)
@@ -107,8 +107,8 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
         setLinkTarget(instance, targetId)
       }
 
-    node.properties
-      .get(LinkableElementModel.Label.value.iri())
+    node
+      .getProperties(LinkableElementModel.Label.value.iri())
       .flatMap(entries => {
         entries.headOption match {
           case Some(Literal(v, _)) => Some(v)
@@ -142,54 +142,47 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
       builder(annotations(nodes, sources, id.value)) match {
         case obj: ObjectNode =>
           obj.withId(node.subject)
-          node.properties.foreach {
-            case (uri, entries: Seq[PropertyObject]) =>
-              if (uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri() &&
-                  uri != (Namespace.Document + "name").iri()) { // we do this to prevent parsing name of annotations
+          node.getKeys().foreach { uri =>
+            if (uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri() &&
+                uri != (Namespace.Document + "name").iri()) { // we do this to prevent parsing name of annotations
 
-                val dataNode = entries.head match {
-                  case l @ Literal(_, _) =>
-                    parseDynamicLiteral(l)
-                  case entry if isRDFArray(entry) =>
-                    parseDynamicArray(entry)
-                  case nestedNode @ Uri(_) =>
-                    parseDynamicType(nestedNode).getOrElse(ObjectNode())
-                  case _ => ObjectNode()
-                }
-                obj.addProperty(uri, dataNode)
+              val dataNode = node.getProperties(uri).get.head match {
+                case l @ Literal(_, _) =>
+                  parseDynamicLiteral(l)
+                case entry if isRDFArray(entry) =>
+                  parseDynamicArray(entry)
+                case nestedNode @ Uri(_) =>
+                  parseDynamicType(nestedNode).getOrElse(ObjectNode())
+                case _ => ObjectNode()
               }
+              obj.addProperty(uri, dataNode)
+            }
           }
           obj
 
         case scalar: ScalarNode =>
           scalar.withId(node.subject)
-          node.properties.foreach {
-            case (uri, entries: Seq[PropertyObject]) =>
-              uri match {
-                case _ if uri == scalar.Value.value.iri() && entries.head.isInstanceOf[Literal] =>
-                  val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
-                  scalar.value = parsedScalar.value
-                  scalar.dataType = parsedScalar.dataType
-                case _ => // ignore
-              }
+          node.getKeys().foreach { k =>
+            val entries = node.getProperties(k).get
+            if (k == scalar.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
+              val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
+              scalar.value = parsedScalar.value
+              scalar.dataType = parsedScalar.dataType
+            }
           }
           scalar
 
         case link: LinkNode =>
           link.withId(node.subject)
-          node.properties.foreach {
-            case (uri, entries: Seq[PropertyObject]) =>
-              uri match {
-                case _ if uri == link.Alias.value.iri() && entries.head.isInstanceOf[Literal] =>
-                  val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
-                  link.alias = parsedScalar.value
-
-                case _ if uri == link.Value.value.iri() && entries.head.isInstanceOf[Literal] =>
-                  val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
-                  link.value = parsedScalar.value
-
-                case _ => // ignore
-              }
+          node.getKeys().foreach { k =>
+            val entries = node.getProperties(k).get
+            if (k == link.Alias.value.iri() && entries.head.isInstanceOf[Literal]) {
+              val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
+              link.alias = parsedScalar.value
+            } else if (k == link.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
+              val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
+              link.value = parsedScalar.value
+            }
           }
           referencesMap.get(link.alias) match {
             case Some(target) => link.withLinkedDomainElement(target)
@@ -201,13 +194,10 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
 
         case array: ArrayNode =>
           array.withId(node.subject)
-          node.properties.foreach {
-            case (uri, entries: Seq[PropertyObject]) =>
-              uri match {
-                case _ if uri == array.Member.value.iri() =>
-                  array.members = entries.flatMap(parseDynamicType).to[ListBuffer]
-                case _ => // ignore
-              }
+          node.getKeys().foreach { k =>
+            if (k == array.Member.value.iri()) {
+              array.members = node.getProperties(k).getOrElse(Nil).flatMap(parseDynamicType).to[ListBuffer]
+            }
           }
           array
 
@@ -222,8 +212,8 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
       case id @ Uri(_) =>
         findLink(id) match {
           case Some(node) =>
-            node.properties.get((Namespace.Rdf + "first").iri()).isDefined ||
-              node.properties.get((Namespace.Rdf + "rest").iri()).isDefined
+            node.getProperties((Namespace.Rdf + "first").iri()).isDefined ||
+              node.getProperties((Namespace.Rdf + "rest").iri()).isDefined
           case _ => false
         }
       case _ => false
@@ -246,8 +236,8 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   def parseDynamicArrayInner(entry: PropertyObject, acc: Seq[DataNode] = Nil): Seq[DataNode] = {
     findLink(entry) match {
       case Some(n) =>
-        val nextNode  = n.properties.getOrElse((Namespace.Rdf + "next").iri(), Nil).headOption
-        val firstNode = n.properties.getOrElse((Namespace.Rdf + "first").iri(), Nil).headOption
+        val nextNode  = n.getProperties((Namespace.Rdf + "next").iri()).getOrElse(Nil).headOption
+        val firstNode = n.getProperties((Namespace.Rdf + "first").iri()).getOrElse(Nil).headOption
         val updatedAcc = firstNode match {
           case Some(id @ Uri(_)) =>
             parseDynamicType(id) match {
@@ -328,7 +318,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
             case _: DomainElementModel if f == DocumentModel.Declares =>
               instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
             case _: BaseUnitModel => instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
-            case _                => instance.setArray(f, values, annotations(nodes, sources, key))
+            case _                => instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
           }
       }
     } else {
@@ -339,10 +329,9 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   private def parseList(id: String, listElement: Type, maybeCollection: Option[Node]): Seq[AmfElement] = {
     val buffer = ListBuffer[PropertyObject]()
     maybeCollection.foreach { collection =>
-      val properties = collection.properties
-      properties.keys.toSeq.sorted.foreach { entry =>
+      val properties = collection.getKeys().foreach { entry =>
         if (entry.startsWith((Namespace.Rdfs + "_").iri())) {
-          buffer ++= properties.get(entry).head
+          buffer ++= collection.getProperties(entry).get
         }
       }
     }
@@ -509,8 +498,8 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   )
 
   protected def retrieveSources(id: String, node: Node): SourceMap = {
-    node.properties
-      .get(DomainElementModel.Sources.value.iri())
+    node
+      .getProperties(DomainElementModel.Sources.value.iri())
       .flatMap { properties =>
         if (properties.nonEmpty) {
           findLink(properties.head) match {
@@ -526,16 +515,16 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
 
   private def parseSourceNode(node: Node): SourceMap = {
     val result = SourceMap()
-    node.properties.keys.foreach {
+    node.getKeys().foreach {
       case key @ AnnotationName(annotation) =>
         val consumer = result.annotation(annotation)
-        node.properties.get(key) match {
+        node.getProperties(key) match {
           case Some(properties) =>
             properties.foreach { property =>
               findLink(property) match {
                 case Some(linkedNode) =>
-                  val k: PropertyObject = linkedNode.properties(SourceMapModel.Element.value.iri()).head
-                  val v: PropertyObject = linkedNode.properties(SourceMapModel.Value.value.iri()).head
+                  val k: PropertyObject = linkedNode.getProperties(SourceMapModel.Element.value.iri()).get.head
+                  val v: PropertyObject = linkedNode.getProperties(SourceMapModel.Value.value.iri()).get.head
                   consumer(k.value, v.value)
                 case _ => //
               }
@@ -549,26 +538,27 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   }
 
   def parseCustomProperties(node: Node, instance: DomainElement): Unit = {
-    val properties: Seq[String] = node.properties
-      .getOrElse(DomainElementModel.CustomDomainProperties.value.iri(), Nil)
+    val properties: Seq[String] = node
+      .getProperties(DomainElementModel.CustomDomainProperties.value.iri())
+      .getOrElse(Nil)
       .filter(_.isInstanceOf[Uri])
       .map(_.asInstanceOf[Uri].value)
 
     val extensions: Seq[DomainExtension] = properties.flatMap { uri =>
-      node.properties
-        .get(uri)
+      node
+        .getProperties(uri)
         .map(entries => {
           val extension = DomainExtension()
           if (entries.nonEmpty) {
             findLink(entries.head) match {
               case Some(obj) =>
-                obj.properties.get(DomainExtensionModel.Name.value.iri()) match {
+                obj.getProperties(DomainExtensionModel.Name.value.iri()) match {
                   case Some(es) if es.nonEmpty && es.head.isInstanceOf[Literal] =>
                     extension.withName(value(DomainExtensionModel.Name.`type`, es.head.asInstanceOf[Literal].value))
                   case _ => // ignore
                 }
 
-                obj.properties.get(DomainExtensionModel.Element.value.iri()) match {
+                obj.getProperties(DomainExtensionModel.Element.value.iri()) match {
                   case Some(es) if es.nonEmpty && es.head.isInstanceOf[Literal] =>
                     extension.withName(value(DomainExtensionModel.Element.`type`, es.head.asInstanceOf[Literal].value))
                   case _ => // ignore

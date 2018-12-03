@@ -119,7 +119,7 @@ case class RamlJsonSchemaExpression(key: YNode,
       }
       val context = new JsonSchemaWebApiContext(url, Nil, ctx, None)
       context.localJSONSchemaContext = Some(schemaEntry.node)
-
+      context.setJsonSchemaAST(schemaEntry.node)
       Oas2DocumentParser(
         Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(context)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
@@ -147,12 +147,15 @@ case class RamlJsonSchemaExpression(key: YNode,
                              adopt: Shape => Shape,
                              value: YNode,
                              extLocation: Option[String]): AnyShape = {
-    val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location).orElse {
-      Some(valueAST.value.sourceName)
-    }
-    val parser = JsonParser.withSourceOffset(text,
-                                             url.getOrElse(value.sourceName),
-                                             (valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
+    val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
+
+    val parser =
+      if (url.isDefined)
+        JsonParser.withSource(text, url.get)(ctx)
+      else
+        JsonParser.withSourceOffset(text,
+                                    valueAST.value.sourceName,
+                                    (valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
 
     val schemaAst = parser.parse(keepTokens = true)
     val schemaEntry = schemaAst.head match {
@@ -164,7 +167,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     }
 
     // we set the local schema entry to be able to resolve local $refs
-    ctx.localJSONSchemaContext = Some(schemaEntry.value)
+    ctx.setJsonSchemaAST(schemaEntry.value)
     val jsonSchemaContext = toSchemaContext(ctx, valueAST)
     val fullRef           = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "#")
     val tmpShape =

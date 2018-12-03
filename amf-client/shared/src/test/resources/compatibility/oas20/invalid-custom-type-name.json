@@ -1,0 +1,223 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+    "version": "1.0.0",
+    "title": "Swagger Petstore",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "petstore.swagger.io",
+  "basePath": "/v2",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/pet": {
+      "post": {
+        "tags": [
+          "pet"
+        ],
+        "summary": "Add a new pet to the store",
+        "description": "",
+        "operationId": "addPet",
+        "consumes": [
+          "application/xml",
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pet object that needs to be added to the store",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SubmitW/ColdTote(s)Return/recall/claimrequest"
+            }
+          }
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "object": {
+      "additionalProperties": true,
+      "description": "Base type for most resource objects. It defines the common `type` element that identifies an object's type. It also identifies the element as Swagger's `discriminator`.",
+      "discriminator": "type",
+      "properties": {
+        "type": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "type": "object"
+    },
+    "SubmitW/ColdTote(s)Return/recall/claimrequest": {
+      "title": "Submit w/ Cold Tote(s) Return/Recall/ClaimRequest",
+      "example": {
+        "toteProductList": [
+          {
+            "productCode": "10145976",
+            "quantity": 1
+          }
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "toteProductList": {
+          "description": "",
+          "example": [
+            {
+              "productCode": "10145976",
+              "quantity": 1
+            }
+          ],
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Category"
+          }
+        }
+      },
+      "required": [
+        "toteProductList"
+      ]
+    },
+    "DeleteReturn/recall/calimrequest": {
+      "title": "Delete Return/Recall/CalimRequest",
+      "example": {
+        "b2bUnitId": "0100052423",
+        "orderCode": "9080055525",
+        "complainType": "PharmacyReturnOrder",
+        "id": "1"
+      },
+      "type": "object",
+      "properties": {
+        "b2bUnitId": {
+          "description": "",
+          "example": "0100052423",
+          "type": "string"
+        },
+        "orderCode": {
+          "description": "",
+          "example": "9080055525",
+          "type": "string"
+        },
+        "complainType": {
+          "description": "",
+          "example": "PharmacyReturnOrder",
+          "type": "string"
+        },
+        "id": {
+          "description": "",
+          "example": "1",
+          "type": "string"
+        }
+      },
+      "required": [
+        "b2bUnitId",
+        "orderCode",
+        "complainType",
+        "id"
+      ]
+    },
+    "Category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Category"
+      }
+    },
+    "Tag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Tag"
+      }
+    },
+    "Pet": {
+      "type": "object",
+      "required": [
+        "name",
+        "photoUrls"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "category": {
+          "$ref": "#/definitions/Category"
+        },
+        "name": {
+          "type": "string",
+          "example": "doggie"
+        },
+        "photoUrls": {
+          "type": "array",
+          "xml": {
+            "name": "photoUrl",
+            "wrapped": true
+          },
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "xml": {
+            "name": "tag",
+            "wrapped": true
+          },
+          "items": {
+            "$ref": "#/definitions/Tag"
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "pet status in the store",
+          "enum": [
+            "available",
+            "pending",
+            "sold"
+          ]
+        }
+      },
+      "xml": {
+        "name": "Pet"
+      }
+    }
+  }
+}

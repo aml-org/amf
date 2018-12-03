@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://asdfasdf.com/example.json",
+  "type": "object",
+  "definitions": {
+    "facetFields": {
+      "id": "/definitions/facetFields",
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": [
+          "object",
+          "null"
+        ],
+        "properties": {
+          "fieldType": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "facetResults": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "facetFields": {
+          "$ref": "/definitions/facetFields"
+        }
+      }
+    }
+  }
+}

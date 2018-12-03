@@ -18,21 +18,21 @@ package object parser {
         }
       })
 
-    def key(keyword: String, fn: (YMapEntry => Unit)): Unit = key(keyword).foreach(fn)
+    def key(keyword: String, fn: YMapEntry => Unit): Unit = key(keyword).foreach(fn)
 
-    def regex(expression: String, fn: (Iterable[YMapEntry] => Unit)): Unit = {
+    def regex(expression: String, fn: Iterable[YMapEntry] => Unit): Unit = {
       val entries = regex(expression)
       if (entries.nonEmpty) fn(entries)
     }
 
     def regex(expression: String): Iterable[YMapEntry] = {
       val path: Regex = expression.r
-      map.entries.filter(entry => {
+      map.entries.filter { entry =>
         entry.key.value match {
           case s: YScalar => path.unapplySeq(s.text).nonEmpty
           case _          => false
         }
-      })
+      }
     }
   }
 

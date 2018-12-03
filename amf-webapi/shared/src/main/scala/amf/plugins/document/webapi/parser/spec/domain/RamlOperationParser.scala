@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.metamodel.OperationModel.Method
 import amf.plugins.domain.webapi.models.{Operation, Response}
 import org.yaml.model._
 import amf.core.utils.Strings
-
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import scala.collection.mutable
 
 /**
@@ -66,39 +66,53 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       .parse()
       .foreach(operation.set(OperationModel.Request, _))
 
-    val optionalMethod = if (parseOptional) "\\??" else ""
-
+    map.key(
+      "defaultResponse".asRamlAnnotation,
+      entry => {
+        if (entry.value.tagType == YType.Map) {
+          val responses = mutable.ListBuffer[Response]()
+          entry.value.as[YMap].entries.foreach { entry =>
+            responses += ctx.factory
+              .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
+              .parse()
+          }
+          operation.withResponses(responses)
+        }
+      }
+    )
     map.key(
       "responses",
       entry => {
+        val responses = mutable.ListBuffer[Response]()
         entry.value.tagType match {
           case YType.Null => // ignore
           case _ =>
             val entries = entry.value
               .as[YMap]
-              .regex(
-                s"(\\d{3})$optionalMethod"
-              )
-            val keys = entries.map(_.key.as[YScalar].text)
+              .entries
+              .filter(y => !isRamlAnnotation(y.key.as[YScalar].text))
+
+            val keys   = entries.map(_.key.as[YScalar].text)
             val keySet = keys.toSet
             if (keys.size > keySet.size) {
-              ctx.violation(DuplicatedOperationStatusCodeSpecification.id, operation.id, None,"RAML Responses must not have duplicated status codes", entry.value)
+              ctx.violation(DuplicatedOperationStatusCodeSpecification.id,
+                            operation.id,
+                            None,
+                            "RAML Responses must not have duplicated status codes",
+                            entry.value)
             }
 
-            if (entries.nonEmpty) {
-              val responses = mutable.ListBuffer[Response]()
-              entries.foreach(entry => {
-                responses += ctx.factory
-                  .responseParser(entry, (r: Response) => r.adopted(operation.id), parseOptional)
-                  .parse()
-              })
-              operation.set(OperationModel.Responses,
-                AmfArray(responses, Annotations(entry.value)),
-                Annotations(entry))
-            } else {
-              ctx.violation(MissingOperationStatusCodeSpecification.id, operation.id, None,"RAML Responses must have a valid status code", entry.value)
+            entries.foreach { entry =>
+              responses += ctx.factory
+                .responseParser(entry, _.adopted(operation.id), parseOptional)
+                .parse()
             }
         }
+
+        val defaultResponses = operation.responses
+        operation.set(OperationModel.Responses,
+                      AmfArray(responses ++ defaultResponses, Annotations(entry.value)),
+                      Annotations(entry))
       }
     )
 

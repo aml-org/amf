@@ -49,6 +49,7 @@
 "@value": "get"
 }
 ],
+"http://www.w3.org/ns/hydra/core#returns": [],
 "http://a.ml/vocabularies/document#extends": [
 {
 "@id": "file://amf-client/shared/src/test/resources/upanddown/traits-resource-types.json#/web-api/end-points/%2Fbooks/get/secured",
@@ -713,6 +714,18 @@
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
 "@value": "[(51,6)-(51,13)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://www.w3.org/ns/hydra/core#returns"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(64,8)-(64,21)]"
 }
 ]
 }

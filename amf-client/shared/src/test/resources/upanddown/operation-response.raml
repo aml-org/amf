@@ -17,11 +17,12 @@ protocols:
   get:
     displayName: Some title
     responses:
-      200:
+      404:
+        description: Not found!
+    (amf-defaultResponse):
+      default:
         description: 200 descr
         headers:
           Time-Ago:
             required: true
             type: integer
-      404:
-        description: Not found!

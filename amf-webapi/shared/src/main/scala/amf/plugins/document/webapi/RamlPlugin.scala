@@ -15,6 +15,7 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{
   Raml08EditingPipeline,
   Raml08ResolutionPipeline,
@@ -28,7 +29,7 @@ import org.yaml.model.{YDocument, YNode}
 
 sealed trait RamlPlugin extends BaseWebApiPlugin {
 
-  override val vendors = Seq(vendor.name, Raml.name)
+  override val vendors: Seq[String] = Seq(vendor.name, Raml.name)
 
   def context(wrapped: ParserContext, root: Root, ds: Option[WebApiDeclarations] = None): RamlWebApiContext
 
@@ -99,7 +100,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
     * List of media types used to encode serialisations of
     * this domain
     */
-  override def documentSyntaxes = Seq(
+  override def documentSyntaxes: Seq[String] = Seq(
     "application/raml",
     "application/raml+json",
     "application/raml+yaml",
@@ -164,6 +165,7 @@ object Raml08Plugin extends RamlPlugin {
     pipelineId match {
       case ResolutionPipeline.DEFAULT_PIPELINE => new Raml08ResolutionPipeline(errorHandler).resolve(unit)
       case ResolutionPipeline.EDITING_PIPELINE => new Raml08EditingPipeline(errorHandler).resolve(unit)
+      case _                                   => super.resolve(unit, errorHandler, pipelineId)
     }
   }
 }
@@ -220,10 +222,10 @@ object Raml10Plugin extends RamlPlugin {
     */
   override def resolve(unit: BaseUnit,
                        errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
-    pipelineId match {
-      case ResolutionPipeline.DEFAULT_PIPELINE => new Raml10ResolutionPipeline(errorHandler).resolve(unit)
-      case ResolutionPipeline.EDITING_PIPELINE => new Raml10EditingPipeline(errorHandler).resolve(unit)
-    }
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
+    case ResolutionPipeline.DEFAULT_PIPELINE       => new Raml10ResolutionPipeline(errorHandler).resolve(unit)
+    case ResolutionPipeline.EDITING_PIPELINE       => new Raml10EditingPipeline(errorHandler).resolve(unit)
+    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler).resolve(unit)
+    case _                                         => super.resolve(unit, errorHandler, pipelineId)
   }
 }

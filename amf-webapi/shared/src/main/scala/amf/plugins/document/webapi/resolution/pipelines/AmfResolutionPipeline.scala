@@ -11,9 +11,9 @@ import amf.{AmfProfile, ProfileName}
 class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
   override def profileName: ProfileName = AmfProfile
 
-  protected lazy val references = new ReferenceResolutionStage(keepEditingInfo = false)
+  protected def references = new ReferenceResolutionStage(keepEditingInfo = false)
 
-  override protected val steps: Seq[ResolutionStage] = Seq(
+  override val steps: Seq[ResolutionStage] = Seq(
     references,
     new ExternalSourceRemovalStage,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = false),

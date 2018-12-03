@@ -297,7 +297,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 Some(copied)
               case _ => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
                 // now we work with canonical JSON schema pointers, not local refs
-                searchJsonSchemaDef(ref, if (!ctx.linkTypes) ref else text, e)
+                ctx.findLocalJSONPath(ref) match {
+                  case Some((keyName, part)) =>
+                    searchLocalJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
+                  case _ =>
+                    searchRemoteJsonSchema(ref, if (!ctx.linkTypes) ref else text, e)
+                }
             }
         }
       }
@@ -355,6 +360,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
     val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
     ctx.findJsonSchema(fullRef) match {
+      case Some(u: UnresolvedShape) =>
+        val annots = Annotations(ast)
+        val copied = u.copyShape(annots ++= u.annotations.copy()).withLinkLabel(ref)
+        copied.unresolved(fullRef, e, "warning")(ctx)
+        adopt(copied)
+        Some(copied)
       case Some(s) =>
         val annots = Annotations(ast)
         val copied = s.link(ref, annots).asInstanceOf[AnyShape].withName(name).withSupportsRecursion(true)
@@ -362,7 +373,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         Some(copied)
       case _ =>
         val tmpShape =
-          UnresolvedShape(fullRef, map).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
+          UnresolvedShape(fullRef, e).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
         tmpShape.unresolved(fullRef, e, "warning")(ctx)
         tmpShape.withContext(ctx)
         adopt(tmpShape)
@@ -375,7 +386,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         } match {
           case None =>
             // it might still be resolvable at the RAML (not JSON Schema) level
-            tmpShape.unresolved(ref, map, "warning").withSupportsRecursion(true)
+            tmpShape.unresolved(text, e, "warning").withSupportsRecursion(true)
             Some(tmpShape)
           case Some(jsonSchemaShape) =>
             if (ctx.declarations.fragments.contains(text)) {
@@ -391,6 +402,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                   .withName(name)
                   .withSupportsRecursion(true))
             } else {
+
               Some(jsonSchemaShape)
             }
         }

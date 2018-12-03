@@ -5,8 +5,8 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#raml-status-code
-  Message: Status code must be numeric and in the 1xx-5xx range
+- Source: http://a.ml/vocabularies/amf/parser#Response-statusCode-pattern
+  Message: Status code for a Response must be valid be between 100 and 599
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/webapi/invalid_status_code.raml#/web-api/end-points/%2Fusers/get/670
   Property: http://www.w3.org/ns/hydra/core#statusCode

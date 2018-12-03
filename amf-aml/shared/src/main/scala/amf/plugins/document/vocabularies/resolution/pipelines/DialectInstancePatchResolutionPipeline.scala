@@ -10,7 +10,7 @@ import amf.{AmfProfile, ProfileName}
 
 class DialectInstancePatchResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
 
-  override protected val steps: Seq[ResolutionStage] = Seq(
+  override val steps: Seq[ResolutionStage] = Seq(
     new DialectInstanceReferencesResolutionStage(),
     new DialectPatchApplicationStage(),
     new CleanReferencesStage(),

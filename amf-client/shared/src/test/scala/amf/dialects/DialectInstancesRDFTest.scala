@@ -3,8 +3,7 @@ package amf.dialects
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
-import org.scalatest.AsyncFunSuite
+import amf.io.FunSuiteCycleTests
 
 import scala.concurrent.ExecutionContext
 

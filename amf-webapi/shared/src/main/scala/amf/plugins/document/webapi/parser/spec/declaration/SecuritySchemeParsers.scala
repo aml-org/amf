@@ -169,6 +169,9 @@ case class OasSecuritySchemeParser(ast: YPart,
 
         val map = value.as[YMap]
 
+        // 3 stages
+        // 2 pipes
+
         map.key(
           "type",
           entry => {

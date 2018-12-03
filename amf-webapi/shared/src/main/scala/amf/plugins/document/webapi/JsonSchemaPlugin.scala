@@ -179,7 +179,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
       documentRoot
     }
 
-    jsonSchemaContext.localJSONSchemaContext = Some(documentRoot)
+    jsonSchemaContext.setJsonSchemaAST(documentRoot)
     rootAst
   }
 
@@ -193,10 +193,11 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
-        val shapeId: String              = if (document.location.contains("#")) document.location else document.location + "#/"
-        val parts: Array[String]         = document.location.split("#")
-        val url: String                  = parts.head
-        val hashFragment: Option[String] = parts.tail.headOption
+        val shapeId: String      = if (document.location.contains("#")) document.location else document.location + "#/"
+        val parts: Array[String] = document.location.split("#")
+        val url: String          = parts.head
+        val hashFragment: Option[String] =
+          parts.tail.headOption.map(t => if (t.startsWith("/definitions")) t.stripPrefix("/") else t)
 
         val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
         val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
@@ -230,10 +231,11 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
-        val shapeId: String              = if (document.location.contains("#")) document.location else document.location + "#/"
-        val parts: Array[String]         = document.location.split("#")
-        val url: String                  = parts.head
-        val hashFragment: Option[String] = parts.tail.headOption
+        val shapeId: String      = if (document.location.contains("#")) document.location else document.location + "#/"
+        val parts: Array[String] = document.location.split("#")
+        val url: String          = parts.head
+        val hashFragment: Option[String] =
+          parts.tail.headOption.map(t => if (t.startsWith("/")) t.stripPrefix("/") else t)
 
         val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
         val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
@@ -246,7 +248,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   def findRootNode(ast: YNode, ctx: JsonSchemaWebApiContext, path: Option[String]): Option[YNode] = {
     if (path.isDefined) {
-      ctx.localJSONSchemaContext = Some(ast)
+      ctx.setJsonSchemaAST(ast)
       val res = ctx.findLocalJSONPath(path.get)
       ctx.localJSONSchemaContext = None
       res.map(_._2)

@@ -382,7 +382,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
                 Response()
                   .withDescription("200 descr")
                   .withStatusCode("200")
-                  .withName("default")
+                  .withName("200")
                   .withHeaders(
                     List(
                       Parameter()
@@ -591,7 +591,7 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
 
     val default = operation
       .withResponse("default")
-      .withStatusCode("200")
+      .withStatusCode("default")
 
     default
       .withPayload()

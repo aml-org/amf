@@ -10,7 +10,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf"
 
-version in ThisBuild := "3.0.2"
+version in ThisBuild := "3.1.0"
 
 publish := {}
 
@@ -61,8 +61,7 @@ setSonarProperties := {
   sonarProperties := values
 
   val p = new Properties()
-  val m = JavaConversions.mapAsJavaMap(values)
-  p.putAll(m)
+  values.foreach(v => p.put(v._1, v._2))
   val stream = new FileOutputStream(file("./sonar-project.properties"))
   p.store(stream, null)
   stream.close()
