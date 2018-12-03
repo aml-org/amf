@@ -499,15 +499,14 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             .as[YMap]
             .entries
             .filter(y => !isOasAnnotation(y.key.as[YScalar].text))
-            .foreach(entry => {
-              responses += OasResponseParser(
-                entry,
-                r =>
-                  r.adopted(operation.id)
-                    .withStatusCode(r.name.value())).parse()
-            })
+            .foreach { entry =>
+              responses += OasResponseParser(entry,
+                                             r =>
+                                               r.adopted(operation.id)
+                                                 .withStatusCode(r.name.value())).parse()
+            }
 
-            if(responses.nonEmpty) operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))
+          operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))
         }
       )
 

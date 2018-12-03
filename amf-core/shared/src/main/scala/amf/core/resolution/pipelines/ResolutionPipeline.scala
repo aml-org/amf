@@ -1,11 +1,12 @@
 package amf.core.resolution.pipelines
 
 import amf.ProfileName
-import amf.core.AMFCompilerRunCount
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
+
+import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
 
 abstract class ResolutionPipeline(val eh: ErrorHandler) {
 
@@ -51,8 +52,10 @@ abstract class ResolutionPipeline(val eh: ErrorHandler) {
   }
 }
 
+@JSExportTopLevel("ResolutionPipeline")
+@JSExportAll
 object ResolutionPipeline {
-  val DEFAULT_PIPELINE            = "default"
-  val EDITING_PIPELINE            = "editing"
-  val RAML_COMPATIBILITY_PIPELINE = "raml-compatibility"
+  val DEFAULT_PIPELINE       = "default"
+  val EDITING_PIPELINE       = "editing"
+  val COMPATIBILITY_PIPELINE = "compatibility"
 }

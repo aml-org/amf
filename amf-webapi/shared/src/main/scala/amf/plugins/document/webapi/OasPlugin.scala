@@ -12,9 +12,8 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header}
-import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.RamlCompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{OasEditingPipeline, OasResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
 import amf.{Oas20Profile, Oas30Profile, ProfileName}
@@ -22,7 +21,7 @@ import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends BaseWebApiPlugin {
 
-  override val vendors = Seq(vendor.name, Oas.name)
+  override val vendors: Seq[String] = Seq(vendor.name, Oas.name)
 
   override def specContext(options: RenderOptions): OasSpecEmitterContext
 
@@ -79,7 +78,7 @@ sealed trait OasPlugin extends BaseWebApiPlugin {
     * List of media types used to encode serialisations of
     * this domain
     */
-  override def documentSyntaxes = Seq(
+  override def documentSyntaxes: Seq[String] = Seq(
     "application/json",
     "application/yaml",
     "application/x-yaml",
@@ -139,13 +138,10 @@ object Oas20Plugin extends OasPlugin {
     */
   override def resolve(unit: BaseUnit,
                        errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
-    pipelineId match {
-      case ResolutionPipeline.DEFAULT_PIPELINE => new OasResolutionPipeline(errorHandler).resolve(unit)
-      case ResolutionPipeline.EDITING_PIPELINE => new OasEditingPipeline(errorHandler).resolve(unit)
-      case ResolutionPipeline.RAML_COMPATIBILITY_PIPELINE => new RamlCompatibilityPipeline(errorHandler).resolve(unit)
-    }
-
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
+    case ResolutionPipeline.DEFAULT_PIPELINE => new OasResolutionPipeline(errorHandler).resolve(unit)
+    case ResolutionPipeline.EDITING_PIPELINE => new OasEditingPipeline(errorHandler).resolve(unit)
+    case _                                   => super.resolve(unit, errorHandler, pipelineId)
   }
 
   override def context(loc: String,
@@ -197,7 +193,7 @@ object Oas30Plugin extends OasPlugin {
     * List of media types used to encode serialisations of
     * this domain
     */
-  override def documentSyntaxes = Seq(
+  override def documentSyntaxes: Seq[String] = Seq(
     "application/json",
     "application/yaml",
     "application/x-yaml",

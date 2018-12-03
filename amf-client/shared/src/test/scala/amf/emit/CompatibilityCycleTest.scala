@@ -6,7 +6,7 @@ import amf.core.remote._
 import amf.core.validation.AMFValidationReport
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.RamlCompatibilityPipeline
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 
@@ -48,7 +48,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
       }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
-    case Raml | Raml08 | Raml10 => RamlCompatibilityPipeline.unhandled.resolve(unit)
+    case Raml | Raml08 | Raml10 => CompatibilityPipeline.unhandled.resolve(unit)
     case Oas | Oas20 | Oas30    => ???
   }
 }
