@@ -1787,21 +1787,6 @@ object AMFRawValidations {
       "Violation"
     ),
     AMFValidation(
-      "amf-parser:raml-status-code",
-      "Status code must match a valid numeric status code",
-      Raml08.name,
-      "Domain",
-      "raml-http:Response",
-      "hydra:statusCode",
-      "PropertyShape",
-      "sh:path",
-      "sh:pattern",
-      "^([1-5]{1}[0-9]{2})$",
-      "Status code must be numeric and in the 1xx-5xx range",
-      "Status code must be numeric an in the 1xx-5xx range",
-      "Violation"
-    ),
-    AMFValidation(
       "amf-parser:min-max-inclusive",
       "Maximum must be greater than or equal to minimum",
       Raml08.name,
