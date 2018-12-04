@@ -70,7 +70,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
   override def resolve(unit: BaseUnit, errorHandler: ErrorHandler, pipelineId: String): BaseUnit = {
     errorHandler.violation(
       ParserSideValidations.ResolutionErrorSpecification.id,
-      s"Unsupported '$pipelineId' in Raml10Plugin",
+      s"Unsupported '$pipelineId' on $ID plugin",
       unit.location().getOrElse(unit.id)
     )
     unit
