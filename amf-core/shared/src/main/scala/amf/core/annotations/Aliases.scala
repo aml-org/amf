@@ -27,7 +27,7 @@ object Aliases extends AnnotationGraphLoader {
   type RelativeUrl = String
   type Alias       = String
 
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]): Aliases = {
     Aliases(
       annotatedValue
         .split(",")

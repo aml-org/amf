@@ -19,7 +19,7 @@ import scala.collection.mutable
 trait AMFDomainEntityResolver {
   def findType(typeString: String): Option[Obj]
 
-  def buildType(modelType: Obj): Option[(Annotations) => AmfObject]
+  def buildType(modelType: Obj): Option[Annotations => AmfObject]
 }
 
 object AMFDomainRegistry {
@@ -31,7 +31,7 @@ object AMFDomainRegistry {
       .map(_.get)
       .headOption
 
-  def buildType(modelType: Obj): Option[(Annotations) => AmfObject] =
+  def buildType(modelType: Obj): Option[Annotations => AmfObject] =
     metadataResolverRegistry.toStream
       .map(_.buildType(modelType))
       .filter(_.isDefined)
@@ -49,7 +49,8 @@ object AMFDomainRegistry {
     "synthesized-field"    -> SynthesizedField,
     "default-node"         -> DefaultNode,
     "data-node-properties" -> DataNodePropertiesAnnotations,
-    "resolved-link"        -> ResolvedLinkAnnotation
+    "resolved-link"        -> ResolvedLinkAnnotation,
+    "null-security"        -> NullSecurity
   )
   val metadataRegistry: mutable.Map[String, Obj] = map(
     size = 1024,

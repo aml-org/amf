@@ -437,7 +437,10 @@ case class RamlSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering, re
       }
       b.obj(traverse(ordering.sorted(result), _))
     } else {
-      raw(b, shape.raw.value())
+      shape.raw.option() match {
+        case Some(r) => raw(b, r)
+        case None    => b += YNode.Null
+      }
     }
   }
 
