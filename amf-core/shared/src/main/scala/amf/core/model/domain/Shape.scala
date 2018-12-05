@@ -2,12 +2,10 @@ package amf.core.model.domain
 
 import java.util.UUID
 
-import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel._
 import amf.core.model.StrField
 import amf.core.model.domain.extensions.{PropertyShape, ShapeExtension}
 import amf.core.parser.{Annotations, ErrorHandler}
-import org.yaml.model.YNode
 
 import scala.collection.mutable
 
@@ -16,10 +14,10 @@ import scala.collection.mutable
   */
 abstract class Shape extends DomainElement with Linkable with NamedDomainElement {
 
-  override protected def nameField: Field = Name
-// used at runtime during validation
+  // used at runtime during validation
   val closureShapes: mutable.Set[Shape] = mutable.Set()
 
+  def name: StrField                                     = fields.field(Name)
   def displayName: StrField                              = fields.field(DisplayName)
   def description: StrField                              = fields.field(Description)
   def default: DataNode                                  = fields.field(Default)
@@ -34,6 +32,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
   def customShapePropertyDefinitions: Seq[PropertyShape] = fields.field(CustomShapePropertyDefinitions)
   // def closure: Seq[String]            = fields.field(Closure)
 
+  def withName(name: String): this.type               = set(Name, name)
   def withDisplayName(name: String): this.type        = set(DisplayName, name)
   def withDescription(description: String): this.type = set(Description, description)
   def withDefault(default: DataNode): this.type       = set(Default, default)
@@ -49,7 +48,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
     setArray(CustomShapePropertyDefinitions, propertyDefinitions)
 
   def withCustomShapePropertyDefinition(name: String): PropertyShape = {
-    val result = PropertyShape().withName(name, Annotations())
+    val result = PropertyShape().withName(name)
     add(CustomShapePropertyDefinitions, result)
     result
   }

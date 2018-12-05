@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Obj
 import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
@@ -18,6 +18,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
     with Linkable
     with NamedDomainElement {
 
+  def name: StrField             = fields.field(Name)
   def parameterName: StrField    = fields.field(ParameterName)
   def description: StrField      = fields.field(Description)
   def required: BoolField        = fields.field(Required)
@@ -31,6 +32,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def payloads: Seq[Payload]     = fields.field(Payloads)
   def examples: Seq[Example]     = fields.field(Examples)
 
+  def withName(name: String): this.type                        = set(Name, name)
   def withParameterName(name: String): this.type               = set(ParameterName, name)
   def withDescription(description: String): this.type          = set(Description, description)
   def withRequired(required: Boolean): this.type               = set(Required, required)
@@ -71,7 +73,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
 
   def withExample(name: Option[String] = None): Example = {
     val example = Example()
-    name.foreach { example.withName(_) }
+    name.foreach { example.withName }
     add(Examples, example)
     example
   }
@@ -101,7 +103,6 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Parameter.apply
-  override protected def nameField: Field                                                       = Name
 }
 
 object Parameter {

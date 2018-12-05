@@ -1,8 +1,8 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Obj
 import amf.core.model.StrField
-import amf.core.model.domain._
+import amf.core.model.domain.{AmfArray, DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.metamodel.ResponseModel
@@ -18,6 +18,7 @@ class Response(override val fields: Fields, override val annotations: Annotation
     with Linkable
     with NamedDomainElement {
 
+  def name: StrField            = fields.field(Name)
   def description: StrField     = fields.field(Description)
   def statusCode: StrField      = fields.field(StatusCode)
   def headers: Seq[Parameter]   = fields.field(Headers)
@@ -25,6 +26,7 @@ class Response(override val fields: Fields, override val annotations: Annotation
   def examples: Seq[Example]    = fields.field(Examples)
   def links: Seq[TemplatedLink] = fields.field(Links)
 
+  def withName(name: String): this.type               = set(Name, name)
   def withDescription(description: String): this.type = set(Description, description)
   def withStatusCode(statusCode: String): this.type   = set(StatusCode, statusCode)
   def withHeaders(headers: Seq[Parameter]): this.type = setArray(Headers, headers)
@@ -81,7 +83,6 @@ class Response(override val fields: Fields, override val annotations: Annotation
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Response.apply
-  override protected def nameField: Field                                                       = Name
 }
 
 object Response {

@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
@@ -18,11 +18,13 @@ case class Payload(fields: Fields, annotations: Annotations)
     with Linkable
     with NamedDomainElement {
 
+  def name: StrField          = fields.field(Name)
   def mediaType: StrField     = fields.field(MediaType)
   def schema: Shape           = fields.field(Schema)
   def examples: Seq[Example]  = fields.field(Examples)
   def encoding: Seq[Encoding] = fields.field(EncodingModel)
 
+  def withName(name: String): this.type                = set(Name, name)
   def withMediaType(mediaType: String): this.type      = set(MediaType, mediaType)
   def withSchema(schema: Shape): this.type             = set(Schema, schema)
   def withExamples(examples: Seq[Example]): this.type  = setArray(Examples, examples)
@@ -48,7 +50,7 @@ case class Payload(fields: Fields, annotations: Annotations)
 
   def withExample(name: Option[String] = None): Example = {
     val example = Example()
-    name.foreach { example.withName(_) }
+    name.foreach { example.withName }
     add(Examples, example)
     example
   }
@@ -87,7 +89,6 @@ case class Payload(fields: Fields, annotations: Annotations)
       .urlComponentEncoded // todo: / char of media type should be encoded?
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Payload.apply
-  override protected def nameField: Field                                                       = Name
 }
 
 object Payload {

@@ -162,7 +162,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
       val producer = (name: Option[String]) => {
         val example = Example()
-        name.foreach(example.withName(_))
+        name.foreach(example.withName)
         namedExample.withEncodes(example)
         example
       }
