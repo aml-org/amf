@@ -39,7 +39,7 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
               val copied = t.copyElement().withId(element.id)
               element match {
                 case n: NamedDomainElement if n.name.option().isDefined =>
-                  copied.asInstanceOf[NamedDomainElement].withName(n.name.value())
+                  copied.asInstanceOf[NamedDomainElement].withName(n.name.value(), n.name.annotations())
                 case _ => // ignore
               }
               copied
@@ -98,8 +98,9 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
       case r: NamedDomainElement =>
         if (isExample(r)) {
           source match {
-            case s: NamedDomainElement if s.name.value().notNull.nonEmpty => r.withName(s.name.value())
-            case _                                                        =>
+            case s: NamedDomainElement if s.name.value().notNull.nonEmpty =>
+              r.withName(s.name.value(), r.name.annotations())
+            case _ =>
           }
         } else if (r.name.value().notNull.isEmpty || r.name.value() == "schema" || r.name.value() == "type") {
           source match {
@@ -144,7 +145,7 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
               case Some(target: Linkable) => innerName(target, resolved)
               case _                      =>
             }
-          case Some(other) => resolved.withName(other)
+          case Some(other) => resolved.withName(other, resolved.name.annotations())
           case _           =>
         }
       case _ =>

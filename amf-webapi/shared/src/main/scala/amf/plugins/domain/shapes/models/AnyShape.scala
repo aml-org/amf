@@ -99,7 +99,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   def withExample(name: Option[String]): Example = {
     val example = Example()
-    name.foreach { example.withName }
+    name.foreach { example.withName(_) }
     add(Examples, example)
     example
   }
