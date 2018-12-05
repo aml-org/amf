@@ -35,17 +35,6 @@ documentation:
       multi
       line
 types:
-  UserJson: |
-    {
-     "$schema": "http://json-schema.org/draft-04/schema",
-     "type": "object",
-     "properties": {
-       "firstname":  { "type": "string" },
-       "lastname":  { "type": "string" },
-       "age":  { "type": "integer" }
-     },
-     "required": [ "firstname", "lastname" ]
-    }
   User:
     type: object
     examples:
@@ -153,6 +142,17 @@ types:
   nString:
     maxLength: 10
     type: string
+  UserJson: |
+    {
+     "$schema": "http://json-schema.org/draft-04/schema",
+     "type": "object",
+     "properties": {
+       "firstname":  { "type": "string" },
+       "lastname":  { "type": "string" },
+       "age":  { "type": "integer" }
+     },
+     "required": [ "firstname", "lastname" ]
+    }
   UserXml: |
     <xs:schema attributeFormDefault="unqualified"
               elementFormDefault="qualified"

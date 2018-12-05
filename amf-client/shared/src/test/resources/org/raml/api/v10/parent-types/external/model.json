@@ -1,4 +1,7 @@
 #%RAML 1.0
+title: api title
+description: api description
+version: "1.0"
 types:
   UserJson: |
     {
@@ -11,9 +14,6 @@ types:
      },
      "required": [ "firstname", "lastname" ]
     }
-title: api title
-description: api description
-version: "1.0"
 /top:
   post:
     body:

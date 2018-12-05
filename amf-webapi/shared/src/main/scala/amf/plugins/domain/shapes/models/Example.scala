@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{Field, Obj}
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.domain._
 import amf.core.model.{BoolField, StrField}
@@ -21,14 +21,12 @@ class Example(override val fields: Fields, override val annotations: Annotations
     with ExternalSourceElement
     with PayloadSerializer {
 
-  def name: StrField            = fields.field(Name)
   def displayName: StrField     = fields.field(DisplayName)
   def description: StrField     = fields.field(Description)
   def structuredValue: DataNode = fields.field(StructuredValue)
   def strict: BoolField         = fields.field(Strict)
   def mediaType: StrField       = fields.field(MediaType)
 
-  def withName(name: String): this.type               = set(Name, name)
   def withDisplayName(displayName: String): this.type = set(DisplayName, displayName)
   def withDescription(description: String): this.type = set(Description, description)
   def withValue(value: String): this.type             = set(ExternalSourceElementModel.Raw, value)
@@ -49,6 +47,7 @@ class Example(override val fields: Fields, override val annotations: Annotations
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Example.apply
+  override protected def nameField: Field                                                       = Name
 }
 
 object Example {

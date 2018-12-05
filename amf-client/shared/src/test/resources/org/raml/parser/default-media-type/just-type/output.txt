@@ -1,4 +1,5 @@
 #%RAML 1.0
+title: Tato Bores
 types:
   Person: |
     {
@@ -19,7 +20,6 @@ types:
         },
         "required": ["firstName", "lastName"]
     }
-title: Tato Bores
 /ok0:
   post:
     body:

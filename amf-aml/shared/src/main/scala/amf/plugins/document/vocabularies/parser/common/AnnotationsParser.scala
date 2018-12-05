@@ -13,7 +13,7 @@ import scala.util.{Failure, Success}
 trait AnnotationsParser {
 
   protected def parseAnnotations(ast: YMap, node: DomainElement, declarations: VocabularyDeclarations)(
-    implicit ctx: ParserContext) = {
+      implicit ctx: ParserContext) = {
     val parsedAnnotationProperties: Iterable[((Option[String], String), String, YNode)] = ast.map.map {
       case (k, v) =>
         val key = k.as[String]
@@ -45,7 +45,7 @@ trait AnnotationsParser {
           case Success(propertyId) =>
             val id               = node.id + s"${prefix.map(_ + "/").getOrElse("/")}$suffix"
             val parsedAnnotation = DynamicExtensionParser(v, Some(id)).parse()
-            val property         = CustomDomainProperty(Annotations(v)).withId(propertyId).withName(k)
+            val property         = CustomDomainProperty(Annotations(v)).withId(propertyId).withName(k, Annotations())
             val extension = DomainExtension()
               .withId(id)
               .withExtension(parsedAnnotation)
@@ -68,7 +68,7 @@ trait AnnotationsParser {
                   .withName(k)
                   .add(Annotations(v))
                 Some(extension)
-              case None             =>
+              case None =>
                 ctx.violation(ex.getMessage, v)
                 None
             }

@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models.security
 
+import amf.core.metamodel.Field
 import amf.core.model.{StrField, domain}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
@@ -15,7 +16,6 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
     with NamedDomainElement
     with WithSettings {
 
-  def name: StrField                  = fields.field(Name)
   def `type`: StrField                = fields.field(Type)
   def displayName: StrField           = fields.field(DisplayName)
   def description: StrField           = fields.field(Description)
@@ -25,7 +25,6 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   def settings: Settings              = fields.field(SettingsField)
   def queryString: Shape              = fields.field(QueryString)
 
-  def withName(name: String): this.type                               = set(Name, name)
   def withType(`type`: String): this.type                             = set(Type, `type`)
   def withDisplayName(displayName: String): this.type                 = set(DisplayName, displayName)
   def withDescription(description: String): this.type                 = set(Description, description)
@@ -133,6 +132,7 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = SecurityScheme.apply
+  override protected def nameField: Field                                                       = Name
 }
 
 object SecurityScheme {
