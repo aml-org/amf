@@ -1,7 +1,7 @@
 package amf.core.rdf
 
 import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.core.metamodel.Type.{Any, Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, SourceMapModel}
 import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -292,7 +292,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
         case Type.Double   => instance.set(f, double(property), annotations(nodes, sources, key))
         case Type.DateTime => instance.set(f, date(property), annotations(nodes, sources, key))
         case Type.Date     => instance.set(f, date(property), annotations(nodes, sources, key))
-
+        case Type.Any      => instance.set(f, any(property), annotations(nodes, sources, key))
         case l: SortedArray if properties.length == 1 =>
           instance.setArray(f,
                             parseList(instance.id, l.element, findLink(properties.head)),
@@ -447,6 +447,31 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   }
 
   private def strCoercion(property: PropertyObject) = AmfScalar(s"${property.value}")
+
+  private val xsdString: String   = (Namespace.Xsd + "string").iri()
+  private val xsdInteger: String  = (Namespace.Xsd + "integer").iri()
+  private val xsdFloat: String    = (Namespace.Xsd + "float").iri()
+  private val amlNumber: String   = (Namespace.Shapes + "number").iri()
+  private val xsdDouble: String   = (Namespace.Xsd + "double").iri()
+  private val xsdBoolean: String  = (Namespace.Xsd + "boolean").iri()
+  private val xsdDateTime: String = (Namespace.Xsd + "dateTime").iri()
+  private val xsdDate: String     = (Namespace.Xsd + "date").iri()
+
+  private def any(property: PropertyObject) = {
+    property match {
+      case Literal(v, typed) =>
+        typed match {
+          case Some(s: String) if s == xsdBoolean  => AmfScalar(v.toBoolean)
+          case Some(s: String) if s == xsdInteger  => AmfScalar(v.toInt)
+          case Some(s: String) if s == xsdFloat    => AmfScalar(v.toFloat)
+          case Some(s: String) if s == xsdDouble   => AmfScalar(v.toDouble)
+          case Some(s: String) if s == xsdDateTime => AmfScalar(SimpleDateTime.parse(v).right.get)
+          case Some(s: String) if s == xsdDate     => AmfScalar(SimpleDateTime.parse(v).right.get)
+          case _                                   => AmfScalar(v)
+        }
+      case Uri(v)        => throw new Exception(s"Expecting String literal found URI $v")
+    }
+  }
 
   private def str(property: PropertyObject) = {
     property match {

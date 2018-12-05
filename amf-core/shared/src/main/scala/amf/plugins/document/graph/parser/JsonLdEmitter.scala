@@ -400,32 +400,44 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
                 .asInstanceOf[Seq[AmfScalar]]
                 .foreach { e =>
                   val dateTime = e.value.asInstanceOf[SimpleDateTime]
-                  if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
-                    typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
-                  } else {
-                    typedScalar(b,
-                                f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
-                                (Namespace.Xsd + "date").iri(),
-                                inArray = false,
-                                ctx)
-                  }
+                  emitSimpleDateTime(b, dateTime, inArray = false, ctx)
                 }
             case Any =>
               seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
                 scalarElement.value match {
-                  case bool: Boolean =>
-                    typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
-                  case str: String =>
-                    typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true, ctx)
-                  case i: Int    => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
-                  case f: Float  => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
-                  case d: Double => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
-                  case other     => scalar(b, other.toString)
+                  case bool: Boolean       => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
+                  case i: Int              => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
+                  case f: Float            => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
+                  case d: Double           => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
+                  case sdt: SimpleDateTime => emitSimpleDateTime(b, sdt, inArray = true, ctx)
+                  case other               => scalar(b, other.toString)
                 }
               }
             case _ => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, ctx, inArray = true))
           }
         }
+
+      case Any if v.value.isInstanceOf[AmfScalar] =>
+        v.value.asInstanceOf[AmfScalar].value match {
+          case bool: Boolean       => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
+          case i: Int              => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
+          case f: Float            => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
+          case d: Double           => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
+          case sdt: SimpleDateTime => emitSimpleDateTime(b, sdt, inArray = true, ctx)
+          case other               => scalar(b, other.toString)
+        }
+    }
+  }
+
+  private def emitSimpleDateTime(b: Part, dateTime: SimpleDateTime, inArray:Boolean = true, ctx: EmissionContext) = {
+    if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
+      typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray, ctx)
+    } else {
+      typedScalar(b,
+        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
+        (Namespace.Xsd + "date").iri(),
+        inArray = false,
+        ctx)
     }
   }
 
