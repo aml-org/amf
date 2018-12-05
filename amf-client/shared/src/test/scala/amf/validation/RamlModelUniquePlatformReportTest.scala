@@ -114,7 +114,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Test variable not implemented in resource type use") {
     validate("/resource_types/variable-not-implemented-resourcetype.raml",
-      Some("variable-not-implemented-resourcetype.report"))
+             Some("variable-not-implemented-resourcetype.report"))
   }
 
   test("Invalid security scheme") {
@@ -174,6 +174,10 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Parse and validate invalid responses") {
     validate("invalid-status-code-string/api.raml", Some("invalid-status-code-string-raml.report"))
+  }
+
+  test("Invalid array definition in enum") {
+    validate("invalid-enum-array.raml", Some("invalid-enum-array.raml.report"))
   }
 
   override val hint: Hint = RamlYamlHint

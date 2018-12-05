@@ -388,7 +388,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
 
     map.key("displayName", ShapeModel.DisplayName in shape)
     map.key("description", ShapeModel.Description in shape)
-    map.key("enum", (ShapeModel.Values in shape using DataNodeParser.parse(Some(shape.id))).allowingSingleValue)
+    map.key("enum", ShapeModel.Values in shape using DataNodeParser.parse(Some(shape.id)))
 
     map.key(
       "pattern",
@@ -1535,7 +1535,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       )
 
-      map.key("enum", (ShapeModel.Values in shape using dataNodeParser).allowingSingleValue)
+      map.key("enum", ShapeModel.Values in shape using dataNodeParser)
 
       map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
