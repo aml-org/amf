@@ -1,0 +1,45 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "termsOfService": "terms of service",
+    "version": "1.1"
+  },
+  "host": "api.example.com",
+  "basePath": "/path",
+  "produces": [
+    "application/yaml"
+  ],
+  "consumes": [
+    "application/yaml"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/levelzero": {
+      "x-amf-displayName": "Name"
+    },
+    "/levelzero/level-one": {
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!",
+      "get": {
+        "operationId": "Some title",
+        "responses": {
+          "200": {
+            "description": "200 descr",
+            "headers": {
+              "Time-Ago": {
+                "type": "integer",
+                "required": true,
+                "example": "test"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
