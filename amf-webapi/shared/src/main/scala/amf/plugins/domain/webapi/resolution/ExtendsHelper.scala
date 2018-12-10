@@ -53,7 +53,11 @@ object ExtendsHelper {
                                  .getOrElse(trAnnotations)),
               YType.Str
             ),
-            DataNodeEmitter(node, SpecOrdering.Default, resolvedLinks = true, referencesCollector)(ctx).emit(_)
+            DataNodeEmitter(node,
+                            if (trAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
+                            else SpecOrdering.Default,
+                            resolvedLinks = true,
+                            referencesCollector)(ctx).emit(_)
           )
         }
       },
@@ -139,7 +143,11 @@ object ExtendsHelper {
                                  .getOrElse(rtAnnotations)),
               YType.Str
             ),
-            DataNodeEmitter(dataNode, SpecOrdering.Default, resolvedLinks = true, referencesCollector)(ctx).emit(_)
+            DataNodeEmitter(dataNode,
+                            if (rtAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
+                            else SpecOrdering.Default,
+                            resolvedLinks = true,
+                            referencesCollector)(ctx).emit(_)
           )
         }
       },

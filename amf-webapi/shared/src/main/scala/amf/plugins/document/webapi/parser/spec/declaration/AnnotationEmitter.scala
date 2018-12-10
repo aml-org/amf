@@ -171,7 +171,11 @@ case class DataNodeEmitter(
   }
 
   def emitObject(objectNode: ObjectNode, b: PartBuilder): Unit = {
-    b.obj(b => ordering.sorted(objectEmitters(objectNode)).foreach(_.emit(b)))
+    b.obj(b => {
+
+      val ordered = ordering.sorted(objectEmitters(objectNode))
+      ordered.foreach(_.emit(b))
+    })
   }
 
   def arrayEmitters(arrayNode: ArrayNode): Seq[PartEmitter] =
@@ -201,8 +205,9 @@ case class DataNodeEmitter(
 
   def scalarEmitter(scalar: ScalarNode): PartEmitter = {
     scalar.dataType match {
-      case Some(t) if t == xsdString  => TextScalarEmitter(scalar.value, scalar.annotations, YType.Str)
-      case Some(t) if t == xsdInteger => TextScalarEmitter(scalar.value, scalar.annotations, YType.Int)
+      case Some(t) if t == xsdString => TextScalarEmitter(scalar.value, scalar.annotations, YType.Str)
+      case Some(t) if t == xsdInteger =>
+        TextScalarEmitter(scalar.value, scalar.annotations, YType.Int)
       case Some(t) if t == xsdDouble | t == amlNumber =>
         TextScalarEmitter(scalar.value, scalar.annotations, YType.Float)
       case Some(t) if t == xsdBoolean => TextScalarEmitter(scalar.value, scalar.annotations, YType.Bool)
