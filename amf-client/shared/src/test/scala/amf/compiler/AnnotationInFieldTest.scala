@@ -7,6 +7,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, Position}
 import amf.core.remote.{OasYamlHint, RamlYamlHint}
 import amf.plugins.domain.shapes.models.NodeShape
+import amf.plugins.domain.webapi.models.templates.ResourceType
 import amf.plugins.domain.webapi.models.{Parameter, Response, WebApi}
 import org.scalatest.AsyncFunSuite
 
@@ -158,6 +159,21 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
         new amf.core.parser.Range(Position(12, 6), Position(12, 7))
       )
 
+      succeed
+    }
+  }
+
+  test("test raml resource type position") {
+    for {
+      unit <- build("file://amf-client/shared/src/test/resources/nodes-annotations-examples/resource-type.raml",
+                    RamlYamlHint)
+    } yield {
+      val document = unit.asInstanceOf[Document]
+      val point    = document.declares.head.asInstanceOf[ResourceType].asEndpoint(document)
+      assertRange(point.annotations.find(classOf[LexicalInformation]).get.range,
+                  amf.core.parser.Range((6, 2), (9, 12)))
+      assertRange(point.path.annotations().find(classOf[LexicalInformation]).get.range,
+                  amf.core.parser.Range((6, 2), (6, 5)))
       succeed
     }
   }

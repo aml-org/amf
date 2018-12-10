@@ -1,20 +1,16 @@
 package amf.plugins.domain.webapi.resolution
 
-import amf.core.annotations.{Aliases, LexicalInformation}
+import amf.core.annotations.{Aliases, LexicalInformation, SourceAST}
+import amf.core.emitter.BaseEmitters.yscalarWithRange
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain._
-import amf.core.parser.{ErrorHandler, FragmentRef, ParserContext}
+import amf.core.parser.{Annotations, ErrorHandler, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.{RuntimeValidator, ValidationsMerger}
 import amf.core.validation.AMFValidationResult
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlSpecEmitterContext,
-  RamlWebApiContext
-}
+import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
@@ -35,6 +31,7 @@ object ExtendsHelper {
                                  node: DataNode,
                                  unit: T,
                                  name: String,
+                                 trAnnotations: Annotations,
                                  extensionId: String,
                                  extensionLocation: Option[String],
                                  keepEditingInfo: Boolean,
@@ -46,7 +43,16 @@ object ExtendsHelper {
       {
         _.obj {
           _.entry(
-            "extends",
+            YNode(
+              yscalarWithRange(name,
+                               YType.Str,
+                               trAnnotations
+                                 .find(classOf[SourceAST])
+                                 .map(_.ast)
+                                 .collectFirst({ case e: YMapEntry => Annotations(e.key) })
+                                 .getOrElse(trAnnotations)),
+              YType.Str
+            ),
             DataNodeEmitter(node, SpecOrdering.Default, resolvedLinks = true, referencesCollector)(ctx).emit(_)
           )
         }
@@ -109,6 +115,7 @@ object ExtendsHelper {
   def asEndpoint[T <: BaseUnit](unit: T,
                                 profile: ProfileName,
                                 dataNode: DataNode,
+                                rtAnnotations: Annotations,
                                 name: String,
                                 extensionId: String,
                                 extensionLocation: Option[String],
@@ -122,7 +129,16 @@ object ExtendsHelper {
       {
         _.obj {
           _.entry(
-            "/endpoint",
+            YNode(
+              yscalarWithRange(name,
+                               YType.Str,
+                               rtAnnotations
+                                 .find(classOf[SourceAST])
+                                 .map(_.ast)
+                                 .collectFirst({ case e: YMapEntry => Annotations(e.key) })
+                                 .getOrElse(rtAnnotations)),
+              YType.Str
+            ),
             DataNodeEmitter(dataNode, SpecOrdering.Default, resolvedLinks = true, referencesCollector)(ctx).emit(_)
           )
         }

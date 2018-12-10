@@ -56,7 +56,7 @@ package object BaseEmitters {
   }
 
   case class NullEmitter(annotations: Annotations) extends PartEmitter {
-    override def emit(b: PartBuilder): Unit = b += YNode(YScalar.Null, YType.Null)
+    override def emit(b: PartBuilder): Unit = b += YNode(yscalarWithRange("null", YType.Null, annotations), YType.Null)
 
     override def position(): Position = pos(annotations)
   }
