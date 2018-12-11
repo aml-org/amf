@@ -1,0 +1,19 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "version": "1.1"
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    },
+    "api_key2": {
+      "type": "apiKey",
+      "in": "query"
+    }
+  },
+  "paths": {}
+}
