@@ -5,7 +5,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 
-class MakeExamplesOptional(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class MakeExamplesOptional()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
 
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
