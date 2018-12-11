@@ -13,7 +13,7 @@ types:
           members:
             items:
               type: object
-              x-amf-recursive: amf://id#1
+              (amf-recursive): amf://id#1
             required: true
         required: true
       name:

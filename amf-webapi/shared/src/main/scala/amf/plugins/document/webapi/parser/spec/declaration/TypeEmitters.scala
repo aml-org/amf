@@ -503,7 +503,7 @@ case class RamlRecursiveShapeEmitter(shape: RecursiveShape, ordering: SpecOrderi
   def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer()
     result += MapEntryEmitter("type", "object")
-    result += MapEntryEmitter("recursive".asOasExtension, shape.fixpoint.value())
+    result += MapEntryEmitter("recursive".asRamlAnnotation, shape.fixpoint.value())
     result
   }
 }
