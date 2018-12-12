@@ -186,7 +186,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           }
           referencesMap.get(link.alias) match {
             case Some(target) => link.withLinkedDomainElement(target)
-            case none =>
+            case _ =>
               val unresolved: Seq[DomainElement] = unresolvedReferences.getOrElse(link.alias, Nil)
               unresolvedReferences += (link.alias -> (unresolved ++ Seq(link)))
           }
@@ -297,7 +297,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           instance.setArray(f,
                             parseList(instance.id, l.element, findLink(properties.head)),
                             annotations(nodes, sources, key))
-        case l: SortedArray =>
+        case _: SortedArray =>
           ctx.violation(
             instance.id,
             s"Error, more than one sorted array values found in node for property $key in node ${instance.id}")
@@ -309,7 +309,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
                 .iri() // this is for self-encoded documents
               items.flatMap(n =>
                 findLink(n) match {
-                  case Some(n) => parse(n, shouldParseUnit)
+                  case Some(o) => parse(o, shouldParseUnit)
                   case _       => None
               })
             case Str | Iri => items.map(n => strCoercion(n))
@@ -329,15 +329,17 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   private def parseList(id: String, listElement: Type, maybeCollection: Option[Node]): Seq[AmfElement] = {
     val buffer = ListBuffer[PropertyObject]()
     maybeCollection.foreach { collection =>
-      val properties = collection.getKeys().foreach { entry =>
+      collection.getKeys().foreach { entry =>
         if (entry.startsWith((Namespace.Rdfs + "_").iri())) {
           buffer ++= collection.getProperties(entry).get
         }
       }
     }
 
-    val res = buffer.map { (n) =>
+    val res = buffer.map { n =>
       listElement match {
+        case DataNodeModel => // dynamic nodes parsed here
+          parseDynamicType(n)
         case _: Obj =>
           findLink(n) match {
             case Some(node) => parse(node)
@@ -355,7 +357,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     res collect { case Some(x) => x }
   }
 
-  def findLink(property: PropertyObject) = {
+  private def findLink(property: PropertyObject) = {
     property match {
       case Uri(v) => graph.get.findNode(v)
       case _      => None
@@ -403,7 +405,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     }
   }
 
-  def retrieveDynamicType(id: String, node: Node): Option[(Annotations) => AmfObject] = {
+  def retrieveDynamicType(id: String, node: Node): Option[Annotations => AmfObject] = {
     ts(node, ctx, id).find({ t =>
       dynamicBuilders.get(t).isDefined
     }) match {
@@ -412,26 +414,28 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     }
   }
 
-  private def types: Map[String, Obj] = Map.empty ++ AMFDomainRegistry.metadataRegistry
+  private def types: Map[String, Obj] = AMFDomainRegistry.metadataRegistry.toMap
 
   private def findType(typeString: String): Option[Obj] = {
     types.get(typeString).orElse(AMFDomainRegistry.findType(typeString))
   }
 
-  val documentType: String = (Namespace.Document + "Document").iri()
-  val fragmentType: String = (Namespace.Document + "Fragment").iri()
-  val moduleType: String   = (Namespace.Document + "Module").iri()
-  val unitType: String     = (Namespace.Document + "Unit").iri()
-  val documentTypesSet     = Set(documentType, fragmentType, moduleType, unitType)
+  private val deferredTypesSet = Set(
+    (Namespace.Document + "Document").iri(),
+    (Namespace.Document + "Fragment").iri(),
+    (Namespace.Document + "Module").iri(),
+    (Namespace.Document + "Unit").iri(),
+    (Namespace.Shacl + "Shape").iri(),
+    (Namespace.Shapes + "Shape").iri()
+  )
 
-  protected def ts(node: Node, ctx: ParserContext, id: String): Seq[String] = {
-    val allTypes         = node.classes
-    val nonDocumentTypes = allTypes.filter(t => !documentTypesSet.contains(t))
-    val documentTypes    = allTypes.filter(t => documentTypesSet.contains(t)).sorted // we just use the fact that lexical order is correct
-    nonDocumentTypes ++ documentTypes
+  private def ts(node: Node, ctx: ParserContext, id: String): Seq[String] = {
+    node.classes.partition(deferredTypesSet.contains) match {
+      case (deferred, others) => others ++ deferred.sorted // we just use the fact that lexical order is correct
+    }
   }
 
-  private def buildType(modelType: Obj): (Annotations) => AmfObject = {
+  private def buildType(modelType: Obj): Annotations => AmfObject = {
     AMFDomainRegistry.metadataRegistry.get(modelType.`type`.head.iri()) match {
       case Some(modelType: ModelDefaultBuilder) =>
         (annotations: Annotations) =>
@@ -515,7 +519,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     }
   }
 
-  private val dynamicBuilders: mutable.Map[String, (Annotations) => AmfObject] = mutable.Map(
+  private val dynamicBuilders: mutable.Map[String, Annotations => AmfObject] = mutable.Map(
     LinkNode.builderType.iri()   -> domain.LinkNode.apply,
     ArrayNode.builderType.iri()  -> domain.ArrayNode.apply,
     ScalarNode.builderType.iri() -> domain.ScalarNode.apply,

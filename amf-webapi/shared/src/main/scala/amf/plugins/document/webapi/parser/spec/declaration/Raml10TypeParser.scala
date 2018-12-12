@@ -1525,7 +1525,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           entry.value.tagType match {
             case YType.Null =>
             case _ =>
-              val dataNodeResult = NodeDataNodeParser(entry.value, shape.id, quiet = false).parse()
+              val dataNodeResult = NodeDataNodeParser(entry.value, shape.id + "/default", quiet = false).parse()
               val str            = YamlRender.render(entry.value)
               shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
               dataNodeResult.dataNode.foreach { dataNode =>
