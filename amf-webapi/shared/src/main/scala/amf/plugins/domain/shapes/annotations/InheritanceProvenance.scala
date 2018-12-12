@@ -14,9 +14,8 @@ case class InheritanceProvenance(baseId: String)
 }
 
 object InheritanceProvenance extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    InheritanceProvenance(annotatedValue)
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(InheritanceProvenance(value))
 }
 
 case class InheritedShapes(baseIds: Seq[String])
@@ -31,9 +30,8 @@ case class InheritedShapes(baseIds: Seq[String])
 }
 
 object InheritedShapes extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    InheritedShapes(annotatedValue.split(","))
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(InheritedShapes(value.split(",")))
 }
 
 case class NilUnion(position: String) extends SerializableAnnotation {
@@ -42,7 +40,6 @@ case class NilUnion(position: String) extends SerializableAnnotation {
 }
 
 object NilUnion extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    NilUnion(annotatedValue)
-  }
+  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(NilUnion(annotatedValue))
 }

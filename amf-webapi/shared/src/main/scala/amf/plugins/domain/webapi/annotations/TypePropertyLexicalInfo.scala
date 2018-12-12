@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.annotations
 
-import amf.core.model.domain.{AmfElement, AnnotationGraphLoader, PerpetualAnnotation, SerializableAnnotation}
+import amf.core.model.domain._
 import amf.core.parser.Range
 
 case class TypePropertyLexicalInfo(range: Range) extends SerializableAnnotation with PerpetualAnnotation {
@@ -10,7 +10,6 @@ case class TypePropertyLexicalInfo(range: Range) extends SerializableAnnotation 
 }
 
 object TypePropertyLexicalInfo extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    TypePropertyLexicalInfo(Range.apply(annotatedValue))
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(TypePropertyLexicalInfo(Range.apply(value)))
 }

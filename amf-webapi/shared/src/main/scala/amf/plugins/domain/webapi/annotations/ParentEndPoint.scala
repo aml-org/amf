@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.annotations
 
-import amf.core.model.domain.{AmfElement, AnnotationGraphLoader, SerializableAnnotation}
+import amf.core.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, SerializableAnnotation}
 import amf.plugins.domain.webapi.models.EndPoint
 
 case class ParentEndPoint(parent: EndPoint) extends SerializableAnnotation {
@@ -10,8 +10,10 @@ case class ParentEndPoint(parent: EndPoint) extends SerializableAnnotation {
 
 }
 
-object ParentEndPoint extends AnnotationGraphLoader  {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    ParentEndPoint(objects(annotatedValue).asInstanceOf[EndPoint])
-  }
+object ParentEndPoint extends AnnotationGraphLoader {
+  override def unparse(parent: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    objects.get(parent) match {
+      case Some(e) => Some(ParentEndPoint(e.asInstanceOf[EndPoint]))
+      case _       => None
+    }
 }

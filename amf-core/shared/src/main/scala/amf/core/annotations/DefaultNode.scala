@@ -6,12 +6,10 @@ import amf.core.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, Ser
   * Node generated during parsing that should not be taken into consideration for resolution
   */
 case class DefaultNode() extends SerializableAnnotation {
-  override val name: String = "default-node"
+  override val name: String  = "default-node"
   override val value: String = ""
 }
 
 object DefaultNode extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]): Annotation = {
-    DefaultNode()
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = Some(DefaultNode())
 }

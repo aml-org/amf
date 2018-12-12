@@ -1,6 +1,6 @@
 package amf.core.annotations
 
-import amf.core.model.domain.{AmfElement, AnnotationGraphLoader, SerializableAnnotation}
+import amf.core.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, SerializableAnnotation}
 
 case class SynthesizedField() extends SerializableAnnotation {
   override val name: String  = "synthesized-field"
@@ -8,7 +8,6 @@ case class SynthesizedField() extends SerializableAnnotation {
 }
 
 object SynthesizedField extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    SynthesizedField()
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(SynthesizedField())
 }

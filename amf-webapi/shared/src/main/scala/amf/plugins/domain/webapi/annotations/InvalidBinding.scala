@@ -7,7 +7,6 @@ case class InvalidBinding(value: String) extends SerializableAnnotation {
 }
 
 object InvalidBinding extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]): Annotation = {
-    InvalidBinding(annotatedValue)
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(InvalidBinding(value))
 }

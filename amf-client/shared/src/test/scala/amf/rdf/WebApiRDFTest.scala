@@ -11,6 +11,6 @@ class WebApiRDFTest extends FunSuiteCycleTests with PlatformSecrets {
   val basePath                                             = "amf-client/shared/src/test/resources/production/raml10/"
 
   test("RDF 1 Dialect full test") {
-    cycleFullRdf("demo-api/api-short.raml", "demo-api/api-short.raml", RamlYamlHint, Raml, basePath)
+    cycleFullRdf("demo-api/api.raml", "demo-api/api.raml", RamlYamlHint, Raml, basePath)
   }
 }

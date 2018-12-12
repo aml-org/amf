@@ -14,9 +14,8 @@ case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation with
 }
 
 object ParsedJSONSchema extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    ParsedJSONSchema(annotatedValue)
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(ParsedJSONSchema(value))
 }
 
 case class ParsedJSONExample(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
@@ -25,9 +24,8 @@ case class ParsedJSONExample(rawText: String) extends SerializableAnnotation wit
 }
 
 object ParsedJSONExample extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    ParsedJSONExample(annotatedValue)
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(ParsedJSONExample(value))
 }
 
 case class SchemaIsJsonSchema() extends Annotation
@@ -40,9 +38,7 @@ case class JSONSchemaId(id: String) extends SerializableAnnotation with Perpetua
 }
 
 object JSONSchemaId extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    JSONSchemaId(annotatedValue)
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = Some(JSONSchemaId(value))
 }
 
 case class FormBodyParameter() extends SerializableAnnotation with PerpetualAnnotation {
@@ -51,8 +47,8 @@ case class FormBodyParameter() extends SerializableAnnotation with PerpetualAnno
 }
 
 object FormBodyParameter extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    FormBodyParameter()
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = {
+    Some(FormBodyParameter())
   }
 }
 
@@ -64,10 +60,11 @@ case class ParameterNameForPayload(paramName: String, range: Range)
 }
 
 object ParameterNameForPayload extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    annotatedValue.split("->") match {
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = {
+    value.split("->") match {
       case Array(req, range) =>
-        new ParameterNameForPayload(req, Range.apply(range))
+        Some(new ParameterNameForPayload(req, Range.apply(range)))
+      case _ => None
     }
 
   }
@@ -81,11 +78,12 @@ case class RequiredParamPayload(required: Boolean, range: Range)
 }
 
 object RequiredParamPayload extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    annotatedValue.split("->") match {
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = {
+    value.split("->") match {
       case Array(req, range) =>
         val required = if (req.equals("true")) true else false
-        new RequiredParamPayload(required, Range.apply(range))
+        Some(new RequiredParamPayload(required, Range.apply(range)))
+      case _ => None
     }
   }
 }
@@ -96,9 +94,8 @@ case class LocalLinkPath(rawPath: String) extends SerializableAnnotation {
 }
 
 object LocalLinkPath extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    LocalLinkPath(annotatedValue)
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(LocalLinkPath(value))
 }
 
 case class InlineDefinition() extends Annotation

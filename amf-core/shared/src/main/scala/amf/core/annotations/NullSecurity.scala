@@ -8,7 +8,5 @@ case class NullSecurity() extends SerializableAnnotation {
 }
 
 object NullSecurity extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]): Annotation = {
-    NullSecurity()
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = Some(NullSecurity())
 }
