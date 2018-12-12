@@ -31,7 +31,7 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
     case _                      => // ignore
   }
 
-  private def capitalizeProtocols(d: DeclaresModel): Unit = d.declares.foreach {
+  private def fixSettings(d: DeclaresModel): Unit = d.declares.foreach {
     case security: SecurityScheme => fixSettings(security)
     case _                        => // ignore
   }
@@ -39,7 +39,7 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
   override def resolve[T <: BaseUnit](model: T): T = model match {
     case d: DeclaresModel =>
       try {
-        capitalizeProtocols(d)
+        fixSettings(d)
       } catch {
         case _: Throwable => // ignore: we don't want this to break anything
       }
