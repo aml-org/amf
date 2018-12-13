@@ -1,0 +1,54 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Google APIs",
+    "description": ""
+  },
+  "paths": {
+    "/google/translate": {
+      "post": {
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Source"
+            }
+          }
+        ],
+        "responses": {
+          "200": {}
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Source": {
+      "title": "Source",
+      "example": "en",
+      "x-enum-elements": [
+        {
+          "name": "en",
+          "description": ""
+        },
+        {
+          "name": "es",
+          "description": ""
+        },
+        {
+          "name": "fr",
+          "description": ""
+        }
+      ],
+      "type": "string",
+      "enum": [
+        "en",
+        "es",
+        "fr"
+      ]
+    }
+  }
+}

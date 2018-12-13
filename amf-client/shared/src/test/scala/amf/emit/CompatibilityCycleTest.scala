@@ -32,6 +32,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
         tmp      <- writeTemporaryFile(path)(rendered)
         report   <- validate(tmp, RamlYamlHint)
       } yield {
+        println(tmp)
         report.toString should include("Conforms? true")
       }
     }
