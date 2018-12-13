@@ -854,7 +854,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     def parse(): Unit = {
       map.key(
-        "(amf-or)", { entry =>
+        "or".asRamlAnnotation, { entry =>
           entry.value.to[Seq[YNode]] match {
             case Right(seq) =>
               val nodes = seq.zipWithIndex
@@ -882,7 +882,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     def parse(): Unit = {
       map.key(
-        "(amf-and)", { entry =>
+        "and".asRamlAnnotation, { entry =>
           entry.value.to[Seq[YNode]] match {
             case Right(seq) =>
               val nodes = seq.zipWithIndex
@@ -912,7 +912,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       adopt(shape)
 
       map.key(
-        "(amf-xor)", { entry =>
+        "xor".asRamlAnnotation, { entry =>
           entry.value.to[Seq[YNode]] match {
             case Right(seq) =>
               val nodes = seq.zipWithIndex
@@ -940,7 +940,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     def parse(): Unit = {
       map.key(
-        "(amf-not)", { entry =>
+        "not".asRamlAnnotation, { entry =>
           typeParser(Left(entry), "not", (s: Shape) => s.withId(shape.id + "/not"), false, defaultType).parse() match {
             case Some(negated) => shape.set(ShapeModel.Not, negated, Annotations(entry.value))
             case _             => // ignore
@@ -1551,10 +1551,10 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       )
 
       // Logical constraints
-      if (map.key("(amf-or)").isDefined) OrConstraintParser(map, shape).parse()
-      if (map.key("(amf-and)").isDefined) AndConstraintParser(map, shape).parse()
-      if (map.key("(amf-xone)").isDefined) XoneConstraintParser(map, shape).parse()
-      if (map.key("(amf-not)").isDefined) NotConstraintParser(map, shape).parse()
+      if (map.key("or".asRamlAnnotation).isDefined) OrConstraintParser(map, shape).parse()
+      if (map.key("and".asRamlAnnotation).isDefined) AndConstraintParser(map, shape).parse()
+      if (map.key("xone".asRamlAnnotation).isDefined) XoneConstraintParser(map, shape).parse()
+      if (map.key("not".asRamlAnnotation).isDefined) NotConstraintParser(map, shape).parse()
 
       // Custom shape property definitions, not instances, those are parsed at the end of the parsing process
       map.key(

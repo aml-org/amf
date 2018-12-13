@@ -331,7 +331,7 @@ case class RamlAndConstraintEmitter(shape: Shape, ordering: SpecOrdering, refere
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      "(amf-and)",
+      "and".asRamlAnnotation,
       _.list { b =>
         ordering.sorted(emitters).foreach(_.emit(b))
       }
@@ -351,7 +351,7 @@ case class RamlOrConstraintEmitter(shape: Shape, ordering: SpecOrdering, referen
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      "(amf-or)",
+      "or".asRamlAnnotation,
       _.list { b =>
         ordering.sorted(emitters).foreach(_.emit(b))
       }
@@ -371,7 +371,7 @@ case class RamlXoneConstraintEmitter(shape: Shape, ordering: SpecOrdering, refer
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      "(amf-xone)",
+      "xone".asRamlAnnotation,
       _.list { b =>
         ordering.sorted(emitters).foreach(_.emit(b))
       }
@@ -389,7 +389,7 @@ case class RamlNotConstraintEmitter(shape: Shape, ordering: SpecOrdering, refere
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      "(amf-not)",
+      "not".asRamlAnnotation,
       p => emitter.emit(p)
     )
   }
