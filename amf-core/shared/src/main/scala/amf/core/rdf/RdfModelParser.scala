@@ -1,7 +1,7 @@
 package amf.core.rdf
 
 import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.metamodel.Type.{Any, Array, Bool, Iri, RegExp, SortedArray, Str}
+import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, SourceMapModel}
 import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
@@ -27,12 +27,15 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
 
   private val referencesMap = mutable.Map[String, DomainElement]()
 
+  private var collected: ListBuffer[Annotation] = ListBuffer()
+
   private var nodes: Map[String, AmfElement] = Map()
   private var graph: Option[RdfModel]        = None
 
   def parse(model: RdfModel, location: String): BaseUnit = {
     graph = Some(model)
-    graph.get.findNode(location) match {
+
+    val unit = model.findNode(location) match {
       case Some(rootNode) =>
         parse(rootNode, findBaseUnit = true) match {
           case Some(unit: BaseUnit) => unit.set(BaseUnitModel.Location, location.split("#").head)
@@ -44,13 +47,18 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
         ctx.violation(location, s"Unable to parse RDF model for location root node: $location")
         Document()
     }
+
+    // Resolve annotations after parsing entire graph
+    collected.collect({ case r: ResolvableAnnotation => r }) foreach (_.resolve(nodes))
+
+    unit
   }
 
   def parse(node: Node, findBaseUnit: Boolean = false): Option[AmfObject] = {
     val id = node.subject
     retrieveType(id, node, findBaseUnit) map { model =>
       val sources  = retrieveSources(id, node)
-      val instance = buildType(model)(annotations(nodes, sources, id))
+      val instance = buildType(model)(annots(sources, id))
       instance.withId(id)
 
       checkLinkables(instance)
@@ -139,7 +147,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
       val sources = retrieveSources(id.value, node)
       val builder = retrieveDynamicType(node.subject, node).get
 
-      builder(annotations(nodes, sources, id.value)) match {
+      builder(annots(sources, id.value)) match {
         case obj: ObjectNode =>
           obj.withId(node.subject)
           node.getKeys().foreach { uri =>
@@ -224,7 +232,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     val nodeAnnotations = findLink(propertyObject) match {
       case Some(node) =>
         val sources = retrieveSources(node.subject, node)
-        annotations(this.nodes, sources, node.subject)
+        annots(sources, node.subject)
       case None => Annotations()
     }
     val nodes = parseDynamicArrayInner(propertyObject)
@@ -266,7 +274,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
       f.`type` match {
         case DataNodeModel => // dynamic nodes parsed here
           parseDynamicType(property) match {
-            case Some(parsed) => instance.set(f, parsed, annotations(nodes, sources, key))
+            case Some(parsed) => instance.set(f, parsed, annots(sources, key))
             case _            =>
           }
         case _: Obj =>
@@ -274,7 +282,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
             case Some(node) =>
               parse(node) match {
                 case Some(parsed) =>
-                  instance.set(f, parsed, annotations(nodes, sources, key))
+                  instance.set(f, parsed, annots(sources, key))
                   instance
                 case _ => // ignore
               }
@@ -284,19 +292,17 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
                 s"Error parsing RDF graph node, unknown linked node for property $key in node ${instance.id}")
           }
 
-        case Iri           => instance.set(f, strCoercion(property), annotations(nodes, sources, key))
-        case Str | RegExp  => instance.set(f, str(property), annotations(nodes, sources, key))
-        case Bool          => instance.set(f, bool(property), annotations(nodes, sources, key))
-        case Type.Int      => instance.set(f, int(property), annotations(nodes, sources, key))
-        case Type.Float    => instance.set(f, float(property), annotations(nodes, sources, key))
-        case Type.Double   => instance.set(f, double(property), annotations(nodes, sources, key))
-        case Type.DateTime => instance.set(f, date(property), annotations(nodes, sources, key))
-        case Type.Date     => instance.set(f, date(property), annotations(nodes, sources, key))
-        case Type.Any      => instance.set(f, any(property), annotations(nodes, sources, key))
+        case Iri           => instance.set(f, strCoercion(property), annots(sources, key))
+        case Str | RegExp  => instance.set(f, str(property), annots(sources, key))
+        case Bool          => instance.set(f, bool(property), annots(sources, key))
+        case Type.Int      => instance.set(f, int(property), annots(sources, key))
+        case Type.Float    => instance.set(f, float(property), annots(sources, key))
+        case Type.Double   => instance.set(f, double(property), annots(sources, key))
+        case Type.DateTime => instance.set(f, date(property), annots(sources, key))
+        case Type.Date     => instance.set(f, date(property), annots(sources, key))
+        case Type.Any      => instance.set(f, any(property), annots(sources, key))
         case l: SortedArray if properties.length == 1 =>
-          instance.setArray(f,
-                            parseList(instance.id, l.element, findLink(properties.head)),
-                            annotations(nodes, sources, key))
+          instance.setArray(f, parseList(instance.id, l.element, findLink(properties.head)), annots(sources, key))
         case _: SortedArray =>
           ctx.violation(
             instance.id,
@@ -316,9 +322,9 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           }
           a.element match {
             case _: DomainElementModel if f == DocumentModel.Declares =>
-              instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
-            case _: BaseUnitModel => instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
-            case _                => instance.setArrayWithoutId(f, values, annotations(nodes, sources, key))
+              instance.setArrayWithoutId(f, values, annots(sources, key))
+            case _: BaseUnitModel => instance.setArrayWithoutId(f, values, annots(sources, key))
+            case _                => instance.setArrayWithoutId(f, values, annots(sources, key))
           }
       }
     } else {
@@ -359,7 +365,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
 
   private def findLink(property: PropertyObject) = {
     property match {
-      case Uri(v) => graph.get.findNode(v)
+      case Uri(v) => graph.flatMap(_.findNode(v))
       case _      => None
     }
   }
@@ -473,7 +479,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           case Some(s: String) if s == xsdDate     => AmfScalar(SimpleDateTime.parse(v).right.get)
           case _                                   => AmfScalar(v)
         }
-      case Uri(v)        => throw new Exception(s"Expecting String literal found URI $v")
+      case Uri(v) => throw new Exception(s"Expecting String literal found URI $v")
     }
   }
 
@@ -603,7 +609,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
                 }
 
                 val sources = retrieveSources(extension.id, node)
-                extension.annotations ++= annotations(nodes, sources, extension.id)
+                extension.annotations ++= annots(sources, extension.id)
 
               case _ => // ignore
             }
@@ -633,4 +639,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
         })
     }
   }
+
+  private def annots(sources: SourceMap, key: String) =
+    annotations(nodes, sources, key).into(collected, _.isInstanceOf[ResolvableAnnotation])
 }

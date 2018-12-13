@@ -133,7 +133,7 @@ object WebApiAnnotations {
   }
 
   private def parentEndPoint(value: String, objects: Map[String, AmfElement]) = {
-    ParentEndPoint(objects(value).asInstanceOf[EndPoint])
+    ParentEndPoint.unparse(value, objects).get
   }
 
   private def singleValueArray(value: String, objects: Map[String, AmfElement]) = {

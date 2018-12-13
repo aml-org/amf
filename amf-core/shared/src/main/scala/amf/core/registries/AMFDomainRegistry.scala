@@ -52,6 +52,7 @@ object AMFDomainRegistry {
     "resolved-link"        -> ResolvedLinkAnnotation,
     "null-security"        -> NullSecurity
   )
+
   val metadataRegistry: mutable.Map[String, Obj] = map(
     size = 1024,
     defaultIri(DocumentModel)              -> DocumentModel,

@@ -28,7 +28,7 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   def servers: Seq[Server]                      = fields.field(Servers)
   def security: Seq[ParametrizedSecurityScheme] = fields.field(Security)
 
-  def parent: Option[EndPoint] = annotations.find(classOf[ParentEndPoint]).map(_.parent)
+  def parent: Option[EndPoint] = annotations.find(classOf[ParentEndPoint]).flatMap(_.parent)
 
   def relativePath: String = parent.map(p => path.value().stripPrefix(p.path.value())).getOrElse(path.value())
 
