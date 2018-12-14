@@ -231,8 +231,10 @@ class AMFCompiler(val rawUrl: String,
     val parsed: Seq[Future[Option[ParsedReference]]] = refs.toReferences
       .filter(_.isRemote)
       .map(link => {
-        link.resolve(context, cache, ctx, env, link.refs.map(_.node), domainPlugin.allowRecursiveReferences) flatMap {
+        val nodes = link.refs.map(_.node)
+        link.resolve(context, cache, ctx, env, nodes, domainPlugin.allowRecursiveReferences) flatMap {
           case ReferenceResolutionResult(_, Some(unit)) =>
+            verifyMatchingVendor(unit.sourceVendor, nodes)
             val reference = ParsedReference(unit, link)
             handler.update(reference, ctx, context, env).map(Some(_))
           case ReferenceResolutionResult(Some(e), _) =>
@@ -243,7 +245,7 @@ class AMFCompiler(val rawUrl: String,
                 Future(None)
               case _ =>
                 if (!link.isInferred) {
-                  link.refs.map(_.node).foreach { ref =>
+                  nodes.foreach { ref =>
                     ctx.violation(link.url, e.getMessage, ref)
                   }
                 }
@@ -257,6 +259,14 @@ class AMFCompiler(val rawUrl: String,
   }
 
   private def resolve(): Future[Content] = remote.resolve(location, env)
+
+  private def verifyMatchingVendor(refVendor: Option[Vendor], nodes: Seq[YNode]): Unit = {
+    refVendor match {
+      case Some(v) if vendor.nonEmpty && !v.name.contains(vendor.get) =>
+        nodes.foreach(ctx.violation("Cannot reference fragments of another spec", _))
+      case _ => // Nothing to do
+    }
+  }
 
   def root(): Future[Root] = resolve().map(parseSyntax).flatMap {
     case Right(document: Root) =>

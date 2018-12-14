@@ -346,19 +346,19 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("libraries.json", "libraries.raml.raml", OasJsonHint, Raml, referencesPath)
   }
 
-  test("Overlay fragment oas to amf") {
+  ignore("Overlay fragment oas to amf") {
     cycle("overlay.json", "overlay.json.jsonld", OasJsonHint, Amf, referencesPath + "extensions/")
   }
 
-  test("Overlay fragment oas to oas") {
+  ignore("Overlay fragment oas to oas") {
     cycle("overlay.json", "overlay.json.json", OasJsonHint, Oas, referencesPath + "extensions/")
   }
 
-  test("Extension fragment oas to amf") {
+  ignore("Extension fragment oas to amf") {
     cycle("extension.json", "extension.json.jsonld", OasJsonHint, Amf, referencesPath + "extensions/")
   }
 
-  test("Extension fragment oas to oas") {
+  ignore("Extension fragment oas to oas") {
     cycle("extension.json", "extension.json.json", OasJsonHint, Oas, referencesPath + "extensions/")
   }
 
@@ -474,11 +474,11 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("with_references.raml", "with_references.json", RamlYamlHint, Oas)
   }
 
-  test("References oas to oas") {
+  ignore("References oas to oas") {
     cycle("with_references.json", OasJsonHint)
   }
 
-  test("References oas to amf") {
+  ignore("References oas to amf") {
     cycle("with_references.json", "with_references.json.jsonld", OasJsonHint, Amf)
   }
 

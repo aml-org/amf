@@ -1,5 +1,6 @@
 package amf.core.model.document
 
+import amf.core.annotations.SourceVendor
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.document.BaseUnitModel.{Location, Usage}
 import amf.core.metamodel.document.DocumentModel
@@ -9,6 +10,7 @@ import amf.core.model.StrField
 import amf.core.model.domain._
 import amf.core.parser.{DefaultParserSideErrorHandler, ErrorHandler, FieldEntry, ParserContext, Value}
 import amf.core.rdf.{RdfModel, RdfModelParser}
+import amf.core.remote.Vendor
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.features.validation.ParserSideValidations
 
@@ -374,6 +376,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
     }
   }
 
+  def sourceVendor: Option[Vendor] = this match {
+    case e: EncodesModel if Option(e.encodes).isDefined =>
+      e.encodes.annotations.find(classOf[SourceVendor]).map(a => a.vendor)
+    case d: DeclaresModel => d.annotations.find(classOf[SourceVendor]).map(a => a.vendor)
+    case _                => None
+  }
 }
 
 object BaseUnit extends PlatformSecrets {

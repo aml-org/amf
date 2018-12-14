@@ -135,5 +135,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     validate("examples/multiple-example-fragments/api.raml")
   }
 
+  test("Included json schema with ref to himself with file name") {
+    checkValid("shapes/ref-recursive-samefilename/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

@@ -1,0 +1,22 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 2.0
+settings:
+  authorizationUri: https://example.com/oauth/authorize
+  accessTokenUri: https://example.com/oauth/token
+  authorizationGrants:
+    - authorization_code
+    - implicit
+  scopes:
+    - profile
+    - history
+describedBy:
+  headers:
+    Authorization:
+      description: Used to send a valid OAuth 2 access token.
+      type: string
+  queryParameters:
+    access_token:
+      description: Used to send a valid OAuth 2 access token.
+  responses:
+    401:
+      description: Authorization error.
