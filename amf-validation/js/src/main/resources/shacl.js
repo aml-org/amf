@@ -34906,9 +34906,9 @@ var TermFactory = {
             return this.literal(str, (this.term("xsd:float")));
         }
 
-        const col = str.indexOf(":");
+        var col = str.indexOf(":");
         if (col > 0) {
-            const ns = this.namespaces[str.substring(0, col)];
+            var ns = this.namespaces[str.substring(0, col)];
             if (ns != null) {
                 return this.namedNode(ns + str.substring(col + 1));
             } else {
