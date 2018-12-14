@@ -398,7 +398,8 @@ abstract class WebApiContext(val loc: String,
   }
 
   def resolvedPath(base: String, str: String): String = {
-    if (str.startsWith("/")) str
+    if (str.isEmpty) platform.normalizePath(base)
+    else if (str.startsWith("/")) str
     else if (str.contains(":")) str
     else if (str.startsWith("#")) base.split("#").head + str
     else platform.normalizePath(basePath(base) + str)
@@ -413,11 +414,13 @@ abstract class WebApiContext(val loc: String,
     // todo: past uri?
     jsonSchemaIndex match {
       case Some(jsi) =>
-        val p: String = if (path.startsWith("#")) {
-          val str = path.replace("#", "")
-          if (str.startsWith("/")) str.stripPrefix("/")
-          else str
-        } else path
+        val p: String =
+          if (path == "#" || path == "") "/"
+          else if (path.startsWith("#")) {
+            val str = path.replace("#", "")
+            if (str.startsWith("/")) str.stripPrefix("/")
+            else str
+          } else path
 
         jsi.getNode(p).map { n =>
           (path, n)

@@ -169,7 +169,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     // we set the local schema entry to be able to resolve local $refs
     ctx.setJsonSchemaAST(schemaEntry.value)
     val jsonSchemaContext = toSchemaContext(ctx, valueAST)
-    val fullRef           = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "#")
+    val fullRef           = jsonSchemaContext.resolvedPath(jsonSchemaContext.rootContextDocument, "")
     val tmpShape =
       UnresolvedShape(fullRef, schemaEntry).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
     tmpShape.unresolved(fullRef, schemaEntry, "warning")(jsonSchemaContext)

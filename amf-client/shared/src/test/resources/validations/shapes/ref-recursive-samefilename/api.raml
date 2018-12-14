@@ -1,0 +1,8 @@
+#%RAML 0.8
+
+title: Trading Partner Service
+/v1:
+  get:
+    body:
+      application/json:
+        schema: !include schemas/json/tradingPartnerSchema.json
