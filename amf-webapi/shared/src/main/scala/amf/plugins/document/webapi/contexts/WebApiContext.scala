@@ -410,22 +410,18 @@ abstract class WebApiContext(val loc: String,
     withoutHash.splitAt(withoutHash.lastIndexOf("/"))._1 + "/"
   }
 
+  private def normalizeJsonPath(path: String): String = {
+    if (path == "#" || path == "" || path == "/") "/" // exception root cases
+    else {
+      val s = if (path.startsWith("#")) path.replace("#", "") else path
+      if (s.startsWith("/")) s.stripPrefix("/") else s
+    }
+  }
   def findLocalJSONPath(path: String): Option[(String, YNode)] = {
     // todo: past uri?
     jsonSchemaIndex match {
-      case Some(jsi) =>
-        val p: String =
-          if (path == "#" || path == "") "/"
-          else if (path.startsWith("#")) {
-            val str = path.replace("#", "")
-            if (str.startsWith("/")) str.stripPrefix("/")
-            else str
-          } else path
-
-        jsi.getNode(p).map { n =>
-          (path, n)
-        }
-      case _ => None
+      case Some(jsi) => jsi.getNode(normalizeJsonPath(path)).map { (path, _) }
+      case _         => None
 
     }
   }

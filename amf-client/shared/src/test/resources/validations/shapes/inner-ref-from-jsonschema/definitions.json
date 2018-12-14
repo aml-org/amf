@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "fullAddress": {
+    "title": "fullAddress",
+    "type": "object",
+    "properties": {
+      "state": {
+        "$ref": "#/australianState"
+      }
+    }
+  },
+  "australianState": {
+    "title": "australianState",
+    "enum": [
+      "ACT"
+    ]
+  }
+}

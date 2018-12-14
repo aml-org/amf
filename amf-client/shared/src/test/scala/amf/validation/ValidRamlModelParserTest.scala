@@ -139,5 +139,13 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("shapes/ref-recursive-samefilename/api.raml")
   }
 
+  test("Included json schema with ref inner ref to another") {
+    checkValid("shapes/inner-ref-from-jsonschema/api.raml")
+  }
+
+  test("Included path reference with inner ref to main api") {
+    checkValid("shapes/inner-ref-from-jsonschema/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
