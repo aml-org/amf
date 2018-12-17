@@ -62,6 +62,24 @@ class DialectInstancesRDFTest extends FunSuiteCycleTests with PlatformSecrets {
                  "amf-client/shared/src/test/resources/vocabularies2/production/")
   }
 
+  test("Container Configuration 0.2 ex1 test") {
+    withDialectFull("dialect.raml",
+      "ex1.raml",
+      "ex1.raml",
+      VocabularyYamlHint,
+      Aml,
+      "amf-client/shared/src/test/resources/vocabularies2/production/system2/")
+  }
+
+  test("Container Configuration 0.2 ex2 test") {
+    withDialectFull("dialect.raml",
+      "ex2.raml",
+      "ex2.raml",
+      VocabularyYamlHint,
+      Aml,
+      "amf-client/shared/src/test/resources/vocabularies2/production/system2/")
+  }
+
   protected def withDialect(dialect: String,
                             source: String,
                             golden: String,
