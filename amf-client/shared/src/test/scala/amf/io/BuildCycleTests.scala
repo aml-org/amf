@@ -95,7 +95,7 @@ trait BuildCycleTests extends FileAssertionTest {
   /** Method for transforming parsed unit. Override if necessary. */
   def transformThroughRdf(unit: BaseUnit, config: CycleConfig): BaseUnit = {
     val rdfModel = unit.toNativeRdfModel(RenderOptions().withSourceMaps)
-    new RdfModelParser(platform)(ParserContext()).parse(rdfModel, unit.id)
+    BaseUnit.fromNativeRdfModel(unit.id, rdfModel)
   }
 
   /** Method to render parsed unit. Override if necessary. */

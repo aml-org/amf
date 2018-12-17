@@ -357,7 +357,8 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
         case Type.Float         => try { Some(float(n)) } catch { case _: Exception => None }
         case Type.Double        => try { Some(double(n)) } catch { case _: Exception => None }
         case Type.Date          => try { Some(date(n)) } catch { case _: Exception => None }
-        case _                  => throw new Exception("Unknown list element type ")
+        case Type.Any           => try { Some(any(n)) } catch { case _: Exception => None }
+        case _                  => throw new Exception(s"Unknown list element type: ${listElement}")
       }
     }
     res collect { case Some(x) => x }
