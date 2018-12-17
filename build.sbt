@@ -108,7 +108,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.2"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.3"
     ))
   .in(file("./amf-core"))
   .settings(settings)
