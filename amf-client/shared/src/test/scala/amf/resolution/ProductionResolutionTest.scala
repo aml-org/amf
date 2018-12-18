@@ -237,6 +237,18 @@ class ProductionResolutionTest extends RamlResolutionTest {
       assert(simpleDeclares.length == doubleDeclares.length)
     }
   }
+
+  test("Test example inheritance in type declaration with simple inheritance") {
+    cycle("api.raml", "api.raml.resolved", RamlYamlHint, Raml, basePath + "simple-inheritance-example/")
+  }
+
+  test("Test example inheritance in type declaration with simple chained inheritance") {
+    cycle("api.raml", "api.raml.resolved", RamlYamlHint, Raml, basePath + "simple-inheritance-chained-example/")
+  }
+
+  test("Test example inheritance in type declaration with link") {
+    cycle("api.raml", "api.raml.resolved", RamlYamlHint, Raml, basePath + "simple-inheritance-link-example/")
+  }
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {
