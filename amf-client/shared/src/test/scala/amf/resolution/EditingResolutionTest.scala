@@ -130,6 +130,10 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     cycle("oas-multiple-example.json", "oas-multiple-example.resolved.jsonld", OasJsonHint, Amf, productionPath)
   }
 
+  test("Parse correctly non-AMF graph JSON-LD example") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "jsonld-example/")
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

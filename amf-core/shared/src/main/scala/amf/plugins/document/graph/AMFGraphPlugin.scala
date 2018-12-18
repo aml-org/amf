@@ -15,7 +15,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.graph.parser.{GraphDependenciesReferenceHandler, GraphParser, JsonLdEmitter}
 import org.yaml.builder.DocBuilder
-import org.yaml.model.{YDocument, YMap}
+import org.yaml.model.{YDocument, YMap, YSequence, YScalar}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -46,9 +46,16 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
         val maybeMap  = maybeMaps.flatMap(s => s.headOption)
         maybeMap match {
           case Some(m: YMap) =>
-            m.key("@id").isDefined || m.key("@type").isDefined || m
-              .key((Namespace.Document + "encodes").iri())
-              .isDefined || m.key((Namespace.Document + "declares").iri()).isDefined
+            val toDocumentNamespace: String => String = a => (Namespace.Document + a).iri()
+
+            val acceptedKeys = Seq("encodes", "declares", "references").map(toDocumentNamespace)
+            val acceptedTypes = Seq("Document", "Fragment", "Module", "Unit").map(toDocumentNamespace)
+
+            acceptedKeys.exists(m.key(_).isDefined) ||
+              m.key("@type").exists { typesEntry =>
+                val retrievedTypes = typesEntry.value.as[YSequence].nodes.map(node => node.as[YScalar].value)
+                (acceptedTypes intersect retrievedTypes).nonEmpty
+              }
           case _ => false
         }
       case _: RdfModelDocument => true

@@ -1,0 +1,11 @@
+#%RAML 1.0
+baseUri: https://jorge.uri.com
+title: Jorge API
+version: v1
+/jorgeEndpoint:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include examples/dialect.json
