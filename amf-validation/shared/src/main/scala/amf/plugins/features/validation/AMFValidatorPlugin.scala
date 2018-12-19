@@ -235,7 +235,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   }
 
   def customValidations(validations: EffectiveValidations): Seq[ValidationSpecification] =
-    validations.effective.values.toSeq.filter(s => !s.isParserSide())
+    validations.effective.values.toSeq.filter(s => !s.isParserSide)
 
   /**
     * Returns a native RDF model with the SHACL shapes graph

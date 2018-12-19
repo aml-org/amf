@@ -46,7 +46,11 @@ object Namespace {
 
   val AmfParser = Namespace("http://a.ml/vocabularies/amf/parser#")
 
+  val AmfResolution = Namespace("http://a.ml/vocabularies/amf/resolution#")
+
   val AmfValidation = Namespace("http://a.ml/vocabularies/amf/validation#")
+
+  val AmfRender = Namespace("http://a.ml/vocabularies/amf/render#")
 
   val ns = mutable.HashMap(
     "rdf"         -> Rdf,

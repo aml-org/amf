@@ -13,7 +13,7 @@ import amf.core.parser.{DefaultParserSideErrorHandler, ErrorHandler, FieldEntry,
 import amf.core.rdf.{RdfModel, RdfModelParser}
 import amf.core.remote.Vendor
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.RecursiveShapeSpecification
 
 import scala.collection.mutable.ListBuffer
 
@@ -69,7 +69,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
 
   /** Finds in the nested model structure AmfObjects with the requested types. */
   def findByType(shapeType: String, cycles: Set[String] = Set.empty): Seq[DomainElement] = {
-    val predicate = { (element: DomainElement) =>
+    val predicate = { element: DomainElement =>
       val types = element match {
         case e: DynamicDomainElement =>
           e.dynamicType.map(t => t.iri()) ++ element.dynamicTypes() ++ metaModel(element).`type`.map(t => t.iri())
@@ -81,13 +81,12 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
       findInEncodedModel(predicate, this, first = false, ListBuffer.empty, cycles)
   }
 
-  def findBy(predicate: (DomainElement) => Boolean, cycles: Set[String] = Set.empty): Seq[DomainElement] = {
+  def findBy(predicate: DomainElement => Boolean, cycles: Set[String] = Set.empty): Seq[DomainElement] = {
     findInDeclaredModel(predicate, this, first = false, ListBuffer.empty, cycles) ++
       findInEncodedModel(predicate, this, first = false, ListBuffer.empty, cycles)
   }
 
-  def transform(selector: (DomainElement) => Boolean,
-                transformation: (DomainElement, Boolean) => Option[DomainElement])(
+  def transform(selector: DomainElement => Boolean, transformation: (DomainElement, Boolean) => Option[DomainElement])(
       implicit errorHandler: ErrorHandler): BaseUnit = {
     val domainElementAdapter = (o: AmfObject) => {
       o match {
@@ -110,11 +109,11 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
 
   // Private lookup methods
 
-  protected def findInEncodedModel(predicate: (DomainElement) => Boolean,
+  protected def findInEncodedModel(predicate: DomainElement => Boolean,
                                    encoder: BaseUnit,
                                    first: Boolean = false,
                                    acc: ListBuffer[DomainElement] = ListBuffer.empty: ListBuffer[DomainElement],
-                                   cycles: Set[String]) = {
+                                   cycles: Set[String]): ListBuffer[_ <: DomainElement] = {
     encoder match {
       case _ if cycles.contains(encoder.id) => ListBuffer.empty
       case encoder: EncodesModel if Option(encoder.encodes).isDefined =>
@@ -123,7 +122,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
     }
   }
 
-  protected def findInDeclaredModel(predicate: (DomainElement) => Boolean,
+  protected def findInDeclaredModel(predicate: DomainElement => Boolean,
                                     encoder: BaseUnit,
                                     first: Boolean,
                                     acc: ListBuffer[DomainElement],
@@ -153,7 +152,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
     }
   }
 
-  protected def findModelByCondition(predicate: (DomainElement) => Boolean,
+  protected def findModelByCondition(predicate: DomainElement => Boolean,
                                      element: DomainElement,
                                      first: Boolean,
                                      acc: ListBuffer[DomainElement],
@@ -188,7 +187,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
     }
   }
 
-  private def findModelByConditionInSeq(predicate: (DomainElement) => Boolean,
+  private def findModelByConditionInSeq(predicate: DomainElement => Boolean,
                                         elements: Seq[AmfElement],
                                         first: Boolean,
                                         acc: ListBuffer[DomainElement],
@@ -228,7 +227,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
         Some(RecursiveShape(s))
       case _ =>
         errorHandler.violation(
-          ParserSideValidations.RecursiveShapeSpecification.id,
+          RecursiveShapeSpecification,
           old.id,
           s"Recursive loop generated in reference expansion: ${old.id} => ${transformed.id}",
           old.annotations
@@ -238,7 +237,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
   }
 
   protected def transformByCondition(element: AmfObject,
-                                     predicate: (AmfObject) => Boolean,
+                                     predicate: AmfObject => Boolean,
                                      transformation: (AmfObject, Boolean) => Option[AmfObject],
                                      cycles: Set[String] = Set.empty,
                                      cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject]): AmfObject = {
@@ -386,6 +385,6 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
 }
 
 object BaseUnit extends PlatformSecrets {
-  def fromNativeRdfModel(id: String, rdfModel: RdfModel, ctx: ParserContext = ParserContext()) =
+  def fromNativeRdfModel(id: String, rdfModel: RdfModel, ctx: ParserContext = ParserContext()): BaseUnit =
     new RdfModelParser(platform)(ctx).parse(rdfModel, id)
 }

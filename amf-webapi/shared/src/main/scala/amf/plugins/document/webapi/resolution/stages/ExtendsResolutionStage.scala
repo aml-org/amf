@@ -21,7 +21,7 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging._
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
@@ -61,7 +61,7 @@ class ExtendsResolutionStage(
       case Some(rt: ResourceType) =>
         val node = rt.dataNode.cloneNode()
         node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
-          apiContext.violation(r.id, message, r.position(), r.location()))
+          apiContext.violation(ResolutionValidation, r.id, None, message, r.position(), r.location()))
 
         ExtendsHelper.asEndpoint(
           context.model,
@@ -77,7 +77,9 @@ class ExtendsResolutionStage(
         )
 
       case _ =>
-        apiContext.violation(r.id,
+        apiContext.violation(ResolutionValidation,
+                             r.id,
+                             None,
                              s"Cannot find target for parametrized resource type ${r.id}",
                              r.position(),
                              r.location())
@@ -269,7 +271,7 @@ class ExtendsResolutionStage(
       val local = context.add(parameterized.variables)
 
       Option(parameterized.target) match {
-        case Some(t: ErrorDeclaration) => Some(TraitBranch(key, Operation(), Seq()))
+        case Some(_: ErrorDeclaration) => Some(TraitBranch(key, Operation(), Seq()))
         case Some(potentialTrait: Trait) =>
           potentialTrait.effectiveLinkTarget match {
             case err: ErrorTrait =>
@@ -277,7 +279,7 @@ class ExtendsResolutionStage(
             case t: Trait =>
               val node: DataNode = t.dataNode.cloneNode()
               node.replaceVariables(local.variables, subTree)((message: String) =>
-                apiContext.violation(t.id, message, t.position(), t.location()))
+                apiContext.violation(ResolutionValidation, t.id, None, message, t.position(), t.location()))
 
               val op = ExtendsHelper.asOperation(
                 profile,
@@ -297,7 +299,7 @@ class ExtendsResolutionStage(
           }
         case m =>
           errorHandler.violation(
-            ParserSideValidations.ResolutionErrorSpecification.id,
+            ResolutionValidation,
             parameterized.id,
             s"Looking for trait but $m was found on model ${context.model}",
             parameterized.annotations

@@ -9,7 +9,7 @@ import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.resolution.stages.RecursionErrorRegister
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 private[stages] object ShapeExpander {
   def apply(s: Shape, context: NormalizationContext, recursionRegister: RecursionErrorRegister): Shape =
@@ -27,7 +27,9 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
   protected def ensureCorrect(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {
-      context.errorHandler.violation(ParserSideValidations.ResolutionErrorSpecification.id,
+      context.errorHandler.violation(ResolutionValidation,
+                                     shape.id,
+                                     None,
                                      s"Resolution error: Found shape without ID: $shape",
                                      shape.position(),
                                      shape.location())
@@ -289,7 +291,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       property.fields.setWithoutId(PropertyShapeModel.Range, expandedRange, oldRange.annotations)
     } else {
       context.errorHandler.violation(
-        ParserSideValidations.ResolutionErrorSpecification.id,
+        ResolutionValidation,
         property.id,
         s"Resolution error: Property shape with missing range: $property",
         property.annotations
@@ -304,7 +306,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       case None if shape.inherits.nonEmpty =>
         traversed.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
       case _ if shape.isInstanceOf[RecursiveShape] => shape
-      case _ => traversed.runWithIgnoredIds(() => normalize(shape), Set(root.id))
+      case _                                       => traversed.runWithIgnoredIds(() => normalize(shape), Set(root.id))
     }
   }
 
@@ -324,7 +326,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       }
       union.setArrayWithoutId(UnionShapeModel.AnyOf, newAnyOf, oldAnyOf.annotations)
     } else if (Option(union.inherits).isEmpty || union.inherits.isEmpty) {
-      context.errorHandler.violation(ParserSideValidations.ResolutionErrorSpecification.id,
+      context.errorHandler.violation(ResolutionValidation,
                                      union.id,
                                      s"Resolution error: Union shape with missing anyof: $union",
                                      union.annotations)

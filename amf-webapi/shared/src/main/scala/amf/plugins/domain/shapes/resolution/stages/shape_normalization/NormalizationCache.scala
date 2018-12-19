@@ -2,7 +2,10 @@ package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.{
+  InvalidTypeInheritanceWarningSpecification,
+  ResolutionValidation
+}
 import amf.{ProfileName, Raml08Profile}
 
 import scala.collection.mutable
@@ -22,7 +25,7 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
     } catch {
       case e: InheritanceIncompatibleShapeError =>
         errorHandler.violation(
-          ParserSideValidations.InvalidTypeInheritanceWarningSpecification.id,
+          InvalidTypeInheritanceWarningSpecification,
           derivedShape.id,
           e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
           e.getMessage,
@@ -32,7 +35,7 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
         derivedShape
       case other: Throwable =>
         errorHandler.violation(
-          ParserSideValidations.ResolutionErrorSpecification.id,
+          ResolutionValidation,
           derivedShape.id,
           Some(ShapeModel.Inherits.value.iri()),
           other.getMessage,
@@ -46,7 +49,7 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
 }
 
 private[shape_normalization] case class NormalizationCache() {
-  def addClojures(closureShapes: Seq[Shape], s: Shape) = {
+  def addClojures(closureShapes: Seq[Shape], s: Shape): Unit = {
     closureShapes.foreach { c =>
       cacheClojure(c.id, s)
     }
@@ -72,7 +75,7 @@ private[shape_normalization] case class NormalizationCache() {
             case _ => // ignore
           }
         }
-      case _ => //ignore
+      case _ => // ignore
     }
   }
 
@@ -108,7 +111,7 @@ private[shape_normalization] case class NormalizationCache() {
 
   private val cache = mutable.Map[String, Shape]()
   /* Shape in the clojure -> Shape that in s.clojures contains the shape */
-  private var cacheWithClojures = mutable.Map[String, Seq[Shape]]()
+  private val cacheWithClojures = mutable.Map[String, Seq[Shape]]()
 
   private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
   private val mappings      = mutable.Map[String, String]()

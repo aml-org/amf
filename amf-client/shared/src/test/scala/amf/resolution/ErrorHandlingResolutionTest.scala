@@ -1,14 +1,18 @@
 package amf.resolution
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
+import amf.core.parser.ErrorHandler
 import amf.core.remote._
 import amf.core.validation.SeverityLevels
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfResolutionPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.{
+  DeclarationNotFound,
+  UnknownSecuritySchemeErrorSpecification
+}
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.scalatest.Assertion
 import org.scalatest.Matchers._
 
@@ -24,7 +28,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
       RamlYamlHint,
       List(
         ErrorContainer(
-          ParserSideValidations.ParsingErrorSpecification.id,
+          DeclarationNotFound.id,
           "",
           None,
           "Cannot find declarations in context 'collectionsTypes",
@@ -42,7 +46,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
       RamlYamlHint,
       List(
         ErrorContainer(
-          ParserSideValidations.ParsingErrorSpecification.id,
+          ResolutionValidation.id,
           "file://amf-client/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection",
           None,
           "Variable 'exampleCollection' cannot be replaced with type amf.core.model.domain.LinkNode",
@@ -51,7 +55,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
           None
         ),
         ErrorContainer(
-          ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id,
+          UnknownSecuritySchemeErrorSpecification.id,
           "file://amf-client/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection/applied/get/oauth_2_0",
           None,
           "Security scheme 'oauth_2_0' not found in declarations.",

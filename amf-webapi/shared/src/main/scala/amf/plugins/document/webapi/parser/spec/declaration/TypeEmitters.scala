@@ -26,7 +26,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YType}
 
@@ -62,7 +62,9 @@ case class RamlNamedTypeEmitter(shape: AnyShape,
     case s: Shape with ShapeHelpers => typesEmitter(s, ordering, None, Seq(), references).emit(b)
     case _ =>
       spec.eh.violation(
-        ParserSideValidations.EmittionErrorEspecification.id,
+        ResolutionValidation,
+        shape.id,
+        None,
         "Cannot emit inline shape that doesnt support type expressions",
         shape.position(),
         shape.location()
@@ -139,7 +141,9 @@ abstract class RamlTypePartEmitter(shape: Shape,
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other =>
-      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+      spec.eh.violation(ResolutionValidation,
+                        shape.id,
+                        None,
                         s"IllegalTypeDeclarations found: $other",
                         shape.position(),
                         shape.location())
@@ -238,7 +242,7 @@ case class Raml10TypeEmitter(shape: Shape,
     case p: PartEmitter =>
       new EntryEmitter {
         override def emit(b: EntryBuilder): Unit =
-          b.entry(YNode("type"), (b) => p.emit(b))
+          b.entry(YNode("type"), b => p.emit(b))
         override def position(): Position = p.position()
       }
   }
@@ -325,7 +329,7 @@ case class RamlAndConstraintEmitter(shape: Shape, ordering: SpecOrdering, refere
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitters = shape.and.map { s =>
+  val emitters: Seq[Raml10TypePartEmitter] = shape.and.map { s =>
     Raml10TypePartEmitter(s, ordering, None, Nil, references)
   }
 
@@ -345,7 +349,7 @@ case class RamlOrConstraintEmitter(shape: Shape, ordering: SpecOrdering, referen
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitters = shape.or.map { s =>
+  val emitters: Seq[Raml10TypePartEmitter] = shape.or.map { s =>
     Raml10TypePartEmitter(s, ordering, None, Nil, references)
   }
 
@@ -365,7 +369,7 @@ case class RamlXoneConstraintEmitter(shape: Shape, ordering: SpecOrdering, refer
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitters = shape.xone.map { s =>
+  val emitters: Seq[Raml10TypePartEmitter] = shape.xone.map { s =>
     Raml10TypePartEmitter(s, ordering, None, Nil, references)
   }
 
@@ -485,7 +489,7 @@ case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
   override def position(): Position = pos(f.value.annotations)
 }
 
-//case class RamlNamedRecursiveShapeEmitter(recursive:RecursiveShape,ordering: SpecOrdering)(
+// case class RamlNamedRecursiveShapeEmitter(recursive:RecursiveShape,ordering: SpecOrdering)(
 //  implicit spec: RamlSpecEmitterContext) extends EntryEmitter {
 //  override def emit(b: EntryBuilder): Unit = {
 //    // todo add error handling?
@@ -496,7 +500,7 @@ case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
 //  }
 //
 //  override def position(): Position = pos(recursive.annotations)
-//}
+// }
 
 case class RamlRecursiveShapeEmitter(shape: RecursiveShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext) {
@@ -589,14 +593,17 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
               ordering.sorted(inlineShapes.flatMap {
                 case s: AnyShape => Raml10TypeEmitter(s, ordering, references = references).entries()
                 case other =>
-                  spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                  spec.eh.violation(ResolutionValidation,
+                                    other.id,
+                                    None,
                                     "Cannot emit for type shapes without WebAPI Shape support",
                                     other.position(),
                                     other.location())
                   Nil
               }),
               _
-            ))
+            )
+          )
         } else {
           declaredShapes match {
             case (head: Shape with ShapeHelpers) :: Nil =>
@@ -660,7 +667,7 @@ class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: S
     extends RamlShapeEmitter(shape, ordering, references)
     with ExamplesEmitter {
   override def emitters(): Seq[EntryEmitter] = {
-    var results = ListBuffer(super.emitters(): _*)
+    val results = ListBuffer(super.emitters(): _*)
 
     emitExamples(shape, results, ordering, references)
 
@@ -826,7 +833,7 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     }
   }
 
-  override val typeName: Option[String] = None //exceptional case for get the type (scalar) and format
+  override val typeName: Option[String] = None // exceptional case for get the type (scalar) and format
 }
 
 case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -1037,9 +1044,9 @@ case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering,
     tuple.items match {
       case tupleItems: AnyShape =>
         tuple.items
-          .foreach(item => {
+          .foreach { _ =>
             Raml10TypeEmitter(tupleItems, ordering, references = references).entries().foreach(result += _)
-          })
+          }
       case _ => // ignore
     }
 
@@ -1217,7 +1224,6 @@ abstract class OasTypePartCollector(shape: Shape,
                         schemaPath: Seq[(String, String)]): Either[PartEmitter, Seq[EntryEmitter]] = _emitter match {
     case Some(em) => em
     case _ =>
-      val res = emitters(pointer, schemaPath)
       _emitter = Some(
         emitters(pointer, schemaPath) match {
           case Seq(p: PartEmitter)                           => Left(p)
@@ -1233,7 +1239,8 @@ class SimpleOasTypePartCollector(shape: Shape, ordering: SpecOrdering, ignored: 
     implicit spec: OasSpecEmitterContext)
     extends OasTypePartCollector(shape, ordering, ignored, references) {
 
-  def computeEmitters(pointer: Seq[String], schemaPath: Seq[(String, String)]) = emitters(pointer, schemaPath)
+  def computeEmitters(pointer: Seq[String], schemaPath: Seq[(String, String)]): Seq[Emitter] =
+    emitters(pointer, schemaPath)
 }
 
 case class OasTypeEmitter(shape: Shape,
@@ -1403,7 +1410,7 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
         })
       case _ => None
     }
-    for (p <- pointer) b.entry("$ref", p)
+    for { p <- pointer } b.entry("$ref", p)
   }
 
   private def findInPath(id: String) = {
@@ -1666,7 +1673,7 @@ case class OasItemsShapeEmitter(array: ArrayShape,
     with EntryEmitter {
 
   def emit(b: EntryBuilder): Unit = {
-    if (Option((array.fields.getValue(ArrayShapeModel.Items))).isDefined) {
+    if (Option(array.fields.getValue(ArrayShapeModel.Items)).isDefined) {
       b.entry("items", b => emitPart(b))
     }
   }
@@ -1694,7 +1701,7 @@ case class OasTupleItemsShapeEmitter(array: TupleShape,
                                      schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
-  val itemEmitters = {
+  val itemEmitters: Seq[OasTypeEmitter] = {
     array.items.zipWithIndex.map {
       case (shape, i) =>
         /*
@@ -2100,7 +2107,8 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
 
   val propertyName: String = property.patternName.option().getOrElse(property.name.value())
 
-  val computedEmitters = emitter(pointer ++ Seq("properties", propertyName), schemaPath)
+  val computedEmitters: Either[PartEmitter, Seq[EntryEmitter]] =
+    emitter(pointer ++ Seq("properties", propertyName), schemaPath)
 
   override def emit(b: EntryBuilder): Unit = {
     property.range match {
@@ -2141,7 +2149,7 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
     results += emitter
     shape match {
       case any: AnyShape if any.examples.nonEmpty => emitExamples(any, results, ordering, Nil)
-      case _                                      => //ignore
+      case _                                      => // ignore
     }
 
     results

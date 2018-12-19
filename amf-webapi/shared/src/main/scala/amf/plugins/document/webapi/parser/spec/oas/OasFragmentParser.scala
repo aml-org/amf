@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.features.validation.ParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 /**
@@ -27,7 +28,10 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
     val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.to[YMap] match {
       case Right(m) => m
       case _ =>
-        ctx.violation(root.location, "Cannot parse empty map", root.parsed.asInstanceOf[SyamlParsedDocument].document)
+        ctx.violation(InvalidFragmentType,
+                      root.location,
+                      "Cannot parse empty map",
+                      root.parsed.asInstanceOf[SyamlParsedDocument].document)
         YMap.empty
     }
 
@@ -45,7 +49,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         .withLocation(root.location)
         .withId(root.location)
         .withEncodes(ExternalDomainElement().withRaw(root.raw))
-      ctx.violation(fragment.id, "Unsupported oas type", map)
+      ctx.violation(InvalidFragmentType, fragment.id, "Unsupported oas type", map)
       fragment
     }
 

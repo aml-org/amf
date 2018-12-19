@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.document.webapi.validation.AMFShapeValidations
 import amf.plugins.domain.shapes.models.ArrayShape
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.RecursiveShapeSpecification
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -149,7 +149,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, RamlProfile)
     } yield {
-      assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id))
+      assert(!report.results.exists(_.validationId != RecursiveShapeSpecification.id))
     }
   }
 

@@ -2,48 +2,59 @@ package amf
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 import amf.plugins.document.webapi.validation.{AMFRawValidations, DefaultAMFValidations, ImportUtils}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.{ParserSideValidations, Validations}
 
 object ValidationsExporter extends ImportUtils {
 
   def main(args: Array[String]): Unit = {
 
-    val parserSideVals = ParserSideValidations.levels.foldLeft(Map[String,Map[String,String]]()) { case (accMap, (id, levels)) =>
-      accMap.updated(id, levels.foldLeft(Map[String,String]()) { case (acc, (p, v)) =>
-        acc.updated(p.profile, v)
-      })
+    val parserSideVals = Validations.allLevels.foldLeft(Map[String, Map[String, String]]()) {
+      case (accMap, (id, levels)) =>
+        accMap.updated(id, levels.foldLeft(Map[String, String]()) {
+          case (acc, (p, v)) =>
+            acc.updated(p.profile, v)
+        })
     }
 
-    ParserSideValidations.validations.foreach { validation =>
+    Validations.validations.foreach { validation =>
       val severity: Map[String, String] = parserSideVals(validation.id)
-      val levelsString = severity.keys.toSeq.sorted.map { case i =>
-        severity(i)
-      }.mkString("\t")
+      val levelsString = severity.keys.toSeq.sorted
+        .map {
+          case i =>
+            severity(i)
+        }
+        .mkString("\t")
       println(s"${uriModel(Some(validation.id))}\t\t\t${validation.message}\t\t\t$levelsString")
     }
-    var validationsAcc = Map[String,AMFValidation]()
-    var levels: Map[String,Map[String,String]] = Map()
+    var validationsAcc                           = Map[String, AMFValidation]()
+    var levels: Map[String, Map[String, String]] = Map()
 
-    AMFRawValidations.map.foreach { case (profile, validations) =>
-      validations.foreach { validation =>
-        val id = uri(validation)
-        if (!validations.contains(id)) {
-          validationsAcc = validationsAcc + (id -> validation)
+    AMFRawValidations.map.foreach {
+      case (profile, validations) =>
+        validations.foreach { validation =>
+          val id = uri(validation)
+          if (!validations.contains(id)) {
+            validationsAcc = validationsAcc + (id -> validation)
+          }
+          var thisLevel = levels.getOrElse(id, Map())
+          thisLevel = thisLevel + (profile.profile -> validation.severity)
+          levels = levels.updated(id, thisLevel)
         }
-        var thisLevel = levels.getOrElse(id, Map())
-        thisLevel = thisLevel + (profile.profile -> validation.severity)
-        levels = levels.updated(id, thisLevel)
-      }
     }
 
+    validationsAcc.foreach {
+      case (id, validation) =>
+        val severity: Map[String, String] = levels.getOrElse(id, parserSideVals(id))
+        val levelsString = severity.keys.toSeq.sorted
+          .map {
+            case i =>
+              severity(i)
+          }
+          .mkString("\t")
 
-    validationsAcc.foreach { case (id, validation) =>
-      val severity: Map[String, String] = levels.getOrElse(id, parserSideVals(id))
-      val levelsString = severity.keys.toSeq.sorted.map { case i =>
-        severity(i)
-      }.mkString("\t")
-
-      println(s"${uri(validation)}\t${uriModel(validation.owlClass)}\t${uriModel(validation.owlProperty)}\t${validation.message.getOrElse("")}\t${validation.ramlErrorMessage}\t${validation.openApiErrorMessage}\t${levelsString}")
+        println(
+          s"${uri(validation)}\t${uriModel(validation.owlClass)}\t${uriModel(validation.owlProperty)}\t${validation.message
+            .getOrElse("")}\t${validation.ramlErrorMessage}\t${validation.openApiErrorMessage}\t${levelsString}")
     }
 
   }
@@ -55,7 +66,6 @@ object ValidationsExporter extends ImportUtils {
     }
     Namespace.compact(id)
   }
-
 
   def uriModel(s: Option[String]): String = {
     s match {

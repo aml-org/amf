@@ -11,6 +11,7 @@ import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
 import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations._
 import org.yaml.model.{YMap, YType}
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
@@ -25,7 +26,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
         checkBalancedParams(value, entry.value, server.id, ServerModel.Url.value.iri(), ctx)
         if (!TemplateUri.isValid(value))
-          ctx.violation(api.id, TemplateUri.invalidMsg(value), entry.value)
+          ctx.violation(InvalidServerPath, api.id, TemplateUri.invalidMsg(value), entry.value)
 
         map.key("serverDescription".asRamlAnnotation, ServerModel.Description in server)
 
@@ -38,7 +39,10 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         map
           .key("baseUriParameters")
           .foreach { entry =>
-            ctx.violation(api.id, "'baseUri' not defined and 'baseUriParameters' defined.", entry)
+            ctx.violation(ParametersWithoutBaseUri,
+                          api.id,
+                          "'baseUri' not defined and 'baseUriParameters' defined.",
+                          entry)
 
             val server = Server().adopted(api.id)
             parseBaseUriParameters(server, Nil)
@@ -73,11 +77,11 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
                 case _       => buildParamFromVar(v, server.id)
 
             })
-            val (used, unused) = parameters.partition(flatten.contains(_))
-            val finalParams    = flatten ++ unused
+            val (_, unused) = parameters.partition(flatten.contains(_))
+            val finalParams = flatten ++ unused
             server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
             unused.foreach { p =>
-              ctx.warning(ParserSideValidations.ParsingWarningSpecification.id,
+              ctx.warning(UnusedBaseUriParameter,
                           p.id,
                           None,
                           s"Unused base uri parameter ${p.name.value()}",
@@ -85,7 +89,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
                           p.location())
             }
           case YType.Null =>
-          case _          => ctx.violation("Invalid node for baseUriParameters", entry.value)
+          case _          => ctx.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
         }
       case None =>
         if (orderedVariables.nonEmpty)
@@ -136,7 +140,7 @@ case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: 
         basePath = entry.value.as[String]
 
         if (!basePath.startsWith("/")) {
-          ctx.violation(api.id, "'basePath' property must start with '/'", entry.value)
+          ctx.violation(InvalidBasePath, api.id, "'basePath' property must start with '/'", entry.value)
           basePath = "/" + basePath
         }
       }

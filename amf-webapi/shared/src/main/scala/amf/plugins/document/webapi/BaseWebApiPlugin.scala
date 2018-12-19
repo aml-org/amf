@@ -21,7 +21,7 @@ import amf.plugins.document.webapi.references.WebApiReferenceHandler
 import amf.plugins.document.webapi.validation.WebApiValidations
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.UnsupportedPipeline
 
 import scala.concurrent.Future
 
@@ -69,7 +69,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
 
   override def resolve(unit: BaseUnit, errorHandler: ErrorHandler, pipelineId: String): BaseUnit = {
     errorHandler.violation(
-      ParserSideValidations.ResolutionErrorSpecification.id,
+      UnsupportedPipeline,
       s"Unsupported '$pipelineId' on $ID plugin",
       unit.location().getOrElse(unit.id)
     )

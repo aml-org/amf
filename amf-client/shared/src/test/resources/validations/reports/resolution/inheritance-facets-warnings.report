@@ -5,7 +5,7 @@ Number of results: 11
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Invalid scalar inheritance base type http://www.w3.org/2001/XMLSchema#integer < http://www.w3.org/2001/XMLSchema#string 
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedType/property/a/scalar/a
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(112,6)-(114,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: Incompatible types [class amf.plugins.domain.shapes.models.NodeShape, class amf.plugins.domain.shapes.models.ScalarShape]
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedType1/property/a/a
@@ -23,7 +23,7 @@ Level: Violation
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: closed shapes cannot inherit from open shapes
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedAdditionalProperties
@@ -31,7 +31,7 @@ Level: Warning
   Position: Some(LexicalInformation([(12,26)-(12,30)]))
   Location: [(11,2)-(15,0)]
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for max-properties than base type for maxProperties
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMaxProperties
@@ -39,7 +39,7 @@ Level: Warning
   Position: Some(LexicalInformation([(19,19)-(19,20)]))
   Location: [(18,2)-(22,0)]
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for min-properties than base type for minProperties
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMinProperties
@@ -47,7 +47,7 @@ Level: Warning
   Position: Some(LexicalInformation([(26,19)-(26,20)]))
   Location: [(25,2)-(29,0)]
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: different values for discriminator constraint
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedDiscriminator
@@ -55,7 +55,7 @@ Level: Warning
   Position: Some(LexicalInformation([(36,19)-(36,21)]))
   Location: [(34,2)-(40,0)]
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMaxLength/property/a/scalar/a
@@ -63,7 +63,7 @@ Level: Warning
   Position: Some(LexicalInformation([(51,19)-(51,22)]))
   Location: [(49,6)-(53,0)]
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: different values for pattern constraint
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedPattern/property/a/scalar/a
@@ -71,7 +71,7 @@ Level: Warning
   Position: Some(LexicalInformation([(64,8)-(66,0)]))
   Location: [(62,6)-(66,0)]
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for maximum than base type for maximum
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMaximum/property/a/scalar/a
@@ -79,7 +79,7 @@ Level: Warning
   Position: Some(LexicalInformation([(77,17)-(77,20)]))
   Location: [(75,6)-(79,0)]
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for min-minimum than base type for minimum
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMinimum/property/a/scalar/a
@@ -87,7 +87,7 @@ Level: Warning
   Position: Some(LexicalInformation([(90,17)-(90,20)]))
   Location: [(88,6)-(92,0)]
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Values in subtype enumeration (f) not found in the supertype enumeration (a,b)
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedEnum/property/a/scalar/a

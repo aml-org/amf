@@ -8,6 +8,7 @@ import amf.core.model.domain.DomainElement
 import amf.core.parser.{ErrorHandler, LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
@@ -16,7 +17,7 @@ import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
 import amf.plugins.document.webapi.resolution.pipelines.{OasEditingPipeline, OasResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
-import amf.{Oas20Profile, Oas30Profile, ProfileName}
+import amf.{Oas20Profile, Oas30Profile, OasProfile, ProfileName}
 import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends BaseWebApiPlugin {
@@ -148,6 +149,9 @@ object Oas20Plugin extends OasPlugin {
                        refs: Seq[ParsedReference],
                        wrapped: ParserContext,
                        ds: Option[OasWebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds)
+
+  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
+    super.domainValidationProfiles(platform).filterKeys(k => k == Oas20Profile.p || k == OasProfile.p)
 }
 
 object Oas30Plugin extends OasPlugin {
@@ -220,4 +224,7 @@ object Oas30Plugin extends OasPlugin {
                        refs: Seq[ParsedReference],
                        wrapped: ParserContext,
                        ds: Option[OasWebApiDeclarations]) = new Oas3WebApiContext(loc, refs, wrapped, ds)
+
+  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
+    defaultValidationProfiles.filterKeys(_ == validationProfile.p)
 }

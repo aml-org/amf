@@ -5,6 +5,7 @@ import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclara
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
+import amf.plugins.features.validation.ParserSideValidations.InvalidAbstractDeclarationType
 import org.yaml.model._
 
 object ParametrizedDeclarationParser {
@@ -47,7 +48,7 @@ case class ParametrizedDeclarationParser(
       case YType.Str => fromStringNode(node)
       case _ =>
         val declaration = producer("") // todo : review with pedro
-        ctx.violation(declaration.id, "Invalid model extension.", node)
+        ctx.violation(InvalidAbstractDeclarationType, declaration.id, "Invalid model extension.", node)
         declaration
     }
   }
@@ -60,13 +61,12 @@ case class ParametrizedDeclarationParser(
           .set(ParametrizedDeclarationModel.Target,
                declarations(value, SearchScope.Fragments).link(value).asInstanceOf[AbstractDeclaration])
       case Right(n) =>
-        val text = n.as[YScalar].text
-        val target = declarations(text, SearchScope.All).link(text).asInstanceOf[AbstractDeclaration]
+        val text        = n.as[YScalar].text
+        val target      = declarations(text, SearchScope.All).link(text).asInstanceOf[AbstractDeclaration]
         val paremtrized = producer(text)
         paremtrized
           .add(Annotations.valueNode(node))
-          .set(ParametrizedDeclarationModel.Target,
-            target)
+          .set(ParametrizedDeclarationModel.Target, target)
     }
   }
 }

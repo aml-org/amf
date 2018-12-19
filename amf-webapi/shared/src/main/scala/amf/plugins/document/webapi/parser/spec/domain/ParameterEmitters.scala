@@ -26,7 +26,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType.Bool
 import org.yaml.model.{YNode, YType}
@@ -100,7 +100,9 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
             case Some(shape: AnyShape) =>
               result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references).entries()
             case Some(other) =>
-              spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+              spec.eh.violation(ResolutionValidation,
+                                other.id,
+                                None,
                                 "Cannot emit parameter for a non WebAPI shape",
                                 other.position(),
                                 other.location())
@@ -155,7 +157,7 @@ case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
               case Left(p: PartEmitter) =>
                 result += new EntryEmitter {
                   override def emit(b: EntryBuilder): Unit =
-                    b.entry(YNode("schema"), (b) => p.emit(b))
+                    b.entry(YNode("schema"), b => p.emit(b))
 
                   override def position(): Position = p.position()
                 }

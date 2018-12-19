@@ -14,6 +14,7 @@ import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Settings}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.ExclusivePropertiesSpecification
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -28,10 +29,12 @@ object SecuritySchemeParser {
       case _: Raml => RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx))
       case _: Oas  => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
       case other =>
-        ctx.violation(s"Unsupported vendor $other in security scheme parsers", entry)
+        ctx.violation(ParserSideValidations.UnexpectedVendor,
+                      "",
+                      s"Unsupported vendor $other in security scheme parsers",
+                      entry)
         RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx)) // use raml as default?
     }
-
 }
 
 trait SecuritySchemeParser extends SpecParserOps {
@@ -99,7 +102,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
 
             if (map.key("queryParameters").isDefined && map.key("queryString").isDefined) {
               ctx.violation(
-                ParserSideValidations.ExclusivePropertiesSpecification.id,
+                ExclusivePropertiesSpecification,
                 scheme.id,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
                 map

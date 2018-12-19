@@ -109,8 +109,6 @@ object ParsedPropertyConstraint extends DialectWrapper {
 
 object ParsedValidationSpecification extends DialectWrapper {
 
-  val PARSER_SIDE_VALIDATION = (Namespace.Shapes + "ParserShape").iri()
-
   def apply(node: DialectDomainElement, prefixes: mutable.Map[String,String]): ValidationSpecification = {
     ValidationSpecification(
       name                = mandatory("name in validation specification", extractString(node, "name")),

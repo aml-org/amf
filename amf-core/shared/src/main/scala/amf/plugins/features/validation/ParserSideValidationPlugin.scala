@@ -28,28 +28,22 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
 
   def parserSideValidationsProfile(profile: ProfileName): ValidationProfile = {
     // sorting parser side validation for this profile
-    val violationParserSideValidations = ParserSideValidations.validations
+    val violationParserSideValidations = Validations.validations
       .filter { v =>
-        ParserSideValidations
-          .levels(v.id)
-          .get(profile)
-          .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.VIOLATION
+        Validations
+          .level(v.id, profile) == SeverityLevels.VIOLATION
       }
       .map(_.name)
-    val infoParserSideValidations = ParserSideValidations.validations
+    val infoParserSideValidations = Validations.validations
       .filter { v =>
-        ParserSideValidations
-          .levels(v.id)
-          .get(profile)
-          .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.INFO
+        Validations
+          .level(v.id, profile) == SeverityLevels.INFO
       }
       .map(_.name)
-    val warningParserSideValidations = ParserSideValidations.validations
+    val warningParserSideValidations = Validations.validations
       .filter { v =>
-        ParserSideValidations
-          .levels(v.id)
-          .get(profile)
-          .getOrElse(ProfileNames.AMF, SeverityLevels.VIOLATION) == SeverityLevels.WARNING
+        Validations
+          .level(v.id, profile) == SeverityLevels.WARNING
       }
       .map(_.name)
 
@@ -59,7 +53,7 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
       infoLevel = infoParserSideValidations,
       warningLevel = warningParserSideValidations,
       violationLevel = violationParserSideValidations,
-      validations = ParserSideValidations.validations
+      validations = Validations.validations
     )
   }
 

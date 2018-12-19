@@ -10,11 +10,15 @@ import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSch
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.{
+  ExamplesMustBeAMap,
+  ExclusivePropertiesSpecification,
+  NamedExampleUsedInExample
+}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
-import org.yaml.render.{JsonRender, YamlRender}
+import org.yaml.render.YamlRender
 
 import scala.collection.mutable.ListBuffer
 
@@ -54,7 +58,7 @@ case class RamlExamplesParser(map: YMap,
   def parse(): Seq[Example] = {
     if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && parentId.isDefined) {
       ctx.violation(
-        ParserSideValidations.ExclusivePropertiesSpecification.id,
+        ExclusivePropertiesSpecification,
         parentId.get,
         s"Properties '$singleExampleKey' and '$multipleExamplesKey' are exclusive and cannot be declared together",
         map
@@ -84,7 +88,8 @@ case class RamlMultipleExampleParser(key: String,
             case YType.Null => // ignore
             case _ =>
               ctx.violation(
-                ParserSideValidations.ExamplesMustBeAMap.id,
+                ExamplesMustBeAMap,
+                "",
                 s"Property '$key' should be a map",
                 entry
               )
@@ -123,7 +128,7 @@ case class RamlSingleExampleParser(key: String,
         case Left(s) =>
           ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example]).map { example =>
             ctx.warning(
-              ParserSideValidations.NamedExampleUsedInExample.id,
+              NamedExampleUsedInExample,
               example.id,
               "Using an included named example as an inlined example",
               entry
@@ -231,7 +236,7 @@ case class NodeDataNodeParser(node: YNode,
     var jsonText: Option[String] = None
     val exampleNode: Option[YNode] = node.toOption[YScalar] match {
       case Some(scalar) if scalar.mark.isInstanceOf[QuotedMark] => Some(node)
-      case Some(scalar) if isScalar                             => Some(node)
+      case Some(_) if isScalar                                  => Some(node)
       case Some(scalar) if JSONSchema.unapply(scalar.text).isDefined =>
         jsonText = Some(scalar.text)
         node
@@ -279,7 +284,7 @@ case class DataNodeParserResult(exampleNode: Option[YNode], dataNode: Option[Dat
 
 case class ExampleOptions(strictDefault: Boolean, quiet: Boolean, isScalar: Boolean = false) {
   def checkScalar(shape: AnyShape): ExampleOptions = shape match {
-    case s: ScalarShape =>
+    case _: ScalarShape =>
       ExampleOptions(strictDefault, quiet, isScalar = true)
     case _ => this
   }

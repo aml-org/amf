@@ -6,6 +6,7 @@ import amf.core.model.domain
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, ParserContext, YMapOps}
 import amf.core.vocabulary.Namespace
+import amf.plugins.features.validation.ParserSideValidations.UnableToParseNode
 import org.yaml.model.{YMap, YNode}
 
 import scala.collection.mutable
@@ -28,7 +29,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement],
     * @param map incoming node map
     * @return builder function that returns the type of dynamic node
     */
-  def retrieveType(id: String, map: YMap): Option[(Annotations) => AmfObject] = {
+  def retrieveType(id: String, map: YMap): Option[Annotations => AmfObject] = {
     ts(map, ctx, id).find({ t =>
       dynamicBuilders.get(t).isDefined
     }) match {
@@ -129,10 +130,12 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement],
           Some(array)
 
         case other =>
-          ctx.violation(id, s"Cannot parse object data node from non object JSON structure $other", map)
+          ctx.violation(UnableToParseNode,
+                        id,
+                        s"Cannot parse object data node from non object JSON structure $other",
+                        map)
           None
       }
-
     })
   }
 
@@ -208,7 +211,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement],
   /**
     * Mapping fro @type URI values to dynamic node builders
     */
-  private val dynamicBuilders: mutable.Map[String, (Annotations) => AmfObject] = mutable.Map(
+  private val dynamicBuilders: mutable.Map[String, Annotations => AmfObject] = mutable.Map(
     LinkNode.builderType.iri()   -> domain.LinkNode.apply,
     ArrayNode.builderType.iri()  -> domain.ArrayNode.apply,
     ScalarNode.builderType.iri() -> domain.ScalarNode.apply,

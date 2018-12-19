@@ -26,7 +26,7 @@ trait ValidationResultProcessor {
       message = "Constraint violation"
     }
 
-    if (spec.isParserSide() && Option(result.message).isDefined) {
+    if (spec.isParserSide && Option(result.message).isDefined) {
       message = result.message
     }
 
@@ -88,7 +88,7 @@ trait ValidationResultProcessor {
           message = result.message.getOrElse("Constraint violation")
         }
 
-        if (targetSpec.isParserSide() && result.message.nonEmpty) {
+        if (targetSpec.isParserSide && result.message.nonEmpty) {
           message = result.message.get
         }
 

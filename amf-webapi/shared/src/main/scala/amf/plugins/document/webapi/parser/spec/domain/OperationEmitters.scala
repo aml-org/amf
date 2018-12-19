@@ -13,7 +13,7 @@ import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
 import amf.plugins.domain.webapi.models.Operation
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.Strings
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -32,12 +32,14 @@ case class Raml10OperationEmitter(operation: Operation, ordering: SpecOrdering, 
     Option(operation.request).foreach { req =>
       req.fields
         .entry(RequestModel.QueryString)
-        .map { f =>
+        .foreach { f =>
           Option(f.value.value) match {
             case Some(shape: AnyShape) =>
               results += RamlNamedTypeEmitter(shape, ordering, references, Raml10TypePartEmitter.apply)
             case Some(other) =>
-              spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+              spec.eh.violation(ResolutionValidation,
+                                req.id,
+                                None,
                                 "Cannot emit non WebApi Shape",
                                 other.position(),
                                 other.location())
@@ -119,10 +121,16 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
     }
 
     fs.entry(OperationModel.Responses)
-      .map(f => result += RamlResponsesEmitter("responses", f, ordering, references, defaultResponse = false))
+      .map(f => result += RamlResponsesEmitter("responses", f, ordering, references))
 
     fs.entry(OperationModel.Responses)
-      .map(f => result += RamlResponsesEmitter("defaultResponse".asRamlAnnotation, f, ordering, references, defaultResponse = true))
+      .map(
+        f =>
+          result += RamlResponsesEmitter("defaultResponse".asRamlAnnotation,
+                                         f,
+                                         ordering,
+                                         references,
+                                         defaultResponse = true))
 
     fs.entry(OperationModel.Security)
       .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))

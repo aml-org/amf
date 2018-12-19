@@ -1,14 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
-import amf.core.annotations.{LexicalInformation, SourceVendor}
+import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{AmfArray, Shape}
-import amf.core.parser.{Annotations, Position, Range, SearchScope}
+import amf.core.parser.{Annotations, Range, SearchScope}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models._
+import amf.plugins.features.validation.ParserSideValidations.InvalidTypeExpression
 import org.yaml.model.{YMapEntry, YNode, YPart, YScalar}
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
@@ -51,7 +52,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
           parseInput(result.remaining)
         case '|' =>
           if (acc == "" && this.parsedShape.isEmpty) {
-            ctx.violation("", "Syntax error, cannot parse Union with empty values", lexical, location)
+            ctx.violation(InvalidTypeExpression,
+                          "",
+                          None,
+                          "Syntax error, cannot parse Union with empty values",
+                          lexical,
+                          location)
           }
           processChars()
           parsedShape = Some(toUnion)
@@ -60,12 +66,14 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
           parseInput(result.remaining)
         case '[' =>
           processChars()
-          if (parsingArray) { ctx.violation("", "Syntax error, duplicated [", lexical, location) }
+          if (parsingArray) {
+            ctx.violation(InvalidTypeExpression, "", None, "Syntax error, duplicated [", lexical, location)
+          }
           parsingArray = true
           parseInput(input.tail)
         case ']' =>
           if (!parsingArray) {
-            ctx.violation("", "Syntax error, Not matching ]", lexical, location)
+            ctx.violation(InvalidTypeExpression, "", None, "Syntax error, Not matching ]", lexical, location)
           }
           parsingArray = false
           parsedShape = Some(toArray)
@@ -130,7 +138,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
       case None =>
         val union = UnionShape()
         adopt(union)
-        ctx.violation(union.id, "", None, "Syntax error, cannot create empty Union", lexical, location)
+        ctx.violation(InvalidTypeExpression,
+                      union.id,
+                      None,
+                      "Syntax error, cannot create empty Union",
+                      lexical,
+                      location)
         union
       case Some(u: UnionShape) => u
       case Some(shape) =>
@@ -174,7 +187,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
             }
           case _ =>
-            ctx.violation(shape.id, s"Error parsing type expression, cannot accept type $shape", lexical, location)
+            ctx.violation(InvalidTypeExpression,
+                          shape.id,
+                          None,
+                          s"Error parsing type expression, cannot accept type $shape",
+                          lexical,
+                          location)
             Some(shape)
         }
     }
@@ -220,7 +238,8 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
       case m: MatrixShape => isEmptyArray(m)
       case _              => false
     }
-    if (empty) ctx.violation(t.id, "Syntax error, generating empty array", lexical, location)
+    if (empty)
+      ctx.violation(InvalidTypeExpression, t.id, None, "Syntax error, generating empty array", lexical, location)
   }
 
   private val (lexical, location) = part match {

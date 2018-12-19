@@ -8,6 +8,7 @@ import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{EmptyFutureDeclarations, ErrorHandler, LinkReference, ParserContext, RefContainer}
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
@@ -23,7 +24,7 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   Raml10ResolutionPipeline
 }
 import amf.plugins.domain.webapi.models.WebApi
-import amf.{ProfileName, Raml08Profile, RamlProfile}
+import amf._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YDocument, YNode}
 
@@ -168,6 +169,9 @@ object Raml08Plugin extends RamlPlugin {
       case _                                   => super.resolve(unit, errorHandler, pipelineId)
     }
   }
+
+  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
+    defaultValidationProfiles.filterKeys(_ == validationProfile.p)
 }
 
 object Raml10Plugin extends RamlPlugin {
@@ -228,4 +232,9 @@ object Raml10Plugin extends RamlPlugin {
     case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler).resolve(unit)
     case _                                         => super.resolve(unit, errorHandler, pipelineId)
   }
+
+  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
+    super
+      .domainValidationProfiles(platform)
+      .filterKeys(k => k == Raml10Profile.p || k == RamlProfile.p || k == AmfProfile.p)
 }

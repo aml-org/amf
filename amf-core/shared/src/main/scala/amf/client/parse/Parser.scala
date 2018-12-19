@@ -8,7 +8,6 @@ import amf.core.client.ParsingOptions
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
 import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
-import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.internal.resource.{ResourceLoader, StringResourceLoader}
 import amf.{MessageStyle, ProfileName, RAMLStyle}
 

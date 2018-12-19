@@ -11,6 +11,7 @@ import amf.internal.environment.Environment
 import org.yaml.model.YNode
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
+import amf.plugins.features.validation.ParserSideValidations.{ExpectedModule, InvalidInclude}
 
 import scala.collection.mutable
 import scala.concurrent.Future
@@ -47,8 +48,8 @@ case class Reference(url: String, refs: Seq[RefContainer]) extends PlatformSecre
         Future(parser.ReferenceResolutionResult(None, Some(eventualUnit)))
       } recover {
         case e: CyclicReferenceException if allowRecursiveRefs =>
-          val fulllUrl = e.history.last
-          resolveRecursiveUnit(fulllUrl).map(u => ReferenceResolutionResult(None, Some(u)))
+          val fullUrl = e.history.last
+          resolveRecursiveUnit(fullUrl).map(u => ReferenceResolutionResult(None, Some(u)))
         case e: Throwable =>
           Future(ReferenceResolutionResult(Some(e), None))
       }
@@ -77,12 +78,12 @@ case class Reference(url: String, refs: Seq[RefContainer]) extends PlatformSecre
     unit match {
       case _: Module => // if is a library, kind should be LibraryReference
         if (!LibraryReference.eq(kind))
-          nodes.foreach(ctx.violation("Libraries must be applied by using 'uses'", _))
+          nodes.foreach(ctx.violation(ExpectedModule, unit.id, "Libraries must be applied by using 'uses'", _))
       // ToDo find a better way to skip vocabulary/dialect elements of this validation
       case _ if !unit.meta.`type`.exists(_.iri().contains(Namespace.Meta.base)) =>
         // if is not a library, and is not a vocabulary, kind should not be LibraryReference
         if (LibraryReference.eq(kind))
-          nodes.foreach(ctx.violation("Fragments must be imported by using '!include'", _))
+          nodes.foreach(ctx.violation(InvalidInclude, unit.id, "Fragments must be imported by using '!include'", _))
       case _ => // nothing to do
     }
     unit

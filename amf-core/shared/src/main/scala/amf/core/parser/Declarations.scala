@@ -5,6 +5,7 @@ import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.SearchScope.{All, Fragments, Named}
 import amf.core.utils.QName
+import amf.plugins.features.validation.ParserSideValidations.DeclarationNotFound
 import org.yaml.model.YPart
 
 class Declarations(var libraries: Map[String, Declarations] = Map(),
@@ -13,7 +14,7 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
                    errorHandler: Option[ErrorHandler],
                    futureDeclarations: FutureDeclarations) {
 
-  var promotedFragments = Seq[Fragment]()
+  var promotedFragments: Seq[Fragment] = Seq[Fragment]()
 
   def +=(fragment: (String, Fragment)): Declarations = {
     fragment match {
@@ -49,7 +50,7 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
   }
 
   protected def error(message: String, ast: YPart): Unit = errorHandler match {
-    case Some(handler) => handler.violation(message, ast)
+    case Some(handler) => handler.violation(DeclarationNotFound, "", message, ast)
     case _             => throw new Exception(message)
   }
 

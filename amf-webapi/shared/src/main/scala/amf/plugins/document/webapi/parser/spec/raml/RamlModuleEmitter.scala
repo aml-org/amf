@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument
 
 /**
@@ -87,7 +87,9 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
       Option(dataType.encodes) match {
         case Some(shape: AnyShape) => Raml10TypeEmitter(shape, ordering, references = Nil).entries()
         case Some(other) =>
-          spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+          spec.eh.violation(ResolutionValidation,
+                            other.id,
+                            None,
                             "Cannot emit non WebApi Shape",
                             other.position(),
                             other.location())

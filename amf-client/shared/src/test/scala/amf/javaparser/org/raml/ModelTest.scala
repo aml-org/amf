@@ -16,6 +16,7 @@ import _root_.org.scalatest.compatible.Assertion
 import amf.core.parser.{DefaultParserSideErrorHandler, UnhandledErrorHandler}
 import amf.core.vocabulary.Namespace
 import amf.emit.AMFRenderer
+import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
 
 import scala.concurrent.Future
 
@@ -33,7 +34,7 @@ trait ModelValidationTest extends DirectoryTest {
       // we only need to use the platform if there are errors in examples, this is what causes differences due to
       // the different JSON-Schema libraries used in JS and the JVM
       val usePlatform = !report.conforms && report.results.exists(
-        _.validationId == (Namespace.AmfParser + "example-validation-error").iri())
+        _.validationId == ExampleValidationErrorSpecification.id)
       (output, usePlatform)
     }
   }

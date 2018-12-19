@@ -8,7 +8,7 @@ import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization._
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.RecursiveShapeSpecification
 
 import scala.collection.mutable.ListBuffer
 
@@ -16,7 +16,6 @@ import scala.collection.mutable.ListBuffer
   * Computes the canonical form for all the shapes in the model
   * We are assuming certain pre-conditions in the state of the shape:
   *  - All type references have been replaced by their expanded forms
-  * @param profile
   */
 class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean)(
     override implicit val errorHandler: ErrorHandler)
@@ -62,18 +61,20 @@ private[stages] case class RecursionErrorRegister() {
   def recursionAndError(root: Shape, base: Option[String], s: Shape, traversed: IdsTraversionCheck)(
       implicit context: NormalizationContext): RecursiveShape = {
     val recursion = buildRecursion(base, s)
-    recursionError(root, recursion,  traversed: IdsTraversionCheck, Some(root.id))
+    recursionError(root, recursion, traversed: IdsTraversionCheck, Some(root.id))
   }
 
-  def recursionError(original: Shape, r: RecursiveShape, traversed: IdsTraversionCheck, checkId: Option[String] = None)(
-      implicit context: NormalizationContext): RecursiveShape = {
+  def recursionError(original: Shape,
+                     r: RecursiveShape,
+                     traversed: IdsTraversionCheck,
+                     checkId: Option[String] = None)(implicit context: NormalizationContext): RecursiveShape = {
 
     val canRegister = !avoidRegister.contains(r.id)
     if (!r.supportsRecursion
           .option()
           .getOrElse(false) && !traversed.avoidError(r, checkId) && canRegister) {
       context.errorHandler.violation(
-        ParserSideValidations.RecursiveShapeSpecification.id,
+        RecursiveShapeSpecification,
         original.id,
         None,
         "Error recursive shape",
@@ -81,7 +82,7 @@ private[stages] case class RecursionErrorRegister() {
         original.location()
       )
       avoidRegister += r.id
-    } else if(traversed.avoidError(r, checkId)) {
+    } else if (traversed.avoidError(r, checkId)) {
       r.withSupportsRecursion(true)
     }
     r

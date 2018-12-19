@@ -2,500 +2,591 @@ package amf.plugins.features.validation
 
 import amf._
 import amf.core.validation.SeverityLevels
+import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
 import amf.core.validation.core.ValidationSpecification
+import amf.core.validation.core.ValidationSpecification.PARSER_SIDE_VALIDATION
 import amf.core.vocabulary.Namespace
+import amf.core.vocabulary.Namespace.AmfParser
 
-object ParserSideValidations {
+// noinspection TypeAnnotation
+object ParserSideValidations extends Validations {
+  override val specification: String = PARSER_SIDE_VALIDATION
+  override val namespace: Namespace = AmfParser
 
-  val DuplicatedOperationStatusCodeSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "duplicated-operation-status-code").iri(),
-    "Status code for the  provided operation response must not be duplicated",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
-
-  val MissingOperationStatusCodeSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "missing-operation-status-code").iri(),
-    "Status code must be provided for an operation response",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val DialectError = validation(
+    "dialect-error",
+    "Dialect error"
   )
 
-  val ChainedReferenceSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "chained-reference-error").iri(),
-    "References cannot be chained",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val ExpectedVocabularyModule = validation(
+    "expected-vocabulary-module",
+    "Expected vocabulary module"
   )
 
-  val RecursiveShapeSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "recursive-shape").iri(),
-    "Recursive shape",
-    Some("Recursive type"),
-    Some("Recursive schema"),
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidShapeFormat = validation(
+    "invalid-shape-format",
+    "Invalid shape format"
   )
 
-  val ExclusivePropertiesSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "exclusive-properties-error").iri(),
-    "Exclusive properties declared together",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidDialectPatch = validation(
+    "invalid-dialect-patch",
+    "Invalid dialect patch"
   )
 
-  val ExamplesMustBeAMap = ValidationSpecification(
-    (Namespace.AmfParser + "examples-must-be-map").iri(),
-    "Examples value should be a map",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidBasePath = validation(
+    "invalid-base-path",
+    "Invalid base path"
   )
 
-  val PathTemplateUnbalancedParameters = ValidationSpecification(
-    (Namespace.AmfParser + "path-template-unbalanced-parameters").iri(),
-    "Nested parameters are not allowed in path templates",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidBaseUriParametersType = validation(
+    "invalid-base-uri-parameters-type",
+    "Invalid baseUriParameters type"
   )
 
-  val OasBodyAndFormDataParameterSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "oas-not-body-and-form-data-parameters").iri(),
-    "Operation cannot have a body parameter and a formData parameter",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val UnusedBaseUriParameter = validation(
+    "unused-base-uri-parameter",
+    "Unused base uri parameter"
   )
 
-  val OasInvalidBodyParameter = ValidationSpecification(
-    (Namespace.AmfParser + "oas-invalid-body-parameter").iri(),
-    "Only one body parameter is allowed",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val ParametersWithoutBaseUri = validation(
+    "parameters-without-base-uri",
+    "'baseUri' not defined and 'baseUriParameters' defined."
   )
 
-  val OasInvalidParameterBinding = ValidationSpecification(
-    (Namespace.AmfParser + "oas-invalid-parameter-binding").iri(),
-    "Parameter has invalid binding",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val ParameterNameRequired = validation(
+    "parameter-name-required",
+    "Parameter name is required"
   )
 
-  val OasFormDataNotFileSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "oas-file-not-form-data-parameters").iri(),
-    "Parameters with type file must be in formData",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidServerPath = validation(
+    "invalid-server-path",
+    "Invalid server path"
   )
 
-  val ExampleValidationErrorSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "example-validation-error").iri(),
-    "Example does not validate type",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidAbstractDeclarationParameterInType = validation(
+    "invalid-abstract-declaration-parameter-in-type",
+    "Trait/Resource Type parameter in type"
   )
 
-  val UnsupportedExampleMediaTypeErrorSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "unsupported-example-media-type").iri(),
-    "Cannot validate example with unsupported media type",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidSecuredByType = validation(
+    "invalid-secured-by-type",
+    "Invalid 'securedBy' type"
   )
 
-  val UnsupportedExampleMediaTypeWarningSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "unsupported-example-media-type-warning").iri(),
-    "Cannot validate example with unsupported media type",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidEndpointPath = validation(
+    "invalid-endpoint-path",
+    "Invalid endpoint path (invalid template uri)"
   )
 
-  val UnknownSecuritySchemeErrorSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "unknown-security-scheme").iri(),
-    "Cannot find the security scheme",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val DuplicatedEndpointPath = validation(
+    "duplicated-endpoint-path",
+    "Duplicated endpoint path"
   )
 
-  val UnknownScopeErrorSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "unknown-scope").iri(),
-    "Cannot find the scope in the security settings",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
-  val NamedExampleUsedInExample = ValidationSpecification(
-    (Namespace.AmfParser + "named-example-used-inlined-example").iri(),
-    "Named example should not be used as inline examples",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
-  val DialectAmbiguousRangeSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "dialect-ambiguous-range").iri(),
-    "Ambiguous entity range",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
-  )
-  val ClosedShapeSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "closed-shape").iri(),
-    "Invalid property for node",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val SchemaDeprecated = validation(
+    "schema-deprecated",
+    "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
   )
 
-  val DuplicatedPropertySpecification = ValidationSpecification(
-    (Namespace.AmfParser + "duplicated-property").iri(),
-    "Duplicated property in node",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val SchemasDeprecated = validation(
+    "schemas-deprecated",
+    "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead"
   )
 
-  val MissingPropertySpecification = ValidationSpecification(
-    (Namespace.AmfParser + "mandatory-property-shape").iri(),
-    "Missing mandatory property",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidOperationType = validation(
+    "invalid-operation-type",
+    "Invalid operation type"
   )
 
-  val ParsingErrorSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "parsing-error").iri(),
-    "Parsing error",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidExternalTypeType = validation(
+    "invalid-external-type-type",
+    "Invalid external type type"
   )
 
-  val CycleReferenceError = ValidationSpecification(
-    (Namespace.AmfParser + "cycle-reference").iri(),
-    "Cycle in references",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidXmlSchemaType = validation(
+    "invalid-xml-schema-type",
+    "Invalid xml schema type"
   )
 
-  val InvalidTypeInheritanceErrorSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "invalid-type-inheritance").iri(),
-    "Invalid inheritance relationship",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidJsonSchemaExpression = validation(
+    "invalid-json-schema-expression",
+    "Invalid json schema expression"
   )
 
-  val InvalidTypeInheritanceWarningSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "invalid-type-inheritance-warning").iri(),
-    "Invalid inheritance relationship",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidPropertyType = validation(
+    "invalid-property-type",
+    "Invalid property key type. Should be string"
   )
 
-  val MissingExtensionInReferences = ValidationSpecification(
-    (Namespace.AmfParser + "missing-extension").iri(),
-    "Missing extension in reference",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val UnableToParseArray = validation(
+    "unable-to-parse-array",
+    "Unable to parse array definition"
   )
 
-  val JsonSchemaInheratinaceWarningSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "json-schema-inheritance").iri(),
-    "Inheriting from JSON Schema",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidDecimalPoint = validation(
+    "invalid-decimal-point",
+    "Invalid decimal point"
   )
 
-  val XmlSchemaInheratinaceWarningSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "xml-schema-inheritance").iri(),
-    "Inheriting from XML Schema",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidInclude = validation(
+    "invalid-include",
+    "Invalid !include value"
   )
 
-  val ParsingWarningSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "parsing-warning").iri(),
-    "Parsing warning",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidTypeDefinition = validation(
+    "invalid-type-definition",
+    "Invalid type definition"
   )
 
-  val InconsistentPropertyRangeValueSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "inconsistent-property-range-value").iri(),
-    "Range value does not match the expected type",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidRequiredArrayForSchemaVersion = validation(
+    "invalid-required-array-for-schema-version",
+    "Required arrays of properties not supported in JSON Schema below version draft-4"
   )
 
-  val MissingPropertyRangeSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "missing-node-mapping-range-term").iri(),
-    "Missing property range term",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidRequiredBooleanForSchemaVersion = validation(
+    "invalid-required-boolean-for-schema-version",
+    "Required property boolean value is only supported in JSON Schema draft-3"
   )
 
-  val MissingTermSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "missing-vocabulary-term").iri(),
-    "Missing vocabulary term",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidAdditionalPropertiesType = validation(
+    "invalid-additional-properties-type",
+    "additionalProperties should be a boolean or a map"
   )
 
-  val MissingFragmentSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "missing-dialect-fragment").iri(),
-    "Missing dialect fragment",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidTupleType = validation(
+    "invalid-tuple-type",
+    "Tuple should be a sequence"
   )
 
-  val ResolutionErrorSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "resolution-error").iri(),
-    "Error during resolution stage",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidSchemaType = validation(
+    "invalid-schema-type",
+    "Schema should be a string"
   )
 
-  val EmittionErrorEspecification = ValidationSpecification(
-    (Namespace.AmfParser + "emittion-error").iri(),
-    "Error during emittion stage",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidMediaTypeType = validation(
+    "invalid-media-type-type",
+    "Media type should be a string"
   )
 
-  val PatternPropertiesOnClosedNodeSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "pattern-properties-on-closed-node").iri(),
-    "Closed node cannot define pattern properties",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidXoneType = validation(
+    "invalid-xone-type",
+    "Xone should be a sequence"
   )
 
-  val DiscriminatorOnExtendedUnionSpecification = ValidationSpecification(
-    (Namespace.AmfParser + "discriminator-on-extended-union").iri(),
-    "Property discriminator not supported in a node extending a unionShape",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidAndType = validation(
+    "invalid-and-type",
+    "And should be a sequence"
   )
 
-  val InvalidDeclarationPathComponent = ValidationSpecification(
-    (Namespace.AmfParser + "invalid-declaration-path").iri(),
-    "Declaration Path component is not present in tree",
-    None,
-    None,
-    Seq(ValidationSpecification.PARSER_SIDE_VALIDATION)
+  val InvalidUnionType = validation(
+    "invalid-union-type",
+    "Union should be a sequence"
   )
 
-  val levels: Map[String, Map[ProfileName, String]] = Map(
-    DuplicatedOperationStatusCodeSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    RecursiveShapeSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.WARNING,
-      Oas20Profile  -> SeverityLevels.WARNING,
-      Oas30Profile  -> SeverityLevels.WARNING,
-      AmfProfile    -> SeverityLevels.INFO
-    ),
-    ChainedReferenceSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    ExclusivePropertiesSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    PathTemplateUnbalancedParameters.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
+  val InvalidOrType = validation(
+    "invalid-or-type",
+    "Or should be a sequence"
+  )
+
+  val InvalidDisjointUnionType = validation(
+    "invalid-disjoint-union-type",
+    "Invalid type for disjoint union"
+  )
+
+  val UnexpectedVendor = validation(
+    "unexpected-vendor",
+    "Unexpected vendor"
+  )
+
+  val NullAbstractDeclaration = validation(
+    "null-abstract-declaration",
+    "Generating abstract declaration (resource type / trait)  with null value"
+  )
+
+  val InvalidAbstractDeclarationType = validation(
+    "invalid-abstract-declaration-type",
+    "Invalid type for declaration node"
+  )
+
+  val UnableToParseShapeExtensions = validation(
+    "unable-to-parse-shape-extensions",
+    "Unable to parse shape extensions"
+  )
+
+  val InvalidJsonSchemaVersion = validation(
+    "invalid-json-schema-version",
+    "Invalid Json Schema version"
+  )
+
+  val InvalidCrossSpec = validation(
+    "invalid-cross-spec",
+    "Cross spec file usage is not allowed"
+  )
+
+  val DeclarationNotFound = validation(
+    "declaration-not-found",
+    "Declaration not found"
+  )
+
+  val UriSyntaxError = validation(
+    "uri-syntax-error",
+    "invalid uri syntax"
+  )
+
+  val MissingIdInNode = validation(
+    "missing-id-in-node",
+    "Missing @id in json-ld node"
+  )
+
+  val MissingTypeInNode = validation(
+    "missing-type-in-node",
+    "Missing @type in json-ld node"
+  )
+
+  val InvalidModuleType = validation(
+    "invalid-module-type",
+    "Invalid module type"
+  )
+
+  val ExpectedModule = validation(
+    "expected-module",
+    "Expected Module"
+  )
+
+  val UnableToParseNode = validation(
+    "parse-node-fail",
+    "JsonLD @types failed to parse in node"
+  )
+
+  val UnableToParseDocument = validation(
+    "parse-document-fail",
+    "Unable to parse document"
+  )
+
+  val UnableToParseRdfDocument = validation(
+    "parse-rdf-document-fail",
+    "Unable to parse rdf document"
+  )
+
+  val NotLinkable = validation(
+    "not-linkable",
+    "Only linkable elements can be linked"
+  )
+
+  val DuplicatedOperationStatusCodeSpecification = validation(
+    "duplicated-operation-status-code",
+    "Status code for the provided operation response must not be duplicated"
+  )
+
+  val ChainedReferenceSpecification = validation(
+    "chained-reference-error",
+    "References cannot be chained"
+  )
+
+  val UnableToSetDefaultType = validation(
+    "unable-to-set-default-type",
+    "Unable to set default type"
+  )
+
+  val ExclusiveSchemaType = validation(
+    "exclusive-schema-type",
+    "'schema' and 'type' properties are mutually exclusive"
+  )
+
+  val ExclusiveSchemasType = validation(
+    "exclusive-schemas-type",
+    "'schemas' and 'types' properties are mutually exclusive"
+  )
+
+  val ExclusivePropertiesSpecification = validation(
+    "exclusive-properties-error",
+    "Exclusive properties declared together"
+  )
+
+  val ExamplesMustBeAMap = validation(
+    "examples-must-be-map",
+    "Examples value should be a map"
+  )
+
+  val PathTemplateUnbalancedParameters = validation(
+    "path-template-unbalanced-parameters",
+    "Nested parameters are not allowed in path templates"
+  )
+
+  val OasBodyAndFormDataParameterSpecification = validation(
+    "oas-not-body-and-form-data-parameters",
+    "Operation cannot have a body parameter and a formData parameter"
+  )
+
+  val OasInvalidBodyParameter = validation(
+    "oas-invalid-body-parameter",
+    "Only one body parameter is allowed"
+  )
+
+  val OasInvalidParameterBinding = validation(
+    "oas-invalid-parameter-binding",
+    "Parameter has invalid binding"
+  )
+
+  val OasFormDataNotFileSpecification = validation(
+    "oas-file-not-form-data-parameters",
+    "Parameters with type file must be in formData"
+  )
+
+  val UnsupportedExampleMediaTypeErrorSpecification = validation(
+    "unsupported-example-media-type",
+    "Cannot validate example with unsupported media type"
+  )
+
+  val UnsupportedExampleMediaTypeWarningSpecification = validation(
+    "unsupported-example-media-type-warning",
+    "Cannot validate example with unsupported media type"
+  )
+
+  val UnknownSecuritySchemeErrorSpecification = validation(
+    "unknown-security-scheme",
+    "Cannot find the security scheme"
+  )
+
+  val UnknownScopeErrorSpecification = validation(
+    "unknown-scope",
+    "Cannot find the scope in the security settings"
+  )
+  val NamedExampleUsedInExample = validation(
+    "named-example-used-inlined-example",
+    "Named example should not be used as inline examples"
+  )
+  val DialectAmbiguousRangeSpecification = validation(
+    "dialect-ambiguous-range",
+    "Ambiguous entity range"
+  )
+  val ClosedShapeSpecification = validation(
+    "closed-shape",
+    "Invalid property for node"
+  )
+
+  val DuplicatedPropertySpecification = validation(
+    "duplicated-property",
+    "Duplicated property in node"
+  )
+
+  val UnexpectedRamlScalarKey = validation(
+    "unexpected-raml-scalar-key",
+    "Unexpected key. Options are 'value' or annotations \\(.+\\)"
+  )
+
+  val UnexpectedFileTypesSyntax = validation(
+    "unexpected-file-types-syntax",
+    "Unexpected 'fileTypes' syntax. Options are string or sequence"
+  )
+
+  val MissingPropertySpecification = validation(
+    "mandatory-property-shape",
+    "Missing mandatory property"
+  )
+
+  val CycleReferenceError = validation(
+    "cycle-reference",
+    "Cycle in references"
+  )
+
+  val JsonSchemaInheratinaceWarningSpecification = validation(
+    "json-schema-inheritance",
+    "Inheriting from JSON Schema"
+  )
+
+  val XmlSchemaInheratinaceWarningSpecification = validation(
+    "xml-schema-inheritance",
+    "Inheriting from XML Schema"
+  )
+
+  val InconsistentPropertyRangeValueSpecification = validation(
+    "inconsistent-property-range-value",
+    "Range value does not match the expected type"
+  )
+
+  val MissingPropertyRangeSpecification = validation(
+    "missing-node-mapping-range-term",
+    "Missing property range term"
+  )
+
+  val MissingTermSpecification = validation(
+    "missing-vocabulary-term",
+    "Missing vocabulary term"
+  )
+
+  val MissingVocabulary = validation(
+    "missing-vocabulary",
+    "Missing vocabulary"
+  )
+
+  val MissingFragmentSpecification = validation(
+    "missing-dialect-fragment",
+    "Missing dialect fragment"
+  )
+
+  val InvalidEndpointType = validation(
+    "invalid-endpoint-type",
+    "Invalid endpoint type"
+  )
+
+  val InvalidParameterType = validation(
+    "invalid-parameter-type",
+    "Invalid parameter type"
+  )
+
+  val UnableToParseShape = validation(
+    "unable-to-parse-shape",
+    "Unable to parse shape"
+  )
+
+  val JsonSchemaFragmentNotFound = validation(
+    "json-schema-fragment-not-found",
+    "Json schema fragment not found"
+  )
+
+  val PatternPropertiesOnClosedNodeSpecification = validation(
+    "pattern-properties-on-closed-node",
+    "Closed node cannot define pattern properties"
+  )
+
+  val DiscriminatorOnExtendedUnionSpecification = validation(
+    "discriminator-on-extended-union",
+    "Property discriminator not supported in a node extending a unionShape"
+  )
+
+  val UnresolvedReference = validation(
+    "unresolved-reference",
+    "Unresolved reference"
+  )
+
+  val UnresolvedParameter = validation(
+    "unresolved-parameter",
+    "Unresolved parameter"
+  )
+
+  val UnableToParseJsonSchema = validation(
+    "unable-to-parse-json-schema",
+    "Unable to parse json schema"
+  )
+
+  val InvalidAnnotationType = validation(
+    "invalid-annotation-type",
+    "Invalid annotation type"
+  )
+
+  val InvalidFragmentType = validation(
+    "invalid-fragment-type",
+    "Invalid fragment type"
+  )
+
+  val InvalidTypesType = validation(
+    "invalid-types-type",
+    "Invalid types type"
+  )
+
+  val InvalidDocumentationType = validation(
+    "invalid-documentation-type",
+    "Invalid documentation type"
+  )
+
+  val InvalidAllowedTargetsType = validation(
+    "invalid-allowed-targets-type",
+    "Invalid allowedTargets type"
+  )
+
+  val InvalidExtensionsType = validation(
+    "invalid-extension-type",
+    "Invalid extension type"
+  )
+
+  val ModuleNotFound = validation(
+    "module-not-found",
+    "Module not found"
+  )
+
+  val ExternalFragmentWarning = validation(
+    "external-fragment-warning",
+    "External fragment will be created"
+  )
+
+  val InvalidTypeExpression = validation(
+    "invalid-type-expression",
+    "Invalid type expression"
+  )
+
+  val UnexpectedReference = validation(
+    "unexpected-reference",
+    "Unexpected reference"
+  )
+
+  val SyamlError = validation(
+    "syaml-error",
+    "Syaml error"
+  )
+
+  val SyamlWarning = validation(
+    "syaml-warning",
+    "Syaml warning"
+  )
+
+  val NodeNotFound = validation(
+    "node-not-found",
+    "Builder for model not found"
+  )
+
+  val ExampleValidationErrorSpecification = validation(
+    "example-validation-error",
+    "Example does not validate type"
+  )
+
+  override val levels: Map[String, Map[ProfileName, String]] = Map(
     OasBodyAndFormDataParameterSpecification.id -> Map(
-      OasProfile   -> SeverityLevels.VIOLATION,
-      Oas20Profile -> SeverityLevels.VIOLATION
+      OasProfile   -> VIOLATION,
+      Oas20Profile -> VIOLATION
     ),
-    OasInvalidBodyParameter.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    OasInvalidParameterBinding.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
+    OasInvalidBodyParameter.id    -> all(VIOLATION),
+    OasInvalidParameterBinding.id -> all(VIOLATION),
     OasFormDataNotFileSpecification.id -> Map(
-      OasProfile   -> SeverityLevels.VIOLATION,
-      Oas20Profile -> SeverityLevels.VIOLATION
+      OasProfile   -> VIOLATION,
+      Oas20Profile -> VIOLATION
     ),
-    MissingExtensionInReferences.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    InvalidTypeInheritanceErrorSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    InvalidTypeInheritanceWarningSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.WARNING,
-      Raml10Profile -> SeverityLevels.WARNING,
-      Raml08Profile -> SeverityLevels.WARNING,
-      OasProfile    -> SeverityLevels.WARNING,
-      Oas20Profile  -> SeverityLevels.WARNING,
-      Oas30Profile  -> SeverityLevels.WARNING,
-      AmfProfile    -> SeverityLevels.WARNING
-    ),
-    JsonSchemaInheratinaceWarningSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.WARNING,
-      Raml10Profile -> SeverityLevels.WARNING,
-      Raml08Profile -> SeverityLevels.WARNING,
-      OasProfile    -> SeverityLevels.WARNING,
-      Oas20Profile  -> SeverityLevels.WARNING,
-      Oas30Profile  -> SeverityLevels.WARNING,
-      AmfProfile    -> SeverityLevels.WARNING
-    ),
-    XmlSchemaInheratinaceWarningSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    UnknownSecuritySchemeErrorSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    UnknownScopeErrorSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    ClosedShapeSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    DuplicatedPropertySpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
+    JsonSchemaInheratinaceWarningSpecification.id -> all(WARNING),
     NamedExampleUsedInExample.id -> Map(
-      RamlProfile   -> SeverityLevels.WARNING,
-      Raml10Profile -> SeverityLevels.WARNING,
-      Raml08Profile -> SeverityLevels.WARNING,
+      RamlProfile   -> WARNING,
+      Raml10Profile -> WARNING,
+      Raml08Profile -> WARNING,
       OasProfile    -> SeverityLevels.INFO,
       Oas20Profile  -> SeverityLevels.INFO,
       Oas30Profile  -> SeverityLevels.INFO,
       AmfProfile    -> SeverityLevels.INFO
     ),
-    DialectAmbiguousRangeSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
+    SyamlWarning.id                                    -> all(WARNING),
+    UnsupportedExampleMediaTypeWarningSpecification.id -> all(WARNING),
+    PatternPropertiesOnClosedNodeSpecification.id -> Map(
+      RamlProfile   -> VIOLATION,
+      Raml10Profile -> VIOLATION,
+      Raml08Profile -> VIOLATION,
+      OasProfile    -> WARNING,
+      Oas20Profile  -> WARNING,
+      Oas30Profile  -> WARNING,
+      AmfProfile    -> WARNING
     ),
-    ParsingErrorSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
+    DiscriminatorOnExtendedUnionSpecification.id -> Map(
+      RamlProfile   -> VIOLATION,
+      Raml10Profile -> VIOLATION,
+      Raml08Profile -> VIOLATION,
+      OasProfile    -> WARNING,
+      Oas20Profile  -> WARNING,
+      Oas30Profile  -> WARNING,
+      AmfProfile    -> WARNING
     ),
-    CycleReferenceError.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
+    NullAbstractDeclaration.id -> all(WARNING),
+    SchemaDeprecated.id        -> all(WARNING),
+    SchemasDeprecated.id       -> all(WARNING),
+    ExternalFragmentWarning.id -> all(WARNING),
+    UnusedBaseUriParameter.id  -> all(WARNING),
+    InvalidShapeFormat.id      -> all(WARNING),
     ExampleValidationErrorSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
       Raml10Profile -> SeverityLevels.VIOLATION,
@@ -505,128 +596,10 @@ object ParserSideValidations {
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
-    ParsingWarningSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.WARNING,
-      Raml10Profile -> SeverityLevels.WARNING,
-      Raml08Profile -> SeverityLevels.WARNING,
-      OasProfile    -> SeverityLevels.WARNING,
-      Oas20Profile  -> SeverityLevels.WARNING,
-      Oas30Profile  -> SeverityLevels.WARNING,
-      AmfProfile    -> SeverityLevels.WARNING
-    ),
-    UnsupportedExampleMediaTypeErrorSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    UnsupportedExampleMediaTypeWarningSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.WARNING,
-      Raml10Profile -> SeverityLevels.WARNING,
-      Raml08Profile -> SeverityLevels.WARNING,
-      OasProfile    -> SeverityLevels.WARNING,
-      Oas20Profile  -> SeverityLevels.WARNING,
-      Oas30Profile  -> SeverityLevels.WARNING,
-      AmfProfile    -> SeverityLevels.WARNING
-    ),
-    InconsistentPropertyRangeValueSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    MissingPropertyRangeSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    MissingTermSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    MissingFragmentSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    MissingPropertySpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    ResolutionErrorSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    EmittionErrorEspecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.VIOLATION,
-      Oas20Profile  -> SeverityLevels.VIOLATION,
-      Oas30Profile  -> SeverityLevels.VIOLATION,
-      AmfProfile    -> SeverityLevels.VIOLATION
-    ),
-    PatternPropertiesOnClosedNodeSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.WARNING,
-      Oas20Profile  -> SeverityLevels.WARNING,
-      Oas30Profile  -> SeverityLevels.WARNING,
-      AmfProfile    -> SeverityLevels.WARNING
-    ),
-    DiscriminatorOnExtendedUnionSpecification.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.WARNING,
-      Oas20Profile  -> SeverityLevels.WARNING,
-      Oas30Profile  -> SeverityLevels.WARNING,
-      AmfProfile    -> SeverityLevels.WARNING
-    ),
-    InvalidDeclarationPathComponent.id -> Map(
-      RamlProfile   -> SeverityLevels.VIOLATION,
-      Raml10Profile -> SeverityLevels.VIOLATION,
-      Raml08Profile -> SeverityLevels.VIOLATION,
-      OasProfile    -> SeverityLevels.WARNING,
-      Oas20Profile  -> SeverityLevels.WARNING,
-      Oas30Profile  -> SeverityLevels.WARNING,
-      AmfProfile    -> SeverityLevels.WARNING
-    )
   )
 
-  def validations: List[ValidationSpecification] = List(
+  override val validations: List[ValidationSpecification] = List(
     DuplicatedOperationStatusCodeSpecification,
-    RecursiveShapeSpecification,
     NamedExampleUsedInExample,
     ChainedReferenceSpecification,
     ExclusivePropertiesSpecification,
@@ -635,16 +608,11 @@ object ParserSideValidations {
     UnknownScopeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
     XmlSchemaInheratinaceWarningSpecification,
-    InvalidTypeInheritanceErrorSpecification,
-    InvalidTypeInheritanceWarningSpecification,
-    MissingExtensionInReferences,
     ClosedShapeSpecification,
     DuplicatedPropertySpecification,
     DialectAmbiguousRangeSpecification,
-    ParsingErrorSpecification,
     CycleReferenceError,
-    ParsingWarningSpecification,
-    ExampleValidationErrorSpecification,
+    ExamplesMustBeAMap,
     UnsupportedExampleMediaTypeErrorSpecification,
     UnsupportedExampleMediaTypeWarningSpecification,
     InconsistentPropertyRangeValueSpecification,
@@ -653,13 +621,88 @@ object ParserSideValidations {
     MissingFragmentSpecification,
     MissingPropertySpecification,
     OasInvalidBodyParameter,
-    ResolutionErrorSpecification,
-    EmittionErrorEspecification,
     PatternPropertiesOnClosedNodeSpecification,
     DiscriminatorOnExtendedUnionSpecification,
-    InvalidDeclarationPathComponent,
     OasFormDataNotFileSpecification,
     OasBodyAndFormDataParameterSpecification,
-    OasInvalidParameterBinding
+    OasInvalidParameterBinding,
+    NotLinkable,
+    UnresolvedReference,
+    SyamlError,
+    SyamlWarning,
+    NodeNotFound,
+    UnableToParseDocument,
+    UnableToParseNode,
+    ExpectedModule,
+    InvalidModuleType,
+    MissingIdInNode,
+    MissingTypeInNode,
+    UriSyntaxError,
+    UnableToParseRdfDocument,
+    DeclarationNotFound,
+    MissingVocabulary,
+    InvalidInclude,
+    UnableToParseJsonSchema,
+    UnexpectedRamlScalarKey,
+    UnableToParseShapeExtensions,
+    InvalidAbstractDeclarationType,
+    NullAbstractDeclaration,
+    UnexpectedVendor,
+    InvalidDisjointUnionType,
+    InvalidUnionType,
+    InvalidOrType,
+    InvalidAndType,
+    InvalidXoneType,
+    InvalidAdditionalPropertiesType,
+    InvalidRequiredArrayForSchemaVersion,
+    InvalidRequiredBooleanForSchemaVersion,
+    InvalidSchemaType,
+    UnableToSetDefaultType,
+    InvalidTypeDefinition,
+    InvalidTupleType,
+    UnableToParseArray,
+    InvalidDecimalPoint,
+    InvalidPropertyType,
+    JsonSchemaFragmentNotFound,
+    InvalidJsonSchemaExpression,
+    InvalidXmlSchemaType,
+    InvalidExternalTypeType,
+    InvalidAbstractDeclarationParameterInType,
+    ExclusiveSchemaType,
+    SchemaDeprecated,
+    UnresolvedParameter,
+    ParameterNameRequired,
+    InvalidSecuredByType,
+    InvalidEndpointPath,
+    DuplicatedEndpointPath,
+    InvalidOperationType,
+    InvalidServerPath,
+    ParametersWithoutBaseUri,
+    UnusedBaseUriParameter,
+    InvalidBaseUriParametersType,
+    InvalidBasePath,
+    InvalidParameterType,
+    InvalidMediaTypeType,
+    InvalidJsonSchemaVersion,
+    InvalidCrossSpec,
+    InvalidEndpointType,
+    UnableToParseShape,
+    InvalidAnnotationType,
+    InvalidFragmentType,
+    InvalidTypesType,
+    SchemasDeprecated,
+    ExclusiveSchemasType,
+    InvalidDocumentationType,
+    InvalidAllowedTargetsType,
+    ExternalFragmentWarning,
+    InvalidTypeExpression,
+    InvalidExtensionsType,
+    ModuleNotFound,
+    UnexpectedReference,
+    InvalidShapeFormat,
+    UnexpectedFileTypesSyntax,
+    InvalidDialectPatch,
+    DialectError,
+    ExampleValidationErrorSpecification
   )
 }

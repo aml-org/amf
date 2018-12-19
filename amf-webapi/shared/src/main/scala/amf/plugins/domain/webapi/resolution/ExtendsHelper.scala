@@ -9,12 +9,18 @@ import amf.core.parser.{Annotations, ErrorHandler, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.{RuntimeValidator, ValidationsMerger}
 import amf.core.validation.AMFValidationResult
+import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.{
+  NestedEndpoint,
+  ParseResourceTypeFail,
+  ResolutionValidation
+}
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
@@ -103,7 +109,7 @@ object ExtendsHelper {
           val property = propertyNode.as[YScalar].text
           if (property.startsWith("/")) {
             ctx.violation(
-              ParserSideValidations.ParsingErrorSpecification.id,
+              NestedEndpoint,
               extensionId,
               None,
               s"Nested endpoint in $extension: '$property'",
@@ -187,7 +193,7 @@ object ExtendsHelper {
         new ReferenceResolutionStage(keepEditingInfo)(errorHandler).resolveDomainElement(element)
       case Nil =>
         errorHandler.violation(
-          ParserSideValidations.ParsingErrorSpecification.id,
+          ParseResourceTypeFail,
           extensionId,
           None,
           s"Couldn't parse an endpoint from resourceType '$name'.",
@@ -262,7 +268,7 @@ object ExtendsHelper {
         nestedDeclarations(ctx, m)
       case other =>
         ctx.violation(
-          ParserSideValidations.ResolutionErrorSpecification.id,
+          ResolutionValidation,
           other,
           None,
           "Error resolving nested declaration, found something that is not a library or a fragment"
@@ -301,14 +307,14 @@ object ExtendsHelper {
 
 class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext()) {
   override def handle[T](error: YError, defaultValue: T): T = defaultValue
-  override def violation(id: String,
+  override def violation(id: ValidationSpecification,
                          node: String,
                          property: Option[String],
                          message: String,
                          lexical: Option[LexicalInformation],
                          location: Option[String]): Unit =
     super.violation(id, node, property, message, lexical, location)
-  override def warning(id: String,
+  override def warning(id: ValidationSpecification,
                        node: String,
                        property: Option[String],
                        message: String,
@@ -319,14 +325,14 @@ class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserConte
 
 class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext()) {
   override def handle[T](error: YError, defaultValue: T): T = defaultValue
-  override def violation(id: String,
+  override def violation(id: ValidationSpecification,
                          node: String,
                          property: Option[String],
                          message: String,
                          lexical: Option[LexicalInformation],
                          location: Option[String]): Unit =
     super.violation(id, node, property, message, lexical, location)
-  override def warning(id: String,
+  override def warning(id: ValidationSpecification,
                        node: String,
                        property: Option[String],
                        message: String,

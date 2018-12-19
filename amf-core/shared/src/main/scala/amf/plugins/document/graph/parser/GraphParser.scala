@@ -15,7 +15,12 @@ import amf.core.registries.AMFDomainRegistry
 import amf.core.remote.Platform
 import amf.core.unsafe.TrunkPlatform
 import amf.core.vocabulary.Namespace
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.{
+  NodeNotFound,
+  NotLinkable,
+  UnableToParseDocument,
+  UnableToParseNode
+}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.convert.YRead.SeqNodeYRead
 import org.yaml.model._
@@ -49,7 +54,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       maybeMaybeObject match {
         case Some(unit: BaseUnit) => unit.set(Location, location)
         case _ =>
-          ctx.violation(location, s"Unable to parse $document", document)
+          ctx.violation(UnableToParseDocument, location, s"Unable to parse $document", document)
           Document()
       }
     }
@@ -59,7 +64,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       stringTypes.find(findType(_).isDefined) match {
         case Some(t) => findType(t)
         case None =>
-          ctx.violation(id, s"Error parsing JSON-LD node, unknown @types $stringTypes", map)
+          ctx.violation(UnableToParseNode, id, s"Error parsing JSON-LD node, unknown @types $stringTypes", map)
           None
       }
     }
@@ -71,13 +76,13 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
           buffer += entry.value.as[Seq[YNode]].head
         }
       }
-      buffer.flatMap({ (n) =>
+      buffer.flatMap { n =>
         listElement match {
           case _ if listElement.dynamic => dynamicGraphParser.parseDynamicType(n.as[YMap])
           case _: Obj                   => parse(n.as[YMap])
-          case _                        => try { Some(str(value(listElement, n))) } catch { case e: Exception => None }
+          case _                        => try { Some(str(value(listElement, n))) } catch { case _: Exception => None }
         }
-      })
+      }
     }
 
     private def parse(map: YMap): Option[AmfObject] = { // todo fix uses
@@ -144,10 +149,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
             case unresolved: LinkNode =>
               unresolved.withLinkedDomainElement(link)
             case _ =>
-              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
-                            instance.id,
-                            "Only linkable elements can be linked",
-                            instance.annotations)
+              ctx.violation(NotLinkable, instance.id, "Only linkable elements can be linked", instance.annotations)
           }
           unresolvedReferences.update(link.id, Nil)
         case ref: ExternalSourceElement =>
@@ -352,7 +354,6 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
   private val xsdDateTime: String = (Namespace.Xsd + "dateTime").iri()
   private val xsdDate: String     = (Namespace.Xsd + "date").iri()
 
-
   private def any(node: YNode) = {
     node.tagType match {
       case YType.Map =>
@@ -372,20 +373,18 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
               case s: String if s == xsdDate     => AmfScalar(SimpleDateTime.parse(nodeValue).right.get)
               case _                             => AmfScalar(nodeValue)
             }
-          case _  => AmfScalar(nodeValue)
+          case _ => AmfScalar(nodeValue)
         }
       case _ => AmfScalar(node.as[YScalar].text)
     }
   }
 
-
   private def float(node: YNode) = {
     val value = node.tagType match {
       case YType.Map =>
         node.as[YMap].entries.find(_.key.as[String] == "@value") match {
-          case Some(entry) => {
+          case Some(entry) =>
             entry.value.as[YScalar].text.toDouble
-          }
           case _ => node.as[YScalar].text.toDouble
         }
       case _ => node.as[YScalar].text.toDouble
@@ -399,7 +398,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
     types.get(typeString).orElse(AMFDomainRegistry.findType(typeString))
   }
 
-  private def buildType(id: String, map: YMap, modelType: Obj): (Annotations) => Option[AmfObject] = {
+  private def buildType(id: String, map: YMap, modelType: Obj): Annotations => Option[AmfObject] = {
     AMFDomainRegistry.metadataRegistry.get(modelType.`type`.head.iri()) match {
       case Some(modelType: ModelDefaultBuilder) =>
         (annotations: Annotations) =>
@@ -412,7 +411,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
             (a: Annotations) =>
               Some(builder(a))
           case _ =>
-            ctx.violation(id, s"Cannot find builder for node type $modelType", map)
+            ctx.violation(NodeNotFound, id, s"Cannot find builder for node type $modelType", map)
             (_: Annotations) =>
               None
         }

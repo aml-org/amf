@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.validation.remote
 import amf.ProfileName
 import amf.core.model.document.PayloadFragment
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
-import amf.core.vocabulary.Namespace
+import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
 
 trait ValidationProcessor {
   type Return
@@ -36,7 +36,7 @@ trait ReportValidationProcessor extends ValidationProcessor {
             level = SeverityLevels.VIOLATION,
             targetNode = fragment.map(_.encodes.id).getOrElse(""),
             targetProperty = None,
-            validationId = (Namespace.AmfParser + "example-validation-error").iri(),
+            validationId = ExampleValidationErrorSpecification.id,
             position = fragment.flatMap(_.encodes.position()),
             location = fragment.flatMap(_.encodes.location()),
             source = e
@@ -48,7 +48,7 @@ trait ReportValidationProcessor extends ValidationProcessor {
             level = SeverityLevels.VIOLATION,
             targetNode = fragment.map(_.encodes.id).getOrElse(""),
             targetProperty = None,
-            validationId = (Namespace.AmfParser + "example-validation-error").iri(),
+            validationId = ExampleValidationErrorSpecification.id,
             position = fragment.flatMap(_.encodes.position()),
             location = fragment.flatMap(_.encodes.location()),
             source = e
