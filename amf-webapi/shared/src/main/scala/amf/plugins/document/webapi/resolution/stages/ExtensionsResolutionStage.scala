@@ -15,7 +15,7 @@ import amf.core.model.domain._
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, ErrorHandler, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.annotations.ExtensionProvenance
+import amf.plugins.document.webapi.annotations.{ExtensionProvenance, Inferred}
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
@@ -193,6 +193,9 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             val newValue = adoptInner(master.id, value.value)
             if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
             master.set(field, newValue) // Set field if it doesn't exist.
+          case None if field == ScalarShapeModel.DataType && value.annotations.contains(classOf[Inferred]) =>
+          // If the overlay field is a datatype and the type is inferred it must be a type that add only an example
+          // Nothing to do
           case None => // not allowed insert a new obj node. Not exists node in master.
             val node = value.value match {
               case amfObject: AmfObject => amfObject.id
@@ -542,14 +545,14 @@ object MergingRestrictions {
       DomainElementModel.CustomDomainProperties
     )
 
-    val allowedScalarFieldsInObject = Seq(
+    val allowedScalarFieldsInObject: Seq[Field] = Seq(
       EndPointModel.Path,
       OperationModel.Method,
       ResponseModel.StatusCode,
       PayloadModel.MediaType
     )
 
-    val blockedObjectFields = Seq(
+    val blockedObjectFields: Seq[Field] = Seq(
       WebApiModel.Servers
     )
 
