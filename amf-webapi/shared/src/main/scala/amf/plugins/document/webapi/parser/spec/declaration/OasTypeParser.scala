@@ -339,7 +339,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
         ctx match {
           case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) if isDeclaration(ref) =>
-            Some(tmpShape) // nothing to do, the unresolved will be resolved after
+            val shape = NodeShape(ast).withName(name, nameAnnotations)
+            shape.withLinkTarget(tmpShape).withLinkLabel(ref)
+            Some(shape)
           case _ =>
             ctx.findLocalJSONPath(r) match {
               case Some((_, shapeNode)) =>
