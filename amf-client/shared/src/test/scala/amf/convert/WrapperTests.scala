@@ -1530,4 +1530,19 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
 
   }
+
+  test("Test path resolution OAS for 'file:///' prefix") {
+    val file    = platform.fs.syncFile("amf-client/shared/src/test/resources/clients/toupdir-include/spec/swagger.json")
+    val absPath = getAbsolutePath(file.path)
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- new Oas20Parser().parseFileAsync(absPath).asFuture
+      report <- AMF.validate(unit, RamlProfile, AMFStyle).asFuture
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
+  // todo: move to common (file system)
+  def getAbsolutePath(path: String): String
 }
