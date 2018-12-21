@@ -335,7 +335,6 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         tmpShape.unresolved(text, e, "warning")(ctx)
         tmpShape.withContext(ctx)
         adopt(tmpShape)
-        ctx.registerJsonSchema(ref, tmpShape)
 
         ctx match {
           case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) if isDeclaration(ref) =>
@@ -344,6 +343,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             adopt(shape)
             Some(shape)
           case _ =>
+            ctx.registerJsonSchema(ref, tmpShape)
             ctx.findLocalJSONPath(r) match {
               case Some((_, shapeNode)) =>
                 OasTypeParser(YMapEntry(name, shapeNode), adopt, version)
