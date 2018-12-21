@@ -27,6 +27,10 @@ class JvmPlatform extends Platform {
 
   override def resolvePath(path: String): String = {
     val res = new URI(path).normalize.toString
+    fixFilePrefix(res)
+  }
+
+  private def fixFilePrefix(res: String): String = {
     if (res.startsWith("file://") || res.startsWith("file:///")) {
       res
     } else if (res.startsWith("file:/")) {
@@ -59,7 +63,7 @@ class JvmPlatform extends Platform {
 
   private def replaceWhiteSpaces(url: String) = url.replaceAll(" ", "%20")
 
-  override def normalizePath(url: String): String = new URI(encodeURI(url)).normalize.toString
+  override def normalizePath(url: String): String = fixFilePrefix(new URI(encodeURI(url)).normalize.toString)
 
   /** Return the OS (win, mac, nux). */
   override def operativeSystem(): String = {
