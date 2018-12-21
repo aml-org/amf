@@ -398,11 +398,11 @@ abstract class WebApiContext(val loc: String,
   }
 
   def resolvedPath(base: String, str: String): String = {
-    if (str.isEmpty) platform.normalizePath(base)
+    if (str.isEmpty) platform.resolvePath(base)
     else if (str.startsWith("/")) str
     else if (str.contains(":")) str
     else if (str.startsWith("#")) base.split("#").head + str
-    else platform.normalizePath(basePath(base) + str)
+    else platform.resolvePath(basePath(base) + str)
   }
 
   def basePath(path: String): String = {
