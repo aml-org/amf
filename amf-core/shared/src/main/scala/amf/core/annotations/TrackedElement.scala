@@ -15,7 +15,6 @@ case class TrackedElement(parent: String) extends EternalSerializedAnnotation wi
 }
 
 object TrackedElement extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    TrackedElement(annotatedValue)
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(TrackedElement(value))
 }

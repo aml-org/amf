@@ -940,7 +940,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   protected def parseLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement): Option[_] = {
 
     value.tagType match {
-      case YType.Bool if property.literalRange().value() == (Namespace.Xsd + "boolean").iri() =>
+      case YType.Bool
+          if (property.literalRange().value() == (Namespace.Xsd + "boolean")
+            .iri()) || property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
         Some(value.as[Boolean])
       case YType.Bool =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
@@ -951,7 +953,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         None
       case YType.Int
           if property.literalRange().value() == (Namespace.Xsd + "integer")
-            .iri() || property.literalRange().value() == (Namespace.Shapes + "number").iri() =>
+            .iri() || property.literalRange().value() == (Namespace.Shapes + "number")
+            .iri() || property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
         Some(value.as[Int])
       case YType.Int =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
@@ -960,7 +963,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                                     (Namespace.Xsd + "integer").iri(),
                                                     value)
         None
-      case YType.Str if property.literalRange().value() == (Namespace.Xsd + "string").iri() =>
+      case YType.Str
+          if property.literalRange().value() == (Namespace.Xsd + "string")
+            .iri() || property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
         Some(value.as[YScalar].text)
       case YType.Str if property.literalRange().value() == (Namespace.Xsd + "anyUri").iri() =>
         Some(value.as[YScalar].text)
@@ -981,7 +986,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       case YType.Float
           if property.literalRange().value() == (Namespace.Xsd + "float").iri() ||
             property.literalRange().value() == (Namespace.Shapes + "number").iri() ||
-            property.literalRange().value() == (Namespace.Xsd + "double").iri() =>
+            property.literalRange().value() == (Namespace.Xsd + "double").iri() ||
+            property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
         Some(value.as[Double])
       case YType.Float =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
@@ -994,7 +1000,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       case YType.Timestamp
           if property.literalRange().value() == (Namespace.Xsd + "time").iri() ||
             property.literalRange().value() == (Namespace.Xsd + "date").iri() ||
-            property.literalRange().value() == (Namespace.Xsd + "dateTime").iri() =>
+            property.literalRange().value() == (Namespace.Xsd + "dateTime").iri() ||
+            property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
         Some(value.as[SimpleDateTime])
 
       case YType.Timestamp if property.literalRange().value() == (Namespace.Xsd + "string").iri() =>

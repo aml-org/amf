@@ -114,8 +114,10 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
       endpoint.annotations,
       b.complexEntry(
         b => {
-          endpoint.parent.fold(ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit(b))(_ =>
-            ScalarEmitter(AmfScalar(endpoint.relativePath)).emit(b))
+          endpoint.parent match {
+            case Some(_) => ScalarEmitter(AmfScalar(endpoint.relativePath)).emit(b)
+            case None    => ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit(b)
+          }
         },
         _.obj { b =>
           traverse(ordering.sorted(emitters(fs)), b)

@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "inapp_post_resp.schema",
+  "type": "object",
+  "properties": {
+    "expireHours": {
+      "type": "integer",
+      "description": "Number of hours until receipt expected to expire"
+    },
+    "sku": {
+      "type": "string",
+      "$ref": "SKU purchased from appstore"
+    }
+  }
+}

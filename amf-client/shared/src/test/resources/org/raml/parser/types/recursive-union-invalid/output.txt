@@ -8,26 +8,26 @@ types:
         type: array
         items:
           type: object
-          x-amf-recursive: amf://id#1
+          (amf-recursive): amf://id#1
       -
         type: array
         items:
           type: object
-          x-amf-recursive: amf://id#1
+          (amf-recursive): amf://id#1
       -
         additionalProperties: true
         properties: {}
   type: object
-  x-amf-recursive: amf://id#1
+  (amf-recursive): amf://id#1
   SomeUnion:
     anyOf:
       -
         type: array
         items:
           type: object
-          x-amf-recursive: amf://id#1
+          (amf-recursive): amf://id#1
       -
         type: array
         items:
           type: object
-          x-amf-recursive: amf://id#1
+          (amf-recursive): amf://id#1

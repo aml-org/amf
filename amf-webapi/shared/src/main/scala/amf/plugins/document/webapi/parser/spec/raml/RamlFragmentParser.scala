@@ -188,7 +188,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
       val producer = (name: Option[String]) => {
         val example = Example()
-        name.foreach(example.withName)
+        name.foreach(example.withName(_))
         namedExample.withEncodes(example)
         example
       }

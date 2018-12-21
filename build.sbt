@@ -10,7 +10,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf"
 
-version in ThisBuild := "3.1.0"
+version in ThisBuild := "3.1.1"
 
 publish := {}
 
@@ -108,7 +108,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.1"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.3"
     ))
   .in(file("./amf-core"))
   .settings(settings)
@@ -195,7 +195,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.topbraid"           % "shacl"                   % "1.2.0-INTERNAL",
     libraryDependencies += "org.slf4j"              % "slf4j-simple"            % "1.7.12",
     libraryDependencies += "org.apache.commons" % "commons-compress" % "1.18",
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.7",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
   .jsSettings(
@@ -224,7 +224,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
     libraryDependencies += "org.topbraid"           % "shacl"                   % "1.2.0-INTERNAL",
     libraryDependencies += "org.apache.commons" % "commons-compress" % "1.18",
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.7",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
     aggregate in assembly := true,
@@ -232,15 +232,9 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     mainClass in assembly := Some("amf.Main"),
     assemblyOutputPath in assembly := file(s"./amf-${version.value}.jar"),
     assemblyMergeStrategy in assembly := {
-      case x if x.toString.contains("commons/logging") => {
-        MergeStrategy.discard
-      }
-      case x if x.toString.endsWith("JS_DEPENDENCIES") => {
-        MergeStrategy.discard
-      }
-      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => {
-        MergeStrategy.discard
-      }
+      case x if x.toString.contains("commons/logging") => MergeStrategy.discard
+      case x if x.toString.endsWith("JS_DEPENDENCIES") => MergeStrategy.discard
+      case PathList(ps @ _*) if ps.last endsWith "JS_DEPENDENCIES" => MergeStrategy.discard
       case x =>
         val oldStrategy = (assemblyMergeStrategy in assembly).value
         oldStrategy(x)

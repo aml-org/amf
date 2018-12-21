@@ -15,7 +15,12 @@ class CompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPip
     new SanitizeCustomTypeNames(),
     new MandatoryAnnotationType(),
     new DefaultPayloadMediaType(),
-    new DefaultToNumericDefaultResponse()
+    new DefaultToNumericDefaultResponse(),
+    new MakeExamplesOptional(),
+    new CapitalizeSchemes(),
+    new SecuritySettingsMapper(),
+    new ShapeFormatAdjuster(),
+    new CustomAnnotationDeclaration()
   )
 
   override def profileName: ProfileName = RamlProfile

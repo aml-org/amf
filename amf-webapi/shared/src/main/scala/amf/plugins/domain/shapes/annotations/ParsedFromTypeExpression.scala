@@ -1,11 +1,10 @@
 package amf.plugins.domain.shapes.annotations
 
-import amf.core.model.domain.{AmfElement, AnnotationGraphLoader, SerializableAnnotation}
+import amf.core.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, SerializableAnnotation}
 
 object ParsedFromTypeExpression extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    ParsedFromTypeExpression(annotatedValue)
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(ParsedFromTypeExpression(value))
 }
 
 case class ParsedFromTypeExpression(expression: String) extends SerializableAnnotation {

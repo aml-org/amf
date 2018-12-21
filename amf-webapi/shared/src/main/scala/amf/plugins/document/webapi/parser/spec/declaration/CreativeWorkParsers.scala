@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.parser.{Annotations, _}
-import amf.core.remote.{Oas, Raml08, Raml10}
+import amf.core.remote.{Oas, Raml, Raml08, Raml10}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
@@ -42,8 +42,8 @@ case class RamlCreativeWorkParser(node: YNode)(implicit val ctx: WebApiContext) 
     map.key("content", (CreativeWorkModel.Description in documentation).allowingAnnotations)
 
     val url = ctx.vendor match {
-      case Oas             => "url"
-      case Raml08 | Raml10 => "url".asRamlAnnotation
+      case _: Oas  => "url"
+      case _: Raml => "url".asRamlAnnotation
       case other =>
         ctx.violation(s"Unexpected vendor '$other'", node)
         "url"

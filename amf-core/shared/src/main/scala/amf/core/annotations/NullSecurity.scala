@@ -1,5 +1,5 @@
 package amf.core.annotations
-import amf.core.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, SerializableAnnotation}
+import amf.core.model.domain._
 
 /** Used when a security scheme is null and not "null". */
 case class NullSecurity() extends SerializableAnnotation {
@@ -8,7 +8,5 @@ case class NullSecurity() extends SerializableAnnotation {
 }
 
 object NullSecurity extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]): Annotation = {
-    NullSecurity()
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = Some(NullSecurity())
 }

@@ -1,6 +1,6 @@
 package amf.core.annotations
 
-import amf.core.model.domain.{AmfElement, AnnotationGraphLoader, PerpetualAnnotation, SerializableAnnotation}
+import amf.core.model.domain._
 
 case class DeclaredElement() extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String = "declared-element"
@@ -9,7 +9,5 @@ case class DeclaredElement() extends SerializableAnnotation with PerpetualAnnota
 }
 
 object DeclaredElement extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    DeclaredElement()
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = Some(DeclaredElement())
 }

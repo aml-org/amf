@@ -2,12 +2,6 @@
 version: refactor
 title: experience
 /customers:
-  delete:
-    responses:
-      200: {}
-  put:
-    responses:
-      200: {}
   get:
     responses:
       200:
@@ -22,6 +16,12 @@ title: experience
               lastName:
                 type: string
                 required: true
+  put:
+    responses:
+      200: {}
+  delete:
+    responses:
+      200: {}
   description: |
     an individual customer within the collection
     of customerss

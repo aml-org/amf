@@ -1,0 +1,26 @@
+#%RAML 1.0
+
+title: Sample API
+
+types:
+  A:
+    type: object
+    properties:
+      a1: integer
+    example:
+      a1: 2
+
+  B:
+    type: A
+    example:
+      a1: 5
+
+  C:
+    type: B
+
+/personas:
+  get:
+    responses:
+      200:
+        body:
+          application/json: C

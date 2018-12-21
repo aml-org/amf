@@ -45,7 +45,7 @@ trait AnnotationsParser {
           case Success(propertyId) =>
             val id               = node.id + s"${prefix.map(_ + "/").getOrElse("/")}$suffix"
             val parsedAnnotation = DynamicExtensionParser(v, Some(id)).parse()
-            val property         = CustomDomainProperty(Annotations(v)).withId(propertyId).withName(k)
+            val property         = CustomDomainProperty(Annotations(v)).withId(propertyId).withName(k, Annotations())
             val extension = DomainExtension()
               .withId(id)
               .withExtension(parsedAnnotation)

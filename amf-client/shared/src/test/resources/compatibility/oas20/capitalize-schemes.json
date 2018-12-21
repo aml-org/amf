@@ -1,0 +1,22 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "termsOfService": "terms of service",
+    "version": "1.1"
+  },
+  "schemes": ["ws", "http", "wss", "https"],
+  "paths": {
+    "/schemes": {
+      "get": {
+        "schemes": ["ws"],
+        "responses": {
+          "200": {
+            "description": "Not found!"
+          }
+        }
+      }
+    }
+  }
+}

@@ -83,6 +83,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     case Right(r) => r
   }
 
+  private val nameAnnotations: Annotations =
+    entryOrNode.left.toOption.map(e => Annotations(e.key)).getOrElse(Annotations())
+
   def parse(): Option[AnyShape] = {
 
     if (detectDisjointUnion()) {
@@ -114,7 +117,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   def checkNilUnion(parsed: AnyShape): AnyShape = {
     map.key("nullable") match {
       case Some(nullableEntry) if nullableEntry.value.toOption[Boolean].getOrElse(false) =>
-        val union = UnionShape().withName(name).withId(parsed.id + "/nilUnion")
+        val union = UnionShape().withName(name, nameAnnotations).withId(parsed.id + "/nilUnion")
         parsed.annotations += NilUnion(Range(nullableEntry.key.range).toString())
         union.withAnyOf(
           Seq(
@@ -255,15 +258,15 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                               adopt: Shape => Unit = adopt): AnyShape = {
     val parsed = typeDef match {
       case NilType =>
-        val shape = NilShape(ast).withName(name)
+        val shape = NilShape(ast).withName(name, nameAnnotations)
         adopt(shape)
         shape
       case FileType =>
-        val shape = FileShape(ast).withName(name)
+        val shape = FileShape(ast).withName(name, nameAnnotations)
         adopt(shape)
         FileShapeParser(typeDef, shape, map).parse()
       case _ =>
-        val shape = ScalarShape(ast).withName(name)
+        val shape = ScalarShape(ast).withName(name, nameAnnotations)
         adopt(shape)
         ScalarShapeParser(typeDef, shape, map).parse()
     }
@@ -271,7 +274,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   }
 
   private def parseAnyType(name: String = name, map: YMap = map, adopt: Shape => Unit = adopt): AnyShape = {
-    val shape = AnyShape(ast).withName(name)
+    val shape = AnyShape(ast).withName(name, nameAnnotations)
     adopt(shape)
     AnyTypeShapeParser(shape, map).parse()
   }
@@ -292,7 +295,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             ctx.declarations.findType(text, SearchScope.All) match { // normal declaration to be used from raml or oas
               case Some(s) =>
                 val copied =
-                  s.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name).withSupportsRecursion(true)
+                  s.link(text, Annotations(ast))
+                    .asInstanceOf[AnyShape]
+                    .withName(name, nameAnnotations)
+                    .withSupportsRecursion(true)
                 adopt(copied)
                 Some(copied)
               case _ => // Only enabled for JSON Schema, not OAS. In OAS local references can only point to the #/definitions (#/components in OAS 3) node
@@ -318,22 +324,26 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     ctx.findJsonSchema(ref) match {
       case Some(s) =>
         val annots = Annotations(ast)
-        val copied = s.link(ref, annots).asInstanceOf[AnyShape].withName(name).withSupportsRecursion(true)
+        val copied =
+          s.link(ref, annots).asInstanceOf[AnyShape].withName(name, Annotations()).withSupportsRecursion(true)
         adopt(copied)
         Some(copied)
       // Local reference
       case None =>
         val tmpShape =
-          UnresolvedShape(ref, map).withName(text).withSupportsRecursion(true)
+          UnresolvedShape(ref, map).withName(text, Annotations()).withSupportsRecursion(true)
         tmpShape.unresolved(text, e, "warning")(ctx)
         tmpShape.withContext(ctx)
         adopt(tmpShape)
-        ctx.registerJsonSchema(ref, tmpShape)
 
         ctx match {
           case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) if isDeclaration(ref) =>
-            Some(tmpShape) // nothing to do, the unresolved will be resolved after
+            val shape = NodeShape(ast).withName(name, nameAnnotations)
+            shape.withLinkTarget(tmpShape).withLinkLabel(ref)
+            adopt(shape)
+            Some(shape)
           case _ =>
+            ctx.registerJsonSchema(ref, tmpShape)
             ctx.findLocalJSONPath(r) match {
               case Some((_, shapeNode)) =>
                 OasTypeParser(YMapEntry(name, shapeNode), adopt, version)
@@ -343,7 +353,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                     //            tmpShape.resolve(shape) // useless?
                     ctx.registerJsonSchema(ref, shape)
                     if (ctx.linkTypes || ref.equals("#"))
-                      shape.link(ref, Annotations(ast)).asInstanceOf[AnyShape].withName(name)
+                      shape.link(ref, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
                     else shape
                   } orElse { Some(tmpShape) }
 
@@ -368,12 +378,13 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         Some(copied)
       case Some(s) =>
         val annots = Annotations(ast)
-        val copied = s.link(ref, annots).asInstanceOf[AnyShape].withName(name).withSupportsRecursion(true)
+        val copied =
+          s.link(ref, annots).asInstanceOf[AnyShape].withName(name, nameAnnotations).withSupportsRecursion(true)
         adopt(copied)
         Some(copied)
       case _ =>
         val tmpShape =
-          UnresolvedShape(fullRef, e).withName(fullRef).withId(fullRef).withSupportsRecursion(true)
+          UnresolvedShape(fullRef, e).withName(fullRef, Annotations()).withId(fullRef).withSupportsRecursion(true)
         tmpShape.unresolved(fullRef, e, "warning")(ctx)
         tmpShape.withContext(ctx)
         adopt(tmpShape)
@@ -399,7 +410,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 promotedShape
                   .link(text, Annotations(ast))
                   .asInstanceOf[AnyShape]
-                  .withName(name)
+                  .withName(name, nameAnnotations)
                   .withSupportsRecursion(true))
             } else {
 
@@ -419,11 +430,11 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   private def parseObjectType(name: String = name, map: YMap = map, adopt: Shape => Unit = adopt): AnyShape = {
     if (map.key("schema".asOasExtension).isDefined) {
-      val shape = SchemaShape(ast).withName(name)
+      val shape = SchemaShape(ast).withName(name, nameAnnotations)
       adopt(shape)
       SchemaShapeParser(shape, map).parse()
     } else {
-      val shape = NodeShape(ast).withName(name)
+      val shape = NodeShape(ast).withName(name, nameAnnotations)
       checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
       NodeShapeParser(shape, map).parse()
     }
@@ -497,13 +508,16 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   case class UnionShapeParser(nodeOrEntry: Either[YMapEntry, YNode], name: String) extends AnyShapeParser() {
 
-    val node = nodeOrEntry match {
+    val node: YNode = nodeOrEntry match {
       case Left(entry) => entry.value
       case Right(node) => node
     }
+
+    private def nameAnnotations: Annotations =
+      nodeOrEntry.left.toOption.map(e => Annotations(e.key)).getOrElse(Annotations())
     override val map: YMap = node.as[YMap]
 
-    override val shape: UnionShape = UnionShape(Annotations.valueNode(node)).withName(name)
+    override val shape: UnionShape = UnionShape(Annotations.valueNode(node)).withName(name, nameAnnotations)
 
     override def parse(): UnionShape = {
       super.parse()
@@ -632,9 +646,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         case Some(entry) =>
           entry.value.to[Seq[YNode]] match {
             // this is a sequence, we need to create a tuple
-            case Right(_) => Some(Left(TupleShape(ast).withName(name)))
+            case Right(_) => Some(Left(TupleShape(ast).withName(name, nameAnnotations)))
             // not an array regular array parsing
-            case _ => Some(Right(ArrayShape(ast).withName(name)))
+            case _ => Some(Right(ArrayShape(ast).withName(name, nameAnnotations)))
 
           }
         case None => None
@@ -644,7 +658,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     def parse(): AnyShape = {
       lookAhead() match {
         case None =>
-          val array = ArrayShape(ast).withName(name)
+          val array = ArrayShape(ast).withName(name, nameAnnotations)
           ArrayShapeParser(array, map, adopt).parse()
         case Some(Left(tuple))  => TupleShapeParser(tuple, map, adopt).parse()
         case Some(Right(array)) => ArrayShapeParser(array, map, adopt).parse()
@@ -865,7 +879,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             declaration
               .link(entry.value.as[String], Annotations(entry.value))
               .asInstanceOf[AnyShape]
-              .withName(declaration.name.option().getOrElse("schema"))
+              .withName(declaration.name.option().getOrElse("schema"), Annotations())
           }
         }
     }
@@ -895,7 +909,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         .add(Annotations(entry))
         .set(PropertyShapeModel.MinCount, AmfScalar(if (required) 1 else 0), requiredAnnotations += ExplicitField())
 
-      property.set(PropertyShapeModel.Path, (Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri())
+      property.set(
+        PropertyShapeModel.Path,
+        AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri(), Annotations(entry.key)))
       entry.value.toOption[YMap].foreach(_.key("readOnly", PropertyShapeModel.ReadOnly in property))
 
       if (version.isInstanceOf[OAS30SchemaVersion]) {

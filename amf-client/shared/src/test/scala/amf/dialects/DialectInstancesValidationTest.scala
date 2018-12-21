@@ -164,6 +164,10 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
     validate("dialect.raml", "system.raml", numErrors = 0, productionPath + "system/")
   }
 
+  test("Can validate oas 2.0 dialect instances") {
+    validate("oas20_dialect1.yaml", "oas20_instance1.yaml", numErrors = 0, productionPath)
+  }
+
   protected def validate(dialect: String, instance: String, numErrors: Int, path: String = basePath) = {
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)

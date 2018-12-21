@@ -1,6 +1,6 @@
 package amf.core.annotations
 
-import amf.core.model.domain.{AmfElement, AnnotationGraphLoader, SerializableAnnotation}
+import amf.core.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, SerializableAnnotation}
 
 case class DataNodePropertiesAnnotations(properties: Map[String, LexicalInformation]) extends SerializableAnnotation {
 
@@ -16,12 +16,12 @@ case class DataNodePropertiesAnnotations(properties: Map[String, LexicalInformat
 }
 
 object DataNodePropertiesAnnotations extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    val tuples: Array[(String, LexicalInformation)] = annotatedValue
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = {
+    val tuples: Array[(String, LexicalInformation)] = value
       .split("#")
       .map(_.split("->") match {
         case Array(key, range) => key -> LexicalInformation(range)
       })
-    DataNodePropertiesAnnotations(tuples.toMap)
+    Some(DataNodePropertiesAnnotations(tuples.toMap))
   }
 }

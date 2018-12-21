@@ -259,6 +259,7 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
         case Type.Double        => instance.set(f, double(node), annotations(nodes, sources, key))
         case Type.DateTime      => instance.set(f, date(node), annotations(nodes, sources, key))
         case Type.Date          => instance.set(f, date(node), annotations(nodes, sources, key))
+        case Type.Any           => instance.set(f, any(node), annotations(nodes, sources, key))
         case l: SortedArray =>
           instance.setArray(f, parseList(instance.id, l.element, node.as[YMap]), annotations(nodes, sources, key))
         case a: Array =>
@@ -340,6 +341,40 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       case _ => SimpleDateTime.parse(node.as[YScalar].text).right.get
     }
     AmfScalar(value)
+  }
+
+  private val xsdString: String   = (Namespace.Xsd + "string").iri()
+  private val xsdInteger: String  = (Namespace.Xsd + "integer").iri()
+  private val xsdFloat: String    = (Namespace.Xsd + "float").iri()
+  private val amlNumber: String   = (Namespace.Shapes + "number").iri()
+  private val xsdDouble: String   = (Namespace.Xsd + "double").iri()
+  private val xsdBoolean: String  = (Namespace.Xsd + "boolean").iri()
+  private val xsdDateTime: String = (Namespace.Xsd + "dateTime").iri()
+  private val xsdDate: String     = (Namespace.Xsd + "date").iri()
+
+  private def any(node: YNode) = {
+    node.tagType match {
+      case YType.Map =>
+        val nodeValue = node.as[YMap].entries.find(_.key.as[String] == "@value") match {
+          case Some(entry) => entry.value.as[YScalar].text
+          case _           => node.as[YScalar].text
+        }
+        node.as[YMap].entries.find(_.key.as[String] == "@type") match {
+          case Some(typeEntry) =>
+            val typeUri = typeEntry.value.as[YScalar].text
+            typeUri match {
+              case s: String if s == xsdBoolean  => AmfScalar(nodeValue.toBoolean)
+              case s: String if s == xsdInteger  => AmfScalar(nodeValue.toInt)
+              case s: String if s == xsdFloat    => AmfScalar(nodeValue.toFloat)
+              case s: String if s == xsdDouble   => AmfScalar(nodeValue.toDouble)
+              case s: String if s == xsdDateTime => AmfScalar(SimpleDateTime.parse(nodeValue).right.get)
+              case s: String if s == xsdDate     => AmfScalar(SimpleDateTime.parse(nodeValue).right.get)
+              case _                             => AmfScalar(nodeValue)
+            }
+          case _ => AmfScalar(nodeValue)
+        }
+      case _ => AmfScalar(node.as[YScalar].text)
+    }
   }
 
   private def float(node: YNode) = {

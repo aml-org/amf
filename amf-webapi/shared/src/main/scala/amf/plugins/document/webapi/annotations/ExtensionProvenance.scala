@@ -14,12 +14,11 @@ case class ExtensionProvenance(baseId: String, baseLocation: Option[String])
 }
 
 object ExtensionProvenance extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    annotatedValue.split(",") match {
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    value.split(",") match {
       case Array(baseId, baseLocation) =>
-        ExtensionProvenance(baseId.split("->").last, Option(baseLocation.split("->").last))
-      case Array(baseId) => ExtensionProvenance(baseId.split("->").last, None)
+        Some(ExtensionProvenance(baseId.split("->").last, Option(baseLocation.split("->").last)))
+      case Array(baseId) => Some(ExtensionProvenance(baseId.split("->").last, None))
+      case _             => None
     }
-
-  }
 }

@@ -14,9 +14,8 @@ case class ResolvedLinkAnnotation(linkId: String)
 }
 
 object ResolvedLinkAnnotation extends AnnotationGraphLoader {
-  override def unparse(annotatedValue: String, objects: Map[String, AmfElement]) = {
-    ResolvedLinkAnnotation(annotatedValue)
-  }
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(ResolvedLinkAnnotation(value))
 }
 
 case class ResolvedInheritance() extends PerpetualAnnotation

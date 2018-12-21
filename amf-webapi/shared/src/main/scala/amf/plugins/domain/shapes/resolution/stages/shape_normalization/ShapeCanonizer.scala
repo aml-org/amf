@@ -164,49 +164,62 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
         case _                       => // ignore
       }
 
+      shape match {
+        // If the shape is a declaration that inherits of only one type and not declare any property, the it inherits the examples
+        case s: NodeShape if isSimpleInheritanceDeclaration(s, superTypes) =>
+          aggregateExamples(accShape, superTypes.head)
+        case _ => // Nothing to do
+      }
+
       accShape
     }
   }
 
-  protected def aggregateExamples(shape: Shape, referencedShape: Shape) = {
-    val names: mutable.Set[String] = mutable.Set() // duplicated names
-    var exCounter                  = 0
-    if (shape.isInstanceOf[AnyShape] && referencedShape.isInstanceOf[AnyShape]) {
-      val accShape = shape.asInstanceOf[AnyShape]
-      val refShape = referencedShape.asInstanceOf[AnyShape]
-      accShape.examples.foreach { example =>
-        val oldExamples = refShape.examples
-        oldExamples.find(
-          old =>
-            old.id == example.id || old.raw
-              .option()
-              .getOrElse("")
-              .trim == example.raw.option().getOrElse("").trim) match {
-          case Some(_) => // duplicated
-          case None =>
-            example.annotations += LocalElement()
-            refShape.setArrayWithoutId(AnyShapeModel.Examples, oldExamples ++ Seq(example))
-        }
+  private def isSimpleInheritanceDeclaration(n: NodeShape, inherits: Seq[Shape]): Boolean =
+    n.annotations.contains(classOf[DeclaredElement]) && inherits.size == 1 && n.properties.isEmpty
+
+  private def copyExamples(from: AnyShape, to: AnyShape): Unit = {
+    from.examples.foreach(e1 => {
+      to.examples.find(e2 => {
+        e1.id == e2.id || e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim
+      }) match {
+        case Some(_) => // duplicated
+        case None =>
+          e1.annotations += LocalElement()
+          to.setArrayWithoutId(AnyShapeModel.Examples, to.examples ++ Seq(e1))
       }
-      // we give proper names if there are more than one example, so it cannot be null
-      if (refShape.examples.length > 1) {
-        refShape.examples.foreach { example =>
-          // we generate a unique new name if the no name or the name is already in the list of named examples
-          if (example.name.option().isEmpty || names.contains(example.name.value())) {
-            var name = s"example_$exCounter"
-            while (names.contains(name)) {
-              exCounter += 1
-              name = s"example_$exCounter"
-            }
-            names.add(name)
-            example.withName(name)
-          } else {
-            names.add(example.name.value())
+    })
+  }
+
+  protected def aggregateExamples(shape: Shape, referencedShape: Shape): Unit = {
+    (shape, referencedShape) match {
+      case (accShape: AnyShape, refShape: AnyShape) =>
+        val (from, to) =
+          if (accShape.annotations.contains(classOf[DeclaredElement])) (refShape, accShape)
+          else (accShape, refShape)
+
+        copyExamples(from, to)
+
+        val namesCache: mutable.Set[String] = mutable.Set() // duplicated names
+        // we give proper names if there are more than one example, so it cannot be null
+        if (to.examples.size > 1) {
+          to.examples.foreach { example =>
+            // we generate a unique new name if the no name or the name is already in the list of named examples
+            if (example.name.option().isEmpty || namesCache.contains(example.name.value())) {
+              var i    = 0
+              var name = s"example_$i"
+              while (namesCache.contains(name)) {
+                i += 1
+                name = s"example_$i"
+              }
+              namesCache.add(name)
+              example.withName(name)
+            } else namesCache.add(example.name.value())
           }
         }
-      }
-    }
 
+      case _ => // Nothing to do
+    }
   }
 
   def endpointSimpleInheritance(shape: Shape): Boolean = {

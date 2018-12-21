@@ -204,8 +204,8 @@ private case class RamlSingleArrayNode(node: YNode)(implicit iv: WebApiContext) 
 object SingleArrayNode {
   def apply(node: YNode)(implicit iv: WebApiContext): ArrayNode = {
     node.value match {
-      case seq: YSequence => ArrayNode(node)
-      case _              => RamlSingleArrayNode(node)
+      case _: YSequence => ArrayNode(node)
+      case _            => RamlSingleArrayNode(node)
     }
   }
 }

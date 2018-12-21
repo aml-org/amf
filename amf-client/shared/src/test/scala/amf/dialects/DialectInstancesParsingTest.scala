@@ -22,10 +22,23 @@ trait DialectInstancesParsingTest extends FunSuiteCycleTests {
                   Amf,
                   useAmfJsonldSerialisation = false)
     }
+
+    test("parse 1b test") {
+      withDialect("dialect1.raml",
+                  "example1b.raml",
+                  "example1b.json",
+                  VocabularyYamlHint,
+                  Amf,
+                  useAmfJsonldSerialisation = false)
+    }
   }
 
   test("parse 1 (AMF) test") {
     withDialect("dialect1.raml", "example1.raml", "example1.amf.json", VocabularyYamlHint, Amf)
+  }
+
+  test("parse 1b (AMF) test") {
+    withDialect("dialect1.raml", "example1b.raml", "example1b.amf.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 1 with annotations test") {
@@ -184,6 +197,19 @@ trait DialectInstancesParsingTest extends FunSuiteCycleTests {
 
   test("generate 1 (AMF) test") {
     withDialect("dialect1.raml", "example1.amf.json", "example1.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 1b (AMF) test") {
+    withDialect("dialect1.raml", "example1b.amf.json", "example1b.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 1b test") {
+    withDialect("dialect1.raml",
+                "example1b.json",
+                "example1b.raml",
+                AmfJsonHint,
+                Aml,
+                useAmfJsonldSerialisation = false)
   }
 
   test("generate 2 test") {

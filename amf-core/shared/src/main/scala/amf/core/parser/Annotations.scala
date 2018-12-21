@@ -4,7 +4,7 @@ import amf.core.annotations.{LexicalInformation, SourceAST, SourceLocation, Sour
 import amf.core.model.domain.{Annotation, EternalSerializedAnnotation, SerializableAnnotation}
 import org.yaml.model.{YMapEntry, YNode, YPart}
 
-import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.{ArrayBuffer, ListBuffer}
 
 /**
   * Element annotations
@@ -55,6 +55,11 @@ class Annotations(hintSize: Int = 4) {
   def unapply[T <: Annotation](clazz: Class[T]): Option[T] = find(clazz)
 
   def copy(): Annotations = Annotations(this)
+
+  def into(collector: ListBuffer[Annotation], filter: Annotation => Boolean): Annotations = {
+    collector ++= annotations.filter(filter)
+    this
+  }
 }
 
 object Annotations {

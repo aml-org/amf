@@ -106,8 +106,9 @@ trait GraphParserHelpers {
       sources.annotations.foreach {
         case (annotation, values: mutable.Map[String, String]) =>
           annotation match {
-            case Annotation(deserialize) if values.contains(key) => result += deserialize(values(key), nodes)
-            case _                                               =>
+            case Annotation(deserialize) if values.contains(key) =>
+              deserialize(values(key), nodes).foreach(result += _)
+            case _ =>
           }
       }
     }

@@ -1,0 +1,60 @@
+{
+  "swagger": "2.0",
+  "schemes": [
+    "https"
+  ],
+  "info": {
+    "title": "Zenoti Open",
+    "version": "1.0.0"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "definitions": {
+    "AddGuestRequest": {
+      "properties": {
+        "Guest": {
+          "$ref": "#/definitions/GuestModel"
+        }
+      },
+      "type": "object"
+    },
+    "Guest": {
+      "$ref": "#/definitions/GuestModel"
+    },
+    "GuestModel": {
+      "properties": {
+        "Address1": {
+          "type": "string"
+        },
+        "Address2": {
+          "type": "string"
+        },
+        "AnniversaryDate": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "CenterCode": {
+          "type": "string"
+        },
+        "CenterId": {
+          "type": "string"
+        },
+        "CenterName": {
+          "type": "string"
+        },
+        "City": {
+          "type": "string"
+        },
+        "Code": {
+          "description": "Code assigned to Guest",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+#%Container Configuration 0.2
+mapping:
+  -
+    variable: name
+    property: http://schema.org/name
+  -
+    variable: description
+    property: http://schema.org/description
+  -
+    variable: propertyName
+    property: http://www.w3.org/ns/shacl#name
+namespace: api_specs
+pattern:
+  template: $container/anyId/$uuid
+schema: http://aml.og/schema/xyz
+pageSize: 10

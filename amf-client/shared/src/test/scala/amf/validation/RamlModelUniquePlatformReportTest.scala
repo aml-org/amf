@@ -176,5 +176,13 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-status-code-string/api.raml", Some("invalid-status-code-string-raml.report"))
   }
 
+  test("Invalid array definition in enum") {
+    validate("invalid-enum-array.raml", Some("invalid-enum-array.raml.report"))
+  }
+
+  test("Invalid Raml with json schema that refs path with spaces") {
+    validate("raml-json-ref-with-spaces/api.raml", Some("raml-json-ref-with-spaces.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

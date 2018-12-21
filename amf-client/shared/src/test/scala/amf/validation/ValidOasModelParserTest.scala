@@ -29,5 +29,13 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/payloads/form-data-with-ref.json", OasProfile)
   }
 
+  test("Api with external docs") {
+    checkValid("/apiWithExternalDocs.json", OasProfile)
+  }
+
+  test("Local references with same property name") {
+    checkValid("/zenoti-reduced.json", OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

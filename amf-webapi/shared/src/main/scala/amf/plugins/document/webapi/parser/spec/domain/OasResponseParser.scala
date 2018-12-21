@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.DeclaredElement
+import amf.core.annotations.{DeclaredElement, TrackedElement}
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
 import amf.core.utils.Strings
@@ -64,6 +64,7 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
 
         val examples = OasResponseExamplesParser("examples", map).parse()
         if (examples.nonEmpty) res.set(ResponseModel.Examples, AmfArray(examples))
+        examples.foreach(_.annotations += TrackedElement(res.id))
 
         AnnotationParser(res, map).parse()
 

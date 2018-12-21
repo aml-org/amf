@@ -15,8 +15,14 @@ trait SerializableAnnotation extends Annotation {
   val value: String
 }
 
+trait ResolvableAnnotation extends Annotation {
+
+  /** To allow deferred resolution on unordered graph parsing. */
+  def resolve(objects: Map[String, AmfElement]): Unit = {}
+}
+
 trait AnnotationGraphLoader {
-  def unparse(annotatedValue: String, objects: Map[String, AmfElement]): Annotation
+  def unparse(annotatedValue: String, objects: Map[String, AmfElement]): Option[Annotation]
 }
 
 trait UriAnnotation {
@@ -25,7 +31,7 @@ trait UriAnnotation {
 }
 
 object Annotation {
-  def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Annotation] =
+  def unapply(annotation: String): Option[(String, Map[String, AmfElement]) => Option[Annotation]] =
     AMFDomainRegistry.annotationsRegistry.get(annotation) match {
       case Some(annotationLoader) => Some(annotationLoader.unparse)
       case _                      => None

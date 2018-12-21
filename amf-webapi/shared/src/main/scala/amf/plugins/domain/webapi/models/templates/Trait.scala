@@ -31,6 +31,7 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
                                       _,
                                       unit,
                                       name.option().getOrElse(""),
+                                      annotations,
                                       id,
                                       ExtendsHelper.findUnitLocationOfElement(id, unit),
                                       keepEditingInfo = false))

@@ -30,6 +30,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
             ExtendsHelper.asEndpoint(unit,
                                      profile,
                                      _,
+                                     annotations,
                                      name.value(),
                                      id,
                                      ExtendsHelper.findUnitLocationOfElement(id, unit),

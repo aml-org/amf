@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes
 
-import amf.core.metamodel.domain.ShapeModel
+import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.{PropertyShapeModel, ShapeExtensionModel}
 import amf.client.plugins.{AMFDomainPlugin, AMFPlugin}
 import amf.plugins.domain.shapes.annotations.{
@@ -43,7 +43,11 @@ object DataShapesDomainPlugin extends AMFDomainPlugin {
     UnionShapeModel,
     XMLSerializerModel,
     ShapeExtensionModel,
-    ExampleModel
+    ExampleModel,
+    ObjectNodeModel,
+    ScalarNodeModel,
+    ArrayNodeModel,
+    LinkNodeModel
   )
 
   override def init(): Future[AMFPlugin] = Future { this }
