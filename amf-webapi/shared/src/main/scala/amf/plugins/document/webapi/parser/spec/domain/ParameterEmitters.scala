@@ -331,6 +331,7 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
           .foreach { f =>
             if (parameter.isBody) {
               result += OasSchemaEmitter(f, ordering, references)
+              result ++= AnnotationsEmitter(parameter, ordering).emitters
             } else {
               result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape],
                                         ordering,
@@ -338,8 +339,6 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
                                         references).entries()
             }
           }
-
-        result ++= AnnotationsEmitter(parameter, ordering).emitters
 
         b.obj(traverse(ordering.sorted(result), _))
       }
