@@ -189,7 +189,7 @@ case class RamlJsonSchemaExpression(key: YNode,
           ctx.futureDeclarations.resolveRef(fullRef, sh)
           tmpShape.resolve(sh) // useless?
           ctx.registerJsonSchema(fullRef, sh)
-          if (sh.isLink) sh.effectiveLinkTarget.asInstanceOf[AnyShape]
+          if (sh.isLink) sh.effectiveLinkTarget().asInstanceOf[AnyShape]
           else sh
         case None =>
           val shape = SchemaShape()

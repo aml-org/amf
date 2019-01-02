@@ -273,7 +273,7 @@ class ExtendsResolutionStage(
       Option(parameterized.target) match {
         case Some(_: ErrorDeclaration) => Some(TraitBranch(key, Operation(), Seq()))
         case Some(potentialTrait: Trait) =>
-          potentialTrait.effectiveLinkTarget match {
+          potentialTrait.effectiveLinkTarget() match {
             case err: ErrorTrait =>
               Some(TraitBranch(key, Operation().withId(err.id + "_op"), Nil))
             case t: Trait =>

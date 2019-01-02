@@ -23,7 +23,7 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
                                 errorHandler: ErrorHandler = UnhandledErrorHandler): EndPoint = {
     linkTarget match {
       case Some(_) =>
-        effectiveLinkTarget.asInstanceOf[ResourceType].asEndpoint(unit, profile, errorHandler)
+        effectiveLinkTarget().asInstanceOf[ResourceType].asEndpoint(unit, profile, errorHandler)
       case _ =>
         Option(dataNode)
           .map(

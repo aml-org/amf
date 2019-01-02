@@ -66,7 +66,7 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
   def effectiveInherits: Seq[Shape] = {
     inherits.map { base =>
       if (base.linkTarget.isDefined) {
-        base.effectiveLinkTarget match {
+        base.effectiveLinkTarget() match {
           case linkedShape: Shape => linkedShape
           case _                  => base // TODO: what should we do here?
         }

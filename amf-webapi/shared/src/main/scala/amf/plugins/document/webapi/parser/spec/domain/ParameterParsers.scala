@@ -469,7 +469,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       val schema = NodeShape().withName("formData").adopted(parentId)
 
       formData.foreach { p =>
-        val payload = if (p.isLink) p.effectiveLinkTarget.asInstanceOf[Payload] else p
+        val payload = if (p.isLink) p.effectiveLinkTarget().asInstanceOf[Payload] else p
 
         val property = schema.withProperty(payload.name.value())
         payload.annotations.find(classOf[RequiredParamPayload]) match {

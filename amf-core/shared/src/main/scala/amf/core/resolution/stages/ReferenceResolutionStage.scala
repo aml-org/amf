@@ -33,7 +33,7 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
       case l: Linkable if l.linkTarget.isDefined =>
         if (links.contains(l.linkTarget.get.id)) Some(links(l.linkTarget.get.id))
         else {
-          val target = l.effectiveLinkTarget match {
+          val target = l.effectiveLinkTarget() match {
             case t: DomainElement if links.contains(t.id) => links(t.id)
             case t: DomainElement with Linkable if element.annotations.contains(classOf[DeclaredElement]) =>
               val copied = t.copyElement().withId(element.id)
