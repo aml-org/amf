@@ -4,6 +4,7 @@ import amf.client.convert.CoreClientConverters._
 import amf.client.model.{AmfObjectWrapper, StrField}
 import amf.client.model.domain.DomainElement
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
+import amf.core.remote.Vendor
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
 
@@ -53,4 +54,6 @@ trait BaseUnit extends AmfObjectWrapper with PlatformSecrets {
 
   def findByType(typeId: String): ClientList[DomainElement] =
     _internal.findByType(Namespace.expand(typeId).iri()).asClient
+
+  def sourceVendor: ClientOption[Vendor] = _internal.sourceVendor.asClient
 }
