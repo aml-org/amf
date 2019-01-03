@@ -7,14 +7,14 @@ resourceTypes:
     description: The collection of users
     get:
       responses:
-        200:
+        "200":
           body:
             application/json: null
 /users:
   get:
     description: Metadata of a Specific Index
     responses:
-      200:
+      "200":
         body:
           application/json:
             type: any

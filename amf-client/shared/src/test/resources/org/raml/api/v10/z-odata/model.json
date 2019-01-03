@@ -86,7 +86,7 @@ types:
           required: false
       description: Read order
       responses:
-        200:
+        "200":
           body:
             application/json:
               type: object
@@ -129,7 +129,7 @@ types:
           required: false
       description: Delete order
       responses:
-        200:
+        "200":
           body:
             application/json:
               type: object
@@ -155,7 +155,7 @@ types:
     put:
       description: Update order
       responses:
-        204:
+        "204":
           body:
             application/json:
               type: object
@@ -251,7 +251,7 @@ types:
         required: false
     description: List of orders
     responses:
-      200:
+      "200":
         body:
           application/json:
             items:
@@ -311,7 +311,7 @@ types:
         required: false
     description: Create a new order
     responses:
-      200:
+      "200":
         body:
           application/json:
             type: object
@@ -358,7 +358,7 @@ types:
           required: false
       description: Read customer
       responses:
-        200:
+        "200":
           body:
             application/json:
               type: object
@@ -406,7 +406,7 @@ types:
           required: false
       description: Delete customer
       responses:
-        200:
+        "200":
           body:
             application/json:
               type: object
@@ -437,7 +437,7 @@ types:
     put:
       description: Update customer
       responses:
-        204:
+        "204":
           body:
             application/json:
               type: object
@@ -543,7 +543,7 @@ types:
         required: false
     description: List of customers
     responses:
-      200:
+      "200":
         body:
           application/json:
             items:
@@ -608,7 +608,7 @@ types:
         required: false
     description: Create a new customer
     responses:
-      200:
+      "200":
         body:
           application/json:
             type: object
@@ -660,7 +660,7 @@ types:
           required: false
       description: Read Weird-resource_NAME
       responses:
-        200:
+        "200":
           body:
             application/json:
               type: object
@@ -698,7 +698,7 @@ types:
           required: false
       description: Delete Weird-resource_NAME
       responses:
-        200:
+        "200":
           body:
             application/json:
               type: object
@@ -719,7 +719,7 @@ types:
     put:
       description: Update Weird-resource_NAME
       responses:
-        204:
+        "204":
           body:
             application/json:
               type: object
@@ -805,7 +805,7 @@ types:
         required: false
     description: List of Weird-resource_NAMEs
     responses:
-      200:
+      "200":
         body:
           application/json:
             items:
@@ -860,7 +860,7 @@ types:
         required: false
     description: Create a new Weird-resource_NAME
     responses:
-      200:
+      "200":
         body:
           application/json:
             type: object

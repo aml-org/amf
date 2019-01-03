@@ -108,7 +108,7 @@ baseUri: aaa-bbb.com/apis
         type: string
     get:
       responses:
-        200:
+        "200":
           body:
             application/json:
               anyOf:
@@ -229,7 +229,7 @@ baseUri: aaa-bbb.com/apis
                       required: false
     patch:
       responses:
-        200:
+        "200":
           body:
             application/json:
               additionalProperties: true
@@ -310,7 +310,7 @@ baseUri: aaa-bbb.com/apis
             description: The `page` parameter specifies the page of results to return.
             default: 1
         responses:
-          200:
+          "200":
             body:
               application/json:
                 items:
@@ -395,7 +395,7 @@ baseUri: aaa-bbb.com/apis
             type: string
         get:
           responses:
-            200:
+            "200":
               body:
                 application/json:
                   additionalProperties: true
@@ -485,7 +485,7 @@ baseUri: aaa-bbb.com/apis
             description: The `page` parameter specifies the page of results to return.
             default: 1
         responses:
-          200:
+          "200":
             body:
               application/json:
                 items:

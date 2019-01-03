@@ -11,7 +11,7 @@ resourceTypes:
     description: Entity representing a <<resourcePathName|!singularize>>
     get:
       responses:
-        200:
+        "200":
           body:
             application/json:
               type: <<resourcePathName|!singularize>>
@@ -33,7 +33,7 @@ resourceTypes:
           example: 80
     get:
       responses:
-        200:
+        "200":
           body:
             application/json:
               minimum: 0

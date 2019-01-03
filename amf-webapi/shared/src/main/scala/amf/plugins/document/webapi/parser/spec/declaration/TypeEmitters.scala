@@ -28,7 +28,7 @@ import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping,
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -1113,9 +1113,11 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       })
       .getOrElse(property.name.value())
 
+    val key = YNode(YScalar(name), YType.Str)
+
     if (property.range.annotations.contains(classOf[SynthesizedField])) {
       b.entry(
-        name,
+        key,
         raw(_, "", YType.Null)
       )
     } else {
@@ -1131,7 +1133,7 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       property.range match {
         case range: AnyShape =>
           b.entry(
-            name,
+            key,
             pb => {
               Raml10TypePartEmitter(range, ordering, None, references = references).emitter match {
                 case Left(p)        => p.emit(pb)
@@ -1139,8 +1141,8 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
               }
             }
           )
-        case _ => // ignreo
-          b.entry(name, _.obj(e => traverse(additionalEmitters, e)))
+        case _ => // ignore
+          b.entry(key, _.obj(e => traverse(additionalEmitters, e)))
       }
     }
   }
@@ -2106,6 +2108,7 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
     property.fields.entry(PropertyShapeModel.ReadOnly).map(fe => ValueEmitter("readOnly", fe))
 
   val propertyName: String = property.patternName.option().getOrElse(property.name.value())
+  val propertyKey = YNode(YScalar(propertyName), YType.Str)
 
   val computedEmitters: Either[PartEmitter, Seq[EntryEmitter]] =
     emitter(pointer ++ Seq("properties", propertyName), schemaPath)
@@ -2114,7 +2117,7 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
     property.range match {
       case _: AnyShape | _: RecursiveShape =>
         b.entry(
-          propertyName,
+          propertyKey,
           pb => {
             computedEmitters match {
               case Left(p)        => p.emit(pb)
@@ -2123,7 +2126,7 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
           }
         )
       case _ => // ignore
-        b.entry(propertyName, _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
+        b.entry(propertyKey, _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
     }
   }
 

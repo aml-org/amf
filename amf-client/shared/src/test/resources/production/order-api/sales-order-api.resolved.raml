@@ -24,7 +24,7 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
         required: false
         type: string
     responses:
-      200:
+      "200":
         body:
           application/json:
             example:
@@ -83,7 +83,7 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
                 creationDate: 08/17/2017
                 trackingNumber: 7d0d25a4-b4bd-4b28-ba30-785415eedad2
             (amf-tuple): true
-      404:
+      "404":
         body:
           application/json:
             example:
@@ -153,7 +153,7 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
             ]
           }
     responses:
-      201:
+      "201":
         body:
           application/json:
             example:
@@ -173,7 +173,7 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
                   "id"
                 ]
               }
-      400:
+      "400":
         body:
           application/json:
             example:
@@ -189,7 +189,7 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
         required: true
     get:
       responses:
-        200:
+        "200":
           body:
             application/json:
               example:
@@ -203,7 +203,7 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
                 trackingNumber: 1964401a-a8b3-40c1-b86e-d8b9f75b5842
                 userId: bigboy
               type: any
-        404:
+        "404":
           body:
             application/json:
               example:
@@ -338,14 +338,14 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
               }
             }
       responses:
-        204: {}
-        400:
+        "204": {}
+        "400":
           body:
             application/json:
               example:
                 message: Bad Request
               type: any
-        404:
+        "404":
           body:
             application/json:
               example:
@@ -353,14 +353,14 @@ baseUri: https://mocksvc.mulesoft.com/mocks/18f878aa-683e-4f79-94a6-feffe69aec41
               type: any
     delete:
       responses:
-        204: {}
-        400:
+        "204": {}
+        "400":
           body:
             application/json:
               example:
                 message: Bad Request
               type: any
-        404:
+        "404":
           body:
             application/json:
               example:

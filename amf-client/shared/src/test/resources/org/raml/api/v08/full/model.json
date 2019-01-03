@@ -77,7 +77,7 @@ resourceTypes:
   post:
     description: post something
     responses:
-      200:
+      "200":
         body:
           application/json:
             example:
@@ -127,7 +127,7 @@ resourceTypes:
                 "required": false,
                 "type": "object"
             }
-      400:
+      "400":
         body: {}
     body:
       application/json:

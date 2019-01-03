@@ -735,7 +735,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         | /endpoint:
         |  get:
         |    responses:
-        |      200:
+        |      "200":
         |       description: a descrip""".stripMargin
     for {
       _         <- AMF.init().asFuture
@@ -765,7 +765,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
          |          schema:
          |            $ref: "#/definitions/person"
          |      responses:
-         |        200:
+         |        "200":
          |          description: a descrip
          |definitions:
          |  person:

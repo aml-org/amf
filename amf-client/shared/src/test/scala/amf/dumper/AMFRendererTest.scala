@@ -421,7 +421,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |/endpoint:
         | get:
         |   responses:
-        |     200:
+        |     "200":
         |       body:
         |        application/json:
         |         example:

@@ -30,7 +30,7 @@ types:
         - traits.partial
       description: Returns Customer data
       responses:
-        200:
+        "200":
           body:
             application/json:
               type:
@@ -42,7 +42,7 @@ types:
           - traits.sortable
         description: Returns a collection accounts
         responses:
-          200:
+          "200":
             body:
               application/json:
                 type:
@@ -62,7 +62,7 @@ types:
             - traits.partial
           description: Returns BankAccount data
           responses:
-            200:
+            "200":
               body:
                 application/json:
                   type:
@@ -77,7 +77,7 @@ types:
           - contentCacheable
         description: Returns a collection accounts
         responses:
-          200:
+          "200":
             body:
               application/json:
                 type:
@@ -97,7 +97,7 @@ types:
             - traits.partial
           description: Returns Loan data
           responses:
-            200:
+            "200":
               body:
                 application/json:
                   type:
@@ -106,7 +106,7 @@ types:
         get:
           description: Returns the repayments schedule for a Loan
           responses:
-            200:
+            "200":
               body: shapes.RepaymentSpecificationData
     /cards:
       /debit:
@@ -116,7 +116,7 @@ types:
             - traits.sortable
           description: Returns a collection of cards
           responses:
-            200:
+            "200":
               body:
                 application/json:
                   type:
@@ -136,7 +136,7 @@ types:
               - traits.partial
             description: Returns DebitCard data
             responses:
-              200:
+              "200":
                 body:
                   application/json:
                     type:
@@ -151,7 +151,7 @@ types:
             - contentCacheable
           description: Returns a collection accounts
           responses:
-            200:
+            "200":
               body:
                 application/json:
                   type:
@@ -171,7 +171,7 @@ types:
               - traits.partial
             description: Returns DebitCard data
             responses:
-              200:
+              "200":
                 body:
                   application/json:
                     type:

@@ -17,7 +17,7 @@ types:
           - CLE
         type: string
     responses:
-      200:
+      "200":
         body:
           application/json:
             type:
@@ -31,7 +31,7 @@ types:
           - AmericanFlight
         examples: !include examples/AmericanFlightNoIdExample.raml
     responses:
-      201:
+      "201":
         body:
           application/json:
             example:
@@ -41,7 +41,7 @@ types:
     get:
       displayName: Get a flight by ID
       responses:
-        200:
+        "200":
           body:
             application/json:
               type:
@@ -50,7 +50,7 @@ types:
     delete:
       displayName: Delete a flight
       responses:
-        200:
+        "200":
           body:
             application/json:
               example:
@@ -64,7 +64,7 @@ types:
             - AmericanFlight
           examples: !include examples/AmericanFlightNoIdExample.raml
       responses:
-        200:
+        "200":
           body:
             application/json:
               example:
