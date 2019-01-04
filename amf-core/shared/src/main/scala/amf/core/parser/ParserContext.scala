@@ -247,7 +247,7 @@ case class WarningOnlyHandler(override val currentFile: String) extends RuntimeE
   override val parserCount: Int = AMFCompilerRunCount.count
 
   override def handle(node: YPart, e: SyamlException): Unit = {
-    warning(SyamlError, "", e.getMessage, node)
+    warning(SyamlWarning, "", e.getMessage, node)
     warningRegister = true
   }
 
