@@ -73,13 +73,18 @@ class RamlParserErrorTest extends ParserErrorTest {
       "error/invalid-type.raml",
       artist => {
         artist.level should be("Violation")
-        artist.message should be("Expecting !!str and !!seq provided")
+        artist.message should be("Invalid property name")
         artist.position.map(_.range) should be(Some(Range((44, 10), (44, 12))))
       },
       tracks => {
         tracks.level should be("Violation")
-        tracks.message should be("Expecting !!str and !!seq provided")
+        tracks.message should be("Invalid property name")
         tracks.position.map(_.range) should be(Some(Range((49, 10), (49, 12))))
+      },
+      anotherTrack => {
+        anotherTrack.level should be("Violation")
+        anotherTrack.message should be("Invalid property name")
+        anotherTrack.position.map(_.range) should be(Some(Range((54, 10), (54, 12))))
       }
     )
   }
@@ -392,19 +397,6 @@ class RamlParserErrorTest extends ParserErrorTest {
         first.level should be("Violation")
         first.message should be("Missing library location")
         first.position.map(_.range) should be(Some(Range((5, 2), (14, 12))))
-      }
-    )
-  }
-
-  // Strange problem where hashcode for YMap entries had to be recalculated inside syaml.
-  // Just check it doesn't throw NPE :)
-  test("Null in type name") {
-    validate(
-      "/error/null-name.raml",
-      first => {
-        first.level should be("Violation")
-        first.message should be("Expecting !!str and !!null provided")
-        first.position.map(_.range) should be(Some(Range((13, 6), (13, 10))))
       }
     )
   }

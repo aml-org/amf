@@ -1429,16 +1429,17 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     def parse(): Option[PropertyShape] = {
 
-      entry.key.to[String] match {
-        case Right(prop) =>
-          val property = producer(prop).add(Annotations(entry))
+      entry.key.asScalar match {
+        case Some(scalarKey) =>
+          val propName = scalarKey.text
+          val property = producer(propName).add(Annotations(entry))
 
           // we detect pattern properties here
-          if (prop.startsWith("/") && prop.endsWith("/")) {
-            if (prop == "//") {
+          if (propName.startsWith("/") && propName.endsWith("/")) {
+            if (propName == "//") {
               property.withPatternName("^.*$")
             } else {
-              property.withPatternName(prop.drop(1).dropRight(1))
+              property.withPatternName(propName.drop(1).dropRight(1))
             }
           }
 
@@ -1468,12 +1469,12 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             if (property.patternName.option().isDefined) {
               property.set(PropertyShapeModel.MinCount, 0)
             } else {
-              val required = !prop.endsWith("?")
+              val required = !propName.endsWith("?")
 
               property.set(PropertyShapeModel.MinCount, if (required) 1 else 0)
               property.set(
                 PropertyShapeModel.Name,
-                if (required) prop else prop.stripSuffix("?").stripPrefix("/").stripSuffix("/")) // TODO property id is using a name that is not final.
+                if (required) propName else propName.stripSuffix("?").stripPrefix("/").stripSuffix("/")) // TODO property id is using a name that is not final.
               property.set(PropertyShapeModel.Path,
                            (Namespace.Data + entry.key.as[YScalar].text.stripSuffix("?")).iri())
             }
@@ -1491,9 +1492,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
           Some(property)
 
-        case Left(error) =>
+        case None =>
           // TODO get parent id
-          ctx.violation(InvalidPropertyType, "", error.error, entry.key)
+          ctx.violation(InvalidPropertyType, "", "Invalid property name", entry.key)
           None
       }
     }
