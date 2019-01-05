@@ -21,7 +21,6 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.features.validation.{ParserSideValidations, ResolutionSideValidations}
 import amf.plugins.features.validation.ParserSideValidations._
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model._
@@ -197,18 +196,16 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   private def detectDependency(): Option[TypeDef] = map.key("$ref").map(_ => LinkType)
 
-  private def detectUnion(): Option[TypeDef.UnionType.type] = {
-    map.key("x-amf-union").map(_ => UnionType)
-  }
+  private def detectUnion(): Option[TypeDef.UnionType.type] = map.key("x-amf-union").map(_ => UnionType)
 
-  private def detectType(): Option[TypeDef] = {
-    map
-      .key("type")
-      .map(e => {
-        val t = e.value.as[YScalar].text
-        val f = map.key("format").flatMap(e => e.value.toOption[YScalar].map(_.text)).getOrElse("")
-        matchType(t, f)
-      })
+  private def detectType(): Option[TypeDef] = map.key("type").flatMap { e =>
+    val t      = e.value.as[YScalar].text
+    val f      = map.key("format").flatMap(e => e.value.toOption[YScalar].map(_.text)).getOrElse("")
+    val result = matchType(t, f, UndefinedType)
+    if (result == UndefinedType) {
+      ctx.violation(InvalidJsonSchemaType, "", s"Invalid type $t", e.value)
+      None
+    } else Some(result)
   }
 
   private def parseDisjointUnionType(): UnionShape = {

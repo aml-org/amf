@@ -18,6 +18,11 @@ object ParserSideValidations extends Validations {
     "Dialect error"
   )
 
+  val InvalidJsonSchemaType = validation(
+    "invalid-json-schema-type",
+    "Invalid json schema definition type"
+  )
+
   val ExpectedVocabularyModule = validation(
     "expected-vocabulary-module",
     "Expected vocabulary module"
@@ -703,6 +708,7 @@ object ParserSideValidations extends Validations {
     UnexpectedFileTypesSyntax,
     InvalidDialectPatch,
     DialectError,
-    ExampleValidationErrorSpecification
+    ExampleValidationErrorSpecification,
+    InvalidJsonSchemaType
   )
 }

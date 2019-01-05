@@ -20,7 +20,11 @@
       "type": "object",
       "properties": {
         "c": {
-          "type": "#/definitions/c"
+          "allOf": [
+            {
+              "$ref": "#/definitions/c"
+            }
+          ]
         }
       }
     },
