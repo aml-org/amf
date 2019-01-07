@@ -249,6 +249,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test example inheritance in type declaration with link") {
     cycle("api.raml", "api.raml.resolved", RamlYamlHint, Raml, basePath + "simple-inheritance-link-example/")
   }
+
+  test("Test union type anyOf name values") {
+    cycle("api.raml", "api.raml.resolved", RamlYamlHint, Amf, basePath + "union-type/")
+  }
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {

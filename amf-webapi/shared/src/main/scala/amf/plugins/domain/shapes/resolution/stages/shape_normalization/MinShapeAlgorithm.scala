@@ -424,7 +424,9 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
       superUnionElement <- superUnion.anyOf
     } yield {
       try {
-        Some(unionContext.minShape(baseShape, superUnionElement))
+        val newShape = unionContext.minShape(baseShape, superUnionElement)
+        superUnionElement.name.option().foreach(n => newShape.withName(n))
+        Some(newShape)
       } catch {
         case _: Exception => None
       }

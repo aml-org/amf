@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: some title
+types:
+  a:
+    type: object
+    properties:
+      aProp: string
+  b:
+    type: object
+    properties:
+      bProp: integer
+  c:
+    type: a | b
+
+
+/endpoint:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: c
