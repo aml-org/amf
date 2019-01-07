@@ -47,7 +47,8 @@ object DataShapesDomainPlugin extends AMFDomainPlugin {
     ObjectNodeModel,
     ScalarNodeModel,
     ArrayNodeModel,
-    LinkNodeModel
+    LinkNodeModel,
+    RecursiveShapeModel
   )
 
   override def init(): Future[AMFPlugin] = Future { this }
