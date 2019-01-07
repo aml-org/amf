@@ -524,8 +524,12 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
 
   private def date(property: PropertyObject) = {
     property match {
-      case Literal(v, _) => AmfScalar(SimpleDateTime.parse(v).right.get)
-      case Uri(v)        => throw new Exception(s"Expecting Date literal found URI $v")
+      case Literal(v, _) =>
+        SimpleDateTime.parse(v) match {
+          case Right(value) => AmfScalar(value)
+          case Left(error)  => throw new Exception(error.message)
+        }
+      case Uri(v) => throw new Exception(s"Expecting Date literal found URI $v")
     }
   }
 

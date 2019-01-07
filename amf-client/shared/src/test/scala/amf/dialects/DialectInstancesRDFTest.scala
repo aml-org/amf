@@ -38,6 +38,10 @@ class DialectInstancesRDFTest extends FunSuiteCycleTests with PlatformSecrets {
     withDialectFull("dialect6.raml", "example6.raml", "example6.raml", VocabularyYamlHint, Aml)
   }
 
+  test("RDF 26 full test") {
+    withDialectFull("dialect26.raml", "example26.raml", "example26.raml", VocabularyYamlHint, Aml)
+  }
+
   test("RDF 1 Vocabulary full test") {
     cycleFullRdf("example1.raml",
                  "example1.raml",
@@ -64,47 +68,47 @@ class DialectInstancesRDFTest extends FunSuiteCycleTests with PlatformSecrets {
 
   test("Container Configuration 0.2 ex1 test") {
     withDialectFull("dialect.raml",
-      "ex1.raml",
-      "ex1.raml",
-      VocabularyYamlHint,
-      Aml,
-      "amf-client/shared/src/test/resources/vocabularies2/production/system2/")
+                    "ex1.raml",
+                    "ex1.raml",
+                    VocabularyYamlHint,
+                    Aml,
+                    "amf-client/shared/src/test/resources/vocabularies2/production/system2/")
   }
 
   test("Container Configuration 0.2 ex2 test") {
     withDialectFull("dialect.raml",
-      "ex2.raml",
-      "ex2.raml",
-      VocabularyYamlHint,
-      Aml,
-      "amf-client/shared/src/test/resources/vocabularies2/production/system2/")
+                    "ex2.raml",
+                    "ex2.raml",
+                    VocabularyYamlHint,
+                    Aml,
+                    "amf-client/shared/src/test/resources/vocabularies2/production/system2/")
   }
 
-  protected def withDialect(dialect: String,
-                            source: String,
-                            golden: String,
-                            hint: Hint,
-                            target: Vendor,
-                            directory: String = basePath) = {
+  private def withDialect(dialect: String,
+                          source: String,
+                          golden: String,
+                          hint: Hint,
+                          target: Vendor,
+                          directory: String = basePath) = {
     for {
-      v         <- Validation(platform).map(_.withEnabledValidation(false))
-      something <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
-      res       <- cycleRdf(source, golden, hint, target)
+      v   <- Validation(platform).map(_.withEnabledValidation(false))
+      _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
+      res <- cycleRdf(source, golden, hint, target)
     } yield {
       res
     }
   }
 
-  protected def withDialectFull(dialect: String,
-                                source: String,
-                                golden: String,
-                                hint: Hint,
-                                target: Vendor,
-                                directory: String = basePath) = {
+  private def withDialectFull(dialect: String,
+                              source: String,
+                              golden: String,
+                              hint: Hint,
+                              target: Vendor,
+                              directory: String = basePath) = {
     for {
-      v         <- Validation(platform).map(_.withEnabledValidation(false))
-      something <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
-      res       <- cycleFullRdf(source, golden, hint, target, directory)
+      v   <- Validation(platform).map(_.withEnabledValidation(false))
+      _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
+      res <- cycleFullRdf(source, golden, hint, target, directory)
     } yield {
       res
     }
