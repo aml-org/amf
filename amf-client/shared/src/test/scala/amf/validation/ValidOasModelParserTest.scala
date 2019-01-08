@@ -37,5 +37,9 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/zenoti-reduced.json", OasProfile)
   }
 
+  test("some some some") {
+    checkValid("/ref-to-doc/api.json", OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

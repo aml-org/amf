@@ -1,11 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
+import amf.core.client.ParsingOptions
 import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{ExternalDomainElement, Shape}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument}
+import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.ExternalJsonRefsPlugin
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
@@ -21,9 +24,10 @@ import org.yaml.model.{YMap, YMapEntry, YScalar}
   *
   */
 case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: OasWebApiContext)
-    extends OasSpecParser {
+    extends OasSpecParser
+    with PlatformSecrets {
 
-  def parseFragment(): Fragment = {
+  def parseFragment(): BaseUnit = {
     // first i must identify the type of fragment
     val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.to[YMap] match {
       case Right(m) => m
@@ -43,7 +47,9 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       case Oas20AnnotationTypeDeclaration => Some(AnnotationFragmentParser(map).parse())
       case Oas20SecurityScheme            => Some(SecuritySchemeFragmentParser(map).parse())
       case Oas20NamedExample              => Some(NamedExampleFragmentParser(map).parse())
-      case _                              => None
+      case Oas20Header | Oas30Header =>
+        new ExternalJsonRefsPlugin().parse(root, ctx, platform, ParsingOptions())
+      case _ => None
     }).getOrElse {
       val fragment = ExternalFragment()
         .withLocation(root.location)
