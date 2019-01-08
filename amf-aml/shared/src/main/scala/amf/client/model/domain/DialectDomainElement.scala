@@ -3,12 +3,11 @@ package amf.client.model.domain
 import amf.client.convert.VocabulariesClientConverter
 import amf.client.convert.VocabulariesClientConverter._
 import amf.core.model.BoolField
+import amf.client.model.document.Dialect
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement => InternalDialectDomainElement}
 import org.yaml.model.YNode
-
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-
 @JSExportAll
 case class DialectDomainElement(override private[amf] val _internal: InternalDialectDomainElement)
     extends DomainElement {
@@ -57,9 +56,9 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     }
   }
 
-  def getTypeUris(): ClientList[String] = _internal.dynamicType.map(_.iri()).asClient
+  def getTypeUris(): ClientList[String] = _internal.meta.`type`.map(_.iri()).asClient
 
-  def getPropertyUris(): ClientList[String] = _internal.dynamicFields.map(_.value.iri()).asClient
+  def getPropertyUris(): ClientList[String] = _internal.meta.fields.map(_.value.iri()).asClient
 
   def getScalarByPropertyUri(propertyId: String): ClientList[Any] = {
     val expanded = Namespace.expand(propertyId).iri()

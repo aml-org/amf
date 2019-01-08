@@ -13,6 +13,9 @@ import scala.collection.mutable.ListBuffer
   */
 class Fields {
 
+  def getByIri(str: String): Option[Value] =
+    fs.collectFirst({ case (Field(_, v, _, _), value) if v.iri() == str => value })
+
   private var fs: Map[Field, Value] = ListMap()
 
   def default(field: Field): AmfElement =

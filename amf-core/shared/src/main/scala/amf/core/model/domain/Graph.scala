@@ -1,8 +1,7 @@
 package amf.core.model.domain
 
-import amf.core.annotations.{LexicalInformation, SourceAST}
 import amf.core.metamodel.domain.DomainElementModel.`type`
-import amf.core.parser.{FieldEntry, Range}
+import amf.core.parser.FieldEntry
 import amf.core.vocabulary.Namespace
 
 case class Graph(e: DomainElement) {

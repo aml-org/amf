@@ -179,7 +179,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           scalar.withId(node.subject)
           node.getKeys().foreach { k =>
             val entries = node.getProperties(k).get
-            if (k == scalar.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
+            if (k == ScalarNodeModel.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
               val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
               scalar.value = parsedScalar.value
               scalar.dataType = parsedScalar.dataType
@@ -545,10 +545,10 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   }
 
   private val dynamicBuilders: mutable.Map[String, Annotations => AmfObject] = mutable.Map(
-    LinkNode.builderType.iri()   -> domain.LinkNode.apply,
-    ArrayNode.builderType.iri()  -> domain.ArrayNode.apply,
-    ScalarNode.builderType.iri() -> domain.ScalarNode.apply,
-    ObjectNode.builderType.iri() -> domain.ObjectNode.apply
+    LinkNode.builderType.iri()        -> domain.LinkNode.apply,
+    ArrayNode.builderType.iri()       -> domain.ArrayNode.apply,
+    ScalarNodeModel.`type`.head.iri() -> domain.ScalarNode.apply,
+    ObjectNode.builderType.iri()      -> domain.ObjectNode.apply
   )
 
   protected def retrieveSources(id: String, node: Node): SourceMap = {

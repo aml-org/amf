@@ -6,7 +6,7 @@ import amf.core.metamodel.document.BaseUnitModel.Location
 import amf.core.metamodel.document._
 import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
+import amf.core.metamodel._
 import amf.core.model.document._
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
@@ -78,9 +78,9 @@ class GraphParser(platform: Platform)(implicit val ctx: ParserContext) extends G
       }
       buffer.flatMap { n =>
         listElement match {
-          case _ if listElement.dynamic => dynamicGraphParser.parseDynamicType(n.as[YMap])
-          case _: Obj                   => parse(n.as[YMap])
-          case _                        => try { Some(str(value(listElement, n))) } catch { case _: Exception => None }
+          case _: DynamicObj => dynamicGraphParser.parseDynamicType(n.as[YMap])
+          case _: Obj        => parse(n.as[YMap])
+          case _             => try { Some(str(value(listElement, n))) } catch { case _: Exception => None }
         }
       }
     }

@@ -3,6 +3,7 @@ package amf.plugins.features.validation
 import java.util.regex.Pattern
 
 import amf.core.annotations.SourceAST
+import amf.core.metamodel.DynamicObj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.parser.Annotations
@@ -89,7 +90,7 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
     matchingClass(validationSpecification, element) || matchingInstance(validationSpecification, element)
 
   protected def matchingClass(validationSpecification: ValidationSpecification, element: DomainElement): Boolean = {
-    val classes = if (element.meta.dynamic && element.isInstanceOf[DynamicDomainElement]) {
+    val classes = if (element.meta.isInstanceOf[DynamicObj] && element.isInstanceOf[DynamicDomainElement]) {
       element.asInstanceOf[DynamicDomainElement].dynamicTypes()
     } else {
       element.meta.`type`.map(_.iri())
@@ -103,9 +104,9 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
     validationSpecification.targetInstance.contains(element.id)
 
   def findFieldTarget(element: DomainElement, property: String): Option[(Annotations, Seq[AmfElement])] = {
-    if (element.meta.dynamic && element.isInstanceOf[DynamicDomainElement]) {
+    if (element.meta.isInstanceOf[DynamicObj] && element.isInstanceOf[DynamicDomainElement]) {
       val dynamicElement = element.asInstanceOf[DynamicDomainElement]
-      dynamicElement.dynamicFields.find(_.value.iri() == property) match {
+      dynamicElement.meta.fields.find(_.value.iri() == property) match {
         case Some(field) =>
           dynamicElement.valueForField(field) match {
             case Some(value) =>
@@ -145,9 +146,9 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
 
   def extractPredicateValue(predicate: String,
                             element: DomainElement): Option[(Annotations, AmfElement, Option[Any])] = {
-    if (element.meta.dynamic && element.isInstanceOf[DynamicDomainElement]) {
+    if (element.meta.isInstanceOf[DynamicObj] && element.isInstanceOf[DynamicDomainElement]) {
       val dynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
-      dynamicDomainElement.dynamicFields.find { f =>
+      dynamicDomainElement.meta.fields.find { f =>
         f.value.iri() == predicate
       } match {
         case None =>

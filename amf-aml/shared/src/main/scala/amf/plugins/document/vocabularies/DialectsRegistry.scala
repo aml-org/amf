@@ -83,7 +83,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
         dialectModel.nodeMapping match {
           case Some(nodeMapping) =>
             DialectDomainElement(annotations)
-              .withInstanceTypes(Seq(dialectModel.typeIri, nodeMapping.id))
+              .withInstanceTypes(dialectModel.typeIri :+ nodeMapping.id)
               .withDefinedBy(nodeMapping)
           case _ =>
             throw new Exception(s"Cannot find node mapping for dialectModel $dialectModel")
@@ -110,7 +110,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
         .distinct
         .map(iri => Field(Type.Str, ValueType(iri.value()), ModelDoc(ModelVocabularies.Parser, "custom", iri.value())))
 
-    new DialectDomainElementModel(nodeType.value(), fields ++ mapPropertiesFields, Some(nodeMapping))
+    new DialectDomainElementModel(Seq(nodeType.value()), fields ++ mapPropertiesFields, Some(nodeMapping))
   }
 
   def registerDialect(uri: String, environment: Environment = Environment()): Future[Dialect] = {

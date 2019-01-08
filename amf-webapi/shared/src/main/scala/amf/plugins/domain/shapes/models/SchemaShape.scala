@@ -18,7 +18,7 @@ case class SchemaShape(override val fields: Fields, override val annotations: An
 
   override def linkCopy(): SchemaShape = SchemaShape().withId(id)
 
-  override def meta: AnyShapeModel = SchemaShapeModel
+  override val meta: AnyShapeModel = SchemaShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/schema/" + name.option().getOrElse("default-schema").urlComponentEncoded

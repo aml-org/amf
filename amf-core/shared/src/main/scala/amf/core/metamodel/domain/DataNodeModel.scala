@@ -21,9 +21,6 @@ object DataNodeModel extends DomainElementModel with NameFieldSchema {
   override def fields: List[Field]     = List(Name) ++ DomainElementModel.fields
   override val `type`: List[ValueType] = Data + "Node" :: DomainElementModel.`type`
 
-  // This is a dynamic class, the structure is not known before parsing
-  override val dynamic = true
-
   override def modelInstance =
     throw new Exception("DataNode is an abstract class and it cannot be instantiated directly")
 

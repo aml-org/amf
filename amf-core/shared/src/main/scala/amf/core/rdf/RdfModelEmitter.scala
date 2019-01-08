@@ -6,7 +6,7 @@ import amf.core.metamodel.Type.{Array, Bool, EncodedIri, Iri, LiteralUri, Sorted
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
-import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
+import amf.core.metamodel._
 import amf.core.model.document.{BaseUnit, SourceMap}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
@@ -47,8 +47,35 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
 
         val obj = metaModel(element)
 
-        if (obj.dynamic) traverseDynamicMetaModel(id, element, obj)
-        else traverseStaticMetamodel(id, element, obj, sources)
+        createTypeNode(id, obj, Some(element))
+
+        // workaround for lazy values in shape
+        val modelFields = obj.fields ++ (obj match {
+          case _: ShapeModel =>
+            Seq(
+              ShapeModel.CustomShapePropertyDefinitions,
+              ShapeModel.CustomShapeProperties
+            )
+          case _ => Nil
+        }).filter(options.renderField)
+
+        element match {
+          case e: ObjectNode if options.isValidation =>
+            val url = Namespace.AmfValidation.base + "/properties"
+            objectValue(id, url, Type.Int, Value(AmfScalar(e.properties.size), Annotations()))
+          case _ => // Nothing to do
+        }
+
+        obj match {
+          case _: DynamicObj =>
+            modelFields.foreach { f =>
+              emitDynamicFieldModel(f, id, element.asInstanceOf[DynamicDomainElement], obj)
+            }
+          case _ =>
+            modelFields.foreach { f =>
+              emitStaticField(f, id, element, obj, sources)
+            }
+        }
 
         createCustomExtensions(element)
 
@@ -63,46 +90,22 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       }
     }
 
-    def traverseDynamicMetaModel(id: String, element: AmfObject, obj: Obj): Unit = {
-      val schema: DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
+    def emitDynamicFieldModel(f: Field, id: String, element: DynamicDomainElement, obj: Obj): Unit = {
 
-      createDynamicTypeNode(id, schema)
-      // workaround for lazy values in shape
-      val modelFields = schema.dynamicFields ++ (obj match {
-        case _: ShapeModel =>
-          Seq(
-            ShapeModel.CustomShapePropertyDefinitions,
-            ShapeModel.CustomShapeProperties
-          )
-        case _ => Nil
-      })
-
-      element match {
-        case e: ObjectNode if options.isValidation =>
-          val url = Namespace.AmfValidation.base + "/properties"
-          objectValue(id, url, Type.Int, Value(AmfScalar(e.properties.size), Annotations()))
-        case _ => // Nothing to do
-      }
-
-      modelFields.filter(options.renderField).foreach { f: Field =>
-        schema.valueForField(f).foreach { amfValue =>
-          val url = f.value.iri()
-          schema match {
-            case schema: DynamicDomainElement if !schema.isInstanceOf[ExternalSourceElement] =>
-              objectValue(id, url, f.`type`, Value(amfValue.value, amfValue.value.annotations))
-            case _ =>
-              objectValue(id, url, f.`type`, amfValue)
-          }
+      element.valueForField(f).foreach { amfValue =>
+        val url = f.value.iri()
+        element match {
+          case schema: DynamicDomainElement if !schema.isInstanceOf[ExternalSourceElement] =>
+            objectValue(id, url, f.`type`, Value(amfValue.value, amfValue.value.annotations))
+          case _ =>
+            objectValue(id, url, f.`type`, amfValue)
         }
       }
     }
 
-    def traverseStaticMetamodel(id: String, element: AmfObject, obj: Obj, sources: SourceMap): Unit = {
-      createTypeNode(id, obj, Some(element))
+    def emitStaticField(field: Field, id: String, element: AmfObject, obj: Obj, sources: SourceMap): Unit = {
 
-      // workaround for lazy values in shape
-
-      obj.fields.filter(options.renderField).map(element.fields.entryJsonld) foreach {
+      element.fields.entryJsonld(field) match {
         case Some(FieldEntry(f, v)) =>
           val url = f.value.iri()
           sources.property(url)(v)
@@ -319,9 +322,10 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
     }
 
     private def createDynamicTypeNode(id: String, obj: DynamicDomainElement): Unit = {
-      obj.dynamicType.foreach { t =>
-        rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t.iri())
-      }
+      if (obj.isInstanceOf[DynamicObj])
+        obj.meta.`type`.foreach { t =>
+          rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t.iri())
+        }
     }
 
     private def createTypeNode(id: String, obj: Obj, maybeElement: Option[AmfObject] = None): Unit = {

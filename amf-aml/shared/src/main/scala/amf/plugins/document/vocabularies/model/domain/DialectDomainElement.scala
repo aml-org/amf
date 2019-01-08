@@ -43,8 +43,6 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     instanceTypes = types
     this
   }
-  override def dynamicType: List[ValueType] =
-    (instanceTypes.distinct.map(iriToValue) ++ DialectDomainElementModel().`type`).toList
 
   // Dialect mapping defining the instance
   protected var instanceDefinedBy: Option[NodeMapping] = None
@@ -355,8 +353,21 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     if (instanceTypes.isEmpty) {
       DialectDomainElementModel()
     } else {
-      new DialectDomainElementModel(instanceTypes.head, dynamicFields, Some(definedBy))
+      new DialectDomainElementModel(instanceTypes.distinct, dynamicFields, Some(definedBy))
     }
+
+  private def dynamicFields = {
+    val mapKeyFields = mapKeyProperties.keys map { propertyId =>
+      Field(Type.Str, ValueType(propertyId))
+    }
+    (literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map {
+      propertyId =>
+        instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get.toField
+    }.toList ++ mapKeyFields ++ fields
+      .fields()
+      .filter(f => f.field != LinkableElementModel.Target && f.field != DomainElementModel.CustomDomainProperties)
+      .map(_.field)
+  }
 
   override def adopted(newId: String): DialectDomainElement.this.type =
     if (Option(this.id).isEmpty) simpleAdoption(newId) else this
@@ -389,5 +400,4 @@ object DialectDomainElement {
   def apply(ast: YMap): DialectDomainElement = apply(Annotations(ast))
 
   def apply(annotations: Annotations): DialectDomainElement = DialectDomainElement(Fields(), annotations)
-
 }

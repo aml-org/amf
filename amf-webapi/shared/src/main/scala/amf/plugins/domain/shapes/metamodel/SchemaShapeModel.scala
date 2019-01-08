@@ -22,8 +22,6 @@ object SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
 
   override def modelInstance = SchemaShape()
 
-  override val dynamic = true
-
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
     "Schema Shape",

@@ -6,7 +6,7 @@ import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, LiteralUri, S
 import amf.core.metamodel.document.{ModuleModel, SourceMapModel}
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
-import amf.core.metamodel.{Field, MetaModelTypeMapping, Obj, Type}
+import amf.core.metamodel._
 import amf.core.model.document.{BaseUnit, SourceMap}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
@@ -70,8 +70,7 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
 
     val obj = metaModel(element)
 
-    if (obj.dynamic) traverseDynamicMetaModel(id, element, sources, obj, b, ctx)
-    else traverseStaticMetamodel(id, element, sources, obj, b, ctx)
+    traverseMetaModel(id, element, sources, obj, b, ctx)
 
     createCustomExtensions(element, b, ctx)
 
@@ -85,17 +84,16 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
     createSourcesNode(sourceMapId, sources, b, ctx)
   }
 
-  def traverseDynamicMetaModel(id: String,
-                               element: AmfObject,
-                               sources: SourceMap,
-                               obj: Obj,
-                               b: Entry,
-                               ctx: EmissionContext): Unit = {
-    val schema: DynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
+  def traverseMetaModel(id: String,
+                        element: AmfObject,
+                        sources: SourceMap,
+                        obj: Obj,
+                        b: Entry,
+                        ctx: EmissionContext): Unit = {
+    createTypeNode(b, obj, Some(element), ctx)
 
-    createDynamicTypeNode(schema, b, ctx)
     // workaround for lazy values in shape
-    val modelFields = schema.dynamicFields ++ (obj match {
+    val modelFields = obj.fields ++ (obj match {
       case _: ShapeModel =>
         Seq(
           ShapeModel.CustomShapePropertyDefinitions,
@@ -104,6 +102,7 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
       case _ => Nil
     })
 
+    // no longer necessary?
     element match {
       case e: ObjectNode if options.isValidation =>
         val url = Namespace.AmfValidation.base + "/properties"
@@ -114,36 +113,25 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
       case _ => // Nothing to do
     }
 
-    modelFields.foreach { f: Field =>
-      schema.valueForField(f).foreach { amfValue =>
-        val url = ctx.emitIri(f.value.iri())
-        schema match {
-          case schema: DynamicDomainElement if !schema.isInstanceOf[ExternalSourceElement] =>
-            b.entry(
-              url,
-              value(f.`type`, Value(amfValue.value, amfValue.value.annotations), id, sources.property(url), _, ctx)
-            )
-          case _ =>
-            b.entry(
-              url,
-              value(f.`type`, amfValue, id, sources.property(url), _, ctx)
-            )
+    obj match {
+      case dynamic: DynamicObj =>
+        modelFields.foreach { f =>
+          emitDynamicField(f, b, id, element.asInstanceOf[DynamicDomainElement], sources, ctx)
         }
-      }
+      case _ =>
+        modelFields.foreach { f =>
+          emitStaticField(f, element, id, sources, b, ctx)
+        }
     }
   }
 
-  def traverseStaticMetamodel(id: String,
+  private def emitStaticField(field: Field,
                               element: AmfObject,
+                              id: String,
                               sources: SourceMap,
-                              obj: Obj,
                               b: Entry,
                               ctx: EmissionContext): Unit = {
-    createTypeNode(b, obj, Some(element), ctx)
-
-    // workaround for lazy values in shape
-
-    obj.fields.map(element.fields.entryJsonld) foreach {
+    element.fields.entryJsonld(field) match {
       case Some(FieldEntry(f, v)) =>
         val url = ctx.emitIri(f.value.iri())
         b.entry(
@@ -151,6 +139,28 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
           value(f.`type`, v, id, sources.property(url), _, ctx)
         )
       case None => // Missing field
+    }
+  }
+  private def emitDynamicField(f: Field,
+                               b: Entry,
+                               id: String,
+                               element: DynamicDomainElement,
+                               sources: SourceMap,
+                               ctx: EmissionContext): Unit = {
+    element.valueForField(f).foreach { amfValue =>
+      val url = ctx.emitIri(f.value.iri())
+      element match {
+        case schema: DynamicDomainElement if !schema.isInstanceOf[ExternalSourceElement] =>
+          b.entry(
+            url,
+            value(f.`type`, Value(amfValue.value, amfValue.value.annotations), id, _ => {}, _, ctx)
+          )
+        case _ =>
+          b.entry(
+            url,
+            value(f.`type`, amfValue, id, sources.property(url), _, ctx)
+          )
+      }
     }
   }
 
@@ -549,20 +559,8 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
     b.entry(
       "@type",
       _.list { b =>
-        val allTypes = obj.`type`.map(_.iri()) ++ (maybeElement match {
-          case Some(element) => element.dynamicTypes()
-          case _             => List()
-        })
+        val allTypes = obj.`type`.map(_.iri())
         allTypes.distinct.foreach(t => raw(b, ctx.emitIri(t)))
-      }
-    )
-  }
-
-  private def createDynamicTypeNode(obj: DynamicDomainElement, b: Entry, ctx: EmissionContext): Unit = {
-    b.entry(
-      "@type",
-      _.list { b =>
-        obj.dynamicType.foreach(t => raw(b, ctx.emitIri(t.iri())))
       }
     )
   }

@@ -16,7 +16,7 @@ case class UnionShape(override val fields: Fields, override val annotations: Ann
 
   override def linkCopy(): AnyShape = UnionShape().withId(id)
 
-  override def meta: AnyShapeModel = UnionShapeModel
+  override val meta: AnyShapeModel = UnionShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/union/" + name.option().getOrElse("default-union").urlComponentEncoded

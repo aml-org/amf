@@ -2,14 +2,15 @@ package amf.core.model.domain
 
 import amf.core.annotations.{DataNodePropertiesAnnotations, LexicalInformation, ScalarType}
 import amf.core.metamodel.Type.{Array, EncodedIri, Str}
-import amf.core.metamodel.domain._
+import amf.core.metamodel.domain.{ScalarNodeModel, _}
 import amf.core.metamodel.domain.DataNodeModel._
-import amf.core.metamodel.{Field, Obj}
+import amf.core.metamodel.{DynamicObj, Field, ModelDefaultBuilder, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain.templates.Variable
 import amf.core.parser.{Annotations, Fields, Value}
 import amf.core.resolution.VariableReplacer
 import amf.core.utils._
+import amf.core.vocabulary.Namespace.Data
 import amf.core.vocabulary.{Namespace, ValueType}
 import org.yaml.model.{YPart, YSequence}
 
@@ -46,8 +47,6 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   override val fields: Fields = Fields()
 
   def cloneNode(): DataNode
-
-  override def meta: Obj = DataNodeModel
 
   def lexicalPropertiesAnnotation: Option[DataNodePropertiesAnnotations] = None
 }
@@ -101,14 +100,7 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
       propertyOrUri
     }
 
-  override def dynamicFields: List[Field] =
-    this.properties.keys.toSeq.sorted
-      .map({ p =>
-        Field(DataNodeModel, Namespace.Data + p, ModelDoc(ModelVocabularies.Data, p, ""))
-      })
-      .toList ++ DataNodeModel.fields
-
-  override def dynamicType = List(ObjectNode.builderType)
+  override val meta: Obj = new ObjectNodeDynamicModel()
 
   override def valueForField(f: Field): Option[Value] = {
     val maybeNode = f.value.ns match {
@@ -163,6 +155,22 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
     if (stringToInformation.nonEmpty) Some(DataNodePropertiesAnnotations(stringToInformation.toMap)) else None
   }
 
+  class ObjectNodeDynamicModel extends DynamicObj with ModelDefaultBuilder {
+    override val `type`: List[ValueType] = Data + "Object" :: DataNodeModel.`type`
+
+    override def fields: List[Field] =
+      properties.keys.toSeq.sorted
+        .map(p => Field(DataNodeModel, Namespace.Data + p, ModelDoc(ModelVocabularies.Data, p)))
+        .toList ++ DataNodeModel.fields
+
+    override def modelInstance: AmfObject = ObjectNode()
+
+    override val doc: ModelDoc = ModelDoc(
+      ModelVocabularies.Data,
+      "Object Node",
+      "Node that represents a dynamic object with records data structure"
+    )
+  }
 }
 
 object ObjectNode {
@@ -186,14 +194,10 @@ class ScalarNode(var value: String,
                  val annotations: Annotations)
     extends DataNode(annotations) {
 
-  val Value: Field = ScalarNodeModel.Value
+  override def meta: Obj = ScalarNodeModel
 
-  override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields
-
-  override def dynamicType = List(ScalarNode.builderType)
-
-  override def valueForField(f: Field): Option[Value] = f match {
-    case Value =>
+  override def valueForField(f: Field): Option[Value] = f match { // TODO
+    case ScalarNodeModel.Value =>
       val annotations = dataType match {
         case Some(dt) => Annotations() += ScalarType(dt)
         case None     => Annotations()
@@ -217,9 +221,6 @@ class ScalarNode(var value: String,
 }
 
 object ScalarNode {
-
-  val builderType: ValueType = Namespace.Data + "Scalar"
-
   def apply(): ScalarNode = apply("", None)
 
   def apply(annotations: Annotations): ScalarNode = apply("", None, annotations)
@@ -243,10 +244,6 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
   var members: ListBuffer[DataNode] = ListBuffer()
 
   def addMember(member: DataNode): ListBuffer[DataNode] = members += member.adopted(this.id)
-
-  override def dynamicFields: List[Field] = List(Member) ++ positionFields() ++ DataNodeModel.fields
-
-  override def dynamicType = List(ArrayNode.builderType, Namespace.Rdf + "Seq")
 
   override def valueForField(f: Field): Option[Value] = f match {
     case Member => Some(Value(AmfArray(members), Annotations()))
@@ -275,6 +272,14 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
     case (_, i) =>
       Field(EncodedIri, Namespace.Data + s"pos$i", ModelDoc(ModelVocabularies.Data, s"pos$i", ""))
   }
+
+  override def meta: Obj = new ArrayNodeDynamicModel
+
+  class ArrayNodeDynamicModel extends DynamicObj with ModelDefaultBuilder {
+    override def modelInstance: AmfObject = ArrayNode()
+    override def fields: List[Field]      = List(Member) ++ positionFields() ++ DataNodeModel.fields
+    override val `type`: List[ValueType]  = Data + "Array" :: Namespace.Rdf + "Seq" :: DataNodeModel.`type`
+  }
 }
 
 object ArrayNode {
@@ -301,10 +306,6 @@ class LinkNode(var alias: String, var value: String, override val fields: Fields
   val Value: Field                               = Field(Str, Namespace.Data + "value", ModelDoc(ModelVocabularies.Data, "value", ""))
   val Alias: Field                               = Field(Str, Namespace.Data + "alias", ModelDoc(ModelVocabularies.Data, "alias", ""))
   var linkedDomainElement: Option[DomainElement] = None
-
-  override def dynamicFields: List[Field] = List(Value) ++ DataNodeModel.fields
-
-  override def dynamicType = List(LinkNode.builderType)
 
   override def valueForField(f: Field): Option[Value] = {
     val maybeScalar = f match {
@@ -333,6 +334,14 @@ class LinkNode(var alias: String, var value: String, override val fields: Fields
   def withLinkedDomainElement(domainElement: DomainElement): LinkNode = {
     linkedDomainElement = Some(domainElement)
     this
+  }
+
+  override def meta: Obj = new LinkNodeDynamicModel
+
+  class LinkNodeDynamicModel extends DynamicObj with ModelDefaultBuilder {
+    override def modelInstance: AmfObject = LinkNode()
+    override def fields: List[Field]      = List(Value) ++ DataNodeModel.fields
+    override val `type`: List[ValueType]  = Data + "Link" :: DataNodeModel.`type`
   }
 }
 

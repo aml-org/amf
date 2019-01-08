@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
 import amf.core.metamodel.Type.ObjType
-import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.domain.{DomainElementModel, ScalarNodeModel}
 import amf.core.model.domain
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, ParserContext, YMapOps}
@@ -82,7 +82,7 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement],
               case _ if uri == scalar.Range.value.iri() =>
                 scalar.dataType = Some(value(scalar.Range.`type`, entry.value.value).toScalar.text)
                  */
-                case _ if uri == scalar.Value.value.iri() =>
+                case _ if uri == ScalarNodeModel.Value.value.iri() =>
                   val parsedScalar = parseJSONLDScalar(entry.value)
                   scalar.value = parsedScalar.value
                   scalar.dataType = parsedScalar.dataType
@@ -212,9 +212,9 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement],
     * Mapping fro @type URI values to dynamic node builders
     */
   private val dynamicBuilders: mutable.Map[String, Annotations => AmfObject] = mutable.Map(
-    LinkNode.builderType.iri()   -> domain.LinkNode.apply,
-    ArrayNode.builderType.iri()  -> domain.ArrayNode.apply,
-    ScalarNode.builderType.iri() -> domain.ScalarNode.apply,
-    ObjectNode.builderType.iri() -> domain.ObjectNode.apply
+    LinkNode.builderType.iri()        -> domain.LinkNode.apply,
+    ArrayNode.builderType.iri()       -> domain.ArrayNode.apply,
+    ScalarNodeModel.`type`.head.iri() -> domain.ScalarNode.apply,
+    ObjectNode.builderType.iri()      -> domain.ObjectNode.apply
   )
 }

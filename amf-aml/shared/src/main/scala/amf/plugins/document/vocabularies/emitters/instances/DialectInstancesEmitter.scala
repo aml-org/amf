@@ -22,7 +22,8 @@ import org.yaml.model.{YDocument, YNode}
 trait DialectEmitterHelper {
   val dialect: Dialect
 
-  def externalEmitters[T <: amf.core.model.domain.AmfObject](model: ExternalContext[T], ordering: SpecOrdering): Seq[EntryEmitter] = {
+  def externalEmitters[T <: amf.core.model.domain.AmfObject](model: ExternalContext[T],
+                                                             ordering: SpecOrdering): Seq[EntryEmitter] = {
     if (model.externals.nonEmpty) {
       Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
@@ -196,15 +197,17 @@ case class DialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) 
     YDocument(b => {
       b.comment(s"%${dialect.name().value()} ${dialect.version().value()}")
       val (_, rootNodeMapping) = findNodeMappingById(dialect.documents().root().encoded().value())
-      DialectNodeEmitter(instance.encodes.asInstanceOf[DialectDomainElement],
-                         rootNodeMapping,
-                         instance,
-                         dialect,
-                         ordering,
-                         aliases,
-                         None,
-                         rootNode = true,
-                         topLevelEmitters = externalEmitters(instance, ordering)) .emit(b)
+      DialectNodeEmitter(
+        instance.encodes.asInstanceOf[DialectDomainElement],
+        rootNodeMapping,
+        instance,
+        dialect,
+        ordering,
+        aliases,
+        None,
+        rootNode = true,
+        topLevelEmitters = externalEmitters(instance, ordering)
+      ).emit(b)
     })
   }
 }
@@ -319,7 +322,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         }
         emitters ++= Seq(MapEntryEmitter("$id", customId))
       }
-      node.dynamicFields.foreach { field =>
+      node.meta.fields.foreach { field =>
         findPropertyMapping(field) foreach { propertyMapping =>
           if (keyPropertyId.isEmpty || propertyMapping.nodePropertyMapping().value() != keyPropertyId.get) {
 
@@ -471,7 +474,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
           case (acc, dialectDomainElement: DialectDomainElement) =>
             // Let's see if this element has a discriminator to add
             nodeMappings.find(nodeMapping =>
-              dialectDomainElement.dynamicType.map(_.iri()).contains(nodeMapping.nodetypeMapping.value())) match {
+              dialectDomainElement.meta.`type`.map(_.iri()).contains(nodeMapping.nodetypeMapping.value())) match {
               case Some(nextNodeMapping) =>
                 val nodeEmitter = DialectNodeEmitter(dialectDomainElement,
                   nextNodeMapping,
@@ -508,7 +511,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
             ordering.sorted(mapElements.keys.toSeq).foreach { emitter =>
               val dialectDomainElement = mapElements(emitter)
               val mapKeyField =
-                dialectDomainElement.dynamicFields.find(_.value.iri() == propertyMapping.mapKeyProperty().value()).get
+                dialectDomainElement.meta.fields.find(_.value.iri() == propertyMapping.mapKeyProperty().value()).get
               val mapKeyValue = dialectDomainElement.valueForField(mapKeyField).get.toString
               EntryPartEmitter(mapKeyValue, emitter).emit(b)
             }
@@ -559,8 +562,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
               }
               sortedElements.foreach {
                 case element: DialectDomainElement =>
-                  val keyField   = element.dynamicFields.find(_.value.iri() == keyProperty)
-                  val valueField = element.dynamicFields.find(_.value.iri() == valueProperty)
+                  val keyField   = element.meta.fields.find(_.value.iri() == keyProperty)
+                  val valueField = element.meta.fields.find(_.value.iri() == valueProperty)
                   if (keyField.isDefined && valueField.isDefined) {
                     val keyLiteral   = element.valueForField(keyField.get).map(_.value)
                     val valueLiteral = element.valueForField(valueField.get).map(_.value)

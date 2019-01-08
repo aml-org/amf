@@ -9,8 +9,6 @@ import amf.core.vocabulary.ValueType
   */
 trait Type {
   val `type`: List[ValueType]
-
-  val dynamic: Boolean = false
 }
 
 trait Obj extends Type {
@@ -19,8 +17,6 @@ trait Obj extends Type {
   // the information about fields at parsing time
 
   val doc: ModelDoc = ModelDoc()
-
-  override val dynamic: Boolean = false
 
   def fields: List[Field]
 }
