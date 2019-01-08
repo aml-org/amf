@@ -130,6 +130,10 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/overlays/valid-insertion-example-type-object/overlay.raml")
   }
 
+  test("Valid insertion operation description") {
+    checkReport("/overlays/valid-insertion-operation-description/overlay.raml")
+  }
+
   test("Inline single prop inheritance from union") {
     checkReport("/types/inline-union-inheritance.raml")
   }

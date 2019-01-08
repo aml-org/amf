@@ -238,7 +238,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                 )
             }
           case Some(existing) => // cannot be override
-            if (!isSameDataType(existing, entry))
+            if (!isSameValue(existing, entry))
               errorHandler.violation(
                 ResolutionValidation,
                 field.toString,
@@ -250,8 +250,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     master
   }
 
-  def isSameDataType(existing: FieldEntry, master: FieldEntry): Boolean =
-    existing.field == ScalarShapeModel.DataType && existing.value.toString == master.value.toString
+  def isSameValue(existing: FieldEntry, master: FieldEntry): Boolean = existing.value.toString == master.value.toString
 
   def cleanSynthesizedFacets(domain: DomainElement): Unit = domain match {
     case shape: Shape =>
