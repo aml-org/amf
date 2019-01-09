@@ -189,6 +189,8 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
       case _ =>
     }
 
+    if (parameter.fields.entry(ParameterModel.Required).isEmpty) parameter.set(ParameterModel.Required, value = false)
+
     val stringName = name.text().toString
     if (parseOptional && stringName.endsWith("?")) {
       parameter.set(ParameterModel.Optional, value = true)
