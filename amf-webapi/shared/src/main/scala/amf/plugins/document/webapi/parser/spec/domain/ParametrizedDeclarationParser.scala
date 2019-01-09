@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.metamodel.domain.templates.ParametrizedDeclarationModel
+import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -32,6 +33,7 @@ case class ParametrizedDeclarationParser(
             val declaration =
               producer(name)
                 .add(Annotations.valueNode(node))
+            setName(declaration, name, entry.key)
             declaration.fields.setWithoutId(ParametrizedDeclarationModel.Target, declarations(name, SearchScope.Named))
             val variables = entry.value
               .as[YMap]
@@ -61,12 +63,16 @@ case class ParametrizedDeclarationParser(
           .set(ParametrizedDeclarationModel.Target,
                declarations(value, SearchScope.Fragments).link(value).asInstanceOf[AbstractDeclaration])
       case Right(n) =>
-        val text        = n.as[YScalar].text
-        val target      = declarations(text, SearchScope.All).link(text).asInstanceOf[AbstractDeclaration]
-        val paremtrized = producer(text)
-        paremtrized
+        val text         = n.as[YScalar].text
+        val target       = declarations(text, SearchScope.All).link(text).asInstanceOf[AbstractDeclaration]
+        val parametrized = producer(text)
+        setName(parametrized, text, n)
+        parametrized
           .add(Annotations.valueNode(node))
           .set(ParametrizedDeclarationModel.Target, target)
     }
   }
+
+  def setName(declaration: ParametrizedDeclaration, name: String, key: YNode): Unit =
+    declaration.set(ParametrizedDeclarationModel.Name, AmfScalar(name), Annotations(key))
 }
