@@ -359,7 +359,7 @@ object ParserSideValidations extends Validations {
   )
   val NamedExampleUsedInExample = validation(
     "named-example-used-inlined-example",
-    "Named example should not be used as inline examples"
+    "Named example fragments should be included in 'examples' facet"
   )
   val DialectAmbiguousRangeSpecification = validation(
     "dialect-ambiguous-range",

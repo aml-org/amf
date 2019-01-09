@@ -130,7 +130,7 @@ case class RamlSingleExampleParser(key: String,
             ctx.warning(
               NamedExampleUsedInExample,
               example.id,
-              "Using an included named example as an inlined example",
+              "Named example fragments should be included in 'examples' facet",
               entry
             )
             example
