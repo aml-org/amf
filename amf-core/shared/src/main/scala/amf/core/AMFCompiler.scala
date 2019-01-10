@@ -14,6 +14,7 @@ import amf.core.parser.{
   ParsedDocument,
   ParsedReference,
   ParserContext,
+  RefContainer,
   ReferenceKind,
   ReferenceResolutionResult,
   UnspecifiedReference
@@ -27,7 +28,8 @@ import amf.plugins.features.validation.ParserSideValidations.{
   CycleReferenceError,
   InvalidCrossSpec,
   UnresolvedReference,
-  UriSyntaxError
+  UriSyntaxError,
+  InvalidFragmentRef
 }
 import org.yaml.model.YNode
 
@@ -242,6 +244,7 @@ class AMFCompiler(val rawUrl: String,
         link.resolve(context, cache, ctx, env, nodes, domainPlugin.allowRecursiveReferences) flatMap {
           case ReferenceResolutionResult(_, Some(unit)) =>
             verifyMatchingVendor(unit.sourceVendor, nodes)
+            verifyValidFragment(unit.sourceVendor, link.refs)
             val reference = ParsedReference(unit, link)
             handler.update(reference, ctx, context, env).map(Some(_))
           case ReferenceResolutionResult(Some(e), _) =>
@@ -270,6 +273,15 @@ class AMFCompiler(val rawUrl: String,
   private def verifyMatchingVendor(refVendor: Option[Vendor], nodes: Seq[YNode]): Unit = refVendor match {
     case Some(v) if vendor.nonEmpty && !v.name.contains(vendor.get) =>
       nodes.foreach(ctx.violation(InvalidCrossSpec, "", "Cannot reference fragments of another spec", _))
+    case _ => // Nothing to do
+  }
+
+  def verifyValidFragment(refVendor: Option[Vendor], refs: Seq[RefContainer]): Unit = refVendor match {
+    case Some(v) if v.isRaml =>
+      refs.foreach(
+        r =>
+          if (r.fragment.isDefined)
+            ctx.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.node))
     case _ => // Nothing to do
   }
 

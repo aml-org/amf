@@ -188,5 +188,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-schema-type/invalid-schema-type.raml", Some("invalid-schema-type.report"))
   }
 
+  test("Invalid reference with #") {
+    validate("invalid-reference/api.raml", Some("invalid-reference.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

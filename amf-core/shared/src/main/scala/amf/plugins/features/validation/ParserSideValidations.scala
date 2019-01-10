@@ -228,6 +228,11 @@ object ParserSideValidations extends Validations {
     "Cross spec file usage is not allowed"
   )
 
+  val InvalidFragmentRef = validation(
+    "invalid-fragment-ref",
+    "References with # in RAML are not allowed"
+  )
+
   val DeclarationNotFound = validation(
     "declaration-not-found",
     "Declaration not found"
@@ -709,6 +714,7 @@ object ParserSideValidations extends Validations {
     InvalidDialectPatch,
     DialectError,
     ExampleValidationErrorSpecification,
-    InvalidJsonSchemaType
+    InvalidJsonSchemaType,
+    InvalidFragmentRef
   )
 }
