@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.OasProfile
-import amf.core.remote.{Hint, OasJsonHint, RamlYamlHint}
+import amf.core.remote.{Hint, OasJsonHint}
 
 class ValidOasModelParserTest extends ValidModelTest {
 
@@ -37,7 +37,7 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/zenoti-reduced.json", OasProfile)
   }
 
-  test("some some some") {
+  test("$ref to a swagger 2.0 document") {
     checkValid("/ref-to-doc/api.json", OasProfile)
   }
 

@@ -80,7 +80,7 @@ trait ValidationResultProcessor {
       case Some(targetSpec) =>
         var message = messageStyle match {
           case RAMLStyle => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-          case OASStyle  => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case OASStyle  => targetSpec.oasMessage.getOrElse(targetSpec.message)
           case _         => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
         }
 
@@ -114,5 +114,4 @@ trait ValidationResultProcessor {
       SeverityLevels.VIOLATION
     }
   }
-
 }
