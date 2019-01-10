@@ -6,7 +6,7 @@ import amf.core.remote.{Oas, Raml}
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.{isOasAnnotation, isRamlAnnotation}
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -14,7 +14,10 @@ import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Settings}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.plugins.features.validation.ParserSideValidations
-import amf.plugins.features.validation.ParserSideValidations.ExclusivePropertiesSpecification
+import amf.plugins.features.validation.ParserSideValidations.{
+  DuplicatedOperationStatusCodeSpecification,
+  ExclusivePropertiesSpecification
+}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -130,28 +133,40 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                   .foreach(s => scheme.withQueryString(tracking(s, scheme.id)))
               }
             )
-
             value.key(
               "responses",
               entry => {
-                entry.value
-                  .as[YMap]
-                  .regex(
-                    "\\d{3}",
-                    entries => {
-                      val responses = mutable.ListBuffer[Response]()
-                      entries.foreach(entry => {
-                        responses += ctx.factory
-                          .responseParser(entry, (r: Response) => r.adopted(scheme.id), false)
-                          .parse() // todo replace in separation
-                      })
-                      scheme.set(SecuritySchemeModel.Responses,
-                                 AmfArray(responses, Annotations(entry.value)),
-                                 Annotations(entry))
+                val responses = mutable.ListBuffer[Response]()
+                entry.value.tagType match {
+                  case YType.Null => // ignore
+                  case _ =>
+                    val entries = entry.value
+                      .as[YMap]
+                      .entries
+                      .filter(y => !isRamlAnnotation(y.key.as[YScalar].text))
+
+                    val keys   = entries.map(_.key.as[YScalar].text)
+                    val keySet = keys.toSet
+                    if (keys.size > keySet.size) {
+                      ctx.violation(DuplicatedOperationStatusCodeSpecification,
+                                    scheme.id,
+                                    None,
+                                    "RAML Responses must not have duplicated status codes",
+                                    entry.value)
                     }
-                  )
+
+                    entries.foreach(entry => {
+                      responses += ctx.factory
+                        .responseParser(entry, (r: Response) => r.adopted(scheme.id), false)
+                        .parse() // todo replace in separation
+                    })
+                }
+                scheme.set(SecuritySchemeModel.Responses,
+                           AmfArray(responses, Annotations(entry.value)),
+                           Annotations(entry))
               }
             )
+
           case _ => // should add some warning or violation for secs ?
         }
       }
