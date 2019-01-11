@@ -25,6 +25,9 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   val referencesPath  = "amf-client/shared/src/test/resources/references/"
   val validationsPath = "amf-client/shared/src/test/resources/validations/"
 
+  test("API with recursive shapes") {
+    cycle("recursive3.raml", "recursive3.editing.jsonld", RamlYamlHint, Amf, productionPath)
+  }
   test("Simple extends resolution to Raml") {
     cycle("simple-merge.raml", "simple-merge.editing.jsonld", RamlYamlHint, Amf, extendsPath)
   }
