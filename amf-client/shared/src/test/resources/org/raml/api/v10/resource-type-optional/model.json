@@ -13,8 +13,7 @@ resourceTypes:
         - trait
     post?:
       body:
-        application/json:
-          type: <<resourcePathName>>
+        application/json: null
 types:
   implemented-post:
     type: string
@@ -33,4 +32,4 @@ types:
   post:
     body:
       application/json:
-        type: string
+        type: any

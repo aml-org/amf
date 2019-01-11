@@ -102,7 +102,8 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       val (violations, others) =
         report.results.partition(r => r.level.equals(SeverityLevels.VIOLATION))
-      assert(violations.isEmpty)
+      assert(violations.nonEmpty)
+      assert(violations.head.message.equals("Unresolved reference 'itemType' from root context "))
       assert(others.lengthCompare(1) == 0)
       assert(others.head.level == SeverityLevels.WARNING)
       assert(others.head.message.equals("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"))

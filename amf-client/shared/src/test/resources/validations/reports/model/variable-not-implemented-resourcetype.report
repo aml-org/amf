@@ -1,9 +1,17 @@
 Model: file://amf-client/shared/src/test/resources/validations/resource_types/variable-not-implemented-resourcetype.raml
 Profile: RAML 1.0
 Conforms? false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+  Message: Unresolved reference '<<errorItem>>' from root context 
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/resource_types/variable-not-implemented-resourcetype.raml#/web-api/end-points/%2Fcustomers/collection/applied/get/503/application%2Fjson/any/schema/unresolved
+  Property: 
+  Position: Some(LexicalInformation([(26,20)-(26,33)]))
+  Location: file://amf-client/shared/src/test/resources/validations/resource_types/variable-not-implemented-resourcetype.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#resolution-validation
   Message: Cannot find variable 'errorItem'.

@@ -192,5 +192,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-reference/api.raml", Some("invalid-reference.report"))
   }
 
+  test("Inexistent declarations in resource types") {
+    validate("inexistent-declarations/in-resource-types.raml", Some("inexistent-declarations-in-resource-types.report"))
+  }
+
+  test("Inexistent declarations in traits") {
+    validate("inexistent-declarations/in-traits.raml", Some("inexistent-declarations-in-traits.report"))
+  }
   override val hint: Hint = RamlYamlHint
 }
