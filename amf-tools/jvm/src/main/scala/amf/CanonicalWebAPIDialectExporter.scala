@@ -21,6 +21,8 @@ object CanonicalWebAPIDialectExporter {
 
   val reflectionsWebApi     = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
   val reflectionsShapes     = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
+  val reflectionsCore       = new Reflections("amf.core.metamodel.domain.extensions", new SubTypesScanner(false))
+  val reflectionsTemplates  = new Reflections("amf.core.metamodel.domain.templates", new SubTypesScanner(false))
 
   var nodeMappings: Map[String, DialectNodeMapping] = Map()
 
@@ -58,7 +60,7 @@ object CanonicalWebAPIDialectExporter {
 
   def buildPropertyMapping(field: Field): DialectPropertyMapping = {
     val propertyTerm          = field.value.iri()
-    val name = toCamelCase(field.doc.displayName)
+    val name = toCamelCase(field.doc.displayName).replace("\\.", "")
     val (range, allowMultiple) = metaTypeToDialectRange(field.`type`)
 
     DialectPropertyMapping(name, propertyTerm, range, allowMultiple)
@@ -118,6 +120,10 @@ object CanonicalWebAPIDialectExporter {
     "DataNode"
   )
 
+  val blacklistedMappings: Set[String] = Set(
+    "Settings"
+  )
+
   val shapeUnionRange =
     """          - UnionShape
       |          - TupleShape
@@ -137,7 +143,11 @@ object CanonicalWebAPIDialectExporter {
       |          - APIKeySetings
       |          - HTTPSetings
       |          - OpenIDSetings
-      |          
+    """.stripMargin
+
+  val abstractDeclarationsRange =
+    """          - ResourceType
+      |          - Trait
     """.stripMargin
 
   def renderDialect(): Unit = {
@@ -147,46 +157,57 @@ object CanonicalWebAPIDialectExporter {
                  "dialect: WebAPI\n" ++
                  "version: 1.0\n\n"
 
-    nodeMappings.foreach { case (_, dialectNodeMapping: DialectNodeMapping) =>
-      stringBuilder.append(s"  ${dialectNodeMapping.name}:\n")
-      var (compacted, prefix, base) = compact(dialectNodeMapping.classTerm)
-      aggregateExternals(externals, prefix, base)
-      stringBuilder.append(s"    classTerm: ${compacted}\n")
-      stringBuilder.append("    mapping:\n")
+    nodeMappings.foreach {
+      case (_, dialectNodeMapping: DialectNodeMapping) =>
+      if (!blacklistedMappings.contains(dialectNodeMapping.name)) {
+        stringBuilder.append(s"  ${dialectNodeMapping.name}:\n")
+        var (compacted, prefix, base) = compact(dialectNodeMapping.classTerm)
+        aggregateExternals(externals, prefix, base)
+        stringBuilder.append(s"    classTerm: ${compacted}\n")
+        stringBuilder.append("    mapping:\n")
 
-      var propertyCounters: mutable.Map[String,Int] = mutable.Map()
-      dialectNodeMapping.propertyMappings.foreach { propertyMapping =>
-        // dynamic and linking information only relevant for design will not be dumped in the dialect
-        if (!blacklistedProperties.contains(propertyMapping.propertyTerm) && !blacklistedRanges.contains(propertyMapping.range)) {
-          // property names can be duplicated in the WebAPI meta-model, we make sure
-          // we generate unique property mapping alias
-          val name = propertyMapping.name
-          val nextPropertyName = propertyCounters.get(name) match {
-            case None =>
-              propertyCounters.update(name, 1)
-              name
-            case Some(counter) =>
-              propertyCounters.update(name, counter + 1)
-              s"$name$counter"
-          }
-          // render the property mapping here
-          stringBuilder.append(s"      ${nextPropertyName}:\n")
-          var (compacted, prefix, base) = compact(propertyMapping.propertyTerm)
-          aggregateExternals(externals, prefix, base)
-          stringBuilder.append(s"        propertyTerm: ${compacted}\n")
-          if (propertyMapping.range == "Shape") {
-            stringBuilder.append(s"        range:\n")
-            stringBuilder.append(shapeUnionRange ++ "\n")
-          } else {
-            stringBuilder.append(s"        range: ${propertyMapping.range}\n")
-          }
-          if (propertyMapping.allowMultiple) {
-            stringBuilder.append(s"        allowMultiple: ${propertyMapping.allowMultiple}\n")
+        var propertyCounters: mutable.Map[String, Int] = mutable.Map()
+        dialectNodeMapping.propertyMappings.foreach { propertyMapping =>
+          // dynamic and linking information only relevant for design will not be dumped in the dialect
+          if (!blacklistedProperties.contains(propertyMapping.propertyTerm) && !blacklistedRanges.contains(
+                propertyMapping.range)) {
+            // property names can be duplicated in the WebAPI meta-model, we make sure
+            // we generate unique property mapping alias
+            val name = propertyMapping.name
+            val nextPropertyName = propertyCounters.get(name) match {
+              case None =>
+                propertyCounters.update(name, 1)
+                name
+              case Some(counter) =>
+                propertyCounters.update(name, counter + 1)
+                s"$name$counter"
+            }
+            // render the property mapping here
+            stringBuilder.append(s"      ${nextPropertyName}:\n")
+            var (compacted, prefix, base) = compact(propertyMapping.propertyTerm)
+            aggregateExternals(externals, prefix, base)
+            stringBuilder.append(s"        propertyTerm: ${compacted}\n")
+            if (propertyMapping.range == "Shape") {
+              stringBuilder.append(s"        range:\n")
+              stringBuilder.append(shapeUnionRange ++ "\n")
+            } else if (propertyMapping.range == "Settings") {
+              stringBuilder.append(s"        range:\n")
+              stringBuilder.append(settingsUnionRange ++ "\n")
+            } else if (propertyMapping.range == "AbstractDeclaration") {
+              stringBuilder.append(s"        range:\n")
+              stringBuilder.append(abstractDeclarationsRange ++ "\n")
+            } else {
+              stringBuilder.append(s"        range: ${propertyMapping.range}\n")
+            }
+            if (propertyMapping.allowMultiple) {
+              stringBuilder.append(s"        allowMultiple: ${propertyMapping.allowMultiple}\n")
+            }
           }
         }
+        stringBuilder.append("\n\n")
       }
-      stringBuilder.append("\n\n")
     }
+
     stringBuilder.append("\n\n")
     stringBuilder.append("documents:\n")
     stringBuilder.append("  root:\n")
@@ -197,7 +218,7 @@ object CanonicalWebAPIDialectExporter {
     println(header ++ dependencies ++ "nodeMappings:\n\n" ++ stringBuilder.mkString)
   }
 
-  def aggregateExternals(externals: mutable.HashMap[String, String], prefix: String, base: String) = {
+  def aggregateExternals(externals: mutable.HashMap[String, String], prefix: String, base: String): Unit = {
     if (!externals.contains(prefix)) {
       externals.update(prefix, base)
     }
@@ -214,6 +235,8 @@ object CanonicalWebAPIDialectExporter {
     println("*** Processing classes")
     VocabularyExporter.metaObjects(reflectionsWebApi, parseMetaObject)
     VocabularyExporter.metaObjects(reflectionsShapes, parseMetaObject)
+    VocabularyExporter.metaObjects(reflectionsCore, parseMetaObject)
+    VocabularyExporter.metaObjects(reflectionsTemplates, parseMetaObject)
     renderDialect()
   }
 }
