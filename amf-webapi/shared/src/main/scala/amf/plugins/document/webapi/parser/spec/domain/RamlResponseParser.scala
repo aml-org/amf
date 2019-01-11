@@ -83,7 +83,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
           entry => {
             val payloads = mutable.ListBuffer[Payload]()
 
-            val payload = Payload()
+            val payload = Payload(Annotations(entry))
             payload.adopted(res.id)
 
             entry.value.tagType match {
