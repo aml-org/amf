@@ -9,7 +9,10 @@ import amf.core.vocabulary.Namespace.Schema
   * DisplayName field.
   */
 trait DisplayNameField {
-  val DisplayName = Field(Str, Schema + "displayName", ModelDoc(ExternalModelVocabularies.SchemaOrg, "display name", "Human readable name for an entity"))
+  val DisplayName = Field(
+    Str,
+    Schema + "displayName",
+    ModelDoc(ExternalModelVocabularies.SchemaOrg, "display name", "Human readable name for an entity"))
 }
 
 object DisplayNameField extends DisplayNameField

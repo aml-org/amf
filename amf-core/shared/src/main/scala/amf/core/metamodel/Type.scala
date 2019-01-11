@@ -57,8 +57,8 @@ object Type {
     override def fields: List[Field]     = Nil
     override val `type`: List[ValueType] = Nil
 
-    override  val doc: ModelDoc = ModelDoc(ModelVocabularies.Parser, "", "")
-}
+    override val doc: ModelDoc = ModelDoc(ModelVocabularies.Parser, "", "")
+  }
 
   abstract class ArrayLike(val element: Type) extends Type {
     override val `type`: List[ValueType] = element.`type`

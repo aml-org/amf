@@ -13,33 +13,33 @@ class MandatoryAnnotationType()(override implicit val errorHandler: ErrorHandler
 
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-    model match {
-      case doc: Document =>
-        doc.findByType(DomainExtensionModel.`type`.head.iri()).foreach {
-          case domainExtension: DomainExtension =>
-            val customDomainPropertyWithSchema = Option(domainExtension.definedBy) match {
-              case Some(customDomainProperty) =>
-                ensureType(customDomainProperty)
-              case None =>
-                annotationCounter += 1
-                val customDomainProperty = CustomDomainProperty()
-                  .withId(model.location() + s"#genAnnotation${annotationCounter}")
-                  .withName(domainExtension.name.value())
-                  .withSchema(AnyShape())
-                domainExtension.withDefinedBy(customDomainProperty)
-                customDomainProperty
-            }
+      model match {
+        case doc: Document =>
+          doc.findByType(DomainExtensionModel.`type`.head.iri()).foreach {
+            case domainExtension: DomainExtension =>
+              val customDomainPropertyWithSchema = Option(domainExtension.definedBy) match {
+                case Some(customDomainProperty) =>
+                  ensureType(customDomainProperty)
+                case None =>
+                  annotationCounter += 1
+                  val customDomainProperty = CustomDomainProperty()
+                    .withId(model.location() + s"#genAnnotation${annotationCounter}")
+                    .withName(domainExtension.name.value())
+                    .withSchema(AnyShape())
+                  domainExtension.withDefinedBy(customDomainProperty)
+                  customDomainProperty
+              }
 
-            if (!doc.declares.exists(_.id == customDomainPropertyWithSchema.id)) {
-              doc.withDeclaredElement(customDomainPropertyWithSchema)
-            }
+              if (!doc.declares.exists(_.id == customDomainPropertyWithSchema.id)) {
+                doc.withDeclaredElement(customDomainPropertyWithSchema)
+              }
 
-          case _                               =>
-          // ignore
-        }
+            case _ =>
+            // ignore
+          }
 
-      case _ => // ignore
-    }
+        case _ => // ignore
+      }
     } catch {
       case e: Throwable => // ignore: we don't want to break anything
     }

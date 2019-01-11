@@ -13,7 +13,8 @@ trait NameFieldSchema {
 }
 
 trait NameFieldShacl {
-  val Name = Field(Str, Shacl + "name", ModelDoc(ExternalModelVocabularies.Shacl, "name", "Additional name for the shape"))
+  val Name =
+    Field(Str, Shacl + "name", ModelDoc(ExternalModelVocabularies.Shacl, "name", "Additional name for the shape"))
 }
 
 object NameFieldSchema extends NameFieldSchema

@@ -14,7 +14,9 @@ import amf.plugins.domain.webapi.models.Server
 object ServerModel extends DomainElementModel with DescriptionField {
   val Url = Field(Str, Http + "url", ModelDoc(ModelVocabularies.Http, "url", "URL for the server"))
 
-  val Variables = Field(Array(ParameterModel), Http + "variable", ModelDoc(ModelVocabularies.Http, "variable", "Variables in the URL for the server"))
+  val Variables = Field(Array(ParameterModel),
+                        Http + "variable",
+                        ModelDoc(ModelVocabularies.Http, "variable", "Variables in the URL for the server"))
 
   override val `type`: List[ValueType] = Http + "Server" :: DomainElementModel.`type`
 
@@ -27,7 +29,7 @@ object ServerModel extends DomainElementModel with DescriptionField {
 
   override def modelInstance = Server()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Server",
     "Information about the network accessible locations where the API is available"

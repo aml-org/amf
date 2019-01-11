@@ -9,7 +9,11 @@ import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
   * Documentation field.
   */
 trait DocumentationField {
-  val Documentation = Field(CreativeWorkModel, Schema + "documentation", ModelDoc(ExternalModelVocabularies.SchemaOrg, "documentation", "Documentation for a particular part of the model"))
+  val Documentation = Field(
+    CreativeWorkModel,
+    Schema + "documentation",
+    ModelDoc(ExternalModelVocabularies.SchemaOrg, "documentation", "Documentation for a particular part of the model")
+  )
 }
 
 object DocumentationField extends DocumentationField

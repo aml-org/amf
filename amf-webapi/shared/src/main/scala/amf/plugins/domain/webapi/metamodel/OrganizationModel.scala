@@ -13,9 +13,13 @@ import amf.core.vocabulary.ValueType
   */
 object OrganizationModel extends DomainElementModel with NameFieldSchema {
 
-  val Url = Field(Iri, Schema + "url", ModelDoc(ExternalModelVocabularies.SchemaOrg, "url", "URL identifying the organization"))
+  val Url = Field(Iri,
+                  Schema + "url",
+                  ModelDoc(ExternalModelVocabularies.SchemaOrg, "url", "URL identifying the organization"))
 
-  val Email = Field(Str, Schema + "email", ModelDoc(ExternalModelVocabularies.SchemaOrg, "email", "Contact email for the organization"))
+  val Email = Field(Str,
+                    Schema + "email",
+                    ModelDoc(ExternalModelVocabularies.SchemaOrg, "email", "Contact email for the organization"))
 
   override val `type`: List[ValueType] = Schema + "Organization" :: DomainElementModel.`type`
 
@@ -23,5 +27,5 @@ object OrganizationModel extends DomainElementModel with NameFieldSchema {
 
   override def modelInstance = Organization()
 
-  override  val doc: ModelDoc = ModelDoc(ModelVocabularies.Http, "Organization", "Organization providing an API")
+  override val doc: ModelDoc = ModelDoc(ModelVocabularies.Http, "Organization", "Organization providing an API")
 }

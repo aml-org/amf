@@ -17,8 +17,11 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-case class RamlResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit], defaultResponse: Boolean = false)(
-    implicit spec: RamlSpecEmitterContext)
+case class RamlResponsesEmitter(key: String,
+                                f: FieldEntry,
+                                ordering: SpecOrdering,
+                                references: Seq[BaseUnit],
+                                defaultResponse: Boolean = false)(implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
@@ -31,17 +34,19 @@ case class RamlResponsesEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
   }
 
   private def responses(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
-    val result = effectiveResponses.map(e => spec.factory.responseEmitter(e.asInstanceOf[Response], ordering, references))
+    val result =
+      effectiveResponses.map(e => spec.factory.responseEmitter(e.asInstanceOf[Response], ordering, references))
     ordering.sorted(result)
   }
 
   override def position(): Position = pos(f.value.annotations)
 
-  protected def effectiveResponses = if (defaultResponse) {
-    f.array.values.filter(_.asInstanceOf[Response].statusCode.option().getOrElse("default") == "default")
-  } else {
-    f.array.values.filter(_.asInstanceOf[Response].statusCode.option().getOrElse("default") != "default")
-  }
+  protected def effectiveResponses =
+    if (defaultResponse) {
+      f.array.values.filter(_.asInstanceOf[Response].statusCode.option().getOrElse("default") == "default")
+    } else {
+      f.array.values.filter(_.asInstanceOf[Response].statusCode.option().getOrElse("default") != "default")
+    }
 }
 
 case class Raml10ResponseEmitter(response: Response, ordering: SpecOrdering, references: Seq[BaseUnit])(

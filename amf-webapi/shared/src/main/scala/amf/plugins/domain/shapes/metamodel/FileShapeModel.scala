@@ -8,7 +8,9 @@ import amf.plugins.domain.shapes.models.FileShape
 
 object FileShapeModel extends AnyShapeModel with CommonShapeFields {
 
-  val FileTypes = Field(Array(Str), Namespace.Shapes + "fileType", ModelDoc(ModelVocabularies.Shapes, "file type", "Type of file described by this shape"))
+  val FileTypes = Field(Array(Str),
+                        Namespace.Shapes + "fileType",
+                        ModelDoc(ModelVocabularies.Shapes, "file type", "Type of file described by this shape"))
 
   val specificFields = List(FileTypes)
   override def fields: List[Field] =
@@ -19,7 +21,7 @@ object FileShapeModel extends AnyShapeModel with CommonShapeFields {
 
   override def modelInstance = FileShape()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
     "File Shape",
     "Shape describing data uploaded in an API request"

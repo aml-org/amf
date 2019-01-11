@@ -15,7 +15,9 @@ import amf.core.vocabulary.ValueType
   */
 object LicenseModel extends DomainElementModel with NameFieldSchema {
 
-  val Url = Field(Iri, Schema + "url", ModelDoc(ExternalModelVocabularies.SchemaOrg, "url", "URL identifying the organization"))
+  val Url = Field(Iri,
+                  Schema + "url",
+                  ModelDoc(ExternalModelVocabularies.SchemaOrg, "url", "URL identifying the organization"))
 
   override val `type`: List[ValueType] = Http + "License" :: DomainElementModel.`type`
 
@@ -23,7 +25,7 @@ object LicenseModel extends DomainElementModel with NameFieldSchema {
 
   override def modelInstance = License()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "License",
     "Licensing information for an API"

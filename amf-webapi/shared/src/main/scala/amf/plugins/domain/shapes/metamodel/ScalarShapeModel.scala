@@ -12,7 +12,10 @@ import amf.plugins.domain.shapes.models.ScalarShape
   */
 object ScalarShapeModel extends AnyShapeModel with CommonShapeFields {
 
-  val DataType = Field(Iri, Shacl + "datatype", ModelDoc(ExternalModelVocabularies.Shacl, "datatype", "Scalar range constraining this scalar shape"))
+  val DataType = Field(
+    Iri,
+    Shacl + "datatype",
+    ModelDoc(ExternalModelVocabularies.Shacl, "datatype", "Scalar range constraining this scalar shape"))
 
   val specificFields = List(DataType)
   override val fields
@@ -22,7 +25,7 @@ object ScalarShapeModel extends AnyShapeModel with CommonShapeFields {
 
   override def modelInstance = ScalarShape()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
     "Scalar Shape",
     "Data shape describing a scalar value in the input data model, reified as an scalar node in the mapped graph"

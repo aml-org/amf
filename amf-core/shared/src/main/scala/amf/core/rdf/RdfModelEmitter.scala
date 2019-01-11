@@ -28,15 +28,15 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
   case class Emitter(options: RenderOptions) {
 
     private val idsTraversionCheck = IdsTraversionCheck()
-    var rootId: Option[String] = None
+    var rootId: Option[String]     = None
 
     def root(unit: BaseUnit): Unit = {
       rootId = Some(unit.id)
       traverse(unit)
     }
 
-    protected def selfEncoded(element: AmfObject): Boolean = element.id == rootId.getOrElse("") && !element.isInstanceOf[BaseUnit]
-
+    protected def selfEncoded(element: AmfObject): Boolean =
+      element.id == rootId.getOrElse("") && !element.isInstanceOf[BaseUnit]
 
     def traverse(element: AmfObject): Unit = {
       if (!idsTraversionCheck.hasId(element.id) || selfEncoded(element)) {
@@ -231,19 +231,19 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
           v.value.asInstanceOf[AmfScalar].value match {
             case bool: Boolean =>
               rdfmodel.addTriple(subject,
-                property,
-                v.value.asInstanceOf[AmfScalar].toString,
-                Some((Namespace.Xsd + "boolean").iri()))
-            case i: Int        =>
+                                 property,
+                                 v.value.asInstanceOf[AmfScalar].toString,
+                                 Some((Namespace.Xsd + "boolean").iri()))
+            case i: Int =>
               emitIntLiteral(subject, property, v.value.asInstanceOf[AmfScalar].toString)
-            case f: Float      =>
+            case f: Float =>
               emitFloatLiteral(subject, property, v.value.asInstanceOf[AmfScalar].toString)
-            case d: Double     =>
+            case d: Double =>
               rdfmodel.addTriple(subject,
-                property,
-                v.value.asInstanceOf[AmfScalar].toString,
-                Some((Namespace.Xsd + "double").iri()))
-            case _             =>
+                                 property,
+                                 v.value.asInstanceOf[AmfScalar].toString,
+                                 Some((Namespace.Xsd + "double").iri()))
+            case _ =>
               v.annotations.find(classOf[ScalarType]) match {
                 case Some(annotation) =>
                   typedScalar(subject, property, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype)

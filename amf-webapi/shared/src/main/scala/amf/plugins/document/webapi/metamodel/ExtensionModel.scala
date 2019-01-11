@@ -13,9 +13,9 @@ import amf.core.vocabulary.ValueType
   */
 object ExtensionModel extends ExtensionLikeModel {
   override val `type`: List[ValueType] = List(Document + "Extension") ++ DocumentModel.`type`
-  override def modelInstance = Extension()
+  override def modelInstance           = Extension()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.AmlDoc,
     "Extension",
     "API spec information designed to be applied and compelement the information of a base specification. RAML extensions and overlays are examples of extensions."

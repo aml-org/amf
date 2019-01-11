@@ -9,9 +9,19 @@ import amf.core.vocabulary.{Namespace, ValueType}
 
 object ScopeModel extends DomainElementModel {
 
-  val Name = Field(Str, Security + "name", ModelDoc(ModelVocabularies.Security, "name", "Name of the scope", Seq((Namespace.Schema + "name").iri())))
+  val Name = Field(
+    Str,
+    Security + "name",
+    ModelDoc(ModelVocabularies.Security, "name", "Name of the scope", Seq((Namespace.Schema + "name").iri())))
 
-  val Description = Field(Str, Security + "description", ModelDoc(ModelVocabularies.Security, "description", "Human readable description for the scope", Seq((Namespace.Schema + "description").iri())))
+  val Description = Field(
+    Str,
+    Security + "description",
+    ModelDoc(ModelVocabularies.Security,
+             "description",
+             "Human readable description for the scope",
+             Seq((Namespace.Schema + "description").iri()))
+  )
 
   override def fields: List[Field] = List(Name, Description) ++ DomainElementModel.fields
 
@@ -19,7 +29,7 @@ object ScopeModel extends DomainElementModel {
 
   override def modelInstance = Scope()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
     "Scope",
     ""

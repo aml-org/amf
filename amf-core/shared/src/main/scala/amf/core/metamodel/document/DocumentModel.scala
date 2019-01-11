@@ -23,16 +23,9 @@ trait DocumentModel extends FragmentModel with ModuleModel {
 object DocumentModel extends DocumentModel {
   override def modelInstance = amf.core.model.document.Document()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.AmlDoc,
     "Document",
     "A Document is a parsing Unit that encodes a stand-alone DomainElement and can include references to other DomainElements that reference from the encoded DomainElement.\nSince it encodes a DomainElement, but also declares references, it behaves like a Fragment and a Module at the same time.\nThe main difference is that the Document encoded DomainElement is stand-alone and that the references declared are supposed to be private not for re-use from other Units"
   )
 }
-
-
-
-
-
-
-

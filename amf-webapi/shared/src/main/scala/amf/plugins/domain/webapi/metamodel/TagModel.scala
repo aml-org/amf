@@ -13,7 +13,10 @@ import amf.plugins.domain.webapi.models.Tag
   */
 object TagModel extends DomainElementModel with NameFieldSchema with DescriptionField {
 
-  val Documentation = Field(CreativeWorkModel, Schema + "externalDocs", ModelDoc(ExternalModelVocabularies.SchemaOrg, "external docs", "Documentation about the tag"))
+  val Documentation = Field(
+    CreativeWorkModel,
+    Schema + "externalDocs",
+    ModelDoc(ExternalModelVocabularies.SchemaOrg, "external docs", "Documentation about the tag"))
 
   override val `type`: List[ValueType] = Http + "Tag" :: DomainElementModel.`type`
 
@@ -26,7 +29,7 @@ object TagModel extends DomainElementModel with NameFieldSchema with Description
 
   override def modelInstance = Tag()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Tag",
     "Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format."

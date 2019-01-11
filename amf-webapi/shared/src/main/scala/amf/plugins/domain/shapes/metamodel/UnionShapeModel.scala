@@ -8,7 +8,9 @@ import amf.core.vocabulary.{Namespace, ValueType}
 
 object UnionShapeModel extends AnyShapeModel {
 
-  val AnyOf = Field(Array(ShapeModel), Namespace.Shapes + "anyOf", ModelDoc(ModelVocabularies.Shapes, "any of", "Data shapes in the union"))
+  val AnyOf = Field(Array(ShapeModel),
+                    Namespace.Shapes + "anyOf",
+                    ModelDoc(ModelVocabularies.Shapes, "any of", "Data shapes in the union"))
 
   val specificFields = List(AnyOf)
 
@@ -19,7 +21,7 @@ object UnionShapeModel extends AnyShapeModel {
 
   override def modelInstance = UnionShape()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
     "Union Shape",
     "Shape representing the union of many alternative data shapes"

@@ -14,9 +14,16 @@ object ExternalDomainElementModel extends DomainElementModel {
   /**
     * Raw textual information that cannot be processed for the current model semantics.
     */
-  val Raw = Field(Str, Document + "raw", ModelDoc(ModelVocabularies.AmlDoc, "raw", "Raw textual information that cannot be processed for the current model semantics."))
+  val Raw = Field(Str,
+                  Document + "raw",
+                  ModelDoc(ModelVocabularies.AmlDoc,
+                           "raw",
+                           "Raw textual information that cannot be processed for the current model semantics."))
 
-  val MediaType = Field(Str, Http + "mediaType", ModelDoc(ModelVocabularies.Http, "mediaType", "Media type associated to the encoded fragment information"))
+  val MediaType = Field(
+    Str,
+    Http + "mediaType",
+    ModelDoc(ModelVocabularies.Http, "mediaType", "Media type associated to the encoded fragment information"))
 
   override def fields: List[Field] = List(Raw, MediaType)
 
@@ -24,7 +31,7 @@ object ExternalDomainElementModel extends DomainElementModel {
 
   override def modelInstance = ExternalDomainElement()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.AmlDoc,
     "External Domain Element",
     "Domain element containing foreign information that cannot be included into the model semantics"

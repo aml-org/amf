@@ -105,7 +105,10 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
       .filter(prop => prop.objectRange().exists(_.value() == nodeMapping.id))
 
     val mapPropertiesFields =
-      mapPropertiesInDomain.map(_.mapKeyProperty()).distinct.map(iri => Field(Type.Str, ValueType(iri.value()), ModelDoc(ModelVocabularies.Parser, "custom", iri.value())))
+      mapPropertiesInDomain
+        .map(_.mapKeyProperty())
+        .distinct
+        .map(iri => Field(Type.Str, ValueType(iri.value()), ModelDoc(ModelVocabularies.Parser, "custom", iri.value())))
 
     new DialectDomainElementModel(nodeType.value(), fields ++ mapPropertiesFields, Some(nodeMapping))
   }

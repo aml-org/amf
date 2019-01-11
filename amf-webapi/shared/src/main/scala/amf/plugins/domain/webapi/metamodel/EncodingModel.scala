@@ -35,7 +35,7 @@ object EncodingModel extends DomainElementModel with KeyField {
   override val key: Field = PropertyName
 
   // TODO: doc, describe this model
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Encoding",
     ""

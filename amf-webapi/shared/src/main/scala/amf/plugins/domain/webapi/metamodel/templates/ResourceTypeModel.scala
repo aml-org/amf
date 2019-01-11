@@ -12,7 +12,7 @@ object ResourceTypeModel extends AbstractDeclarationModel {
 
   override def modelInstance = ResourceType()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Resource Type",
     "Type of document base unit encoding a RAML resource type"

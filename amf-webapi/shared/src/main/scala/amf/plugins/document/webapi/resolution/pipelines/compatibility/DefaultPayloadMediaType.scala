@@ -12,7 +12,7 @@ class DefaultPayloadMediaType()(override implicit val errorHandler: ErrorHandler
       model.findByType(PayloadModel.`type`.head.iri()).foreach {
         case payload: Payload if payload.mediaType.isNullOrEmpty =>
           payload.withMediaType("*/*")
-        case _                => // ignore
+        case _ => // ignore
       }
     } catch {
       case e: Throwable => // ignore: we don't want this to break anything

@@ -22,23 +22,42 @@ object ParameterModel
     with ExampleField
     with DescriptionField {
 
-  val ParameterName = Field(Str, Http + "paramName", ModelDoc(ModelVocabularies.Http, "param name", "Name of a parameter", Seq((Namespace.Schema + "name").iri())))
+  val ParameterName = Field(
+    Str,
+    Http + "paramName",
+    ModelDoc(ModelVocabularies.Http, "param name", "Name of a parameter", Seq((Namespace.Schema + "name").iri())))
 
-  val Required = Field(Bool, Hydra + "required", ModelDoc(ModelVocabularies.Http, "required", "Marks the parameter as required"))
+  val Required =
+    Field(Bool, Hydra + "required", ModelDoc(ModelVocabularies.Http, "required", "Marks the parameter as required"))
 
-  val Deprecated = Field(Bool, Document + "deprecated", ModelDoc(ModelVocabularies.Http, "deprecated", "Marks the parameter as deprecated"))
+  val Deprecated = Field(Bool,
+                         Document + "deprecated",
+                         ModelDoc(ModelVocabularies.Http, "deprecated", "Marks the parameter as deprecated"))
 
-  val AllowEmptyValue = Field(Bool, Http + "allowEmptyValue", ModelDoc(ModelVocabularies.Http, "allow empty value", "Parameter can be passed without value"))
+  val AllowEmptyValue = Field(
+    Bool,
+    Http + "allowEmptyValue",
+    ModelDoc(ModelVocabularies.Http, "allow empty value", "Parameter can be passed without value"))
 
-  val Style = Field(Str, Http + "style", ModelDoc(ModelVocabularies.Http, "style", "Encoding style for the parameter information"))
+  val Style = Field(Str,
+                    Http + "style",
+                    ModelDoc(ModelVocabularies.Http, "style", "Encoding style for the parameter information"))
 
   val Explode = Field(Bool, Http + "explode", ModelDoc(ModelVocabularies.Http, "explode", ""))
 
   val AllowReserved = Field(Bool, Http + "allowReserved", ModelDoc(ModelVocabularies.Http, "allow reserved", ""))
 
-  val Binding = Field(Str, Http + "binding", ModelDoc(ModelVocabularies.Http, "binding", "Part of the Request model where the parameter can be encoded (header, path, query param, etc.)"))
+  val Binding = Field(
+    Str,
+    Http + "binding",
+    ModelDoc(ModelVocabularies.Http,
+             "binding",
+             "Part of the Request model where the parameter can be encoded (header, path, query param, etc.)")
+  )
 
-  val Schema = Field(ShapeModel, Http + "schema", ModelDoc(ModelVocabularies.Http, "schema", "Schema the parameter value must validate"))
+  val Schema = Field(ShapeModel,
+                     Http + "schema",
+                     ModelDoc(ModelVocabularies.Http, "schema", "Schema the parameter value must validate"))
 
   val Payloads = Field(Array(PayloadModel), Http + "payload", ModelDoc(ModelVocabularies.Http, "payload", ""))
 
@@ -63,7 +82,7 @@ object ParameterModel
 
   override def modelInstance = Parameter()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Parameter",
     "Piece of data required or returned by an Operation"

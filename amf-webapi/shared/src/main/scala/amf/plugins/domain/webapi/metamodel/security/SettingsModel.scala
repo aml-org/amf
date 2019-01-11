@@ -10,7 +10,9 @@ import amf.core.vocabulary.ValueType
 trait SettingsModel extends DomainElementModel
 
 object SettingsModel extends SettingsModel {
-  val AdditionalProperties = Field(DataNodeModel, Security + "additionalProperties", ModelDoc(ModelVocabularies.Security, "additional properties", ""))
+  val AdditionalProperties = Field(DataNodeModel,
+                                   Security + "additionalProperties",
+                                   ModelDoc(ModelVocabularies.Security, "additional properties", ""))
 
   override val `type`: List[ValueType] = List(Security + "Settings") ++ DomainElementModel.`type`
 
@@ -18,7 +20,7 @@ object SettingsModel extends SettingsModel {
 
   override def modelInstance = Settings()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
     "Settings",
     "Settings for a security scheme"
@@ -27,11 +29,14 @@ object SettingsModel extends SettingsModel {
 
 object OAuth1SettingsModel extends SettingsModel {
 
-  val RequestTokenUri = Field(Str, Security + "requestTokenUri", ModelDoc(ModelVocabularies.Security, "request token URI", ""))
+  val RequestTokenUri =
+    Field(Str, Security + "requestTokenUri", ModelDoc(ModelVocabularies.Security, "request token URI", ""))
 
-  val AuthorizationUri = Field(Str, Security + "authorizationUri", ModelDoc(ModelVocabularies.Security, "authorization URI", ""))
+  val AuthorizationUri =
+    Field(Str, Security + "authorizationUri", ModelDoc(ModelVocabularies.Security, "authorization URI", ""))
 
-  val TokenCredentialsUri = Field(Str, Security + "tokenCredentialsUri", ModelDoc(ModelVocabularies.Security, "token credentials URI", ""))
+  val TokenCredentialsUri =
+    Field(Str, Security + "tokenCredentialsUri", ModelDoc(ModelVocabularies.Security, "token credentials URI", ""))
 
   val Signatures = Field(Array(Str), Security + "signature", ModelDoc(ModelVocabularies.Security, "signature", ""))
 
@@ -42,7 +47,7 @@ object OAuth1SettingsModel extends SettingsModel {
 
   override def modelInstance = OAuth1Settings()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
     "OAuth1 Setings",
     "Settings for an OAuth1 security scheme"
@@ -51,11 +56,14 @@ object OAuth1SettingsModel extends SettingsModel {
 
 object OAuth2SettingsModel extends SettingsModel {
 
-  val AuthorizationUri = Field(Str, Security + "authorizationUri", ModelDoc(ModelVocabularies.Security, "authorization URI", ""))
+  val AuthorizationUri =
+    Field(Str, Security + "authorizationUri", ModelDoc(ModelVocabularies.Security, "authorization URI", ""))
 
-  val AccessTokenUri = Field(Str, Security + "accessTokenUri", ModelDoc(ModelVocabularies.Security, "access token URI", ""))
+  val AccessTokenUri =
+    Field(Str, Security + "accessTokenUri", ModelDoc(ModelVocabularies.Security, "access token URI", ""))
 
-  val AuthorizationGrants = Field(Array(Str), Security + "authorizationGrant", ModelDoc(ModelVocabularies.Security, "authorization grant", ""))
+  val AuthorizationGrants =
+    Field(Array(Str), Security + "authorizationGrant", ModelDoc(ModelVocabularies.Security, "authorization grant", ""))
 
   val Flow = Field(Str, Security + "flow", ModelDoc(ModelVocabularies.Security, "flow", ""))
 
@@ -70,7 +78,7 @@ object OAuth2SettingsModel extends SettingsModel {
 
   override def modelInstance = OAuth2Settings()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
     "OAuth2 Setings",
     "Settings for an OAuth2 security scheme"
@@ -89,7 +97,7 @@ object ApiKeySettingsModel extends SettingsModel {
 
   override def modelInstance = ApiKeySettings()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
     "API Key Setings",
     "Settings for an API Key security scheme"
@@ -108,7 +116,7 @@ object HttpSettingsModel extends SettingsModel {
 
   override def modelInstance = ApiKeySettings()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
     "HTTP Setings",
     "Settings for an HTTP security scheme"
@@ -125,7 +133,7 @@ object OpenIdConnectSettingsModel extends SettingsModel {
 
   override def modelInstance = ApiKeySettings()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
     "OpenID Setings",
     "Settings for an OpenID security scheme"

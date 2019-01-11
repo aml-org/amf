@@ -22,13 +22,27 @@ object ResponseModel
     with NameFieldSchema
     with DescriptionField {
 
-  val StatusCode = Field(Str, Hydra + "statusCode", ModelDoc(ExternalModelVocabularies.Hydra, "status code", "HTTP status code returned by a response"))
+  val StatusCode = Field(
+    Str,
+    Hydra + "statusCode",
+    ModelDoc(ExternalModelVocabularies.Hydra, "status code", "HTTP status code returned by a response"))
 
-  val Headers = Field(Array(ParameterModel), Http + "header", ModelDoc(ModelVocabularies.Http, "header", "Parameter passed as a header to an operation or returned by a response"))
+  val Headers = Field(
+    Array(ParameterModel),
+    Http + "header",
+    ModelDoc(ModelVocabularies.Http,
+             "header",
+             "Parameter passed as a header to an operation or returned by a response")
+  )
 
-  val Payloads = Field(Array(PayloadModel), Http + "payload", ModelDoc(ModelVocabularies.Http, "payload", "Payload for a Request/Response"))
+  val Payloads = Field(Array(PayloadModel),
+                       Http + "payload",
+                       ModelDoc(ModelVocabularies.Http, "payload", "Payload for a Request/Response"))
 
-  val Links = Field(Array(TemplatedLinkModel), Http + "link", ModelDoc(ModelVocabularies.Http, "links", "Structural definition of links on the source data shape AST"))
+  val Links = Field(
+    Array(TemplatedLinkModel),
+    Http + "link",
+    ModelDoc(ModelVocabularies.Http, "links", "Structural definition of links on the source data shape AST"))
 
   override val key: Field = StatusCode
 
@@ -40,7 +54,7 @@ object ResponseModel
 
   override def modelInstance = Response()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Response",
     "Response information for an operation"

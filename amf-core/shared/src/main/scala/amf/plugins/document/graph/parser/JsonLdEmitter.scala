@@ -194,7 +194,8 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
     if (customProperties.nonEmpty)
       b.entry(
         ctx.emitIri(DomainElementModel.CustomDomainProperties.value.iri()),
-        _.list { b => customProperties.foreach(iri(b, _, ctx, inArray = true))
+        _.list { b =>
+          customProperties.foreach(iri(b, _, ctx, inArray = true))
         }
       )
   }
@@ -405,7 +406,8 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
             case Any =>
               seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
                 scalarElement.value match {
-                  case bool: Boolean       => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
+                  case bool: Boolean =>
+                    typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
                   case i: Int              => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
                   case f: Float            => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
                   case d: Double           => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
@@ -429,15 +431,15 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
     }
   }
 
-  private def emitSimpleDateTime(b: Part, dateTime: SimpleDateTime, inArray:Boolean = true, ctx: EmissionContext) = {
+  private def emitSimpleDateTime(b: Part, dateTime: SimpleDateTime, inArray: Boolean = true, ctx: EmissionContext) = {
     if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
       typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray, ctx)
     } else {
       typedScalar(b,
-        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
-        (Namespace.Xsd + "date").iri(),
-        inArray = false,
-        ctx)
+                  f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
+                  (Namespace.Xsd + "date").iri(),
+                  inArray = false,
+                  ctx)
     }
   }
 
@@ -457,7 +459,18 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
         case _ => // ignore
       }
     }
-    val linked = shape.link[Shape](shape.name.value())
+    val linked = shape match {
+      // if it is recursive we force the conversion into a linked shape
+      case rec: RecursiveShape =>
+        RecursiveShape()
+          .withId(rec.id + "/linked")
+          .withLinkTarget(rec)
+          .withLinkLabel(shape.name.value())
+      // no recursive we just generate the linked shape
+      case _ =>
+        shape.link[Shape](shape.name.value())
+    }
+
     link(b, linked, inArray = false, ctx)
   }
 
@@ -473,10 +486,12 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
         elementWithLink.set(LinkableElementModel.TargetId, target.id)
         elementWithLink.fields.removeField(LinkableElementModel.Target)
       }
-      b.obj { o => traverse(elementWithLink, o, ctx)
+      b.obj { o =>
+        traverse(elementWithLink, o, ctx)
       }
       // we reset the link target after emitting
-      savedLinkTarget.foreach { target => elementWithLink.fields.setWithoutId(LinkableElementModel.Target, target)
+      savedLinkTarget.foreach { target =>
+        elementWithLink.fields.setWithoutId(LinkableElementModel.Target, target)
       }
     }
 
@@ -535,7 +550,8 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
   private def createDynamicTypeNode(obj: DynamicDomainElement, b: Entry, ctx: EmissionContext): Unit = {
     b.entry(
       "@type",
-      _.list { b => obj.dynamicType.foreach(t => raw(b, ctx.emitIri(t.iri())))
+      _.list { b =>
+        obj.dynamicType.foreach(t => raw(b, ctx.emitIri(t.iri())))
       }
     )
   }
@@ -580,7 +596,8 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
       if (options.isWithRawSourceMaps) {
         b.entry(
           "smaps",
-          _.obj { b => createAnnotationNodes(b, sources.eternals, ctx)
+          _.obj { b =>
+            createAnnotationNodes(b, sources.eternals, ctx)
           }
         )
       } else {

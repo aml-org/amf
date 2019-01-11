@@ -142,5 +142,3 @@ object EmissionContext {
   def apply(unit: BaseUnit, options: RenderOptions) =
     new EmissionContext(mutable.Map(), unit.id, options)
 }
-
-

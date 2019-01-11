@@ -13,9 +13,11 @@ import amf.plugins.domain.shapes.models.CreativeWork
   */
 object CreativeWorkModel extends DomainElementModel with LinkableElementModel with DescriptionField {
 
-  val Url = Field(Iri, Schema + "url", ModelDoc(ExternalModelVocabularies.SchemaOrg, "url", "URL for the creative work"))
+  val Url =
+    Field(Iri, Schema + "url", ModelDoc(ExternalModelVocabularies.SchemaOrg, "url", "URL for the creative work"))
 
-  val Title = Field(Str, Schema + "title", ModelDoc(ExternalModelVocabularies.SchemaOrg, "title", "Title of the creative work"))
+  val Title =
+    Field(Str, Schema + "title", ModelDoc(ExternalModelVocabularies.SchemaOrg, "title", "Title of the creative work"))
 
   override val `type`: List[ValueType] = Schema + "CreativeWork" :: DomainElementModel.`type`
 
@@ -24,7 +26,7 @@ object CreativeWorkModel extends DomainElementModel with LinkableElementModel wi
 
   override def modelInstance = CreativeWork()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Creative Work",
     "he most generic kind of creative work, including books, movies, photographs, software programs, etc."

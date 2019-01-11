@@ -8,7 +8,9 @@ import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.models.SchemaShape
 
 object SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
-  val MediaType = Field(Str, Shacl + "mediaType", ModelDoc(ExternalModelVocabularies.Shacl, "media type", "Media type associated to a shape"))
+  val MediaType = Field(Str,
+                        Shacl + "mediaType",
+                        ModelDoc(ExternalModelVocabularies.Shacl, "media type", "Media type associated to a shape"))
 
   val specificFields = List(MediaType)
   override val fields: List[Field] = specificFields ++
@@ -22,7 +24,7 @@ object SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
 
   override val dynamic = true
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
     "Schema Shape",
     "Raw schema that cannot be parsed using AMF shapes model"

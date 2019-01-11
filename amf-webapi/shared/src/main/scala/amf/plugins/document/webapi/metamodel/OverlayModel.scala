@@ -18,7 +18,7 @@ object OverlayModel extends ExtensionLikeModel {
 
   override def modelInstance = Overlay()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Overlay Model",
     "Model defining a RAML overlay"

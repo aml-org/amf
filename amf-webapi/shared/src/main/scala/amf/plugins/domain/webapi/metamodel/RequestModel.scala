@@ -15,17 +15,27 @@ object RequestModel extends DomainElementModel with DescriptionField {
 
   val Required = Field(Bool, Http + "required", ModelDoc(ModelVocabularies.Http, "required", ""))
 
-  val QueryParameters = Field(Array(ParameterModel), Http + "parameter", ModelDoc(ModelVocabularies.Http, "parameter", "Parameters associated to the request"))
+  val QueryParameters = Field(Array(ParameterModel),
+                              Http + "parameter",
+                              ModelDoc(ModelVocabularies.Http, "parameter", "Parameters associated to the request"))
 
-  val Headers = Field(Array(ParameterModel), Http + "header", ModelDoc(ModelVocabularies.Http, "header", "Headers associated to the request"))
+  val Headers = Field(Array(ParameterModel),
+                      Http + "header",
+                      ModelDoc(ModelVocabularies.Http, "header", "Headers associated to the request"))
 
-  val Payloads = Field(Array(PayloadModel), Http + "payload", ModelDoc(ModelVocabularies.Http, "payload", "Payload for the request"))
+  val Payloads = Field(Array(PayloadModel),
+                       Http + "payload",
+                       ModelDoc(ModelVocabularies.Http, "payload", "Payload for the request"))
 
-  val QueryString = Field(ShapeModel, Http + "queryString", ModelDoc(ModelVocabularies.Http, "query string", "Query string for the request"))
+  val QueryString = Field(ShapeModel,
+                          Http + "queryString",
+                          ModelDoc(ModelVocabularies.Http, "query string", "Query string for the request"))
 
-  val UriParameters = Field(Array(ParameterModel), Http + "uriParameter", ModelDoc(ModelVocabularies.Http, "uri parameter", ""))
+  val UriParameters =
+    Field(Array(ParameterModel), Http + "uriParameter", ModelDoc(ModelVocabularies.Http, "uri parameter", ""))
 
-  val CookieParameters = Field(Array(ParameterModel), Http + "cookieParameter", ModelDoc(ModelVocabularies.Http, "cookie parameter", ""))
+  val CookieParameters =
+    Field(Array(ParameterModel), Http + "cookieParameter", ModelDoc(ModelVocabularies.Http, "cookie parameter", ""))
 
   override val `type`: List[ValueType] = Http + "Request" :: DomainElementModel.`type`
 
@@ -34,7 +44,7 @@ object RequestModel extends DomainElementModel with DescriptionField {
 
   override def modelInstance = Request()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Request",
     "Request information for an operation"

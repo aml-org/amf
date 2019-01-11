@@ -169,7 +169,9 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
         val elements = element match {
           case dynamicElement: DynamicDomainElement =>
             val values =
-              (dynamicElement.dynamicFields :+ DomainElementModel.CustomDomainProperties).flatMap(f => dynamicElement.valueForField(f)).map(_.value)
+              (dynamicElement.dynamicFields :+ DomainElementModel.CustomDomainProperties)
+                .flatMap(f => dynamicElement.valueForField(f))
+                .map(_.value)
             val effectiveValues = values.map {
               case d: DomainElement => Seq(d) // set(
               case a: AmfArray =>

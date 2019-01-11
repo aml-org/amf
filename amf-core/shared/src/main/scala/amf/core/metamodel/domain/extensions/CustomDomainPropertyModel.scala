@@ -37,13 +37,15 @@ object CustomDomainPropertyModel extends DomainElementModel with KeyField with D
     *
     * They are mapped from the allowedTargets property of an annotationType in RAML.
     */
-  val Domain = Field(Array(Iri), Rdfs + "domain", ModelDoc(ExternalModelVocabularies.Rdfs, "domain", "RDFS domain property"))
+  val Domain =
+    Field(Array(Iri), Rdfs + "domain", ModelDoc(ExternalModelVocabularies.Rdfs, "domain", "RDFS domain property"))
 
   /**
     * A shape constraining the shape of the valid RDF graph for the property.
     * It is parsed from the RAML type associated to the annotationType.
     */
-  val Schema = Field(ShapeModel, Shapes + "schema", ModelDoc(ModelVocabularies.Shapes, "schema", "Schema for an entity"))
+  val Schema =
+    Field(ShapeModel, Shapes + "schema", ModelDoc(ModelVocabularies.Shapes, "schema", "Schema for an entity"))
 
   override def fields: List[Field] =
     List(Domain, Schema, Name) ++ LinkableElementModel.fields ++ DomainElementModel.fields
@@ -52,7 +54,7 @@ object CustomDomainPropertyModel extends DomainElementModel with KeyField with D
 
   override def modelInstance = CustomDomainProperty()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.AmlDoc,
     "Custom Domain Property",
     "Definition of an extension to the domain model defined directly by a user in the RAML/OpenAPI document.\nThis can be achieved by using an annotationType in RAML. In OpenAPI thy don't need to\n      be declared, they can just be used.\n      This should be mapped to new RDF properties declared directly in the main document or module.\n      Contrast this extension mechanism with the creation of a propertyTerm in a vocabulary, a more\nre-usable and generic way of achieving the same functionality.\nIt can be validated using a SHACL shape"

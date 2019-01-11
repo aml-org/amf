@@ -21,9 +21,12 @@ object PayloadModel
     with LinkableElementModel
     with ExampleField {
 
-  val MediaType = Field(Str, Http + "mediaType", ModelDoc(ModelVocabularies.Http, "media type", "Media types supported in the payload"))
+  val MediaType = Field(Str,
+                        Http + "mediaType",
+                        ModelDoc(ModelVocabularies.Http, "media type", "Media types supported in the payload"))
 
-  val Schema = Field(ShapeModel, Http + "schema", ModelDoc(ModelVocabularies.Http, "schema", "Schema associated to this payload"))
+  val Schema =
+    Field(ShapeModel, Http + "schema", ModelDoc(ModelVocabularies.Http, "schema", "Schema associated to this payload"))
 
   val Encoding = Field(Array(EncodingModel), Http + "encoding", ModelDoc(ModelVocabularies.Http, "encoding", ""))
 
@@ -36,7 +39,7 @@ object PayloadModel
 
   override def modelInstance = Payload()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Payload",
     "Encoded payload using certain media-type"

@@ -12,9 +12,13 @@ import amf.plugins.domain.webapi.models.IriTemplateMapping
   */
 object IriTemplateMappingModel extends DomainElementModel {
 
-  val TemplateVariable = Field(Str, Hydra + "variable", ModelDoc(ExternalModelVocabularies.Hydra, "variable", "Variable defined inside an URL tempplate"))
+  val TemplateVariable = Field(
+    Str,
+    Hydra + "variable",
+    ModelDoc(ExternalModelVocabularies.Hydra, "variable", "Variable defined inside an URL tempplate"))
 
-  val LinkExpression = Field(Str, Http + "linkExpression", ModelDoc(ModelVocabularies.Http, "link exprssion", "OAS 3 link expression"))
+  val LinkExpression =
+    Field(Str, Http + "linkExpression", ModelDoc(ModelVocabularies.Http, "link exprssion", "OAS 3 link expression"))
 
   override val `type`: List[ValueType] = Hydra + "IriTemplateMapping" :: DomainElementModel.`type`
 
@@ -22,7 +26,7 @@ object IriTemplateMappingModel extends DomainElementModel {
 
   override def modelInstance = IriTemplateMapping()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Iri Template",
     ""

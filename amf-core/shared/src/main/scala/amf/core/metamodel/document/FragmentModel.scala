@@ -18,7 +18,14 @@ trait FragmentModel extends BaseUnitModel {
   /**
     * The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains.
     */
-  val Encodes = Field(DomainElementModel, Document + "encodes", ModelDoc(ModelVocabularies.AmlDoc, "encodes", "The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains."))
+  val Encodes = Field(
+    DomainElementModel,
+    Document + "encodes",
+    ModelDoc(
+      ModelVocabularies.AmlDoc,
+      "encodes",
+      "The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains.")
+  )
 
   override def modelInstance: AmfObject =
     throw new Exception("Fragment is abstract instances cannot be created directly")
@@ -31,7 +38,7 @@ object FragmentModel extends FragmentModel {
 
   override def fields: List[Field] = Encodes :: BaseUnitModel.fields
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.AmlDoc,
     "Fragment",
     "A Fragment is a parsing Unit that encodes a DomainElement"
@@ -40,13 +47,16 @@ object FragmentModel extends FragmentModel {
 
 object PayloadFragmentModel extends FragmentModel {
 
-  val MediaType = Field(Str, Http + "mediaType", ModelDoc(ModelVocabularies.Http, "mediaType", "Media type associated to the encoded fragment information"))
+  val MediaType = Field(
+    Str,
+    Http + "mediaType",
+    ModelDoc(ModelVocabularies.Http, "mediaType", "Media type associated to the encoded fragment information"))
 
   override def fields: List[Field] = Encodes :: MediaType :: BaseUnitModel.fields
 
   override val `type`: List[ValueType] = List(Document + "PayloadFragment") ++ FragmentModel.`type`
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Payload Fragment",
     "Fragment encoding HTTP payload information"

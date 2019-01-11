@@ -11,7 +11,8 @@ object VariableValueModel extends DomainElementModel {
 
   val Name = Field(Str, Document + "name", ModelDoc(ModelVocabularies.AmlDoc, "name", "name of the template variable"))
 
-  val Value = Field(DataNodeModel, Document + "value", ModelDoc(ModelVocabularies.AmlDoc, "value", "value of the variables"))
+  val Value =
+    Field(DataNodeModel, Document + "value", ModelDoc(ModelVocabularies.AmlDoc, "value", "value of the variables"))
 
   override def fields: List[Field] = List(Name, Value) ++ DomainElementModel.fields
 
@@ -19,7 +20,7 @@ object VariableValueModel extends DomainElementModel {
 
   override def modelInstance = VariableValue()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.AmlDoc,
     "Variable Value",
     "Value for a variable in a graph template"

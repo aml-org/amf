@@ -48,14 +48,14 @@ object AMFGraphPlugin extends AMFDocumentPlugin with PlatformSecrets {
           case Some(m: YMap) =>
             val toDocumentNamespace: String => String = a => (Namespace.Document + a).iri()
 
-            val acceptedKeys = Seq("encodes", "declares", "references").map(toDocumentNamespace)
+            val acceptedKeys  = Seq("encodes", "declares", "references").map(toDocumentNamespace)
             val acceptedTypes = Seq("Document", "Fragment", "Module", "Unit").map(toDocumentNamespace)
 
             acceptedKeys.exists(m.key(_).isDefined) ||
-              m.key("@type").exists { typesEntry =>
-                val retrievedTypes = typesEntry.value.as[YSequence].nodes.map(node => node.as[YScalar].value)
-                (acceptedTypes intersect retrievedTypes).nonEmpty
-              }
+            m.key("@type").exists { typesEntry =>
+              val retrievedTypes = typesEntry.value.as[YSequence].nodes.map(node => node.as[YScalar].value)
+              (acceptedTypes intersect retrievedTypes).nonEmpty
+            }
           case _ => false
         }
       case _: RdfModelDocument => true

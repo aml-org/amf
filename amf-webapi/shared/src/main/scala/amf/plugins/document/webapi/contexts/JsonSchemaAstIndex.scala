@@ -11,7 +11,7 @@ class JsonSchemaAstIndex(root: YNode)(implicit val ctx: WebApiContext) {
   init()
   def init(): Unit = root.to[YMap] match {
     case Right(value) => indexMap(value)
-    case _ => // ignore
+    case _            => // ignore
   }
 
   private def indexMap(m: YMap): Unit = {

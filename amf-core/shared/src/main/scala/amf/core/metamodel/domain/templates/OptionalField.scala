@@ -9,5 +9,7 @@ import amf.core.vocabulary.Namespace
   * Determines if the field is optional for merging.
   */
 trait OptionalField extends Obj {
-  val Optional = Field(Bool, Namespace.Http + "optional", ModelDoc(ModelVocabularies.Http, "optional", "Marks some information as optional"))
+  val Optional = Field(Bool,
+                       Namespace.Http + "optional",
+                       ModelDoc(ModelVocabularies.Http, "optional", "Marks some information as optional"))
 }

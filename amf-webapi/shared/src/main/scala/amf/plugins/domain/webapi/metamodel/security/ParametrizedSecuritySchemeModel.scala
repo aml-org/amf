@@ -10,11 +10,18 @@ import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
 
 object ParametrizedSecuritySchemeModel extends DomainElementModel with KeyField {
 
-  val Name = Field(Str, Security + "name", ModelDoc(ModelVocabularies.Security, "name", "Name for the security scheme", Seq((Namespace.Schema + "name").iri())))
+  val Name = Field(Str,
+                   Security + "name",
+                   ModelDoc(ModelVocabularies.Security,
+                            "name",
+                            "Name for the security scheme",
+                            Seq((Namespace.Schema + "name").iri())))
 
   val Scheme = Field(SecuritySchemeModel, Security + "scheme", ModelDoc(ModelVocabularies.Security, "scheme", ""))
 
-  val Settings = Field(SettingsModel, Security + "settings", ModelDoc(ModelVocabularies.Security, "settings", "Security scheme settings"))
+  val Settings = Field(SettingsModel,
+                       Security + "settings",
+                       ModelDoc(ModelVocabularies.Security, "settings", "Security scheme settings"))
 
   override val key: Field = Name
 
@@ -24,7 +31,7 @@ object ParametrizedSecuritySchemeModel extends DomainElementModel with KeyField 
 
   override def modelInstance = ParametrizedSecurityScheme()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
     "Parametrized Security Scheme",
     ""

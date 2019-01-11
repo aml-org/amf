@@ -24,16 +24,17 @@ class DefaultToNumericDefaultResponse()(override implicit val errorHandler: Erro
   def checkDefaultResponse(operation: Operation): Unit = {
     operation.responses.find(_.statusCode.value() == "default") match {
       case Some(defaultResponse) =>
-        val responsesMap = operation.responses.foldLeft(Map[String, Response]()) { case (acc, resp) =>
-          acc.updated(resp.statusCode.value(), resp)
+        val responsesMap = operation.responses.foldLeft(Map[String, Response]()) {
+          case (acc, resp) =>
+            acc.updated(resp.statusCode.value(), resp)
         }
         val preferredStatusCodes = Seq("200", "500")
         preferredStatusCodes.find(responsesMap.get(_).isEmpty) match {
           case Some(preferredStatusCode) => defaultResponse.withStatusCode(preferredStatusCode)
           case _ =>
             var nextAvailable = 501
-            var found = false
-            while(!found && nextAvailable < 600) {
+            var found         = false
+            while (!found && nextAvailable < 600) {
               if (responsesMap.get(nextAvailable.toString).isEmpty) {
                 found = true
                 defaultResponse.withStatusCode(nextAvailable.toString)

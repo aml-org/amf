@@ -17,11 +17,17 @@ object TemplatedLinkModel
     with NameFieldSchema
     with DescriptionField {
 
-  val Template = Field(Str, Hydra + "template", ModelDoc(ExternalModelVocabularies.Hydra, "template", "URL template for a templated link"))
+  val Template = Field(Str,
+                       Hydra + "template",
+                       ModelDoc(ExternalModelVocabularies.Hydra, "template", "URL template for a templated link"))
 
-  val OperationId = Field(Str, Http + "operationId", ModelDoc(ModelVocabularies.Http, "operation ID", "Identifier of the target operation"))
+  val OperationId = Field(Str,
+                          Http + "operationId",
+                          ModelDoc(ModelVocabularies.Http, "operation ID", "Identifier of the target operation"))
 
-  val Mapping = Field(Array(IriTemplateMappingModel), Hydra + "mapping", ModelDoc(ExternalModelVocabularies.Hydra, "mapping", "Variable mapping for the URL template"))
+  val Mapping = Field(Array(IriTemplateMappingModel),
+                      Hydra + "mapping",
+                      ModelDoc(ExternalModelVocabularies.Hydra, "mapping", "Variable mapping for the URL template"))
 
   val RequestBody = Field(Str, Http + "requestBody", ModelDoc(ModelVocabularies.Http, "request body", ""))
 
@@ -34,7 +40,7 @@ object TemplatedLinkModel
 
   override def modelInstance = TemplatedLink()
 
-  override  val doc: ModelDoc = ModelDoc(
+  override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Http,
     "Templated Link",
     "Templated link containing URL template and variables mapping"

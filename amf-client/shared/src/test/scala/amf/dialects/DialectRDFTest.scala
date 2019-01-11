@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext
 class DialectRDFTest extends FunSuiteCycleTests with PlatformSecrets {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  val productionPath = "amf-client/shared/src/test/resources/vocabularies2/production/"
+  val productionPath                                       = "amf-client/shared/src/test/resources/vocabularies2/production/"
 
   override def basePath: String = "amf-client/shared/src/test/resources/vocabularies2/dialects/"
 

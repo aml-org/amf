@@ -18,7 +18,7 @@ object FragmentsTypesModels {
 
     override def modelInstance: AmfObject = DocumentationItemFragment()
 
-    override  val doc: ModelDoc = ModelDoc(
+    override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Http,
       "Documentation Item Fragment",
       "Fragment encoding a RAML documentation item"
@@ -33,7 +33,7 @@ object FragmentsTypesModels {
 
     override def modelInstance: AmfObject = DataTypeFragment()
 
-    override  val doc: ModelDoc = ModelDoc(
+    override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Http,
       "Data Type Fragment",
       "Fragment encoding a RAML data type"
@@ -48,7 +48,7 @@ object FragmentsTypesModels {
 
     override def modelInstance: AmfObject = NamedExampleFragment()
 
-    override  val doc: ModelDoc = ModelDoc(
+    override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Http,
       "Named Example Fragment",
       "Fragment encoding a RAML named example"
@@ -63,7 +63,7 @@ object FragmentsTypesModels {
 
     override def modelInstance: AmfObject = ResourceTypeFragment()
 
-    override  val doc: ModelDoc = ModelDoc(
+    override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Http,
       "Resource Type Fragment",
       "Fragment encoding a RAML resource type"
@@ -78,12 +78,12 @@ object FragmentsTypesModels {
 
     override def modelInstance: AmfObject = TraitFragment()
 
-    override  val doc: ModelDoc = ModelDoc(
+    override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Http,
       "Trait Fragment",
       "Fragment encoding a RAML trait"
     )
-}
+  }
 
   object AnnotationTypeDeclarationFragmentModel extends FragmentModel {
 
@@ -93,7 +93,7 @@ object FragmentsTypesModels {
 
     override def modelInstance: AmfObject = AnnotationTypeDeclarationFragment()
 
-    override  val doc: ModelDoc = ModelDoc(
+    override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Http,
       "Annotation Type Fragment",
       "Fragment encoding a RAML annotation type"
@@ -107,7 +107,7 @@ object FragmentsTypesModels {
 
     override def modelInstance: AmfObject = SecuritySchemeFragment()
 
-    override  val doc: ModelDoc = ModelDoc(
+    override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Http,
       "Security Scheme Fragment",
       "Fragment encoding a RAML security scheme"
