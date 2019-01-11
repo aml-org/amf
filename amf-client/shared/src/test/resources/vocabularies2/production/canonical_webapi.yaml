@@ -1,0 +1,2061 @@
+#%Dialect 1.0
+
+dialect: WebAPI
+version: 1.0
+
+external:
+  raml-http: http://a.ml/vocabularies/http#
+  raml-shapes: http://a.ml/vocabularies/shapes#
+  shacl: http://www.w3.org/ns/shacl#
+  security: http://a.ml/vocabularies/security#
+  doc: http://a.ml/vocabularies/document#
+  schema-org: http://schema.org/
+  hydra: http://www.w3.org/ns/hydra/core#
+
+nodeMappings:
+
+  SchemaShape:
+    classTerm: shacl.SchemaShape
+    mapping:
+      mediaType:
+        propertyTerm: shacl.mediaType
+        range: string
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  Request:
+    classTerm: raml-http.Request
+    mapping:
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      required:
+        propertyTerm: raml-http.required
+        range: boolean
+      parameter:
+        propertyTerm: raml-http.parameter
+        range: Parameter
+        allowMultiple: true
+      header:
+        propertyTerm: raml-http.header
+        range: Parameter
+        allowMultiple: true
+      payload:
+        propertyTerm: raml-http.payload
+        range: Payload
+        allowMultiple: true
+      queryString:
+        propertyTerm: raml-http.queryString
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      uriParameter:
+        propertyTerm: raml-http.uriParameter
+        range: Parameter
+        allowMultiple: true
+      cookieParameter:
+        propertyTerm: raml-http.cookieParameter
+        range: Parameter
+        allowMultiple: true
+
+
+  Operation:
+    classTerm: hydra.Operation
+    mapping:
+      method:
+        propertyTerm: hydra.method
+        range: string
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      deprecated:
+        propertyTerm: doc.deprecated
+        range: boolean
+      guiSummary:
+        propertyTerm: raml-http.guiSummary
+        range: string
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      scheme:
+        propertyTerm: raml-http.scheme
+        range: string
+        allowMultiple: true
+      accepts:
+        propertyTerm: raml-http.accepts
+        range: string
+        allowMultiple: true
+      contentType:
+        propertyTerm: raml-http.contentType
+        range: string
+        allowMultiple: true
+      expects:
+        propertyTerm: hydra.expects
+        range: Request
+      returns:
+        propertyTerm: hydra.returns
+        range: Response
+        allowMultiple: true
+      security:
+        propertyTerm: security.security
+        range: ParametrizedSecurityScheme
+        allowMultiple: true
+      tag:
+        propertyTerm: raml-http.tag
+        range: string
+        allowMultiple: true
+      callback:
+        propertyTerm: raml-http.callback
+        range: Callback
+        allowMultiple: true
+      server:
+        propertyTerm: raml-http.server
+        range: Server
+        allowMultiple: true
+
+
+  Scope:
+    classTerm: security.Scope
+    mapping:
+      name:
+        propertyTerm: security.name
+        range: string
+      description:
+        propertyTerm: security.description
+        range: string
+
+
+  Parameter:
+    classTerm: raml-http.Parameter
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      paramName:
+        propertyTerm: raml-http.paramName
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      required:
+        propertyTerm: hydra.required
+        range: boolean
+      deprecated:
+        propertyTerm: doc.deprecated
+        range: boolean
+      allowEmptyValue:
+        propertyTerm: raml-http.allowEmptyValue
+        range: boolean
+      style:
+        propertyTerm: raml-http.style
+        range: string
+      explode:
+        propertyTerm: raml-http.explode
+        range: boolean
+      allowReserved:
+        propertyTerm: raml-http.allowReserved
+        range: boolean
+      binding:
+        propertyTerm: raml-http.binding
+        range: string
+      schema:
+        propertyTerm: raml-http.schema
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      payload:
+        propertyTerm: raml-http.payload
+        range: Payload
+        allowMultiple: true
+      example:
+        propertyTerm: raml-http.example
+        range: Example
+        allowMultiple: true
+
+
+  OAuth2Setings:
+    classTerm: security.OAuth2Settings
+    mapping:
+      authorizationURI:
+        propertyTerm: security.authorizationUri
+        range: string
+      accessTokenURI:
+        propertyTerm: security.accessTokenUri
+        range: string
+      authorizationGrant:
+        propertyTerm: security.authorizationGrant
+        range: string
+        allowMultiple: true
+      flow:
+        propertyTerm: security.flow
+        range: string
+      refreshURI:
+        propertyTerm: security.refreshUri
+        range: string
+      scope:
+        propertyTerm: security.scope
+        range: Scope
+        allowMultiple: true
+
+
+  ResourceType:
+    classTerm: doc.ResourceType
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      variable:
+        propertyTerm: doc.variable
+        range: string
+        allowMultiple: true
+
+
+  ParametrizedTrait:
+    classTerm: doc.ParametrizedTrait
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      target:
+        propertyTerm: doc.target
+        range: AbstractDeclaration
+      variable:
+        propertyTerm: doc.variable
+        range: VariableValue
+        allowMultiple: true
+
+
+  Callback:
+    classTerm: raml-http.Callback
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      expression:
+        propertyTerm: raml-http.expression
+        range: string
+      endpoint:
+        propertyTerm: raml-http.endpoint
+        range: EndPoint
+
+
+  PropertyDependencies:
+    classTerm: raml-shapes.PropertyDependencies
+    mapping:
+      propertySource:
+        propertyTerm: raml-shapes.propertySource
+        range: uri
+      propertyTarget:
+        propertyTerm: raml-shapes.propertyTarget
+        range: uri
+        allowMultiple: true
+
+
+  FileShape:
+    classTerm: raml-shapes.FileShape
+    mapping:
+      fileType:
+        propertyTerm: raml-shapes.fileType
+        range: string
+        allowMultiple: true
+      pattern:
+        propertyTerm: shacl.pattern
+        range: string
+      min.Length:
+        propertyTerm: shacl.minLength
+        range: integer
+      max.Length:
+        propertyTerm: shacl.maxLength
+        range: integer
+      min.Inclusive:
+        propertyTerm: shacl.minInclusive
+        range: double
+      max.Inclusive:
+        propertyTerm: shacl.maxInclusive
+        range: double
+      min.Exclusive:
+        propertyTerm: shacl.minExclusive
+        range: boolean
+      max.Exclusive:
+        propertyTerm: shacl.maxExclusive
+        range: boolean
+      format:
+        propertyTerm: raml-shapes.format
+        range: string
+      multipleOf:
+        propertyTerm: raml-shapes.multipleOf
+        range: double
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  OAuth1Setings:
+    classTerm: security.OAuth1Settings
+    mapping:
+      requestTokenURI:
+        propertyTerm: security.requestTokenUri
+        range: string
+      authorizationURI:
+        propertyTerm: security.authorizationUri
+        range: string
+      tokenCredentialsURI:
+        propertyTerm: security.tokenCredentialsUri
+        range: string
+      signature:
+        propertyTerm: security.signature
+        range: string
+        allowMultiple: true
+
+
+  APIKeySetings:
+    classTerm: security.ApiKeySettings
+    mapping:
+      name:
+        propertyTerm: security.name
+        range: string
+      in:
+        propertyTerm: security.in
+        range: string
+
+
+  MatrixShape:
+    classTerm: raml-shapes.MatrixShape
+    mapping:
+      items:
+        propertyTerm: raml-shapes.items
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      minCount:
+        propertyTerm: shacl.minCount
+        range: integer
+      maxCount:
+        propertyTerm: shacl.maxCount
+        range: integer
+      uinqueItems:
+        propertyTerm: raml-shapes.uniqueItems
+        range: boolean
+      collectionFormat:
+        propertyTerm: raml-shapes.collectionFormat
+        range: string
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  NilShape:
+    classTerm: raml-shapes.NilShape
+    mapping:
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  XMLSerializer:
+    classTerm: raml-shapes.XMLSerializer
+    mapping:
+      xmlAttribute:
+        propertyTerm: raml-shapes.xmlAttribute
+        range: boolean
+      xmlWrapped:
+        propertyTerm: raml-shapes.xmlWrapped
+        range: boolean
+      xmlName:
+        propertyTerm: raml-shapes.xmlName
+        range: string
+      xmlNamespace:
+        propertyTerm: raml-shapes.xmlNamespace
+        range: string
+      xmlPrefix:
+        propertyTerm: raml-shapes.xmlPrefix
+        range: string
+
+
+  WebAPI:
+    classTerm: schema-org.WebAPI
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      server:
+        propertyTerm: raml-http.server
+        range: Server
+        allowMultiple: true
+      accepts:
+        propertyTerm: raml-http.accepts
+        range: string
+        allowMultiple: true
+      contentType:
+        propertyTerm: raml-http.contentType
+        range: string
+        allowMultiple: true
+      scheme:
+        propertyTerm: raml-http.scheme
+        range: string
+        allowMultiple: true
+      version:
+        propertyTerm: schema-org.version
+        range: string
+      termsOfService:
+        propertyTerm: schema-org.termsOfService
+        range: string
+      provider:
+        propertyTerm: schema-org.provider
+        range: Organization
+      license:
+        propertyTerm: schema-org.license
+        range: License
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+        allowMultiple: true
+      endpoint:
+        propertyTerm: raml-http.endpoint
+        range: EndPoint
+        allowMultiple: true
+      security:
+        propertyTerm: security.security
+        range: ParametrizedSecurityScheme
+        allowMultiple: true
+      tag:
+        propertyTerm: raml-http.tag
+        range: Tag
+        allowMultiple: true
+
+
+  ScalarShape:
+    classTerm: raml-shapes.ScalarShape
+    mapping:
+      datatype:
+        propertyTerm: shacl.datatype
+        range: uri
+      pattern:
+        propertyTerm: shacl.pattern
+        range: string
+      min.Length:
+        propertyTerm: shacl.minLength
+        range: integer
+      max.Length:
+        propertyTerm: shacl.maxLength
+        range: integer
+      min.Inclusive:
+        propertyTerm: shacl.minInclusive
+        range: double
+      max.Inclusive:
+        propertyTerm: shacl.maxInclusive
+        range: double
+      min.Exclusive:
+        propertyTerm: shacl.minExclusive
+        range: boolean
+      max.Exclusive:
+        propertyTerm: shacl.maxExclusive
+        range: boolean
+      format:
+        propertyTerm: raml-shapes.format
+        range: string
+      multipleOf:
+        propertyTerm: raml-shapes.multipleOf
+        range: double
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  SecurityScheme:
+    classTerm: security.SecurityScheme
+    mapping:
+      name:
+        propertyTerm: security.name
+        range: string
+      type:
+        propertyTerm: security.type
+        range: string
+      displayName:
+        propertyTerm: schema-org.displayName
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      header:
+        propertyTerm: raml-http.header
+        range: Parameter
+        allowMultiple: true
+      parameter:
+        propertyTerm: raml-http.parameter
+        range: Parameter
+        allowMultiple: true
+      response:
+        propertyTerm: hydra.response
+        range: Response
+        allowMultiple: true
+      settings:
+        propertyTerm: security.settings
+        range: Settings
+      queryString:
+        propertyTerm: raml-http.queryString
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+
+
+  ParametrizedResourceType:
+    classTerm: doc.ParametrizedResourceType
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      target:
+        propertyTerm: doc.target
+        range: AbstractDeclaration
+      variable:
+        propertyTerm: doc.variable
+        range: VariableValue
+        allowMultiple: true
+
+
+  AnyShape:
+    classTerm: raml-shapes.AnyShape
+    mapping:
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  Tag:
+    classTerm: raml-http.Tag
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      externalDocs:
+        propertyTerm: schema-org.externalDocs
+        range: CreativeWork
+
+
+  IriTemplate:
+    classTerm: hydra.IriTemplateMapping
+    mapping:
+      variable:
+        propertyTerm: hydra.variable
+        range: string
+      linkExprssion:
+        propertyTerm: raml-http.linkExpression
+        range: string
+
+
+  UnionShape:
+    classTerm: raml-shapes.UnionShape
+    mapping:
+      anyOf:
+        propertyTerm: raml-shapes.anyOf
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  TemplatedLink:
+    classTerm: hydra.TemplatedLink
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      template:
+        propertyTerm: hydra.template
+        range: string
+      operationID:
+        propertyTerm: raml-http.operationId
+        range: string
+      mapping:
+        propertyTerm: hydra.mapping
+        range: IriTemplate
+        allowMultiple: true
+      requestBody:
+        propertyTerm: raml-http.requestBody
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      server:
+        propertyTerm: raml-http.server
+        range: Server
+
+
+  HTTPSetings:
+    classTerm: security.HttpSettings
+    mapping:
+      scheme:
+        propertyTerm: security.scheme
+        range: string
+      bearerFormat:
+        propertyTerm: security.bearerFormat
+        range: string
+
+
+  OpenIDSetings:
+    classTerm: security.OpenIdConnectSettings
+    mapping:
+      OpenIDConnectURL:
+        propertyTerm: security.openIdConnectUrl
+        range: string
+
+
+  ParametrizedSecurityScheme:
+    classTerm: security.ParametrizedSecurityScheme
+    mapping:
+      name:
+        propertyTerm: security.name
+        range: string
+      scheme:
+        propertyTerm: security.scheme
+        range: SecurityScheme
+      settings:
+        propertyTerm: security.settings
+        range: Settings
+
+
+  Server:
+    classTerm: raml-http.Server
+    mapping:
+      url:
+        propertyTerm: raml-http.url
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      variable:
+        propertyTerm: raml-http.variable
+        range: Parameter
+        allowMultiple: true
+
+
+  CreativeWork:
+    classTerm: schema-org.CreativeWork
+    mapping:
+      url:
+        propertyTerm: schema-org.url
+        range: uri
+      title:
+        propertyTerm: schema-org.title
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+
+
+  EndPoint:
+    classTerm: raml-http.EndPoint
+    mapping:
+      path:
+        propertyTerm: raml-http.path
+        range: string
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      summary:
+        propertyTerm: schema-org.summary
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      supportedOperation:
+        propertyTerm: hydra.supportedOperation
+        range: Operation
+        allowMultiple: true
+      parameter:
+        propertyTerm: raml-http.parameter
+        range: Parameter
+        allowMultiple: true
+      payload:
+        propertyTerm: raml-http.payload
+        range: Payload
+        allowMultiple: true
+      servers:
+        propertyTerm: raml-http.server
+        range: Server
+        allowMultiple: true
+      security:
+        propertyTerm: security.security
+        range: ParametrizedSecurityScheme
+        allowMultiple: true
+
+
+  Settings:
+    classTerm: security.Settings
+    mapping:
+
+
+  TupleShape:
+    classTerm: raml-shapes.TupleShape
+    mapping:
+      items:
+        propertyTerm: raml-shapes.items
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      minCount:
+        propertyTerm: shacl.minCount
+        range: integer
+      maxCount:
+        propertyTerm: shacl.maxCount
+        range: integer
+      uinqueItems:
+        propertyTerm: raml-shapes.uniqueItems
+        range: boolean
+      additionalItems:
+        propertyTerm: raml-shapes.additionalItems
+        range: boolean
+      collectionFormat:
+        propertyTerm: raml-shapes.collectionFormat
+        range: string
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  License:
+    classTerm: raml-http.License
+    mapping:
+      url:
+        propertyTerm: schema-org.url
+        range: uri
+      name:
+        propertyTerm: schema-org.name
+        range: string
+
+
+  Response:
+    classTerm: raml-http.Response
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      statusCode:
+        propertyTerm: hydra.statusCode
+        range: string
+      header:
+        propertyTerm: raml-http.header
+        range: Parameter
+        allowMultiple: true
+      payload:
+        propertyTerm: raml-http.payload
+        range: Payload
+        allowMultiple: true
+      links:
+        propertyTerm: raml-http.link
+        range: TemplatedLink
+        allowMultiple: true
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  Organization:
+    classTerm: schema-org.Organization
+    mapping:
+      url:
+        propertyTerm: schema-org.url
+        range: uri
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      email:
+        propertyTerm: schema-org.email
+        range: string
+
+
+  Example:
+    classTerm: doc.Example
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      displayName:
+        propertyTerm: doc.displayName
+        range: string
+      guiSummary:
+        propertyTerm: raml-http.guiSummary
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      externalValue:
+        propertyTerm: doc.externalValue
+        range: string
+      strict:
+        propertyTerm: doc.strict
+        range: boolean
+      mediaType:
+        propertyTerm: raml-http.mediaType
+        range: string
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+
+
+  Payload:
+    classTerm: raml-http.Payload
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      mediaType:
+        propertyTerm: raml-http.mediaType
+        range: string
+      schema:
+        propertyTerm: raml-http.schema
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      example:
+        propertyTerm: raml-http.example
+        range: Example
+        allowMultiple: true
+      encoding:
+        propertyTerm: raml-http.encoding
+        range: Encoding
+        allowMultiple: true
+
+
+  NodeShape:
+    classTerm: shacl.NodeShape
+    mapping:
+      minProperties:
+        propertyTerm: raml-shapes.minProperties
+        range: integer
+      maxProperties:
+        propertyTerm: raml-shapes.maxProperties
+        range: integer
+      closed:
+        propertyTerm: shacl.closed
+        range: boolean
+      additionalPropertiesSchema:
+        propertyTerm: shacl.additionalPropertiesSchema
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      discriminator:
+        propertyTerm: raml-shapes.discriminator
+        range: string
+      discriminatorValue:
+        propertyTerm: raml-shapes.discriminatorValue
+        range: string
+      property:
+        propertyTerm: shacl.property
+        range: PropertyShape
+        allowMultiple: true
+      dependencies:
+        propertyTerm: raml-shapes.dependencies
+        range: PropertyDependencies
+        allowMultiple: true
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+  Trait:
+    classTerm: doc.Trait
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      variable:
+        propertyTerm: doc.variable
+        range: string
+        allowMultiple: true
+
+
+  Encoding:
+    classTerm: raml-http.Encoding
+    mapping:
+      propertyName:
+        propertyTerm: raml-http.propertyName
+        range: string
+      contentType:
+        propertyTerm: raml-http.contentType
+        range: string
+      header:
+        propertyTerm: raml-http.header
+        range: Parameter
+        allowMultiple: true
+      style:
+        propertyTerm: raml-http.style
+        range: string
+      explode:
+        propertyTerm: raml-http.explode
+        range: boolean
+      allowReserved:
+        propertyTerm: raml-http.allowReserved
+        range: boolean
+
+
+  ArrayShape:
+    classTerm: raml-shapes.ArrayShape
+    mapping:
+      items:
+        propertyTerm: raml-shapes.items
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      minCount:
+        propertyTerm: shacl.minCount
+        range: integer
+      maxCount:
+        propertyTerm: shacl.maxCount
+        range: integer
+      uinqueItems:
+        propertyTerm: raml-shapes.uniqueItems
+        range: boolean
+      collectionFormat:
+        propertyTerm: raml-shapes.collectionFormat
+        range: string
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: schema-org.name
+        range: string
+      description:
+        propertyTerm: schema-org.description
+        range: string
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
+        range: string
+      not:
+        propertyTerm: shacl.not
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+      and:
+        propertyTerm: shacl.and
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range:
+          - UnionShape
+          - TupleShape
+          - NodeShape
+          - ArrayShape
+          - SchemaShape
+          - FileShape
+          - MatrixShape
+          - NilShape
+          - ScalarShape
+          - AnyShape
+
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: uri
+        allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: uri
+      documentation:
+        propertyTerm: schema-org.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: doc.examples
+        range: Example
+        allowMultiple: true
+
+
+
+
+documents:
+  root:
+    encodes: WebAPI

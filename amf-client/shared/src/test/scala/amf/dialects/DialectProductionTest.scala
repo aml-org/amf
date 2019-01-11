@@ -35,6 +35,10 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/production/"
 
+  test("HERE_HERE Can parse the canonical webapi dialect") {
+    cycle("canonical_webapi.yaml", "canonical_webapi.json", VocabularyYamlHint, Amf)
+  }
+
   test("Can parse validation dialect") {
     cycle("validation_dialect.raml", "validation_dialect.json", VocabularyYamlHint, Amf)
   }
