@@ -201,7 +201,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("inexistent-declarations/in-traits.raml", Some("inexistent-declarations-in-traits.report"))
   }
 
-  test("some some some") {
+  test("Invalid reference from overlay to swagger document") {
     validate("invalid-cross-overlay/invalid-cross-overlay.raml", Some("invalid-cross-overlay.report"))
   }
 
