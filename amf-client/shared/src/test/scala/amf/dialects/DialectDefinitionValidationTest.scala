@@ -3,6 +3,7 @@ import amf.ProfileName
 import amf.core.AMFCompiler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
+import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
@@ -27,7 +28,7 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with F
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     val report = for {
-      _ <- amf.core.AMF.init()
+      _ <- Validation(platform).map(_.withEnabledValidation(true))
       dialect <- {
         new AMFCompiler(
           "file://" + path + dialect,
