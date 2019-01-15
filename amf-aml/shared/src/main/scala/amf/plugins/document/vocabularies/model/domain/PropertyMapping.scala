@@ -62,7 +62,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def withTypeDiscriminatorName(name: String): PropertyMapping     = set(TypeDiscriminatorName, name)
   def withTypeDiscriminator(typesMapping: Map[String, String]): PropertyMapping =
     set(TypeDiscriminator, typesMapping.map { case (a, b) => s"$a->$b" }.mkString(","))
-  def withUnique(unique: Boolean): PropertyMapping                 = set(Unique, unique)
+  def withUnique(unique: Boolean): PropertyMapping = set(Unique, unique)
 
   def classification(): PropertyClassification = {
     val isAnyNode = objectRange().exists { obj =>
@@ -101,37 +101,38 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
 
   def isUnion: Boolean = nodesInRange.nonEmpty
 
-  def toField: Field = {
-    val propertyIdValue = ValueType(nodePropertyMapping().value())
+  def toField: Option[Field] = {
+    nodePropertyMapping().option().map { v =>
+      val propertyIdValue = ValueType(v)
+      val isObjectRange   = objectRange().nonEmpty || Option(typeDiscriminator()).isDefined
 
-    val isObjectRange = objectRange().nonEmpty || Option(typeDiscriminator()).isDefined
-
-    if (isObjectRange) {
-      if (allowMultiple().value() || mapKeyProperty().nonNull) {
-        Field(Type.Array(DialectDomainElementModel()), propertyIdValue)
+      if (isObjectRange) {
+        if (allowMultiple().value() || mapKeyProperty().nonNull) {
+          Field(Type.Array(DialectDomainElementModel()), propertyIdValue)
+        } else {
+          Field(DialectDomainElementModel(), propertyIdValue)
+        }
       } else {
-        Field(DialectDomainElementModel(), propertyIdValue)
-      }
-    } else {
-      val fieldType = literalRange().value() match {
-        case literal if literal == (Namespace.Shapes + "link").iri()  => Type.Iri
-        case literal if literal.endsWith("anyType")                   => Type.Any
-        case literal if literal.endsWith("number")                    => Type.Float
-        case literal if literal == (Namespace.Xsd + "integer").iri()  => Type.Int
-        case literal if literal == (Namespace.Xsd + "float").iri()    => Type.Float
-        case literal if literal == (Namespace.Xsd + "double").iri()   => Type.Double
-        case literal if literal == (Namespace.Xsd + "boolean").iri()  => Type.Bool
-        case literal if literal == (Namespace.Xsd + "decimal").iri()  => Type.Int
-        case literal if literal == (Namespace.Xsd + "time").iri()     => Type.Time
-        case literal if literal == (Namespace.Xsd + "date").iri()     => Type.Date
-        case literal if literal == (Namespace.Xsd + "dateTime").iri() => Type.Date
-        case _                                                        => Type.Str
-      }
+        val fieldType = literalRange().value() match {
+          case literal if literal == (Namespace.Shapes + "link").iri()  => Type.Iri
+          case literal if literal.endsWith("anyType")                   => Type.Any
+          case literal if literal.endsWith("number")                    => Type.Float
+          case literal if literal == (Namespace.Xsd + "integer").iri()  => Type.Int
+          case literal if literal == (Namespace.Xsd + "float").iri()    => Type.Float
+          case literal if literal == (Namespace.Xsd + "double").iri()   => Type.Double
+          case literal if literal == (Namespace.Xsd + "boolean").iri()  => Type.Bool
+          case literal if literal == (Namespace.Xsd + "decimal").iri()  => Type.Int
+          case literal if literal == (Namespace.Xsd + "time").iri()     => Type.Time
+          case literal if literal == (Namespace.Xsd + "date").iri()     => Type.Date
+          case literal if literal == (Namespace.Xsd + "dateTime").iri() => Type.Date
+          case _                                                        => Type.Str
+        }
 
-      if (allowMultiple().value()) {
-        Field(Type.Array(fieldType), propertyIdValue)
-      } else {
-        Field(fieldType, propertyIdValue)
+        if (allowMultiple().value()) {
+          Field(Type.Array(fieldType), propertyIdValue)
+        } else {
+          Field(fieldType, propertyIdValue)
+        }
       }
     }
   }

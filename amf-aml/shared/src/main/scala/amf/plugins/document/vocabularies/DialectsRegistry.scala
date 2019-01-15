@@ -95,7 +95,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def buildMetaModel(nodeMapping: NodeMapping, dialect: Dialect): DialectDomainElementModel = {
     val nodeType = nodeMapping.nodetypeMapping
-    val fields   = nodeMapping.propertiesMapping().map(_.toField)
+    val fields   = nodeMapping.propertiesMapping().flatMap(_.toField)
     val mapPropertiesInDomain = dialect.declares
       .collect {
         case nodeMapping: NodeMapping =>
