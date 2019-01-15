@@ -931,7 +931,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             "required",
             entry => {
               if (entry.value.tagType == YType.Bool) {
-                if (version == JSONSchemaDraft4SchemaVersion) {
+                if (version == JSONSchemaDraft4SchemaVersion || version.isInstanceOf[OASSchemaVersion]) {
                   ctx.violation(InvalidRequiredBooleanForSchemaVersion,
                                 property.id,
                                 "Required property boolean value is only supported in JSON Schema draft-3",

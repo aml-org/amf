@@ -19,5 +19,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("parameter-without-shape/parameter-without-shape.json", Some("parameter-without-shape.report"))
   }
 
+  test("Invalid required in oas schema") {
+    validate("invalid-oas-required/invalid-oas-required.json", Some("invalid-oas-required.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }
