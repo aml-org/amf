@@ -103,12 +103,12 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
               }
             )
 
-            if (map.key("queryParameters").isDefined && map.key("queryString").isDefined) {
+            if (value.key("queryParameters").isDefined && value.key("queryString").isDefined) {
               ctx.violation(
                 ExclusivePropertiesSpecification,
                 scheme.id,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
-                map
+                value
               )
             }
 
@@ -166,6 +166,8 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                            Annotations(entry))
               }
             )
+
+            AnnotationParser(scheme, value).parse()
 
           case _ => // should add some warning or violation for secs ?
         }
