@@ -164,5 +164,9 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
                 golden = Some("ref-jsonschema-bad-link.report"))
   }
 
+  test("Test resolve double var at resource type (resolved link replacement)") {
+    checkReport("/resource_types/resolved-link-replacement/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

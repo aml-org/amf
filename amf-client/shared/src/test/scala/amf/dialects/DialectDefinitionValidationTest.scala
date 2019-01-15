@@ -11,7 +11,6 @@ import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
-import scala.concurrent.ExecutionContext.Implicits
 import scala.concurrent.{ExecutionContext, Future}
 
 class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with FileAssertionTest with PlatformSecrets {
