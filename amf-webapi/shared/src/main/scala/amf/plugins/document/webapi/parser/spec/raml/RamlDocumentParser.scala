@@ -463,7 +463,10 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
             ctx.violation(InvalidDocumentationType, parent, s"Unexpected sequence. Options are object or scalar ", n)
           case _ =>
             val scalar = n.as[YScalar]
-            declarations.findDocumentations(scalar.text, SearchScope.Fragments) match {
+            declarations.findDocumentations(
+              scalar.text,
+              SearchScope.Fragments,
+              Some((s: String) => ctx.violation(InvalidFragmentType, "", s, scalar))) match {
               case Some(doc) =>
                 results += doc.link(scalar.text, Annotations()).asInstanceOf[CreativeWork]
               case _ =>

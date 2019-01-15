@@ -113,7 +113,9 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                   .set(ParameterModel.Name, name.text())
               case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
                 val schema = ctx.declarations
-                  .findType(ref.text, scope)
+                  .findType(ref.text,
+                            scope,
+                            Some((s: String) => ctx.violation(InvalidFragmentType, parameter.id, s, entry.value)))
                   .get
                   .link[Shape](ref.text, Annotations(entry))
                   .withName("schema")

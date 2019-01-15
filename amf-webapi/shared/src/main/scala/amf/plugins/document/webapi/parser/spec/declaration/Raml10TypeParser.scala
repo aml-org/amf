@@ -219,7 +219,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
           val shape = UnresolvedShape(text, node).withName(text, Annotations())
           shape.withContext(ctx)
           adopt(shape)
-          if (!text.validReferencePath) {
+          if (!text.validReferencePath && ctx.declarations.libraries.keys.exists(_ == text.split("\\.").head)) {
             ctx.violation(
               ChainedReferenceSpecification,
               shape.id,
@@ -641,7 +641,10 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         case _ if node.toOption[YScalar].isDefined =>
           val refTuple = ctx.link(node) match {
             case Left(key) =>
-              (key, ctx.declarations.findType(key, SearchScope.Fragments))
+              (key,
+               ctx.declarations.findType(key,
+                                         SearchScope.Fragments,
+                                         Some((s: String) => ctx.violation(InvalidFragmentType, shape.id, s, node))))
             case _ =>
               val text = node.as[YScalar].text
               (text, ctx.declarations.findType(text, SearchScope.Named))
@@ -665,7 +668,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                                               shouldLink = false).withName(text, nameAnnotations)
               unresolve.withContext(ctx)
               adopt(unresolve)
-              if (!text.validReferencePath) {
+              if (!text.validReferencePath && ctx.declarations.libraries.keys.exists(_ == text.split("\\.").head)) {
                 ctx.violation(
                   ChainedReferenceSpecification,
                   shape.id,
@@ -1303,7 +1306,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           if (shape.fields.exists(LinkableElementModel.TargetId)) shape.set(LinkableElementModel.TargetId, k))
       )
       unresolvedShape.withContext(ctx)
-      if (!reference.validReferencePath) {
+      if (!reference.validReferencePath && ctx.declarations.libraries.keys.exists(_ == reference.split("\\.").head)) {
         ctx.violation(
           ChainedReferenceSpecification,
           unresolvedShape.id,

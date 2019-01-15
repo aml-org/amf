@@ -75,7 +75,6 @@ class Declarations(var libraries: Map[String, Declarations] = Map(),
                   scope: SearchScope.Scope): Option[DomainElement] = {
     def inRef(): Option[DomainElement] = {
       val fqn = QName(key)
-
       val result = if (fqn.isQualified) {
         libraries.get(fqn.qualification).flatMap(_.findForType(fqn.name, map, scope))
       } else None

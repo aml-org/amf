@@ -576,6 +576,39 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Test invalid fragment (distinct type)") {
+    validate(
+      "error/invalid-fragment/api.raml",
+      fragmentError => {
+        fragmentError.level should be("Violation")
+        fragmentError.message should be("Fragment of type ResourceType does not conform to the expected type DataType")
+      },
+      resourceType => {
+        resourceType.level should be("Violation")
+        resourceType.message should be("ResourceType Resource not found")
+      },
+      unresolved => {
+        unresolved.level should be("Violation")
+        unresolved.message should be(
+          "Unresolved reference 'fragment.raml' from root context file://amf-client/shared/src/test/resources/parser-results/raml/error/invalid-fragment/api.raml")
+      }
+    )
+  }
+
+  test("Test that chain ref in valid paths works ok") {
+    validate(
+      "valid/points-in-path/api.raml",
+      fileNotFound => {
+        fileNotFound.level should be("Violation")
+        fileNotFound.message should startWith("File Not Found")
+      },
+      unresolved => {
+        unresolved.level should be("Violation")
+        unresolved.message should startWith("Unresolved reference ")
+      }
+    )
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =
