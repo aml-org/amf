@@ -10,9 +10,12 @@ import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
-import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits
+import scala.concurrent.{ExecutionContext, Future}
 
 class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with FileAssertionTest with PlatformSecrets {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test invalid property term uri for description") {
     validate("/schema-uri/dialect.yaml", Some("/schema-uri/report.json"), Some("/schema-uri/instance.yaml"))
