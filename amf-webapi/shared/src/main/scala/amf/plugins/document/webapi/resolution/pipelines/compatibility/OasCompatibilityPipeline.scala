@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas.{
   SecuritySettingsMapper
 }
 
-class RAMLtoOASCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
+class OasCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
 
   private val resolution = new OasResolutionPipeline(eh)
 
@@ -26,6 +26,6 @@ class RAMLtoOASCompatibilityPipeline(override val eh: ErrorHandler) extends Reso
   override def profileName: ProfileName = OasProfile
 }
 
-object RAMLtoOASCompatibilityPipeline {
-  def unhandled = new RAMLtoOASCompatibilityPipeline(UnhandledErrorHandler)
+object OasCompatibilityPipeline {
+  def unhandled = new OasCompatibilityPipeline(UnhandledErrorHandler)
 }
