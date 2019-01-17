@@ -20,19 +20,19 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
       oauth2.withFlow(flow)
     }
     oauth2.flow.value() match {
-      case "implicit"   =>
+      case "implicit" =>
         if (oauth2.authorizationUri.option().isEmpty) oauth2.withAuthorizationUri("http://")
         oauth2.fields.removeField(OAuth2SettingsModel.AccessTokenUri)
       case "accessCode" =>
         if (oauth2.authorizationUri.option().isEmpty) oauth2.withAuthorizationUri("http://")
         if (oauth2.accessTokenUri.option().isEmpty) oauth2.withAccessTokenUri("http://")
-      case "password"   =>
+      case "password" =>
         if (oauth2.accessTokenUri.option().isEmpty) oauth2.withAccessTokenUri("http://")
         oauth2.fields.removeField(OAuth2SettingsModel.AuthorizationUri)
-      case "application"   =>
+      case "application" =>
         if (oauth2.accessTokenUri.option().isEmpty) oauth2.withAccessTokenUri("http://")
         oauth2.fields.removeField(OAuth2SettingsModel.AuthorizationUri)
-      case _            => // ignore
+      case _ => // ignore
     }
     if (oauth2.scopes.isEmpty) oauth2.withScopes(Seq(Scope().withName("*").withDescription("")))
   }
@@ -51,15 +51,12 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
   }
 
   private def fixSettings(security: SecurityScheme): Unit = {
-    println(security.name)
-    println(security.settings)
-
     security.settings match {
       case oauth2: OAuth2Settings => fixOauth2(oauth2)
       case apiKey: ApiKeySettings => fixApiKey(security, apiKey)
       case null if security.`type`.option().getOrElse("") == "x-amf-apiKey" =>
         fixApiKey(security, security.withApiKeySettings())
-      case _                      => // ignore
+      case _ => // ignore
     }
   }
 
@@ -77,7 +74,7 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
           case _                        => true
 
         }
-      case other             => true
+      case other => true
     }
     d.withDeclares(filteredDeclarations)
   }
