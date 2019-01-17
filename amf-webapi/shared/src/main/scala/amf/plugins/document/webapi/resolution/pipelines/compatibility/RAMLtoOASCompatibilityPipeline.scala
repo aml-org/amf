@@ -1,30 +1,29 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility
 
+import amf.{OasProfile, ProfileName}
 import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.document.webapi.resolution.pipelines.Raml10ResolutionPipeline
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.raml._
-import amf.{ProfileName, RamlProfile}
+import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas.{
+  LowercaseSchemes,
+  MandatoryDocumentationUrl,
+  MandatoryResponses,
+  SecuritySettingsMapper
+}
 
 class RAMLtoOASCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
 
-  private val resolution = new Raml10ResolutionPipeline(eh)
+  private val resolution = new OasResolutionPipeline(eh)
 
   override val steps: Seq[ResolutionStage] = resolution.steps ++ Seq(
-    new MandatoryDocumentationTitle(),
-    new SanitizeCustomTypeNames(),
-    new MandatoryAnnotationType(),
-    new DefaultPayloadMediaType(),
-    new DefaultToNumericDefaultResponse(),
-    new MakeExamplesOptional(),
-    new CapitalizeSchemes(),
+    new LowercaseSchemes(),
     new SecuritySettingsMapper(),
-    new ShapeFormatAdjuster(),
-    new CustomAnnotationDeclaration()
+    new MandatoryDocumentationUrl(),
+    new MandatoryResponses()
   )
 
-  override def profileName: ProfileName = RamlProfile
+  override def profileName: ProfileName = OasProfile
 }
 
 object RAMLtoOASCompatibilityPipeline {

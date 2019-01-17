@@ -15,10 +15,13 @@ import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header}
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.OAStoRAMLCompatibiltyPipeline
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.{
+  CompatibilityPipeline,
+  RAMLtoOASCompatibilityPipeline
+}
 import amf.plugins.document.webapi.resolution.pipelines.{OasEditingPipeline, OasResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
-import amf.{Oas20Profile, Oas30Profile, OasProfile, ProfileName}
+import amf._
 import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends BaseWebApiPlugin {
@@ -143,8 +146,9 @@ object Oas20Plugin extends OasPlugin {
                        pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
     case ResolutionPipeline.DEFAULT_PIPELINE       => new OasResolutionPipeline(errorHandler).resolve(unit)
     case ResolutionPipeline.EDITING_PIPELINE       => new OasEditingPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new OAStoRAMLCompatibiltyPipeline(errorHandler).resolve(unit)
-    case _                                         => super.resolve(unit, errorHandler, pipelineId)
+    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, RamlProfile).resolve(unit)
+    // When resolving with compatibility pipeline in OAS means we want to transform to RAML
+    case _ => super.resolve(unit, errorHandler, pipelineId)
   }
 
   override def context(loc: String,

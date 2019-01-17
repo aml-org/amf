@@ -1,12 +1,12 @@
 package amf.emit
 
-import amf.ProfileNames
+import amf.{OasProfile, ProfileNames}
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.validation.AMFValidationReport
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.{RAMLtoOASCompatibilityPipeline, OAStoRAMLCompatibiltyPipeline}
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 
@@ -37,7 +37,6 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
     }
   }
 
-
   for {
     file <- platform.fs.syncFile(basePath + "raml10").list
   } {
@@ -51,7 +50,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
         resolved <- successful(transform(origin, c))
         rendered <- render(resolved, c, useAmfJsonldSerialization = true)
         tmp      <- writeTemporaryFile(path)(rendered)
-        report   <- {
+        report <- {
           println(s"FILE:${path}")
           println(s"TARGET:${tmp}")
 
@@ -78,7 +77,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
       }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
-    case Raml | Raml08 | Raml10 => RAMLtoOASCompatibilityPipeline.unhandled.resolve(unit)
-    case Oas | Oas20 | Oas30    => OAStoRAMLCompatibiltyPipeline.unhandled.resolve(unit)
+    case Raml | Raml08 | Raml10 => CompatibilityPipeline.unhandled().resolve(unit)
+    case Oas | Oas20 | Oas30    => CompatibilityPipeline.unhandled(OasProfile).resolve(unit)
   }
 }
