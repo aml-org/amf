@@ -50,12 +50,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
         resolved <- successful(transform(origin, c))
         rendered <- render(resolved, c, useAmfJsonldSerialization = true)
         tmp      <- writeTemporaryFile(path)(rendered)
-        report <- {
-          println(s"FILE:${path}")
-          println(s"TARGET:${tmp}")
-
-          validate(tmp, OasYamlHint)
-        }
+        report   <- validate(tmp, OasYamlHint)
       } yield {
         report.toString should include("Conforms? true")
       }
