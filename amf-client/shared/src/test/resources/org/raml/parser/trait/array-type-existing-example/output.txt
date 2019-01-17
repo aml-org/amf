@@ -22,6 +22,9 @@ traits:
     headers:
       X-Dept:
         type: array
+        example:
+          - 18-FINANCE
+          - 200-MISC
         description: |
           A department code to be charged.
           Multiple of such headers are allowed.
@@ -29,6 +32,6 @@ traits:
           example: 230-OCTO
           pattern: \d+\-\w+
       X-Tracker:
-        pattern: \w{16}
-        example: abcdefghijklmnop
+        example: gfr456d03ygh38s2
         description: A code to track API calls end to end
+        pattern: \w{16}

@@ -19,6 +19,8 @@ resourceTypes:
     body:
       application/json:
         type: object
+        example:
+          name: Something
         additionalProperties: true
         properties:
           name:
@@ -30,6 +32,8 @@ resourceTypes:
       body:
         application/json:
           type: object
+          example:
+            name: Something
           additionalProperties: true
           properties:
             name:

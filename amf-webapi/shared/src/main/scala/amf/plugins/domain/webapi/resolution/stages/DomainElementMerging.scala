@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
+import amf.client.model.DataTypes
 import amf.core.annotations.DefaultNode
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
@@ -9,7 +10,8 @@ import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.parser.{ErrorHandler, FieldEntry, Value}
 import amf.plugins.document.webapi.annotations.Inferred
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
+import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 /**
@@ -49,13 +51,42 @@ object DomainElementMerging {
             if (target.examples.nonEmpty) cloned.withExamples(target.examples)
             main.set(field, adoptInner(main.id, cloned))
 
+          // case if existing element has an infered default type
+          // this is because of the merge is at AST level and when the "type" node is on the trait side it should be merged
           case Some(existing)
               if Option(existing.value).isDefined && Option(existing.value.value).isDefined
                 && existing.value.value.annotations.contains(classOf[DefaultNode]) =>
             field.`type` match {
               case t: OptionalField if isOptional(t, value.value.asInstanceOf[DomainElement]) => // Do nothing (2)
               case Type.ArrayLike(element)                                                    => setNonOptional(main, field, element, value)
-              case _                                                                          => main.set(field, adoptInner(main.id, value.value))
+              case _: DomainElementModel =>
+                existing.value.value match {
+                  // This case is for default type String (in parameters)
+                  case s: ScalarShape if s.dataType.value() == DataTypes.String =>
+                    value.value match {
+                      // if both parts are scalar strings, then just merge the dataNodes
+                      case sc: ScalarShape if sc.dataType.value() == DataTypes.String =>
+                        merge(existing.domainElement, entry.domainElement, errorHandler)
+                      // if other is an scalar with a different datatype
+                      case sc: ScalarShape =>
+                        s.set(ScalarShapeModel.DataType, sc.dataType.value())
+                        merge(existing.domainElement, entry.domainElement, errorHandler)
+                      // if other is an array or an object
+                      case a: AnyShape =>
+                        val examples = s.examples
+                        main.set(field, adoptInner(main.id, a))
+                        if (examples.nonEmpty)
+                          main.fields
+                            .entry(field)
+                            .foreach(_.value.value.asInstanceOf[AnyShape].withExamples(examples))
+                      // else override the shape
+                      case x => main.set(field, adoptInner(main.id, x))
+                    }
+                  // This case is for default type AnyShape (in payload in an endpoint)
+                  case a: AnyShape => merge(existing.domainElement, entry.domainElement, errorHandler)
+                  case _           => main.set(field, adoptInner(main.id, value.value))
+                }
+              case _ => main.set(field, adoptInner(main.id, value.value))
             }
 
           case Some(existing) => // Case (3)

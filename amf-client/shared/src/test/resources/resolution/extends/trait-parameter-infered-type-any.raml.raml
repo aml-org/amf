@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: Example with headers
+/users:
+  get:
+    headers:
+      X-Dept:
+        type: any
+        example:
+          - 18-FINANCE
+          - 200-MISC

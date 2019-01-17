@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: apiEnum
+
+traits:
+  withQueryParameters:
+    queryParameters:
+      platform:
+        description: a list
+        type: integer
+        example: 12
+
+/installer:
+  get:
+    is: [ withQueryParameters ]
+    queryParameters:
+      platform:
+        example: 13
+        description: override the description

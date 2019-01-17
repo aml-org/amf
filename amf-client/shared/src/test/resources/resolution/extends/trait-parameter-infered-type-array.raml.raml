@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: Example with headers
+/users:
+  get:
+    headers:
+      X-Dept:
+        type: array
+        example:
+          - 18-FINANCE
+          - 200-MISC
+        description: |
+          A department code to be charged.
+          Multiple of such headers are allowed.
+        items:
+          example: 230-OCTO
+          pattern: \d+\-\w+
