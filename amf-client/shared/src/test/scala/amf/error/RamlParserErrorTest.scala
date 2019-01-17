@@ -100,10 +100,6 @@ class RamlParserErrorTest extends ParserErrorTest {
         badInclude2.level should be("Violation")
         badInclude2.message should startWith("Fragments must be imported by using '!include'")
       },
-      badInclude3 => {
-        badInclude3.level should be("Violation")
-        badInclude3.message should startWith("Fragments must be imported by using '!include'")
-      },
       invalidRef => {
         invalidRef.level should be("Violation")
         invalidRef.message should be("Cannot inline a fragment in a not mutable node")
