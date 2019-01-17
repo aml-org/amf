@@ -4,6 +4,7 @@ import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.model.document.BaseUnit
+import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, SpecEmitterContext}

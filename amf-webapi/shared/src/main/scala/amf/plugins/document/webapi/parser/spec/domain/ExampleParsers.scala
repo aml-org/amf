@@ -127,12 +127,13 @@ case class RamlSingleExampleParser(key: String,
       ctx.link(entry.value) match {
         case Left(s) =>
           ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example]).map { example =>
-            ctx.warning(
-              NamedExampleUsedInExample,
-              example.id,
-              "Named example fragments should be included in 'examples' facet",
-              entry
-            )
+            // todo: delete id and find link
+//            ctx.warning(
+//              NamedExampleUsedInExample,
+//              example.id,
+//              "Named example fragments should be included in 'examples' facet",
+//              entry
+//            )
             example
           }
 

@@ -1,9 +1,12 @@
 #%RAML 1.0
 types:
   person:
+    examples:
+      personExample:
+        name: Bob
+        lastname: Marley
     properties:
       name:
-       type: string
+        type: string
       lastName:
         type: string
-    examples: !include named-example.raml

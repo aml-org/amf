@@ -20,14 +20,45 @@ types:
       "200":
         body:
           application/json:
+            example:
+              -
+                ID: 1
+                code: ER38sd
+                price: 400
+                departureDate: 2017/07/26
+                origin: CLE
+                destination: SFO
+                emptySeats: 0
+                plane:
+                  type: Boeing 737
+                  totalSeats: 150
+              -
+                ID: 2
+                code: ER45if
+                price: 540.99
+                departureDate: 2017/07/27
+                origin: SFO
+                destination: ORD
+                emptySeats: 54
+                plane:
+                  type: Boeing 777
+                  totalSeats: 300
             type: AmericanFlight[]
-            examples: !include examples/AmericanFlightsExample.raml
   post:
     displayName: Add a flight
     body:
       application/json:
+        example:
+          code: GQ574
+          price: 399
+          departureDate: 2016/12/20
+          origin: ORD
+          destination: SFO
+          emptySeats: 200
+          plane:
+            type: Boeing 747
+            totalSeats: 400
         type: AmericanFlight
-        examples: !include examples/AmericanFlightNoIdExample.raml
     responses:
       "201":
         body:
@@ -42,8 +73,18 @@ types:
         "200":
           body:
             application/json:
+              example:
+                ID: 1
+                code: GQ574
+                price: 399
+                departureDate: 2016/12/20
+                origin: ORD
+                destination: SFO
+                emptySeats: 200
+                plane:
+                  type: Boeing 747
+                  totalSeats: 400
               type: AmericanFlight
-              examples: !include examples/AmericanFlightExample.raml
     delete:
       displayName: Delete a flight
       responses:
@@ -57,8 +98,17 @@ types:
       displayName: Update a flight
       body:
         application/json:
+          example:
+            code: GQ574
+            price: 399
+            departureDate: 2016/12/20
+            origin: ORD
+            destination: SFO
+            emptySeats: 200
+            plane:
+              type: Boeing 747
+              totalSeats: 400
           type: AmericanFlight
-          examples: !include examples/AmericanFlightNoIdExample.raml
       responses:
         "200":
           body:

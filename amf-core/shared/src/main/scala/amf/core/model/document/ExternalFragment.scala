@@ -5,7 +5,7 @@ import amf.core.metamodel.document.ExternalFragmentModel
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{Annotations, Fields}
 
-case class ExternalFragment(fields: Fields, annotations: Annotations) extends Fragment {
+class ExternalFragment(val fields: Fields, val annotations: Annotations) extends Fragment {
   override def encodes: ExternalDomainElement = super.encodes.asInstanceOf[ExternalDomainElement]
 
   /** Meta data for the document */
@@ -14,5 +14,5 @@ case class ExternalFragment(fields: Fields, annotations: Annotations) extends Fr
 
 object ExternalFragment {
   def apply(): ExternalFragment                         = apply(Annotations())
-  def apply(annotations: Annotations): ExternalFragment = ExternalFragment(Fields(), annotations)
+  def apply(annotations: Annotations): ExternalFragment = new ExternalFragment(Fields(), annotations)
 }

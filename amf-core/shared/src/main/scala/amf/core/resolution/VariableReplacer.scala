@@ -1,10 +1,11 @@
 package amf.core.resolution
 
-import amf.core.annotations.{ErrorRegistered, SourceAST}
+import amf.core.annotations.{ErrorRegistered, LexicalInformation, SourceAST, SourceNode}
 import amf.core.model.domain.templates.Variable
 import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.resolution.stages.ResolvedLinkNode
 import amf.core.utils.InflectorBase.Inflector
+import org.yaml.model.YNode.MutRef
 import org.yaml.model.{QuotedMark, YScalar}
 import org.yaml.render.YamlRender
 
@@ -20,7 +21,7 @@ object VariableReplacer {
   val VariableRegex: Regex = s"<<\\s*([^<<>>|\\s]+)((?:\\s*\\|\\s*!(?:$Transformations)\\s*)*)>>".r
 
   def replaceNodeVariables(s: ScalarNode, values: Set[Variable], errorFunction: String => Unit): DataNode = {
-    s.value match {
+    s.value.trim match {
       case VariableRegex(name, transformations) =>
         values.find(_.name == name) match {
           case Some(Variable(_, scalar: ScalarNode))
