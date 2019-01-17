@@ -442,7 +442,8 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("examples.json.jsonld", "examples.jsonld.json", AmfJsonHint, Oas)
   }
 
-  test("Fragment Named Example oas to oas") {
+  // this should never happen
+  ignore("Fragment Named Example oas to oas") {
     cycle("named-example.json", OasJsonHint, referencesPath)
   }
 

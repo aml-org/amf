@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.model
 
 import amf.core.metamodel.Obj
-import amf.core.model.document.Fragment
+import amf.core.model.document.{ExternalFragment, Fragment}
 import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.{Annotations, Fields}
@@ -22,13 +22,6 @@ case class DataTypeFragment(fields: Fields, annotations: Annotations) extends Fr
 
   /** Meta data for the document */
   override def meta: Obj = DataTypeFragmentModel
-}
-
-case class NamedExampleFragment(fields: Fields, annotations: Annotations) extends Fragment {
-  override def encodes: Example = super.encodes.asInstanceOf[Example]
-
-  /** Meta data for the document */
-  override def meta: Obj = NamedExampleFragmentModel
 }
 
 case class ResourceTypeFragment(fields: Fields, annotations: Annotations) extends Fragment {
@@ -98,4 +91,11 @@ object SecuritySchemeFragment {
   def apply(): SecuritySchemeFragment = apply(Annotations())
 
   def apply(annotations: Annotations): SecuritySchemeFragment = apply(Fields(), annotations)
+}
+
+case class NamedExampleFragment(override val fields: Fields, override val annotations: Annotations)
+    extends ExternalFragment(fields, annotations) {
+
+  /** Meta data for the document */
+  override def meta: Obj = NamedExampleFragmentModel
 }

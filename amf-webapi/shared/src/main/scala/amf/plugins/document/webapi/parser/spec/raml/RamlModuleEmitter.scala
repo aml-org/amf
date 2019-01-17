@@ -10,11 +10,11 @@ import amf.core.remote.Raml
 import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
-import org.yaml.model.YDocument
+import org.yaml.model.{YDocument, YMap, YNode, YScalar}
+import org.yaml.parser.YamlParser
 
 /**
   *
@@ -38,14 +38,36 @@ case class RamlModuleEmitter(module: Module)(implicit val spec: RamlSpecEmitterC
 }
 
 class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitterContext) {
+
   def emitFragment(): YDocument = {
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Raml, fragment.encodes.annotations)
 
+    fragment match {
+      case na: NamedExampleFragment   => emitNamedExamples(na)
+      case external: ExternalFragment => YDocument(YNode(external.encodes.raw.value()))
+      case _                          => emitTypedFragment(ordering)
+    }
+
+  }
+
+  def emitNamedExamples(na: NamedExampleFragment): YDocument = {
+    YDocument { b =>
+      b.comment(RamlFragmentHeader.Raml10NamedExample.text)
+      na.encodes.parsed match {
+        case Some(p) =>
+          b += p
+        case _ =>
+          b += YamlParser(na.encodes.raw.value()).parse().collectFirst { case d: YDocument => d }.get.node
+      }
+
+    }
+  }
+
+  def emitTypedFragment(ordering: SpecOrdering): YDocument = {
     val typeEmitter: RamlFragmentTypeEmitter = fragment match {
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)
       case dt: DataTypeFragment                  => DataTypeFragmentEmitter(dt, ordering)
-      case ne: NamedExampleFragment              => FragmentNamedExampleEmitter(ne, ordering)
       case rt: ResourceTypeFragment              => ResourceTypeFragmentEmitter(rt, ordering)(spec.eh)
       case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)(spec.eh)
       case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
@@ -145,14 +167,5 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
         case e: EntryEmitter => e
         case other           => throw new Exception(s"Fragment not encoding DataObjectNode but $other")
       }
-  }
-
-  case class FragmentNamedExampleEmitter(example: NamedExampleFragment, ordering: SpecOrdering)
-      extends RamlFragmentTypeEmitter {
-
-    override val header: RamlHeader = RamlFragmentHeader.Raml10NamedExample
-
-    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] = Seq(NamedExampleEmitter(example.encodes, ordering))
-
   }
 }

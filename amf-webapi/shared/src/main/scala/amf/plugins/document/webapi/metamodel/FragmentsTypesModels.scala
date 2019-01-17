@@ -42,9 +42,9 @@ object FragmentsTypesModels {
 
   object NamedExampleFragmentModel extends FragmentModel {
 
-    override def fields: List[Field] = FragmentModel.fields
+    override def fields: List[Field] = ExternalFragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "NamedExample") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(Document + "NamedExample") ++ ExternalFragmentModel.`type`
 
     override def modelInstance: AmfObject = NamedExampleFragment()
 

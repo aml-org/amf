@@ -1,10 +1,11 @@
 package amf.emit
 
-import amf.core.model.document.BaseUnit
+import amf.core.model.document.{BaseUnit, Document}
 import amf.core.remote.RamlYamlHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
-import amf.plugins.document.webapi.model.NamedExampleFragment
+import amf.plugins.document.webapi.model.{DataTypeFragment, NamedExampleFragment}
+import amf.plugins.domain.shapes.models.AnyShape
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -69,12 +70,12 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   private def findExample(unit: BaseUnit, removeRaw: Boolean) = unit match {
-    case f: NamedExampleFragment if removeRaw =>
-      val example = f.encodes
-      example.raw.remove()
+    case f: Document =>
+      val example = f.declares.head.asInstanceOf[AnyShape].examples.head
+      if (removeRaw)
+        example.raw.remove()
       Future.successful(example)
-    case f: NamedExampleFragment => Future.successful(f.encodes)
-    case _                       => Future.failed(fail("Not a named example fragment"))
+    case _ => Future.failed(fail("Not a named example fragment"))
   }
 
   private val basePath: String   = "file://amf-client/shared/src/test/resources/tojson/examples/source/"

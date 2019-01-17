@@ -166,19 +166,16 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
   }
 
   case class NamedExampleFragmentParser(map: YMap) {
-    def parse(): NamedExampleFragment = {
-      val entries      = map.entries.filter(e => e.key.as[YScalar].text != "fragmentType".asOasExtension)
+    def parse(): Fragment = {
+      val element = ExternalDomainElement()
+        .withRaw(root.raw)
+        .withMediaType(root.mediatype)
+      element.parsed = Some(map)
       val namedExample = NamedExampleFragment().adopted(root.location + "#/")
-
-      val producer = (name: Option[String]) => {
-        val example = Example()
-        name.foreach(example.withName(_))
-        namedExample.withEncodes(example)
-        example
-      }
-
-      namedExample.withEncodes(
-        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true)).parse())
+      namedExample
+        .withLocation(root.location)
+        .withId(root.location)
+        .withEncodes(element)
     }
   }
 }
