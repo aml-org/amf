@@ -172,7 +172,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     }
     amf.core.AMF.registerPlugin(featurePlugin)
     featurePlugin.init() flatMap { _ =>
-      RuntimeCompiler(url, Some("application/yaml"), Some(Raml10.name), Context(platform)) map { _ =>
+      RuntimeCompiler(url, Some("application/yaml"), Some(Raml10.name), Context(platform), cache = Cache()) map { _ =>
         val allPhases = Seq("begin_parsing_invocation",
                             "begin_document_parsing",
                             "syntax_parsed",
@@ -225,7 +225,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       if (size != expectedSize) {
         cache.foreach {
           case (a, b) =>
-            println(s"${a} -> ${b.id}")
+            println(s"${a} -> ${System.identityHashCode(b)}")
         }
       }
       size should be(expectedSize)

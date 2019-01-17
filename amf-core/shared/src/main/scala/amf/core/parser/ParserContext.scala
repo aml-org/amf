@@ -1,16 +1,16 @@
 package amf.core.parser
 
-import amf.core.{AMFCompilerRunCount, annotations}
 import amf.core.annotations.{LexicalInformation, SourceLocation}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfObject
 import amf.core.services.RuntimeValidator
+import amf.core.utils.Strings
 import amf.core.validation.SeverityLevels.{VIOLATION, WARNING}
+import amf.core.validation.core.ValidationSpecification
+import amf.core.{AMFCompilerRunCount, annotations}
+import amf.plugins.features.validation.ParserSideValidations.{SyamlError, SyamlWarning}
 import org.mulesoft.lexer.InputRange
 import org.yaml.model._
-import amf.core.utils.Strings
-import amf.core.validation.core.ValidationSpecification
-import amf.plugins.features.validation.ParserSideValidations.{SyamlError, SyamlWarning}
 
 import scala.collection.mutable
 
@@ -44,6 +44,10 @@ trait ErrorHandler extends IllegalTypeHandler with ParseErrorHandler {
   override def handle[T](error: YError, defaultValue: T): T = {
     violation(SyamlError, "", error.error, part(error))
     defaultValue
+  }
+
+  def guiKey(message: String, location: Option[String], lexical: Option[LexicalInformation]) = {
+    message ++ location.getOrElse("") ++ lexical.map(_.value).getOrElse("")
   }
 
   def reportConstraint(id: String,
@@ -191,6 +195,7 @@ case class ParserContext(rootContextDocument: String = "",
 
   def forLocation(newLocation: String): ParserContext = {
     val copied: ParserContext = this.copy(rootContextDocument = newLocation)
+    copied.reportDisambiguation = reportDisambiguation
     copied.globalSpace = globalSpace
     copied
   }
@@ -211,9 +216,13 @@ case class ParserContext(rootContextDocument: String = "",
 
   def copyWithSonsReferences(): ParserContext = {
     val context = this.copy(refs = this.refs ++ getSonsParsedReferences)
+    context.reportDisambiguation = this.reportDisambiguation
     context.globalSpace = this.globalSpace
     context
   }
+
+  var reportDisambiguation: mutable.Set[String] = mutable.Set()
+
   override def reportConstraint(id: String,
                                 node: String,
                                 property: Option[String],
@@ -221,24 +230,28 @@ case class ParserContext(rootContextDocument: String = "",
                                 lexical: Option[LexicalInformation],
                                 level: String,
                                 location: Option[String]): Unit = {
-    eh match {
-      case Some(errorHandler) =>
-        errorHandler.reportConstraint(id,
-                                      node,
-                                      property,
-                                      message,
-                                      lexical,
-                                      level,
-                                      location.orElse(Some(rootContextDocument)))
-      case _ =>
-        RuntimeValidator.reportConstraintFailure(level,
-                                                 id,
-                                                 node,
-                                                 property,
-                                                 message,
-                                                 lexical,
-                                                 parserCount,
-                                                 location.orElse(Some(rootContextDocument)))
+    val reportKey = guiKey(message, location, lexical)
+    if (!reportDisambiguation.contains(reportKey)) {
+      reportDisambiguation += reportKey
+      eh match {
+        case Some(errorHandler) =>
+          errorHandler.reportConstraint(id,
+            node,
+            property,
+            message,
+            lexical,
+            level,
+            location.orElse(Some(rootContextDocument)))
+        case _ =>
+          RuntimeValidator.reportConstraintFailure(level,
+            id,
+            node,
+            property,
+            message,
+            lexical,
+            parserCount,
+            location.orElse(Some(rootContextDocument)))
+      }
     }
   }
 }

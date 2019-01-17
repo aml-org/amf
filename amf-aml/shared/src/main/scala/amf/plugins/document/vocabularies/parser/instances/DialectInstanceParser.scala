@@ -91,6 +91,7 @@ class DialectInstanceContext(var dialect: Dialect,
   val rootDeclarationsNodeMappings: Map[String, NodeMapping]    = parseDeclaredNodeMappings("root")
 
   globalSpace = wrapped.globalSpace
+  reportDisambiguation = wrapped.reportDisambiguation
 
   def forPatch(): DialectInstanceContext = {
     isPatch = true

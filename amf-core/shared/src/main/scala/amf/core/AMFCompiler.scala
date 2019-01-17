@@ -51,7 +51,7 @@ class AMFCompiler(val rawUrl: String,
                   val mediaType: Option[String],
                   val vendor: Option[String],
                   val referenceKind: ReferenceKind = UnspecifiedReference,
-                  private val cache: Cache = Cache(),
+                  private val cache: Cache,
                   private val baseContext: Option[ParserContext] = None,
                   val env: Environment = Environment(),
                   val parsingOptions: ParsingOptions = ParsingOptions()) {
@@ -246,7 +246,7 @@ class AMFCompiler(val rawUrl: String,
             verifyMatchingVendor(unit.sourceVendor, nodes)
             verifyValidFragment(unit.sourceVendor, link.refs)
             val reference = ParsedReference(unit, link)
-            handler.update(reference, ctx, context, env).map(Some(_))
+            handler.update(reference, ctx, context, env, cache).map(Some(_))
           case ReferenceResolutionResult(Some(e), _) =>
             e match {
               case e: CyclicReferenceException if !domainPlugin.allowRecursiveReferences =>
