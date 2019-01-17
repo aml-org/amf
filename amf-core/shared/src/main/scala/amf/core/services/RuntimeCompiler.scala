@@ -33,7 +33,7 @@ object RuntimeCompiler {
             vendor: Option[String],
             base: Context,
             referenceKind: ReferenceKind = UnspecifiedReference,
-            cache: Cache = Cache(),
+            cache: Cache,
             ctx: Option[ParserContext] = None,
             env: Environment = Environment(),
             parsingOptions: ParsingOptions = ParsingOptions()): Future[BaseUnit] = {
