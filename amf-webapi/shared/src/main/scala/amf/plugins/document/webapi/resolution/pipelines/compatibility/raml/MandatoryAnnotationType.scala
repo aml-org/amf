@@ -1,4 +1,4 @@
-package amf.plugins.document.webapi.resolution.pipelines.compatibility
+package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.model.document.{BaseUnit, Document}

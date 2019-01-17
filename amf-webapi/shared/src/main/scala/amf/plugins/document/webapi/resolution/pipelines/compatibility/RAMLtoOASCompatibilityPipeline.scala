@@ -4,9 +4,10 @@ import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.resolution.pipelines.Raml10ResolutionPipeline
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.raml._
 import amf.{ProfileName, RamlProfile}
 
-class CompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
+class RAMLtoOASCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
 
   private val resolution = new Raml10ResolutionPipeline(eh)
 
@@ -26,6 +27,6 @@ class CompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPip
   override def profileName: ProfileName = RamlProfile
 }
 
-object CompatibilityPipeline {
-  def unhandled = new CompatibilityPipeline(UnhandledErrorHandler)
+object RAMLtoOASCompatibilityPipeline {
+  def unhandled = new RAMLtoOASCompatibilityPipeline(UnhandledErrorHandler)
 }

@@ -30,7 +30,7 @@ case class OasHeaderParameterParser(entry: YMapEntry, producer: String => Parame
     val map = entry.value.as[YMap]
 
     map.key("description", ParameterModel.Description in parameter)
-    map.key("required", (ParameterModel.Required in parameter).explicit)
+    map.key("x-amf-required", (ParameterModel.Required in parameter).explicit)
 
     map.key(
       "type",
