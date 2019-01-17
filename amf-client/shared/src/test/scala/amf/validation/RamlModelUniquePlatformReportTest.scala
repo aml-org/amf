@@ -192,5 +192,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-reference/api.raml", Some("invalid-reference.report"))
   }
 
+  test("Invalid reference from overlay to swagger document") {
+    validate("invalid-cross-overlay/invalid-cross-overlay.raml", Some("invalid-cross-overlay.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }
