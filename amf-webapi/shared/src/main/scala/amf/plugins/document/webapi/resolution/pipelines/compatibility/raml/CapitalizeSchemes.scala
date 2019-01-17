@@ -1,4 +1,5 @@
-package amf.plugins.document.webapi.resolution.pipelines.compatibility
+package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
+
 import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, Document}

@@ -83,7 +83,10 @@ object WellKnownAnnotation {
     "facets",
     "merge",
     "union",
-    "security"
+    "security",
+    "required",
+    "example",
+    "examples"
   )
 
   def resolveAnnotation(field: String): Option[String] = field match {

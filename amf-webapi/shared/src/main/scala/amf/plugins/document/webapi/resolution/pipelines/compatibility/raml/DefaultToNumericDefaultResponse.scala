@@ -1,6 +1,6 @@
-package amf.plugins.document.webapi.resolution.pipelines.compatibility
+package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
+
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DomainElement
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.OperationModel

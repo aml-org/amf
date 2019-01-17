@@ -16,7 +16,7 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.{CompatibilityPipeline, RamlCompatibilityPipeline}
 import amf.plugins.document.webapi.resolution.pipelines.{
   Raml08EditingPipeline,
   Raml08ResolutionPipeline,
@@ -229,7 +229,7 @@ object Raml10Plugin extends RamlPlugin {
                        pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
     case ResolutionPipeline.DEFAULT_PIPELINE       => new Raml10ResolutionPipeline(errorHandler).resolve(unit)
     case ResolutionPipeline.EDITING_PIPELINE       => new Raml10EditingPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler).resolve(unit)
+    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, RamlProfile).resolve(unit)
     case _                                         => super.resolve(unit, errorHandler, pipelineId)
   }
 

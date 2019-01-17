@@ -370,9 +370,9 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
 
         fs.entry(ParameterModel.Required)
           .filter(_.value.annotations.contains(classOf[ExplicitField]))
-          .map(f => result += RamlScalarEmitter("required", f))
+          .map(f => result += RamlScalarEmitter("x-amf-required", f))
 
-        result ++= OasTypeEmitter(parameter.schema, ordering, references = references).entries()
+        result ++= OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references).entries()
         traverse(ordering.sorted(result), b)
       }
     )
