@@ -210,7 +210,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   private def parseDisjointUnionType(): UnionShape = {
 
-    val detectedTypes = map.key("type").get.value.as[YSequence].nodes.map(_.as[String])
+    // val detectedTypes = map.key("type").get.value.as[YSequence].nodes.map(_.as[String])
     val filtered      = YMap(map.entries.filter(_.key.as[String] != "type"), map.sourceName)
 
     val union = UnionShapeParser(Right(filtered), name).parse()
@@ -225,28 +225,45 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
 
     val exclusiveProps = YMap(finals, finals.headOption.map(_.sourceName).getOrElse(""))
-
-    val parsedTypes = detectedTypes map {
-      case "object" => Some(parseObjectType(name, exclusiveProps, s => s.withId(union.id + "/object")))
-      case "array"  => Some(parseArrayType(name, exclusiveProps, s => s.withId(union.id + "/array")))
-      case "number" =>
-        Some(parseScalarType(TypeDef.NumberType, name, exclusiveProps, s => s.withId(union.id + "/number")))
-      case "integer" =>
-        Some(parseScalarType(TypeDef.IntType, name, exclusiveProps, s => s.withId(union.id + "/integer")))
-      case "string" =>
-        Some(parseScalarType(TypeDef.StrType, name, exclusiveProps, s => s.withId(union.id + "/string")))
-      case "boolean" =>
-        Some(parseScalarType(TypeDef.BoolType, name, exclusiveProps, s => s.withId(union.id + "/boolean")))
-      case "null" =>
-        Some(parseScalarType(TypeDef.NilType, name, exclusiveProps, s => s.withId(union.id + "/nil")))
-      case "any" => Some(parseAnyType(name, exclusiveProps, s => s.withId(union.id + "/any")))
-      case other =>
+    var i = 0
+    val parsedTypes: Seq[AmfElement] = map.key("type").get.value.as[YSequence].nodes map { node =>
+      i += 1
+      if (node.tagType == YType.Str) {
+        node.as[String] match {
+          case "object" =>
+            Some(parseObjectType(name, exclusiveProps, s => s.withId(union.id + "/object")))
+          case "array" =>
+            Some(parseArrayType(name, exclusiveProps, s => s.withId(union.id + "/array")))
+          case "number" =>
+            Some(parseScalarType(TypeDef.NumberType, name, exclusiveProps, s => s.withId(union.id + "/number")))
+          case "integer" =>
+            Some(parseScalarType(TypeDef.IntType, name, exclusiveProps, s => s.withId(union.id + "/integer")))
+          case "string" =>
+            Some(parseScalarType(TypeDef.StrType, name, exclusiveProps, s => s.withId(union.id + "/string")))
+          case "boolean" =>
+            Some(parseScalarType(TypeDef.BoolType, name, exclusiveProps, s => s.withId(union.id + "/boolean")))
+          case "null" =>
+            Some(parseScalarType(TypeDef.NilType, name, exclusiveProps, s => s.withId(union.id + "/nil")))
+          case "any" =>
+            Some(parseAnyType(name, exclusiveProps, s => s.withId(union.id + "/any")))
+          case other =>
+            ctx.violation(InvalidDisjointUnionType,
+              union.id,
+              s"Invalid type for disjointUnion $other",
+              map.key("type").get.value)
+            None
+        }
+      } else if (node.tagType == YType.Map) {
+        val entry = YMapEntry(s"union_member_$i", node)
+        OasTypeParser(entry, shape => shape.adopted(union.id), version).parse()
+      } else {
         ctx.violation(InvalidDisjointUnionType,
-                      union.id,
-                      s"Invalid type for disjointUnion $other",
-                      map.key("type").get.value)
+          union.id,
+          s"Invalid type for disjointUnion ${node.tagType}",
+          map.key("type").get.value)
         None
-    } collect { case Some(t) => t }
+      }
+    } collect { case Some(t: AmfElement) => t }
 
     if (parsedTypes.nonEmpty) union.setArrayWithoutId(UnionShapeModel.AnyOf, parsedTypes)
 

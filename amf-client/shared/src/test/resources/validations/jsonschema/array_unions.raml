@@ -1,0 +1,57 @@
+#%RAML 1.0
+title: test
+
+types:
+  test1: |
+    {
+        "$schema": "http://json-schema.org/draft-03/schema#",
+        "id" : "http://www.prysm.com/schemas/rms/ReportExecutionParam",
+        "type": "object",
+        "description" : "The ReportExecutionParam Detail.",
+        "properties":
+        {
+            "Name":{ "type": "string" },
+            "Values":
+            {
+                "type":"array",
+                "items":
+                {
+                    "type": [{
+                        "type":"object",
+                        "properties": {
+                           "a": {
+                              "type": "string",
+                              "required": true
+                           }
+                        }
+                     },
+                    {
+                        "type":"object",
+                        "properties": {
+                           "b": {
+                              "type": "integer",
+                              "required": true
+                           }
+                        }
+                    }]
+                }
+            }
+        }
+    }
+
+/ep1:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: test1
+            example: |
+              {
+                 "Name": "lala",
+                 "Values": [
+                   {"a": "lolo" },
+                   {"b": 34},
+                   {"a": 12}
+                 ]
+              }
