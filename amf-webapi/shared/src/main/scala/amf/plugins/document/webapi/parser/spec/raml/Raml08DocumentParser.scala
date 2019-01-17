@@ -4,29 +4,20 @@ import amf.core.Root
 import amf.core.annotations.DeclaredElement
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
+import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  AbstractDeclarationParser,
-  Raml08TypeParser,
-  SecuritySchemeParser,
-  _
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, SecuritySchemeParser, _}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations.{
-  InvalidAbstractDeclarationType,
-  InvalidSecuredByType,
-  InvalidTypeDefinition,
-  InvalidTypesType
-}
+import amf.plugins.features.validation.ParserSideValidations.{InvalidAbstractDeclarationType, InvalidSecuredByType, InvalidTypeDefinition, InvalidTypesType}
 import org.yaml.model.{YMap, YMapEntry, YType}
 
 /**
   * Raml 0.8 spec parser
   */
 case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebApiContext)
-    extends RamlDocumentParser(root) {
+    extends RamlDocumentParser(root) with PlatformSecrets {
 
   override protected def parseDeclarations(root: Root, map: YMap): Unit = {
 
@@ -128,6 +119,10 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
         .parse() match {
         case Some(shape) =>
           ctx.declarations += shape.add(DeclaredElement())
+          // This is a workaround for the weird situations where we reuse a local RAML identifier inside a json schema without
+          // a proper $ref
+          val localRaml08RefInJson = platform.normalizePath(ctx.basePath(ctx.rootContextDocument) + shape.name.value())
+          ctx.futureDeclarations.resolveRef(localRaml08RefInJson, shape)
         case None => ctx.violation(InvalidTypeDefinition, parent, s"Error parsing shape '$entry'", entry)
       }
     }
