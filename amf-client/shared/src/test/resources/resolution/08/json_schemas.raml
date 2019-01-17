@@ -1,0 +1,43 @@
+#%RAML 0.8
+---
+title: "Muse: Mule Sales Enablement API"
+version: v1
+baseUri: http://orangeserver:8080/CovisService/rest
+schemas:
+  - pointJson: |
+     {  "$schema": "http://json-schema.org/draft-03/schema",
+         "type": "object",
+         "description": "Esri geometry point",
+         "properties": {
+           "x":  { "type": "number", "required": true },
+           "y":  { "type": "number", "required": true },
+           "z":  { "type": "number", "required": false },
+           "m":  { "type": "number", "required": false },
+           "spatialReference": { "$ref": "spatialReferenceJson", "required": false }
+         }
+      }
+  - polygonJson: |
+     {  "$schema": "http://json-schema.org/draft-03/schema",
+         "type": "object",
+         "description": "Esri geometry polygon",
+         "properties": {
+           "hasZ":  { "type": "boolean", "required": false },
+           "hasM":  { "type": "boolean", "required": false },
+           "rings": {
+              "type": "array",
+              "items": { "type": "array", "items": {"type": "array", "items": {"type": "number"}} }
+           },
+           "spatialReference": { "$ref": "spatialReferenceJson", "required": false}
+         }
+      }
+  - spatialReferenceJson: |
+      {  "$schema": "http://json-schema.org/draft-03/schema",
+         "type": "object",
+         "description": "Esri spatial reference",
+         "properties": {
+             "wkid" : { "type": "integer"},
+             "latestWkid" : { "type": "integer", "required": false},
+             "vcsWkid" : { "type": "integer", "required": false},
+             "latestVcsWkid" : { "type": "integer", "required": false}
+        }
+      }
