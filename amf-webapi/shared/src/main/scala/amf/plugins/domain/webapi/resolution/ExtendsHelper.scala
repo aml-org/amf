@@ -94,9 +94,6 @@ object ExtendsHelper {
     checkNoNestedEndpoints(entry, ctx, node, extensionId, "trait")
 
     if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
-
-    ctx.futureDeclarations.resolve()
-
     operation
     // new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
   }
@@ -189,7 +186,7 @@ object ExtendsHelper {
     }
 
     checkNoNestedEndpoints(endPointEntry, ctx, dataNode, extensionId, "resourceType")
-    ctx.futureDeclarations.resolve()
+
     collector.toList match {
       case element :: _ =>
         if (keepEditingInfo) annotateExtensionId(element, extensionId, extensionLocation)
@@ -215,9 +212,7 @@ object ExtendsHelper {
     })
   }
 
-  private def annotateExtensionId(point: DomainElement,
-                                  extensionId: String,
-                                  extensionLocation: Option[String]): Unit = {
+  private def annotateExtensionId(point: DomainElement, extensionId: String, extensionLocation: Option[String]): Unit = {
     val annotation = ExtensionProvenance(extensionId, extensionLocation)
     if (!point.fields
           .fields()

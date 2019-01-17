@@ -7,3 +7,4 @@ get:
     200:
       body:
         application/json:
+          type: <<resourcePathName | !singularize | !uppercamelcase>>
