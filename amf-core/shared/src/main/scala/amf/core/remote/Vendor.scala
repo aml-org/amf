@@ -103,4 +103,6 @@ object Payload extends Vendor {
 
 object JsonSchema extends Vendor {
   override val name: String = "JSON Schema"
+
+  override def toString: String = name.trim
 }
