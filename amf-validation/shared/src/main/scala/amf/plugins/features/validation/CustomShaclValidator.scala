@@ -90,11 +90,7 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
     matchingClass(validationSpecification, element) || matchingInstance(validationSpecification, element)
 
   protected def matchingClass(validationSpecification: ValidationSpecification, element: DomainElement): Boolean = {
-    val classes = if (element.meta.isInstanceOf[DynamicObj] && element.isInstanceOf[DynamicDomainElement]) {
-      element.asInstanceOf[DynamicDomainElement].dynamicTypes()
-    } else {
-      element.meta.`type`.map(_.iri())
-    }
+    val classes = element.meta.`type`.map(_.iri())
     validationSpecification.targetClass.exists { cls =>
       classes.contains(cls)
     }

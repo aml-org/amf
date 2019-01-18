@@ -81,7 +81,7 @@ trait BuildCycleTests extends FileAssertionTest {
   /** Method to render parsed unit. Override if necessary. */
   def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     val target  = config.target
-    var options = RenderOptions().withSourceMaps
+    var options = RenderOptions().withSourceMaps.withPrettyPrint
     options =
       if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
     new AMFRenderer(unit, target, options, config.syntax).renderToString

@@ -72,7 +72,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declarations/type s/any/ChildType",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declarations/types/any/ChildType",
         "@type": [
           "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
@@ -227,7 +227,9 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/forward-shape-custom-properties/api.raml#/declarations/types/any/ChildType/extension/b/scalar_1",
                 "@type": [
-                  "http://a.ml/vocabularies/data#Scalar"
+                  "http://a.ml/vocabularies/data#Scalar",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {

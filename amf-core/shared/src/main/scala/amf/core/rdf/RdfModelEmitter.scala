@@ -329,10 +329,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
     }
 
     private def createTypeNode(id: String, obj: Obj, maybeElement: Option[AmfObject] = None): Unit = {
-      val allTypes = obj.`type`.map(_.iri()) ++ (maybeElement match {
-        case Some(element) => element.dynamicTypes()
-        case _             => List()
-      })
+      val allTypes = obj.`type`.map(_.iri())
       allTypes.foreach { t =>
         //if (t != "http://a.ml/vocabularies/document#DomainElement" && t != "http://www.w3.org/ns/shacl#Shape" && t != "http://a.ml/vocabularies/shapes#Shape")
         rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t)

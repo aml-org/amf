@@ -8,6 +8,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.TraitModel
 import amf.plugins.domain.webapi.models.Operation
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
+import amf.plugins.domain.webapi.resolution.ExtendsHelper.custom
 import amf.{ProfileName, RamlProfile}
 import org.yaml.model.{YMapEntry, YPart}
 

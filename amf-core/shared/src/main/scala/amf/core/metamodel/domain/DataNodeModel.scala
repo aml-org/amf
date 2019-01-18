@@ -1,6 +1,6 @@
 package amf.core.metamodel.domain
 
-import amf.core.metamodel.Field
+import amf.core.metamodel.{DynamicObj, Field}
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.model.domain._
@@ -15,7 +15,7 @@ import amf.core.vocabulary.{Namespace, ValueType}
   * This can be used to parse value of annotations, payloads or
   * examples
   */
-object DataNodeModel extends DomainElementModel with NameFieldSchema {
+object DataNodeModel extends DomainElementModel with DynamicObj with NameFieldSchema {
 
   // We set this so it can be re-used in the definition of the dynamic types
   override def fields: List[Field]     = List(Name) ++ DomainElementModel.fields
@@ -44,7 +44,7 @@ object ObjectNodeModel extends DomainElementModel {
   )
 }
 
-object ScalarNodeModel extends DomainElementModel {
+object ScalarNodeModel extends DomainElementModel with DynamicObj {
 
   val Value =
     Field(Str, Namespace.Data + "value", ModelDoc(ModelVocabularies.Data, "value", "value for an scalar dynamic node"))

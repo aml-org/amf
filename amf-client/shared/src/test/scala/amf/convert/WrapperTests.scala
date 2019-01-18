@@ -918,8 +918,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .asSeq
         .head
         .structuredValue
-      assert(dataNode._internal.dynamicTypes().nonEmpty)
-      assert(dataNode._internal.dynamicTypes().head.contains((Namespace.Data + "Object").iri()))
+      assert(dataNode._internal.meta.`type`.head.iri() == (Namespace.Data + "Object").iri())
     }
   }
 
