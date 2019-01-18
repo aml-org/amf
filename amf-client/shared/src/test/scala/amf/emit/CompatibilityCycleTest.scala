@@ -23,7 +23,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
     // For each oas -> render raml and validate
     val path = s"oas20/$file"
 
-    test(s"HERE_HERE Test $path") {
+    test(s"Test $path") {
       val c = CycleConfig(path, path, OasJsonHint, Raml, basePath, None)
       for {
         origin   <- build(c, None, useAmfJsonldSerialisation = true)

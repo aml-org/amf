@@ -1,0 +1,34 @@
+swagger: '2.0'
+info:
+  title: test
+  version: v1
+host: test.com
+schemes:
+  - https
+definitions:
+  404:
+    type: "object"
+    properties:
+      errorCode:
+        description: "code"
+        type: "integer"
+        example: 404
+      errorMessage:
+        description: "message"
+        type: "string"
+        example: "example"
+paths:
+  '/api/v1/apr/{param}':
+    get:
+      parameters:
+        - name: param
+          required: true
+          in: path
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: OK
+          x-amf-mediaType: application/json
+          schema:
+            $ref: "#/definitions/404"
