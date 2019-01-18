@@ -128,10 +128,11 @@ object Oas20Plugin extends OasPlugin {
 
   override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
     unit match {
-      case module: Module     => Some(OasModuleEmitter(module)(specContext(renderOptions)).emitModule())
-      case document: Document => Some(Oas2DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
-      case fragment: Fragment => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
-      case _                  => None
+      case module: Module             => Some(OasModuleEmitter(module)(specContext(renderOptions)).emitModule())
+      case document: Document         => Some(Oas2DocumentEmitter(document)(specContext(renderOptions)).emitDocument())
+      case external: ExternalFragment => Some(YDocument(YNode(external.encodes.raw.value())))
+      case fragment: Fragment         => Some(new OasFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
+      case _                          => None
     }
 
   /**

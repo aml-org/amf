@@ -1,18 +1,15 @@
-#%RAML 1.0
-title: test
-types:
-  A:
-    example: |
-      [
-        "scalar",
-        "prop2",
-        #other invalid comment,
-        {
-          "object": {
-            "name": "cristian",
-            "surname": "pavon",
-            #an invalid json comment only to check the raw render,
-            "age": 22
-          }
-        }
-      ]
+#%RAML 1.0 NamedExample
+example: |
+  [
+    "scalar",
+    "prop2",
+    #other invalid comment,
+    {
+      "object": {
+        "name": "cristian",
+        "surname": "pavon",
+        #an invalid json comment only to check the raw render,
+        "age": 22
+      }
+    }
+  ]

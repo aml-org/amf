@@ -107,8 +107,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       },
       invalidModule => {
         invalidModule.level should be("Violation")
-        invalidModule.message should startWith("Expected module but found:")
-        invalidModule.message should include("ExternalFragment")
+        invalidModule.message should startWith("Expected module but found: ExternalFragment(")
         invalidModule.position.map(_.range) should be(Some(Range((3, 2), (5, 0))))
       },
       unresolvedRef => {

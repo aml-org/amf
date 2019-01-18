@@ -6,14 +6,16 @@ import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{ErrorHandler, Position}
+import amf.core.parser.Position.ZERO
 import amf.core.remote.Oas
-import amf.core.utils.Strings
-import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, OasSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
-import org.yaml.model.YDocument.EntryBuilder
+import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
+import org.yaml.model.YDocument.EntryBuilder
+import amf.core.utils.Strings
 
 /**
   *
@@ -45,14 +47,6 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
 
     val ordering: SpecOrdering = SpecOrdering.ordering(Oas, fragment.annotations)
 
-    fragment match {
-      case na: NamedExampleFragment   => emitNamedExample(na)
-      case external: ExternalFragment => YDocument(YNode(external.encodes.raw.value()))
-      case _                          => emitTypedFragments(ordering)
-    }
-  }
-
-  def emitTypedFragments(ordering: SpecOrdering): YDocument = {
     val typeEmitter: OasFragmentTypeEmitter = fragment match {
       case di: DocumentationItemFragment         => DocumentationItemFragmentEmitter(di, ordering)
       case dt: DataTypeFragment                  => DataTypeFragmentEmitter(dt, ordering)
@@ -60,6 +54,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
       case tf: TraitFragment                     => TraitFragmentEmitter(tf, ordering)(spec.eh)
       case at: AnnotationTypeDeclarationFragment => AnnotationFragmentEmitter(at, ordering)
       case sc: SecuritySchemeFragment            => SecuritySchemeFragmentEmitter(sc, ordering)
+      case ne: NamedExampleFragment              => NamedExampleFragmentEmitter(ne, ordering)
       case _                                     => throw new UnsupportedOperationException("Unsupported fragment type")
     }
     val references = ReferencesEmitter(fragment, ordering)
@@ -74,9 +69,6 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
       }
     }
   }
-
-  def emitNamedExample(na: NamedExampleFragment) =
-    YDocument(na.encodes.parsed.getOrElse(YNode(na.encodes.raw.value())))
 
   trait OasFragmentTypeEmitter {
     val header: EntryEmitter
@@ -149,6 +141,14 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
       OasSecuritySchemeEmitter(securityScheme.encodes,
                                OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`.value()),
                                ordering).emitters()
+  }
+
+  case class NamedExampleFragmentEmitter(namedExample: NamedExampleFragment, ordering: SpecOrdering)
+      extends OasFragmentTypeEmitter {
+
+    override val header = OasHeaderEmitter(OasHeader.Oas20NamedExample)
+
+    val emitters: Seq[EntryEmitter] = Seq(NamedExampleEmitter(namedExample.encodes, ordering))
   }
 
   case class OasHeaderEmitter(oasHeader: OasHeader) extends EntryEmitter {

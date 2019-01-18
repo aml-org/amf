@@ -17,7 +17,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamed
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.ParserSideValidations.{ExternalFragmentWarning, InvalidFragmentType}
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
+import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 /**
   *
@@ -27,8 +27,8 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
   def parseFragment(): Option[Fragment] = {
     // first i must identify the type of fragment
-    val rootNode = root.parsed.asInstanceOf[SyamlParsedDocument].document.node
-    val rootMap: YMap = rootNode.to[YMap] match {
+
+    val rootMap: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.to[YMap] match {
       case Right(map) => map
       case _          =>
         // we need to check if named example fragment in order to support invalid structures as external fragment
@@ -54,7 +54,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       case Raml10Trait                     => Some(TraitFragmentParser(encodedMap).parse())
       case Raml10AnnotationTypeDeclaration => Some(AnnotationFragmentParser(encodedMap).parse())
       case Raml10SecurityScheme            => Some(SecuritySchemeFragmentParser(encodedMap).parse())
-      case Raml10NamedExample              => Some(NamedExampleFragmentParser(rootNode).parse())
+      case Raml10NamedExample              => Some(NamedExampleFragmentParser(encodedMap).parse())
       case _                               => None
     }
 
@@ -86,7 +86,13 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       s"Invalid fragment body in ${root.location} , external fragment will be created",
       root.parsed.asInstanceOf[SyamlParsedDocument].document
     )
-
+    ExternalFragment()
+      .withLocation(root.location)
+      .withId(root.location)
+      .withEncodes(
+        ExternalDomainElement()
+          .withRaw(root.raw)
+          .withMediaType(root.mediatype))
   }
 
   case class DocumentationItemFragmentParser(map: YMap) {
@@ -169,17 +175,31 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     }
   }
 
-  case class NamedExampleFragmentParser(node: YNode) {
+  case class NamedExampleFragmentParser(map: YMap) {
     def parse(): Fragment = {
-      val element = ExternalDomainElement()
-        .withRaw(root.raw)
-        .withMediaType(root.mediatype)
-      element.parsed = Some(node)
+
+      map.entries.toList match {
+        // not a valid map
+        case Nil => buildExternalFragment()
+        // good example = name => example body
+        case head :: Nil => parseExample(head)
+        // bad example (no name, example body directly)
+        case _ :: _ => buildExternalFragment()
+      }
+    }
+
+    private def parseExample(entry: YMapEntry) = {
       val namedExample = NamedExampleFragment().adopted(root.location + "#/")
-      namedExample
-        .withLocation(root.location)
-        .withId(root.location)
-        .withEncodes(element)
+
+      val producer = (name: Option[String]) => {
+        val example = Example()
+        name.foreach(example.withName(_))
+        namedExample.withEncodes(example)
+        example
+      }
+
+      namedExample.withEncodes(
+        RamlNamedExampleParser(entry, producer, ExampleOptions(strictDefault = true, quiet = true)).parse())
     }
   }
 }

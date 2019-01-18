@@ -50,7 +50,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Parse and validate named examples as external framents") {
-    validate("examples/inline-named-examples/api.raml")
+    validate("examples/inline-named-examples/api.raml", Some("inline-named-examples.report"))
   }
 
   test("Nil value validation") {
