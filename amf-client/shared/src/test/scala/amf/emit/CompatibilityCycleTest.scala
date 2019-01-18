@@ -37,6 +37,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
     }
   }
 
+  // testing -> raml10
   for {
     file <- platform.fs.syncFile(basePath + "raml10").list
   } {
