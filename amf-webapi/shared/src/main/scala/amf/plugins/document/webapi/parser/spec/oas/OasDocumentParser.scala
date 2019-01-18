@@ -256,9 +256,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case Some(n) if n.tagType == YType.Map =>
               parseEndpointMap(endpoint, n.as[YMap])
             case Some(n) =>
-              ctx.violation(InvalidEndpointType, "Invalid node for path item", n)
+              ctx.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
             case None =>
-              ctx.violation(InvalidEndpointPath, s"Cannot find fragment path item ref $value", entry.value)
+              ctx.violation(InvalidEndpointPath,
+                            endpoint.id,
+                            s"Cannot find fragment path item ref $value",
+                            entry.value)
           }
         case Right(node) if node.tagType == YType.Map =>
           parseEndpointMap(endpoint, node.as[YMap])
