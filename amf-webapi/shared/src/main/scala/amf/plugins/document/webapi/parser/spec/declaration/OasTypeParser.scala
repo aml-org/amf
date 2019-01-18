@@ -57,7 +57,7 @@ object OasTypeParser {
 
   def apply(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: OasWebApiContext): OasTypeParser =
     new OasTypeParser(Left(entry),
-                      entry.key.as[String],
+                      entry.key.as[YScalar].text,
                       entry.value.as[YMap],
                       adopt,
                       OAS20SchemaVersion("schema")(ctx))
