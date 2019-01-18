@@ -9,13 +9,17 @@ import amf.plugins.domain.webapi.models.{Operation, Response}
 class MandatoryResponses()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
 
   override def resolve[T <: BaseUnit](model: T): T = {
-    model.findByType(OperationModel.`type`.head.iri()).foreach {
-      case operation: Operation =>
-        if (operation.responses.isEmpty) {
-          operation.withResponses(Seq(Response().withName("200").withStatusCode("200").withDescription("")))
-        }
+    try {
+      model.findByType(OperationModel.`type`.head.iri()).foreach {
+        case operation: Operation =>
+          if (operation.responses.isEmpty) {
+            operation.withResponses(Seq(Response().withName("200").withStatusCode("200").withDescription("")))
+          }
+      }
+      model
+    } catch {
+      case _: Exception => model
     }
-    model
   }
 
 }
