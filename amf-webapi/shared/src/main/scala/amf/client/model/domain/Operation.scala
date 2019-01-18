@@ -26,7 +26,7 @@ case class Operation(override private[amf] val _internal: InternalOperation) ext
   def contentType: ClientList[StrField]   = _internal.contentType.asClient
   def request: Request                    = _internal.request
   def responses: ClientList[Response]     = _internal.responses.asClient
-  def security: ClientList[DomainElement] = _internal.security.asClient
+  def security: ClientList[ParametrizedSecurityScheme] = _internal.security.asClient
   def callbacks: ClientList[Callback]     = _internal.callbacks.asClient
   def servers: ClientList[Server]         = _internal.servers.asClient
 

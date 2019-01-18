@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Example API for Automation
+version: 1.0.0
+securitySchemes:
+  basicAuth:
+      description: Basic Authentication
+      type: Basic Authentication
+      describedBy:
+        queryParameters:
+          Username:
+            displayName: User name
+            type: string
+            example: test_user
+          Password:
+            displayName: Password
+            type: string
+            example: passwd_1234
+/endpoint:
+  get:
+    securedBy: [null, basicAuth]
+    responses:
+      200:
