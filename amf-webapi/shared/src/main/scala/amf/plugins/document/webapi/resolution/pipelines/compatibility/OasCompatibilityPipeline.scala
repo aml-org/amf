@@ -5,12 +5,7 @@ import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas.{
-  LowercaseSchemes,
-  MandatoryDocumentationUrl,
-  MandatoryResponses,
-  SecuritySettingsMapper
-}
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas._
 
 class OasCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
 
@@ -20,7 +15,8 @@ class OasCompatibilityPipeline(override val eh: ErrorHandler) extends Resolution
     new LowercaseSchemes(),
     new SecuritySettingsMapper(),
     new MandatoryDocumentationUrl(),
-    new MandatoryResponses()
+    new MandatoryResponses(),
+    new MandatoryPathParameters()
   )
 
   override def profileName: ProfileName = OasProfile
