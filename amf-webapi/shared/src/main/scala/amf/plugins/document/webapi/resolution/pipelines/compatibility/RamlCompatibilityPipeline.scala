@@ -22,7 +22,8 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
     new SecuritySettingsMapper(),
     new ShapeFormatAdjuster(),
     new CustomAnnotationDeclaration(),
-    new PushSingleOperationPathParams()
+    new PushSingleOperationPathParams(),
+    new UnionsAsTypeExpressions()
   )
 
   override def profileName: ProfileName = RamlProfile

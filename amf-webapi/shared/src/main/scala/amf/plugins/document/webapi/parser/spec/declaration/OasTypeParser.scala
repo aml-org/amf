@@ -231,21 +231,21 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       if (node.tagType == YType.Str) {
         node.as[String] match {
           case "object" =>
-            Some(parseObjectType(name, exclusiveProps, s => s.withId(union.id + "/object")))
+            Some(parseObjectType(name + i, exclusiveProps, s => s.withId(union.id + "/object")))
           case "array" =>
-            Some(parseArrayType(name, exclusiveProps, s => s.withId(union.id + "/array")))
+            Some(parseArrayType(name + i, exclusiveProps, s => s.withId(union.id + "/array")))
           case "number" =>
-            Some(parseScalarType(TypeDef.NumberType, name, exclusiveProps, s => s.withId(union.id + "/number")))
+            Some(parseScalarType(TypeDef.NumberType, name + i, exclusiveProps, s => s.withId(union.id + "/number")))
           case "integer" =>
-            Some(parseScalarType(TypeDef.IntType, name, exclusiveProps, s => s.withId(union.id + "/integer")))
+            Some(parseScalarType(TypeDef.IntType, name + i, exclusiveProps, s => s.withId(union.id + "/integer")))
           case "string" =>
-            Some(parseScalarType(TypeDef.StrType, name, exclusiveProps, s => s.withId(union.id + "/string")))
+            Some(parseScalarType(TypeDef.StrType, name + i, exclusiveProps, s => s.withId(union.id + "/string")))
           case "boolean" =>
-            Some(parseScalarType(TypeDef.BoolType, name, exclusiveProps, s => s.withId(union.id + "/boolean")))
+            Some(parseScalarType(TypeDef.BoolType, name + i, exclusiveProps, s => s.withId(union.id + "/boolean")))
           case "null" =>
-            Some(parseScalarType(TypeDef.NilType, name, exclusiveProps, s => s.withId(union.id + "/nil")))
+            Some(parseScalarType(TypeDef.NilType, name + i, exclusiveProps, s => s.withId(union.id + "/nil")))
           case "any" =>
-            Some(parseAnyType(name, exclusiveProps, s => s.withId(union.id + "/any")))
+            Some(parseAnyType(name + i, exclusiveProps, s => s.withId(union.id + "/any")))
           case other =>
             ctx.violation(InvalidDisjointUnionType,
               union.id,
@@ -509,7 +509,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           shape
             .set(ScalarShapeModel.DataType,
                  AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
-                 Annotations() += Inferred()))(entry =>
+                 Annotations()))(entry =>
           shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
 
       shape
