@@ -147,8 +147,12 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("shapes/inner-ref-from-jsonschema/api.raml")
   }
 
-  test("Types with non string property names"){
+  test("Types with non string property names") {
     checkValid("types/non-string-property-names.raml")
+  }
+
+  test("date-time-only union with nil in type expression") {
+    checkValid("date-time-only-union/date-time-only-union.raml")
   }
 
   override val hint: Hint = RamlYamlHint

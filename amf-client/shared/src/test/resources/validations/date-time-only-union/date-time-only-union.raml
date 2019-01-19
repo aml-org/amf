@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Some title
+
+types:
+  birthday:
+    type: object
+    properties:
+      fireworks:
+        type: datetime-only | nil
+
+/accounts:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: birthday[]
+            examples:
+              test:
+                - fireworks: 2015-07-04T21:00:00
+                - fireworks: null

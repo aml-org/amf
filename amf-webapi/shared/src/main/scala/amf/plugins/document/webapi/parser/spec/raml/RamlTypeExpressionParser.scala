@@ -97,7 +97,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
         case "number"        => ScalarShape().withDataType((Namespace.Shapes + "number").iri())
         case "boolean"       => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
         case "datetime"      => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-        case "datetime-only" => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
+        case "datetime-only" => ScalarShape().withDataType((Namespace.Shapes + "dateTimeOnly").iri())
         case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
         case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
         case other =>
