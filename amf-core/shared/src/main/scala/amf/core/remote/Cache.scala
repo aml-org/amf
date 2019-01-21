@@ -12,20 +12,24 @@ object GlobalCounter {
 
 class Cache {
 
-  protected val cache: mutable.Map[String, Future[BaseUnit]] = mutable.Map()
+  protected val cache: mutable.Map[String, BaseUnit] = mutable.Map()
 
   def getOrUpdate(url: String)(supplier: () => Future[BaseUnit]): Future[BaseUnit] = {
+    //println(s"SIZE ${cache.size} :: ${System.identityHashCode(this)}")
     cache.get(url) match {
       case Some(value) =>
-        value
+        //println(s"- ${url} HIT ${System.identityHashCode(this)}")
+        Future(value)
       case None =>
-        val futureUnit = supplier()
-        update(url, futureUnit)
-        futureUnit
+        //println(s"- ${url} MISS ${System.identityHashCode(this)}")
+        supplier() map { value =>
+          update(url, value)
+          value
+        }
     }
   }
 
-  private def update(url: String, value: Future[BaseUnit]): Unit = synchronized {
+  private def update(url: String, value: BaseUnit): Unit = synchronized {
     cache.update(url, value)
   }
 

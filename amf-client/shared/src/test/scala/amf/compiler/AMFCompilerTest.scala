@@ -225,7 +225,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       if (size != expectedSize) {
         cache.foreach {
           case (a, b) =>
-            println(s"${a} -> ${System.identityHashCode(b)}")
+            println(s"${a} -> ${b.id}")
         }
       }
       size should be(expectedSize)
