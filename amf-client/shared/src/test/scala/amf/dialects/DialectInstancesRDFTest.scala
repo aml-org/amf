@@ -18,7 +18,7 @@ class DialectInstancesRDFTest extends FunSuiteCycleTests with PlatformSecrets {
     withDialect("dialect1.raml", "example1.raml", "example1.ttl", VocabularyYamlHint, Amf)
   }
 
-  test("RDF 2 full test") {
+  test("HO_HO RDF 2 full test") {
     withDialectFull("dialect2.raml", "example2.raml", "example2.raml", VocabularyYamlHint, Aml)
   }
 

@@ -169,8 +169,7 @@ object CanonicalWebAPIDialectExporter {
         var propertyCounters: mutable.Map[String, Int] = mutable.Map()
         dialectNodeMapping.propertyMappings.foreach { propertyMapping =>
           // dynamic and linking information only relevant for design will not be dumped in the dialect
-          if (!blacklistedProperties.contains(propertyMapping.propertyTerm) && !blacklistedRanges.contains(
-                propertyMapping.range)) {
+          if (!blacklistedProperties.contains(propertyMapping.propertyTerm) && !blacklistedRanges.contains(propertyMapping.range)) {
             // property names can be duplicated in the WebAPI meta-model, we make sure
             // we generate unique property mapping alias
             val name = propertyMapping.name
