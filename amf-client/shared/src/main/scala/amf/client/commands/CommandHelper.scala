@@ -46,8 +46,7 @@ trait CommandHelper {
       inputFile,
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
       config.inputFormat,
-      Context(platform),
-      cache = Cache()
+      Context(platform)
     )
     val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve)
@@ -64,8 +63,7 @@ trait CommandHelper {
         inputFile,
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         config.inputFormat,
-        Context(platform),
-        cache = Cache()
+        Context(platform)
       )
       parsed map { parsed =>
         RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)

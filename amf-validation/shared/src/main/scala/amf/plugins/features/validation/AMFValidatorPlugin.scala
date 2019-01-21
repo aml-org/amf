@@ -7,7 +7,7 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote._
+import amf.core.remote.{Context, Oas30, Raml08, Vendor}
 import amf.core.services.{RuntimeCompiler, RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
@@ -73,8 +73,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       validationProfilePath,
       Some("application/yaml"),
       Some(AMLPlugin.ID),
-      Context(platform),
-      cache = Cache()
+      Context(platform)
     ).map {
         case parsed: DialectInstance if parsed.definedBy().is(url) =>
           parsed.encodes

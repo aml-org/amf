@@ -6,7 +6,7 @@ import amf.client.model.document.BaseUnit
 import amf.client.validate.ValidationReport
 import amf.core.client.ParsingOptions
 import amf.core.model.document.{BaseUnit => InternalBaseUnit}
-import amf.core.remote.{Cache, Context}
+import amf.core.remote.Context
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.internal.resource.{ResourceLoader, StringResourceLoader}
 import amf.{MessageStyle, ProfileName, RAMLStyle}
@@ -105,7 +105,6 @@ class Parser(vendor: String, mediaType: String, private val env: Option[Environm
                     Some(vendor),
                     Context(platform),
                     env = environment,
-                    cache = Cache(),
                     parsingOptions = parsingOptions) map { model =>
       parsedModel = Some(model)
       model

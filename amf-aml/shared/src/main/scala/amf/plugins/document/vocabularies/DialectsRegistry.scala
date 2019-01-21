@@ -6,7 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.registries.AMFDomainEntityResolver
-import amf.core.remote.{Aml, Cache, Context}
+import amf.core.remote.{Aml, Context}
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.ValueType
@@ -118,7 +118,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
       case Some(dialect) => Future { dialect }
       case _ =>
         RuntimeValidator.disableValidationsAsync() { reenable =>
-          RuntimeCompiler(uri, Some("application/yaml"), Some(Aml.name), Context(platform), env = environment, cache = Cache())
+          RuntimeCompiler(uri, Some("application/yaml"), Some(Aml.name), Context(platform), env = environment)
             .map {
               case dialect: Dialect =>
                 reenable()

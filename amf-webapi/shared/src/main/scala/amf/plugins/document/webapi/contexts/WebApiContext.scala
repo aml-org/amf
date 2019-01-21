@@ -308,7 +308,6 @@ abstract class WebApiContext(val loc: String,
   }
 
   globalSpace = wrapped.globalSpace
-  reportDisambiguation = wrapped.reportDisambiguation
 
   // JSON Schema has a global namespace
 
