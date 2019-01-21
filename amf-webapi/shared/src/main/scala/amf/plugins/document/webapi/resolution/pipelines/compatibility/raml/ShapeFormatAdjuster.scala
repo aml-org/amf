@@ -15,11 +15,13 @@ class ShapeFormatAdjuster()(override implicit val errorHandler: ErrorHandler) ex
       model.findByType(ScalarShapeModel.`type`.head.iri()).foreach {
         case shape: ScalarShape if shape.format.nonEmpty =>
           val typeDef = TypeDefXsdMapping.typeDef(shape.dataType.value())
-          if (typeDef != DateTimeType && typeDef != DateTimeOnlyType && typeDef != TimeOnlyType && typeDef != DateOnlyType) {
-            val valid = Seq("int32", "int64", "int", "long", "float", "double", "int16", "int8")
+          if (typeDef != DateTimeOnlyType && typeDef != TimeOnlyType && typeDef != DateOnlyType) {
+            val valid =
+              if (typeDef == DateTimeType) Seq("rfc3339", "rfc2616")
+              else Seq("int32", "int64", "int", "long", "float", "double", "int16", "int8")
 
             if (!valid.contains(shape.format.value())) shape.fields.removeField(ScalarShapeModel.Format)
-          }
+          } else shape.fields.removeField(ScalarShapeModel.Format)
         case _ => // ignore
       }
     } catch {
