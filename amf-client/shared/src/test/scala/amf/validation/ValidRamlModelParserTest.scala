@@ -155,5 +155,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("date-time-only-union/date-time-only-union.raml")
   }
 
+  test("Valid use of recursive shape in json schemas") {
+    checkValid("valid-recursive/valid-recursive.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
