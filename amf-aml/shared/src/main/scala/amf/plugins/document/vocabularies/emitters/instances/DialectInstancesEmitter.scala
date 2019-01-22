@@ -371,10 +371,37 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       nodeMapping
     }
 
-    nodeMappings.find(nodeMapping => element.dynamicType.map(_.iri()).contains(nodeMapping.nodetypeMapping.value())) match {
-      case Some(nextNodeMapping) =>
-        Seq(EntryPartEmitter(key, DialectNodeEmitter(element, nextNodeMapping, instance, dialect, ordering, aliases)))
-      case _ => Nil // TODO: raise violation
+    // potential node range based in discriminators map
+    val discriminatorsMappings: Map[String, NodeMapping] =
+      Option(propertyMapping.typeDiscriminator()).getOrElse(Map()).foldLeft(Map[String, NodeMapping]()) {
+        case (acc, (alias, mappingId)) =>
+          findNodeMappingById(mappingId) match {
+            case (_, nodeMapping: NodeMapping) => acc + (alias -> nodeMapping)
+            case _                             => acc // TODO: violation here
+          }
+      }
+
+    val elementTypes = element.dynamicType.map(_.iri())
+    discriminatorsMappings.find {
+      case (_, discriminatorMapping) => elementTypes.contains(discriminatorMapping.nodetypeMapping.value()).asInstanceOf[Boolean]
+    } match {
+      case Some((alias, discriminatorMapping)) =>
+        val discriminatorName = propertyMapping.typeDiscriminatorName()
+        Seq(EntryPartEmitter(key,
+            DialectNodeEmitter(element,
+              discriminatorMapping,
+              instance,
+              dialect,
+              ordering,
+              aliases,
+              discriminator = Some((discriminatorName.value(), alias)))
+        ))
+      case _ =>
+        nodeMappings.find(nodeMapping => element.dynamicType.map(_.iri()).contains(nodeMapping.nodetypeMapping.value())) match {
+          case Some(nextNodeMapping) =>
+            Seq(EntryPartEmitter(key, DialectNodeEmitter(element, nextNodeMapping, instance, dialect, ordering, aliases)))
+          case _ => Nil // TODO: raise violation
+        }
     }
   }
 
@@ -401,24 +428,25 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       val arrayElements: Seq[DialectNodeEmitter] = array.values.map {
         case dialectDomainElement: DialectDomainElement =>
           val elementTypes = dialectDomainElement.dynamicType.map(_.iri())
-          objectRangeMappings.find(nodeMapping => elementTypes.contains(nodeMapping.nodetypeMapping.value())) match {
-            case Some(nextNodeMapping) =>
-              Some(DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases))
-            case _ =>
-              discriminatorsMappings.find {
-                case (_, discriminatorMapping) => elementTypes.contains(discriminatorMapping.nodetypeMapping.value())
-              } match {
-                case Some((alias, discriminatorMapping)) =>
-                  val discriminatorName = propertyMapping.typeDiscriminatorName()
-                  Some(
-                    DialectNodeEmitter(dialectDomainElement,
-                                       discriminatorMapping,
-                                       instance,
-                                       dialect,
-                                       ordering,
-                                       aliases,
-                                       discriminator = Some((discriminatorName.value(), alias))))
-                case None => None
+          discriminatorsMappings.find {
+            case (_, discriminatorMapping) => elementTypes.contains(discriminatorMapping.nodetypeMapping.value())
+          } match {
+
+            case Some((alias, discriminatorMapping)) =>
+              val discriminatorName = propertyMapping.typeDiscriminatorName()
+              Some(
+                DialectNodeEmitter(dialectDomainElement,
+                  discriminatorMapping,
+                  instance,
+                  dialect,
+                  ordering,
+                  aliases,
+                  discriminator = Some((discriminatorName.value(), alias))))
+            case None =>
+              objectRangeMappings.find(nodeMapping => elementTypes.contains(nodeMapping.nodetypeMapping.value())) match {
+                case Some(nextNodeMapping) =>
+                  Some(DialectNodeEmitter(dialectDomainElement, nextNodeMapping, instance, dialect, ordering, aliases))
+                case _ => None // TODO: violation here
               }
           }
         case _ => None

@@ -1,12 +1,10 @@
-package amf
+package amf.tools
 
 import java.io.{File, FileWriter}
 
 import amf.core.metamodel.Type.{Bool, Date, DateTime, Double, EncodedIri, Float, Int, Iri, RegExp, Str, Time}
-import amf.core.metamodel.{Field, Obj, Type}
-import amf.core.metamodel.document.BaseUnitModel
 import amf.core.metamodel.domain._
-import amf.core.parser.SyamlParsedDocument
+import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.vocabulary.Namespace
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner

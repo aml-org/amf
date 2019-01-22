@@ -1,4 +1,5 @@
-package amf
+package amf.tools
+
 import amf.core.metamodel.Type.Scalar
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.vocabulary.Namespace
@@ -124,6 +125,20 @@ object CanonicalWebAPIDialectExporter {
     "Settings"
   )
 
+  val shapeTypeDiscriminator =
+    """        typeDiscriminatorName: dataShape
+      |        typeDiscriminator:
+      |          Union: UnionShape
+      |          Tuple: TupleShape
+      |          Node: NodeShape
+      |          Array: ArrayShape
+      |          Schema: SchemaShape
+      |          File: FileShape
+      |          Nil: NilShape
+      |          Scalar: ScalarShape
+      |          Any: AnyShape
+      |
+    """.stripMargin
   val shapeUnionRange =
     """          - UnionShape
       |          - TupleShape
@@ -189,12 +204,15 @@ object CanonicalWebAPIDialectExporter {
             if (propertyMapping.range == "Shape") {
               stringBuilder.append(s"        range:\n")
               stringBuilder.append(shapeUnionRange ++ "\n")
+              stringBuilder.append(shapeTypeDiscriminator ++ "\n")
             } else if (propertyMapping.range == "Settings") {
               stringBuilder.append(s"        range:\n")
               stringBuilder.append(settingsUnionRange ++ "\n")
             } else if (propertyMapping.range == "AbstractDeclaration") {
               stringBuilder.append(s"        range:\n")
               stringBuilder.append(abstractDeclarationsRange ++ "\n")
+            } else if (propertyMapping.range == "uri") {
+              stringBuilder.append(s"        range: link\n")
             } else {
               stringBuilder.append(s"        range: ${propertyMapping.range}\n")
             }

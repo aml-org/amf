@@ -1,19 +1,19 @@
 package amf.dialects
 import amf.core.AMF
-import amf.core.model.document.{BaseUnit, Document}
+import amf.core.emitter.RenderOptions
+import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
 import amf.core.rdf.RdfModelParser
 import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote.{AmfJsonHint, VocabularyYamlHint}
+import amf.core.remote.{AmfJsonHint, Syntax, Vendor, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
+import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
-import amf.io.FunSuiteCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
-import amf.plugins.document.webapi.{Oas20Plugin, Raml10Plugin}
+import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.features.validation.JenaRdfModel
 import org.apache.jena.rdf.model.Model
 import org.scalatest.AsyncFunSuite
 
@@ -26,10 +26,14 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with PlatformSecrets {
 
   def removeWebAPIPlugin() = Future {
     AMFPluginsRegistry.unregisterDomainPlugin(WebAPIDomainPlugin)
+    AMFPluginsRegistry.unregisterDomainPlugin(DataShapesDomainPlugin)
   }
 
+  def findWebAPIDialect =
+    AMLPlugin.registry.allDialects().find(_.nameAndVersion() == "WebAPI 1.0")
+
   def buildCanonicalClassMapping: Map[String, String] = {
-    AMLPlugin.registry.allDialects().find(_.nameAndVersion() == "WebAPI 1.0") match {
+    findWebAPIDialect match {
       case Some(webApiDialect) =>
         val nodeMappings = webApiDialect.declares.collect { case mapping: NodeMapping => mapping }
         nodeMappings.foldLeft(Map[String,String]()) { case (acc, mapping) =>
@@ -54,13 +58,31 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with PlatformSecrets {
       nativeModel.createProperty((Namespace.Rdf + "type").iri()),
       nativeModel.createResource((Namespace.Meta + "DialectInstance").iri())
     )
+    findWebAPIDialect match {
+      case Some(dialect) =>
+        nativeModel.add(
+          nativeModel.createResource(doc),
+          nativeModel.createProperty((Namespace.Meta + "definedBy").iri()),
+          nativeModel.createResource(dialect.id)
+        )
+      case None          => //ignore
+    }
 
     // Find all domain elements
-    val it = nativeModel.listSubjectsWithProperty(
+    var it = nativeModel.listSubjectsWithProperty(
       nativeModel.createProperty((Namespace.Rdf + "type").iri()),
       nativeModel.createResource((Namespace.Document + "DomainElement").iri())
     )
     val domainElements: mutable.ListBuffer[String] = mutable.ListBuffer()
+    while (it.hasNext()) {
+      domainElements += it.next().getURI
+    }
+
+    // Find all shapes
+    it = nativeModel.listSubjectsWithProperty(
+      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+      nativeModel.createResource((Namespace.Shapes + "Shape").iri())
+    )
     while (it.hasNext()) {
       domainElements += it.next().getURI
     }
@@ -100,7 +122,7 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with PlatformSecrets {
     new RdfModelParser(platform)(ParserContext()).parse(model, unit.id)
   }
 
-  ignore("HERE_HERE Test parsed RAML/OAS WebAPIs can be re-parsed with the WebAPI dialect") {
+  test("HERE_HERE Test parsed RAML/OAS WebAPIs can be re-parsed with the WebAPI dialect") {
     for {
       _               <- AMF.init()
       _               <- Future(amf.Core.registerPlugin(AMLPlugin))
@@ -118,8 +140,14 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with PlatformSecrets {
         println(s"  ===> 3")
         Future { cleanAMFModel(unit)}
       }
+      rendered          <- {
+        println(s"  ===> 4")
+        new AMFRenderer(dialectInstance, Vendor.AML, RenderOptions(), Some(Syntax.Yaml)).renderToString
+      }
     } yield {
       println(dialectInstance)
+      println("RENDERED")
+      println(rendered)
       println(unit.toNativeRdfModel())
       println(unit.toNativeRdfModel().toN3())
       assert(true)

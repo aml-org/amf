@@ -1,14 +1,13 @@
-package amf
-
-import amf.core.{AMF, AMFSerializer}
+package amf.tools
+import amf.core.AMF
 import amf.core.emitter.RenderOptions
 import amf.core.services.RuntimeSerializer
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.dialects.OAS20Dialect
 
-import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Await
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object DialectExporter {
 

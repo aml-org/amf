@@ -1,17 +1,15 @@
 package amf.plugins.document.webapi.dialects
-
 import amf.core.annotations.Aliases
 import amf.core.metamodel.document.DocumentModel
-import amf.core.metamodel.domain.{ModelVocabularies, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.metamodel.domain.{ModelVocabularies, ShapeModel}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.XsdTypes._
 import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.metamodel.security._
-
+import amf.plugins.domain.webapi.metamodel.security.{ApiKeySettingsModel, OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
 
 object OAS20Dialect {
 
