@@ -17,7 +17,8 @@ class OasCompatibilityPipeline(override val eh: ErrorHandler) extends Resolution
     new MandatoryDocumentationUrl(),
     new MandatoryResponses(),
     new MandatoryPathParameters(),
-    new CleanNullSecurity()
+    new CleanNullSecurity(),
+    new CleanParameterExamples()
   )
 
   override def profileName: ProfileName = OasProfile

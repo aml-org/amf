@@ -13,7 +13,7 @@ class MandatoryPathParameters()(override implicit val errorHandler: ErrorHandler
       model.findByType(ParameterModel.`type`.head.iri()).foreach {
         case param: Parameter if param.isPath =>
           param.withRequired(true)
-        case other                                =>
+        case other =>
           other
       }
       model
@@ -21,5 +21,4 @@ class MandatoryPathParameters()(override implicit val errorHandler: ErrorHandler
       case _: Exception => model
     }
   }
-
 }
