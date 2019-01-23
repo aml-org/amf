@@ -7,20 +7,19 @@ import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft3SchemaVersion,
   JSONSchemaDraft4SchemaVersion,
   JSONSchemaUnspecifiedVersion,
   JSONSchemaVersion
 }
+import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.features.validation.ParserSideValidations.{
   ClosedShapeSpecification,
   DeclarationNotFound,
-  DuplicatedPropertySpecification,
   InvalidJsonSchemaVersion
 }
 import org.yaml.model._
@@ -425,21 +424,8 @@ abstract class WebApiContext(val loc: String,
   def link(node: YNode): Either[String, YNode]
   def ignore(shape: String, property: String): Boolean
 
-  def checkDuplicates(node: String, ast: YMap, shape: String, annotation: Boolean): Set[String] = {
-    ast.entries.foldLeft(Set[String]()) {
-      case (acc, entry) =>
-        if (acc.contains(entry.key.toString())) {
-          violation(DuplicatedPropertySpecification, node, s"Property '${entry.key}' is duplicated", entry)
-          acc
-        } else {
-          acc ++ Set(entry.key.toString())
-        }
-    }
-  }
-
   /** Validate closed shape. */
-  def closedShape(node: String, ast: YMap, shape: String, annotation: Boolean = false): Unit = {
-    checkDuplicates(node, ast, shape, annotation)
+  def closedShape(node: String, ast: YMap, shape: String, annotation: Boolean = false): Unit =
     syntax.nodes.get(shape) match {
       case Some(props) =>
         val properties = if (annotation) {
@@ -459,5 +445,4 @@ abstract class WebApiContext(val loc: String,
       case None =>
         violation(ClosedShapeSpecification, node, s"Cannot validate unknown node type $shape for $vendor", ast)
     }
-  }
 }
