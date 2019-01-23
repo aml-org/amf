@@ -11,6 +11,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.{ClassTermModel, Objec
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
+import amf.plugins.features.validation.ParserSideValidations.ExpectedVocabularyModule
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -255,7 +256,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
             target(url).foreach {
               case module: DeclaresModel => result += (alias, collectAlias(module, alias -> (module.id, url)))
               case other =>
-                ctx.violation(id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
+                ctx.violation(ExpectedVocabularyModule, id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
             }
           })
     )

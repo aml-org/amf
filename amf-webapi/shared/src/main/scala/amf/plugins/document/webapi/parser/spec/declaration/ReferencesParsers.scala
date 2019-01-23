@@ -5,6 +5,8 @@ import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.core.parser.{ParsedReference, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.{ExpectedModule, InvalidModuleType}
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
@@ -80,12 +82,13 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
                       result += (alias, module)
                     case other =>
                       ctx
-                        .violation(id, s"Expected module but found: $other", e) // todo Uses should only reference modules...
+                        .violation(ExpectedModule, id, s"Expected module but found: $other", e)
                   }
                 }
               })
           case YType.Null =>
-          case _          => ctx.violation(id, s"Invalid ast type for uses: ${entry.value.tagType}", entry.value)
+          case _ =>
+            ctx.violation(InvalidModuleType, id, s"Invalid ast type for uses: ${entry.value.tagType}", entry.value)
       }
     )
 
@@ -106,7 +109,6 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
       case None => module.add(Aliases(Set(alias)))
     }
   }
-
 }
 
 // Helper method to parse references and annotations before having an actual base unit

@@ -30,7 +30,7 @@ import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
 
@@ -249,7 +249,9 @@ class Raml10EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
     case _: Overlay   => Some(RamlHeader.Raml10Overlay.text)
     case _: Document  => Some(RamlHeader.Raml10.text)
     case _ =>
-      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+      spec.eh.violation(RenderValidation,
+                        document.id,
+                        None,
                         "Document has no header.",
                         document.position(),
                         document.location())
@@ -301,7 +303,9 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
   override def retrieveHeader(document: BaseUnit): Option[String] = document match {
     case _: Document => Some(RamlHeader.Raml08.text)
     case _ =>
-      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+      spec.eh.violation(RenderValidation,
+                        document.id,
+                        None,
                         "Document has no header.",
                         document.position(),
                         document.location())
@@ -325,14 +329,16 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
     Raml08RootLevelEmitters.apply
 
   override def customFacetsEmitter: (FieldEntry, SpecOrdering, Seq[BaseUnit]) => CustomFacetsEmitter = {
-    (f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =>
+    (f: FieldEntry, ordering: SpecOrdering, _: Seq[BaseUnit]) =>
       new CustomFacetsEmitter(f, ordering, Nil) {
         override val key: String                                                                = ""
         override def shapeEmitter: (PropertyShape, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = ???
 
         override def emit(b: EntryBuilder): Unit = {
           spec.eh.violation(
-            ParserSideValidations.EmittionErrorEspecification.id,
+            RenderValidation,
+            "",
+            None,
             s"Custom facets not supported for vendor ${spec.vendor}",
             f.value.value.position(),
             f.value.value.location()
@@ -347,7 +353,9 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
 
         override def emit(b: EntryBuilder): Unit = {
           spec.eh.violation(
-            ParserSideValidations.EmittionErrorEspecification.id,
+            RenderValidation,
+            shapeExtension.id,
+            None,
             s"Custom facets not supported for vendor ${spec.vendor}",
             shapeExtension.position(),
             shapeExtension.location()
@@ -363,7 +371,9 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
 
         override def emit(b: EntryBuilder): Unit = {
           spec.eh.violation(
-            ParserSideValidations.EmittionErrorEspecification.id,
+            RenderValidation,
+            domainExtension.id,
+            None,
             s"Custom facets not supported for vendor ${spec.vendor}",
             domainExtension.position(),
             domainExtension.location()
@@ -381,7 +391,9 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
           Left(shapeEmitters.asInstanceOf[Seq[EntryEmitter]])
         override protected val shapeEmitters: Seq[Emitter] = Seq(new EntryEmitter {
           override def emit(b: EntryBuilder): Unit = {
-            spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+            spec.eh.violation(RenderValidation,
+                              property.id,
+                              None,
                               s"Custom facets not supported for vendor ${spec.vendor}",
                               property.position(),
                               property.location())

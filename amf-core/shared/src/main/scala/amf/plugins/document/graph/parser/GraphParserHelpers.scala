@@ -9,6 +9,7 @@ import amf.core.model.domain.{AmfElement, Annotation}
 import amf.core.parser.{Annotations, _}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.SourceMaps
+import amf.plugins.features.validation.ParserSideValidations.{MissingIdInNode, MissingTypeInNode}
 import org.yaml.convert.YRead.SeqNodeYRead
 import org.yaml.model._
 
@@ -51,7 +52,7 @@ trait GraphParserHelpers {
         nonDocumentTypes ++ documentTypes
 
       case _ =>
-        ctx.violation(id, s"No @type declaration on node $map", map) // todo : review with pedro
+        ctx.violation(MissingTypeInNode, id, s"No @type declaration on node $map", map) // todo : review with pedro
         Nil
     }
   }
@@ -60,7 +61,7 @@ trait GraphParserHelpers {
     map.key("@id") match {
       case Some(entry) => Some(entry.value.as[YScalar].text)
       case _ =>
-        ctx.violation(s"No @id declaration on node $map", map)
+        ctx.violation(MissingIdInNode, "", s"No @id declaration on node $map", map)
         None
     }
   }

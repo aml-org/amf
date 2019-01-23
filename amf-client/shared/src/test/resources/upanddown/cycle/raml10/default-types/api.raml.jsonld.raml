@@ -1,18 +1,15 @@
 #%RAML 1.0
 types:
   A:
-
 title: test
-
 /test:
   get:
     responses:
-      200:
+      "200":
         body:
           application/json:
             properties:
               a:
-
 /test/{pathParam}:
   get:
     body:
@@ -22,7 +19,7 @@ title: test
     queryParameters:
       queryParam:
     responses:
-      200:
+      "200":
         headers:
           header:
         body:

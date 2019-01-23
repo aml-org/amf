@@ -1,18 +1,21 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.{DeclaredElement, LexicalInformation}
+import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
-import amf.core.parser.{Annotations, ErrorHandler, RuntimeErrorHandler, Value}
+import amf.core.parser.{Annotations, RuntimeErrorHandler, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.{
+  InvalidTypeInheritanceErrorSpecification,
+  InvalidTypeInheritanceWarningSpecification
+}
 import org.yaml.model.YError
 
 import scala.collection.mutable
@@ -65,7 +68,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
             computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
           } else {
             context.errorHandler.violation(
-              ParserSideValidations.InvalidTypeInheritanceErrorSpecification.id,
+              InvalidTypeInheritanceErrorSpecification,
               derivedShape,
               Some(ShapeModel.Inherits.value.iri()),
               s"Resolution error: Invalid scalar inheritance base type $b < $s "
@@ -138,7 +141,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         // fallback error
         case _ =>
           context.errorHandler.violation(
-            ParserSideValidations.InvalidTypeInheritanceErrorSpecification.id,
+            InvalidTypeInheritanceErrorSpecification,
             derivedShape,
             Some(ShapeModel.Inherits.value.iri()),
             s"Resolution error: Incompatible types [${derivedShape.getClass}, ${superShape.getClass}]"
@@ -148,7 +151,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     } catch {
       case e: InheritanceIncompatibleShapeError =>
         context.errorHandler.warning(
-          ParserSideValidations.InvalidTypeInheritanceWarningSpecification.id,
+          InvalidTypeInheritanceWarningSpecification,
           derivedShape.id,
           e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
           e.getMessage,
@@ -169,7 +172,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     schema
   }
 
-  protected def isGenericNodeShape(shape: Shape) = {
+  protected def isGenericNodeShape(shape: Shape): Boolean = {
     shape match {
       case node: NodeShape => node.properties.isEmpty
       case _               => false
@@ -189,7 +192,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     baseShape
   }
 
-  protected def computeMinGeneric(baseShape: NodeShape, superShape: Shape) = restrictShape(baseShape, superShape)
+  protected def computeMinGeneric(baseShape: NodeShape, superShape: Shape): Shape =
+    restrictShape(baseShape, superShape)
 
   protected def computeMinMatrix(baseMatrix: MatrixShape, superMatrix: MatrixShape): Shape = {
 
@@ -348,7 +352,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
       throw new Exception("raising exceptions in union processing")
     }
 
-    def wrapContext(ctx: NormalizationContext) = {
+    def wrapContext(ctx: NormalizationContext): NormalizationContext = {
       new NormalizationContext(
         this,
         ctx.keepEditingInfo,
@@ -420,7 +424,9 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
       superUnionElement <- superUnion.anyOf
     } yield {
       try {
-        Some(unionContext.minShape(baseShape, superUnionElement))
+        val newShape = unionContext.minShape(baseShape, superUnionElement)
+        superUnionElement.name.option().foreach(n => newShape.withName(n))
+        Some(newShape)
       } catch {
         case _: Exception => None
       }

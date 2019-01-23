@@ -127,54 +127,55 @@ object VocabularyExporter {
             b.entry(
               "classTerms",
               b => {
-                b.obj { b =>
-                  vocabClasses
-                    .foreach {
-                      classTerm: VocabClassTerm =>
-                        b.entry(
-                          compactUri(classTerm.id, vocabulary),
-                          b => {
-                            b.obj {
-                              b =>
-                                b.entry("displayName", classTerm.displayName)
-                                if (classTerm.description != "") {
-                                  b.entry("description", classTerm.description)
-                                }
-                                val superClasses = notBlacklisted(classTerm.superClasses, vocabulary)
-                                if (superClasses.nonEmpty) {
-                                  if (classTerm.superClasses.length == 1) {
-                                    b.entry("extends", compactUri(classTerm.superClasses.head, vocabulary))
-                                  } else {
-                                    b.entry("extends", b => {
+                b.obj {
+                  b =>
+                    vocabClasses
+                      .foreach {
+                        classTerm: VocabClassTerm =>
+                          b.entry(
+                            compactUri(classTerm.id, vocabulary),
+                            b => {
+                              b.obj {
+                                b =>
+                                  b.entry("displayName", classTerm.displayName)
+                                  if (classTerm.description != "") {
+                                    b.entry("description", classTerm.description)
+                                  }
+                                  val superClasses = notBlacklisted(classTerm.superClasses, vocabulary)
+                                  if (superClasses.nonEmpty) {
+                                    if (classTerm.superClasses.length == 1) {
+                                      b.entry("extends", compactUri(classTerm.superClasses.head, vocabulary))
+                                    } else {
+                                      b.entry("extends", b => {
+                                        b.list { l =>
+                                          classTerm.superClasses.foreach { t =>
+                                            l += compactUri(t, vocabulary)
+                                          }
+                                        }
+                                      })
+                                    }
+                                  }
+
+                                  // only properties in domain
+                                  /*
+                    val exclusiveProperties = classTerm.properties.filter { prop =>
+                      properties(prop).domain.size == 1 && properties(prop).domain.head == classTerm.id
+                    }
+                                   */
+                                  val exclusiveProperties = notBlacklisted(classTerm.properties, vocabulary)
+                                  if (exclusiveProperties.nonEmpty) {
+                                    b.entry("properties", b => {
                                       b.list { l =>
-                                        classTerm.superClasses.foreach { t =>
-                                          l += compactUri(t, vocabulary)
+                                        exclusiveProperties.foreach { p =>
+                                          l += compactUri(p, vocabulary)
                                         }
                                       }
                                     })
                                   }
-                                }
-
-                                // only properties in domain
-                                /*
-                    val exclusiveProperties = classTerm.properties.filter { prop =>
-                      properties(prop).domain.size == 1 && properties(prop).domain.head == classTerm.id
-                    }
-                                 */
-                                val exclusiveProperties = notBlacklisted(classTerm.properties, vocabulary)
-                                if (exclusiveProperties.nonEmpty) {
-                                  b.entry("properties", b => {
-                                    b.list { l =>
-                                      exclusiveProperties.foreach { p =>
-                                        l += compactUri(p, vocabulary)
-                                      }
-                                    }
-                                  })
-                                }
+                              }
                             }
-                          }
-                        )
-                    }
+                          )
+                      }
                 }
               }
             )
@@ -185,46 +186,47 @@ object VocabularyExporter {
             b.entry(
               "propertyTerms",
               b => {
-                b.obj { b =>
-                  vocabProperties
-                    .foreach {
-                      propertyTerm =>
-                        b.entry(
-                          compactUri(propertyTerm.id, vocabulary),
-                          b => {
-                            b.obj {
-                              b =>
-                                b.entry("displayName", propertyTerm.displayName)
-                                if (propertyTerm.description != "") {
-                                  b.entry("description", propertyTerm.description)
-                                }
-                                val superProperties = notBlacklisted(propertyTerm.superClasses, vocabulary)
-                                if (superProperties.nonEmpty) {
-                                  if (propertyTerm.superClasses.length == 1) {
-                                    b.entry("extends", compactUri(propertyTerm.superClasses.head, vocabulary))
-                                  } else {
-                                    b.entry("extends", b => {
-                                      b.list { l =>
-                                        propertyTerm.superClasses.foreach { t =>
-                                          l += compactUri(t, vocabulary)
+                b.obj {
+                  b =>
+                    vocabProperties
+                      .foreach {
+                        propertyTerm =>
+                          b.entry(
+                            compactUri(propertyTerm.id, vocabulary),
+                            b => {
+                              b.obj {
+                                b =>
+                                  b.entry("displayName", propertyTerm.displayName)
+                                  if (propertyTerm.description != "") {
+                                    b.entry("description", propertyTerm.description)
+                                  }
+                                  val superProperties = notBlacklisted(propertyTerm.superClasses, vocabulary)
+                                  if (superProperties.nonEmpty) {
+                                    if (propertyTerm.superClasses.length == 1) {
+                                      b.entry("extends", compactUri(propertyTerm.superClasses.head, vocabulary))
+                                    } else {
+                                      b.entry("extends", b => {
+                                        b.list { l =>
+                                          propertyTerm.superClasses.foreach { t =>
+                                            l += compactUri(t, vocabulary)
+                                          }
                                         }
-                                      }
-                                    })
+                                      })
+                                    }
                                   }
-                                }
 
-                                if (propertyTerm.scalarRange.nonEmpty) {
-                                  b.entry("range", propertyTerm.scalarRange.get)
-                                }
-                                if (propertyTerm.objectRange.nonEmpty) {
-                                  if (notBlacklisted(Seq(propertyTerm.objectRange.get), vocabulary).nonEmpty) {
-                                    b.entry("range", compactUri(propertyTerm.objectRange.get, vocabulary))
+                                  if (propertyTerm.scalarRange.nonEmpty) {
+                                    b.entry("range", propertyTerm.scalarRange.get)
                                   }
-                                }
+                                  if (propertyTerm.objectRange.nonEmpty) {
+                                    if (notBlacklisted(Seq(propertyTerm.objectRange.get), vocabulary).nonEmpty) {
+                                      b.entry("range", compactUri(propertyTerm.objectRange.get, vocabulary))
+                                    }
+                                  }
+                              }
                             }
-                          }
-                        )
-                    }
+                          )
+                      }
                 }
               }
             )

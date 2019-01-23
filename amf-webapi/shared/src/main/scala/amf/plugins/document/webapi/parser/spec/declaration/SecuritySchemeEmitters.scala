@@ -21,7 +21,7 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.core.utils.Strings
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 import scala.collection.mutable.ListBuffer
 
@@ -87,7 +87,9 @@ case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
       case Some(n) => n
       case None =>
         spec.eh.violation(
-          ParserSideValidations.EmittionErrorEspecification.id,
+          ResolutionValidation,
+          securityScheme.id,
+          None,
           s"Cannot declare security scheme without name $securityScheme",
           securityScheme.position(),
           securityScheme.location()
@@ -269,7 +271,6 @@ case class OasSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(imp
 
 case class OasApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
-    val fs      = apiKey.fields
     val results = ListBuffer[EntryEmitter]() ++= RamlApiKeySettingsEmitters(apiKey, ordering).emitters()
 
     val internals = ListBuffer[EntryEmitter]()
@@ -298,7 +299,6 @@ case class RamlApiKeySettingsEmitters(apiKey: ApiKeySettings, ordering: SpecOrde
 
 case class OasOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
-    val fs      = o1.fields
     val results = ListBuffer[EntryEmitter]() ++= RamlOAuth1SettingsEmitters(o1, ordering).emitters()
 
     o1.fields
@@ -450,7 +450,9 @@ case class Raml08DescribedByEmitter(key: String,
   override def entries(fs: Fields): Seq[EntryEmitter] = {
     fs.entry(SecuritySchemeModel.QueryString)
       .foreach { _ =>
-        spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+        spec.eh.violation(ResolutionValidation,
+                          securityScheme.id,
+                          None,
                           "Cannot emit query string in raml 08 spec",
                           securityScheme.position(),
                           securityScheme.location())

@@ -1,41 +1,41 @@
 #%RAML 1.0
-types: 
-  Person: 
-    properties: 
-      name: 
+types:
+  Person:
+    properties:
+      name:
         type: string
-      age: 
+      age:
         type: integer
       address: Address
       parent: Person
   Address:
-    properties: 
-      street: 
+    properties:
+      street:
         type: string
-      number: 
+      number:
         type: integer
-  Figure: 
-    properties: 
-      area: 
+  Figure:
+    properties:
+      area:
         type: integer
       context: (Circle | Square)[]
-  Circle: 
+  Circle:
     type: Figure
-    properties: 
-      radius: 
+    properties:
+      radius:
         type: integer
-  Square: 
+  Square:
     type: Figure
-    properties: 
-      side: 
+    properties:
+      side:
         type: integer
-/person-response: 
-  get: 
-    responses: 
-      200: 
+/person-response:
+  get:
+    responses:
+      "200":
         body: Person
-/address-response: 
-  get: 
-    responses: 
-      200: 
+/address-response:
+  get:
+    responses:
+      "200":
         body: Address

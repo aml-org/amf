@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: test
+
+uses:
+  collectionLib: collection-library.raml
+
+
+/territory-regions:
+  type:
+    collectionLib.collection:
+      exampleCollectionResponse: !include examples/territory-regions-example.raml
+  get:
+    description: Provides a list of regions and the zip codes associated to each region
+  /adjusters:
+    type:
+      collectionLib.collection:
+        exampleCollectionResponse: !include examples/territory-region-adjusters-example.raml
+    get:
+      description: Provides a list of Adjusters for the specified Region used for Auto Assignment in Claims

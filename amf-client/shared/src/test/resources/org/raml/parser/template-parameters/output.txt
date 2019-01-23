@@ -5,18 +5,18 @@ resourceTypes:
   collection:
     get:
       responses:
-        200:
+        "200":
           body:
             type: <<resourcePathName>>
     post:
       responses:
-        200:
+        "200":
           body:
             type: <<resourcePathName | !singularize>>
   member:
     get:
       responses:
-        200:
+        "200":
           body:
             type: <<resourcePathName>>
 traits:

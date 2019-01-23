@@ -26,7 +26,7 @@ trait ValidationResultProcessor {
       message = "Constraint violation"
     }
 
-    if (spec.isParserSide() && Option(result.message).isDefined) {
+    if (spec.isParserSide && Option(result.message).isDefined) {
       message = result.message
     }
 
@@ -80,7 +80,7 @@ trait ValidationResultProcessor {
       case Some(targetSpec) =>
         var message = messageStyle match {
           case RAMLStyle => targetSpec.ramlMessage.getOrElse(targetSpec.message)
-          case OASStyle  => targetSpec.ramlMessage.getOrElse(targetSpec.message)
+          case OASStyle  => targetSpec.oasMessage.getOrElse(targetSpec.message)
           case _         => Option(targetSpec.message).getOrElse(result.message.getOrElse(""))
         }
 
@@ -88,7 +88,7 @@ trait ValidationResultProcessor {
           message = result.message.getOrElse("Constraint violation")
         }
 
-        if (targetSpec.isParserSide() && result.message.nonEmpty) {
+        if (targetSpec.isParserSide && result.message.nonEmpty) {
           message = result.message.get
         }
 
@@ -114,5 +114,4 @@ trait ValidationResultProcessor {
       SeverityLevels.VIOLATION
     }
   }
-
 }

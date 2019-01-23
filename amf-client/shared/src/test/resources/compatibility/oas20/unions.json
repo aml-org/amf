@@ -1,0 +1,32 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Docker Engine API",
+    "version": "1.30"
+  },
+  "definitions": {
+    "ContainerConfig": {
+      "type": [
+        "array",
+        "string"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "paths": {
+    "/commit": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "no error",
+            "schema": {
+              "$ref": "#/definitions/ContainerConfig"
+            }
+          }
+        }
+      }
+    }
+  }
+}

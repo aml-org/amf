@@ -88,7 +88,7 @@ trait RuntimeValidator {
 
 object RuntimeValidator {
   var validatorOption: Option[RuntimeValidator] = None
-  def register(runtimeValidator: RuntimeValidator) = {
+  def register(runtimeValidator: RuntimeValidator): Unit = {
     validatorOption = Some(runtimeValidator)
   }
 
@@ -99,7 +99,8 @@ object RuntimeValidator {
     }
   }
 
-  def loadValidationProfile(validationProfilePath: String) = validator.loadValidationProfile(validationProfilePath)
+  def loadValidationProfile(validationProfilePath: String): Future[ProfileName] =
+    validator.loadValidationProfile(validationProfilePath)
 
   def shaclValidation(model: BaseUnit,
                       validations: EffectiveValidations,
@@ -122,7 +123,7 @@ object RuntimeValidator {
                       messageStyle: MessageStyle = AMFStyle): Future[AMFValidationReport] =
     validator.aggregateReport(model, profileName, messageStyle)
 
-  def reset() = validator.reset()
+  def reset(): Unit = validator.reset()
 
   def nestedValidation[T](merger: ValidationsMerger)(k: => T): T = validator.nestedValidation(merger)(k)
 
@@ -137,7 +138,7 @@ object RuntimeValidator {
                               message: String = "",
                               position: Option[LexicalInformation] = None,
                               parserRun: Int,
-                              location: Option[String]) = {
+                              location: Option[String]): Unit = {
     validator.reportConstraintFailure(
       level,
       validationId,
@@ -152,14 +153,14 @@ object RuntimeValidator {
 }
 
 class ValidationOptions() {
-  val filterFields: (Field) => Boolean = (_: Field) => false
-  var messageStyle: MessageStyle       = AMFStyle
-  var level: String                    = "partial" // partial | full
+  val filterFields: Field => Boolean = (_: Field) => false
+  var messageStyle: MessageStyle     = AMFStyle
+  var level: String                  = "partial" // partial | full
 
-  def toRenderOptions: RenderOptions   = RenderOptions().withValidation.withFilterFieldsFunc(filterFields)
+  def toRenderOptions: RenderOptions = RenderOptions().withValidation.withFilterFieldsFunc(filterFields)
 
   def withMessageStyle(style: MessageStyle): ValidationOptions = {
-    var messageStyle = style
+    messageStyle = style
     this
   }
 

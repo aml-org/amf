@@ -3,7 +3,7 @@ title: Tato Bores
 /ok0:
   post:
     responses:
-      200:
+      "200":
         body:
           application/json:
             example: tato
@@ -11,22 +11,22 @@ title: Tato Bores
           text/xml:
             example: tato
             type: any
-      400:
+      "400":
         body:
           text/plain:
             example: coqui
             type: any
-      401:
+      "401":
         body:
           text/csv:
             type: any
-      402:
+      "402":
         body:
           application/json:
             type: any
           text/xml:
             type: any
-      403:
+      "403":
         body: {}
     body:
       application/json:

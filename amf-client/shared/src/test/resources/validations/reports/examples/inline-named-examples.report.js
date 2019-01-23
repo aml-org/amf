@@ -6,7 +6,7 @@ Number of results: 3
 Level: Warning
 
 - Source: http://a.ml/vocabularies/amf/parser#named-example-used-inlined-example
-  Message: Using an included named example as an inlined example
+  Message: Named example fragments should be included in 'examples' facet
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/linked_1
   Property: 
@@ -14,7 +14,7 @@ Level: Warning
   Location: file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#named-example-used-inlined-example
-  Message: Using an included named example as an inlined example
+  Message: Named example fragments should be included in 'examples' facet
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/example/value/linked_2
   Property: 
@@ -22,7 +22,7 @@ Level: Warning
   Location: file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#named-example-used-inlined-example
-  Message: Using an included named example as an inlined example
+  Message: Named example fragments should be included in 'examples' facet
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/example/value/linked_1
   Property: 

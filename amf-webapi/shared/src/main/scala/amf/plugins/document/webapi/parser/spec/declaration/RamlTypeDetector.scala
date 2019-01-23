@@ -4,6 +4,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.unsafe.PlatformSecrets
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
@@ -11,9 +12,9 @@ import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefString
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations._
+import amf.plugins.features.validation.ResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
 import org.yaml.model._
-import amf.core.utils.Strings
 
 /**
   *
@@ -49,7 +50,7 @@ case class RamlTypeDetector(parent: String,
       typeExplicit match {
         case Some(JSONSchemaType) if infer.isDefined =>
           ctx.warning(
-            ParserSideValidations.JsonSchemaInheratinaceWarningSpecification.id,
+            JsonSchemaInheratinaceWarningSpecification,
             parent,
             Some(ShapeModel.Inherits.value.iri()),
             "Inheritance from JSON Schema",
@@ -67,12 +68,14 @@ case class RamlTypeDetector(parent: String,
     case _ =>
       val scalar = node.as[YScalar]
       scalar.text match {
-        case t: String if t.startsWith("<<") && t.endsWith(">>") =>
-          ctx.violation(parent, "Trait/Resource Type parameter in type", node)
+        case t if t.startsWith("<<") && t.endsWith(">>") =>
+          ctx.violation(InvalidAbstractDeclarationParameterInType,
+                        parent,
+                        "Trait/Resource Type parameter in type",
+                        node)
           None
 
-        case t: String if t.endsWith("?") && wellKnownType(t.replace("?", "")) =>
-          Some(NilUnionType)
+        case t if t.endsWith("?") && wellKnownType(t.replace("?", "")) => Some(NilUnionType)
 
         case XMLSchema(_) => Some(XMLSchemaType)
 
@@ -152,11 +155,15 @@ case class RamlTypeDetector(parent: String,
       _ <- `type`
       s <- schema
     } {
-      ctx.violation("'schema' and 'type' properties are mutually exclusive", s.key)
+      ctx.violation(ExclusiveSchemaType, parent, "'schema' and 'type' properties are mutually exclusive", s.key)
     }
 
-    schema.foreach(s =>
-      ctx.warning("'schema' keyword it's deprecated for 1.0 version, should use 'type' instead", s.key))
+    schema.foreach(
+      s =>
+        ctx.warning(SchemaDeprecated,
+                    parent,
+                    "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead",
+                    s.key))
 
     `type`.orElse(schema)
   }
@@ -177,7 +184,7 @@ case class RamlTypeDetector(parent: String,
           else {
             val head = definedTypes.headOption
             if (definedTypes.count(_.equals(head.get)) != definedTypes.size) {
-              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
+              ctx.violation(InvalidTypeInheritanceErrorSpecification,
                             parent,
                             "Can't inherit from more than one class type",
                             ast)
@@ -199,7 +206,7 @@ case class RamlTypeDetector(parent: String,
             case Some(linkedShape: Shape) if linkedShape == shape => Some(AnyType)
             case Some(linkedShape: Shape)                         => apply(linkedShape, part, plainUnion)
             case _ =>
-              ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
+              ctx.violation(InvalidTypeDefinition,
                             shape.id,
                             "Found reference to domain element different of Shape when shape was expected",
                             part)

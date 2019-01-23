@@ -34,13 +34,13 @@ import amf.client.validate.{
   ValidationResult => ClientValidationResult,
   ValidationShapeSet => ClientValidationShapeSet
 }
-import amf.core.annotations.LexicalInformation
 import amf.core.model._
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape}
 import amf.core.model.domain.templates.{AbstractDeclaration, ParametrizedDeclaration, VariableValue}
 import amf.core.parser.Annotations
+import amf.core.remote.Vendor
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, ValidationCandidate, ValidationShapeSet}
 import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
@@ -48,6 +48,7 @@ import amf.internal.resource.{ResourceLoader, ResourceLoaderAdapter}
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.language.higherKinds
 
 trait CoreBaseConverter
     extends PlatformSecrets
@@ -84,6 +85,7 @@ trait CoreBaseConverter
   implicit object AnyMatcher         extends IdentityMatcher[Any]
   implicit object UnitMatcher        extends IdentityMatcher[Unit]
   implicit object ProfileNameMatcher extends IdentityMatcher[ProfileName]
+  implicit object VendorMatcher      extends IdentityMatcher[Vendor]
 
   implicit object ContentMatcher extends IdentityMatcher[Content]
 

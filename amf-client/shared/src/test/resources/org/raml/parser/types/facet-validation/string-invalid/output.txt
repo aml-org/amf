@@ -15,7 +15,7 @@ Level: Violation
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/types/scalar/MyThirdType
@@ -23,7 +23,7 @@ Level: Warning
   Position: Some(LexicalInformation([(16,17)-(16,19)]))
   Location: [(14,4)-(18,0)]
 
-- Source: http://a.ml/vocabularies/amf/parser#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for min-length than base type for maxProperties
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/facet-validation/string-invalid/input.raml#/declarations/types/scalar/MyFourthType

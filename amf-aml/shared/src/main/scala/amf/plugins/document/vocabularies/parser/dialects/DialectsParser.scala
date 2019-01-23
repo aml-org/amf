@@ -15,6 +15,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragmen
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
+import amf.plugins.features.validation.ParserSideValidations.DialectError
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -252,7 +253,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
                 collectAlias(dialect, alias -> (module.id, url))
                 result += (alias, module)
               case other =>
-                ctx.violation(id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
+                ctx.violation(DialectError, id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
             }
           })
     )
@@ -507,7 +508,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     val fragment = toFragment(dialect)
 
     parseNodeMapping(YMapEntry(YNode("fragment"), map),
-                     (mapping) => mapping.withId(fragment.id + "/fragment").withName("fragment"),
+                     mapping => mapping.withId(fragment.id + "/fragment").withName("fragment"),
                      fragment = true) match {
       case Some(encoded) => fragment.fields.setWithoutId(FragmentModel.Encodes, encoded)
       case _             => // ignore
@@ -568,7 +569,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           case Some(propertyTerm) =>
             propertyMapping.withNodePropertyMapping(propertyTerm.id)
           case _ =>
-            ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+            ctx.violation(DialectError,
+                          propertyMapping.id,
+                          s"Cannot find property term with alias $propertyTermId",
+                          entry.value)
         }
       }
     )
@@ -606,7 +610,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         ctx.declarations.findPropertyTerm(propertyTermId, All) match {
           case Some(term) => propertyMapping.withMapKeyProperty(term.id)
           case _ =>
-            ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+            ctx.violation(DialectError,
+                          propertyMapping.id,
+                          s"Cannot find property term with alias $propertyTermId",
+                          entry.value)
         }
       }
     )
@@ -618,7 +625,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         if (PropertyMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethod)) {
           propertyMapping.withMergePolicy(patchMethod)
         } else {
-          ctx.violation(propertyMapping.id,
+          ctx.violation(DialectError,
+                        propertyMapping.id,
                         s"Unsupported property mapping patch operation '$patchMethod'",
                         entry.value)
         }
@@ -632,7 +640,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         ctx.declarations.findPropertyTerm(propertyTermId, All) match {
           case Some(term) => propertyMapping.withMapValueProperty(term.id)
           case _ =>
-            ctx.violation(propertyMapping.id, s"Cannot find property term with alias $propertyTermId", entry.value)
+            ctx.violation(DialectError,
+                          propertyMapping.id,
+                          s"Cannot find property term with alias $propertyTermId",
+                          entry.value)
         }
       }
     )
@@ -670,7 +681,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             val booleanValue = ValueNode(entry.value).boolean().toBool
             propertyMapping.withUnique(booleanValue)
           case _ =>
-            ctx.violation("Unique property in a property mapping must be a boolean value", entry.value)
+            ctx.violation(DialectError, "Unique property in a property mapping must be a boolean value", entry.value)
         }
       }
     )
@@ -706,7 +717,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           node.value match {
             case scalar: YScalar => Some(scalar.value)
             case _ =>
-              ctx.violation("Cannot create enumeration constraint from not scalar value", node)
+              ctx.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
               None
           }
         }
@@ -739,16 +750,19 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     propertyMapping
   }
 
-  def validateTemplate(template: String, map: YMap, propMappings: Seq[PropertyMapping]) = {
+  def validateTemplate(template: String, map: YMap, propMappings: Seq[PropertyMapping]): Unit = {
     val regex = "(\\{[^}]+\\})".r
     regex.findAllIn(template).foreach { varMatch =>
       val variable = varMatch.replace("{", "").replace("}", "")
       propMappings.find(_.name().value() == variable) match {
         case Some(prop) =>
           if (prop.minCount().option().getOrElse(0) != 1)
-            ctx.violation(s"PropertyMapping for idTemplate variable '$variable' must be mandatory", map)
+            ctx.violation(DialectError,
+                          prop.id,
+                          s"PropertyMapping for idTemplate variable '$variable' must be mandatory",
+                          map)
         case None =>
-          ctx.violation(s"Missing propertyMapping for idTemplate variable '$variable'", map)
+          ctx.violation(DialectError, "", s"Missing propertyMapping for idTemplate variable '$variable'", map)
       }
     }
   }
@@ -773,7 +787,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               case Some(classTerm) =>
                 nodeMapping.withNodeTypeMapping(classTerm.id)
               case _ =>
-                ctx.violation(nodeMapping.id, s"Cannot find class term with alias $classTermId", entry.value)
+                ctx.violation(DialectError,
+                              nodeMapping.id,
+                              s"Cannot find class term with alias $classTermId",
+                              entry.value)
             }
           }
         )
@@ -785,7 +802,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             if (NodeMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethod)) {
               nodeMapping.withMergePolicy(patchMethod)
             } else {
-              ctx.violation(nodeMapping.id, s"Unsupported node mapping patch operation '$patchMethod'", entry.value)
+              ctx.violation(DialectError,
+                            nodeMapping.id,
+                            s"Unsupported node mapping patch operation '$patchMethod'",
+                            entry.value)
             }
           }
         )
@@ -875,11 +895,11 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           e.value.as[YMap].entries.foreach { entry =>
             parseNodeMapping(entry, nodeMapping => nodeMapping.withName(entry.key).adopted(parent)) match {
               case Some(nodeMapping: NodeMapping) => ctx.declarations += nodeMapping
-              case None                           => ctx.violation(parent, s"Error parsing shape '$entry'", entry)
+              case None                           => ctx.violation(DialectError, parent, s"Error parsing shape '$entry'", entry)
             }
           }
         case YType.Null =>
-        case t          => ctx.violation(parent, s"Invalid type $t for 'nodeMappings' node.", e.value)
+        case t          => ctx.violation(DialectError, parent, s"Invalid type $t for 'nodeMappings' node.", e.value)
       }
     }
   }
@@ -986,13 +1006,16 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             ctx.closedNode("documentsMappingOptions", documentsMapping.id, optionsMap)
             parseOptions(optionsMap, documentsMapping)
           case _ =>
-            ctx.violation(documentsMapping.id, "Options for a documents mapping must be a map", entry.value)
+            ctx.violation(DialectError,
+                          documentsMapping.id,
+                          "Options for a documents mapping must be a map",
+                          entry.value)
         }
       case _ => // ignore
     }
   }
 
-  def parseOptions(map: YMap, documentsModel: DocumentsModel) = {
+  def parseOptions(map: YMap, documentsModel: DocumentsModel): Option[Any] = {
     map.key("selfEncoded").map(v => parseSelfEncoded(v, documentsModel))
     map.key("declarationsPath").map(v => parseDeclarationsPath(v, documentsModel))
   }
@@ -1003,7 +1026,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         val selfEncoded = ValueNode(entry.value).boolean()
         documentsModel.set(DocumentsModelModel.SelfEncoded, selfEncoded, Annotations(entry))
       case _ =>
-        ctx.violation(documentsModel.id, "'selfEncoded' Option for a documents mapping must be a boolean", entry)
+        ctx.violation(DialectError,
+                      documentsModel.id,
+                      "'selfEncoded' Option for a documents mapping must be a boolean",
+                      entry)
     }
   }
 
@@ -1012,7 +1038,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       case YType.Str =>
         documentsModel.set(DocumentsModelModel.DeclarationsPath, ValueNode(entry.value).string(), Annotations(entry))
       case _ =>
-        ctx.violation(documentsModel.id, "'declarationsPath' Option for a documents mapping must be a String", entry)
+        ctx.violation(DialectError,
+                      documentsModel.id,
+                      "'declarationsPath' Option for a documents mapping must be a String",
+                      entry)
     }
   }
 

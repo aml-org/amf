@@ -14,6 +14,7 @@ import amf.core.parser.{
   ParsedDocument,
   ParsedReference,
   ParserContext,
+  RefContainer,
   ReferenceKind,
   ReferenceResolutionResult,
   UnspecifiedReference
@@ -23,7 +24,13 @@ import amf.core.remote._
 import amf.core.services.RuntimeCompiler
 import amf.core.utils.Strings
 import amf.internal.environment.Environment
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.{
+  CycleReferenceError,
+  InvalidCrossSpec,
+  UnresolvedReference,
+  UriSyntaxError,
+  InvalidFragmentRef
+}
 import org.yaml.model.YNode
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -44,7 +51,7 @@ class AMFCompiler(val rawUrl: String,
                   val mediaType: Option[String],
                   val vendor: Option[String],
                   val referenceKind: ReferenceKind = UnspecifiedReference,
-                  private val cache: Cache = Cache(),
+                  private val cache: Cache,
                   private val baseContext: Option[ParserContext] = None,
                   val env: Environment = Environment(),
                   val parsingOptions: ParsingOptions = ParsingOptions()) {
@@ -54,7 +61,9 @@ class AMFCompiler(val rawUrl: String,
       rawUrl.normalizePath
     } catch {
       case e: URISyntaxException =>
-        baseContext.getOrElse(ParserContext(rawUrl)).violation(path, e.getMessage, YNode(path))
+        baseContext
+          .getOrElse(ParserContext(rawUrl))
+          .violation(UriSyntaxError, path, e.getMessage, YNode(path))
         rawUrl
       case e: Exception => throw new PathResolutionError(e.getMessage)
     }
@@ -230,42 +239,50 @@ class AMFCompiler(val rawUrl: String,
     ExecutionLog.log(s"AMFCompiler#parseReferences: ${refs.toReferences.size} references found in $rawUrl")
     val parsed: Seq[Future[Option[ParsedReference]]] = refs.toReferences
       .filter(_.isRemote)
-      .map(link => {
+      .map { link =>
         val nodes = link.refs.map(_.node)
         link.resolve(context, cache, ctx, env, nodes, domainPlugin.allowRecursiveReferences) flatMap {
           case ReferenceResolutionResult(_, Some(unit)) =>
             verifyMatchingVendor(unit.sourceVendor, nodes)
+            verifyValidFragment(unit.sourceVendor, link.refs)
             val reference = ParsedReference(unit, link)
-            handler.update(reference, ctx, context, env).map(Some(_))
+            handler.update(reference, ctx, context, env, cache).map(Some(_))
           case ReferenceResolutionResult(Some(e), _) =>
             e match {
               case e: CyclicReferenceException if !domainPlugin.allowRecursiveReferences =>
                 ctx
-                  .violation(ParserSideValidations.CycleReferenceError.id, link.url, e.getMessage, link.refs.head.node)
+                  .violation(CycleReferenceError, link.url, e.getMessage, link.refs.head.node)
                 Future(None)
               case _ =>
                 if (!link.isInferred) {
                   nodes.foreach { ref =>
-                    ctx.violation(link.url, e.getMessage, ref)
+                    ctx.violation(UnresolvedReference, link.url, e.getMessage, ref)
                   }
                 }
                 Future(None)
             }
           case _ => Future(None)
         }
-      })
+      }
 
     Future.sequence(parsed).map(rs => root.copy(references = rs.flatten))
   }
 
   private def resolve(): Future[Content] = remote.resolve(location, env)
 
-  private def verifyMatchingVendor(refVendor: Option[Vendor], nodes: Seq[YNode]): Unit = {
-    refVendor match {
-      case Some(v) if vendor.nonEmpty && !v.name.contains(vendor.get) =>
-        nodes.foreach(ctx.violation("Cannot reference fragments of another spec", _))
-      case _ => // Nothing to do
-    }
+  private def verifyMatchingVendor(refVendor: Option[Vendor], nodes: Seq[YNode]): Unit = refVendor match {
+    case Some(v) if vendor.nonEmpty && !v.name.contains(vendor.get) =>
+      nodes.foreach(ctx.violation(InvalidCrossSpec, "", "Cannot reference fragments of another spec", _))
+    case _ => // Nothing to do
+  }
+
+  def verifyValidFragment(refVendor: Option[Vendor], refs: Seq[RefContainer]): Unit = refVendor match {
+    case Some(v) if v.isRaml =>
+      refs.foreach(
+        r =>
+          if (r.fragment.isDefined)
+            ctx.violation(InvalidFragmentRef, "", "Cannot use reference with # in a RAML fragment", r.node))
+    case _ => // Nothing to do
   }
 
   def root(): Future[Root] = resolve().map(parseSyntax).flatMap {

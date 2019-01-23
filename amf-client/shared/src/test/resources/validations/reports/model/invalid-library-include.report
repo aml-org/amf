@@ -5,18 +5,18 @@ Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Libraries must be applied by using 'uses'
+- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+  Message: Unresolved reference 'financeDetail.raml' from root context file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml
   Level: Violation
-  Target: 
+  Target: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml#/web-api/end-points/%2Fclaims%2F%7Bclaim-id%7D/patch/request/application%2Fjson/any/schema/unresolved
   Property: 
   Position: Some(LexicalInformation([(8,16)-(8,43)]))
   Location: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#parsing-error
-  Message: Unresolved reference 'financeDetail.raml' from root context file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml
+- Source: http://a.ml/vocabularies/amf/parser#expected-module
+  Message: Libraries must be applied by using 'uses'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml#/web-api/end-points/%2Fclaims%2F%7Bclaim-id%7D/patch/request/application%2Fjson/any/schema/unresolved
+  Target: file://amf-client/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
   Property: 
   Position: Some(LexicalInformation([(8,16)-(8,43)]))
   Location: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml

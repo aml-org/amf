@@ -141,7 +141,7 @@ protocols:
         type: number
         format: int32
     responses:
-      200:
+      "200":
         description: History information for the given user
         body: Activities
     (amf-defaultResponse):
@@ -153,7 +153,7 @@ protocols:
     description: The User Profile endpoint returns information about the Uber user that has authorized with the application.
     (amf-summary): User Profile
     responses:
-      200:
+      "200":
         description: Profile information for a user
         body: Profile
     (amf-defaultResponse):
@@ -180,7 +180,7 @@ protocols:
         type: number
         format: double
     responses:
-      200:
+      "200":
         description: An array of products
         body:
           type: array
@@ -223,7 +223,7 @@ protocols:
         type: number
         format: double
     responses:
-      200:
+      "200":
         description: An array of price estimates by product
         body:
           type: array
@@ -255,7 +255,7 @@ protocols:
         description: Unique identifier representing a specific product for a given latitude & longitude.
         type: string
     responses:
-      200:
+      "200":
         description: An array of products
         body:
           type: array

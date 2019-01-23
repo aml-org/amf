@@ -8,6 +8,8 @@ import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef.{DoubleType, FloatType, IntType, LongType}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
+import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.InvalidShapeFormat
 import org.yaml.model.{YMap, YScalar}
 
 object FormatValidator {
@@ -32,7 +34,10 @@ case class ScalarFormatType(shape: Shape, typeDef: TypeDef)(implicit ctx: WebApi
         val format = n.value.as[YScalar].text
 
         if (!FormatValidator.isValid(format, typeDef))
-          ctx.warning(shape.id, s"Format $format is not valid for type ${XsdTypeDefMapping.xsd(typeDef)}", n)
+          ctx.warning(InvalidShapeFormat,
+                      shape.id,
+                      s"Format $format is not valid for type ${XsdTypeDefMapping.xsd(typeDef)}",
+                      n)
 
         (ScalarShapeModel.Format in shape).allowingAnnotations(n)
         fromFormat(format)

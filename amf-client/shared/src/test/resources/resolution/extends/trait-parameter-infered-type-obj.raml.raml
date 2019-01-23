@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: Example with headers
+/users:
+  get:
+    headers:
+      aHeader:
+        type: object
+        example:
+          a: someText
+          b: 12
+        description: some description
+        additionalProperties: true
+        properties:
+          a:
+            type: string
+            required: true
+          b:
+            type: integer
+            required: true

@@ -14,7 +14,7 @@ import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel, Sca
 import amf.plugins.domain.shapes.models.TypeDef.NumberType
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.{ParserSideValidations, Validations}
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
@@ -32,7 +32,7 @@ class AMFShapeValidations(root: Shape) {
       name = PayloadProfile,
       baseProfile = Some(PayloadProfile),
       violationLevel = parsedValidations.map(_.name),
-      validations = parsedValidations ++ ParserSideValidations.validations
+      validations = parsedValidations ++ Validations.validations
     )
   }
 

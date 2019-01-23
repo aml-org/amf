@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, 
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import amf.plugins.domain.shapes.models.Example
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument._
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -163,7 +163,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
           example.raw.option().foreach { s =>
             results += StringToAstEmitter(s)
           }
-        })(f => results += DataNodeEmitter(example.structuredValue, ordering)(spec.eh))
+        })(_ => results += DataNodeEmitter(example.structuredValue, ordering)(spec.eh))
     }
 
     results
@@ -173,7 +173,9 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other =>
-      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+      spec.eh.violation(ResolutionValidation,
+                        example.id,
+                        None,
                         s"IllegalTypeDeclarations found: $other",
                         example.position(),
                         example.location())

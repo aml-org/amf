@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "type": "object",
+    "properties": {
+        "users":{
+            "type": "array",
+            "items": {
+                "$ref": "user.json"
+            }
+        }
+    }
+}

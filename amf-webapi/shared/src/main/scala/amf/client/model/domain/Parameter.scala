@@ -16,6 +16,7 @@ case class Parameter(override private[amf] val _internal: InternalParameter) ext
   def this() = this(InternalParameter())
 
   def name: StrField                = _internal.name
+  def parameterName: StrField       = _internal.parameterName
   def description: StrField         = _internal.description
   def required: BoolField           = _internal.required
   def deprecated: BoolField         = _internal.deprecated
@@ -31,6 +32,12 @@ case class Parameter(override private[amf] val _internal: InternalParameter) ext
   /** Set name property of this Parameter. */
   def withName(name: String): this.type = {
     _internal.withName(name)
+    this
+  }
+
+  /** Set specific name of this Parameter. */
+  def withParameterName(name: String): this.type = {
+    _internal.withParameterName(name)
     this
   }
 

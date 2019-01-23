@@ -9,9 +9,11 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstancePatch}
 import amf.plugins.document.vocabularies.model.domain._
+import amf.plugins.features.validation.ParserSideValidations.InvalidDialectPatch
 
-class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHandler)
-  extends ResolutionStage() {
+import scala.language.postfixOps
+
+class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
@@ -20,12 +22,11 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
     }
   }
 
-
   private def resolvePatch(patch: DialectInstancePatch): BaseUnit = {
     findTarget(patch) match {
       case Some(target: DialectInstance) =>
         applyPatch(target, patch)
-      case _                             =>
+      case _ =>
         patch
     }
   }
@@ -35,23 +36,28 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       case Some(id) if patch.location().isDefined =>
         patch.references.find(u => u.isInstanceOf[DialectInstance] && u.location().get.endsWith(id)) match {
           case Some(d: DialectInstance) if d.location().isDefined => Some(d)
-          case _                        => None
+          case _                                                  => None
         }
-      case _        => None
+      case _ => None
     }
   }
 
   private def applyPatch(target: DialectInstance, patch: DialectInstancePatch): DialectInstance = {
-    patchNode(Some(target.encodes.asInstanceOf[DialectDomainElement]), target.location().get, patch.encodes.asInstanceOf[DialectDomainElement], patch.location().get) match {
+    patchNode(Some(target.encodes.asInstanceOf[DialectDomainElement]),
+              target.location().get,
+              patch.encodes.asInstanceOf[DialectDomainElement],
+              patch.location().get) match {
       case Some(patchedDialectElement) => target.withEncodes(patchedDialectElement)
-      case None                        =>
+      case None =>
         target.fields.remove(DialectInstanceModel.Encodes.value.iri())
         target
     }
   }
 
-
-  private def patchNode(targetNode: Option[DialectDomainElement], targetLocation: String, patchNode: DialectDomainElement, patchLocation: String): Option[DialectDomainElement] = {
+  private def patchNode(targetNode: Option[DialectDomainElement],
+                        targetLocation: String,
+                        patchNode: DialectDomainElement,
+                        patchLocation: String): Option[DialectDomainElement] = {
     findNodeMergePolicy(patchNode) match {
       case "insert" =>
         patchNodeInsert(targetNode, targetLocation, patchNode, patchLocation)
@@ -63,14 +69,23 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
         patchNodeUpsert(targetNode, targetLocation, patchNode, patchLocation)
       case "ignore" =>
         targetNode
-      case "fail"   =>
-        errorHandler.violation(patchNode.id, s"Node ${patchNode.dynamicType.map(_.iri()).mkString(",")} cannot be patched", patchNode.annotations.find(classOf[LexicalInformation]), None)
+      case "fail" =>
+        errorHandler.violation(
+          InvalidDialectPatch,
+          patchNode.id,
+          None,
+          s"Node ${patchNode.dynamicType.map(_.iri()).mkString(",")} cannot be patched",
+          patchNode.annotations.find(classOf[LexicalInformation]),
+          None
+        )
         None
     }
   }
 
-  private def findNodeMergePolicy(element: DialectDomainElement): String = element.definedBy.mergePolicy.option().getOrElse("update")
-  private def findPropertyMappingMergePolicy(property: PropertyMapping): String = property.mergePolicy.option().getOrElse("update")
+  private def findNodeMergePolicy(element: DialectDomainElement): String =
+    element.definedBy.mergePolicy.option().getOrElse("update")
+  private def findPropertyMappingMergePolicy(property: PropertyMapping): String =
+    property.mergePolicy.option().getOrElse("update")
 
   // add or ignore if present
   private def patchNodeInsert(targetNode: Option[DialectDomainElement],
@@ -79,7 +94,6 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                               patchLocation: String): Option[DialectDomainElement] = {
     if (targetNode.isEmpty) Some(patchNode) else targetNode
   }
-
 
   // delete or ignore if not present
   private def patchNodeDelete(targetNode: Option[DialectDomainElement],
@@ -100,16 +114,26 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                             targetLocation: String,
                             patchLocation: String): Unit = {
     propertyMapping.classification() match {
-      case LiteralProperty                                                   =>
+      case LiteralProperty =>
         patchLiteralProperty(targetNode, patchField, patchValue, propertyMapping, targetLocation, patchLocation)
-      case LiteralPropertyCollection                                         =>
-        patchLiteralCollectionProperty(targetNode, patchField, patchValue, propertyMapping, targetLocation, patchLocation)
-      case ObjectProperty                                                    =>
+      case LiteralPropertyCollection =>
+        patchLiteralCollectionProperty(targetNode,
+                                       patchField,
+                                       patchValue,
+                                       propertyMapping,
+                                       targetLocation,
+                                       patchLocation)
+      case ObjectProperty =>
         patchObjectProperty(targetNode, patchField, patchValue, propertyMapping, targetLocation, patchLocation)
       case ObjectPropertyCollection | ObjectMapProperty | ObjectPairProperty =>
-        patchObjectCollectionProperty(targetNode, patchField, patchValue, propertyMapping, targetLocation, patchLocation)
-      case _                                                                 =>
-        // throw new Exception("Unsupported node mapping in patch")
+        patchObjectCollectionProperty(targetNode,
+                                      patchField,
+                                      patchValue,
+                                      propertyMapping,
+                                      targetLocation,
+                                      patchLocation)
+      case _ =>
+      // throw new Exception("Unsupported node mapping in patch")
 
     }
   }
@@ -126,7 +150,10 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
         if (targetPropertyValue.isEmpty) targetNode.patchLiteralField(patchField, patchValue.value)
       case "delete" =>
         try {
-          if (targetPropertyValue.nonEmpty && patchValue.value.asInstanceOf[AmfScalar].value == targetPropertyValue.get.value.asInstanceOf[AmfScalar].value) targetNode.removeField(patchField)
+          if (targetPropertyValue.nonEmpty && patchValue.value
+                .asInstanceOf[AmfScalar]
+                .value == targetPropertyValue.get.value.asInstanceOf[AmfScalar].value)
+            targetNode.removeField(patchField)
         } catch {
           case _: Exception => // ignore
         }
@@ -135,11 +162,18 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       case "upsert" =>
         targetNode.patchLiteralField(patchField, patchValue.value)
       case "ignore" =>
-        // ignore
-      case "fail"   =>
-        errorHandler.violation(targetNode.id, s"Property ${patchField.value.iri()} cannot be patched", targetPropertyValue.get.annotations.find(classOf[LexicalInformation]), None)
-      case _        =>
-        // ignore
+      // ignore
+      case "fail" =>
+        errorHandler.violation(
+          InvalidDialectPatch,
+          targetNode.id,
+          None,
+          s"Property ${patchField.value.iri()} cannot be patched",
+          targetPropertyValue.get.annotations.find(classOf[LexicalInformation]),
+          None
+        )
+      case _ =>
+      // ignore
     }
   }
 
@@ -173,9 +207,16 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
         targetNode.patchLiteralField(patchField, targetPropertyValue.union(patchPropertyValue).toSeq)
       case "ignore" =>
       // ignore
-      case "fail"   =>
-        errorHandler.violation(targetNode.id, s"Property ${patchField.value.iri()} cannot be patched", patchValue.annotations.find(classOf[LexicalInformation]), None)
-      case _        =>
+      case "fail" =>
+        errorHandler.violation(
+          InvalidDialectPatch,
+          targetNode.id,
+          None,
+          s"Property ${patchField.value.iri()} cannot be patched",
+          patchValue.annotations.find(classOf[LexicalInformation]),
+          None
+        )
+      case _ =>
       // ignore
     }
   }
@@ -195,97 +236,117 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       case Some(v)                                   => Seq(v.value)
       case _                                         => Nil
     }
-    val targetPropertyValueIds = targetPropertyValue.collect { case elm: DialectDomainElement => elm }.foldLeft(Map[String, DialectDomainElement]()) {
-      (acc: Map[String,DialectDomainElement], elm: DialectDomainElement) =>
-        acc + (neutralId(elm.id, targetLocation) -> elm)
-    }
-
+    val targetPropertyValueIds = targetPropertyValue
+      .collect { case elm: DialectDomainElement => elm }
+      .foldLeft(Map[String, DialectDomainElement]()) {
+        (acc: Map[String, DialectDomainElement], elm: DialectDomainElement) =>
+          acc + (neutralId(elm.id, targetLocation) -> elm)
+      }
 
     val patchPropertyValue: Seq[AmfElement] = patchValue.value match {
       case arr: AmfArray => arr.values
       case elm           => Seq(elm)
     }
-    val patchPropertyValueIds = patchPropertyValue.collect { case elm: DialectDomainElement => elm }.foldLeft(Map[String, DialectDomainElement]()) {
-      (acc: Map[String,DialectDomainElement], elm: DialectDomainElement) =>
-        acc + (neutralId(elm.id, patchLocation) -> elm)
-    }
+    val patchPropertyValueIds = patchPropertyValue
+      .collect { case elm: DialectDomainElement => elm }
+      .foldLeft(Map[String, DialectDomainElement]()) {
+        (acc: Map[String, DialectDomainElement], elm: DialectDomainElement) =>
+          acc + (neutralId(elm.id, patchLocation) -> elm)
+      }
 
     findPropertyMappingMergePolicy(propertyMapping) match {
       case "insert" =>
-        val newDialectDomainElements = patchPropertyValueIds.collect { case (id, elem) =>
-          targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
-            case Some(_) => None
-            case None    => Some(elem)
-          }
+        val newDialectDomainElements = patchPropertyValueIds.collect {
+          case (id, elem) =>
+            targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
+              case Some(_) => None
+              case None    => Some(elem)
+            }
         } collect { case Some(elem) => elem } toSeq
         val unionElements = targetPropertyValue.collect { case d: DialectDomainElement => d } union newDialectDomainElements
         targetNode.patchObjectField(patchField, unionElements)
       case "delete" =>
-        val newDialectDomainElements = patchPropertyValueIds.collect { case (id, elem) =>
-          targetPropertyValueIds.get(neutralId(id, patchLocation))
+        val newDialectDomainElements = patchPropertyValueIds.collect {
+          case (id, _) =>
+            targetPropertyValueIds.get(neutralId(id, patchLocation))
         } collect { case Some(elem) => elem } toSeq
-        val unionElements = targetPropertyValue.collect { case d: DialectDomainElement => d } diff  newDialectDomainElements
+        val unionElements = targetPropertyValue.collect { case d: DialectDomainElement => d } diff newDialectDomainElements
         targetNode.patchObjectField(patchField, unionElements)
       case "update" =>
-        val computedDomainElements: Seq[(DialectDomainElement, Option[DialectDomainElement])] = patchPropertyValueIds.collect { case (id, elem) =>
-          targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
-            case Some(targetElem) => Some((targetElem, elem))
-            case None             => None
-          }
-        } collect { case Some(pair) => pair } map { case (targetElem, patchElem) =>
-          (targetElem, patchNode(Some(targetElem), targetLocation, patchElem, patchLocation))
-        } toSeq
+        val computedDomainElements: Seq[(DialectDomainElement, Option[DialectDomainElement])] =
+          patchPropertyValueIds.collect {
+            case (id, elem) =>
+              targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
+                case Some(targetElem) => Some((targetElem, elem))
+                case None             => None
+              }
+          } collect { case Some(pair) => pair } map {
+            case (targetElem, patchElem) =>
+              (targetElem, patchNode(Some(targetElem), targetLocation, patchElem, patchLocation))
+          } toSeq
 
-        val newDomainElements = computedDomainElements.foldLeft(targetPropertyValueIds) { case (acc, (targetElem, maybePatchedElem)) =>
-          maybePatchedElem match {
-            case Some(mergedElem) => acc.updated(neutralId(targetElem.id, targetLocation), mergedElem)
-            case None             => acc - neutralId(targetElem.id, targetLocation)
-          }
+        val newDomainElements = computedDomainElements.foldLeft(targetPropertyValueIds) {
+          case (acc, (targetElem, maybePatchedElem)) =>
+            maybePatchedElem match {
+              case Some(mergedElem) => acc.updated(neutralId(targetElem.id, targetLocation), mergedElem)
+              case None             => acc - neutralId(targetElem.id, targetLocation)
+            }
         }
         targetNode.patchObjectField(patchField, newDomainElements.values.toSeq)
       case "upsert" =>
-        val existingElems = patchPropertyValueIds.toSeq.map { case (id, elem) =>
-          targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
-            case Some(targetElem) => (Some(targetElem), elem)
-            case None             => (None            , elem)
-          }
+        val existingElems = patchPropertyValueIds.toSeq.map {
+          case (id, elem) =>
+            targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
+              case Some(targetElem) => (Some(targetElem), elem)
+              case None             => (None, elem)
+            }
         }
 
-        val computedDomainElements = existingElems.map { case (maybeTargetElem, patchElem) =>
-          maybeTargetElem match {
-            case Some(targetElem) => (Some(targetElem), patchNode(Some(targetElem), targetLocation, patchElem, patchLocation))
-            case None             => (None            , Some(patchElem))
-          }
+        val computedDomainElements = existingElems.map {
+          case (maybeTargetElem, patchElem) =>
+            maybeTargetElem match {
+              case Some(targetElem) =>
+                (Some(targetElem), patchNode(Some(targetElem), targetLocation, patchElem, patchLocation))
+              case None => (None, Some(patchElem))
+            }
 
         }
 
-        val newDomainElements = computedDomainElements.foldLeft(targetPropertyValueIds) { case (acc, (maybeTargetElem, maybeMergedElem)) =>
-          maybeTargetElem match {
+        val newDomainElements = computedDomainElements.foldLeft(targetPropertyValueIds) {
+          case (acc, (maybeTargetElem, maybeMergedElem)) =>
+            maybeTargetElem match {
               // these elements were patch elements matching target elements
               // they might have produced a merged or none element
-            case Some(targetElem) =>
-              maybeMergedElem match {
-                case Some(mergedElement) =>
-                  acc.updated(neutralId(targetElem.id, targetLocation), mergedElement)
-                case None =>
-                  acc - neutralId(targetElem.id, targetLocation)
-              }
+              case Some(targetElem) =>
+                maybeMergedElem match {
+                  case Some(mergedElement) =>
+                    acc.updated(neutralId(targetElem.id, targetLocation), mergedElement)
+                  case None =>
+                    acc - neutralId(targetElem.id, targetLocation)
+                }
               // These are new elements introduced by the patch array not in the original target array, we always add them
-            case None             =>
-              maybeMergedElem match {
-                case Some(mergedElement) =>
-                  acc.updated(neutralId(mergedElement.id, patchLocation), mergedElement)
-                case None                =>
-                  acc // this should never happen
-              }
-          }
+              case None =>
+                maybeMergedElem match {
+                  case Some(mergedElement) =>
+                    acc.updated(neutralId(mergedElement.id, patchLocation), mergedElement)
+                  case None =>
+                    acc // this should never happen
+                }
+            }
         }
         targetNode.patchObjectField(patchField, newDomainElements.values.toSeq)
       case "ignore" =>
       // ignore
-      case "fail"   =>
-        errorHandler.violation(targetNode.id, s"Property ${patchField.value.iri()} cannot be patched", patchValue.annotations.find(classOf[LexicalInformation]), None)
-      case _        =>
+      case "fail" =>
+        errorHandler.violation(
+          InvalidDialectPatch,
+          targetNode.id,
+          None,
+          s"Property ${patchField.value.iri()} cannot be patched",
+          patchValue.annotations.find(classOf[LexicalInformation]),
+          None
+        )
+      case _ =>
       // ignore
     }
   }
@@ -301,7 +362,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
         val targetNodeValue = targetNode.valueForField(patchField) match {
           case Some(v) if v.value.isInstanceOf[DialectDomainElement] =>
             Some(v.value.asInstanceOf[DialectDomainElement])
-          case _                                                     =>
+          case _ =>
             None
         }
         patchNode(targetNodeValue, targetLocation, patchDialectDomainElement, patchLocation) match {
@@ -311,7 +372,6 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       case _ => // ignore
     }
   }
-
 
   // recursive merge if both present
   private def patchNodeUpdate(targetNode: Option[DialectDomainElement],
@@ -323,10 +383,12 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       patchNode.dynamicFields.foreach { patchField =>
         patchNode.valueForField(patchField) match {
           case Some(fieldValue) =>
-            nodeMapping.propertiesMapping().find(_.nodePropertyMapping().option().getOrElse("") == patchField.value.iri()) match {
+            nodeMapping
+              .propertiesMapping()
+              .find(_.nodePropertyMapping().option().getOrElse("") == patchField.value.iri()) match {
               case Some(propertyMapping) =>
                 patchProperty(targetNode.get, patchField, fieldValue, propertyMapping, targetLocation, patchLocation)
-              case _                     => // ignore
+              case _ => // ignore
             }
           case _ => // ignore
         }
@@ -343,7 +405,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
     if (targetNode.isEmpty)
       patchNodeInsert(targetNode, targetLocation, patchNode, patchLocation)
     else
-    patchNodeUpdate(targetNode, targetLocation, patchNode, patchLocation)
+      patchNodeUpdate(targetNode, targetLocation, patchNode, patchLocation)
   }
 
   private def sameNodeIdentity(target: DialectDomainElement,

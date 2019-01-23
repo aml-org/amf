@@ -2,10 +2,9 @@ package amf.plugins.document.vocabularies.parser
 
 import amf.core.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, ParserContext}
-import amf.core.utils.IdCounter
-import amf.core.utils._
+import amf.core.utils.{IdCounter, _}
 import amf.core.vocabulary.Namespace
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.DialectError
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 
@@ -66,11 +65,7 @@ case class DynamicExtensionParser(node: YNode, parent: Option[String] = None, id
 
       case other =>
         val parsed = parseScalar(YScalar(other.toString()), "string")
-        ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
-                      parsed.id,
-                      None,
-                      s"Cannot parse data node from AST structure '$other'",
-                      node)
+        ctx.violation(DialectError, parsed.id, None, s"Cannot parse data node from AST structure '$other'", node)
         parsed
     }
   }

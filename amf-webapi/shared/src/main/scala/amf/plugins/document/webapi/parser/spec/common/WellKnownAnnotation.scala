@@ -4,7 +4,8 @@ import scala.util.matching.Regex
 
 object WellKnownAnnotation {
 
-  private val ramlKnownAnnotations = Set(
+  val ramlKnownAnnotations = Set(
+    "baseUriParameters",
     "termsOfService",
     "parameters",
     "binding",
@@ -14,7 +15,6 @@ object WellKnownAnnotation {
     "baseUriParameters",
     "oasDeprecated",
     "summary",
-    "externalDocs",
     "defaultResponse",
     "payloads",
     "readOnly",
@@ -37,10 +37,16 @@ object WellKnownAnnotation {
     "xor",
     "and",
     "or",
-    "not"
+    "not",
+    "minimum",
+    "maximum",
+    "recursive",
+    "pattern",
+    "multipleOf",
+    "xone"
   )
 
-  private val oasKnownAnnotations = Set(
+  val oasKnownAnnotations = Set(
     "baseUriParameters",
     "annotationTypes",
     "requestPayloads",
@@ -76,7 +82,11 @@ object WellKnownAnnotation {
     "parameters",
     "facets",
     "merge",
-    "union"
+    "union",
+    "security",
+    "required",
+    "example",
+    "examples"
   )
 
   def resolveAnnotation(field: String): Option[String] = field match {

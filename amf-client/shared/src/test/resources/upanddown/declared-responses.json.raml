@@ -4,7 +4,7 @@
     description: 200 descr
     headers:
       Time-Ago:
-        required: true
+        x-amf-required: true
         type: integer
 title: My API With Types
 description: This RAML illustrates a type declaration that uses facets to restrict its object properties.
@@ -15,4 +15,4 @@ version: V1
   get:
     displayName: Some title
     responses:
-      200: Default
+      "200": Default

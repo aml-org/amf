@@ -2,13 +2,13 @@ package amf
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
 import amf.plugins.document.webapi.validation.{AMFRawValidations, DefaultAMFValidations, ImportUtils}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.{ParserSideValidations, Validations}
 
 object ValidationsExporter extends ImportUtils {
 
   def main(args: Array[String]): Unit = {
 
-    val parserSideVals = ParserSideValidations.levels.foldLeft(Map[String, Map[String, String]]()) {
+    val parserSideVals = Validations.allLevels.foldLeft(Map[String, Map[String, String]]()) {
       case (accMap, (id, levels)) =>
         accMap.updated(id, levels.foldLeft(Map[String, String]()) {
           case (acc, (p, v)) =>
@@ -16,7 +16,7 @@ object ValidationsExporter extends ImportUtils {
         })
     }
 
-    ParserSideValidations.validations.foreach { validation =>
+    Validations.validations.foreach { validation =>
       val severity: Map[String, String] = parserSideVals(validation.id)
       val levelsString = severity.keys.toSeq.sorted
         .map {

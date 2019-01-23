@@ -1,0 +1,43 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Some api"
+  },
+  "paths": {
+    "/a": {
+      "get": {
+        "parameters": [
+          {
+            "name": "ab",
+            "in": "query",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/One"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "One": {
+      "type": "object",
+      "properties": {
+        "some": {
+          "required": false,
+          "type": "string"
+        },
+        "api": {
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+  }
+}

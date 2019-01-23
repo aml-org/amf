@@ -15,19 +15,19 @@ import amf.core.model.domain._
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, ErrorHandler, FieldEntry, ParserContext, Value}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.annotations.ExtensionProvenance
+import amf.plugins.document.webapi.annotations.{ExtensionProvenance, Inferred}
 import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
-import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.shapes.metamodel.common._
+import amf.plugins.domain.shapes.metamodel.{ExampleModel, ScalarShapeModel}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.{MissingExtensionInReferences, ResolutionValidation}
 import amf.{ProfileName, Raml08Profile}
 
 import scala.collection.mutable
@@ -108,7 +108,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       val docFullUrl       = documentAliases.find(_._1 == alias).map(_._2._1).get
       if (extensionFullUrl != docFullUrl)
         errorHandler.violation(
-          ParserSideValidations.ResolutionErrorSpecification.id,
+          ResolutionValidation,
           s"Conflicting urls for alias '$alias' and libraries: '$extensionFullUrl' - '$docFullUrl'",
           document.location().getOrElse(document.id)
         )
@@ -193,6 +193,9 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             val newValue = adoptInner(master.id, value.value)
             if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
             master.set(field, newValue) // Set field if it doesn't exist.
+          case None if field == ScalarShapeModel.DataType && value.annotations.contains(classOf[Inferred]) =>
+          // If the overlay field is a datatype and the type is inferred it must be a type that add only an example
+          // Nothing to do
           case None => // not allowed insert a new obj node. Not exists node in master.
             val node = value.value match {
               case amfObject: AmfObject => amfObject.id
@@ -200,7 +203,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             }
 
             errorHandler.violation(
-              ParserSideValidations.ResolutionErrorSpecification.id,
+              ResolutionValidation,
               node,
               s"Property '$node' of type '${value.value.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
               value.annotations
@@ -226,16 +229,18 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                 merge(existing.domainElement, entry.domainElement, extensionId, extensionLocation)
               case _ =>
                 errorHandler.violation(
-                  ParserSideValidations.ResolutionErrorSpecification.id,
+                  ResolutionValidation,
+                  field.toString,
+                  None,
                   s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)",
                   value.value.annotations.find(classOf[LexicalInformation]),
                   value.value.annotations.find(classOf[SourceLocation]).map(_.location)
                 )
             }
           case Some(existing) => // cannot be override
-            if (!isSameDataType(existing, entry))
+            if (!isSameValue(existing, entry))
               errorHandler.violation(
-                ParserSideValidations.ResolutionErrorSpecification.id,
+                ResolutionValidation,
                 field.toString,
                 s"Property '${existing.field.toString}' in '${master.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
                 value.annotations
@@ -245,8 +250,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     master
   }
 
-  def isSameDataType(existing: FieldEntry, master: FieldEntry): Boolean =
-    existing.field == ScalarShapeModel.DataType && existing.value.toString == master.value.toString
+  def isSameValue(existing: FieldEntry, master: FieldEntry): Boolean = existing.value.toString == master.value.toString
 
   def cleanSynthesizedFacets(domain: DomainElement): Unit = domain match {
     case shape: Shape =>
@@ -325,7 +329,9 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       case key: KeyField         => mergeByKeyValue(target, field, element, key, m, o, extensionId, extensionLocation)
       case _: DomainElementModel => setDomainElementArrayValue(target, field, o, extensionId, extensionLocation)
       case _ =>
-        errorHandler.violation(ParserSideValidations.ResolutionErrorSpecification.id,
+        errorHandler.violation(ResolutionValidation,
+                               extensionId,
+                               None,
                                s"Cannot merge '$element': not a KeyField nor a Scalar",
                                target.position(),
                                target.location())
@@ -404,7 +410,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
       case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), extensionId, extensionLocation)
       case None if !(restrictions allowsNodeInsertionIn field) =>
         errorHandler.violation(
-          ParserSideValidations.ResolutionErrorSpecification.id,
+          ResolutionValidation,
           obj.id,
           s"Property of key '${obj.id}' of class '${obj.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
           obj.annotations
@@ -460,7 +466,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
           extensionsQueue(collector, e)
         case None if Option(extension.extend).isDefined =>
           errorHandler.violation(
-            ParserSideValidations.MissingExtensionInReferences.id,
+            MissingExtensionInReferences,
             model,
             Some(extension.extend),
             s"BaseUnit '${extension.extend}' not found in references."
@@ -468,7 +474,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
           Nil
         case _ =>
           errorHandler.violation(
-            ParserSideValidations.MissingExtensionInReferences.id,
+            MissingExtensionInReferences,
             model,
             Some(extension.extend),
             s"Missing extend property for model '${model.id}'."
@@ -542,14 +548,14 @@ object MergingRestrictions {
       DomainElementModel.CustomDomainProperties
     )
 
-    val allowedScalarFieldsInObject = Seq(
+    val allowedScalarFieldsInObject: Seq[Field] = Seq(
       EndPointModel.Path,
       OperationModel.Method,
       ResponseModel.StatusCode,
       PayloadModel.MediaType
     )
 
-    val blockedObjectFields = Seq(
+    val blockedObjectFields: Seq[Field] = Seq(
       WebApiModel.Servers
     )
 
@@ -559,12 +565,11 @@ object MergingRestrictions {
 
     override def allowsOverride(field: Field): Boolean =
       field.`type` match {
-        case s: Scalar => isAllowedField(field) || isAllowedScalarObjectField(field)
+        case _: Scalar => isAllowedField(field) || isAllowedScalarObjectField(field)
         case _         => isAllowedField(field) || isAllowedObjectField(field)
       }
 
     // Can insert new examples/documentation in existing
     override def allowsNodeInsertionIn(field: Field): Boolean = isAllowedField(field)
-
   }
 }

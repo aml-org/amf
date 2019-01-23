@@ -192,14 +192,28 @@ class WebApiDeclarations(val alias: Option[String],
         ErrorResourceType(key, ast)
     }
 
-  def findResourceType(key: String, scope: SearchScope.Scope): Option[ResourceType] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].resourceTypes, scope) collect {
-      case r: ResourceType => r
+  def findResourceType(key: String,
+                       scope: SearchScope.Scope,
+                       error: Option[String => Unit] = None): Option[ResourceType] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].resourceTypes, scope) match {
+      case Some(r: ResourceType) => Some(r)
+      case Some(other) if scope == SearchScope.Fragments =>
+        error.foreach(
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type ResourceType"))
+        None
+      case _ => None
     }
 
-  def findDocumentations(key: String, scope: SearchScope.Scope): Option[CreativeWork] =
-    findForType(key, Map(), scope) collect {
-      case u: CreativeWork => u
+  def findDocumentations(key: String,
+                         scope: SearchScope.Scope,
+                         error: Option[String => Unit] = None): Option[CreativeWork] =
+    findForType(key, Map(), scope) match {
+      case Some(u: CreativeWork) => Some(u)
+      case Some(other) if scope == SearchScope.Fragments =>
+        error.foreach(_(
+          s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type DocumentationItem"))
+        None
+      case _ => None
     }
 
   def findTraitOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Trait = findTrait(key, scope) match {
@@ -209,14 +223,24 @@ class WebApiDeclarations(val alias: Option[String],
       ErrorTrait(key, ast)
   }
 
-  private def findTrait(key: String, scope: SearchScope.Scope): Option[Trait] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].traits, scope) collect {
-      case t: Trait => t
+  private def findTrait(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[Trait] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].traits, scope) match {
+      case Some(t: Trait) => Some(t)
+      case Some(other) if scope == SearchScope.Fragments =>
+        error.foreach(
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type Trait"))
+        None
+      case _ => None
     }
 
-  def findType(key: String, scope: SearchScope.Scope): Option[AnyShape] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].shapes, scope) collect {
-      case s: AnyShape => s
+  def findType(key: String, scope: SearchScope.Scope, error: Option[String => Unit] = None): Option[AnyShape] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].shapes, scope) match {
+      case Some(anyShape: AnyShape) => Some(anyShape)
+      case Some(other) if scope == SearchScope.Fragments =>
+        error.foreach(
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type DataType"))
+        None
+      case _ => None
     }
 
   def findSecuritySchemeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): SecurityScheme =
@@ -227,9 +251,16 @@ class WebApiDeclarations(val alias: Option[String],
         ErrorSecurityScheme(key, ast)
     }
 
-  def findSecurityScheme(key: String, scope: SearchScope.Scope): Option[SecurityScheme] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].securitySchemes, scope) collect {
-      case ss: SecurityScheme => ss
+  def findSecurityScheme(key: String,
+                         scope: SearchScope.Scope,
+                         error: Option[String => Unit] = None): Option[SecurityScheme] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].securitySchemes, scope) match {
+      case Some(ss: SecurityScheme) => Some(ss)
+      case Some(other) if scope == SearchScope.Fragments =>
+        error.foreach(
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type SecurityScheme"))
+        None
+      case _ => None
     }
 
   def findResponse(key: String, scope: SearchScope.Scope): Option[Response] =
@@ -252,9 +283,15 @@ class WebApiDeclarations(val alias: Option[String],
       ErrorNamedExample(key, ast)
   }
 
-  def findNamedExample(key: String): Option[Example] = fragments.get(key).map(_.encoded) collect {
-    case e: Example => e
-  }
+  def findNamedExample(key: String, error: Option[String => Unit] = None): Option[Example] =
+    fragments.get(key).map(_.encoded) match {
+      case Some(e: Example) => Some(e)
+      case Some(other) =>
+        error.foreach(
+          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type NamedExample"))
+        None
+      case _ => None
+    }
 
   def nonEmpty: Boolean = {
     libs.nonEmpty || frags.nonEmpty || shapes.nonEmpty || anns.nonEmpty || resourceTypes.nonEmpty ||

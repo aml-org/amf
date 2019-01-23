@@ -126,6 +126,14 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/overlays/valid-complex/overlay2.raml")
   }
 
+  test("Valid insertion example of a type overlay") {
+    checkReport("/overlays/valid-insertion-example-type-object/overlay.raml")
+  }
+
+  test("Valid insertion operation description") {
+    checkReport("/overlays/valid-insertion-operation-description/overlay.raml")
+  }
+
   test("Inline single prop inheritance from union") {
     checkReport("/types/inline-union-inheritance.raml")
   }
@@ -154,6 +162,10 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/reference-jsonschema-property/bad-link.raml",
                 profile = Oas20Profile,
                 golden = Some("ref-jsonschema-bad-link.report"))
+  }
+
+  test("Test resolve double var at resource type (resolved link replacement)") {
+    checkReport("/resource_types/resolved-link-replacement/api.raml")
   }
 
   override val hint: Hint = RamlYamlHint

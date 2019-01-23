@@ -2,6 +2,7 @@ package amf.plugins.document.vocabularies.parser.common
 
 import amf.core.parser.{LibraryReference, LinkReference, ReferenceHandler, _}
 import amf.plugins.document.vocabularies.DialectsRegistry
+import amf.plugins.features.validation.ParserSideValidations.{InvalidInclude, InvalidModuleType}
 import org.yaml.model._
 
 class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHandler) extends ReferenceHandler {
@@ -40,12 +41,12 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
       case Right(map) =>
         map
           .key("uses")
-          .foreach(entry => {
+          .foreach { entry =>
             entry.value.to[YMap] match {
               case Right(m) => m.entries.foreach(library)
-              case _        => ctx.violation("", s"Expected map but found: ${entry.value}", entry.value)
+              case _        => ctx.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
             }
-          })
+          }
       case _ =>
     }
   }
@@ -98,9 +99,8 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
 
   private def ramlInclude(node: YNode): Unit = {
     node.value match {
-
       case scalar: YScalar => collector += (scalar.text, LinkReference, node)
-      case _               => eh.violation(s"Unexpected !include or dialect with ${node.value}", node)
+      case _               => eh.violation(InvalidInclude, "", s"Unexpected !include or dialect with ${node.value}", node)
     }
   }
 }

@@ -7,7 +7,7 @@ mediaType: application/json
   get:
     description: Returns a collection of location.Locations
     responses:
-      200:
+      "200":
         body:
           type:
             - location.Locations
@@ -16,7 +16,7 @@ mediaType: application/json
   get:
     description: Returns a collection of location.Locations
     responses:
-      200:
+      "200":
         body:
           type:
             - location.str
@@ -24,13 +24,13 @@ mediaType: application/json
   get:
     description: Returns a collection of location.Locations
     responses:
-      200:
+      "200":
         body: location.obj
 /arr:
   get:
     description: Returns a collection of location.Locations
     responses:
-      200:
+      "200":
         body: location.arr
 uses:
   location: exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml

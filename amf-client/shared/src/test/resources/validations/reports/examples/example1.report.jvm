@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#parsing-warning
+- Source: http://a.ml/vocabularies/amf/parser#schema-deprecated
   Message: 'schema' keyword it's deprecated for 1.0 version, should use 'type' instead
   Level: Warning
   Target: 

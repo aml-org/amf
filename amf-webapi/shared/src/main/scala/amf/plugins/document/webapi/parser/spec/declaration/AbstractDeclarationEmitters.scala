@@ -6,7 +6,8 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.RenderSideValidations.RenderValidation
+import amf.plugins.features.validation.{ParserSideValidations, RenderSideValidations}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 
@@ -37,7 +38,9 @@ case class AbstractDeclarationEmitter(declaration: AbstractDeclaration,
       case Some(n) => n
       case _ =>
         spec.eh.violation(
-          ParserSideValidations.EmittionErrorEspecification.id,
+          RenderValidation,
+          declaration.id,
+          None,
           s"Cannot declare abstract declaration without name $declaration",
           declaration.position(),
           declaration.location()

@@ -1,7 +1,7 @@
 package amf.core.parser
 
 import amf.core.model.domain.{DomainElement, Linkable}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.UnresolvedReference
 
 trait UnresolvedReference { this: DomainElement =>
   val reference: String
@@ -14,7 +14,7 @@ trait UnresolvedReference { this: DomainElement =>
     this
   }
 
-  def futureRef(resolve: (Linkable) => Unit): Unit = ctx match {
+  def futureRef(resolve: Linkable => Unit): Unit = ctx match {
     case Some(c) =>
       c.futureDeclarations.futureRef(
         id,
@@ -23,7 +23,7 @@ trait UnresolvedReference { this: DomainElement =>
           resolve,
           () =>
             c.violation(
-              ParserSideValidations.ParsingErrorSpecification.id,
+              UnresolvedReference,
               this,
               None,
               s"Unresolved reference $reference from root context ${c.rootContextDocument}"

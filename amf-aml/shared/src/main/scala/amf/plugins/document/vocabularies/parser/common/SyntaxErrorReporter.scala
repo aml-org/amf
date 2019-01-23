@@ -5,21 +5,21 @@ import amf.core.parser.{Annotations, ErrorHandler, Range}
 import amf.core.utils.Strings
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations._
 import org.yaml.model.{YNode, YPart}
 trait SyntaxErrorReporter { this: ErrorHandler =>
 
   def missingTermViolation(term: String, node: String, ast: YPart): Unit = {
-    violation(ParserSideValidations.MissingTermSpecification.id, node, s"Cannot find vocabulary term $term", ast)
+    violation(MissingTermSpecification, node, s"Cannot find vocabulary term $term", ast)
   }
 
   def missingFragmentViolation(fragment: String, node: String, ast: YPart): Unit = {
-    violation(ParserSideValidations.MissingFragmentSpecification.id, node, s"Cannot find fragment $fragment", ast)
+    violation(MissingFragmentSpecification, node, s"Cannot find fragment $fragment", ast)
   }
 
   def missingPropertyRangeViolation(term: String, node: String, annotations: Annotations): Unit = {
     violation(
-      ParserSideValidations.MissingPropertyRangeSpecification.id,
+      MissingPropertyRangeSpecification,
       node,
       Some(PropertyMappingModel.ObjectRange.value.iri()),
       s"Cannot find property range term $term",
@@ -34,7 +34,7 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
                                               found: String,
                                               valueNode: YNode): Unit = {
     violation(
-      ParserSideValidations.InconsistentPropertyRangeValueSpecification.id,
+      InconsistentPropertyRangeValueSpecification,
       node,
       Some(property.nodePropertyMapping().value()),
       s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()}). Found '$found', expected '$expected'",
@@ -46,7 +46,7 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
 
   def closedNodeViolation(id: String, property: String, nodeType: String, ast: YPart): Unit = {
     violation(
-      ParserSideValidations.ClosedShapeSpecification.id,
+      ClosedShapeSpecification,
       id,
       s"Property: '$property' not supported in a $nodeType node",
       ast
@@ -55,12 +55,10 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
 
   def missingPropertyViolation(id: String, property: String, nodeType: String, ast: YPart): Unit = {
     violation(
-      ParserSideValidations.MissingPropertySpecification.id,
+      MissingPropertySpecification,
       id,
       s"Property: '$property' mandatory in a $nodeType node",
       ast
     )
   }
 }
-
-object RamlVocabulariesParsersideValidations {}

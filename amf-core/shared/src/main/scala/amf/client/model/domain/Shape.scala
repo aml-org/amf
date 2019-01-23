@@ -44,7 +44,7 @@ trait Shape extends DomainElement with Linkable with NamedDomainElement {
     this
   }
 
-  def withValues(values: ClientList[String]): this.type = {
+  def withValues(values: ClientList[DataNode]): this.type = {
     _internal.withValues(values.asInternal)
     this
   }

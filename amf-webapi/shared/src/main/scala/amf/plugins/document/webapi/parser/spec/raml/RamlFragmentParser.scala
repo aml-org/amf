@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.features.validation.ParserSideValidations.{ExternalFragmentWarning, InvalidFragmentType}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 /**
@@ -32,7 +33,8 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       case _          =>
         // we need to check if named example fragment in order to support invalid structures as external fragment
         if (fragmentType != Raml10NamedExample)
-          ctx.violation(root.location,
+          ctx.violation(InvalidFragmentType,
+                        root.location,
                         "Cannot parse empty map",
                         root.parsed.asInstanceOf[SyamlParsedDocument].document)
         YMap.empty
@@ -78,9 +80,12 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
   }
 
   private def buildExternalFragment() = {
-    ctx.warning(root.location,
-                s"Invalid fragment body in ${root.location} , external fragment will be created",
-                root.parsed.asInstanceOf[SyamlParsedDocument].document)
+    ctx.warning(
+      ExternalFragmentWarning,
+      root.location,
+      s"Invalid fragment body in ${root.location} , external fragment will be created",
+      root.parsed.asInstanceOf[SyamlParsedDocument].document
+    )
     ExternalFragment()
       .withLocation(root.location)
       .withId(root.location)

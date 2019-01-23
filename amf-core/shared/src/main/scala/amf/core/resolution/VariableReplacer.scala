@@ -3,6 +3,7 @@ package amf.core.resolution
 import amf.core.annotations.{ErrorRegistered, SourceAST}
 import amf.core.model.domain.templates.Variable
 import amf.core.model.domain.{DataNode, ScalarNode}
+import amf.core.resolution.stages.ResolvedLinkNode
 import amf.core.utils.InflectorBase.Inflector
 import org.yaml.model.{QuotedMark, YScalar}
 import org.yaml.render.YamlRender
@@ -53,27 +54,32 @@ object VariableReplacer {
 
   private def replaceMatch(values: Map[String, DataNode])(m: Match, errorFunction: String => Unit): String = {
     val name = m.group(1)
-    values
+    val textOption = values
       .get(name)
       .flatMap {
         case v: ScalarNode =>
-          val text: String = v.annotations
+          v.annotations
             .find(classOf[SourceAST])
             .map(_.ast)
             .collectFirst({
               case s: YScalar if s.mark.isInstanceOf[QuotedMark] => YamlRender.render(YScalar(s.text))
               /* this calls quotedmark.marktext*/
             })
-            .getOrElse(v.value)
+            .orElse(Some(v.value))
 
-          Option(m.group(2))
-            .map { transformations =>
-              TransformationsRegex.findAllIn(transformations).foldLeft(text)(variableTransformation(errorFunction))
-            }
-            .orElse(Some(text))
+        case r: ResolvedLinkNode => Some(r.source.alias)
         case node =>
           errorFunction(s"Variable '$name' cannot be replaced with type ${node.getClass.getName}")
           None
+      }
+
+    textOption
+      .flatMap { text =>
+        Option(m.group(2))
+          .map { transformations =>
+            TransformationsRegex.findAllIn(transformations).foldLeft(text)(variableTransformation(errorFunction))
+          }
+          .orElse(Some(text))
       }
       .getOrElse(name)
       .replace("$", "\\$")

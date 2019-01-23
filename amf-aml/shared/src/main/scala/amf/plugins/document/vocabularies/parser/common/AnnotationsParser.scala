@@ -1,11 +1,12 @@
 package amf.plugins.document.vocabularies.parser.common
 
-import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.core.parser.{Annotations, ErrorHandler, ParserContext}
+import amf.core.parser.{Annotations, ParserContext}
 import amf.plugins.document.vocabularies.parser.DynamicExtensionParser
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
+import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.MissingVocabulary
 import org.yaml.model.{YMap, YNode}
 
 import scala.util.{Failure, Success}
@@ -69,7 +70,7 @@ trait AnnotationsParser {
                   .add(Annotations(v))
                 Some(extension)
               case None =>
-                ctx.violation(ex.getMessage, v)
+                ctx.violation(MissingVocabulary, node.id, ex.getMessage, v)
                 None
             }
         }

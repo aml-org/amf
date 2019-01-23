@@ -13,6 +13,7 @@ import amf.plugins.domain.webapi.models.{Operation, Response}
 import org.yaml.model._
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
+
 import scala.collection.mutable
 
 /**
@@ -39,7 +40,10 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       // Empty operation
       case _ if entry.value.toOption[YScalar].map(_.text).exists(s => s == "" || s == "null") => operation
       case _ =>
-        ctx.violation(operation.id, s"Invalid node ${entry.value} for method $method", entry.value)
+        ctx.violation(InvalidOperationType,
+                      operation.id,
+                      s"Invalid node ${entry.value} for method $method",
+                      entry.value)
         operation
     }
   }
@@ -95,7 +99,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
             val keys   = entries.map(_.key.as[YScalar].text)
             val keySet = keys.toSet
             if (keys.size > keySet.size) {
-              ctx.violation(DuplicatedOperationStatusCodeSpecification.id,
+              ctx.violation(DuplicatedOperationStatusCodeSpecification,
                             operation.id,
                             None,
                             "RAML Responses must not have duplicated status codes",

@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser
 
-import amf.core.parser.ErrorHandler
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._
 
@@ -21,10 +20,11 @@ object OasTypeDefMatcher {
                                       "long",
                                       "float")
 
-  def matchType(ramlType: String, format: String = ""): TypeDef = ramlType match {
+  def matchType(ramlType: String, format: String = "", default: TypeDef = ObjectType): TypeDef = ramlType match {
     case "string" =>
       format match {
         case "time-only"      => TimeOnlyType
+        case "date"           => DateOnlyType
         case "date-only"      => DateOnlyType
         case "date-time"      => DateTimeType
         case "date-time-only" => DateTimeOnlyType
@@ -49,7 +49,7 @@ object OasTypeDefMatcher {
     case "object"  => ObjectType
     case "array"   => ArrayType
     case "file"    => FileType
-    case _         => ObjectType
+    case _         => default
   }
 }
 

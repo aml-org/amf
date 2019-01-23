@@ -5,7 +5,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{IdsTraversionCheck, Linkable, RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.{RecursiveShapeSpecification, ResolutionValidation}
 
 trait ShapeHelpers { this: Shape =>
 
@@ -19,7 +19,12 @@ trait ShapeHelpers { this: Shape =>
   def typeExpression(eh: ErrorHandler): String = this.annotations.find(classOf[ParsedFromTypeExpression]) match {
     case Some(expr: ParsedFromTypeExpression) => expr.value
     case _ =>
-      eh.violation(this.id, "Trying to extract non existent type expression", position(), location())
+      eh.violation(ResolutionValidation,
+                   this.id,
+                   None,
+                   "Trying to extract non existent type expression",
+                   position(),
+                   location())
       ""
   }
 
@@ -69,9 +74,9 @@ trait ShapeHelpers { this: Shape =>
                               name: String,
                               link: Linkable,
                               recursionErrorHandler: Option[ErrorHandler]): RecursiveShape = {
-    if (recursionErrorHandler.isDefined && !link.supportsRecursion.option().getOrElse(false)) {
+    if (recursionErrorHandler.isDefined && link.supportsRecursion.option().isEmpty) {
       recursionErrorHandler.get.violation(
-        ParserSideValidations.RecursiveShapeSpecification.id,
+        RecursiveShapeSpecification,
         link.id,
         None,
         "Error recursive shape",

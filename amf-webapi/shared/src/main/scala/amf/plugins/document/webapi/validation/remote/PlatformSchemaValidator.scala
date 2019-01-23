@@ -3,13 +3,7 @@ package amf.plugins.document.webapi.validation.remote
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
-import amf.core.parser.{
-  DefaultParserSideErrorHandler,
-  ErrorHandler,
-  ParserContext,
-  RuntimeErrorHandler,
-  SyamlParsedDocument
-}
+import amf.core.parser.{DefaultParserSideErrorHandler, ParserContext, RuntimeErrorHandler, SyamlParsedDocument}
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
@@ -21,6 +15,7 @@ import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._
+import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.{ProfileName, ProfileNames}
 import org.yaml.builder.YDocumentBuilder
@@ -29,8 +24,8 @@ import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
@@ -103,7 +98,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
             SeverityLevels.VIOLATION,
             "",
             None,
-            (Namespace.AmfParser + "example-validation-error").iri(),
+            ExampleValidationErrorSpecification.id,
             None,
             None,
             null
@@ -247,7 +242,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
                     defaultSeverity,
                     "",
                     Some(shape.id),
-                    (Namespace.AmfParser + "example-validation-error").iri(),
+                    ExampleValidationErrorSpecification.id,
                     shape.position(),
                     shape.location(),
                     null

@@ -26,7 +26,7 @@ import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType.Bool
 import org.yaml.model.{YNode, YType}
@@ -100,7 +100,9 @@ case class Raml10ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
             case Some(shape: AnyShape) =>
               result ++= Raml10TypeEmitter(shape, ordering, Seq(AnyShapeModel.Description), references).entries()
             case Some(other) =>
-              spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+              spec.eh.violation(ResolutionValidation,
+                                other.id,
+                                None,
                                 "Cannot emit parameter for a non WebAPI shape",
                                 other.position(),
                                 other.location())
@@ -155,7 +157,7 @@ case class Raml08ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, 
               case Left(p: PartEmitter) =>
                 result += new EntryEmitter {
                   override def emit(b: EntryBuilder): Unit =
-                    b.entry(YNode("schema"), (b) => p.emit(b))
+                    b.entry(YNode("schema"), b => p.emit(b))
 
                   override def position(): Position = p.position()
                 }
@@ -329,6 +331,7 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
           .foreach { f =>
             if (parameter.isBody) {
               result += OasSchemaEmitter(f, ordering, references)
+              result ++= AnnotationsEmitter(parameter, ordering).emitters
             } else {
               result ++= OasTypeEmitter(f.value.value.asInstanceOf[Shape],
                                         ordering,
@@ -336,8 +339,6 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
                                         references).entries()
             }
           }
-
-        result ++= AnnotationsEmitter(parameter, ordering).emitters
 
         b.obj(traverse(ordering.sorted(result), _))
       }
@@ -369,9 +370,9 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
 
         fs.entry(ParameterModel.Required)
           .filter(_.value.annotations.contains(classOf[ExplicitField]))
-          .map(f => result += RamlScalarEmitter("required", f))
+          .map(f => result += RamlScalarEmitter("x-amf-required", f))
 
-        result ++= OasTypeEmitter(parameter.schema, ordering, references = references).entries()
+        result ++= OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references).entries()
         traverse(ordering.sorted(result), b)
       }
     )

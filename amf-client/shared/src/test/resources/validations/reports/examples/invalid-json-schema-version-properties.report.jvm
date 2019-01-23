@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#parsing-error
+- Source: http://a.ml/vocabularies/amf/parser#invalid-required-array-for-schema-version
   Message: Required arrays of properties not supported in JSON Schema below version draft-4
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-json-schema-version-properties.raml#/declarations/schemas/Request

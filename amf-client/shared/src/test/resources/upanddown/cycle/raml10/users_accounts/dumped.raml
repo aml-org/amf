@@ -19,18 +19,18 @@ types:
 /users:
   get:
     responses:
-      200:
+      "200":
         body:
           application/json: User[]
   /{id}:
     get:
       responses:
-        200:
+        "200":
           body:
             application/json: User
     /account:
       get:
         responses:
-          200:
+          "200":
             body:
               application/json: Account

@@ -7,14 +7,14 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.{InvalidAbstractDeclarationType, NullAbstractDeclaration}
 import org.yaml.model._
 
 /**
   *
   */
 case class AbstractDeclarationsParser(key: String,
-                                      producer: (YMapEntry) => AbstractDeclaration,
+                                      producer: YMapEntry => AbstractDeclaration,
                                       map: YMap,
                                       customProperties: String)(implicit ctx: WebApiContext) {
   def parse(): Unit = {
@@ -30,7 +30,11 @@ case class AbstractDeclarationsParser(key: String,
                 ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
                   .parse())
           case YType.Null =>
-          case t          => ctx.violation(customProperties, s"Invalid type $t for '$key' node.", e.value)
+          case t =>
+            ctx.violation(InvalidAbstractDeclarationType,
+                          customProperties,
+                          s"Invalid type $t for '$key' node.",
+                          e.value)
         }
       }
     )
@@ -49,7 +53,7 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
   def parse(): AbstractDeclaration = {
 
     if (entryValue.tagType == YType.Null)
-      ctx.warning(ParserSideValidations.ParsingWarningSpecification.id,
+      ctx.warning(NullAbstractDeclaration,
                   parent,
                   "Generating abstract declaration (resource type / trait)  with null value",
                   entryValue)
