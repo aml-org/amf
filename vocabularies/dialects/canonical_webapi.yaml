@@ -3,13 +3,15 @@
 dialect: WebAPI
 version: 1.0
 
+uses:
+  raml-http: ../vocabularies/http.yaml
+  raml-shapes: ../vocabularies/shapes.yaml
+  security: ../vocabularies/security.yaml
+  doc: ../vocabularies/aml_doc.yaml
+
 external:
-  raml-http: http://a.ml/vocabularies/http#
-  raml-shapes: http://a.ml/vocabularies/shapes#
   shacl: http://www.w3.org/ns/shacl#
-  security: http://a.ml/vocabularies/security#
   rdfs: http://www.w3.org/2000/01/rdf-schema#
-  doc: http://a.ml/vocabularies/document#
   schema-org: http://schema.org/
   hydra: http://www.w3.org/ns/hydra/core#
 
@@ -43,7 +45,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -55,7 +57,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -73,7 +75,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -85,7 +87,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -99,7 +101,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -111,7 +113,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -126,7 +128,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -138,7 +140,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -153,7 +155,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -165,7 +167,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -223,7 +225,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -235,7 +237,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       uriParameter:
         propertyTerm: raml-http.uriParameter
         range: Parameter
@@ -361,7 +363,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -373,7 +375,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       payload:
         propertyTerm: raml-http.payload
         range: Payload
@@ -435,7 +437,7 @@ nodeMappings:
         range:
           - ResourceType
           - Trait
-
+    
       variable:
         propertyTerm: doc.variable
         range: VariableValue
@@ -539,7 +541,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -551,7 +553,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -569,7 +571,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -581,7 +583,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -595,7 +597,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -607,7 +609,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -622,7 +624,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -634,7 +636,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -649,7 +651,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -661,7 +663,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -704,7 +706,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -716,7 +718,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       min.Count:
         propertyTerm: shacl.minCount
         range: integer
@@ -751,7 +753,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -763,7 +765,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -781,7 +783,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -793,7 +795,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -807,7 +809,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -819,7 +821,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -834,7 +836,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -846,7 +848,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -861,7 +863,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -873,7 +875,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -926,7 +928,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -938,7 +940,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       minCount:
         propertyTerm: shacl.minCount
         range: integer
@@ -973,7 +975,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -985,7 +987,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -1003,7 +1005,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1015,7 +1017,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -1029,7 +1031,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1041,7 +1043,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -1056,7 +1058,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1068,7 +1070,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -1083,7 +1085,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1095,7 +1097,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -1152,7 +1154,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1164,7 +1166,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -1182,7 +1184,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1194,7 +1196,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -1208,7 +1210,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1220,7 +1222,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -1235,7 +1237,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1247,7 +1249,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -1262,7 +1264,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1274,7 +1276,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -1428,7 +1430,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1440,7 +1442,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -1458,7 +1460,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1470,7 +1472,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -1484,7 +1486,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1496,7 +1498,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -1511,7 +1513,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1523,7 +1525,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -1538,7 +1540,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1550,7 +1552,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -1609,7 +1611,7 @@ nodeMappings:
           - APIKeySettings
           - HTTPSettings
           - OpenIDSettings
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           OAuth2: OAuth2Settings
@@ -1617,7 +1619,7 @@ nodeMappings:
           APIKey: APIKeySettings
           Http: HTTPSettings
           OpenID: OpenIDSettings
-
+    
       queryString:
         propertyTerm: raml-http.queryString
         range:
@@ -1631,7 +1633,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1643,7 +1645,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
 
 
   ParametrizedResourceType:
@@ -1657,7 +1659,7 @@ nodeMappings:
         range:
           - ResourceType
           - Trait
-
+    
       variable:
         propertyTerm: doc.variable
         range: VariableValue
@@ -1689,7 +1691,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1701,7 +1703,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -1719,7 +1721,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1731,7 +1733,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -1745,7 +1747,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1757,7 +1759,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -1772,7 +1774,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1784,7 +1786,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -1799,7 +1801,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1811,7 +1813,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -1855,7 +1857,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1867,7 +1869,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       name:
         propertyTerm: doc.name
         range: string
@@ -1909,7 +1911,7 @@ nodeMappings:
         range:
           - ResourceType
           - Trait
-
+    
       variable:
         propertyTerm: doc.variable
         range: VariableValue
@@ -1940,7 +1942,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1952,7 +1954,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       name:
         propertyTerm: shacl.name
@@ -1976,7 +1978,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -1988,7 +1990,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -2006,7 +2008,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2018,7 +2020,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -2032,7 +2034,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2044,7 +2046,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -2059,7 +2061,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2071,7 +2073,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -2086,7 +2088,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2098,7 +2100,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -2185,7 +2187,7 @@ nodeMappings:
           - APIKeySettings
           - HTTPSettings
           - OpenIDSettings
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           OAuth2: OAuth2Settings
@@ -2193,7 +2195,7 @@ nodeMappings:
           APIKey: APIKeySettings
           Http: HTTPSettings
           OpenID: OpenIDSettings
-
+    
 
 
   Server:
@@ -2278,7 +2280,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2290,7 +2292,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       minCount:
         propertyTerm: shacl.minCount
@@ -2329,7 +2331,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2341,7 +2343,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -2359,7 +2361,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2371,7 +2373,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -2385,7 +2387,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2397,7 +2399,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -2412,7 +2414,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2424,7 +2426,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -2439,7 +2441,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2451,7 +2453,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -2584,7 +2586,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2596,7 +2598,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       example:
         propertyTerm: raml-http.example
         range: Example
@@ -2646,7 +2648,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2658,7 +2660,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       discriminator:
         propertyTerm: raml-shapes.discriminator
         range: string
@@ -2695,7 +2697,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2707,7 +2709,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -2725,7 +2727,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2737,7 +2739,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -2751,7 +2753,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2763,7 +2765,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -2778,7 +2780,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2790,7 +2792,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -2805,7 +2807,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2817,7 +2819,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -2896,7 +2898,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2908,7 +2910,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       minCount:
         propertyTerm: shacl.minCount
         range: integer
@@ -2943,7 +2945,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2955,7 +2957,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
@@ -2973,7 +2975,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -2985,7 +2987,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
       and:
         propertyTerm: shacl.and
         range:
@@ -2999,7 +3001,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -3011,7 +3013,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       or:
         propertyTerm: shacl.or
@@ -3026,7 +3028,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -3038,7 +3040,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
@@ -3053,7 +3055,7 @@ nodeMappings:
           - NilShape
           - ScalarShape
           - AnyShape
-
+    
         typeDiscriminatorName: type
         typeDiscriminator:
           Union: UnionShape
@@ -3065,7 +3067,7 @@ nodeMappings:
           Nil: NilShape
           Scalar: ScalarShape
           Any: AnyShape
-
+    
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure

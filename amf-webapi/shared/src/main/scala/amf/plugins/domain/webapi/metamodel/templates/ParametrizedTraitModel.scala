@@ -12,7 +12,7 @@ object ParametrizedTraitModel extends ParametrizedDeclarationModel {
   override def modelInstance = ParametrizedTrait()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Http,
+    ModelVocabularies.AmlDoc,
     "Parametrized Trait",
     "RAML trait with declared parameters"
   )

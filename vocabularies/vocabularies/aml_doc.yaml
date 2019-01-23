@@ -9,6 +9,17 @@ external:
   rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
   rdfs: http://www.w3.org/2000/01/rdf-schema#
 classTerms:
+  ParametrizedResourceType:
+    displayName: Parametrized Resource Type
+    description: RAML resource type that can accept parameters
+    extends:
+      - ParametrizedDeclaration
+      - DomainElement
+    properties:
+      - schema-org.name
+      - target
+      - variable
+      - extends
   ExternalFragment:
     displayName: External Fragment
     description: Fragment encoding an external entity
@@ -47,6 +58,21 @@ classTerms:
       - recursive
       - shacl.raw
       - reference-id
+  Trait:
+    displayName: Trait
+    description: Type of document base unit encoding a RAML trait
+    extends:
+      - AbstractDeclaration
+      - DomainElement
+    properties:
+      - schema-org.name
+      - schema-org.description
+      - dataNode
+      - variable
+      - link-target
+      - link-label
+      - recursive
+      - extends
   Module:
     displayName: Module
     description: |-
@@ -67,10 +93,36 @@ classTerms:
       - target
       - variable
       - extends
+  ResourceType:
+    displayName: Resource Type
+    description: Type of document base unit encoding a RAML resource type
+    extends:
+      - AbstractDeclaration
+      - DomainElement
+    properties:
+      - schema-org.name
+      - schema-org.description
+      - dataNode
+      - variable
+      - link-target
+      - link-label
+      - recursive
+      - extends
   DomainElement:
     displayName: Domain element
     description: Base class for any element describing a domain model. Domain Elements are encoded or declared into base units
     properties:
+      - extends
+  ParametrizedTrait:
+    displayName: Parametrized Trait
+    description: RAML trait with declared parameters
+    extends:
+      - ParametrizedDeclaration
+      - DomainElement
+    properties:
+      - schema-org.name
+      - target
+      - variable
       - extends
   Linkable:
     displayName: Linkable Element

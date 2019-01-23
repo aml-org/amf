@@ -8,29 +8,6 @@ external:
   shacl: http://www.w3.org/ns/shacl#
   schema-org: http://schema.org/
 classTerms:
-  shacl.Shape:
-    displayName: Shape
-    description: |-
-      Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph.
-      They can be used to define and enforce schemas for the data graph information through SHACL.
-      Shapes can be recursive and inherit from other shapes.
-    extends: Shape
-    properties:
-      - doc.link-target
-      - doc.link-label
-      - doc.recursive
-      - shacl.name
-      - schema-org.name
-      - schema-org.description
-      - shacl.defaultValue
-      - shacl.in
-      - inherits
-      - shacl.defaultValueStr
-      - shacl.not
-      - shacl.and
-      - shacl.or
-      - shacl.xone
-      - closure
   shacl.SchemaShape:
     displayName: Schema Shape
     description: Raw schema that cannot be parsed using AMF shapes model
@@ -343,6 +320,29 @@ classTerms:
       - xmlSerialization
       - doc.examples
       - doc.extends
+  Shape:
+    displayName: Shape
+    description: |-
+      Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph.
+      They can be used to define and enforce schemas for the data graph information through SHACL.
+      Shapes can be recursive and inherit from other shapes.
+    extends: shacl.Shape
+    properties:
+      - doc.link-target
+      - doc.link-label
+      - doc.recursive
+      - shacl.name
+      - schema-org.name
+      - schema-org.description
+      - shacl.defaultValue
+      - shacl.in
+      - inherits
+      - shacl.defaultValueStr
+      - shacl.not
+      - shacl.and
+      - shacl.or
+      - shacl.xone
+      - closure
   FileShape:
     displayName: File Shape
     description: Shape describing data uploaded in an API request
