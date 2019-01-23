@@ -40,6 +40,9 @@ object Vendor {
 
 sealed trait Vendor {
   val name: String
+
+  def isRaml: Boolean = this == Raml || this == Raml10 || this == Raml08
+  def isOas: Boolean  = this == Oas || this == Oas20 || this == Oas30
 }
 
 class UnknowVendor(override val name: String) extends Vendor
@@ -100,4 +103,6 @@ object Payload extends Vendor {
 
 object JsonSchema extends Vendor {
   override val name: String = "JSON Schema"
+
+  override def toString: String = name.trim
 }

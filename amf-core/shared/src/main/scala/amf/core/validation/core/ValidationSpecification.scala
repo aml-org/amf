@@ -1,7 +1,7 @@
 package amf.core.validation.core
 
-import amf.core.model.domain.DataNode
 import amf.core.rdf.RdfModel
+import amf.core.validation.core.ValidationSpecification.PARSER_SIDE_VALIDATION
 import amf.core.vocabulary.Namespace
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -120,7 +120,8 @@ case class ValidationSpecification(name: String,
     }
   }
 
-  def isParserSide(): Boolean = targetInstance.nonEmpty && targetInstance.head == ValidationSpecification.PARSER_SIDE_VALIDATION
+  def isParserSide: Boolean =
+    targetInstance.nonEmpty && targetInstance.head == PARSER_SIDE_VALIDATION
 
   def withTargets(other: ValidationSpecification): ValidationSpecification =
     copy(
@@ -135,5 +136,7 @@ case class ValidationSpecification(name: String,
 }
 
 object ValidationSpecification {
-  val PARSER_SIDE_VALIDATION: String = (Namespace.Shapes + "ParserShape").iri()
+  val PARSER_SIDE_VALIDATION: String     = (Namespace.Shapes + "ParserShape").iri()
+  val RENDER_SIDE_VALIDATION: String     = (Namespace.Shapes + "RenderShape").iri()
+  val RESOLUTION_SIDE_VALIDATION: String = (Namespace.Shapes + "ResolutionShape").iri()
 }

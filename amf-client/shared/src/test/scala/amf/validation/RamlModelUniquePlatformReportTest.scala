@@ -184,5 +184,17 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("raml-json-ref-with-spaces/api.raml", Some("raml-json-ref-with-spaces.report"))
   }
 
+  test("Invalid json schema type") {
+    validate("invalid-schema-type/invalid-schema-type.raml", Some("invalid-schema-type.report"))
+  }
+
+  test("Invalid reference with #") {
+    validate("invalid-reference/api.raml", Some("invalid-reference.report"))
+  }
+
+  test("Invalid reference from overlay to swagger document") {
+    validate("invalid-cross-overlay/invalid-cross-overlay.raml", Some("invalid-cross-overlay.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

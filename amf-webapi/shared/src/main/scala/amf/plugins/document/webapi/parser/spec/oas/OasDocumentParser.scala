@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.core.annotations.{DeclaredElement, ExplicitField, SingleValueArray, SourceVendor}
+import amf.core.annotations.{DeclaredElement, SingleValueArray, SourceVendor}
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -11,11 +11,11 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Lazy, Strings, TemplateUri}
-import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -27,7 +27,7 @@ import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
+import amf.plugins.features.validation.ParserSideValidations._
 import org.yaml.model.{YNode, _}
 
 import scala.collection.mutable
@@ -210,7 +210,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         None
       case _ =>
         val scheme = producer(node.toString)
-        ctx.violation(scheme.id, s"Invalid type $node", node)
+        ctx.violation(InvalidSecuredByType, scheme.id, s"Invalid type $node", node)
         None
     }
 
@@ -222,7 +222,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         case None =>
           val securityScheme = SecurityScheme()
           scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme)
-          ctx.violation(securityScheme.id, s"Security scheme '$name' not found in declarations.", part)
+          ctx.violation(DeclarationNotFound,
+                        securityScheme.id,
+                        s"Security scheme '$name' not found in declarations.",
+                        part)
           securityScheme
       }
     }
@@ -239,9 +242,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)))
 
       if (!TemplateUri.isValid(path))
-        ctx.violation(endpoint.id, TemplateUri.invalidMsg(path), entry.value)
+        ctx.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
-      if (collector.exists(e => e.path.is(path))) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
+      if (collector.exists(e => e.path.is(path)))
+        ctx.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
       else parseEndpoint(endpoint)
     }
 
@@ -252,9 +256,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case Some(n) if n.tagType == YType.Map =>
               parseEndpointMap(endpoint, n.as[YMap])
             case Some(n) =>
-              ctx.violation("Invalid node for path item", n)
+              ctx.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
             case None =>
-              ctx.violation(s"Cannot find fragment path item ref $value", entry.value)
+              ctx.violation(InvalidEndpointPath,
+                            endpoint.id,
+                            s"Cannot find fragment path item ref $value",
+                            entry.value)
           }
         case Right(node) if node.tagType == YType.Map =>
           parseEndpointMap(endpoint, node.as[YMap])
@@ -262,7 +269,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           collector += endpoint
       }
 
-    private def parseEndpointMap(endpoint: EndPoint, map: YMap) = {
+    private def parseEndpointMap(endpoint: EndPoint, map: YMap): Unit = {
       ctx.closedShape(endpoint.id, map, "pathItem")
 
       map.key("displayName".asOasExtension, EndPointModel.Name in endpoint)
@@ -575,7 +582,10 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
               case Some(shape) =>
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>
-                ctx.violation(NodeShape().adopted(typesPrefix).id, s"Error parsing shape at $typeName", e)
+                ctx.violation(UnableToParseShape,
+                              NodeShape().adopted(typesPrefix).id,
+                              s"Error parsing shape at $typeName",
+                              e)
             }
           })
       }
@@ -630,10 +640,13 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .foreach(e => {
             val typeName = e.key
             val oasParameter: domain.OasParameter = e.value.to[YMap] match {
-              case Right(m) => OasParameterParser(Left(e), parentPath, Some(typeName)).parse()
+              case Right(_) => OasParameterParser(Left(e), parentPath, Some(typeName)).parse()
               case _ =>
                 val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName)).parse()
-                ctx.violation(parameter.domainElement.id, "Map needed to parse a parameter declaration", e)
+                ctx.violation(InvalidParameterType,
+                              parameter.domainElement.id,
+                              "Map needed to parse a parameter declaration",
+                              e)
                 parameter
             }
             ctx.declarations.registerOasParameter(oasParameter)
@@ -669,7 +682,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
   }
 
   object AnnotationTypesParser {
-    def apply(ast: YMapEntry, adopt: (CustomDomainProperty) => Unit): CustomDomainProperty =
+    def apply(ast: YMapEntry, adopt: CustomDomainProperty => Unit): CustomDomainProperty =
       ast.value.tagType match {
         case YType.Map =>
           ast.value.as[YMap].key("$ref") match {
@@ -682,6 +695,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           val customDomainProperty = CustomDomainProperty().withName(ast.key.as[YScalar].text)
           adopt(customDomainProperty)
           ctx.violation(
+            InvalidAnnotationType,
             customDomainProperty.id,
             "Invalid value node type for annotation types parser, expected map or scalar reference",
             ast.value
@@ -696,7 +710,7 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
   case class LinkedAnnotationTypeParser(ast: YPart,
                                         annotationName: String,
                                         scalar: YScalar,
-                                        adopt: (CustomDomainProperty) => Unit) {
+                                        adopt: CustomDomainProperty => Unit) {
     def parse(): CustomDomainProperty = {
       ctx.declarations
         .findAnnotation(scalar.text, SearchScope.All)
@@ -710,16 +724,16 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
         .getOrElse {
           val customDomainProperty = CustomDomainProperty().withName(annotationName)
           adopt(customDomainProperty)
-          ctx.violation(customDomainProperty.id, "Could not find declared annotation link in references", scalar)
+          ctx.violation(DeclarationNotFound,
+                        customDomainProperty.id,
+                        "Could not find declared annotation link in references",
+                        scalar)
           customDomainProperty
         }
     }
   }
 
-  case class AnnotationTypesParser(ast: YPart,
-                                   annotationName: String,
-                                   map: YMap,
-                                   adopt: (CustomDomainProperty) => Unit) {
+  case class AnnotationTypesParser(ast: YPart, annotationName: String, map: YMap, adopt: CustomDomainProperty => Unit) {
     def parse(): CustomDomainProperty = {
       val custom = CustomDomainProperty(ast)
       custom.withName(annotationName)
@@ -789,7 +803,10 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
               case Some(doc) => doc.link(text, Annotations(n)).asInstanceOf[CreativeWork]
               case _ =>
                 val documentation = RamlCreativeWorkParser(YNode(YMap.empty)).parse()
-                ctx.violation(documentation.id, s"not supported scalar $n.text for documentation item", n)
+                ctx.violation(DeclarationNotFound,
+                              documentation.id,
+                              s"not supported scalar $n.text for documentation item",
+                              n)
                 documentation
             }
       })

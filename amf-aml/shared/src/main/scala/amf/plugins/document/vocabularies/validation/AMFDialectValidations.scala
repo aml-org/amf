@@ -2,26 +2,26 @@ package amf.plugins.document.vocabularies.validation
 
 import amf.ProfileName
 import amf.core.rdf.RdfModel
+import amf.core.utils.Strings
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{NodeMapping, PropertyMapping}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.Validations
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Strings
 
 import scala.collection.mutable.ListBuffer
 
 class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
 
-  def profile() = {
+  def profile(): ValidationProfile = {
     val parsedValidations = validations()
     ValidationProfile(
       name = ProfileName(dialect.nameAndVersion()),
       baseProfile = None,
       violationLevel = parsedValidations.map(_.name),
-      validations = parsedValidations ++ ParserSideValidations.validations
+      validations = parsedValidations ++ Validations.validations
     )
   }
 
@@ -45,7 +45,9 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
       .toList
   }
 
-  protected def emitPropertyValidations(node: NodeMapping, prop: PropertyMapping, recursion: Seq[String]): List[ValidationSpecification] = {
+  protected def emitPropertyValidations(node: NodeMapping,
+                                        prop: PropertyMapping,
+                                        recursion: Seq[String]): List[ValidationSpecification] = {
     val validations: ListBuffer[ValidationSpecification] = ListBuffer.empty
 
     prop.minimum().option().foreach { minValue =>
@@ -152,7 +154,9 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
             ramlPropertyId = prop.nodePropertyMapping().value(),
             name = validationId(node, prop.name().value(), "enum") + "/prop",
             message = Some(message),
-            in = values.map { v => s"$v" }
+            in = values.map { v =>
+              s"$v"
+            }
           ))
       )
     }
@@ -219,7 +223,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
               ))
           )
 
-        case literal if  literal.endsWith("link") =>
+        case literal if literal.endsWith("link") =>
           val message = s"Property '${prop.name()}'  value must be of a link"
           validations += new ValidationSpecification(
             name = validationId(node, prop.name().value(), "dialectRange"),
@@ -239,7 +243,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
                   )
                 }),
                 customRdf = Some((rdfModel: RdfModel, subject: String) => {
-                  val propId                = rdfModel.nextAnonId()
+                  val propId = rdfModel.nextAnonId()
                   rdfModel.addTriple(subject, (Namespace.Shacl + "nodeKind").iri(), (Namespace.Shacl + "IRI").iri())
                 })
               ))

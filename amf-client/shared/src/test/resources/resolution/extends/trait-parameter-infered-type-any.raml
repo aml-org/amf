@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: Example with headers
+traits:
+  chargeable:
+    headers:
+      X-Dept:
+        type: any
+/users:
+  get:
+    is: [ chargeable ]
+    headers:
+      X-Dept:
+        example: [ 18-FINANCE, 200-MISC ]

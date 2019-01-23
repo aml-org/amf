@@ -8,15 +8,17 @@ import amf.core.model.domain.DomainElement
 import amf.core.parser.{ErrorHandler, LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header}
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.{CompatibilityPipeline, OasCompatibilityPipeline}
 import amf.plugins.document.webapi.resolution.pipelines.{OasEditingPipeline, OasResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
-import amf.{Oas20Profile, Oas30Profile, ProfileName}
+import amf._
 import org.yaml.model.{YDocument, YNode}
 
 sealed trait OasPlugin extends BaseWebApiPlugin {
@@ -139,15 +141,19 @@ object Oas20Plugin extends OasPlugin {
   override def resolve(unit: BaseUnit,
                        errorHandler: ErrorHandler,
                        pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
-    case ResolutionPipeline.DEFAULT_PIPELINE => new OasResolutionPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.EDITING_PIPELINE => new OasEditingPipeline(errorHandler).resolve(unit)
-    case _                                   => super.resolve(unit, errorHandler, pipelineId)
+    case ResolutionPipeline.DEFAULT_PIPELINE       => new OasResolutionPipeline(errorHandler).resolve(unit)
+    case ResolutionPipeline.EDITING_PIPELINE       => new OasEditingPipeline(errorHandler).resolve(unit)
+    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, OasProfile).resolve(unit)
+    case _                                         => super.resolve(unit, errorHandler, pipelineId)
   }
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],
                        wrapped: ParserContext,
                        ds: Option[OasWebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds)
+
+  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
+    super.domainValidationProfiles(platform).filterKeys(k => k == Oas20Profile.p || k == OasProfile.p)
 }
 
 object Oas30Plugin extends OasPlugin {
@@ -220,4 +226,7 @@ object Oas30Plugin extends OasPlugin {
                        refs: Seq[ParsedReference],
                        wrapped: ParserContext,
                        ds: Option[OasWebApiDeclarations]) = new Oas3WebApiContext(loc, refs, wrapped, ds)
+
+  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
+    defaultValidationProfiles.filterKeys(_ == validationProfile.p)
 }

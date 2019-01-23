@@ -13,9 +13,9 @@ securitySchemes:
           description: Used to send a valid OAuth 2 access token.
           type: string
       responses:
-        401:
+        "401":
           description: Bad or expired token.
-        403:
+        "403":
           description: Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...).
     settings:
       authorizationUri: https://www.dropbox.com/1/oauth2/authorize
@@ -31,7 +31,7 @@ securitySchemes:
       authorizationUri: https://www.site.com/1/oauth/authorize
       tokenCredentialsUri: https://apidomain.com/1/oauth/access_token
   basic_auth:
-      type: Basic Authentication
+    type: Basic Authentication
   digest_auth:
     type: Digest Authentication
   api_key:

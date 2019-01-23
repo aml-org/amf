@@ -72,7 +72,7 @@ class OasParameter(element: Either[Parameter, Payload], val ast: Option[YPart] =
 
   val isFormData: Boolean = element.right.toOption.exists(
     p =>
-      (p.isLink && p.effectiveLinkTarget.annotations.contains(classOf[FormBodyParameter])) || p.annotations.contains(
+      (p.isLink && p.effectiveLinkTarget().annotations.contains(classOf[FormBodyParameter])) || p.annotations.contains(
         classOf[FormBodyParameter]))
   val isBody: Boolean             = element.isRight && !isFormData
   private val paramOption         = element.left.toOption

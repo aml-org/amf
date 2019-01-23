@@ -3,14 +3,14 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.core.emitter.BaseEmitters.{pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
+import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Position}
+import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.{OasDefinitions, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.{
   OasParameter,
@@ -20,7 +20,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 }
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer
@@ -90,7 +90,9 @@ case class OasNamedParameterEmitter(oasParameter: OasParameter, ordering: SpecOr
       case Some(n) => n
       case _ =>
         spec.eh.violation(
-          ParserSideValidations.EmittionErrorEspecification.id,
+          ResolutionValidation,
+          oasParameter.domainElement.id,
+          None,
           s"Cannot declare parameter without name ${oasParameter.domainElement}",
           oasParameter.domainElement.position(),
           oasParameter.domainElement.location()

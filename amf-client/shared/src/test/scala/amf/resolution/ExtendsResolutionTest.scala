@@ -120,6 +120,81 @@ trait ExtendsResolutionTest extends ResolutionTest {
     cycle("extension-library-multilevel/api.raml", "extension-library-multilevel/api.raml.raml", RamlYamlHint, Raml)
   }
 
+  test("Trait with main parameter without type and trait with array type") {
+    cycle("trait-parameter-infered-type-array.raml",
+          "trait-parameter-infered-type-array.raml.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
+  test("Trait with main parameter without type and trait with string type") {
+    cycle("trait-parameter-infered-type-string.raml",
+          "trait-parameter-infered-type-string.raml.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
+  test("Trait with main parameter without type and trait with obj type") {
+    cycle("trait-parameter-infered-type-obj.raml",
+          "trait-parameter-infered-type-obj.raml.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
+  test("Trait with main parameter without type and trait with integer type") {
+    cycle("trait-parameter-infered-type-integer.raml",
+          "trait-parameter-infered-type-integer.raml.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
+  test("Trait with main parameter without type and trait with any type") {
+    cycle("trait-parameter-infered-type-any.raml",
+          "trait-parameter-infered-type-any.raml.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
+  test("ResourceType with main shape without type and resourceType with string type") {
+    cycle("resource-type-any-infered-type-string.raml",
+          "resource-type-any-infered-type-string.raml.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
+  test("ResourceType with main shape without type and resourceType with array type") {
+    cycle("resource-type-any-infered-type-array.raml",
+          "resource-type-any-infered-type-array.raml.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
+  test("ResourceType with main shape without type and resourceType with obj type") {
+    cycle("resource-type-any-infered-type-obj.raml",
+          "resource-type-any-infered-type-obj.raml.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
+  test("ResourceType with main shape without type and resourceType with any type") {
+    cycle("resource-type-any-infered-type-any.raml",
+          "resource-type-any-infered-type-any.raml.raml",
+          RamlYamlHint,
+          Raml,
+          basePath)
+  }
+
+  test("Test complex trait with infered type") {
+    cycle("trait-infered-case.raml", "trait-infered-case.raml.raml", RamlYamlHint, Raml, basePath)
+  }
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     val target = config.target
     new AMFRenderer(unit, target, RenderOptions().withSourceMaps, config.syntax).renderToString

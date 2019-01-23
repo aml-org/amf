@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: apiEnum
+/installer:
+  get:
+    queryParameters:
+      platform:
+        description: override the description
+        example: unix
+        enum:
+          - win
+          - mac
+          - unix

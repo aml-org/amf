@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.document.webapi.validation.AMFShapeValidations
 import amf.plugins.domain.shapes.models.ArrayShape
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.RecursiveShapeSpecification
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -40,6 +40,17 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
 
   // todo serialize json of validation report?
   // Example validations test and Example model validation test were the same, because the resolution runs always for validation
+
+  ignore("HERE_HERE PROD") {
+    for {
+      validation <- Validation(platform)
+      library    <- AMFCompiler(productionPath + "bdm/0-main.raml", platform, RamlYamlHint, validation).build()
+      report     <- validation.validate(library, RamlProfile)
+    } yield {
+      println(report)
+      assert(report.conforms)
+    }
+  }
 
   //what is speciy testing?? should be partitioned in a some new of tests? extract to tckUtor?
   ignore("Trailing spaces validation") {
@@ -149,7 +160,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
         .build()
       report <- validation.validate(library, RamlProfile)
     } yield {
-      assert(!report.results.exists(_.validationId != ParserSideValidations.RecursiveShapeSpecification.id))
+      assert(!report.results.exists(_.validationId != RecursiveShapeSpecification.id))
     }
   }
 
@@ -337,6 +348,20 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     } yield {
       assert(!report.conforms)
       assert(report.results.size == 1)
+    }
+  }
+
+  test("Numeric status codes in OAS responses") {
+    for {
+      validation <- Validation(platform)
+      doc <- AMFCompiler(productionPath + "/oas_numeric_resources.yaml",
+        platform,
+        OasYamlHint,
+        validation)
+        .build()
+      report <- validation.validate(doc, Oas20Profile)
+    } yield {
+      assert(report.conforms)
     }
   }
 

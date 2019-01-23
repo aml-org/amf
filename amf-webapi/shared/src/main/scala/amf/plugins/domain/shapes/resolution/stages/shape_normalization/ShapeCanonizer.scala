@@ -9,6 +9,8 @@ import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.annotations.InheritedShapes
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
+import amf.plugins.features.validation.ResolutionSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -268,7 +270,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
         array.annotations += ExplicitField()
         array.fields.removeField(ArrayShapeModel.Items)
         newItems match {
-          case arrayItems: ArrayShape =>
+          case _: ArrayShape =>
             // Array items -> array must become a Matrix
             array.fields.setWithoutId(ArrayShapeModel.Items, newItems)
             array.toMatrixShape
@@ -336,7 +338,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
           Option(tuple.fields.getValue(TupleShapeModel.TupleItems)).map(_.annotations).getOrElse(Annotations()))
         tuple
       } else {
-        val tuples = acc.map { items =>
+        acc.map { items =>
           val newTuple = tuple.cloneShape(Some(context.errorHandler))
           newTuple.fields.setWithoutId(
             TupleShapeModel.Items,
@@ -362,7 +364,9 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
         normalize(propertyShape) match {
           case canonicalProperty: PropertyShape => canonicalProperty
           case other =>
-            context.errorHandler.violation(other.id,
+            context.errorHandler.violation(ResolutionValidation,
+                                           other.id,
+                                           None,
                                            s"Resolution error: Expecting property shape, found $other",
                                            other.position(),
                                            other.location())

@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: Example with headers
+traits:
+  chargeable:
+    headers:
+      aHeader:
+        type: object
+        description: some description
+        properties:
+          a: string
+          b: integer
+
+/users:
+  get:
+    is: [ chargeable ]
+    headers:
+      aHeader:
+        example:
+          a: someText
+          b: 12

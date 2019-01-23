@@ -1,11 +1,9 @@
 package amf.plugins.document.webapi.references
 
 import amf.core.annotations.SourceAST
-import amf.core.exception.CyclicReferenceException
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser._
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.utils._
 import amf.internal.environment.Environment
@@ -13,7 +11,7 @@ import amf.plugins.document.webapi.BaseWebApiPlugin
 import amf.plugins.document.webapi.parser.RamlHeader
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration.LibraryLocationParser
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.YamlParser
@@ -38,10 +36,11 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   override def update(reference: ParsedReference,
                       ctx: ParserContext,
                       context: Context,
-                      environment: Environment): Future[ParsedReference] =
+                      environment: Environment,
+                      cache: Cache): Future[ParsedReference] =
     vendor match {
       case Raml10.name | Raml08.name | Raml.name if reference.isExternalFragment =>
-        handleRamlExternalFragment(reference, ctx, context, environment)
+        handleRamlExternalFragment(reference, ctx, context, environment, cache)
       case _ => Future.successful(reference)
     }
 
@@ -72,7 +71,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
             .foreach(entry =>
               entry.value.tagType match {
                 case YType.Map | YType.Seq | YType.Null =>
-                  ctx.violation("", s"Expected scalar but found: ${entry.value}", entry.value)
+                  ctx.violation(InvalidExtensionsType, "", s"Expected scalar but found: ${entry.value}", entry.value)
                 case _ => extension(entry) // assume scalar
             })
         }
@@ -108,7 +107,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
               entry.value.tagType match {
                 case YType.Map  => entry.value.as[YMap].entries.foreach(library(_, ctx))
                 case YType.Null =>
-                case _          => ctx.violation("", s"Expected map but found: ${entry.value}", entry.value)
+                case _          => ctx.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
               }
             })
         })
@@ -119,7 +118,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   private def library(entry: YMapEntry, ctx: ParserContext): Unit =
     LibraryLocationParser(entry, ctx) match {
       case Some(location) => references += (location, LibraryReference, entry.value)
-      case _              => ctx.violation("Missing library location", entry)
+      case _              => ctx.violation(ModuleNotFound, "", "Missing library location", entry)
     }
 
   def oasLinks(part: YPart, ctx: ParserContext): Unit = {
@@ -135,7 +134,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
       case YType.Str =>
         references += (ref.value
           .as[String], LinkReference, ref.value) // this is not for all scalar, link must be a string
-      case _ => ctx.violation("", s"Unexpected $$ref with $ref", ref.value)
+      case _ => ctx.violation(UnexpectedReference, "", s"Unexpected $$ref with $ref", ref.value)
     }
   }
 
@@ -175,14 +174,15 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
     node.value match {
       case scalar: YScalar =>
         references += (scalar.text, LinkReference, node)
-      case _ => ctx.violation(s"Unexpected !include with ${node.value}", node)
+      case _ => ctx.violation(UnexpectedReference, "", s"Unexpected !include with ${node.value}", node)
     }
   }
 
   private def handleRamlExternalFragment(reference: ParsedReference,
                                          ctx: ParserContext,
                                          context: Context,
-                                         environment: Environment): Future[ParsedReference] = {
+                                         environment: Environment,
+                                         cache: Cache): Future[ParsedReference] = {
     resolveUnitDocument(reference, ctx) match {
       case Right(document) =>
         val parsed = SyamlParsedDocument(document)
@@ -191,10 +191,10 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val updated = context.update(reference.unit.id) // ??
 
         val externals = refs.toReferences.map((r: Reference) => {
-          r.resolve(updated, Cache(), ctx, environment, r.refs.map(_.node), allowRecursiveRefs = true)
+          r.resolve(updated, cache, ctx, environment, r.refs.map(_.node), allowRecursiveRefs = true)
             .flatMap {
               case ReferenceResolutionResult(None, Some(unit)) =>
-                val resolved = handleRamlExternalFragment(ParsedReference(unit, r), ctx, updated, environment)
+                val resolved = handleRamlExternalFragment(ParsedReference(unit, r), ctx, updated, environment, cache)
 
                 resolved.map(res => {
                   r.refs.foreach { refContainer =>
@@ -203,7 +203,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                         res.unit.references.foreach(u => ctx.addSonRef(u))
                         mut.target = res.ast
                       case other =>
-                        ctx.violation("Cannot inline a fragment in a not mutable node", other)
+                        ctx.violation(InvalidFragmentType, "", "Cannot inline a fragment in a not mutable node", other)
                     }
                   // not meaning, only for collect all futures, not matter the type
                   }

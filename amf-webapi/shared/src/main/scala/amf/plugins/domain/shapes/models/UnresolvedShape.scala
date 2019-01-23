@@ -6,6 +6,8 @@ import amf.plugins.document.webapi.parser.spec.common.ShapeExtensionParser
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import org.yaml.model.{YNode, YPart}
 
+import scala.collection.mutable
+
 /**
   * Unresolved shape: intended to be resolved after parsing (exception is thrown if shape is not resolved).
   */
@@ -44,7 +46,7 @@ case class UnresolvedShape(override val fields: Fields,
   }
 
   // if is unresolved the effective target its himselft, because any real type has been found.
-  override def effectiveLinkTarget: UnresolvedShape = this
+  override def effectiveLinkTarget(links: Seq[String] = Seq()): UnresolvedShape = this
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =

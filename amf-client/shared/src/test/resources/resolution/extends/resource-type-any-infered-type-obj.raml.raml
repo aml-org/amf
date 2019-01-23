@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: Example API
+version: v1
+/users:
+  get:
+    description: Metadata of a Specific Index
+    responses:
+      "200":
+        body:
+          application/json:
+            example:
+              a: a text
+              b: 1
+            properties:
+              a:
+                type: string
+              b:
+                type: integer
+  description: The collection of users

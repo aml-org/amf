@@ -6,14 +6,14 @@ resourceTypes:
     get:
       description: List of a
       responses:
-        200:
+        "200":
           body:
             application/json: null
 /orders:
   get:
     description: List of a
     responses:
-      200:
+      "200":
         body:
           application/json:
             type: any

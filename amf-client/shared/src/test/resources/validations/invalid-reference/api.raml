@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: My Foo API
+mediaType: [application/json]
+
+types:
+  Foo:
+    properties:
+      bar: string
+      id: integer
+
+/foo:
+  get:
+    responses:
+      200:
+        body:
+          type: Foo[]
+          example: !include named-example.raml#Foo1

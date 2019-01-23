@@ -3,14 +3,14 @@ title: Including parent resources
 traits:
   trait:
     responses:
-      400:
+      "400":
         body:
           application/json:
             type: file://amf-client/shared/src/test/resources/org/raml/parser/include/include-parent/libraries/types/platformfault.raml
 /blabla:
   get:
     responses:
-      400:
+      "400":
         body:
           application/json:
             type: object

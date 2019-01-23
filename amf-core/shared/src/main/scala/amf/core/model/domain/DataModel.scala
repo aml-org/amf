@@ -202,8 +202,7 @@ class ScalarNode(var value: String,
     case _ => None
   }
 
-  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(
-      reportError: (String) => Unit): DataNode = {
+  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(reportError: String => Unit): DataNode = {
     VariableReplacer.replaceNodeVariables(this, values, reportError)
   }
 
@@ -259,8 +258,7 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
     case _ => None
   }
 
-  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(
-      reportError: (String) => Unit): DataNode = {
+  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(reportError: String => Unit): DataNode = {
     members = members.map(_.replaceVariables(values, keys)(reportError))
     this
   }

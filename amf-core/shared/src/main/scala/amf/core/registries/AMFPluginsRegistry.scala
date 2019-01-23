@@ -146,11 +146,13 @@ object AMFPluginsRegistry {
           payloadValidationPluginRegistry.get(mt) match {
             case Some(list) if !list.contains(validationPlugin) =>
               payloadValidationPluginRegistry.update(mt, list :+ validationPlugin)
+              payloadValidationPluginIDRegistry.update(validationPlugin.ID, validationPlugin)
             case None =>
               payloadValidationPluginRegistry.update(mt, Seq(validationPlugin))
+              payloadValidationPluginIDRegistry.update(validationPlugin.ID, validationPlugin)
+            case Some(_) => // ignore
           }
         }
-        payloadValidationPluginIDRegistry.update(validationPlugin.ID, validationPlugin)
     }
   }
 

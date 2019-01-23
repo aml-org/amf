@@ -2,6 +2,7 @@ package amf.dialects
 
 import amf.ProfileName
 import amf.core.AMFCompiler
+import amf.core.remote.Cache
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -179,7 +180,8 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          Some(AMLPlugin.ID)
+          Some(AMLPlugin.ID),
+          cache = Cache()
         ).build()
       }
       instance <- {
@@ -189,7 +191,8 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          Some(AMLPlugin.ID)
+          Some(AMLPlugin.ID),
+          cache = Cache()
         ).build()
       }
       report <- {
@@ -223,7 +226,8 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          Some(AMLPlugin.ID)
+          Some(AMLPlugin.ID),
+          cache = Cache()
         ).build()
       }
       profile <- {
@@ -237,7 +241,8 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
           platform,
           None,
           Some("application/yaml"),
-          Some(AMLPlugin.ID)
+          Some(AMLPlugin.ID),
+          cache = Cache()
         ).build()
       }
       report <- {

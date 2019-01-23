@@ -24,7 +24,7 @@ import amf.plugins.document.webapi.parser.spec.oas.{
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
 import org.yaml.render.YamlRender
@@ -116,7 +116,9 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
       val name = annotation.name.option() match {
         case Some(n) => n
         case _ =>
-          spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+          spec.eh.violation(ResolutionValidation,
+                            annotation.id,
+                            None,
                             s"Annotation type without name $annotation",
                             annotation.position(),
                             annotation.location())
@@ -216,7 +218,7 @@ case class ReferenceEmitter(reference: BaseUnit,
 
   override def emit(b: EntryBuilder): Unit = {
     val aliasesMap = aliases.getOrElse(Aliases(Set())).aliases
-    val effectiveAlias = aliasesMap.find { case (a, (f, r)) => f == reference.id } map { case (a, (f, r)) => (a, r) } getOrElse {
+    val effectiveAlias = aliasesMap.find { case (_, (f, _)) => f == reference.id } map { case (a, (_, r)) => (a, r) } getOrElse {
       (aliasGenerator(), name)
     }
     MapEntryEmitter(effectiveAlias._1, effectiveAlias._2).emit(b)

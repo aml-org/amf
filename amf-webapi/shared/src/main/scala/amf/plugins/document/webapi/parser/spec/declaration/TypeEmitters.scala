@@ -26,9 +26,9 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.{YNode, YScalar, YType}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
@@ -62,7 +62,9 @@ case class RamlNamedTypeEmitter(shape: AnyShape,
     case s: Shape with ShapeHelpers => typesEmitter(s, ordering, None, Seq(), references).emit(b)
     case _ =>
       spec.eh.violation(
-        ParserSideValidations.EmittionErrorEspecification.id,
+        ResolutionValidation,
+        shape.id,
+        None,
         "Cannot emit inline shape that doesnt support type expressions",
         shape.position(),
         shape.location()
@@ -139,7 +141,9 @@ abstract class RamlTypePartEmitter(shape: Shape,
     case Seq(p: PartEmitter)                           => Left(p)
     case es if es.forall(_.isInstanceOf[EntryEmitter]) => Right(es.collect { case e: EntryEmitter => e })
     case other =>
-      spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+      spec.eh.violation(ResolutionValidation,
+                        shape.id,
+                        None,
                         s"IllegalTypeDeclarations found: $other",
                         shape.position(),
                         shape.location())
@@ -238,7 +242,7 @@ case class Raml10TypeEmitter(shape: Shape,
     case p: PartEmitter =>
       new EntryEmitter {
         override def emit(b: EntryBuilder): Unit =
-          b.entry(YNode("type"), (b) => p.emit(b))
+          b.entry(YNode("type"), b => p.emit(b))
         override def position(): Position = p.position()
       }
   }
@@ -325,7 +329,7 @@ case class RamlAndConstraintEmitter(shape: Shape, ordering: SpecOrdering, refere
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitters = shape.and.map { s =>
+  val emitters: Seq[Raml10TypePartEmitter] = shape.and.map { s =>
     Raml10TypePartEmitter(s, ordering, None, Nil, references)
   }
 
@@ -345,7 +349,7 @@ case class RamlOrConstraintEmitter(shape: Shape, ordering: SpecOrdering, referen
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitters = shape.or.map { s =>
+  val emitters: Seq[Raml10TypePartEmitter] = shape.or.map { s =>
     Raml10TypePartEmitter(s, ordering, None, Nil, references)
   }
 
@@ -365,7 +369,7 @@ case class RamlXoneConstraintEmitter(shape: Shape, ordering: SpecOrdering, refer
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
 
-  val emitters = shape.xone.map { s =>
+  val emitters: Seq[Raml10TypePartEmitter] = shape.xone.map { s =>
     Raml10TypePartEmitter(s, ordering, None, Nil, references)
   }
 
@@ -485,7 +489,7 @@ case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
   override def position(): Position = pos(f.value.annotations)
 }
 
-//case class RamlNamedRecursiveShapeEmitter(recursive:RecursiveShape,ordering: SpecOrdering)(
+// case class RamlNamedRecursiveShapeEmitter(recursive:RecursiveShape,ordering: SpecOrdering)(
 //  implicit spec: RamlSpecEmitterContext) extends EntryEmitter {
 //  override def emit(b: EntryBuilder): Unit = {
 //    // todo add error handling?
@@ -496,7 +500,7 @@ case class XMLSerializerEmitter(key: String, f: FieldEntry, ordering: SpecOrderi
 //  }
 //
 //  override def position(): Position = pos(recursive.annotations)
-//}
+// }
 
 case class RamlRecursiveShapeEmitter(shape: RecursiveShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext) {
@@ -589,14 +593,17 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
               ordering.sorted(inlineShapes.flatMap {
                 case s: AnyShape => Raml10TypeEmitter(s, ordering, references = references).entries()
                 case other =>
-                  spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+                  spec.eh.violation(ResolutionValidation,
+                                    other.id,
+                                    None,
                                     "Cannot emit for type shapes without WebAPI Shape support",
                                     other.position(),
                                     other.location())
                   Nil
               }),
               _
-            ))
+            )
+          )
         } else {
           declaredShapes match {
             case (head: Shape with ShapeHelpers) :: Nil =>
@@ -660,7 +667,7 @@ class RamlAnyShapeEmitter(shape: AnyShape, ordering: SpecOrdering, references: S
     extends RamlShapeEmitter(shape, ordering, references)
     with ExamplesEmitter {
   override def emitters(): Seq[EntryEmitter] = {
-    var results = ListBuffer(super.emitters(): _*)
+    val results = ListBuffer(super.emitters(): _*)
 
     emitExamples(shape, results, ordering, references)
 
@@ -826,7 +833,7 @@ case class RamlScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, r
     }
   }
 
-  override val typeName: Option[String] = None //exceptional case for get the type (scalar) and format
+  override val typeName: Option[String] = None // exceptional case for get the type (scalar) and format
 }
 
 case class RamlFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -1037,9 +1044,9 @@ case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering,
     tuple.items match {
       case tupleItems: AnyShape =>
         tuple.items
-          .foreach(item => {
+          .foreach { _ =>
             Raml10TypeEmitter(tupleItems, ordering, references = references).entries().foreach(result += _)
-          })
+          }
       case _ => // ignore
     }
 
@@ -1106,9 +1113,11 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       })
       .getOrElse(property.name.value())
 
+    val key = YNode(YScalar(name), YType.Str)
+
     if (property.range.annotations.contains(classOf[SynthesizedField])) {
       b.entry(
-        name,
+        key,
         raw(_, "", YType.Null)
       )
     } else {
@@ -1124,7 +1133,7 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
       property.range match {
         case range: AnyShape =>
           b.entry(
-            name,
+            key,
             pb => {
               Raml10TypePartEmitter(range, ordering, None, references = references).emitter match {
                 case Left(p)        => p.emit(pb)
@@ -1132,8 +1141,8 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
               }
             }
           )
-        case _ => // ignreo
-          b.entry(name, _.obj(e => traverse(additionalEmitters, e)))
+        case _ => // ignore
+          b.entry(key, _.obj(e => traverse(additionalEmitters, e)))
       }
     }
   }
@@ -1217,7 +1226,6 @@ abstract class OasTypePartCollector(shape: Shape,
                         schemaPath: Seq[(String, String)]): Either[PartEmitter, Seq[EntryEmitter]] = _emitter match {
     case Some(em) => em
     case _ =>
-      val res = emitters(pointer, schemaPath)
       _emitter = Some(
         emitters(pointer, schemaPath) match {
           case Seq(p: PartEmitter)                           => Left(p)
@@ -1233,7 +1241,8 @@ class SimpleOasTypePartCollector(shape: Shape, ordering: SpecOrdering, ignored: 
     implicit spec: OasSpecEmitterContext)
     extends OasTypePartCollector(shape, ordering, ignored, references) {
 
-  def computeEmitters(pointer: Seq[String], schemaPath: Seq[(String, String)]) = emitters(pointer, schemaPath)
+  def computeEmitters(pointer: Seq[String], schemaPath: Seq[(String, String)]): Seq[Emitter] =
+    emitters(pointer, schemaPath)
 }
 
 case class OasTypeEmitter(shape: Shape,
@@ -1241,7 +1250,8 @@ case class OasTypeEmitter(shape: Shape,
                           ignored: Seq[Field] = Nil,
                           references: Seq[BaseUnit],
                           pointer: Seq[String] = Nil,
-                          schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext) {
+                          schemaPath: Seq[(String, String)] = Nil,
+                          isHeader: Boolean = false)(implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
 
     // Adjusting JSON Schema  pointer
@@ -1259,7 +1269,7 @@ case class OasTypeEmitter(shape: Shape,
         OasSchemaShapeEmitter(copiedNode, ordering).emitters()
       case node: NodeShape =>
         val copiedNode = node.copy(fields = node.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
-        OasNodeShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath).emitters()
+        OasNodeShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case union: UnionShape if nilUnion(union) =>
         OasTypeEmitter(union.anyOf.head, ordering, ignored, references).emitters()
       case union: UnionShape =>
@@ -1267,27 +1277,27 @@ case class OasTypeEmitter(shape: Shape,
         Seq(OasUnionShapeEmitter(copiedNode, ordering, references))
       case array: ArrayShape =>
         val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
-        OasArrayShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath).emitters()
+        OasArrayShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case matrix: MatrixShape =>
         val copiedMatrix = matrix.copy(fields = matrix.fields.filter(f => !ignored.contains(f._1))).withId(matrix.id)
-        OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath).emitters()
+        OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case array: TupleShape =>
         val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
-        OasTupleShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath).emitters()
+        OasTupleShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case nil: NilShape =>
         val copiedNil = nil.copy(fields = nil.fields.filter(f => !ignored.contains(f._1)))
         Seq(OasNilShapeEmitter(copiedNil, ordering))
       case file: FileShape =>
         val copiedScalar = file.copy(fields = file.fields.filter(f => !ignored.contains(f._1)))
-        OasFileShapeEmitter(copiedScalar, ordering, references).emitters()
+        OasFileShapeEmitter(copiedScalar, ordering, references, isHeader).emitters()
       case scalar: ScalarShape =>
         val copiedScalar = scalar.copy(fields = scalar.fields.filter(f => !ignored.contains(f._1)))
-        OasScalarShapeEmitter(copiedScalar, ordering, references).emitters()
+        OasScalarShapeEmitter(copiedScalar, ordering, references, isHeader).emitters()
       case recursive: RecursiveShape =>
         Seq(OasRecursiveShapeEmitter(recursive, ordering, schemaPath))
       case any: AnyShape =>
         val copiedNode = any.copyAnyShape(fields = any.fields.filter(f => !ignored.contains(f._1))) // node (amf object) id get loses
-        OasAnyShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath).emitters()
+        OasAnyShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case _ => Seq()
     }
   }
@@ -1403,7 +1413,7 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
         })
       case _ => None
     }
-    for (p <- pointer) b.entry("$ref", p)
+    for { p <- pointer } b.entry("$ref", p)
   }
 
   private def findInPath(id: String) = {
@@ -1514,15 +1524,17 @@ object OasAnyShapeEmitter {
             ordering: SpecOrdering,
             references: Seq[BaseUnit],
             pointer: Seq[String] = Nil,
-            schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext): OasAnyShapeEmitter =
-    new OasAnyShapeEmitter(shape, ordering, references, pointer, schemaPath)(spec)
+            schemaPath: Seq[(String, String)] = Nil,
+            isHeader: Boolean = false)(implicit spec: OasSpecEmitterContext): OasAnyShapeEmitter =
+    new OasAnyShapeEmitter(shape, ordering, references, pointer, schemaPath, isHeader)(spec)
 }
 
 class OasAnyShapeEmitter(shape: AnyShape,
                          ordering: SpecOrdering,
                          references: Seq[BaseUnit],
                          pointer: Seq[String] = Nil,
-                         schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
+                         schemaPath: Seq[(String, String)] = Nil,
+                         isHeader: Boolean = false)(implicit spec: OasSpecEmitterContext)
     extends OasShapeEmitter(shape, ordering, references, pointer, schemaPath) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
@@ -1535,18 +1547,20 @@ class OasAnyShapeEmitter(shape: AnyShape,
 
         result ++= (tuple match {
           case (Nil, Nil)         => Nil
-          case (named, Nil)       => examplesEmitters(named.headOption, named.tail)
-          case (Nil, named)       => examplesEmitters(None, named)
-          case (anonymous, named) => examplesEmitters(anonymous.headOption, anonymous.tail ++ named)
+          case (named, Nil)       => examplesEmitters(named.headOption, named.tail, isHeader)
+          case (Nil, named)       => examplesEmitters(None, named, isHeader)
+          case (anonymous, named) => examplesEmitters(anonymous.headOption, anonymous.tail ++ named, isHeader)
         })
       })
 
     super.emitters() ++ result
   }
 
-  private def examplesEmitters(main: Option[Example], extentions: Seq[Example]) = {
+  private def examplesEmitters(main: Option[Example], extentions: Seq[Example], isHeader: Boolean) = {
     val em = ListBuffer[EntryEmitter]()
-    main.foreach(a => em += SingleExampleEmitter("example", a, ordering))
+    val label = if (isHeader) "x-amf-example" else "example"
+    main.foreach(a => em += SingleExampleEmitter(label, a, ordering))
+    val labesl = if (isHeader) "x-amf-examples" else "examples"
     if (extentions.nonEmpty)
       em += MultipleExampleEmitter("examples".asOasExtension, extentions, ordering, references)
     em
@@ -1557,8 +1571,9 @@ case class OasArrayShapeEmitter(shape: ArrayShape,
                                 ordering: SpecOrdering,
                                 references: Seq[BaseUnit],
                                 pointer: Seq[String] = Nil,
-                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
-    extends OasAnyShapeEmitter(shape, ordering, references) {
+                                schemaPath: Seq[(String, String)] = Nil,
+                                isHeader: Boolean = false)(implicit spec: OasSpecEmitterContext)
+    extends OasAnyShapeEmitter(shape, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter](super.emitters(): _*)
     val fs     = shape.fields
@@ -1599,8 +1614,9 @@ case class OasTupleShapeEmitter(shape: TupleShape,
                                 ordering: SpecOrdering,
                                 references: Seq[BaseUnit],
                                 pointer: Seq[String] = Nil,
-                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
-    extends OasAnyShapeEmitter(shape, ordering, references) {
+                                schemaPath: Seq[(String, String)] = Nil,
+                                isHeader: Boolean = false)(implicit spec: OasSpecEmitterContext)
+    extends OasAnyShapeEmitter(shape, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter](super.emitters(): _*)
     val fs     = shape.fields
@@ -1666,7 +1682,7 @@ case class OasItemsShapeEmitter(array: ArrayShape,
     with EntryEmitter {
 
   def emit(b: EntryBuilder): Unit = {
-    if (Option((array.fields.getValue(ArrayShapeModel.Items))).isDefined) {
+    if (Option(array.fields.getValue(ArrayShapeModel.Items)).isDefined) {
       b.entry("items", b => emitPart(b))
     }
   }
@@ -1694,7 +1710,7 @@ case class OasTupleItemsShapeEmitter(array: TupleShape,
                                      schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
-  val itemEmitters = {
+  val itemEmitters: Seq[OasTypeEmitter] = {
     array.items.zipWithIndex.map {
       case (shape, i) =>
         /*
@@ -1732,8 +1748,9 @@ case class OasNodeShapeEmitter(node: NodeShape,
                                ordering: SpecOrdering,
                                references: Seq[BaseUnit],
                                pointer: Seq[String] = Nil,
-                               schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
-    extends OasAnyShapeEmitter(node, ordering, references) {
+                               schemaPath: Seq[(String, String)] = Nil,
+                               isHeader: Boolean = false)(implicit spec: OasSpecEmitterContext)
+    extends OasAnyShapeEmitter(node, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 
@@ -1973,9 +1990,9 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
 
 }
 
-case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, references: Seq[BaseUnit], isHeader: Boolean = false)(
     override implicit val spec: OasSpecEmitterContext)
-    extends OasAnyShapeEmitter(scalar, ordering, references)
+    extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 
   override def typeDef: Option[TypeDef] = scalar.dataType.option().map(TypeDefXsdMapping.typeDef)
@@ -2011,9 +2028,9 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
   }
 }
 
-case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit], isHeader: Boolean)(
     override implicit val spec: OasSpecEmitterContext)
-    extends OasAnyShapeEmitter(scalar, ordering, references)
+    extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 
   override def typeDef: Option[TypeDef] = None
@@ -2099,14 +2116,16 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
     property.fields.entry(PropertyShapeModel.ReadOnly).map(fe => ValueEmitter("readOnly", fe))
 
   val propertyName: String = property.patternName.option().getOrElse(property.name.value())
+  val propertyKey = YNode(YScalar(propertyName), YType.Str)
 
-  val computedEmitters = emitter(pointer ++ Seq("properties", propertyName), schemaPath)
+  val computedEmitters: Either[PartEmitter, Seq[EntryEmitter]] =
+    emitter(pointer ++ Seq("properties", propertyName), schemaPath)
 
   override def emit(b: EntryBuilder): Unit = {
     property.range match {
       case _: AnyShape | _: RecursiveShape =>
         b.entry(
-          propertyName,
+          propertyKey,
           pb => {
             computedEmitters match {
               case Left(p)        => p.emit(pb)
@@ -2115,7 +2134,7 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
           }
         )
       case _ => // ignore
-        b.entry(propertyName, _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
+        b.entry(propertyKey, _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
     }
   }
 
@@ -2141,7 +2160,7 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
     results += emitter
     shape match {
       case any: AnyShape if any.examples.nonEmpty => emitExamples(any, results, ordering, Nil)
-      case _                                      => //ignore
+      case _                                      => // ignore
     }
 
     results

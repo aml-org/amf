@@ -15,6 +15,9 @@ object ProfileNames {
   val RAML10: ProfileName = Raml10Profile
   val RAML08: ProfileName = Raml08Profile
   val AML: ProfileName    = RamlProfile
+
+  lazy val specProfiles: Seq[ProfileName] =
+    Seq(AmfProfile, OasProfile, Oas20Profile, Oas30Profile, RamlProfile, Raml08Profile, Raml10Profile)
 }
 
 case class ProfileName(private[amf] val p: String, private val m: MessageStyle = AMFStyle) {

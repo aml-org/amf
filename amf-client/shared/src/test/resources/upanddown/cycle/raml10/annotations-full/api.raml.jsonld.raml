@@ -12,7 +12,7 @@ baseUri: myfalsehost.com/apis
     get:
       description: Returns Customer data
       responses:
-        200:
+        "200":
           body:
             application/json:
       (AnnotationInGet): hello
@@ -22,7 +22,7 @@ baseUri: myfalsehost.com/apis
       get:
         description: Returns a collection accounts
         responses:
-          200:
+          "200":
             body:
               application/json:
     /cards:
@@ -30,7 +30,7 @@ baseUri: myfalsehost.com/apis
         get:
           description: Returns a collection of cards
           responses:
-            200:
+            "200":
               body:
                 application/json:
         post:

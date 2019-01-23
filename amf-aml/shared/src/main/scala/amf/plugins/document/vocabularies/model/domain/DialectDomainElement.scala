@@ -75,7 +75,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       Field(Type.Str, iriToValue(propertyId))
     }
 
-    (literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map {
+    (literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).flatMap {
       propertyId =>
         instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get.toField
     }.toList ++ mapKeyFields ++ fields

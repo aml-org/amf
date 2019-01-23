@@ -1,15 +1,12 @@
-// auto-generated class from ValidationsImporter.toScala
 package amf.plugins.document.webapi.validation
 
 import amf._
 import amf.core.remote.{Amf, Oas, Raml, Raml08}
 import amf.core.vocabulary.{Namespace, ValueType}
 
-// scalastyle:off line.contains.tab
 object AMFRawValidations {
 
   /**
-    * Validation defined in a TSV file with AMF validations
     * @param uri URI of the validation, null to auto-generate
     * @param message Optional message for the validation
     * @param level Level: AMF, OpenAPI or RAML
@@ -17,7 +14,7 @@ object AMFRawValidations {
     * @param owlProperty Optional OWL property target of the validation
     * @param shape Type of SHACL shape for the validation
     * @param constraint URI of the constraint component
-    * @param value Value for the contraint component
+    * @param value Value for the constraint component
     */
   class AMFValidation(val uri: Option[String],
                       val message: Option[String],

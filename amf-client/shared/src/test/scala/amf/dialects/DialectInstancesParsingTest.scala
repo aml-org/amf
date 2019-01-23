@@ -331,15 +331,27 @@ trait DialectInstancesParsingTest extends FunSuiteCycleTests {
     withDialect("dialect24.raml", "example24c.json", "example24c.raml", AmfJsonHint, Aml)
   }
 
+  test("Generate instance with invalid property terms") {
+    withDialect(
+      "/invalids/schema-uri/dialect.yaml",
+      "/invalids/schema-uri/instance.yaml",
+      "/invalids/schema-uri/instance.json",
+      VocabularyYamlHint,
+      Amf,
+      enableValidation = true
+    )
+  }
+
   protected def withDialect(dialect: String,
                             source: String,
                             golden: String,
                             hint: Hint,
                             target: Vendor,
                             directory: String = basePath,
-                            useAmfJsonldSerialisation: Boolean = true): Future[Assertion] = {
+                            useAmfJsonldSerialisation: Boolean = true,
+                            enableValidation: Boolean = false): Future[Assertion] = {
     for {
-      v   <- Validation(platform).map(_.withEnabledValidation(false))
+      v   <- Validation(platform).map(_.withEnabledValidation(enableValidation))
       _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
       res <- cycle(source, golden, hint, target, basePath, None, useAmfJsonldSerialisation)
     } yield {

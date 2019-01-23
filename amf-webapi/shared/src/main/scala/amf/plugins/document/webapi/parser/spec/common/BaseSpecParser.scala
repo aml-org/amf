@@ -8,7 +8,11 @@ import amf.core.model.domain.{ArrayNode => _, ScalarNode => _, _}
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.{
+  DuplicatedPropertySpecification,
+  PathTemplateUnbalancedParameters,
+  UnexpectedRamlScalarKey
+}
 import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
@@ -26,7 +30,7 @@ trait SpecParserOps {
     val pattern2 = "\\}[^\\{]*\\}".r
     if (pattern1.findFirstMatchIn(path).nonEmpty || pattern2.findFirstMatchIn(path).nonEmpty) {
       ctx.violation(
-        ParserSideValidations.PathTemplateUnbalancedParameters.id,
+        PathTemplateUnbalancedParameters,
         node,
         Some(property),
         "Invalid path template syntax",
@@ -149,7 +153,7 @@ trait SpecParserOps {
       n match {
         case n: RamlScalarValuedNode =>
           AnnotationParser.parseExtensions(s"$parent/annotation", n.obj)
-        case n: DefaultScalarNode =>
+        case _: DefaultScalarNode =>
           Nil
       }
     }
@@ -247,12 +251,15 @@ object RamlScalarNode {
     }
 
     if (values.nonEmpty) {
-      values.tail.foreach(d => iv.violation(s"Duplicated key 'value'.", d))
+      values.tail.foreach(d => iv.violation(DuplicatedPropertySpecification, "", s"Duplicated key 'value'.", d))
     }
 
     RamlScalarValuedNode(obj, values.headOption.map(entry => ScalarNode(entry.value)))
   }
 
   private def unexpected(key: YNode)(implicit iv: WebApiContext): Unit =
-    iv.violation(s"Unexpected key '$key'. Options are 'value' or annotations \\(.+\\)", key)
+    iv.violation(UnexpectedRamlScalarKey,
+                 "",
+                 s"Unexpected key '$key'. Options are 'value' or annotations \\(.+\\)",
+                 key)
 }

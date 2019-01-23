@@ -61,7 +61,7 @@ schemas:
           - CLE
         type: string
     responses:
-      200:
+      "200":
         body:
           application/json:
             example:
@@ -92,7 +92,7 @@ schemas:
       application/json:
         formParameters: {}
     responses:
-      201:
+      "201":
         body:
           application/json:
             example:
@@ -100,7 +100,7 @@ schemas:
   /{ID}:
     get:
       responses:
-        200:
+        "200":
           body:
             application/json:
               example:
@@ -116,7 +116,7 @@ schemas:
                   totalSeats: 150
     delete:
       responses:
-        200:
+        "200":
           body:
             application/json:
               example:
@@ -126,7 +126,7 @@ schemas:
         application/json:
           formParameters: {}
       responses:
-        200:
+        "200":
           body:
             application/json:
               example:

@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: acc-claims-permission-experience-api
+version: v1
+mediaType: application/json
+protocols:
+  - HTTPS
+
+baseUri: /api/acc-claim-permission/{version}
+
+types:
+  Resource: !include /path2.0.1/fragment.raml

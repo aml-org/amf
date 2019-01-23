@@ -15,6 +15,7 @@ import amf.core.registries.AMFDomainRegistry
 import amf.core.remote.Platform
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.graph.parser.GraphParserHelpers
+import amf.plugins.features.validation.ParserSideValidations.{UnableToParseNode, UnableToParseRdfDocument}
 import org.mulesoft.common.time.SimpleDateTime
 
 import scala.collection.mutable
@@ -40,11 +41,15 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
         parse(rootNode, findBaseUnit = true) match {
           case Some(unit: BaseUnit) => unit.set(BaseUnitModel.Location, location.split("#").head)
           case _ =>
-            ctx.violation(location, s"Unable to parse RDF model for location root node: $location")
+            ctx.violation(UnableToParseRdfDocument,
+                          location,
+                          s"Unable to parse RDF model for location root node: $location")
             Document()
         }
       case _ =>
-        ctx.violation(location, s"Unable to parse RDF model for location root node: $location")
+        ctx.violation(UnableToParseRdfDocument,
+                      location,
+                      s"Unable to parse RDF model for location root node: $location")
         Document()
     }
 
@@ -288,6 +293,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
               }
             case _ =>
               ctx.violation(
+                UnableToParseRdfDocument,
                 instance.id,
                 s"Error parsing RDF graph node, unknown linked node for property $key in node ${instance.id}")
           }
@@ -305,6 +311,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           instance.setArray(f, parseList(instance.id, l.element, findLink(properties.head)), annots(sources, key))
         case _: SortedArray =>
           ctx.violation(
+            UnableToParseRdfDocument,
             instance.id,
             s"Error, more than one sorted array values found in node for property $key in node ${instance.id}")
         case a: Array =>
@@ -407,7 +414,10 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
     foundType match {
       case Some(t) => findType(t)
       case None =>
-        ctx.violation(id, s"Error parsing JSON-LD node, unknown @types $stringTypes", ctx.rootContextDocument)
+        ctx.violation(UnableToParseNode,
+                      id,
+                      s"Error parsing JSON-LD node, unknown @types $stringTypes",
+                      ctx.rootContextDocument)
         None
     }
   }
@@ -514,8 +524,12 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
 
   private def date(property: PropertyObject) = {
     property match {
-      case Literal(v, _) => AmfScalar(SimpleDateTime.parse(v).right.get)
-      case Uri(v)        => throw new Exception(s"Expecting Date literal found URI $v")
+      case Literal(v, _) =>
+        SimpleDateTime.parse(v) match {
+          case Right(value) => AmfScalar(value)
+          case Left(error)  => throw new Exception(error.message)
+        }
+      case Uri(v) => throw new Exception(s"Expecting Date literal found URI $v")
     }
   }
 

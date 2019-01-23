@@ -152,6 +152,9 @@ object WebApiRegister {
     platform.registerWrapper(shapes.metamodel.UnionShapeModel) {
       case s: shapes.models.UnionShape => UnionShape(s)
     }
+    platform.registerWrapper(amf.core.metamodel.domain.RecursiveShapeModel) {
+      case s: amf.core.model.domain.RecursiveShape => RecursiveShape(s)
+    }
     platform.registerWrapper(TemplatedLinkModel) {
       case s: webapi.models.TemplatedLink => TemplatedLink(s)
     }

@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.TemplateUri
+import amf.core.utils.{Strings, TemplateUri}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec
@@ -12,9 +12,12 @@ import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
+import amf.plugins.features.validation.ParserSideValidations.{
+  DuplicatedEndpointPath,
+  InvalidEndpointPath,
+  UnusedBaseUriParameter
+}
 import org.yaml.model._
-import amf.core.utils.Strings
-import amf.plugins.features.validation.ParserSideValidations
 
 import scala.collection.mutable
 
@@ -59,9 +62,10 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
     if (!TemplateUri.isValid(path))
-      ctx.violation(endpoint.id, TemplateUri.invalidMsg(path), entry.value)
+      ctx.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
-    if (collector.exists(e => e.path.is(path))) ctx.violation(endpoint.id, "Duplicated resource path " + path, entry)
+    if (collector.exists(e => e.path.is(path)))
+      ctx.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
     else {
       entry.value.tagType match {
         case YType.Null => collector += endpoint
@@ -212,7 +216,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   private def checkParamsUsage(endpoint: EndPoint, pathParams: Seq[String], endpointParams: Seq[Parameter]): Unit = {
     endpointParams.foreach { p =>
       if (!p.name.option().exists(n => pathParams.contains(n)))
-        ctx.warning(ParserSideValidations.ParsingWarningSpecification.id,
+        ctx.warning(UnusedBaseUriParameter,
                     p.id,
                     None,
                     s"Unused uri parameter ${p.name.value()}",
@@ -222,7 +226,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     endpoint.operations.flatMap(o => Option(o.request)).flatMap(_.uriParameters).foreach { p =>
       if (!p.name.option().exists(n => pathParams.contains(n))) {
-        ctx.warning(ParserSideValidations.ParsingWarningSpecification.id,
+        ctx.warning(UnusedBaseUriParameter,
                     p.id,
                     None,
                     s"Unused operation uri parameter ${p.name.value()}",

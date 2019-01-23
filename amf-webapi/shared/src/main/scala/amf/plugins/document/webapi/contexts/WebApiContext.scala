@@ -7,12 +7,6 @@ import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft3SchemaVersion,
-  JSONSchemaDraft4SchemaVersion,
-  JSONSchemaUnspecifiedVersion,
-  JSONSchemaVersion
-}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft3SchemaVersion,
@@ -23,10 +17,11 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.features.validation.ParserSideValidations
 import amf.plugins.features.validation.ParserSideValidations.{
   ClosedShapeSpecification,
-  DuplicatedPropertySpecification
+  DeclarationNotFound,
+  DuplicatedPropertySpecification,
+  InvalidJsonSchemaVersion
 }
 import org.yaml.model._
 
@@ -107,7 +102,7 @@ abstract class RamlWebApiContext(override val loc: String,
         case Some(library: RamlWebApiDeclarations) =>
           findDeclarations(path.tail, library)
         case _ =>
-          violation(ParserSideValidations.ParsingErrorSpecification.id,
+          violation(DeclarationNotFound,
                     "",
                     None,
                     s"Cannot find declarations in context '${path.mkString(".")}",
@@ -168,7 +163,7 @@ abstract class RamlWebApiContext(override val loc: String,
           case None => // at least we found a solution, this is a valid shape
           case Some(errors: Seq[YMapEntry]) =>
             violation(
-              ClosedShapeSpecification.id,
+              ClosedShapeSpecification,
               node,
               s"Properties ${errors.map(_.key.as[YScalar].text).mkString(",")} not supported in a $vendor $shapeType node",
               errors.head
@@ -177,7 +172,7 @@ abstract class RamlWebApiContext(override val loc: String,
 
       case None =>
         violation(
-          ClosedShapeSpecification.id,
+          ClosedShapeSpecification,
           node,
           s"Cannot validate unknown node type $shapeType for $vendor",
           shape.annotations
@@ -249,8 +244,8 @@ abstract class OasWebApiContext(loc: String,
   }
 
   val linkTypes: Boolean = wrapped match {
-    case raml: RamlWebApiContext => false
-    case _                       => true
+    case _: RamlWebApiContext => false
+    case _                    => true
   }
   override def ignore(shape: String, property: String): Boolean =
     property.startsWith("x-") || property == "$ref" || (property.startsWith("/") && shape == "webApi")
@@ -313,6 +308,7 @@ abstract class WebApiContext(val loc: String,
   }
 
   globalSpace = wrapped.globalSpace
+  reportDisambiguation = wrapped.reportDisambiguation
 
   // JSON Schema has a global namespace
 
@@ -387,7 +383,7 @@ abstract class WebApiContext(val loc: String,
                   case _                                                             => JSONSchemaDraft4SchemaVersion // we upgrade anything else to 4
                 }
               case _ =>
-                violation("JSON Schema version value must be a string", node)
+                violation(InvalidJsonSchemaVersion, "", "JSON Schema version value must be a string", node)
                 JSONSchemaDraft4SchemaVersion
             }
           case _ => JSONSchemaUnspecifiedVersion
@@ -433,7 +429,7 @@ abstract class WebApiContext(val loc: String,
     ast.entries.foldLeft(Set[String]()) {
       case (acc, entry) =>
         if (acc.contains(entry.key.toString())) {
-          violation(DuplicatedPropertySpecification.id, node, s"Property '${entry.key}' is duplicated", entry)
+          violation(DuplicatedPropertySpecification, node, s"Property '${entry.key}' is duplicated", entry)
           acc
         } else {
           acc ++ Set(entry.key.toString())
@@ -457,14 +453,11 @@ abstract class WebApiContext(val loc: String,
           if (ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {
-            violation(ClosedShapeSpecification.id,
-                      node,
-                      s"Property $key not supported in a $vendor $shape node",
-                      entry)
+            violation(ClosedShapeSpecification, node, s"Property $key not supported in a $vendor $shape node", entry)
           }
         }
       case None =>
-        violation(ClosedShapeSpecification.id, node, s"Cannot validate unknown node type $shape for $vendor", ast)
+        violation(ClosedShapeSpecification, node, s"Cannot validate unknown node type $shape for $vendor", ast)
     }
   }
 }

@@ -1,8 +1,11 @@
 package amf.core
 
+import java.text.DecimalFormat
+import java.util.concurrent.TimeUnit
+
 import amf.core.parser.{Position, Range}
 import amf.core.unsafe.PlatformSecrets
-import org.mulesoft.common.time.SimpleDateTime
+import org.mulesoft.common.time.{SimpleDateTime, TimeOfDay}
 import org.mulesoft.lexer.InputRange
 
 import scala.annotation.tailrec
@@ -36,21 +39,24 @@ package object utils {
 //
 //  }
 
-  implicit class SimpleDateTimes(val dateTime: SimpleDateTime) {
+  implicit class SimpleDateTimes(val sdt: SimpleDateTime) {
     def rfc3339: String = {
-      if (dateTime.timeOfDay.isDefined) {
-        val timezone = dateTime.zoneOffset match {
-          case Some(0)      => "Z"
-          case Some(i: Int) => f"+$i%02d"
-          case None         => ""
-        }
-
-        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02dT${dateTime.timeOfDay.get.hour}%02d:${dateTime.timeOfDay.get.minute}%02d:${Option(
-          dateTime.timeOfDay.get.second).getOrElse(0)}%02d$timezone"
-      } else {
-        f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d"
+      sdt.timeOfDay match {
+        case Some(TimeOfDay(hour, minute, second, nanos)) =>
+          var result = f"${sdt.year}%04d-${sdt.month}%02d-${sdt.day}%02dT$hour%02d:$minute%02d:$second%02d"
+          if (nanos != 0) result += decimal(nanos)
+          sdt.zoneOffset match {
+            case Some(0)      => s"${result}Z"
+            case Some(i: Int) => f"$result+$i%02d"
+            case None         => result
+          }
+        case None =>
+          f"${sdt.year}%04d-${sdt.month}%02d-${sdt.day}%02d"
       }
     }
+
+    /** 50.000.000 -> .05 */
+    private def decimal(nano: Int) = f".$nano%09d".split("0*$").head
   }
 
   /**

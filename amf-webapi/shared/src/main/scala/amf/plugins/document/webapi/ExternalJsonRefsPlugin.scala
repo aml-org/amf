@@ -18,6 +18,7 @@ import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.client.ParsingOptions
 import amf.core.remote.Platform
 import amf.core.utils._
+import amf.plugins.features.validation.ParserSideValidations.UnresolvedReference
 import org.yaml.model._
 
 import scala.concurrent.Future
@@ -59,14 +60,14 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
       case YType.Str =>
         val refValue = ref.as[String]
         if (!refValue.startsWith("#")) refUrls += refValue.split("#").head
-      case _ => ctx.violation("", s"Unexpected $$ref with $ref", ref.value)
+      case _ => ctx.violation(UnresolvedReference, "", s"Unexpected $$ref with $ref", ref.value)
     }
   }
 }
 
 class ExternalJsonRefsPlugin extends JsonSchemaPlugin {
 
-  override val priority = AMFDocumentPluginSettings.PluginPriorities.low
+  override val priority: Int = AMFDocumentPluginSettings.PluginPriorities.low
 
   override val ID: String = "JSON + Refs"
 

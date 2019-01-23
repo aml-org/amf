@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType}
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable
@@ -83,7 +83,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
           entry => {
             val payloads = mutable.ListBuffer[Payload]()
 
-            val payload = Payload()
+            val payload = Payload(Annotations(entry))
             payload.adopted(res.id)
 
             entry.value.tagType match {
@@ -121,10 +121,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
                         if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {
-                          ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
-                                        res.id,
-                                        "Invalid media type",
-                                        m)
+                          ctx.violation(UnsupportedExampleMediaTypeErrorSpecification, res.id, "Invalid media type", m)
                         }
                         ctx.factory
                           .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, defaultType)
@@ -133,7 +130,9 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                       } else {
                         others.entries.foreach(
                           e =>
-                            ctx.violation(s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
+                            ctx.violation(UnsupportedExampleMediaTypeErrorSpecification,
+                                          res.id,
+                                          s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
                                           e))
                       }
                     }

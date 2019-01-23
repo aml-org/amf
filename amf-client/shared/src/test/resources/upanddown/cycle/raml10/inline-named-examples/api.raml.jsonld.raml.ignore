@@ -12,7 +12,7 @@ types:
   get:
     displayName: Get organizations
     responses:
-      200:
+      "200":
         body:
           application/json:
             type:
@@ -26,7 +26,7 @@ types:
     get:
       displayName: Get organizations by organization ID
       responses:
-        200:
+        "200":
           body:
             application/json:
               type:

@@ -23,7 +23,7 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
   def asOperation[T <: BaseUnit](unit: T, profile: ProfileName = RamlProfile): Operation = {
     linkTarget match {
       case Some(_) =>
-        effectiveLinkTarget.asInstanceOf[Trait].asOperation(unit, profile)
+        effectiveLinkTarget().asInstanceOf[Trait].asOperation(unit, profile)
       case _ =>
         Option(dataNode)
           .map(

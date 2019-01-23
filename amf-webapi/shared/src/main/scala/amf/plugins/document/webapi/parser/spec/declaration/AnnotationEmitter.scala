@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmit
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model._
 
@@ -149,7 +149,9 @@ case class DataNodeEmitter(
         })
       case other =>
         eh.violation(
-          ParserSideValidations.EmittionErrorEspecification.id,
+          RenderValidation,
+          dataNode.id,
+          None,
           s"Unsupported seq of emitter type in data node emitters $other",
           dataNode.position(),
           dataNode.location()
@@ -266,7 +268,9 @@ case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: S
           }
         case Some(shape: RecursiveShape) => RamlRecursiveShapeEmitter(shape, ordering, Nil).emitters()
         case Some(x) =>
-          spec.eh.violation(ParserSideValidations.EmittionErrorEspecification.id,
+          spec.eh.violation(RenderValidation,
+                            property.id,
+                            None,
                             "Cannot emit raml type for a shape that is not an AnyShape",
                             x.position(),
                             x.location())

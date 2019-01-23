@@ -7,6 +7,7 @@ import amf.core.parser._
 import amf.core.remote.{Oas, Raml}
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.features.validation.ParserSideValidations.UnableToParseShapeExtensions
 import org.yaml.model.YMap
 
 case class ShapeExtensionParser(shape: Shape,
@@ -22,7 +23,10 @@ case class ShapeExtensionParser(shape: Shape,
         case _: Raml => shapeExtensionDefinition.name.value() // TODO check this.
         case _: Oas  => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
         case _ =>
-          ctx.violation(shape.id, s"Cannot parse shape extension for vendor ${ctx.vendor}", map)
+          ctx.violation(UnableToParseShapeExtensions,
+                        shape.id,
+                        s"Cannot parse shape extension for vendor ${ctx.vendor}",
+                        map)
           shapeExtensionDefinition.name.value()
       }
       map.key(

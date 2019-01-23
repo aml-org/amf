@@ -9,7 +9,11 @@ import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRaml
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.{
+  InvalidSecuredByType,
+  UnknownScopeErrorSpecification,
+  UnknownSecuritySchemeErrorSpecification
+}
 import org.yaml.model._
 
 object RamlParametrizedSecuritySchemeParser {
@@ -33,7 +37,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
           scheme
         case None =>
           ctx.violation(
-            ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id,
+            UnknownSecuritySchemeErrorSpecification,
             scheme.id,
             s"Security scheme '$name' not found in declarations.",
             node
@@ -56,7 +60,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
           ctx.violation(
-            ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id,
+            UnknownSecuritySchemeErrorSpecification,
             scheme.id,
             s"Security scheme '$name' not found in declarations (and name cannot be 'null').",
             node
@@ -66,13 +70,14 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
       scheme
     case YType.Include =>
       ctx.violation(
-        ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id,
+        UnknownSecuritySchemeErrorSpecification,
+        "",
         "'securedBy' property doesn't accept !include tag, only references to security schemes.",
         node
       )
       producer("invalid").add(Annotations(node))
     case t =>
-      ctx.violation(ParserSideValidations.ParsingErrorSpecification.id, s"Invalid type $t for 'securedBy' node.", node)
+      ctx.violation(InvalidSecuredByType, "", s"Invalid type $t for 'securedBy' node.", node)
       producer("invalid").add(Annotations(node))
   }
 }
@@ -137,10 +142,10 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
           ss.scheme.settings match {
             case se: OAuth2Settings if se.scopes.map(_.name.value()).contains(element.toString) =>
               Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
-            case se: OAuth2Settings =>
+            case _: OAuth2Settings =>
               val scope = Scope().adopted(scheme.id)
               ctx.violation(
-                ParserSideValidations.UnknownScopeErrorSpecification.id,
+                UnknownScopeErrorSpecification,
                 scope.id,
                 s"Scope '${element.toString}' not found in settings of declared secured by ${ss.scheme.name.value()}.",
                 n

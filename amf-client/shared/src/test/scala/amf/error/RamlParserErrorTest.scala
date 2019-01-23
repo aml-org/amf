@@ -73,13 +73,18 @@ class RamlParserErrorTest extends ParserErrorTest {
       "error/invalid-type.raml",
       artist => {
         artist.level should be("Violation")
-        artist.message should be("Expecting !!str and !!seq provided")
+        artist.message should be("Invalid property name")
         artist.position.map(_.range) should be(Some(Range((44, 10), (44, 12))))
       },
       tracks => {
         tracks.level should be("Violation")
-        tracks.message should be("Expecting !!str and !!seq provided")
+        tracks.message should be("Invalid property name")
         tracks.position.map(_.range) should be(Some(Range((49, 10), (49, 12))))
+      },
+      anotherTrack => {
+        anotherTrack.level should be("Violation")
+        anotherTrack.message should be("Invalid property name")
+        anotherTrack.position.map(_.range) should be(Some(Range((54, 10), (54, 12))))
       }
     )
   }
@@ -94,10 +99,6 @@ class RamlParserErrorTest extends ParserErrorTest {
       badInclude2 => {
         badInclude2.level should be("Violation")
         badInclude2.message should startWith("Fragments must be imported by using '!include'")
-      },
-      badInclude3 => {
-        badInclude3.level should be("Violation")
-        badInclude3.message should startWith("Fragments must be imported by using '!include'")
       },
       invalidRef => {
         invalidRef.level should be("Violation")
@@ -396,19 +397,6 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-  // Strange problem where hashcode for YMap entries had to be recalculated inside syaml.
-  // Just check it doesn't throw NPE :)
-  test("Null in type name") {
-    validate(
-      "/error/null-name.raml",
-      first => {
-        first.level should be("Violation")
-        first.message should be("Expecting !!str and !!null provided")
-        first.position.map(_.range) should be(Some(Range((13, 6), (13, 10))))
-      }
-    )
-  }
-
   test("Invalid map key") {
     validate(
       "/error/map-key.raml",
@@ -580,6 +568,39 @@ class RamlParserErrorTest extends ParserErrorTest {
       notYmap => {
         notYmap.level should be("Violation")
         notYmap.message should be("Yaml map expected")
+      }
+    )
+  }
+
+  test("Test invalid fragment (distinct type)") {
+    validate(
+      "error/invalid-fragment/api.raml",
+      fragmentError => {
+        fragmentError.level should be("Violation")
+        fragmentError.message should be("Fragment of type ResourceType does not conform to the expected type DataType")
+      },
+      resourceType => {
+        resourceType.level should be("Violation")
+        resourceType.message should be("ResourceType Resource not found")
+      },
+      unresolved => {
+        unresolved.level should be("Violation")
+        unresolved.message should be(
+          "Unresolved reference 'fragment.raml' from root context file://amf-client/shared/src/test/resources/parser-results/raml/error/invalid-fragment/api.raml")
+      }
+    )
+  }
+
+  test("Test that chain ref in valid paths works ok") {
+    validate(
+      "valid/points-in-path/api.raml",
+      fileNotFound => {
+        fileNotFound.level should be("Violation")
+        fileNotFound.message should startWith("File Not Found")
+      },
+      unresolved => {
+        unresolved.level should be("Violation")
+        unresolved.message should startWith("Unresolved reference ")
       }
     )
   }

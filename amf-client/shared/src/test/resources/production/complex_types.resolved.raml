@@ -20,7 +20,7 @@ baseUri: https://localhost:8081/api
       date:
         type: datetime
     responses:
-      200:
+      "200":
         body:
           application/json:
             items:
@@ -91,7 +91,7 @@ baseUri: https://localhost:8081/api
     description: |
       Create a new Customer
     responses:
-      201:
+      "201":
         description: Created
         body:
           application/json:
@@ -175,7 +175,7 @@ baseUri: https://localhost:8081/api
         Accept:
           type: string
       responses:
-        400:
+        "400":
           body:
             application/json:
               examples:
@@ -191,7 +191,7 @@ baseUri: https://localhost:8081/api
                 code:
                   type: string
                   required: false
-        200:
+        "200":
           body:
             application/json:
               additionalProperties: true
@@ -256,7 +256,7 @@ baseUri: https://localhost:8081/api
                       description: Country Name
                       required: false
                   required: false
-        404:
+        "404":
           body:
             application/json:
               examples:
@@ -275,7 +275,7 @@ baseUri: https://localhost:8081/api
       body: {}
     put:
       responses:
-        204:
+        "204":
           body: {}
       body:
         application/json:
@@ -343,7 +343,7 @@ baseUri: https://localhost:8081/api
               required: false
     delete:
       responses:
-        204:
+        "204":
           body: {}
 /person:
   displayName: Person
@@ -360,7 +360,7 @@ baseUri: https://localhost:8081/api
         names:
           type: array
       responses:
-        400:
+        "400":
           body:
             application/json:
               examples:
@@ -376,7 +376,7 @@ baseUri: https://localhost:8081/api
                 code:
                   type: string
                   required: false
-        200:
+        "200":
           body:
             application/json:
               anyOf:
@@ -458,7 +458,7 @@ baseUri: https://localhost:8081/api
                     email:
                       type: string
                       required: true
-        404:
+        "404":
           body:
             application/json:
               examples:

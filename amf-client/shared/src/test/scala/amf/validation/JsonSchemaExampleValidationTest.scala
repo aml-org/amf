@@ -120,5 +120,9 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
     validate("/enum-not-seq.raml", Some("enum-not-seq.report"))
   }
 
+  test("JSON Schema array union") {
+    validate("/array_unions.raml", Some("array_unions.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

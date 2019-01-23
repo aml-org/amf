@@ -1,0 +1,12 @@
+swagger: '2.0'
+info:
+  title: Twitch
+  description: bla
+  version: v2
+host: api.twitch.tv
+basePath: /kraken
+schemes:
+  - https
+definitions:
+  underChannel2:
+    $ref: '#/definitions/underChannel2'

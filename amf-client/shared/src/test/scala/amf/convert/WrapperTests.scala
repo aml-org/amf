@@ -121,6 +121,15 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Source vendor RAML 1.0") {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseFileAsync(zencoder).asFuture
+    } yield {
+      unit.sourceVendor.asOption should be(Some(Raml10))
+    }
+  }
+
   test("Render / parse test OAS 2.0") {
     for {
       _      <- AMF.init().asFuture
@@ -735,7 +744,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         | /endpoint:
         |  get:
         |    responses:
-        |      200:
+        |      "200":
         |       description: a descrip""".stripMargin
     for {
       _         <- AMF.init().asFuture
@@ -765,7 +774,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
          |          schema:
          |            $ref: "#/definitions/person"
          |      responses:
-         |        200:
+         |        "200":
          |          description: a descrip
          |definitions:
          |  person:

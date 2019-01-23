@@ -17,7 +17,7 @@ types:
           - LAX
           - CLE
     responses:
-      200:
+      "200":
         body:
           application/json:
             type: AmericanFlight[]
@@ -29,7 +29,7 @@ types:
         type: AmericanFlight
         examples: !include examples/AmericanFlightNoIdExample.raml
     responses:
-      201:
+      "201":
         body:
           application/json:
             example:
@@ -39,7 +39,7 @@ types:
     get:
       displayName: Get a flight by ID
       responses:
-        200:
+        "200":
           body:
             application/json:
               type: AmericanFlight
@@ -47,7 +47,7 @@ types:
     delete:
       displayName: Delete a flight
       responses:
-        200:
+        "200":
           body:
             application/json:
               example:
@@ -60,7 +60,7 @@ types:
           type: AmericanFlight
           examples: !include examples/AmericanFlightNoIdExample.raml
       responses:
-        200:
+        "200":
           body:
             application/json:
               example:

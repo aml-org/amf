@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: test
+baseUri: test.com
+version: v1
+protocols:
+  - HTTPS
+/api/v1/apr/{param}:
+  get:
+    responses:
+      "200":
+        description: OK
+        body:
+          application/json:
+            type: string
+  uriParameters:
+    param:
+      type: number
+      format: int32
+      required: false

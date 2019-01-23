@@ -9,7 +9,10 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Defa
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
-import amf.plugins.features.validation.ParserSideValidations
+import amf.plugins.features.validation.ParserSideValidations.{
+  ExclusivePropertiesSpecification,
+  UnsupportedExampleMediaTypeErrorSpecification
+}
 import org.yaml.model.{YMap, YScalar, YType}
 
 import scala.collection.mutable
@@ -31,7 +34,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
             val finalRequest = request.getOrCreate
             if (map.key("queryParameters").isDefined) {
               ctx.violation(
-                ParserSideValidations.ExclusivePropertiesSpecification.id,
+                ExclusivePropertiesSpecification,
                 finalRequest.id,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
                 map
@@ -144,7 +147,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                 if (others.entries.nonEmpty) {
                   if (payloads.isEmpty) {
                     if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {
-                      ctx.violation(ParserSideValidations.ParsingErrorSpecification.id,
+                      ctx.violation(UnsupportedExampleMediaTypeErrorSpecification,
                                     request.getOrCreate.id,
                                     "Invalid media type",
                                     m)
@@ -157,8 +160,12 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                       .parse()
                       .foreach(payloads += request.getOrCreate.withPayload(None).add(Annotations(entry)).withSchema(_)) // todo
                   } else {
-                    others.entries.foreach(e =>
-                      ctx.violation(s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.", e))
+                    others.entries.foreach(
+                      e =>
+                        ctx.violation(UnsupportedExampleMediaTypeErrorSpecification,
+                                      request.getOrCreate.id,
+                                      s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
+                                      e))
                   }
                 }
               case _ =>
