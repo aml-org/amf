@@ -6,7 +6,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel}
 import amf.plugins.domain.webapi.models.EndPoint
 
-class PushSingleOperationPathParams(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class PushSingleOperationPathParams()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
 
   def checkUriParams(endpoint: EndPoint): EndPoint = {
     if (endpoint.operations.size == 1 && Option(endpoint.operations.head.request).isDefined) {
@@ -24,7 +24,7 @@ class PushSingleOperationPathParams(override implicit val errorHandler: ErrorHan
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
       model.findByType(EndPointModel.`type`.head.iri()).foreach {
-        case endpoint: EndPoint  =>
+        case endpoint: EndPoint =>
           checkUriParams(endpoint)
         case _ => // ignore
       }
