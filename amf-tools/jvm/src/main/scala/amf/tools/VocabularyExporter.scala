@@ -402,7 +402,6 @@ object VocabularyExporter {
       case cached @ Some(_) => cached
       case _ =>
         try {
-          println(s"BUILDING CLASS NAME $klassName")
           val singleton = Class.forName(klassName)
           singleton.getField("MODULE$").get(singleton) match {
             case modelObject: Obj => buildClassTerm(klassName, modelObject)

@@ -1,38 +1,52 @@
-package amf.dialects
-import amf.core.AMF
-import amf.core.emitter.RenderOptions
+package amf.tools.canonical
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
 import amf.core.rdf.RdfModelParser
 import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote.{AmfJsonHint, Syntax, Vendor, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
-import amf.emit.AMFRenderer
-import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import org.apache.jena.rdf.model.Model
-import org.scalatest.AsyncFunSuite
 
 import scala.collection.mutable
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.Future
 
-class CanonicalWebAPIDialectTest extends AsyncFunSuite with PlatformSecrets {
+object CanonicalWebAPITransformer extends PlatformSecrets {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+  val CANONICAL_WEBAPI_NAME = "WebAPI 1.0"
 
-  def removeWebAPIPlugin() = Future {
+  /**
+    * Cleans plugins that will cause a conflict with the canonical WebAPI dialect revivers
+    * @return
+    */
+  protected def removeWebAPIPlugin() = Future {
     AMFPluginsRegistry.unregisterDomainPlugin(WebAPIDomainPlugin)
     AMFPluginsRegistry.unregisterDomainPlugin(DataShapesDomainPlugin)
   }
 
-  def findWebAPIDialect =
-    AMLPlugin.registry.allDialects().find(_.nameAndVersion() == "WebAPI 1.0")
+  /**
+    * Resets the WebAPI plugins
+    * @return
+    */
+  protected def registerWebAPIPlugin() = Future {
+    AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
+    AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
+  }
 
-  def buildCanonicalClassMapping: Map[String, String] = {
+  protected def findWebAPIDialect: Option[Dialect] =
+    AMLPlugin.registry.allDialects().find(_.nameAndVersion() == CANONICAL_WEBAPI_NAME)
+
+  /**
+    * Creates a map from the node mapping in the canonical web api dialect to the mapped
+    * class in the WebAPI vocabulary
+    * @return
+    */
+  protected def buildCanonicalClassMapping: Map[String, String] = {
     findWebAPIDialect match {
       case Some(webApiDialect) =>
         val nodeMappings = webApiDialect.declares.collect { case mapping: NodeMapping => mapping }
@@ -44,11 +58,16 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
-  def cleanAMFModel(unit: BaseUnit): BaseUnit = {
+  /**
+    * Cleans the input WebAPI model adding the required information to the
+    * underlying RDF graph and uses it to build the canonical WebAPI dialect
+    * instance as output
+    * @param unit a AMF WebAPI model parsed from RAML / OAS
+    * @return Equivalent Canonical WebAPI AML dialect instance
+    */
+  protected def cleanAMFModel(unit: BaseUnit): BaseUnit = {
     val mapping = buildCanonicalClassMapping
     val model = unit.toNativeRdfModel()
-    println("MODEL:")
-    println(model.toN3())
     val nativeModel = model.native().asInstanceOf[Model]
 
     // First update document to DialectInstance document
@@ -106,7 +125,6 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with PlatformSecrets {
 
     // Add the dialect domain element and right mapped node mapping type in the model
     domainElementsMapping.foreach { case (domainElement, nodeMapping) =>
-      println(s"  *  TRANSFORMING $domainElement INTO A DIALECT DOMAIN ELEMENT")
       nativeModel.add(
         nativeModel.createResource(domainElement),
         nativeModel.createProperty((Namespace.Rdf + "type").iri()),
@@ -122,35 +140,19 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with PlatformSecrets {
     new RdfModelParser(platform)(ParserContext()).parse(model, unit.id)
   }
 
-  test("HERE_HERE Test parsed RAML/OAS WebAPIs can be re-parsed with the WebAPI dialect") {
+  /**
+    * Transforms a WebAPI model parsed by AMF from a RAML/OAS document into
+    * a canonical WebAPI model compatible with the canonical WebAPI AML dialect
+    * @param unit
+    * @return
+    */
+  def transform(unit: BaseUnit): Future[BaseUnit] = {
     for {
-      _               <- AMF.init()
-      _               <- Future(amf.Core.registerPlugin(AMLPlugin))
-      v               <- Validation(platform).map(_.withEnabledValidation(false))
-      _               <- {
-        println(s"  ===> 1")
-        AMFCompiler("file://amf-client/shared/src/test/resources/vocabularies2/production/canonical_webapi.yaml", platform, VocabularyYamlHint, v).build()
-      }
-      unit            <- {
-        println(s"  ===> 2")
-        AMFCompiler("file://amf-client/shared/src/test/resources/upanddown/banking-api.raml.jsonld", platform, AmfJsonHint, v).build()
-      }
-      _               <- removeWebAPIPlugin()
-      dialectInstance <- {
-        println(s"  ===> 3")
-        Future { cleanAMFModel(unit)}
-      }
-      rendered          <- {
-        println(s"  ===> 4")
-        new AMFRenderer(dialectInstance, Vendor.AML, RenderOptions(), Some(Syntax.Yaml)).renderToString
-      }
+      _           <- removeWebAPIPlugin()
+      transformed <- Future { cleanAMFModel(unit) }
+      _           <- registerWebAPIPlugin()
     } yield {
-      println(dialectInstance)
-      println("RENDERED")
-      println(rendered)
-      println(unit.toNativeRdfModel())
-      println(unit.toNativeRdfModel().toN3())
-      assert(true)
+      transformed
     }
   }
 }

@@ -258,7 +258,7 @@ lazy val tools = crossProject(JVMPlatform)
   .settings(Seq(
     name := "amf-tools",
     fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
-  .dependsOn(core, webapi, vocabularies, validation)
+  .dependsOn(core, webapi, vocabularies, validation, client % "compile->compile;test->test")
   .in(file("./amf-tools"))
   .settings(settings)
   .jvmSettings(
