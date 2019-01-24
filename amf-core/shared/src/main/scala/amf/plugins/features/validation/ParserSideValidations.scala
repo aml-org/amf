@@ -563,9 +563,9 @@ object ParserSideValidations extends Validations {
     ),
     JsonSchemaInheratinaceWarningSpecification.id -> all(WARNING),
     NamedExampleUsedInExample.id -> Map(
-      RamlProfile   -> WARNING,
-      Raml10Profile -> WARNING,
-      Raml08Profile -> WARNING,
+      RamlProfile   -> VIOLATION,
+      Raml10Profile -> VIOLATION,
+      Raml08Profile -> VIOLATION,
       OasProfile    -> SeverityLevels.INFO,
       Oas20Profile  -> SeverityLevels.INFO,
       Oas30Profile  -> SeverityLevels.INFO,

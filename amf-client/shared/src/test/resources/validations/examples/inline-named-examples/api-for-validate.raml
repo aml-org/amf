@@ -11,7 +11,7 @@ types:
     body: 
       application/json:
         type: Organization []
-        examples: !include examples/organization/organization-array-response.raml
+        example: !include examples/organization/organization-array-response.raml
   get:
     displayName: Get organizations
     responses: 
@@ -19,7 +19,7 @@ types:
         body: 
           application/json:
             type: Organization[]
-            examples: !include examples/organization/organization-array-response.raml
+            example: !include examples/organization/organization-array-response.raml
             
   /{organization_id}:
     uriParameters: 
@@ -33,5 +33,5 @@ types:
           body: 
             application/json:
               type: Organization
-              examples: !include examples/organization/organization-individual-response.raml
+              example: !include examples/organization/organization-individual-response.raml
    

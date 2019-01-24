@@ -50,7 +50,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Parse and validate named examples as external framents") {
-    validate("examples/inline-named-examples/api.raml", Some("inline-named-examples.report"))
+    validate("examples/inline-named-examples/api-for-validate.raml", Some("inline-named-examples.report"))
   }
 
   test("Nil value validation") {
@@ -236,5 +236,12 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/external-json/api.raml", Some("external-json-example.report"))
   }
 
+  test("External frag example from example facet") {
+    validate("/examples/inlined-external-example/api.raml")
+  }
+
+  test("Multiple named examples in a fragment") {
+    validate("/examples/multiple-example-fragments/api.raml")
+  }
   override val hint: Hint = RamlYamlHint
 }

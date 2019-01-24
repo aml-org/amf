@@ -126,15 +126,15 @@ case class RamlSingleExampleParser(key: String,
     map.key(key).flatMap { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
-          ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example]).map { example =>
-            ctx.warning(
+          ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example]).foreach { example =>
+            ctx.violation(
               NamedExampleUsedInExample,
               example.id,
-              "Named example fragments should be included in 'examples' facet",
+              "Named example fragments must be included in 'examples' facet",
               entry
             )
-            example
           }
+          None
 
         case Right(node) =>
           node.tagType match {

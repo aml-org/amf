@@ -80,12 +80,6 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
   }
 
   private def buildExternalFragment() = {
-    ctx.warning(
-      ExternalFragmentWarning,
-      root.location,
-      s"Invalid fragment body in ${root.location} , external fragment will be created",
-      root.parsed.asInstanceOf[SyamlParsedDocument].document
-    )
     ExternalFragment()
       .withLocation(root.location)
       .withId(root.location)
