@@ -251,6 +251,15 @@ nodeMappings:
   Operation:
     classTerm: hydra.Operation
     mapping:
+      extends:
+        propertyTerm: doc.extends
+        typeDiscriminatorName: type
+        typeDiscriminator:
+          AppliedTrait: ParametrizedTrait
+        range:
+          - ParametrizedTrait
+        allowMultiple: true
+    
       method:
         propertyTerm: hydra.method
         range: string
@@ -1900,24 +1909,6 @@ nodeMappings:
         range: string
 
 
-  ParametrizedDeclaration:
-    classTerm: doc.ParametrizedDeclaration
-    mapping:
-      name:
-        propertyTerm: schema-org.name
-        range: string
-      target:
-        propertyTerm: doc.target
-        range:
-          - ResourceType
-          - Trait
-    
-      variable:
-        propertyTerm: doc.variable
-        range: VariableValue
-        allowMultiple: true
-
-
   ShapeExtension:
     classTerm: raml-http.ShapeExtension
     mapping:
@@ -2230,6 +2221,17 @@ nodeMappings:
   EndPoint:
     classTerm: raml-http.EndPoint
     mapping:
+      extends:
+        propertyTerm: doc.extends
+        typeDiscriminatorName: type
+        typeDiscriminator:
+          AppliedResourceType: ParametrizedResourceType
+          AppliedTrait: ParametrizedTrait
+        range:
+          - ParametrizedResourceType
+          - ParametrizedTrait
+        allowMultiple: true
+    
       path:
         propertyTerm: raml-http.path
         range: string
@@ -3096,3 +3098,8 @@ nodeMappings:
 documents:
   root:
     encodes: WebAPI
+    declares:
+      dataShapes: NodeShape
+      resourceTypes: ResourceType
+      traits: Trait
+  

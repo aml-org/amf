@@ -1,0 +1,96 @@
+#%WebAPI 1.0
+name: test
+endpoint:
+  -
+    path: /users/{userid}/gists
+    supportedOperation:
+      -
+        method: get
+        security:
+          -
+            name: oauth_2_0
+            scheme: fragment
+          -
+            name: "null"
+    parameter:
+      -
+        name: userid
+        paramName: userid
+        required: true
+        binding: path
+        schema:
+          type: Scalar
+          datatype: http://www.w3.org/2001/XMLSchema#string
+          name: userid
+  -
+    path: /users
+    supportedOperation:
+      -
+        method: get
+        security:
+          -
+            name: oauth_2_0
+            scheme: fragment
+          -
+            name: oauth_1_0
+            scheme:
+              name: oauth_1_0
+              type: OAuth 1.0
+              description: OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred.
+              header:
+                -
+                  name: Authorization
+                  paramName: Authorization
+                  description: Used to send a valid OAuth 2 access token.
+                  required: true
+                  binding: header
+                  schema:
+                    type: Scalar
+                    datatype: http://www.w3.org/2001/XMLSchema#string
+                    name: schema
+                    description: Used to send a valid OAuth 2 access token.
+              parameter:
+                -
+                  name: access_token
+                  paramName: access_token
+                  description: Used to send a valid OAuth 2 access token.
+                  required: true
+                  binding: query
+                  schema:
+                    type: Scalar
+                    datatype: http://www.w3.org/2001/XMLSchema#string
+                    name: schema
+                    description: Used to send a valid OAuth 2 access token.
+              response:
+                -
+                  name: "401"
+                  description: Authorization error.
+                  statusCode: "401"
+                  payload:
+                    -
+                      mediaType: application/json
+                      schema:
+                        type: Node
+                        closed: false
+                        property:
+                          -
+                            path: http://a.ml/vocabularies/data#merge
+                            range:
+                              type: Scalar
+                              datatype: http://www.w3.org/2001/XMLSchema#string
+                              name: merge
+                            min.Count: 1
+                            name: merge
+                        name: schema
+              settings:
+                type: OAuth1
+                requestTokenURI: https://api.mysampleapi.com/1/oauth/request_token
+                authorizationURI: https://api.mysampleapi.com/1/oauth/authorize
+                tokenCredentialsURI: https://api.mysampleapi.com/1/oauth/access_token
+                signature:
+                  - PLAINTEXT
+                  - HMAC-SHA1
+security:
+  -
+    name: oauth_2_0
+    scheme: fragment

@@ -71,7 +71,10 @@ object CanonicalWebAPITransformer extends PlatformSecrets {
     val nativeModel = model.native().asInstanceOf[Model]
 
     // First update document to DialectInstance document
-    val doc = nativeModel.listSubjectsWithProperty(nativeModel.createProperty((Namespace.Document + "encodes").iri())).next().getURI
+    val doc = nativeModel.listSubjectsWithProperty(
+      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+      nativeModel.createResource((Namespace.Document + "Document").iri())
+    ).next().getURI
     nativeModel.add(
       nativeModel.createResource(doc),
       nativeModel.createProperty((Namespace.Rdf + "type").iri()),

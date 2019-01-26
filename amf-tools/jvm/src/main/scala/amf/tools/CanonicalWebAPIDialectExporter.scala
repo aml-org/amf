@@ -36,6 +36,7 @@ object CanonicalWebAPIDialectExporter {
   val reflectionsShapes     = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
   val reflectionsCore       = new Reflections("amf.core.metamodel.domain.extensions", new SubTypesScanner(false))
   val reflectionsTemplates  = new Reflections("amf.core.metamodel.domain.templates", new SubTypesScanner(false))
+  //val reflectionsDataNode   = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
 
   var nodeMappings: Map[String, DialectNodeMapping] = Map()
 
@@ -133,8 +134,10 @@ object CanonicalWebAPIDialectExporter {
     "DataNode"
   )
 
+  // Base classes that should not appear in the dialect
   val blacklistedMappings: Set[String] = Set(
-    "Settings"
+    "Settings",
+    "ParametrizedDeclaration"
   )
 
   val shapeTypeDiscriminator =
@@ -187,6 +190,37 @@ object CanonicalWebAPIDialectExporter {
       |          - Trait
     """.stripMargin
 
+  val declarations =
+  """    declares:
+    |      dataShapes: NodeShape
+    |      resourceTypes: ResourceType
+    |      traits: Trait
+  """.stripMargin
+
+  val endPointExtends =
+  """      extends:
+    |        propertyTerm: doc.extends
+    |        typeDiscriminatorName: type
+    |        typeDiscriminator:
+    |          AppliedResourceType: ParametrizedResourceType
+    |          AppliedTrait: ParametrizedTrait
+    |        range:
+    |          - ParametrizedResourceType
+    |          - ParametrizedTrait
+    |        allowMultiple: true
+    """.stripMargin
+
+  val operationExtends =
+    """      extends:
+      |        propertyTerm: doc.extends
+      |        typeDiscriminatorName: type
+      |        typeDiscriminator:
+      |          AppliedTrait: ParametrizedTrait
+      |        range:
+      |          - ParametrizedTrait
+      |        allowMultiple: true
+    """.stripMargin
+
   def renderDialect(): String = {
     val stringBuilder = new StringBuilder()
     val externals: mutable.HashMap[String,String] = mutable.HashMap()
@@ -200,8 +234,14 @@ object CanonicalWebAPIDialectExporter {
         stringBuilder.append(s"  ${dialectNodeMapping.name}:\n")
         var (compacted, prefix, base) = compact(dialectNodeMapping.classTerm)
         aggregateExternals(externals, prefix, base)
-        stringBuilder.append(s"    classTerm: ${compacted}\n")
+        stringBuilder.append(s"    classTerm: $compacted\n")
         stringBuilder.append("    mapping:\n")
+
+        if (dialectNodeMapping.classTerm == (Namespace.Http + "EndPoint").iri()) {
+          stringBuilder.append(endPointExtends + "\n")
+        } else if (dialectNodeMapping.classTerm == (Namespace.Hydra + "Operation").iri()) {
+          stringBuilder.append(operationExtends + "\n")
+        }
 
         var propertyCounters: mutable.Map[String, Int] = mutable.Map()
         dialectNodeMapping.propertyMappings.foreach { propertyMapping =>
@@ -252,6 +292,8 @@ object CanonicalWebAPIDialectExporter {
     stringBuilder.append("documents:\n")
     stringBuilder.append("  root:\n")
     stringBuilder.append(s"    encodes: ${toCamelCase(WebApiModel.doc.displayName)}\n")
+    // TODO: union of declarations
+    stringBuilder.append(declarations)
 
     val effectiveExternals = externals.filter { case (p, b) =>
       !WELL_KNOWN_VOCABULARIES.contains(b)
@@ -291,6 +333,7 @@ object CanonicalWebAPIDialectExporter {
       VocabularyExporter.metaObjects(reflectionsShapes, parseMetaObject)
       VocabularyExporter.metaObjects(reflectionsCore, parseMetaObject)
       VocabularyExporter.metaObjects(reflectionsTemplates, parseMetaObject)
+      //VocabularyExporter.metaObjects(reflectionsDataNode, parseMetaObject)
       val dialectText = renderDialect()
       println(dialectText)
       writer.write(dialectText)
