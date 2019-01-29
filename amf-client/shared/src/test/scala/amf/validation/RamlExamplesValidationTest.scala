@@ -243,5 +243,10 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   test("Multiple named examples in a fragment") {
     validate("/examples/multiple-example-fragments/api.raml")
   }
+
+  test("Complex inheritance with example") {
+    validate("/examples/complex-inheritance/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

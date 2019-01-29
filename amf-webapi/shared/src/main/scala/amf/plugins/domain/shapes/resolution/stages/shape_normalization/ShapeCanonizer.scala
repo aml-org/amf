@@ -9,7 +9,6 @@ import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.annotations.InheritedShapes
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.features.validation.ResolutionSideValidations
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 import scala.collection.mutable
@@ -172,6 +171,10 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
           aggregateExamples(accShape, superTypes.head)
         case _ => // Nothing to do
       }
+
+      // If the final shape is not equals to the original shape, add the inherits again, in case other shape refers this shape
+      // TODO: This may produces multiple validation messages, one for each inherit (the target is different in each one). Is this right?
+      if (!accShape.equals(shape)) shape.withInherits(superTypes)
 
       accShape
     }
@@ -391,7 +394,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     } else {
       val anyOfAcc: ListBuffer[Shape] = ListBuffer()
       union.anyOf.foreach { shape: Shape =>
-        normalize(shape) match {
+        normalizeWithoutCaching(shape) match {
           case nestedUnion: UnionShape =>
             union.closureShapes ++= nestedUnion.closureShapes
             context.cache.addClojures(nestedUnion.closureShapes.toSeq, union)
