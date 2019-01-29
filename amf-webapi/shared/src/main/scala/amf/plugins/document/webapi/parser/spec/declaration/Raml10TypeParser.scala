@@ -523,12 +523,12 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val parsed = node.value match {
       case s: YScalar =>
-        val toParse = YMapEntry(YNode(""), YNode(s.text.replace("?", "")))
+        val toParse = YMapEntry(YNode(""), YNode(s.text.stripSuffix("?")))
         ctx.factory.typeParser(toParse, s => s.withId(union.id), isAnnotation, defaultType).parse().get
       case m: YMap =>
         val newEntries = m.entries.map { entry =>
           if (entry.key.as[String] == "type") {
-            YMapEntry("type", entry.value.as[String].replace("?", ""))
+            YMapEntry("type", entry.value.as[String].stripSuffix("?"))
           } else {
             entry
           }
