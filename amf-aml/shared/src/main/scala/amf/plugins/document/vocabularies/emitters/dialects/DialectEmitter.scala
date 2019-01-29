@@ -14,7 +14,7 @@ import amf.plugins.document.vocabularies.annotations.AliasesLocation
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, PropertyMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, PropertyMappingModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import org.yaml.model.YDocument.EntryBuilder
@@ -28,7 +28,7 @@ trait AliasesConsumer extends DialectEmitterHelper {
       None
     } else {
       maybeFindNodeMappingById(id) match {
-        case Some((_, nodeMapping: NodeMapping)) =>
+        case Some((_, nodeMapping: NodeMappable)) =>
           if (id.startsWith(dialect.id)) {
             Some(nodeMapping.name.value())
           } else {
@@ -67,6 +67,44 @@ trait PosExtractor {
       }
       .getOrElse(ZERO)
   }
+}
+
+
+trait DiscriminatorEmitter extends PosExtractor with AliasesConsumer {
+
+  def emitDiscriminator[T <: DomainElement](nodeWithDiscriminator: NodeWithDiscriminator[T]): Seq[EntryEmitter] = {
+    var emitters: Seq[EntryEmitter] = Seq()
+    nodeWithDiscriminator.fields.entry(UnionNodeMappingModel.TypeDiscriminator) foreach {
+      entry =>
+        val pos          = fieldPos(nodeWithDiscriminator, entry.field)
+        val typesMapping = nodeWithDiscriminator.typeDiscriminator()
+        emitters ++= Seq(new EntryEmitter {
+          override def emit(b: EntryBuilder): Unit =
+            b.entry(
+              "typeDiscriminator",
+              _.obj { b =>
+                typesMapping.foreach {
+                  case (alias, nodeMappingId) =>
+                    aliasFor(nodeMappingId) match {
+                      case Some(nodeMapping) => b.entry(alias, nodeMapping)
+                      case _                 => b.entry(alias, nodeMappingId)
+                    }
+                }
+              }
+            )
+
+          override def position(): Position = pos
+        })
+    }
+
+    nodeWithDiscriminator.fields.entry(UnionNodeMappingModel.TypeDiscriminatorName) foreach { entry =>
+      val value = entry.value.value.asInstanceOf[AmfScalar].value.toString
+      val pos   = fieldPos(nodeWithDiscriminator, entry.field)
+      emitters ++= Seq(MapEntryEmitter("typeDiscriminatorName", value, YType.Str, pos))
+    }
+    emitters
+  }
+
 }
 
 case class LibraryDocumentModelEmitter(dialect: Dialect,
@@ -318,6 +356,7 @@ case class PropertyMappingEmitter(dialect: Dialect,
                                   ordering: SpecOrdering,
                                   aliases: Map[String, (String, String)])
     extends EntryEmitter
+    with DiscriminatorEmitter
     with AliasesConsumer
     with PosExtractor {
   override def emit(b: EntryBuilder): Unit = {
@@ -454,34 +493,7 @@ case class PropertyMappingEmitter(dialect: Dialect,
           emitters ++= Seq(ArrayEmitter("enum", entry, ordering))
         }
 
-        propertyMapping.fields.entry(PropertyMappingModel.TypeDiscriminator) foreach {
-          entry =>
-            val pos          = fieldPos(propertyMapping, entry.field)
-            val typesMapping = propertyMapping.typeDiscriminator()
-            emitters ++= Seq(new EntryEmitter {
-              override def emit(b: EntryBuilder): Unit =
-                b.entry(
-                  "typeDiscriminator",
-                  _.obj { b =>
-                    typesMapping.foreach {
-                      case (alias, nodeMappingId) =>
-                        aliasFor(nodeMappingId) match {
-                          case Some(nodeMapping) => b.entry(alias, nodeMapping)
-                          case _                 => b.entry(alias, nodeMappingId)
-                        }
-                    }
-                  }
-                )
-
-              override def position(): Position = pos
-            })
-        }
-
-        propertyMapping.fields.entry(PropertyMappingModel.TypeDiscriminatorName) foreach { entry =>
-          val value = entry.value.value.asInstanceOf[AmfScalar].value.toString
-          val pos   = fieldPos(propertyMapping, entry.field)
-          emitters ++= Seq(MapEntryEmitter("typeDiscriminatorName", value, YType.Str, pos))
-        }
+        emitters ++= emitDiscriminator(propertyMapping)
 
         ordering.sorted(emitters).foreach(_.emit(b))
       }
@@ -493,45 +505,89 @@ case class PropertyMappingEmitter(dialect: Dialect,
 }
 
 case class NodeMappingEmitter(dialect: Dialect,
-                              nodeMapping: NodeMapping,
+                              nodeMappable: NodeMappable,
                               ordering: SpecOrdering,
                               aliases: Map[String, (String, String)])
-    extends EntryEmitter
-    with AliasesConsumer {
+  extends EntryEmitter
+    with DiscriminatorEmitter
+    with AliasesConsumer
+    with PosExtractor {
+
   override def emit(b: EntryBuilder): Unit = {
-    if (nodeMapping.isLink) {
-      if (isFragment(nodeMapping.linkTarget.get, dialect)) {
-        b.entry(nodeMapping.name.value(), YNode.include(nodeMapping.linkLabel.value()))
+
+    if (nodeMappable.isLink) {
+      if (isFragment(nodeMappable.linkTarget.get, dialect)) {
+        b.entry(nodeMappable.name.value(), YNode.include(nodeMappable.linkLabel.value()))
       } else {
-        b.entry(nodeMapping.name.value(), nodeMapping.linkLabel.value())
+        b.entry(nodeMappable.name.value(), nodeMappable.linkLabel.value())
       }
     } else {
-      b.entry(
-        nodeMapping.name.value(),
-        _.obj { b =>
-          aliasFor(nodeMapping.nodetypeMapping.value()) match {
-            case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
-            case None                 => nodeMapping.nodetypeMapping
-          }
-          b.entry(
-            "mapping",
-            _.obj { b =>
-              val propertiesEmitters: Seq[PropertyMappingEmitter] = nodeMapping.propertiesMapping().map {
-                pm: PropertyMapping =>
-                  PropertyMappingEmitter(dialect, pm, ordering, aliases)
-              }
-              traverse(propertiesEmitters, b)
-            }
-          )
-          nodeMapping.idTemplate.option().foreach { idTemplate =>
-            b.entry("idTemplate", idTemplate)
-          }
-          nodeMapping.mergePolicy.option().foreach { policy =>
-            b.entry("patch", policy)
-          }
-        }
-      )
+      nodeMappable match {
+        case nodeMapping: NodeMapping           => emitSingleNode(b, nodeMapping)
+        case unionNodeMapping: UnionNodeMapping => emitUnioNode(b, unionNodeMapping)
+      }
     }
+  }
+
+  protected def emitSingleNode(b: EntryBuilder, nodeMapping: NodeMapping): Unit = {
+    b.entry(
+      nodeMapping.name.value(),
+      _.obj { b =>
+        aliasFor(nodeMapping.nodetypeMapping.value()) match {
+          case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
+          case None                 => nodeMapping.nodetypeMapping
+        }
+        b.entry(
+          "mapping",
+          _.obj { b =>
+            val propertiesEmitters: Seq[PropertyMappingEmitter] = nodeMapping.propertiesMapping().map {
+              pm: PropertyMapping =>
+                PropertyMappingEmitter(dialect, pm, ordering, aliases)
+            }
+            traverse(propertiesEmitters, b)
+          }
+        )
+        nodeMapping.idTemplate.option().foreach { idTemplate =>
+          b.entry("idTemplate", idTemplate)
+        }
+        nodeMapping.mergePolicy.option().foreach { policy =>
+          b.entry("patch", policy)
+        }
+      }
+    )
+  }
+
+  protected def emitUnioNode(b: EntryBuilder, unionNodeMapping: UnionNodeMapping): Unit = {
+    b.entry(
+      unionNodeMapping.name.value(),
+      _.obj { b =>
+        var emitters: Seq[EntryEmitter] = Seq()
+        val nodes = unionNodeMapping.objectRange()
+        if (nodes.nonEmpty) {
+          val pos = fieldPos(unionNodeMapping, UnionNodeMappingModel.ObjectRange)
+          val targets = nodes
+            .map { nodeId =>
+              aliasFor(nodeId.value()) match {
+                case Some(nodeMappingAlias) => Some(nodeMappingAlias)
+                case _                      => None
+              }
+            }
+            .collect { case Some(alias) => alias }
+
+          emitters ++= Seq(new EntryEmitter {
+            override def emit(b: EntryBuilder): Unit =
+              b.entry("union", _.list { b =>
+                targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
+              })
+            override def position(): Position = pos
+          })
+
+          emitters ++= emitDiscriminator(unionNodeMapping)
+
+          ordering.sorted(emitters).foreach(_.emit(b))
+        }
+      }
+    )
   }
 
   def isFragment(elem: DomainElement, dialect: Dialect): Boolean = {
@@ -542,7 +598,7 @@ case class NodeMappingEmitter(dialect: Dialect,
   }
 
   override def position(): Position =
-    nodeMapping.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+    nodeMappable.asInstanceOf[DomainElement].annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 }
 
 case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases: Map[String, (String, String)])
@@ -656,14 +712,16 @@ trait DialectDocumentsEmitters {
   def nodeMappingDeclarationEmitters(dialect: Dialect,
                                      ordering: SpecOrdering,
                                      aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
-    val nodeMappingDeclarations = dialect.declares.collect { case nm: NodeMapping => nm }
+    val nodeMappingDeclarations: Seq[NodeMappable] = dialect.declares.collect {
+      case nm: NodeMappable       => nm
+    }
     if (nodeMappingDeclarations.nonEmpty) {
       Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
           b.entry(
             "nodeMappings",
             _.obj { b =>
-              val nodeMappingEmitters: Seq[EntryEmitter] = nodeMappingDeclarations.map { n =>
+              val nodeMappingEmitters: Seq[EntryEmitter] = nodeMappingDeclarations.map { n: NodeMappable =>
                 NodeMappingEmitter(dialect, n, ordering, aliases)
               }
               traverse(ordering.sorted(nodeMappingEmitters), b)
@@ -675,9 +733,9 @@ trait DialectDocumentsEmitters {
           nodeMappingDeclarations
             .map(
               _.annotations
-                .find(classOf[LexicalInformation])
-                .map(_.range.start)
-                .getOrElse(ZERO))
+               .find(classOf[LexicalInformation])
+               .map(_.range.start)
+               .getOrElse(ZERO))
             .filter(_ != ZERO)
             .sorted
             .headOption

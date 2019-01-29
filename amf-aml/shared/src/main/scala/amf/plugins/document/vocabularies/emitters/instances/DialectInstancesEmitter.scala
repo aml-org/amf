@@ -46,21 +46,21 @@ trait DialectEmitterHelper {
     }
   }
 
-  def findNodeMappingById(nodeMappingId: String): (Dialect, NodeMapping) = {
+  def findNodeMappingById(nodeMappingId: String): (Dialect, NodeMappable) = {
     maybeFindNodeMappingById(nodeMappingId).getOrElse {
       throw new Exception(s"Cannot find node mapping $nodeMappingId")
     }
   }
 
-  def maybeFindNodeMappingById(nodeMappingId: String): Option[(Dialect, NodeMapping)] = {
+  def maybeFindNodeMappingById(nodeMappingId: String): Option[(Dialect, NodeMappable)] = {
     val inDialectMapping = dialect.declares
       .find {
-        case nodeMapping: NodeMapping => nodeMapping.id == nodeMappingId
+        case nodeMapping: NodeMappable => nodeMapping.id == nodeMappingId
       }
       .map { nodeMapping =>
         (dialect, nodeMapping)
       }
-      .asInstanceOf[Option[(Dialect, NodeMapping)]]
+      .asInstanceOf[Option[(Dialect, NodeMappable)]]
       .orElse {
         dialect.references
           .collect {
@@ -68,7 +68,7 @@ trait DialectEmitterHelper {
               lib.declares.find(_.id == nodeMappingId)
           }
           .collectFirst {
-            case Some(mapping: NodeMapping) =>
+            case Some(mapping: NodeMappable) =>
               (dialect, mapping)
           }
       }
@@ -77,7 +77,7 @@ trait DialectEmitterHelper {
     }
   }
 
-  def findNodeInRegistry(nodeMappingId: String): Option[(Dialect, NodeMapping)] =
+  def findNodeInRegistry(nodeMappingId: String): Option[(Dialect, NodeMappable)] =
     AMLPlugin.registry.findNode(nodeMappingId)
 }
 
@@ -221,7 +221,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
 }
 
 case class DialectNodeEmitter(node: DialectDomainElement,
-                              nodeMapping: NodeMapping,
+                              nodeMappable: NodeMappable,
                               instance: DialectInstance,
                               dialect: Dialect,
                               ordering: SpecOrdering,
@@ -233,6 +233,9 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               topLevelEmitters: Seq[EntryEmitter] = Nil)
     extends PartEmitter
     with DialectEmitterHelper {
+
+  // TODO: support parsing unions here
+  def nodeMapping = nodeMappable.asInstanceOf[NodeMapping]
 
   override def emit(b: PartBuilder): Unit = {
     if (node.isLink) {
@@ -367,8 +370,9 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                 element: DialectDomainElement,
                                 propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
     val nodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().map { rangeNodeMapping =>
-      val (_, nodeMapping) = findNodeMappingById(rangeNodeMapping.value())
-      nodeMapping
+      findNodeMappingById(rangeNodeMapping.value()) match {
+        case (_, nodeMapping: NodeMapping) => nodeMapping
+      }
     }
 
     // potential node range based in discriminators map
@@ -411,8 +415,9 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     Seq(new EntryEmitter() {
       // potential node range based in the objectRange
       val objectRangeMappings: Seq[NodeMapping] = propertyMapping.objectRange().map { rangeNodeMapping =>
-        val (_, nodeMapping) = findNodeMappingById(rangeNodeMapping.value())
-        nodeMapping
+        findNodeMappingById(rangeNodeMapping.value()) match {
+          case (_, nodeMapping: NodeMapping) => nodeMapping
+        }
       }
 
       // potential node range based in discriminators map
@@ -502,8 +507,9 @@ case class DialectNodeEmitter(node: DialectDomainElement,
   protected def emitObjectMap(key: String, array: AmfArray, propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
     Seq(new EntryEmitter() {
       val nextNodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().map { rangeNodeMapping =>
-        val (_, nodeMapping) = findNodeMappingById(rangeNodeMapping.value())
-        nodeMapping
+        findNodeMappingById(rangeNodeMapping.value()) match {
+          case (_, nodeMapping: NodeMapping) => nodeMapping
+        }
       }
       val mapElements: Map[DialectNodeEmitter, DialectDomainElement] = array.values.foldLeft(
         Map[Option[DialectNodeEmitter], DialectDomainElement]()) {
@@ -634,16 +640,18 @@ case class DialectNodeEmitter(node: DialectDomainElement,
               case elem: DialectDomainElement if elem.definedBy.id == publicNodeMapping.mappedNode().value() => elem
             }
             if (declared.nonEmpty) {
-              val (_, nodeMapping) = findNodeMappingById(publicNodeMapping.mappedNode().value())
-              acc ++ Seq(
-                DeclarationsGroupEmitter(declared,
-                                         publicNodeMapping,
-                                         nodeMapping,
-                                         instance,
-                                         dialect,
-                                         ordering,
-                                         docs.declarationsPath().option().getOrElse("/").split("/"),
-                                         aliases))
+              findNodeMappingById(publicNodeMapping.mappedNode().value()) match {
+                case (_, nodeMapping: NodeMapping) =>
+                  acc ++ Seq(
+                    DeclarationsGroupEmitter(declared,
+                      publicNodeMapping,
+                      nodeMapping,
+                      instance,
+                      dialect,
+                      ordering,
+                      docs.declarationsPath().option().getOrElse("/").split("/"),
+                      aliases))
+              }
             } else acc
         }
       }

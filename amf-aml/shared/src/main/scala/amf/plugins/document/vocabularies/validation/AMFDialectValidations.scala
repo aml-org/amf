@@ -7,7 +7,7 @@ import amf.core.validation.core.{PropertyConstraint, ValidationProfile, Validati
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.vocabularies.model.domain.{NodeMapping, PropertyMapping}
+import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
 import amf.plugins.features.validation.Validations
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -30,8 +30,9 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     Option(dialect.documents()).flatMap(docs => Option(docs.root())).flatMap(root => root.encoded().option()).map {
       mappingId =>
         Option(findNodeMappingById(mappingId)) match {
-          case Some((_, nodeMapping)) => emitEntityValidations(nodeMapping, mutable.Set())
-          case _                      => Nil
+          case Some((_, nodeMapping: NodeMapping))      => emitEntityValidations(nodeMapping, mutable.Set())
+          case Some((_, nodeMapping: UnionNodeMapping)) => ???
+          case _                                        => Nil
         }
 
     } getOrElse Nil

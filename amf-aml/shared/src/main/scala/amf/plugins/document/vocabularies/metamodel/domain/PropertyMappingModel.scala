@@ -7,7 +7,7 @@ import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
 
-object PropertyMappingModel extends DomainElementModel with MergeableMappingModel {
+object PropertyMappingModel extends DomainElementModel with MergeableMappingModel with NodeWithDiscriminatorModel {
 
   val Name = Field(
     Str,
@@ -66,20 +66,6 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
     SortedArray(Any),
     Namespace.Shacl + "in",
     ModelDoc(ExternalModelVocabularies.Shacl, "in", "Enum constraint for the values of the property mapping"))
-  val TypeDiscriminator = Field(
-    Str,
-    Namespace.Meta + "typeDiscriminatorMap",
-    ModelDoc(ModelVocabularies.Meta,
-             "type discriminator map",
-             "Information about the discriminator values in the source AST for the property mapping")
-  )
-  val TypeDiscriminatorName = Field(
-    Str,
-    Namespace.Meta + "typeDiscriminatorName",
-    ModelDoc(ModelVocabularies.Meta,
-             "type discriminator name",
-             "Information about the field in the source AST to be used as discrimintaro in the property mapping")
-  )
   val Unique = Field(
     Bool,
     Namespace.Meta + "unique",
