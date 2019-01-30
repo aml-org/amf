@@ -133,7 +133,10 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       var inheritedIds: Seq[String]                   = Nil
 
       superTypes.foreach { superNode =>
-        val canonicalSuperNode = normalizeAction(superNode)
+        val canonicalSuperNode = superNode match {
+          case union: UnionShape => normalizeAction(union)
+          case other             => normalize(other)
+        }
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))
@@ -171,10 +174,6 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
           aggregateExamples(accShape, superTypes.head)
         case _ => // Nothing to do
       }
-
-      // If the final shape is not equals to the original shape, add the inherits again, in case other shape refers this shape
-      // TODO: This may produces multiple validation messages, one for each inherit (the target is different in each one). Is this right?
-      if (!accShape.equals(shape)) shape.withInherits(superTypes)
 
       accShape
     }

@@ -1,0 +1,109 @@
+#%RAML 1.0 Library
+usage: channel entities
+
+uses:
+  common: common.raml
+  provider: provider.raml
+
+types:
+
+  ChannelType:
+    enum: ["email", "push", "sms"]
+
+  ChannelData:
+    properties:
+      name: string
+      channelType: ChannelType
+      providerId: integer
+      providerAttrValues: common.AttributeValue[]
+      attrs: common.Attribute[]
+    example:
+      {
+        "name": "Jared brand templated email",
+        "channelType": "email",
+        "providerId": 1,
+        "providerAttrValues": [
+          {
+            "key": "serviceUrl",
+            "value": "/rest/api/v1.3/campaigns/{campaignName}/email"
+          },
+          {
+            "key": "userId",
+            "value": "clienteling@jared"
+          },
+          {
+            "key": "password",
+            "value": "xxxxxxxxxx"
+          }
+        ],
+        "attrs": [
+          {
+            "key": "campaignName",
+            "type": "string",
+            "requiredFlag": true
+          }
+        ]
+      }
+
+  ChannelRef:
+    type: common.Reference
+    example:
+      {
+        "id": 1,
+        "_links": {
+          "self": {
+            "href": "/channel/1"
+          }
+        }
+      }
+
+  Channel:
+    type: [ChannelData, ChannelRef]
+    properties:
+      _embedded:
+        properties:
+          provider: provider.ProviderRef
+    example:
+      {
+        "id": 1,
+        "_links": {
+          "self": {
+            "href": "/channel/1"
+          }
+        },
+        "name": "Jared brand templated email",
+        "channelType": "email",
+        "providerId": 1,
+        "providerAttrValues": [
+          {
+            "key": "serviceUrl",
+            "value": "/rest/api/v1.3/campaigns/{campaignName}/email"
+          },
+          {
+            "key": "userId",
+            "value": "clienteling@jared"
+          },
+          {
+            "key": "password",
+            "value": "xxxxxxxxxx"
+          }
+        ],
+        "attrs": [
+          {
+            "key": "campaignName",
+            "type": "string",
+            "requiredFlag": true
+          }
+        ],
+        "_embedded": {
+          "provider": {
+            "id": 1,
+            "_links": {
+              "self": {
+                "href": "/provider/1"
+              }
+            }
+          }
+        }
+      }
+

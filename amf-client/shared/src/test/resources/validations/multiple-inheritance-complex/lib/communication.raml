@@ -1,0 +1,519 @@
+#%RAML 1.0 Library
+usage: communication entities
+
+uses:
+  common: common.raml
+  channel: channel.raml
+
+types:
+
+  CommunicationData:
+    properties:
+      name: string
+      channelId: integer
+      channelAttrValues: common.AttributeValue[]
+      recipientAttrs: common.Attribute[]
+      communicationAttrs: common.Attribute[]
+    example:
+      {
+        "name": "Jared Wishlist Email - Development",
+        "channelId": 1,
+        "channelAttrValues": [
+          {
+            "key": "campaignName",
+            "value": "TEST_Jared_Clienteling_Wishlist"
+          }
+        ],
+        "recipientAttrs": [
+          {
+            "key": "EMAIL_ADDRESS_",
+            "type": "string",
+            "requiredFlag": true
+          }
+        ],
+        "communicationAttrs": [
+          {
+            "key": "first_Name",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "JC_Name",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "JC_Phone_Number",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "JC_Store",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "instoreId",
+            "type": "integer",
+            "requiredFlag": true
+          }
+        ]
+      }
+
+  CommunicationRef:
+    type: common.Reference
+    properties:
+      _links:
+        type: common.ReferenceLinks
+        properties:
+          sendMessages: common.Link
+          channel: common.Link
+    example:
+      {
+        "id": 1,
+        "_links": {
+          "self": {
+            "href": "/communication/1"
+          },
+          "channel": {
+            "href": "/channel/1"
+          },
+          "sendMessages": {
+            "href": "/communication/1",
+            "method": "POST"
+          }
+        }
+      }
+
+  Communication:
+    type: [CommunicationData, CommunicationRef]
+    properties:
+      _embedded?:
+        properties:
+          batches: BatchRef[]
+          channel: channel.ChannelRef
+    example:
+      {
+        "id": 1,
+        "_links": {
+          "self": {
+            "href": "/communication/1"
+          },
+          "channel": {
+            "href": "/channel/1"
+          },
+          "sendMessages": {
+            "href": "/communication/1",
+            "method": "POST"
+          }
+        },
+        "name": "Jared Wishlist Email - Development",
+        "channelId": 1,
+        "channelAttrValues": [
+          {
+            "key": "campaignName",
+            "value": "TEST_Jared_Clienteling_Wishlist"
+          }
+        ],
+        "recipientAttrs": [
+          {
+            "key": "EMAIL_ADDRESS_",
+            "type": "string",
+            "requiredFlag": true
+          }
+        ],
+        "communicationAttrs": [
+          {
+            "key": "first_Name",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "JC_Name",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "JC_Phone_Number",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "JC_Store",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "instoreId",
+            "type": "integer",
+            "requiredFlag": true
+          }
+        ],
+        "_embedded": {
+          "batches": [
+            {
+              "id": 1,
+              "status": "OPEN",
+              "statistics": {
+                "total": 5,
+                "accepted": 4,
+                "failed": 1
+              },
+              "_links": {
+                "self": {
+                  "href": "/batch/1"
+                },
+                "communication": {
+                  "href": "/communication/1"
+                },
+                "messages": {
+                  "href": "/batch/1/messages"
+                }
+              }
+            }
+          ],
+          "channel": {
+            "id": 1,
+            "_links": {
+              "self": {
+                "href": "/channel/1"
+              }
+            }
+          }
+        }
+      }
+
+  MessageData:
+    properties:
+      recipientAttrValues: common.AttributeValue[]
+      communicationAttrValues: common.AttributeValue[]
+    example:
+      {
+        "recipientAttrValues": [
+          {
+            "key": "emailAddress",
+            "value": "jdoe@example.com"
+          }
+        ],
+        "communicationAttrValues": [
+          {
+            "key": "orderId",
+            "value": "12345"
+          },
+          {
+            "key": "fullName",
+            "value": "John Doe"
+          }
+        ]
+      }
+
+  MessageRef:
+    type: common.Reference
+    properties:
+      status: StatusValue
+      _links:
+        type: common.ReferenceLinks
+        properties:
+          statusUpdates: common.Link
+          inboundBatch?: common.Link
+          outboundBatch?: common.Link
+          resend?: common.Link
+    example:
+      {
+        id: 1,
+        status: "CHANNEL_ACCEPTED",
+        _links: {
+          self: {
+            href: "/message/1"
+          },
+          inboundBatch: {
+            href: "/batch/1"
+          },
+          outboundBatch: {
+            href: "/batch/2"
+          },
+          statusUpdates: {
+            href: "/message/1/statusUpdate"
+          },
+          resend: {
+            href: "/channel/1/message",
+            method: "post"
+          }
+        }
+      }
+
+  Message:
+    type: [MessageData, MessageRef]
+    properties:
+      resendUrl?: string
+      _embedded?:
+        properties:
+          statusUpdates: StatusUpdateRef[]
+    example:
+      {
+        id: 1,
+        recipientAttrValues: [
+          {
+            key: "emailAddress",
+            value: "jdoe@example.com"
+          }
+        ],
+        communicationAttrValues: [
+          {
+            key: "orderId",
+            value: "12345"
+          },
+          {
+            key: "fullName",
+            value: "John Doe"
+          }
+        ],
+        status: "CHANNEL_ACCEPTED",
+        _embedded: {
+          statusUpdates: [
+            {
+              id: 1,
+              date: "2017-09-01T00:00:00Z",
+              _links: {
+                self: {
+                  href: "/statusUpdate/1"
+                },
+                message: {
+                  href: "/message/1"
+                }
+              }
+            }
+          ]
+        },
+        _links: {
+          self: {
+            href: "/message/1"
+          },
+          inboundBatch: {
+            href: "/batch/1"
+          },
+          outboundBatch: {
+            href: "/batch/2"
+          },
+          statusUpdates: {
+            href: "/message/1/statusUpdate"
+          }
+        }
+      }
+
+  BatchData:
+    properties:
+      messages: MessageData[]
+    example:
+      {
+        "messages": [
+          {
+            "recipientAttrValues": [
+              {
+                "key": "EMAIL_ADDRESS_",
+                "value": "chris.cellucci@signetjewelers.com"
+              }
+            ],
+            "communicationAttrValues": [
+              {
+                "key" : "first_name",
+                "value" : "Chris"
+              },
+              {
+                "key" : "JC_Name",
+                "value" : "John Doe"
+              },
+              {
+                "key" : "JC_Phone_Number",
+                "value" : "550-555-5555"
+              },
+              {
+                "key" : "JC_Store",
+                "value" : "1234"
+              },
+              {
+                "key" : "instoreId",
+                "value" : "12345678"
+              }
+            ]
+          }
+        ]
+      }
+
+
+  BatchRef:
+    type: common.Reference
+    properties:
+      status: BatchStatusValue
+      _links:
+        type: common.ReferenceLinks
+        properties:
+          messages: common.Link
+          communication: common.Link
+          next?: BatchRef
+    example:
+      {
+        id: 1,
+        status: "OPEN",
+        _links: {
+          self: {
+            href: "/batch/1"
+          },
+          communication: {
+            href: "/communication/1"
+          },
+          messages: {
+            href: "/batch/1/messages"
+          }
+        }
+      }
+
+  Batch:
+    type: BatchRef
+    properties:
+      statistics:
+        properties:
+          /.*/: integer
+      _embedded?:
+        properties:
+          communication: CommunicationRef
+          messages: MessageRef[]
+    example:
+      {
+        id: 1,
+        status: "PENDING",
+        statistics: {
+          total: 5,
+          accepted: 4,
+          failed: 1
+        },
+        _embedded: {
+          messages: [
+            {
+              id: 1,
+              status: "CHANNEL_ACCEPTED",
+              _links: {
+                self: {
+                  href: "/message/1"
+                },
+                inboundBatch: {
+                  href: "/batch/1"
+                },
+                outboundBatch: {
+                  href: "/batch/2"
+                },
+                statusUpdates: {
+                  href: "/message/1/statusUpdate"
+                }
+              }
+            }
+          ],
+          communication: {
+              id: 1,
+              _links: {
+                self: {
+                  href: "/communication/1"
+                },
+                channel: {
+                  href: "/channel/1"
+                },
+                sendMessages: {
+                  href: "/communication/1",
+                  method: "POST"
+                }
+              }
+            }
+        },
+        _links: {
+          self: {
+            href: "/batch/1"
+          },
+          communication: {
+            href: "/communication/1"
+          },
+          messages: {
+            href: "/batch/1/messages"
+          }
+        }
+      }
+
+  BatchStatusValue:
+    enum: ["CREATED", "OPEN", "PENDING", "COMPLETE", "COMPLETE_WITH_ERRORS", "PROVIDER_ERRORED", "PERMANENTLY_ERRORED"]
+
+  BatchStatusUpdateData:
+    properties:
+      status: BatchStatusValue
+    example:
+      {
+        "status": "PROVIDER_ERRORED"
+      }
+
+  BatchStatusUpdateRef:
+    type: common.Reference
+    properties:
+      date: string
+      _links:
+        type: common.ReferenceLinks
+        properties:
+          batch: common.Link
+          next?: BatchStatusUpdateRef
+    example:
+      {
+        "id": 7,
+        "date": "2017-09-01T00:00:00Z",
+        "_links": {
+          "batch": {
+            "href": "/batch/1",
+            "method": "GET"
+          },
+          "self": {
+            "href": "/batchStatusUpdate/7",
+            "method": "GET"
+          }
+        },
+        "status": "PROVIDER_ERRORED"
+      }
+
+
+  BatchStatusUpdate:
+    type: [BatchStatusUpdateData, BatchStatusUpdateRef]
+
+  StatusValue:
+      enum: ["CREATED", "COMMUNICATION_ACCEPTED", "COMMUNICATION_ERRORED", "CHANNEL_ACCEPTED", "CHANNEL_ERRORED", "CHANNEL_QUEUED", "PROVIDER_ACCEPTED", "PROVIDER_EXCLUDED", "PROVIDER_ERRORED", "PERMANENTLY_ERRORED"]
+
+  StatusUpdateData:
+    properties:
+      status: StatusValue
+    example:
+      {
+        "status": "PROVIDER_ERRORED"
+      }
+
+  StatusUpdateRef:
+    type: common.Reference
+    properties:
+      date: string
+      _links:
+        type: common.ReferenceLinks
+        properties:
+          message: common.Link
+          next?: StatusUpdateRef
+    example:
+      {
+        "id": 5,
+        "date": "2017-09-01T00:00:00Z",
+        "_links": {
+          "self": {
+            "href": "/statusUpdate/5",
+            "method": "GET"
+          },
+          "message": {
+            "href": "/message/0",
+            "method": "GET"
+          }
+        },
+        "status": "PROVIDER_ACCEPTED"
+      }
+
+  StatusUpdate:
+    type: [StatusUpdateData, StatusUpdateRef]

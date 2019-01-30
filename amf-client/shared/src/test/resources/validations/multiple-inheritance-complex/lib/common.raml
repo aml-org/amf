@@ -1,0 +1,141 @@
+#%RAML 1.0 Library
+usage: Common data types
+
+
+types:
+  StatusMessageCode:
+    type: integer
+    maximum: 0
+
+  HttpStatusCode:
+    type: integer
+    minimum: 100
+    maximum: 599
+
+  StatusMessage:
+    properties:
+      code: StatusMessageCode | HttpStatusCode
+      message: string
+      detail?: string
+      statusMessages?: StatusMessage[]
+    example:
+      {
+        "code" : 404,
+        "message" : "Resource not found",
+        "detail" : "forcing NotFoundException: 404",
+        "statusMessages" : [
+          {
+            "code" : -1,
+            "message" : "StackTrace",
+            "detail" : "com.signetjewelers.api.commhub.exception.NotFoundException: forcing NotFoundException: 404",
+            "statusMessages" : [
+              {
+                "code" : -3,
+                "message" : "CausedBy",
+                "detail" : "simulated root cause",
+                "statusMessages" : [
+                  {
+                    "code" : -1,
+                    "message" : "StackTrace",
+                    "detail" : "java.lang.RuntimeException: simulated root cause",
+                    "statusMessages" : [
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "com.signetjewelers.api.commhub.service.impl.RootServiceImpl.getRoot(RootServiceImpl.java:28)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "sun.reflect.NativeMethodAccessorImpl.invoke0(NativeMethodAccessorImpl.java:-2)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "java.lang.reflect.Method.invoke(Method.java:498)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.processor.InvokerMessageProcessor.process(InvokerMessageProcessor.java:167)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.execution.ExceptionToMessagingExceptionExecutionInterceptor.execute(ExceptionToMessagingExceptionExecutionInterceptor.java:27)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.execution.MessageProcessorNotificationExecutionInterceptor.execute(MessageProcessorNotificationExecutionInterceptor.java:108)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.execution.MessageProcessorExecutionTemplate.execute(MessageProcessorExecutionTemplate.java:44)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.processor.BlockingProcessorExecutor.executeNext(BlockingProcessorExecutor.java:88)" },
+                      { "code" : -2, "message" : "StackTraceElement", "detail" : "... 164 more" }
+                    ]
+                  }
+                ]
+              },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "com.signetjewelers.api.commhub.service.impl.RootServiceImpl.getRoot(RootServiceImpl.java:28)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "sun.reflect.NativeMethodAccessorImpl.invoke0(NativeMethodAccessorImpl.java:-2)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "java.lang.reflect.Method.invoke(Method.java:498)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.processor.InvokerMessageProcessor.process(InvokerMessageProcessor.java:167)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.execution.ExceptionToMessagingExceptionExecutionInterceptor.execute(ExceptionToMessagingExceptionExecutionInterceptor.java:27)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.execution.MessageProcessorNotificationExecutionInterceptor.execute(MessageProcessorNotificationExecutionInterceptor.java:108)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.execution.MessageProcessorExecutionTemplate.execute(MessageProcessorExecutionTemplate.java:44)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "org.mule.processor.BlockingProcessorExecutor.executeNext(BlockingProcessorExecutor.java:88)" },
+              { "code" : -2, "message" : "StackTraceElement", "detail" : "... 164 more" }
+            ]
+          }
+        ]
+      }
+      
+  Link:
+    properties:
+      href: string
+      method?: string
+
+  ReferenceLinks:
+    properties:
+      self: Link
+
+  Entity:
+    properties:
+      id: integer
+
+  Reference:
+    type: Entity
+    properties:
+      _links:
+        type: ReferenceLinks
+
+  Attribute:
+    properties:
+      key: string
+      type: string
+      requiredFlag: boolean
+
+  AttributeValue:
+    properties:
+      key: string
+      value:
+
+  Root:
+    type: Reference
+    properties:
+      environment:
+        type: AttributeValue[]
+      _links:
+        type: ReferenceLinks
+        properties:
+          providers: Link
+          channels: Link
+          communications: Link
+    example:
+      {
+        "id": 1,
+        "environment": [
+          {
+            "key": "env",
+            "value": "PROD"
+          },
+          {
+            "key": "hostname",
+            "value": "dlfesbapp00.irving.zalecorp.com"
+          }
+        ],
+        "_links": {
+          "self": {
+              "href": "/"
+          },
+          "providers": {
+            "href": "/provider"
+          },
+          "channels": {
+            "href": "/channel"
+          },
+          "communications": {
+            "href": "/communication"
+          }
+        }
+      }

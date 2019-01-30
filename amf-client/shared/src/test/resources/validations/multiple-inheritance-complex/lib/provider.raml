@@ -1,0 +1,91 @@
+#%RAML 1.0 Library
+usage: provider entities
+
+uses:
+  common: common.raml
+
+types:
+
+  ApiCallData:
+    properties:
+      providerId: integer
+      type: string
+      endpoint: string
+      invocationTime: string
+      durationMs: integer
+      statusCode: integer
+
+  ApiCallRef:
+    type: common.Reference
+
+  ApiCall:
+    type: [ApiCallData, ApiCallRef]
+
+  ProviderData:
+    properties:
+      name: string
+      attrs: common.Attribute[]
+    example:
+      {
+        "name": "Responsys",
+        "attrs": [
+          {
+            "key": "serviceUrl",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "userId",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "password",
+            "type": "string",
+            "requiredFlag": true
+          }
+        ]
+      }
+
+
+  ProviderRef:
+    type: common.Reference
+    example:
+      {
+        "id": 1,
+        "_links": {
+          "self": {
+            "href": "/provider/1"
+          }
+        }
+      }
+
+  Provider:
+    type: [ProviderData, ProviderRef]
+    example:
+      {
+        "id": 1,
+        "_links": {
+          "self": {
+            "href": "/provider/1"
+          }
+        },
+        "name": "Responsys",
+        "attrs": [
+          {
+            "key": "serviceUrl",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "userId",
+            "type": "string",
+            "requiredFlag": true
+          },
+          {
+            "key": "password",
+            "type": "string",
+            "requiredFlag": true
+          }
+        ]
+      }
