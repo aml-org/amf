@@ -1,0 +1,16 @@
+#%Deployment 0.1
+name: Test deployment
+deploymentTarget: cloudhub
+runtime:
+  version: 3.8.0
+  workerSize: 1 vCore
+  workers: "1"
+  region: us-east
+  autorestart: true
+  persistentQueues: false
+  encryptQueues: false
+bundle: http://test.com/bundle/1
+connections:
+  - http://test.com/connections/1
+  - http://test.com/connections/2
+

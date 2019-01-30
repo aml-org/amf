@@ -84,7 +84,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
     }
   }
 
-  def isUnion: Boolean = nodesInRange.nonEmpty
+  def isUnion: Boolean = nodesInRange.size > 1
 
   def toField: Option[Field] = {
     nodePropertyMapping().option().map { v =>

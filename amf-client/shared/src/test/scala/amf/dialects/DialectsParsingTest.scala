@@ -91,7 +91,7 @@ class DialectsParsingTest extends FunSuiteCycleTests {
     cycle("example19.raml", "example19.json", VocabularyYamlHint, Amf)
   }
 
-  test("HERE_HERE parse 20 test") {
+  test("parse 20 test") {
     cycle("example20.raml", "example20.json", VocabularyYamlHint, Amf)
   }
 
@@ -175,7 +175,7 @@ class DialectsParsingTest extends FunSuiteCycleTests {
     cycle("example19.json", "example19.raml", AmfJsonHint, Aml)
   }
 
-  test("HERE_HERE generate 20 test") {
+  test("generate 20 test") {
     cycle("example20.json", "example20.raml", AmfJsonHint, Aml)
   }
 

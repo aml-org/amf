@@ -1,119 +1,227 @@
 [
-  {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml",
-    "@type": [
-      "http://a.ml/vocabularies/meta#DialectInstance",
-      "http://a.ml/vocabularies/document#Document",
-      "http://a.ml/vocabularies/document#Fragment",
-      "http://a.ml/vocabularies/document#Module",
-      "http://a.ml/vocabularies/document#Unit"
-    ],
-    "http://a.ml/vocabularies/meta#definedBy": [
-      {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml"
-      }
-    ],
-    "http://a.ml/vocabularies/document#encodes": [
-      {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/",
-        "@type": [
-          "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#SoftwareProjectHostedVcsMetadata",
-          "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml#/declarations/SoftwareProjectHostedVcsMetadataNode",
-          "http://a.ml/vocabularies/meta#DialectDomainElement",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#isPrivate": [
-          {
-            "@value": true
-          }
-        ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#owner": [
-          {
-            "@value": "mulesoft"
-          }
-        ],
-        "http://about.org/ABOUT-vocabulary.yaml#forkedFrom": [
-          {
-            "@value": "false"
-          }
-        ],
-        "http://www.w3.org/2002/07/owl#partOf": [
-          {
-            "@value": "https://github.com/mulesoft/maelstrom-artifacts"
-          }
-        ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#name": [
-          {
-            "@value": "maelstrom-artifacts"
-          }
-        ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#ownerAvatar": [
-          {
-            "@value": "https://avatars1.githubusercontent.com/u/185740?v=4"
-          }
-        ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#createdAt": [
-          {
-            "@value": "2017-08-30T19:56:58Z",
-            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-          }
-        ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#updatedAt": [
-          {
-            "@value": "2018-09-07T21:33:28Z",
-            "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
-          }
-        ],
-        "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#stargazersCount": [
-          {
-            "@value": 0
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(3,0)-(11,13)]"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "http://a.ml/vocabularies/document-source-maps#sources": [
-      {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
-        "@type": [
-          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-        ],
-        "http://a.ml/vocabularies/document-source-maps#lexical": [
-          {
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "[(3,0)-(11,13)]"
-              }
-            ]
-          }
-        ]
-      }
-    ]
-  }
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml",
+"@type": [
+"http://a.ml/vocabularies/meta#DialectInstance",
+"http://a.ml/vocabularies/document#Document",
+"http://a.ml/vocabularies/document#Fragment",
+"http://a.ml/vocabularies/document#Module",
+"http://a.ml/vocabularies/document#Unit"
+],
+"http://a.ml/vocabularies/meta#definedBy": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml"
+}
+],
+"http://a.ml/vocabularies/document#encodes": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/",
+"@type": [
+"http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#SoftwareProjectHostedVcsMetadata",
+"file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml#/declarations/SoftwareProjectHostedVcsMetadataNode",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#isPrivate": [
+{
+"@value": true
+}
+],
+"http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#owner": [
+{
+"@value": "mulesoft"
+}
+],
+"http://about.org/ABOUT-vocabulary.yaml#forkedFrom": [
+{
+"@value": "false"
+}
+],
+"http://www.w3.org/2002/07/owl#partOf": [
+{
+"@value": "https://github.com/mulesoft/maelstrom-artifacts"
+}
+],
+"http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#name": [
+{
+"@value": "maelstrom-artifacts"
+}
+],
+"http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#ownerAvatar": [
+{
+"@value": "https://avatars1.githubusercontent.com/u/185740?v=4"
+}
+],
+"http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#createdAt": [
+{
+"@value": "2017-08-30T19:56:58Z",
+"@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+}
+],
+"http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#updatedAt": [
+{
+"@value": "2018-09-07T21:33:28Z",
+"@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+}
+],
+"http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#stargazersCount": [
+{
+"@value": 0
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#stargazersCount"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(3,17)-(3,18)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#createdAt"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(9,11)-(9,33)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#name"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(8,6)-(8,27)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://about.org/ABOUT-vocabulary.yaml#forkedFrom"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(5,12)-(5,19)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#isPrivate"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(11,9)-(11,13)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(3,0)-(11,13)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#owner"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(6,7)-(6,17)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://www.w3.org/2002/07/owl#partOf"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(4,8)-(4,57)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#ownerAvatar"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(7,13)-(7,66)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#updatedAt"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(10,11)-(10,33)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(3,0)-(11,13)]"
+}
+]
+}
+]
+}
+]
+}
 ]

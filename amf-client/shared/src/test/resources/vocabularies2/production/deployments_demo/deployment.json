@@ -1,0 +1,307 @@
+[
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/deployment.yaml",
+"@type": [
+"http://a.ml/vocabularies/meta#DialectInstance",
+"http://a.ml/vocabularies/document#Document",
+"http://a.ml/vocabularies/document#Fragment",
+"http://a.ml/vocabularies/document#Module",
+"http://a.ml/vocabularies/document#Unit"
+],
+"http://a.ml/vocabularies/meta#definedBy": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/dialect.yaml"
+}
+],
+"http://a.ml/vocabularies/document#encodes": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/deployment.yaml#/",
+"@type": [
+"http://mulesoft.com/vocabularies/runtime#Deployment",
+"file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/dialect.yaml#/declarations/DeploymentNode",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://mulesoft.com/vocabularies/runtime#bundledApplication": [
+{
+"@id": "http://test.com/bundle/1"
+}
+],
+"http://mulesoft.com/vocabularies/runtime#runtime": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/deployment.yaml#/runtime",
+"@type": [
+"http://mulesoft.com/vocabularies/runtime#Runtime",
+"file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/dialect.yaml#/declarations/RuntimeNode",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://mulesoft.com/vocabularies/runtime#region": [
+{
+"@value": "us-east"
+}
+],
+"http://mulesoft.com/vocabularies/runtime#encryptQueuesOption": [
+{
+"@value": false
+}
+],
+"http://mulesoft.com/vocabularies/runtime#autoRestartOption": [
+{
+"@value": true
+}
+],
+"http://schema.org/version": [
+{
+"@value": "3.8.0"
+}
+],
+"http://mulesoft.com/vocabularies/runtime#persistentQueuesOption": [
+{
+"@value": false
+}
+],
+"http://mulesoft.com/vocabularies/runtime#workerType": [
+{
+"@value": "1"
+}
+],
+"http://mulesoft.com/vocabularies/runtime#workerSize": [
+{
+"@value": "1 vCore"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/deployment.yaml#/runtime/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#workerSize"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(6,14)-(6,21)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#persistentQueuesOption"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(10,20)-(10,25)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#autoRestartOption"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(9,15)-(9,19)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#region"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(8,10)-(8,17)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/deployment.yaml#/runtime"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(5,0)-(12,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#encryptQueuesOption"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(11,17)-(11,22)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://schema.org/version"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(5,11)-(5,16)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#workerType"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(7,11)-(7,14)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://mulesoft.com/vocabularies/runtime#connections": [
+{
+"@id": "http://test.com/connections/1"
+},
+{
+"@id": "http://test.com/connections/2"
+}
+],
+"http://schema.org/name": [
+{
+"@value": "Test deployment"
+}
+],
+"http://mulesoft.com/vocabularies/runtime#deploymentTarget": [
+{
+"@value": "cloudhub"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/deployment.yaml#/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#deploymentTarget"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(3,18)-(3,26)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#connections"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(13,12)-(17,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#bundledApplication"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(12,8)-(12,32)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/deployment.yaml#/"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(2,0)-(17,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://mulesoft.com/vocabularies/runtime#runtime"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(5,0)-(12,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://schema.org/name"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(2,6)-(2,21)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/deployment.yaml#/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/deployments_demo/deployment.yaml"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(2,0)-(17,0)]"
+}
+]
+}
+]
+}
+]
+}
+]

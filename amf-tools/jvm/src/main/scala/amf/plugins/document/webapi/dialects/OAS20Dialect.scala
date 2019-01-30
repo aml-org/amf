@@ -333,6 +333,13 @@ object OAS20Dialect {
           .withLiteralRange(xsdString.iri()),
 
         PropertyMapping()
+          .withId(DialectLocation + "#/declarations/ResponseObject/statusCode")
+          .withName("statusCode")
+          .withMinCount(1)
+          .withNodePropertyMapping(ResponseModel.StatusCode.value.iri())
+          .withLiteralRange(xsdString.iri()),
+
+        PropertyMapping()
           .withId(DialectLocation + "#/declarations/ResponseObject/schema")
           .withName("schema")
           .withNodePropertyMapping(ResponseModel.Payloads.value.iri())

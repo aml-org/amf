@@ -21,6 +21,7 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
   def withNodeTypeMapping(nodeType: String): NodeMapping              = set(NodeTypeMapping, nodeType)
   def withPropertiesMapping(props: Seq[PropertyMapping]): NodeMapping = setArrayWithoutId(PropertiesMapping, props)
   def withIdTemplate(idTemplate: String): NodeMapping                 = set(IdTemplate, idTemplate)
+  override def withName(name: String): NodeMapping                    = super.withName(name).asInstanceOf[NodeMapping]
 
   /**
     * Returns the properties forming the primary key for this node.

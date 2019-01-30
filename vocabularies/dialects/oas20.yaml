@@ -360,6 +360,10 @@ nodeMappings:
         propertyTerm: schema-org.description
         range: string
         mandatory: true
+      statusCode:
+        propertyTerm: hydra.statusCode
+        range: string
+        mandatory: true
       schema:
         propertyTerm: http.payload
         range: SchemaObject

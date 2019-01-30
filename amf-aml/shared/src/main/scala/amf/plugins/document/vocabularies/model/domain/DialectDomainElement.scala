@@ -2,7 +2,7 @@ package amf.plugins.document.vocabularies.model.domain
 
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
 import amf.core.metamodel.{Field, Obj, Type}
-import amf.core.model.BoolField
+import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields, Value}
 import amf.core.vocabulary.ValueType
@@ -11,6 +11,8 @@ import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.{YMap, YNode}
 
 import scala.collection.mutable
+
+class UnknownMapKeyProperty(val id: String) extends Exception
 
 case class DialectDomainElement(override val fields: Fields, annotations: Annotations)
     extends DynamicDomainElement
@@ -26,6 +28,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def isAbstract: BoolField = fields.field(meta.asInstanceOf[DialectDomainElementModel].Abstract)
   def withAbstract(isAbstract: Boolean): DialectDomainElement = {
     set(meta.asInstanceOf[DialectDomainElementModel].Abstract, isAbstract)
+    this
+  }
+
+  def declarationName: StrField = fields.field(meta.asInstanceOf[DialectDomainElementModel].DeclarationName)
+  def withDeclarationName(name: String): DialectDomainElement = {
+    set(meta.asInstanceOf[DialectDomainElementModel].DeclarationName, name)
     this
   }
 
@@ -70,18 +78,44 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
   def iriToValue(iri: String) = ValueType(iri)
 
-  override def dynamicFields: List[Field] = {
-    val mapKeyFields = mapKeyProperties.keys map { propertyId =>
-      Field(Type.Str, iriToValue(propertyId))
+  def loadAnnotationsFromParsedFields(propertyId: String) = {
+    fields.fields().find(_.field.value.iri() == propertyId) match {
+      case Some(loadedField) =>
+        findPropertyMappingByTermPropertyId(propertyId) match {
+          case Some(propertyMapping) =>
+            propertyAnnotations.update(propertyMapping.id, loadedField.value.annotations)
+          case _                     =>
+          // ignore
+        }
+      case _ => //
     }
+  }
 
-    (literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).flatMap {
+  override def dynamicFields: List[Field] = {
+    /*
+    val mapKeyFields = mapKeyProperties.keys map { propertyId =>
+      loadAnnotationsFromParsedFields(propertyId)
+      instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId) match {
+        case Some(propertyMapping) => propertyMapping.toField
+        case _                     => throw new Exception(s"Cannot find properties mapping for property: $propertyId")
+      }
+    }
+    */
+
+    (mapKeyProperties.keys ++ literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).flatMap {
       propertyId =>
-        instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get.toField
-    }.toList ++ mapKeyFields ++ fields
+        loadAnnotationsFromParsedFields(propertyId)
+        instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId) match {
+          case Some(propertyMapping) => propertyMapping.toField
+          case _                     => throw new Exception(s"Cannot find properties mapping for property: $propertyId")
+        }
+    }.toList ++ fields
       .fields()
       .filter(f => f.field != LinkableElementModel.Target && f.field != DomainElementModel.CustomDomainProperties)
-      .map(_.field)
+      .map { entry =>
+        loadAnnotationsFromParsedFields(entry.field.value.iri())
+        entry.field
+      }
   }
 
   def findPropertyByTermPropertyId(termPropertyId: String): String =
@@ -101,7 +135,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
     // Warning, mapKey has the term property id, no the property mapping id because
     // there's no real propertyMapping for it
-    mapKeyProperties.get(termPropertyId) map { stringValue =>
+    mapKeyProperties.get(propertyId) map { stringValue =>
       AmfScalar(stringValue, annotations)
     } orElse objectProperties.get(propertyId) map { dialectDomainElement =>
       dialectDomainElement
@@ -129,7 +163,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         case other =>
           AmfScalar(other, annotations)
       }
-    } map { Value(_, Annotations()) } orElse {
+    } map {
+      amfElement =>  Value(amfElement, amfElement.annotations)
+    } orElse {
       fields.fields().find(_.field == f).map(_.value)
     }
   }
@@ -155,7 +191,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   }
 
   def containsProperty(property: PropertyMapping): Boolean = {
-    mapKeyProperties.contains(property.nodePropertyMapping().value()) ||
+    mapKeyProperties.contains(property.id) ||
     objectCollectionProperties.contains(property.id) ||
     literalProperties.contains(property.id) ||
     linkProperties.contains(property.id)
@@ -299,7 +335,13 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   }
 
   def setMapKeyField(propertyId: String, value: String, node: YNode): DialectDomainElement = {
-    mapKeyProperties.put(propertyId, value)
+    findPropertyMappingByTermPropertyId(propertyId) match {
+      case Some(nodeMapping) =>
+        literalProperties.put(nodeMapping.id, value)
+        mapKeyProperties.put(nodeMapping.id, value)
+      case _                 =>
+        throw new UnknownMapKeyProperty(propertyId)
+    }
     this
   }
 
