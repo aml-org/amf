@@ -171,5 +171,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("multipleOfDataType.raml")
   }
 
+  test("MultipleOf with decimal limit precision") {
+    checkValid("multipleOfDataTypeLimitPrecision.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
