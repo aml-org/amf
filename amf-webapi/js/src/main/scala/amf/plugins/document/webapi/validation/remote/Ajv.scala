@@ -30,11 +30,11 @@ class Ajv(options: js.Object) extends js.Object {
 object AjvValidator {
   private lazy val options = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": [\"int32\", \"int64\", \"int16\", \"float\", \"double\", \"byte\", \"binary\"], \"allErrors\": true, \"validateSchema\": false}")
+      "{\"schemaId\":\"auto\", \"unknownFormats\": [\"int32\", \"int64\", \"int16\", \"float\", \"double\", \"byte\", \"binary\"], \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6}")
     .asInstanceOf[js.Object]
   private lazy val fastOptions = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": [\"int32\", \"int64\", \"int16\", \"float\", \"double\", \"byte\", \"binary\"], \"allErrors\": false, \"validateSchema\": false}")
+      "{\"schemaId\":\"auto\", \"unknownFormats\": [\"int32\", \"int64\", \"int16\", \"float\", \"double\", \"byte\", \"binary\"], \"allErrors\": false, \"validateSchema\": false, \"multipleOfPrecision\": 6}")
     .asInstanceOf[js.Object]
 
   def apply(): Ajv = {
