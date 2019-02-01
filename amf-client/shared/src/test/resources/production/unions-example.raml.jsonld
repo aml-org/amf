@@ -2756,514 +2756,7 @@
 "@value": "OAuth 2.0"
 }
 ],
-"http://a.ml/vocabularies/http#parameter": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token",
-"@type": [
-"http://a.ml/vocabularies/http#Parameter",
-"http://a.ml/vocabularies/document#DomainElement"
-],
-"http://schema.org/name": [
-{
-"@value": "access_token"
-}
-],
-"http://a.ml/vocabularies/http#paramName": [
-{
-"@value": "access_token"
-}
-],
-"http://schema.org/description": [
-{
-"@value": "Apply access token here."
-}
-],
-"http://www.w3.org/ns/hydra/core#required": [
-{
-"@value": true
-}
-],
-"http://a.ml/vocabularies/http#binding": [
-{
-"@value": "query"
-}
-],
-"http://a.ml/vocabularies/http#schema": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/scalar/schema",
-"@type": [
-"http://a.ml/vocabularies/shapes#ScalarShape",
-"http://www.w3.org/ns/shacl#Shape",
-"http://a.ml/vocabularies/shapes#Shape",
-"http://a.ml/vocabularies/document#DomainElement"
-],
-"http://www.w3.org/ns/shacl#datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-],
-"http://www.w3.org/ns/shacl#name": [
-{
-"@value": "schema"
-}
-],
-"http://schema.org/description": [
-{
-"@value": "Apply access token here."
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/scalar/schema/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/scalar/schema"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(28,10)-(28,14)]"
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://schema.org/description"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(29,10)-(30,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/scalar/schema"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(27,8)-(30,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://www.w3.org/ns/shacl#datatype"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(28,10)-(29,0)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://schema.org/description"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(29,10)-(30,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(27,8)-(30,0)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/security#settings": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2",
-"@type": [
-"http://a.ml/vocabularies/security#OAuth2Settings",
-"http://a.ml/vocabularies/security#Settings",
-"http://a.ml/vocabularies/document#DomainElement"
-],
-"http://a.ml/vocabularies/security#authorizationUri": [
-{
-"@value": "https://auth.com"
-}
-],
-"http://a.ml/vocabularies/security#accessTokenUri": [
-{
-"@value": "https://token.com"
-}
-],
-"http://a.ml/vocabularies/security#authorizationGrant": [
-{
-"@value": "implicit"
-}
-],
-"http://a.ml/vocabularies/security#scope": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2/profile",
-"@type": [
-"http://a.ml/vocabularies/security#Scope",
-"http://a.ml/vocabularies/document#DomainElement"
-],
-"http://a.ml/vocabularies/security#name": [
-{
-"@value": "profile"
-}
-]
-},
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2/email",
-"@type": [
-"http://a.ml/vocabularies/security#Scope",
-"http://a.ml/vocabularies/document#DomainElement"
-],
-"http://a.ml/vocabularies/security#name": [
-{
-"@value": "email"
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#scope"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(24,6)-(25,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#accessTokenUri"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(21,6)-(22,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(21,0)-(25,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#authorizationUri"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(22,6)-(23,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#authorizationGrant"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(23,6)-(24,0)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#declared-element": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": ""
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/http#parameter"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(26,6)-(30,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#name"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(18,2)-(18,8)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(18,2)-(30,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#type"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(19,4)-(20,0)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/oauth2/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/oauth2"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(43,13)-(43,19)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(57,2)-(87,31)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(42,0)-(87,31)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#source-vendor": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "RAML 1.0"
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://schema.org/version"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(3,0)-(4,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://schema.org/name"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(2,0)-(3,0)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(2,0)-(87,31)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/http#server"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(4,0)-(6,0)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/document#declares": [
-{
-"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2",
-"@type": [
-"http://a.ml/vocabularies/security#SecurityScheme",
-"http://a.ml/vocabularies/document#DomainElement"
-],
-"http://a.ml/vocabularies/security#name": [
-{
-"@value": "oauth2"
-}
-],
-"http://a.ml/vocabularies/security#type": [
+"http://a.ml/vocabularies/security#commonType": [
 {
 "@value": "OAuth 2.0"
 }
@@ -3579,12 +3072,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(18,2)-(18,8)]"
+"@value": "[(19,4)-(20,0)]"
 }
 ]
 },
@@ -3603,12 +3096,553 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
+"@value": "http://a.ml/vocabularies/security#name"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(18,2)-(18,8)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#commonType"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(19,10)-(19,19)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/oauth2/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/oauth2"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(43,13)-(43,19)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(57,2)-(87,31)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(42,0)-(87,31)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#source-vendor": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "RAML 1.0"
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://schema.org/version"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(3,0)-(4,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://schema.org/name"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(2,0)-(3,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(2,0)-(87,31)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/http#server"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(4,0)-(6,0)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document#declares": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2",
+"@type": [
+"http://a.ml/vocabularies/security#SecurityScheme",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#name": [
+{
+"@value": "oauth2"
+}
+],
+"http://a.ml/vocabularies/security#type": [
+{
+"@value": "OAuth 2.0"
+}
+],
+"http://a.ml/vocabularies/security#commonType": [
+{
+"@value": "OAuth 2.0"
+}
+],
+"http://a.ml/vocabularies/http#parameter": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token",
+"@type": [
+"http://a.ml/vocabularies/http#Parameter",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://schema.org/name": [
+{
+"@value": "access_token"
+}
+],
+"http://a.ml/vocabularies/http#paramName": [
+{
+"@value": "access_token"
+}
+],
+"http://schema.org/description": [
+{
+"@value": "Apply access token here."
+}
+],
+"http://www.w3.org/ns/hydra/core#required": [
+{
+"@value": true
+}
+],
+"http://a.ml/vocabularies/http#binding": [
+{
+"@value": "query"
+}
+],
+"http://a.ml/vocabularies/http#schema": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/scalar/schema",
+"@type": [
+"http://a.ml/vocabularies/shapes#ScalarShape",
+"http://www.w3.org/ns/shacl#Shape",
+"http://a.ml/vocabularies/shapes#Shape",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://www.w3.org/ns/shacl#datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"http://www.w3.org/ns/shacl#name": [
+{
+"@value": "schema"
+}
+],
+"http://schema.org/description": [
+{
+"@value": "Apply access token here."
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/scalar/schema/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/scalar/schema"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(28,10)-(28,14)]"
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://schema.org/description"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(29,10)-(30,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/scalar/schema"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(27,8)-(30,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://www.w3.org/ns/shacl#datatype"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(28,10)-(29,0)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://schema.org/description"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(29,10)-(30,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/parameter/access_token"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(27,8)-(30,0)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/security#settings": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2",
+"@type": [
+"http://a.ml/vocabularies/security#OAuth2Settings",
+"http://a.ml/vocabularies/security#Settings",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#authorizationUri": [
+{
+"@value": "https://auth.com"
+}
+],
+"http://a.ml/vocabularies/security#accessTokenUri": [
+{
+"@value": "https://token.com"
+}
+],
+"http://a.ml/vocabularies/security#authorizationGrant": [
+{
+"@value": "implicit"
+}
+],
+"http://a.ml/vocabularies/security#scope": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2/profile",
+"@type": [
+"http://a.ml/vocabularies/security#Scope",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#name": [
+{
+"@value": "profile"
+}
+]
+},
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2/email",
+"@type": [
+"http://a.ml/vocabularies/security#Scope",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"http://a.ml/vocabularies/security#name": [
+{
+"@value": "email"
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#scope"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(24,6)-(25,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#accessTokenUri"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(21,6)-(22,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/settings/oauth2"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(21,0)-(25,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#authorizationUri"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(22,6)-(23,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#authorizationGrant"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(23,6)-(24,0)]"
+}
+]
+}
+]
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#declared-element": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": ""
+}
+]
+}
+],
+"http://a.ml/vocabularies/document-source-maps#lexical": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/http#parameter"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(26,6)-(30,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
 "@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
 "@value": "[(19,4)-(20,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/declarations/securitySchemes/oauth2"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(18,2)-(30,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#name"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(18,2)-(18,8)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#commonType"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(19,10)-(19,19)]"
 }
 ]
 }

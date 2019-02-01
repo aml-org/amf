@@ -18,6 +18,11 @@
 "@value": "OAuth 2.0"
 }
 ],
+"http://a.ml/vocabularies/security#commonType": [
+{
+"@value": "OAuth 2.0"
+}
+],
 "http://schema.org/description": [
 {
 "@value": "desc"
@@ -317,6 +322,18 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
+"@value": "http://a.ml/vocabularies/security#type"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(2,0)-(3,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
 "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#fragment"
 }
 ],
@@ -329,12 +346,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#commonType"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(2,0)-(3,0)]"
+"@value": "[(2,6)-(2,15)]"
 }
 ]
 },

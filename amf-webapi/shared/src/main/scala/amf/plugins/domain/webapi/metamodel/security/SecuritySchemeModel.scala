@@ -19,7 +19,8 @@ object SecuritySchemeModel extends DomainElementModel with KeyField with Descrip
                             "Name for the security scheme",
                             Seq((Namespace.Schema + "name").iri())))
 
-  val Type = Field(Str, Security + "type", ModelDoc(ModelVocabularies.Security, "type", "Type of security scheme"))
+  val Type       = Field(Str, Security + "type", ModelDoc(ModelVocabularies.Security, "type", "Type of security scheme"))
+  val CommonType = Field(Str, Security + "commonType", ModelDoc(ModelVocabularies.Security, "Commontype", "Normalized security scheme type"))
 
   val Headers = Field(Array(ParameterModel),
                       Http + "header",
@@ -48,7 +49,7 @@ object SecuritySchemeModel extends DomainElementModel with KeyField with Descrip
   override val `type`: List[ValueType] = Security + "SecurityScheme" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(Name, Type, DisplayName, Description, Headers, QueryParameters, Responses, Settings, QueryString) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+    List(Name, Type, CommonType, DisplayName, Description, Headers, QueryParameters, Responses, Settings, QueryString) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = SecurityScheme()
 

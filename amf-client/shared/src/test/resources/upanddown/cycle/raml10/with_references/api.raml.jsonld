@@ -1197,6 +1197,11 @@
 "@value": "OAuth 2.0"
 }
 ],
+"http://a.ml/vocabularies/security#commonType": [
+{
+"@value": "OAuth 2.0"
+}
+],
 "http://a.ml/vocabularies/http#header": [
 {
 "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization",
@@ -1747,12 +1752,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#commonType"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(2,0)-(3,0)]"
+"@value": "[(2,6)-(2,15)]"
 }
 ]
 },
@@ -1765,6 +1770,18 @@
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
 "@value": "[(2,0)-(23,0)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#type"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(2,0)-(3,0)]"
 }
 ]
 },

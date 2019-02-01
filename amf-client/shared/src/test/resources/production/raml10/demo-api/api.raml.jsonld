@@ -416,6 +416,11 @@
 "@value": "Basic Authentication"
 }
 ],
+"http://a.ml/vocabularies/security#commonType": [
+{
+"@value": "Basic Authentication"
+}
+],
 "http://schema.org/description": [
 {
 "@value": "Test basic auth method\n"
@@ -457,12 +462,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(10,2)-(10,7)]"
+"@value": "[(11,4)-(12,0)]"
 }
 ]
 },
@@ -481,12 +486,24 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(11,4)-(12,0)]"
+"@value": "[(10,2)-(10,7)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#commonType"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(11,10)-(11,30)]"
 }
 ]
 }
@@ -11036,6 +11053,11 @@
 "@value": "Basic Authentication"
 }
 ],
+"http://a.ml/vocabularies/security#commonType": [
+{
+"@value": "Basic Authentication"
+}
+],
 "http://schema.org/description": [
 {
 "@value": "Test basic auth method\n"
@@ -11077,12 +11099,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(10,2)-(10,7)]"
+"@value": "[(11,4)-(12,0)]"
 }
 ]
 },
@@ -11101,12 +11123,24 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(11,4)-(12,0)]"
+"@value": "[(10,2)-(10,7)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#commonType"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(11,10)-(11,30)]"
 }
 ]
 }
@@ -11126,6 +11160,11 @@
 }
 ],
 "http://a.ml/vocabularies/security#type": [
+{
+"@value": "Digest Authentication"
+}
+],
+"http://a.ml/vocabularies/security#commonType": [
 {
 "@value": "Digest Authentication"
 }
@@ -11171,12 +11210,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(14,2)-(14,7)]"
+"@value": "[(16,4)-(18,0)]"
 }
 ]
 },
@@ -11195,12 +11234,24 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(16,4)-(18,0)]"
+"@value": "[(14,2)-(14,7)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#commonType"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(16,10)-(16,31)]"
 }
 ]
 }

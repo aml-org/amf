@@ -65,17 +65,27 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
     case _                        => // ignore
   }
 
+  protected def mapSecuritySchemeType(sec: SecurityScheme): Unit = {
+    sec.toOasSecuritySchemeType match {
+      case Some(oasSecurityType) => sec.withType(oasSecurityType)
+      case _                     => // ignore
+    }
+  }
+
   def removeUnsupportedSchemes(d: DeclaresModel): DeclaresModel = {
     val filteredDeclarations = d.declares.filter {
       case sec: SecurityScheme =>
         sec.settings match {
           case _: OAuth1Settings        => false
           case _: OpenIdConnectSettings => false
-          case _                        => true
+          case _                        =>
+            mapSecuritySchemeType(sec)
+            true
 
         }
       case other => true
     }
+
     d.withDeclares(filteredDeclarations)
   }
 

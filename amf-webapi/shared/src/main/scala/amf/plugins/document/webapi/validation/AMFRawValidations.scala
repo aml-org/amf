@@ -698,19 +698,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-http:Payload",
-      "raml-http:mediaType",
-      "PropertyShape",
-      "sh:path",
-      "sh:pattern",
-      "^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))(\\s*;\\s*\\w+=[-+\\w.]+)*$",
-      "Invalid media type for method",
-      "Swagger Operation object 'produces' must be a valid media type",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-http:Payload",
       "raml-http:schema",
       "PropertyShape",
       "sh:path",
@@ -1533,8 +1520,21 @@ object AMFRawValidations {
       "security:type",
       "PropertyShape",
       "sh:path",
+      "sh:minCount",
+      "1",
+      "Security scheme type is mandatory",
+      "Security scheme type is mandatory",
+      "Violation"
+    ),
+    AMFValidation(
+      Amf.name,
+      "Domain",
+      "security:SecurityScheme",
+      "security:type",
+      "PropertyShape",
+      "sh:path",
       "sh:pattern",
-      "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|\\(apiKey\\)|x-.+$",
+      "^oauth2|basic|apiKey|OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|\\(apiKey\\)|x-.+$",
       "Security scheme type should be one of the supported ones",
       "Security scheme type should be one of the supported ones",
       "Violation"
@@ -1752,6 +1752,22 @@ object AMFRawValidations {
       "",
       "Violation"
     )
+    /*
+    ,
+    AMFValidation(
+      Amf.name,
+      "Domain",
+      "raml-http:Payload",
+      "raml-http:mediaType",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      "^(([-\\w]+|[*]{1})\\/([-+.\\w]+|[*]{1}))(\\s*;\\s*\\w+=[-+\\w.]+)*$",
+      "Invalid media type for method",
+      "Swagger Operation object 'produces' must be a valid media type",
+      "Violation"
+    )
+    */
   )
 
   private val RAML08 = Seq(
@@ -1948,7 +1964,7 @@ object AMFRawValidations {
       "sh:minCount",
       "1",
       "items facet of RAML Array type is required",
-      "items property of Schame objects of type 'array' is required",
+      "items property of Schema objects of type 'array' is required",
       "Violation"
     )
   )

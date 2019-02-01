@@ -87,6 +87,11 @@
 "@value": "OAuth 2.0"
 }
 ],
+"http://a.ml/vocabularies/security#commonType": [
+{
+"@value": "OAuth 2.0"
+}
+],
 "http://a.ml/vocabularies/security#settings": [
 {
 "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.json#/declarations/securitySchemes/oauth_2_0/settings/oauth2",
@@ -1094,12 +1099,24 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#commonType"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(37,6)-(37,14)]"
+"@value": "[(37,14)-(37,22)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/security#name"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(36,4)-(36,15)]"
 }
 ]
 },
@@ -1118,12 +1135,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(36,4)-(36,15)]"
+"@value": "[(37,6)-(37,14)]"
 }
 ]
 }
