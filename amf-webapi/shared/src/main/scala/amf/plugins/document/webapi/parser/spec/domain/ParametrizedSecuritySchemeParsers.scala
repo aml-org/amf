@@ -10,7 +10,6 @@ import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.ParserSideValidations.{
-  InvalidSecuredByType,
   UnknownScopeErrorSpecification,
   UnknownSecuritySchemeErrorSpecification
 }
@@ -27,24 +26,6 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
     implicit ctx: WebApiContext) {
   def parse(): ParametrizedSecurityScheme = node.tagType match {
     case YType.Null => producer("null").add(Annotations(node) += NullSecurity())
-    case YType.Str =>
-      val name: String = node.as[YScalar].text
-      val scheme       = producer(name).add(Annotations(node))
-
-      ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
-        case Some(declaration) =>
-          scheme.fields.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations())
-          scheme
-        case None =>
-          ctx.violation(
-            UnknownSecuritySchemeErrorSpecification,
-            scheme.id,
-            s"Security scheme '$name' not found in declarations.",
-            node
-          )
-          scheme
-      }
-
     case YType.Map =>
       val schemeEntry = node.as[YMap].entries.head
       val name        = schemeEntry.key.as[YScalar].text
@@ -76,9 +57,23 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
         node
       )
       producer("invalid").add(Annotations(node))
-    case t =>
-      ctx.violation(InvalidSecuredByType, "", s"Invalid type $t for 'securedBy' node.", node)
-      producer("invalid").add(Annotations(node))
+    case _ =>
+      val name: String = node.as[YScalar].text
+      val scheme       = producer(name).add(Annotations(node))
+
+      ctx.declarations.findSecurityScheme(name, SearchScope.Named) match {
+        case Some(declaration) =>
+          scheme.fields.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations())
+          scheme
+        case None =>
+          ctx.violation(
+            UnknownSecuritySchemeErrorSpecification,
+            scheme.id,
+            s"Security scheme '$name' not found in declarations.",
+            node
+          )
+          scheme
+      }
   }
 }
 

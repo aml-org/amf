@@ -175,5 +175,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("multipleOfDataTypeLimitPrecision.raml")
   }
 
+  test("Declaration keys as scalars") {
+    checkValid("scalar-declaration-keys.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
