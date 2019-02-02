@@ -756,12 +756,12 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
                       parentElement: DomainElement): Unit = {
     extractPropertyValue(propertyConstraint, parentElement) match {
       case Some((_, scalar: AmfScalar, Some(value))) =>
-        if (!Option(value).isEmpty && propertyConstraint.pattern.get.r.findFirstIn(value.toString).isEmpty)
+        if (Option(value).isDefined && propertyConstraint.pattern.get.r.findFirstIn(value.toString).isEmpty)
           reportFailure(validationSpecification, propertyConstraint, parentElement.id, scalar.annotations)
       case Some((_, arr: AmfArray, _)) =>
         arr.values.foreach {
           case value: AmfScalar =>
-            if (!Option(value).isEmpty && propertyConstraint.pattern.get.r.findFirstIn(value.toString).isEmpty)
+            if (Option(value).isDefined && propertyConstraint.pattern.get.r.findFirstIn(value.toString).isEmpty)
               reportFailure(validationSpecification, propertyConstraint, parentElement.id, value.annotations)
           case _ => // ignore
         }

@@ -104,11 +104,6 @@
 "@value": "x-custom"
 }
 ],
-"http://a.ml/vocabularies/security#commonType": [
-{
-"@value": "x-custom"
-}
-],
 "http://a.ml/vocabularies/security#settings": [
 {
 "@id": "file://amf-client/shared/src/test/resources/upanddown/security.json#/declarations/securitySchemes/custom_auth/settings/default",
@@ -256,12 +251,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(56,6)-(56,14)]"
+"@value": "[(55,4)-(55,17)]"
 }
 ]
 },
@@ -280,24 +275,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(55,4)-(55,17)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#commonType"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(56,14)-(56,24)]"
+"@value": "[(56,6)-(56,14)]"
 }
 ]
 }
@@ -317,11 +300,6 @@
 }
 ],
 "http://a.ml/vocabularies/security#type": [
-{
-"@value": "Basic Authentication"
-}
-],
-"http://a.ml/vocabularies/security#commonType": [
 {
 "@value": "Basic Authentication"
 }
@@ -350,24 +328,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#commonType"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(43,14)-(43,21)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#name"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(42,4)-(42,16)]"
+"@value": "[(43,6)-(43,14)]"
 }
 ]
 },
@@ -386,12 +352,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(43,6)-(43,14)]"
+"@value": "[(42,4)-(42,16)]"
 }
 ]
 }
@@ -411,11 +377,6 @@
 }
 ],
 "http://a.ml/vocabularies/security#type": [
-{
-"@value": "OAuth 2.0"
-}
-],
-"http://a.ml/vocabularies/security#commonType": [
 {
 "@value": "OAuth 2.0"
 }
@@ -1061,24 +1022,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#commonType"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(9,14)-(9,22)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#name"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(8,4)-(8,15)]"
+"@value": "[(9,6)-(9,14)]"
 }
 ]
 },
@@ -1097,12 +1046,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(9,6)-(9,14)]"
+"@value": "[(8,4)-(8,15)]"
 }
 ]
 },
@@ -1147,12 +1096,7 @@
 ],
 "http://a.ml/vocabularies/security#type": [
 {
-"@value": "x-amf-apiKey"
-}
-],
-"http://a.ml/vocabularies/security#commonType": [
-{
-"@value": "x-amf-apiKey"
+"@value": "Api Key"
 }
 ],
 "http://a.ml/vocabularies/security#settings": [
@@ -1257,12 +1201,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(46,6)-(46,14)]"
+"@value": "[(45,4)-(45,13)]"
 }
 ]
 },
@@ -1281,24 +1225,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(45,4)-(45,13)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#commonType"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(46,14)-(46,22)]"
+"@value": "[(46,6)-(46,14)]"
 }
 ]
 }
@@ -1318,11 +1250,6 @@
 }
 ],
 "http://a.ml/vocabularies/security#type": [
-{
-"@value": "Digest Authentication"
-}
-],
-"http://a.ml/vocabularies/security#commonType": [
 {
 "@value": "Digest Authentication"
 }
@@ -1351,24 +1278,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#commonType"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(53,14)-(53,37)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#name"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(52,4)-(52,17)]"
+"@value": "[(53,6)-(53,14)]"
 }
 ]
 },
@@ -1387,12 +1302,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(53,6)-(53,14)]"
+"@value": "[(52,4)-(52,17)]"
 }
 ]
 }

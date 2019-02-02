@@ -32,17 +32,8 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
     case _                      => // ignore
   }
 
-  protected def mapSecuritySchemeType(sec: SecurityScheme): Unit = {
-    sec.toRamlSecuritySchemeType match {
-      case Some(ramlSecurityType) => sec.withType(ramlSecurityType)
-      case _                      => // ignore
-    }
-  }
-
   private def fixSettings(d: DeclaresModel): Unit = d.declares.foreach {
-    case security: SecurityScheme =>
-      mapSecuritySchemeType(security)
-      fixSettings(security)
+    case security: SecurityScheme => fixSettings(security)
     case _                        => // ignore
   }
 

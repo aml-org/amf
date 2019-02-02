@@ -1534,7 +1534,7 @@ object AMFRawValidations {
       "PropertyShape",
       "sh:path",
       "sh:pattern",
-      "^oauth2|basic|apiKey|OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|\\(apiKey\\)|x-.+$",
+      "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|x-.+$",
       "Security scheme type should be one of the supported ones",
       "Security scheme type should be one of the supported ones",
       "Violation"
@@ -1767,7 +1767,7 @@ object AMFRawValidations {
       "Swagger Operation object 'produces' must be a valid media type",
       "Violation"
     )
-    */
+   */
   )
 
   private val RAML08 = Seq(
@@ -1969,7 +1969,7 @@ object AMFRawValidations {
     )
   )
 
-  val map = Map(
+  val map: Map[ProfileName, Seq[AMFValidation]] = Map(
     AmfProfile    -> forProfile(AmfProfile),
     Raml10Profile -> forProfile(Raml10Profile),
     Raml08Profile -> forProfile(Raml08Profile),

@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models.security
 
+import amf.core.annotations.SourceAST
 import amf.core.metamodel.Field
 import amf.core.model.{StrField, domain}
 import amf.core.model.domain._
@@ -17,7 +18,6 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
     with WithSettings {
 
   def `type`: StrField                = fields.field(Type)
-  def commonType: StrField            = fields.field(CommonType)
   def displayName: StrField           = fields.field(DisplayName)
   def description: StrField           = fields.field(Description)
   def headers: Seq[Parameter]         = fields.field(Headers)
@@ -27,7 +27,6 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   def queryString: Shape              = fields.field(QueryString)
 
   def withType(`type`: String): this.type                             = set(Type, `type`)
-  def withCommonttype(commonType: String): this.type                  = set(CommonType, commonType)
   def withDisplayName(displayName: String): this.type                 = set(DisplayName, displayName)
   def withDescription(description: String): this.type                 = set(Description, description)
   def withHeaders(headers: Seq[Parameter]): this.type                 = setArray(Headers, headers)
@@ -36,53 +35,27 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   def withSettings(settings: Settings): this.type                     = set(SettingsField, settings)
   def withQueryString(queryString: Shape): this.type                  = set(QueryString, queryString)
 
-  def computeCommonType() = {
+  def normalizeType(): Unit = {
     `type`.option() match {
       case Some(value) =>
         val normalized = value match {
-          case "OAuth 1.0"             => "OAuth 1.0"
-          case "OAuth 2.0"             => "OAuth 2.0"
-          case "Basic Authentication"  => "Basic Authentication"
-          case "Digest Authentication" => "Digest Authentication"
-          case "Pass Through"          => "Pass Through"
-          case "oauth2"                => "OAuth 2.0"
-          case "basic"                 => "Basic Authentication"
-          case "apiKey"                => "Api Key"
-          case _                       => "Other"
+//          case "OAuth 1.0"             => "OAuth 1.0"
+//          case "OAuth 2.0"             => "OAuth 2.0"
+//          case "Basic Authentication"  => "Basic Authentication"
+//          case "Digest Authentication" => "Digest Authentication"
+//          case "Pass Through"          => "Pass Through"
+
+//          Normalize oas security scheme types.
+          case "oauth2"              => "OAuth 2.0"
+          case "basic"               => "Basic Authentication"
+          case "apiKey" | "x-apiKey" => "Api Key"
+          case other                 => other
         }
-        set(CommonType, AmfScalar(value), `type`.annotations())
-      case _           => // ignore
-    }
-  }
-
-  def toOasSecuritySchemeType: Option[String] = {
-    commonType.option().orElse(`type`.option()) match {
-      case Some("OAuth 1.0")             => Some("oauth1")
-      case Some("OAuth 2.0")             => Some("oauth2")
-      case Some("Basic Authentication")  => Some("basic")
-      case Some("Digest Authentication") => Some("digest")
-      case Some("Pass Through")          => Some("pass-through")
-      case Some("oauth2")                => Some("oauth2")
-      case Some("basic")                 => Some("basic")
-      case Some("apiKey")                => Some("apiKey")
-      case Some(other)                   => Some(other)
-      case None                          => None
-    }
-  }
-
-  def toRamlSecuritySchemeType: Option[String] = {
-    commonType.option().orElse(`type`.option()) match {
-      case Some("OAuth 1.0")             => Some("OAuth 1.0")
-      case Some("OAuth 2.0")             => Some("OAuth 2.0")
-      case Some("Basic Authentication")  => Some("Basic Authentication")
-      case Some("Digest Authentication") => Some("Digest Authentication")
-      case Some("Pass Through")          => Some("Pass Through")
-      case Some("oauth2")                => Some("OAuth 2.0")
-      case Some("basic")                 => Some("Basic Authentication")
-      case Some("apiKey")                => Some("x-apiKey")
-      case Some(other) if other.startsWith("x-")  => Some(other)
-      case Some(other)                   => Some(s"x-$other")
-      case None                          => None
+        // TODO had to reject sourceAST because it is used by CustomShaclValidator (IDKW)
+        set(Type,
+            AmfScalar(normalized, `type`.annotations().reject(_.isInstanceOf[SourceAST])),
+            fields.getValue(Type).annotations)
+      case _ => // ignore
     }
   }
 

@@ -15,7 +15,10 @@ import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Settings}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.plugins.features.validation.ParserSideValidations
-import amf.plugins.features.validation.ParserSideValidations.{DuplicatedOperationStatusCodeSpecification, ExclusivePropertiesSpecification}
+import amf.plugins.features.validation.ParserSideValidations.{
+  DuplicatedOperationStatusCodeSpecification,
+  ExclusivePropertiesSpecification
+}
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -55,8 +58,9 @@ case class RamlSecuritySchemeParser(ast: YPart,
         val map = value.as[YMap]
 
         map.key("type", (SecuritySchemeModel.Type in scheme).allowingAnnotations)
+
         scheme.`type`.option() match {
-          case value @ Some("oauth2"|"basic"|"apiKey") =>
+          case Some("oauth2" | "basic" | "apiKey") =>
             ctx.warning(
               ParserSideValidations.UnknownSecuritySchemeErrorSpecification,
               scheme.id,
@@ -65,23 +69,25 @@ case class RamlSecuritySchemeParser(ast: YPart,
               scheme.`type`.annotations().find(classOf[LexicalInformation]),
               Some(ctx.rootContextDocument)
             )
-            value
-          case _  => // this will be checked during validation
+          case _ => // this will be checked during validation
         }
-        map.key("type", value => {
-          // we need to check this because of the problem parsing nulls like empty strings of value null
-          if (value.value.tagType == YType.Null && scheme.`type`.option() == Some("")) {
-            ctx.violation(
-              ParserSideValidations.MissingSecuritySchemeErrorSpecification,
-              scheme.id,
-              Some(SecuritySchemeModel.Type.value.iri()),
-              "Security Scheme must have a mandatory value from 'OAuth 1.0', 'OAuth 2.0', 'Basic Authentication', 'Digest Authentication', 'Pass Through', x-<other>'",
-              Some(LexicalInformation(Range(map.range))),
-              Some(ctx.rootContextDocument)
-            )
+        map.key(
+          "type",
+          value => {
+            // we need to check this because of the problem parsing nulls like empty strings of value null
+            if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
+              ctx.violation(
+                ParserSideValidations.MissingSecuritySchemeErrorSpecification,
+                scheme.id,
+                Some(SecuritySchemeModel.Type.value.iri()),
+                "Security Scheme must have a mandatory value from 'OAuth 1.0', 'OAuth 2.0', 'Basic Authentication', 'Digest Authentication', 'Pass Through', x-<other>'",
+                Some(LexicalInformation(Range(map.range))),
+                Some(ctx.rootContextDocument)
+              )
+            }
           }
-        })
-        scheme.computeCommonType() // normalize the common type
+        )
+        scheme.normalizeType() // normalize the common type
         map.key("displayName", (SecuritySchemeModel.DisplayName in scheme).allowingAnnotations)
         map.key("description", (SecuritySchemeModel.Description in scheme).allowingAnnotations)
 
@@ -217,53 +223,48 @@ case class OasSecuritySchemeParser(ast: YPart,
         // 3 stages
         // 2 pipes
 
-        map.key(
-          "type",
-          entry => {
-            val t: String = entry.value.as[YScalar].text match {
-              case "oauth2" => "OAuth 2.0"
-              case "basic"  => "Basic Authentication"
-              case "apiKey" => "apiKey".asOasExtension
-              case s if s.startsWith("x-") =>
-                ctx.warning(
-                  ParserSideValidations.UnknownSecuritySchemeErrorSpecification,
-                  scheme.id,
-                  Some(SecuritySchemeModel.Type.value.iri()),
-                  s"RAML 1.0 extension security scheme type '$s' detected in OAS 2.0 spec",
-                  Some(LexicalInformation(Range(entry.value.range))),
-                  Some(ctx.rootContextDocument)
-                )
-                s
-              case s @ ("OAuth 1.0" |"OAuth 2.0" | "Basic Authentication" | "Digest Authentication" | "Pass Through") =>
-                ctx.warning(
-                  ParserSideValidations.UnknownSecuritySchemeErrorSpecification,
-                  scheme.id,
-                  Some(SecuritySchemeModel.Type.value.iri()),
-                  s"RAML 1.0 security scheme type '$s' detected in OAS 2.0 spec",
-                  Some(LexicalInformation(Range(entry.value.range))),
-                  Some(ctx.rootContextDocument)
-                )
-                s
-              case s        => s
-            }
-            scheme.set(SecuritySchemeModel.Type, AmfScalar(t, Annotations(entry.value)), Annotations(entry))
-            scheme.computeCommonType() // compute the common type for the security scheme
-          }
-        )
-        map.key("type", value => {
-          // we need to check this because of the problem parsing nulls like empty strings of value null
-          if (value.value.tagType == YType.Null && scheme.`type`.option() == Some("")) {
-            ctx.violation(
-              ParserSideValidations.MissingSecuritySchemeErrorSpecification,
+        map.key("type", SecuritySchemeModel.Type in scheme)
+
+        scheme.`type`.option() match {
+          case Some(s) if s.startsWith("x-") =>
+            ctx.warning(
+              ParserSideValidations.UnknownSecuritySchemeErrorSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
-              "Security Scheme must have a mandatory value from 'oauth2', 'basic' or 'apiKey'",
-              Some(LexicalInformation(Range(map.range))),
+              s"RAML 1.0 extension security scheme type '$s' detected in OAS 2.0 spec",
+              scheme.`type`.annotations().find(classOf[LexicalInformation]),
               Some(ctx.rootContextDocument)
             )
-          }
-        })
+          case Some("OAuth 1.0" | "OAuth 2.0" | "Basic Authentication" | "Digest Authentication" | "Pass Through") =>
+            ctx.warning(
+              ParserSideValidations.UnknownSecuritySchemeErrorSpecification,
+              scheme.id,
+              Some(SecuritySchemeModel.Type.value.iri()),
+              s"RAML 1.0 security scheme type detected in OAS 2.0 spec",
+              scheme.`type`.annotations().find(classOf[LexicalInformation]),
+              Some(ctx.rootContextDocument)
+            )
+          case _ =>
+        }
 
+        map.key(
+          "type",
+          value => {
+            // we need to check this because of the problem parsing nulls like empty strings of value null
+            if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
+              ctx.violation(
+                ParserSideValidations.MissingSecuritySchemeErrorSpecification,
+                scheme.id,
+                Some(SecuritySchemeModel.Type.value.iri()),
+                "Security Scheme must have a mandatory value from 'oauth2', 'basic' or 'apiKey'",
+                Some(LexicalInformation(Range(map.range))),
+                Some(ctx.rootContextDocument)
+              )
+            }
+          }
+        )
+
+        scheme.normalizeType() // normalize the common type
 
         map.key("displayName".asOasExtension, SecuritySchemeModel.DisplayName in scheme)
         map.key("description", SecuritySchemeModel.Description in scheme)
@@ -283,9 +284,9 @@ case class OasSecuritySchemeParser(ast: YPart,
   case class OasSecuritySettingsParser(map: YMap, scheme: SecurityScheme) {
     def parse(): Option[Settings] = {
       val result = scheme.`type`.value() match {
-        case "OAuth 1.0"    => Some(oauth1())
-        case "OAuth 2.0"    => Some(oauth2())
-        case "x-amf-apiKey" => Some(apiKey())
+        case "OAuth 1.0" => Some(oauth1())
+        case "OAuth 2.0" => Some(oauth2())
+        case "Api Key"   => Some(apiKey())
         case _ =>
           map
             .key("settings".asOasExtension)

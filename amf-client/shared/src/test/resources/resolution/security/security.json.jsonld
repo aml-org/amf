@@ -68,11 +68,6 @@
 "@value": "OAuth 2.0"
 }
 ],
-"http://a.ml/vocabularies/security#commonType": [
-{
-"@value": "OAuth 2.0"
-}
-],
 "http://a.ml/vocabularies/http#header": [
 {
 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.json#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
@@ -690,12 +685,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(37,6)-(37,14)]"
+"@value": "[(36,4)-(36,15)]"
 }
 ]
 },
@@ -714,24 +709,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(36,4)-(36,15)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#commonType"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(37,14)-(37,22)]"
+"@value": "[(37,6)-(37,14)]"
 }
 ]
 },
@@ -832,11 +815,6 @@
 }
 ],
 "http://a.ml/vocabularies/security#type": [
-{
-"@value": "OAuth 1.0"
-}
-],
-"http://a.ml/vocabularies/security#commonType": [
 {
 "@value": "OAuth 1.0"
 }
@@ -1317,24 +1295,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#commonType"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(11,14)-(11,25)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#name"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(9,4)-(9,15)]"
+"@value": "[(11,6)-(11,14)]"
 }
 ]
 },
@@ -1353,12 +1319,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(11,6)-(11,14)]"
+"@value": "[(9,4)-(9,15)]"
 }
 ]
 },
@@ -1510,11 +1476,6 @@
 }
 ],
 "http://a.ml/vocabularies/security#type": [
-{
-"@value": "OAuth 2.0"
-}
-],
-"http://a.ml/vocabularies/security#commonType": [
 {
 "@value": "OAuth 2.0"
 }
@@ -2136,12 +2097,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(37,6)-(37,14)]"
+"@value": "[(36,4)-(36,15)]"
 }
 ]
 },
@@ -2160,24 +2121,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(36,4)-(36,15)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#commonType"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(37,14)-(37,22)]"
+"@value": "[(37,6)-(37,14)]"
 }
 ]
 },
@@ -2463,11 +2412,6 @@
 "@value": "OAuth 1.0"
 }
 ],
-"http://a.ml/vocabularies/security#commonType": [
-{
-"@value": "OAuth 1.0"
-}
-],
 "http://schema.org/description": [
 {
 "@value": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred."
@@ -2944,24 +2888,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#commonType"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(11,14)-(11,25)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#name"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(9,4)-(9,15)]"
+"@value": "[(11,6)-(11,14)]"
 }
 ]
 },
@@ -2980,12 +2912,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(11,6)-(11,14)]"
+"@value": "[(9,4)-(9,15)]"
 }
 ]
 },
@@ -3029,11 +2961,6 @@
 }
 ],
 "http://a.ml/vocabularies/security#type": [
-{
-"@value": "OAuth 2.0"
-}
-],
-"http://a.ml/vocabularies/security#commonType": [
 {
 "@value": "OAuth 2.0"
 }
@@ -3655,12 +3582,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#type"
+"@value": "http://a.ml/vocabularies/security#name"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(37,6)-(37,14)]"
+"@value": "[(36,4)-(36,15)]"
 }
 ]
 },
@@ -3679,24 +3606,12 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
-"@value": "http://a.ml/vocabularies/security#name"
+"@value": "http://a.ml/vocabularies/security#type"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
-"@value": "[(36,4)-(36,15)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://a.ml/vocabularies/security#commonType"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(37,14)-(37,22)]"
+"@value": "[(37,6)-(37,14)]"
 }
 ]
 },
