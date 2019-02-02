@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.models.security
 
+import amf.core.annotations.SourceAST
 import amf.core.metamodel.Field
 import amf.core.model.{StrField, domain}
 import amf.core.model.domain._
@@ -33,6 +34,30 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   def withResponses(responses: Seq[Response]): this.type              = setArray(Responses, responses)
   def withSettings(settings: Settings): this.type                     = set(SettingsField, settings)
   def withQueryString(queryString: Shape): this.type                  = set(QueryString, queryString)
+
+  def normalizeType(): Unit = {
+    `type`.option() match {
+      case Some(value) =>
+        val normalized = value match {
+//          case "OAuth 1.0"             => "OAuth 1.0"
+//          case "OAuth 2.0"             => "OAuth 2.0"
+//          case "Basic Authentication"  => "Basic Authentication"
+//          case "Digest Authentication" => "Digest Authentication"
+//          case "Pass Through"          => "Pass Through"
+
+//          Normalize oas security scheme types.
+          case "oauth2"              => "OAuth 2.0"
+          case "basic"               => "Basic Authentication"
+          case "apiKey" | "x-apiKey" => "Api Key"
+          case other                 => other
+        }
+        // TODO had to reject sourceAST because it is used by CustomShaclValidator (IDKW)
+        set(Type,
+            AmfScalar(normalized, `type`.annotations().reject(_.isInstanceOf[SourceAST])),
+            fields.getValue(Type).annotations)
+      case _ => // ignore
+    }
+  }
 
   override def adopted(parent: String): this.type =
     if (parent.contains("#")) {

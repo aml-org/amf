@@ -358,6 +358,11 @@ object ParserSideValidations extends Validations {
     "Cannot find the security scheme"
   )
 
+  val MissingSecuritySchemeErrorSpecification = validation(
+    "missing-security-scheme-type",
+    "Missing security scheme type"
+  )
+
   val UnknownScopeErrorSpecification = validation(
     "unknown-scope",
     "Cannot find the scope in the security settings"
@@ -615,6 +620,7 @@ object ParserSideValidations extends Validations {
     ExclusivePropertiesSpecification,
     PathTemplateUnbalancedParameters,
     UnknownSecuritySchemeErrorSpecification,
+    MissingSecuritySchemeErrorSpecification,
     UnknownScopeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
     XmlSchemaInheratinaceWarningSpecification,

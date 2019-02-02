@@ -207,7 +207,7 @@ abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
     val results = ListBuffer[EntryEmitter]()
     val fs      = securityScheme.fields
 
-    fs.entry(SecuritySchemeModel.Type).map(f => results += RamlScalarEmitter("type", f))
+    emitType(results, fs)
     fs.entry(SecuritySchemeModel.DisplayName).map(f => results += RamlScalarEmitter("displayName", f))
     fs.entry(SecuritySchemeModel.Description).map(f => results += RamlScalarEmitter("description", f))
 
@@ -218,6 +218,12 @@ abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
     results
 
   }
+  private def emitType(results: ListBuffer[EntryEmitter], fs: Fields): Unit =
+    fs.entry(SecuritySchemeModel.Type) foreach {
+      case f if f.scalar.toString == "Api Key" =>
+        results += MapEntryEmitter("type", "x-apiKey", position = pos(f.value.annotations))
+      case f => results += RamlScalarEmitter("type", f)
+    }
 }
 
 case class RamlSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
