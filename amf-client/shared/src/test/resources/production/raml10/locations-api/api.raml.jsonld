@@ -216,6 +216,28 @@
 {
 "@value": "exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml"
 }
+],
+"http://a.ml/vocabularies/document-source-maps#sources": [
+{
+"@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/array/default/example/default-example/source-map",
+"@type": [
+"http://a.ml/vocabularies/document-source-maps#SourceMap"
+],
+"http://a.ml/vocabularies/document-source-maps#tracked-element": [
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/array/default/example/default-example"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default"
+}
+]
+}
+]
+}
 ]
 }
 ],

@@ -8,6 +8,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.{Payload, WebApi}
 import amf.{OasProfile, ProfileName}
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 
 /** Apply root and operation mime types to payloads.
   *
@@ -99,7 +100,8 @@ class MediaTypeResolutionStage(profile: ProfileName, isValidation: Boolean = fal
             .withMediaType(mediaType)
             .adopted(parent)
           if (Option(payload.schema).isDefined)
-            parsedPayload.fields.setWithoutId(PayloadModel.Schema, payload.schema)
+            parsedPayload.fields
+              .setWithoutId(PayloadModel.Schema, tracking(payload.schema, parsedPayload.id)) // TODO we should clone the schema and the examples.
           parsedPayload
         }
       }
