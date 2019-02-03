@@ -10,7 +10,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf"
 
-version in ThisBuild := "3.1.4"
+version in ThisBuild := "3.1.5"
 
 publish := {}
 
@@ -108,7 +108,7 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
       name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.5"
+      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.6"
     ))
   .in(file("./amf-core"))
   .settings(settings)
