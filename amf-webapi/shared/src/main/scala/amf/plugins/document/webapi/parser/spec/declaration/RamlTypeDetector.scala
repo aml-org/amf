@@ -75,8 +75,6 @@ case class RamlTypeDetector(parent: String,
                         node)
           None
 
-        case t if t.endsWith("?") && wellKnownType(t.replace("?", "")) => Some(NilUnionType)
-
         case XMLSchema(_) => Some(XMLSchemaType)
 
         case JSONSchema(_) => Some(JSONSchemaType)
@@ -89,6 +87,8 @@ case class RamlTypeDetector(parent: String,
               case TypeDef.UnionType | TypeDef.ArrayType if !recursive => TypeExpressionType
               case other                                               => other
             } // exception case when F: C|D (not type, not recursion, union but only have a typeexpression to parse de union
+
+        case t if t.endsWith("?") => Some(NilUnionType)
 
         case t: String if matchType(t, default = UndefinedType) == UndefinedType =>
           // it might be a named type

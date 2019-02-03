@@ -110,8 +110,8 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
         ctx.declarations
           .findNamedExample(s)
           .map(e => e.link(s).asInstanceOf[Example])
-          .getOrElse(RamlSingleExampleValueParser(entry.value, simpleProducer, options).parse())
-      case Right(_) => RamlSingleExampleValueParser(entry.value, simpleProducer, options).parse()
+          .getOrElse(RamlSingleExampleValueParser(entry, simpleProducer, options).parse())
+      case Right(_) => RamlSingleExampleValueParser(entry, simpleProducer, options).parse()
     }
     example.set(ExampleModel.Name, name.string(), Annotations(entry))
   }
@@ -139,7 +139,7 @@ case class RamlSingleExampleParser(key: String,
         case Right(node) =>
           node.tagType match {
             case YType.Map =>
-              Option(RamlSingleExampleValueParser(node.as[YMap], newProducer, options).parse())
+              Option(RamlSingleExampleValueParser(entry, newProducer, options).parse())
             case YType.Null => None
             case _ => // example can be any type or scalar value, like string int datetime etc. We will handle all like strings in this stage
               Option(
@@ -151,15 +151,15 @@ case class RamlSingleExampleParser(key: String,
   }
 }
 
-case class RamlSingleExampleValueParser(node: YNode, producer: () => Example, options: ExampleOptions)(
+case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Example, options: ExampleOptions)(
     implicit ctx: WebApiContext)
     extends SpecParserOps {
   def parse(): Example = {
-    val example = producer().add(Annotations(node))
+    val example = producer().add(Annotations(entry))
 
-    node.tagType match {
+    entry.value.tagType match {
       case YType.Map =>
-        val map = node.as[YMap]
+        val map = entry.value.as[YMap]
 
         if (map.key("value").nonEmpty) {
           map.key("displayName", (ExampleModel.DisplayName in example).allowingAnnotations)
@@ -173,9 +173,9 @@ case class RamlSingleExampleValueParser(node: YNode, producer: () => Example, op
             }
 
           AnnotationParser(example, map).parse()
-        } else RamlExampleValueAsString(node, example, options).populate()
+        } else RamlExampleValueAsString(entry.value, example, options).populate()
       case YType.Null => // ignore
-      case _          => RamlExampleValueAsString(node, example, options).populate()
+      case _          => RamlExampleValueAsString(entry.value, example, options).populate()
     }
 
     example

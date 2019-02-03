@@ -140,16 +140,6 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
-  test("Duplicated title property test") {
-    validate(
-      "/error/dup_title.raml",
-      numberViolation => {
-        numberViolation.level should be("Violation")
-        numberViolation.message should startWith("Property 'title' is duplicated")
-      }
-    )
-  }
-
   test("Duplicated endpoints validations test") {
     validate(
       "error/dup_endpoint.raml",

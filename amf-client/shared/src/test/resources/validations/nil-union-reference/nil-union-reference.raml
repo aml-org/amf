@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: some title
+types:
+  Some: string
+  Other: Some?
+  WithObject:
+    properties:
+      some: Some?
+
+  some?shape: string
+  middleQuestion: some?shape
+  middleQuestionWithMoreQuestion: some?shape?
+
+/some:
+  get:
+    body:
+      application/json:
+        type: WithObject
+        examples:
+          one:
+            some: asdfasdf
+          two:
+            some: null
+  post:
+    body:
+      application/json:
+        type: middleQuestionWithMoreQuestion
+        examples:
+          one: asldfkjalsdf
+          two: null

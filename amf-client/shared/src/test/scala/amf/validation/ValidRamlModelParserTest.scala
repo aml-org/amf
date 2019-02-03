@@ -159,5 +159,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("valid-recursive/valid-recursive.raml")
   }
 
+  test("Nil union with '?' reference to type") {
+    checkValid("nil-union-reference/nil-union-reference.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
