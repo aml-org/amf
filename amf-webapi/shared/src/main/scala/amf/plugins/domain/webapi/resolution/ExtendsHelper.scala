@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution
 
-import amf.core.annotations.{Aliases, LexicalInformation, SourceAST}
+import amf.core.annotations._
 import amf.core.emitter.BaseEmitters.yscalarWithRange
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
@@ -71,6 +71,30 @@ object ExtendsHelper {
     )
 
     val entry = document.as[YMap].entries.head
+
+    entryAsOperation(profile,
+                     unit,
+                     name,
+                     extensionId,
+                     keepEditingInfo,
+                     entry,
+                     node.annotations,
+                     referencesCollector,
+                     context)
+  }
+
+  def entryAsOperation[T <: BaseUnit](profile: ProfileName,
+                                      unit: T,
+                                      name: String,
+                                      extensionId: String,
+                                      keepEditingInfo: Boolean,
+                                      entry: YMapEntry,
+                                      annotations: Annotations,
+                                      referencesCollector: mutable.Map[String, DomainElement] =
+                                        mutable.Map[String, DomainElement](),
+                                      context: Option[RamlWebApiContext] = None): Operation = {
+    val ctx = context.getOrElse(custom(profile))
+
     declarations(ctx, unit)
     referencesCollector.foreach {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
@@ -91,7 +115,7 @@ object ExtendsHelper {
           ctxForTrait.factory.operationParser(entry, _ => Operation(), true).parse()
         }
       }
-    checkNoNestedEndpoints(entry, ctx, node, extensionId, "trait")
+    checkNoNestedEndpoints(entry, ctx, annotations, extensionId, "trait")
 
     if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
     operation
@@ -100,7 +124,7 @@ object ExtendsHelper {
 
   private def checkNoNestedEndpoints(entry: YMapEntry,
                                      ctx: RamlWebApiContext,
-                                     node: DataNode,
+                                     annotations: Annotations,
                                      extensionId: String,
                                      extension: String): Unit = {
     entry.value.tagType match {
@@ -113,8 +137,8 @@ object ExtendsHelper {
               extensionId,
               None,
               s"Nested endpoint in $extension: '$property'",
-              node.position(),
-              node.location()
+              annotations.find(classOf[LexicalInformation]),
+              annotations.find(classOf[SourceLocation]).map(_.location)
             )
           }
         }
@@ -124,7 +148,7 @@ object ExtendsHelper {
 
   def asEndpoint[T <: BaseUnit](unit: T,
                                 profile: ProfileName,
-                                dataNode: DataNode,
+                                node: DataNode,
                                 rtAnnotations: Annotations,
                                 name: String,
                                 extensionId: String,
@@ -149,7 +173,7 @@ object ExtendsHelper {
                                  .getOrElse(rtAnnotations)),
               YType.Str
             ),
-            DataNodeEmitter(dataNode,
+            DataNodeEmitter(node,
                             if (rtAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
                             else SpecOrdering.Default,
                             resolvedLinks = true,
@@ -157,11 +181,40 @@ object ExtendsHelper {
           )
         }
       },
-      dataNode.location().getOrElse("")
+      node.location().getOrElse("")
     )
 
-    val endPointEntry = document.as[YMap].entries.head
-    val collector     = ListBuffer[EndPoint]()
+    val entry = document.as[YMap].entries.head
+
+    entryAsEndpoint(profile,
+                    unit,
+                    node,
+                    name,
+                    extensionId,
+                    keepEditingInfo,
+                    entry,
+                    node.annotations,
+                    errorHandler,
+                    extensionLocation,
+                    referencesCollector,
+                    context)
+  }
+
+  def entryAsEndpoint[T <: BaseUnit](profile: ProfileName,
+                                     unit: T,
+                                     node: DataNode,
+                                     name: String,
+                                     extensionId: String,
+                                     keepEditingInfo: Boolean,
+                                     entry: YMapEntry,
+                                     annotations: Annotations,
+                                     errorHandler: ErrorHandler,
+                                     extensionLocation: Option[String],
+                                     referencesCollector: mutable.Map[String, DomainElement] =
+                                       mutable.Map[String, DomainElement](),
+                                     context: Option[RamlWebApiContext] = None): EndPoint = {
+    val ctx       = context.getOrElse(custom(profile))
+    val collector = ListBuffer[EndPoint]()
 
     declarations(ctx, unit)
     referencesCollector.foreach {
@@ -180,12 +233,12 @@ object ExtendsHelper {
           ctx.declarations += e._2
         }
         ctxForTrait.factory
-          .endPointParser(endPointEntry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)
+          .endPointParser(entry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)
           .parse()
       }
     }
 
-    checkNoNestedEndpoints(endPointEntry, ctx, dataNode, extensionId, "resourceType")
+    checkNoNestedEndpoints(entry, ctx, node.annotations, extensionId, "resourceType")
 
     collector.toList match {
       case element :: _ =>
@@ -197,10 +250,10 @@ object ExtendsHelper {
           extensionId,
           None,
           s"Couldn't parse an endpoint from resourceType '$name'.",
-          dataNode.position(),
-          dataNode.location()
+          node.position(),
+          node.location()
         )
-        ErrorEndPoint(dataNode.id, document.node)
+        ErrorEndPoint(node.id, entry)
     }
   }
 
