@@ -31,7 +31,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
       mappingId =>
         Option(findNodeMappingById(mappingId)) match {
           case Some((_, nodeMapping: NodeMapping))      => emitEntityValidations(nodeMapping, mutable.Set())
-          case Some((_, nodeMapping: UnionNodeMapping)) => ???
+          case Some((_, nodeMapping: UnionNodeMapping)) => emitRootUnionNodeMapping(nodeMapping, mutable.Set())
           case _                                        => Nil
         }
 
@@ -45,6 +45,20 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
         emitPropertyValidations(node, propertyMapping, recursion += node.id)
       }
       .toList
+  }
+
+  protected def emitRootUnionNodeMapping(nodeMapping: UnionNodeMapping, recursion: mutable.Set[String]): List[ValidationSpecification] = {
+    val validations: ListBuffer[ValidationSpecification] = ListBuffer.empty
+    val range = nodeMapping.objectRange().map(_.value())
+    range.foreach { rangeId =>
+      findNodeMappingById(rangeId) match {
+        case (_, nodeMapping: NodeMapping) =>
+          validations ++= emitEntityValidations(nodeMapping, recursion += nodeMapping.id)
+        case _                             =>
+          // ignore
+      }
+    }
+    validations.toList
   }
 
   protected def emitPropertyValidations(node: NodeMapping,
@@ -274,6 +288,15 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     if (prop
           .objectRange()
           .nonEmpty && !prop.objectRange().map(_.value()).contains((Namespace.Meta + "anyNode").iri())) {
+
+      val effectiveRange: Set[String] = prop.objectRange() flatMap { rangeId =>
+        val id = rangeId.value()
+        findNodeMappingById(id) match {
+          case (_, nodeMapping: NodeMapping)       => Seq(nodeMapping.id)
+          case (_, unionMapping: UnionNodeMapping) => unionMapping.objectRange().map(_.value())
+        }
+      } toSet
+
       val message = s"Property '${prop.name()}'  value must be of type ${prop.objectRange()}"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "objectRange"),
@@ -286,13 +309,13 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
             ramlPropertyId = prop.nodePropertyMapping().value(),
             name = validationId(node, prop.name().value(), "objectRange") + "/prop",
             message = Some(message),
-            `class` = prop.objectRange().map(_.value())
+            `class` = effectiveRange.toSeq
           ))
       )
 
       // nested validations here
-      prop.objectRange().foreach { nodeMapping =>
-        dialect.findNodeMapping(nodeMapping.value()).foreach { mapping =>
+      effectiveRange.foreach { nodeMapping =>
+        dialect.findNodeMapping(nodeMapping).foreach { mapping =>
           if (!recursion.contains(mapping.id)) {
             validations ++= emitEntityValidations(mapping, recursion += mapping.id)
           }
@@ -303,7 +326,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     validations.toList
   }
 
-  private def validationId(dialectNode: NodeMapping, propName: String, constraint: String): String =
+  private def validationId(dialectNode: NodeMappable, propName: String, constraint: String): String =
     Option(dialectNode.id) match {
       case Some(id) => s"${id}_${propName.urlComponentEncoded}_${constraint}_validation"
       case None     => throw new Exception("Cannot generate validation for dialect node without ID")
