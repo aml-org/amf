@@ -17,7 +17,8 @@ import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.plugins.features.validation.ParserSideValidations
 import amf.plugins.features.validation.ParserSideValidations.{
   DuplicatedOperationStatusCodeSpecification,
-  ExclusivePropertiesSpecification
+  ExclusivePropertiesSpecification,
+  CrossSecurityWarningSpecification
 }
 import org.yaml.model._
 
@@ -62,7 +63,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
         scheme.`type`.option() match {
           case Some("oauth2" | "basic" | "apiKey") =>
             ctx.warning(
-              ParserSideValidations.UnknownSecuritySchemeErrorSpecification,
+              CrossSecurityWarningSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
               "OAS 2.0 security scheme type detected in RAML 1.0 spec",
@@ -228,7 +229,7 @@ case class OasSecuritySchemeParser(ast: YPart,
         scheme.`type`.option() match {
           case Some(s) if s.startsWith("x-") =>
             ctx.warning(
-              ParserSideValidations.UnknownSecuritySchemeErrorSpecification,
+              CrossSecurityWarningSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
               s"RAML 1.0 extension security scheme type '$s' detected in OAS 2.0 spec",
@@ -237,7 +238,7 @@ case class OasSecuritySchemeParser(ast: YPart,
             )
           case Some("OAuth 1.0" | "OAuth 2.0" | "Basic Authentication" | "Digest Authentication" | "Pass Through") =>
             ctx.warning(
-              ParserSideValidations.UnknownSecuritySchemeErrorSpecification,
+              CrossSecurityWarningSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
               s"RAML 1.0 security scheme type detected in OAS 2.0 spec",

@@ -23,5 +23,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-oas-required/invalid-oas-required.json", Some("invalid-oas-required.report"))
   }
 
+  test("Warning when using raml security schemes") {
+    validate("raml-security-in-oas.json", Some("raml-security-in-oas.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }
