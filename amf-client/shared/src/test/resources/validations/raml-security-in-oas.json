@@ -1,0 +1,29 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Example API for Automation",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/v4/items": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "All items retreived."
+          }
+        },
+        "security": [
+          {
+            "custom": []
+          }
+        ]
+      }
+    }
+  },
+  "x-amf-securitySchemes": {
+    "custom": {
+      "type": "x-{other}",
+      "description": "Custom security"
+    }
+  }
+}
