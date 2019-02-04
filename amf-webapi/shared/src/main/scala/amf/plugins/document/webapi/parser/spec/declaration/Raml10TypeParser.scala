@@ -527,8 +527,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         ctx.factory.typeParser(toParse, s => s.withId(union.id), isAnnotation, defaultType).parse().get
       case m: YMap =>
         val newEntries = m.entries.map { entry =>
-          if (entry.key.as[String] == "type") {
-            YMapEntry("type", entry.value.as[String].stripSuffix("?"))
+          if (entry.key.as[YScalar].text == "type") {
+            YMapEntry("type", entry.value.as[YScalar].text.stripSuffix("?"))
           } else {
             entry
           }
@@ -1209,7 +1209,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
         case YType.Seq =>
           val inherits: Seq[AmfElement] = entry.value.as[Seq[YNode]].map { node =>
-            node.as[String] match {
+            node.as[YScalar].text match {
               case RamlTypeDefMatcher.TypeExpression(s) =>
                 RamlTypeExpressionParser(adopt, Some(node)).parse(s).get.adopted(shape.id)
               case s if wellKnownType(s) =>

@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: Some title
+
+mediaType: application/json
+
+types:
+  someType:
+    type: string
+    examples:
+      one: somesome
+      two: somesomesome
+
+/first:
+  post:
+    body:
+      type: someType
+      example: tracked

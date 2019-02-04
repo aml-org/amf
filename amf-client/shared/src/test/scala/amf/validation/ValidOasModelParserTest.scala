@@ -41,5 +41,9 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/ref-to-doc/api.json", OasProfile)
   }
 
+  test("oas document with empty produces") {
+    checkValid("/oas-produces/api.json", OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

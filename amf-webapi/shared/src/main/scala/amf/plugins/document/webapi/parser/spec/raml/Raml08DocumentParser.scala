@@ -8,16 +8,27 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, SecuritySchemeParser, _}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  AbstractDeclarationParser,
+  Raml08TypeParser,
+  SecuritySchemeParser,
+  _
+}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations.{InvalidAbstractDeclarationType, InvalidSecuredByType, InvalidTypeDefinition, InvalidTypesType}
-import org.yaml.model.{YMap, YMapEntry, YType}
+import amf.plugins.features.validation.ParserSideValidations.{
+  InvalidAbstractDeclarationType,
+  InvalidSecuredByType,
+  InvalidTypeDefinition,
+  InvalidTypesType
+}
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 /**
   * Raml 0.8 spec parser
   */
 case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebApiContext)
-    extends RamlDocumentParser(root) with PlatformSecrets {
+    extends RamlDocumentParser(root)
+    with PlatformSecrets {
 
   override protected def parseDeclarations(root: Root, map: YMap): Unit = {
 
@@ -27,8 +38,8 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
       "resourceTypes",
       entry =>
         ResourceType(entry)
-          .withName(entry.key.as[String])
-          .withId(parent + s"/resourceTypes/${entry.key.as[String].urlComponentEncoded}"),
+          .withName(entry.key.as[YScalar].text)
+          .withId(parent + s"/resourceTypes/${entry.key.as[YScalar].text.urlComponentEncoded}"),
       map,
       parent + "/resourceTypes"
     )
@@ -36,8 +47,8 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
       "traits",
       entry =>
         Trait(entry)
-          .withName(entry.key.as[String])
-          .withId(parent + s"/traits/${entry.key.as[String].urlComponentEncoded}"),
+          .withName(entry.key.as[YScalar].text)
+          .withId(parent + s"/traits/${entry.key.as[YScalar].text.urlComponentEncoded}"),
       map,
       parent + "/traits"
     )
@@ -103,11 +114,11 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
 
   private def parseSchemaEntries(entries: Seq[YMapEntry], parent: String): Unit = {
     entries.foreach { entry =>
-      if (RamlTypeDefMatcher.match08Type(entry.key).isDefined) {
+      if (RamlTypeDefMatcher.match08Type(entry.key.as[YScalar].text).isDefined) {
         ctx.violation(
           InvalidTypeDefinition,
           parent,
-          s"'${entry.key.as[String]}' cannot be used to name a custom type",
+          s"'${entry.key.as[YScalar].text}' cannot be used to name a custom type",
           entry.key
         )
       }

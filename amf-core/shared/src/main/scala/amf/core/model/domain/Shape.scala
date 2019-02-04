@@ -120,7 +120,8 @@ abstract class Shape extends DomainElement with Linkable with NamedDomainElement
 
   def cloneShape(recursionErrorHandler: Option[ErrorHandler],
                  recursionBase: Option[String] = None,
-                 traversed: IdsTraversionCheck = IdsTraversionCheck()): Shape
+                 traversed: IdsTraversionCheck = IdsTraversionCheck(),
+                 cloneExample: Boolean = false): Shape
 
   // Copy fields into a cloned shape
   protected def copyFields(recursionErrorHandler: Option[ErrorHandler],

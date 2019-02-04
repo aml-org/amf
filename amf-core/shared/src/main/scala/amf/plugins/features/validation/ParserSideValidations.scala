@@ -253,6 +253,11 @@ object ParserSideValidations extends Validations {
     "Missing @type in json-ld node"
   )
 
+  val CrossSecurityWarningSpecification = validation(
+    "cross-security-warning",
+    "Using a security scheme type from raml in oas or from oas in raml"
+  )
+
   val InvalidModuleType = validation(
     "invalid-module-type",
     "Invalid module type"
@@ -356,6 +361,11 @@ object ParserSideValidations extends Validations {
   val UnknownSecuritySchemeErrorSpecification = validation(
     "unknown-security-scheme",
     "Cannot find the security scheme"
+  )
+
+  val MissingSecuritySchemeErrorSpecification = validation(
+    "missing-security-scheme-type",
+    "Missing security scheme type"
   )
 
   val UnknownScopeErrorSpecification = validation(
@@ -597,6 +607,7 @@ object ParserSideValidations extends Validations {
     ExternalFragmentWarning.id -> all(WARNING),
     UnusedBaseUriParameter.id  -> all(WARNING),
     InvalidShapeFormat.id      -> all(WARNING),
+    CrossSecurityWarningSpecification.id      -> all(WARNING),
     ExampleValidationErrorSpecification.id -> Map(
       RamlProfile   -> SeverityLevels.VIOLATION,
       Raml10Profile -> SeverityLevels.VIOLATION,
@@ -615,6 +626,7 @@ object ParserSideValidations extends Validations {
     ExclusivePropertiesSpecification,
     PathTemplateUnbalancedParameters,
     UnknownSecuritySchemeErrorSpecification,
+    MissingSecuritySchemeErrorSpecification,
     UnknownScopeErrorSpecification,
     JsonSchemaInheratinaceWarningSpecification,
     XmlSchemaInheratinaceWarningSpecification,
@@ -715,6 +727,7 @@ object ParserSideValidations extends Validations {
     DialectError,
     ExampleValidationErrorSpecification,
     InvalidJsonSchemaType,
-    InvalidFragmentRef
+    InvalidFragmentRef,
+    CrossSecurityWarningSpecification
   )
 }

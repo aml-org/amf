@@ -33,9 +33,17 @@ trait ShapeHelpers { this: Shape =>
     case _             => None
   }
 
+  def cloneAllExamples(cloned: Shape, s: Shape): Unit = (cloned, s) match {
+    case (cloned: AnyShape, s: AnyShape) =>
+      cloned.withExamples(s.examples.map { e =>
+        e.copyElement().asInstanceOf[Example]
+      })
+  }
+
   def cloneShape(recursionErrorHandler: Option[ErrorHandler],
                  withRecursionBase: Option[String] = None,
-                 traversed: IdsTraversionCheck = IdsTraversionCheck()): this.type = {
+                 traversed: IdsTraversionCheck = IdsTraversionCheck(),
+                 cloneExamples: Boolean = false): this.type = {
     if (traversed.hasId(this.id)) {
       buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler).asInstanceOf[this.type]
     } else {
@@ -66,6 +74,7 @@ trait ShapeHelpers { this: Shape =>
         cloned.add(ExplicitField())
       }
       cloned.closureShapes ++= closureShapes
+      if (cloneExamples) cloneAllExamples(cloned, this)
       cloned.asInstanceOf[this.type]
     }
   }

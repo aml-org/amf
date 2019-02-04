@@ -2,14 +2,14 @@ package amf.plugins.domain.webapi.models.templates
 
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.{Annotations, UnhandledErrorHandler, ErrorHandler, Fields}
+import amf.core.model.domain.{DataNode, DomainElement, Linkable}
+import amf.core.parser.{Annotations, ErrorHandler, Fields, UnhandledErrorHandler}
 import amf.plugins.domain.webapi.metamodel.templates.ResourceTypeModel
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.{ProfileName, RamlProfile}
-import org.yaml.model.YPart
+import org.yaml.model.{YMapEntry, YPart}
 
 class ResourceType(override val fields: Fields, override val annotations: Annotations)
     extends AbstractDeclaration(fields, annotations) {
@@ -39,6 +39,23 @@ class ResourceType(override val fields: Fields, override val annotations: Annota
           .orNull
     }
   }
+
+  def entryAsEndpoint[T <: BaseUnit](unit: T,
+                                     node: DataNode,
+                                     entry: YMapEntry,
+                                     annotations: Annotations,
+                                     errorHandler: ErrorHandler = UnhandledErrorHandler,
+                                     profile: ProfileName = RamlProfile): EndPoint =
+    ExtendsHelper.entryAsEndpoint(profile,
+                                  unit,
+                                  node,
+                                  name.option().getOrElse(""),
+                                  id,
+                                  false,
+                                  entry,
+                                  annotations,
+                                  errorHandler,
+                                  ExtendsHelper.findUnitLocationOfElement(id, unit))
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ResourceType.apply

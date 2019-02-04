@@ -137,6 +137,14 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "jsonld-example/")
   }
 
+  test("Root mediaType propagation should also adopt tracked-element annotation") {
+    cycle("root-mediatype-propagation.raml",
+          "root-mediatype-propagation.jsonld",
+          RamlYamlHint,
+          Amf,
+          validationsPath + "root-mediatype-propagation/")
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

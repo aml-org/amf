@@ -74,8 +74,9 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
           case _                        => true
 
         }
-      case other => true
+      case _ => true
     }
+
     d.withDeclares(filteredDeclarations)
   }
 

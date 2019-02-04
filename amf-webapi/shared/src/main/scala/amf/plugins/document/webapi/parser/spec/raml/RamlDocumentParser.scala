@@ -269,8 +269,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       "traits",
       entry =>
         Trait(entry)
-          .withName(entry.key.as[String])
-          .withId(parent + s"/traits/${entry.key.as[String].urlComponentEncoded}"),
+          .withName(entry.key.as[YScalar].text)
+          .withId(parent + s"/traits/${entry.key.as[YScalar].text.urlComponentEncoded}"),
       map,
       parent + "/traits"
     ).parse()
@@ -278,8 +278,8 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       "resourceTypes",
       entry =>
         ResourceType(entry)
-          .withName(entry.key.as[String])
-          .withId(parent + s"/resourceTypes/${entry.key.as[String].urlComponentEncoded}"),
+          .withName(entry.key.as[YScalar].text)
+          .withId(parent + s"/resourceTypes/${entry.key.as[YScalar].text.urlComponentEncoded}"),
       map,
       parent + "/resourceTypes"
     ).parse()
@@ -344,20 +344,19 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
-            if (wellKnownType(entry.key.as[String])) {
+            val typeName = entry.key.as[YScalar].text
+            if (wellKnownType(typeName)) {
               ctx.violation(
                 InvalidTypeDefinition,
                 parent,
-                s"'${entry.key.as[String]}' cannot be used to name a custom type",
+                s"'$typeName' cannot be used to name a custom type",
                 entry.key
               )
             }
             val parser = Raml10TypeParser(
               entry,
               shape => {
-                shape.set(ShapeModel.Name,
-                          AmfScalar(entry.key.as[String], Annotations(entry.key.value)),
-                          Annotations(entry.key))
+                shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(entry.key.value)), Annotations(entry.key))
                 shape.adopted(parent)
               }
             )

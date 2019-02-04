@@ -16,6 +16,9 @@
 <http://a.ml/vocabularies/amf/parser#closed-shape> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#closed-shape> <http://www.w3.org/ns/shacl#message> "Invalid property for node" .
 <http://a.ml/vocabularies/amf/parser#closed-shape> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#cross-security-warning> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#cross-security-warning> <http://www.w3.org/ns/shacl#message> "Using a security scheme type from raml in oas or from oas in raml" .
+<http://a.ml/vocabularies/amf/parser#cross-security-warning> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#cycle-reference> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#cycle-reference> <http://www.w3.org/ns/shacl#message> "Cycle in references" .
 <http://a.ml/vocabularies/amf/parser#cycle-reference> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -208,6 +211,9 @@
 <http://a.ml/vocabularies/amf/parser#missing-node-mapping-range-term> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#missing-node-mapping-range-term> <http://www.w3.org/ns/shacl#message> "Missing property range term" .
 <http://a.ml/vocabularies/amf/parser#missing-node-mapping-range-term> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#missing-security-scheme-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#missing-security-scheme-type> <http://www.w3.org/ns/shacl#message> "Missing security scheme type" .
+<http://a.ml/vocabularies/amf/parser#missing-security-scheme-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#missing-type-in-node> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#missing-type-in-node> <http://www.w3.org/ns/shacl#message> "Missing @type in json-ld node" .
 <http://a.ml/vocabularies/amf/parser#missing-type-in-node> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

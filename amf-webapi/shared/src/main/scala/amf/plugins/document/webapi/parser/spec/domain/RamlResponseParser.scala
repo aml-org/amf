@@ -11,6 +11,7 @@ import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import amf.plugins.features.validation.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 
 import scala.collection.mutable
 
@@ -89,7 +90,10 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
             entry.value.tagType match {
               case YType.Null =>
                 ctx.factory
-                  .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, defaultType)
+                  .typeParser(entry,
+                              shape => tracking(shape.withName("default").adopted(payload.id), payload.id),
+                              false,
+                              defaultType)
                   .parse()
                   .foreach { schema =>
                     schema.annotations += SynthesizedField()
@@ -99,7 +103,10 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
 
               case YType.Str =>
                 ctx.factory
-                  .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, defaultType)
+                  .typeParser(entry,
+                              shape => tracking(shape.withName("default").adopted(payload.id), payload.id),
+                              false,
+                              defaultType)
                   .parse()
                   .foreach(payloads += payload.withSchema(_))
                 res.set(RequestModel.Payloads, AmfArray(payloads, Annotations(entry.value)), Annotations(entry))
@@ -126,7 +133,10 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                         ctx.factory
                           .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, defaultType)
                           .parse()
-                          .foreach(payloads += res.withPayload(None).add(Annotations(entry)).withSchema(_)) // todo
+                          .foreach { schema =>
+                            val payload = res.withPayload()
+                            payloads += payload.add(Annotations(entry)).withSchema(tracking(schema, payload.id))
+                          }
                       } else {
                         others.entries.foreach(
                           e =>

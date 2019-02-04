@@ -6,7 +6,6 @@ import amf.core.utils.{Lazy, Strings}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, Raml10TypeParser}
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 import amf.plugins.features.validation.ParserSideValidations.{
@@ -14,6 +13,7 @@ import amf.plugins.features.validation.ParserSideValidations.{
   UnsupportedExampleMediaTypeErrorSpecification
 }
 import org.yaml.model.{YMap, YScalar, YType}
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 
 import scala.collection.mutable
 
@@ -119,7 +119,10 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                           false,
                           defaultType)
               .parse()
-              .foreach(payloads += request.getOrCreate.withPayload(None).add(Annotations(entry)).withSchema(_))
+              .foreach { schema =>
+                val payload = request.getOrCreate.withPayload(None)
+                payloads += payload.add(Annotations(entry)).withSchema(tracking(schema, payload.id))
+              }
 
           case YType.Str =>
             ctx.factory
@@ -128,7 +131,10 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                           false,
                           defaultType)
               .parse()
-              .foreach(payloads += request.getOrCreate.withPayload(None).add(Annotations(entry)).withSchema(_))
+              .foreach { schema =>
+                val payload = request.getOrCreate.withPayload(None)
+                payloads += payload.add(Annotations(entry)).withSchema(tracking(schema, payload.id))
+              }
 
           case _ =>
             // Now we parsed potentially nested shapes for different data types
@@ -158,7 +164,10 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                                   false,
                                   defaultType)
                       .parse()
-                      .foreach(payloads += request.getOrCreate.withPayload(None).add(Annotations(entry)).withSchema(_)) // todo
+                      .foreach { schema =>
+                        val payload = request.getOrCreate.withPayload(None)
+                        payloads += payload.add(Annotations(entry)).withSchema(tracking(schema, payload.id))
+                      }
                   } else {
                     others.entries.foreach(
                       e =>

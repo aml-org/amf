@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: some
+types:
+  1: integer
+  6:
+    properties:
+      7: string
+      8?: number
+  true: boolean
+securitySchemes:
+  2:
+    type: Basic Authentication
+annotationTypes:
+  3: integer
+
+/one:
+  (3): 3107
+  get:
+    securedBy: 2
+    body:
+      application/json:
+        type: 1
+        examples:
+          4: 0092
+          5: 8893
+      application/xml:
+        type: 6
+        example:
+          7: some some
+          8: 12345
+      application/raml:
+        type: true
+        example: true

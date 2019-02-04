@@ -46,7 +46,8 @@ case class PropertyShape(fields: Fields, annotations: Annotations) extends Shape
 
   override def cloneShape(recursionErrorHandler: Option[ErrorHandler],
                           withRecursionBase: Option[String],
-                          traversed: IdsTraversionCheck): PropertyShape = {
+                          traversed: IdsTraversionCheck,
+                          cloneExamples: Boolean = false): PropertyShape = {
     val cloned = PropertyShape(Annotations(annotations))
     cloned.id = this.id
     copyFields(recursionErrorHandler, cloned, withRecursionBase, traversed)

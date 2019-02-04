@@ -1,0 +1,63 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "test",
+    "description": "test"
+  },
+  "paths": {
+    "/test": {
+      "post": {
+        "summary": "test",
+        "description": "test",
+        "operationId": "test",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "lala",
+            "in": "body",
+            "description": "wadus",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/TheType"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TheType": {
+      "type": "object",
+      "properties": {
+        "a": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "oauth2": {
+      "name": "Authorization",
+      "in": "header",
+      "type": "apiKey",
+      "description": "the test"
+    }
+  },
+  "security": [
+    {
+      "oauth2": []
+    }
+  ]
+}

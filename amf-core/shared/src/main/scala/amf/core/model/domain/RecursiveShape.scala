@@ -19,7 +19,8 @@ case class RecursiveShape(override val fields: Fields, override val annotations:
 
   override def cloneShape(recursionErrorHandler: Option[ErrorHandler],
                           recursionBase: Option[String],
-                          traversed: IdsTraversionCheck = IdsTraversionCheck()): Shape = {
+                          traversed: IdsTraversionCheck = IdsTraversionCheck(),
+                          cloneExamples: Boolean = false): Shape = {
     val cloned = RecursiveShape()
     cloned.id = this.id
     copyFields(recursionErrorHandler, cloned, None, traversed)

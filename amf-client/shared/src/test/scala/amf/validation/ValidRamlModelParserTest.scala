@@ -163,5 +163,21 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("nil-union-reference/nil-union-reference.raml")
   }
 
+  test("Multiple inheritance with complex case") {
+    checkValid("multiple-inheritance-complex/api.raml")
+  }
+
+  test("MultipleOf with decimal precision") {
+    checkValid("multipleOfDataType.raml")
+  }
+
+  test("MultipleOf with decimal limit precision") {
+    checkValid("multipleOfDataTypeLimitPrecision.raml")
+  }
+
+  test("Declaration keys as scalars") {
+    checkValid("scalar-declaration-keys.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

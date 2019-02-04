@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: someAPI
+version: 0.1
+
+uses:
+  communication: lib/communication.raml
+
+/message:
+  /messageId:
+    /statusUpdate:
+      post:
+        responses:
+          201:
+            body:
+              application/json:
+                type: communication.StatusUpdateRef

@@ -81,7 +81,7 @@ class AMFCompiler(val rawUrl: String,
     ExecutionLog.log(s"AMFCompiler#build: Building $rawUrl")
     if (context.hasCycles) failed(new CyclicReferenceException(context.history))
     else
-      cache.getOrUpdate(location) { () =>
+      cache.getOrUpdate(location, context) { () =>
         ExecutionLog.log(s"AMFCompiler#build: compiling $rawUrl")
         compile()
       }

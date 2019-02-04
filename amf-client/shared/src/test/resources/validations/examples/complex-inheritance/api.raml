@@ -1,0 +1,38 @@
+#%RAML 1.0
+title: ac-pss-xshp.raml
+version: v1
+baseUri: https://pss.api.aircanada.com/shopping/{version}/
+description: EIP PSS services.
+
+mediaType:
+  application/json
+
+/search/get:
+  post:
+    body:
+      application/json:
+        type: B
+        example:
+            b1:
+              d1: "YYZ"
+            b2:
+              d1: "YVR"
+
+types:
+    B:
+      type: object
+      properties:
+        b1:
+          type: C
+        b2:
+          type: E
+    C:
+      type: D
+    D:
+      type: object
+      properties:
+        d1:
+          type: string
+    E:
+      type: C
+      additionalProperties: false

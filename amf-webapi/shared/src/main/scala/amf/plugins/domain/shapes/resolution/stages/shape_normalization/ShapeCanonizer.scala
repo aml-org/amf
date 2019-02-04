@@ -9,7 +9,6 @@ import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.annotations.InheritedShapes
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.features.validation.ResolutionSideValidations
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 import scala.collection.mutable
@@ -134,7 +133,10 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       var inheritedIds: Seq[String]                   = Nil
 
       superTypes.foreach { superNode =>
-        val canonicalSuperNode = normalizeAction(superNode)
+        val canonicalSuperNode = superNode match {
+          case union: UnionShape => normalizeAction(union)
+          case other             => normalize(other)
+        }
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))
@@ -391,7 +393,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     } else {
       val anyOfAcc: ListBuffer[Shape] = ListBuffer()
       union.anyOf.foreach { shape: Shape =>
-        normalize(shape) match {
+        normalizeWithoutCaching(shape) match {
           case nestedUnion: UnionShape =>
             union.closureShapes ++= nestedUnion.closureShapes
             context.cache.addClojures(nestedUnion.closureShapes.toSeq, union)
