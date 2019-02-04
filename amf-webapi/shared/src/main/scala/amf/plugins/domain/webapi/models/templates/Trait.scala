@@ -2,14 +2,14 @@ package amf.plugins.domain.webapi.models.templates
 
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.model.domain.templates.AbstractDeclaration
+import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.TraitModel
 import amf.plugins.domain.webapi.models.Operation
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.{ProfileName, RamlProfile}
-import org.yaml.model.YPart
+import org.yaml.model.{YMapEntry, YPart}
 
 class Trait(override val fields: Fields, override val annotations: Annotations)
     extends AbstractDeclaration(fields, annotations) {
@@ -37,6 +37,19 @@ class Trait(override val fields: Fields, override val annotations: Annotations)
                                       keepEditingInfo = false))
           .orNull // TODO should we return null or an empty operation?
     }
+  }
+
+  def entryAsOperation[T <: BaseUnit](unit: T,
+                                      entry: YMapEntry,
+                                      annotations: Annotations,
+                                      profile: ProfileName = RamlProfile): Operation = {
+    ExtendsHelper.entryAsOperation(profile,
+                                   unit,
+                                   name.option().getOrElse(""),
+                                   id,
+                                   keepEditingInfo = false,
+                                   entry,
+                                   annotations = annotations)
   }
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
