@@ -140,49 +140,54 @@ object CanonicalWebAPIDialectExporter {
     "ParametrizedDeclaration"
   )
 
+  val shapeUnionDeclaration = "DataShapesUnion"
+
   val shapeTypeDiscriminator =
-    """        typeDiscriminatorName: type
-      |        typeDiscriminator:
-      |          Union: UnionShape
-      |          Tuple: TupleShape
-      |          Node: NodeShape
-      |          Array: ArrayShape
-      |          Schema: SchemaShape
-      |          File: FileShape
-      |          Nil: NilShape
-      |          Scalar: ScalarShape
-      |          Any: AnyShape
+    """    typeDiscriminatorName: type
+      |    typeDiscriminator:
+      |      Union: UnionShape
+      |      Tuple: TupleShape
+      |      Node: NodeShape
+      |      Array: ArrayShape
+      |      Schema: SchemaShape
+      |      File: FileShape
+      |      Nil: NilShape
+      |      Scalar: ScalarShape
+      |      Any: AnyShape
     """.stripMargin
 
   val shapeUnionRange =
-    """          - UnionShape
-      |          - TupleShape
-      |          - NodeShape
-      |          - ArrayShape
-      |          - SchemaShape
-      |          - FileShape
-      |          - MatrixShape
-      |          - NilShape
-      |          - ScalarShape
-      |          - AnyShape
+    """      - UnionShape
+      |      - TupleShape
+      |      - NodeShape
+      |      - ArrayShape
+      |      - SchemaShape
+      |      - FileShape
+      |      - MatrixShape
+      |      - NilShape
+      |      - ScalarShape
+      |      - AnyShape
     """.stripMargin
 
+
+  val settingsUnionDeclaration = "SecuritySettingsUnion"
+
   val settingsTypeDiscriminator =
-    """        typeDiscriminatorName: type
-      |        typeDiscriminator:
-      |          OAuth2: OAuth2Settings
-      |          OAuth1: OAuth1Settings
-      |          APIKey: APIKeySettings
-      |          Http: HTTPSettings
-      |          OpenID: OpenIDSettings
+    """    typeDiscriminatorName: type
+      |    typeDiscriminator:
+      |      OAuth2: OAuth2Settings
+      |      OAuth1: OAuth1Settings
+      |      APIKey: APIKeySettings
+      |      Http: HTTPSettings
+      |      OpenID: OpenIDSettings
     """.stripMargin
 
   val settingsUnionRange =
-    """          - OAuth2Settings
-      |          - OAuth1Settings
-      |          - APIKeySettings
-      |          - HTTPSettings
-      |          - OpenIDSettings
+    """      - OAuth2Settings
+      |      - OAuth1Settings
+      |      - APIKeySettings
+      |      - HTTPSettings
+      |      - OpenIDSettings
     """.stripMargin
 
   val abstractDeclarationsRange =
@@ -191,8 +196,8 @@ object CanonicalWebAPIDialectExporter {
     """.stripMargin
 
   val declarations =
-  """    declares:
-    |      dataShapes: NodeShape
+  s"""    declares:
+    |      dataShapes: $shapeUnionDeclaration
     |      resourceTypes: ResourceType
     |      traits: Trait
   """.stripMargin
@@ -228,6 +233,19 @@ object CanonicalWebAPIDialectExporter {
                  "dialect: WebAPI\n" ++
                  "version: 1.0\n\n"
 
+    // Shapes union
+    stringBuilder.append(s"  $shapeUnionDeclaration:\n")
+    stringBuilder.append(shapeTypeDiscriminator + "\n")
+    stringBuilder.append("    union:\n")
+    stringBuilder.append(shapeUnionRange + "\n")
+
+    // Security settings union
+    stringBuilder.append(s"  $settingsUnionDeclaration:\n")
+    stringBuilder.append(settingsTypeDiscriminator + "\n")
+    stringBuilder.append("    union:\n")
+    stringBuilder.append(settingsUnionRange + "\n")
+
+
     nodeMappings.foreach {
       case (_, dialectNodeMapping: DialectNodeMapping) =>
       if (!blacklistedMappings.contains(dialectNodeMapping.name)) {
@@ -235,7 +253,8 @@ object CanonicalWebAPIDialectExporter {
         var (compacted, prefix, base) = compact(dialectNodeMapping.classTerm)
         aggregateExternals(externals, prefix, base)
         stringBuilder.append(s"    classTerm: $compacted\n")
-        stringBuilder.append("    mapping:\n")
+
+        stringBuilder.append(s"    mapping:\n")
 
         if (dialectNodeMapping.classTerm == (Namespace.Http + "EndPoint").iri()) {
           stringBuilder.append(endPointExtends + "\n")
@@ -264,13 +283,9 @@ object CanonicalWebAPIDialectExporter {
             aggregateExternals(externals, prefix, base)
             stringBuilder.append(s"        propertyTerm: ${compacted}\n")
             if (propertyMapping.range == "Shape") {
-              stringBuilder.append(s"        range:\n")
-              stringBuilder.append(shapeUnionRange ++ "\n")
-              stringBuilder.append(shapeTypeDiscriminator ++ "\n")
+              stringBuilder.append(s"        range: $shapeUnionDeclaration\n")
             } else if (propertyMapping.range == "Settings") {
-              stringBuilder.append(s"        range:\n")
-              stringBuilder.append(settingsUnionRange ++ "\n")
-              stringBuilder.append(settingsTypeDiscriminator ++ "\n")
+              stringBuilder.append(s"        range: $settingsUnionDeclaration\n")
             } else if (propertyMapping.range == "AbstractDeclaration") {
               stringBuilder.append(s"        range:\n")
               stringBuilder.append(abstractDeclarationsRange ++ "\n")

@@ -17,6 +17,47 @@ external:
 
 nodeMappings:
 
+  DataShapesUnion:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      Union: UnionShape
+      Tuple: TupleShape
+      Node: NodeShape
+      Array: ArrayShape
+      Schema: SchemaShape
+      File: FileShape
+      Nil: NilShape
+      Scalar: ScalarShape
+      Any: AnyShape
+    
+    union:
+      - UnionShape
+      - TupleShape
+      - NodeShape
+      - ArrayShape
+      - SchemaShape
+      - FileShape
+      - MatrixShape
+      - NilShape
+      - ScalarShape
+      - AnyShape
+    
+  SecuritySettingsUnion:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      OAuth2: OAuth2Settings
+      OAuth1: OAuth1Settings
+      APIKey: APIKeySettings
+      Http: HTTPSettings
+      OpenID: OpenIDSettings
+    
+    union:
+      - OAuth2Settings
+      - OAuth1Settings
+      - APIKeySettings
+      - HTTPSettings
+      - OpenIDSettings
+    
   SchemaShape:
     classTerm: shacl.SchemaShape
     mapping:
@@ -34,140 +75,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -214,30 +140,7 @@ nodeMappings:
         allowMultiple: true
       queryString:
         propertyTerm: raml-http.queryString
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       uriParameter:
         propertyTerm: raml-http.uriParameter
         range: Parameter
@@ -361,30 +264,7 @@ nodeMappings:
         range: string
       schema:
         propertyTerm: raml-http.schema
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       payload:
         propertyTerm: raml-http.payload
         range: Payload
@@ -539,140 +419,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -704,30 +469,7 @@ nodeMappings:
         range: link
       range:
         propertyTerm: raml-shapes.range
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       min.Count:
         propertyTerm: shacl.minCount
         range: integer
@@ -751,140 +493,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -926,30 +553,7 @@ nodeMappings:
     mapping:
       items:
         propertyTerm: raml-shapes.items
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       minCount:
         propertyTerm: shacl.minCount
         range: integer
@@ -973,140 +577,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -1152,140 +641,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -1428,140 +802,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -1614,47 +873,10 @@ nodeMappings:
         allowMultiple: true
       settings:
         propertyTerm: security.settings
-        range:
-          - OAuth2Settings
-          - OAuth1Settings
-          - APIKeySettings
-          - HTTPSettings
-          - OpenIDSettings
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          OAuth2: OAuth2Settings
-          OAuth1: OAuth1Settings
-          APIKey: APIKeySettings
-          Http: HTTPSettings
-          OpenID: OpenIDSettings
-    
+        range: SecuritySettingsUnion
       queryString:
         propertyTerm: raml-http.queryString
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
 
 
   ParametrizedResourceType:
@@ -1689,140 +911,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -1855,30 +962,7 @@ nodeMappings:
         allowMultiple: true
       schema:
         propertyTerm: raml-shapes.schema
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       name:
         propertyTerm: doc.name
         range: string
@@ -1922,30 +1006,7 @@ nodeMappings:
     mapping:
       anyOf:
         propertyTerm: raml-shapes.anyOf
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       name:
         propertyTerm: shacl.name
@@ -1958,140 +1019,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -2172,21 +1118,7 @@ nodeMappings:
         range: SecurityScheme
       settings:
         propertyTerm: security.settings
-        range:
-          - OAuth2Settings
-          - OAuth1Settings
-          - APIKeySettings
-          - HTTPSettings
-          - OpenIDSettings
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          OAuth2: OAuth2Settings
-          OAuth1: OAuth1Settings
-          APIKey: APIKeySettings
-          Http: HTTPSettings
-          OpenID: OpenIDSettings
-    
+        range: SecuritySettingsUnion
 
 
   Server:
@@ -2271,30 +1203,7 @@ nodeMappings:
     mapping:
       items:
         propertyTerm: raml-shapes.items
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       minCount:
         propertyTerm: shacl.minCount
@@ -2322,140 +1231,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -2577,30 +1371,7 @@ nodeMappings:
         range: string
       schema:
         propertyTerm: raml-http.schema
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       example:
         propertyTerm: raml-http.example
         range: Example
@@ -2639,30 +1410,7 @@ nodeMappings:
         range: boolean
       additionalPropertiesSchema:
         propertyTerm: shacl.additionalPropertiesSchema
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       discriminator:
         propertyTerm: raml-shapes.discriminator
         range: string
@@ -2688,140 +1436,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -2889,30 +1522,7 @@ nodeMappings:
     mapping:
       items:
         propertyTerm: raml-shapes.items
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       minCount:
         propertyTerm: shacl.minCount
         range: integer
@@ -2936,140 +1546,25 @@ nodeMappings:
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       defaultValueString:
         propertyTerm: shacl.defaultValueStr
         range: string
       not:
         propertyTerm: shacl.not
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
       and:
         propertyTerm: shacl.and
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       or:
         propertyTerm: shacl.or
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       exclusiveOr:
         propertyTerm: shacl.xone
-        range:
-          - UnionShape
-          - TupleShape
-          - NodeShape
-          - ArrayShape
-          - SchemaShape
-          - FileShape
-          - MatrixShape
-          - NilShape
-          - ScalarShape
-          - AnyShape
-    
-        typeDiscriminatorName: type
-        typeDiscriminator:
-          Union: UnionShape
-          Tuple: TupleShape
-          Node: NodeShape
-          Array: ArrayShape
-          Schema: SchemaShape
-          File: FileShape
-          Nil: NilShape
-          Scalar: ScalarShape
-          Any: AnyShape
-    
+        range: DataShapesUnion
         allowMultiple: true
       inheritanceClosure:
         propertyTerm: raml-shapes.closure
@@ -3099,7 +1594,7 @@ documents:
   root:
     encodes: WebAPI
     declares:
-      dataShapes: NodeShape
+      dataShapes: DataShapesUnion
       resourceTypes: ResourceType
       traits: Trait
   

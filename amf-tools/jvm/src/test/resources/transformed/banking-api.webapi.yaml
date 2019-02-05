@@ -10,22 +10,11 @@ contentType:
 version: "1.0"
 endpoint:
   -
-    path: /customers/{customer_id}/cards/debit
+    path: /customers/{customer_id}
     supportedOperation:
       -
-        method: post
-        description: Requests the creation of a new DebitCard
-        expects:
-          payload:
-            -
-              mediaType: application/json
-              schema:
-                type: Scalar
-                datatype: http://www.w3.org/2001/XMLSchema#string
-                name: schema
-      -
         method: get
-        description: Returns a collection of cards
+        description: Returns Customer data
         returns:
           -
             name: "200"
@@ -36,18 +25,9 @@ endpoint:
                 schema:
                   type: Any
                   name: schema
-    parameter:
       -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/{customer_id}/cards
+        method: delete
+        description: Removes a Customer from the system
     parameter:
       -
         name: customer_id
@@ -85,11 +65,34 @@ endpoint:
           datatype: http://www.w3.org/2001/XMLSchema#string
           name: schema
   -
-    path: /customers/{customer_id}
+    path: /customers/{customer_id}/cards
+    parameter:
+      -
+        name: customer_id
+        paramName: customer_id
+        required: true
+        binding: path
+        schema:
+          type: Scalar
+          datatype: http://www.w3.org/2001/XMLSchema#string
+          name: schema
+  -
+    path: /customers/{customer_id}/cards/debit
     supportedOperation:
       -
+        method: post
+        description: Requests the creation of a new DebitCard
+        expects:
+          payload:
+            -
+              mediaType: application/json
+              schema:
+                type: Scalar
+                datatype: http://www.w3.org/2001/XMLSchema#string
+                name: schema
+      -
         method: get
-        description: Returns Customer data
+        description: Returns a collection of cards
         returns:
           -
             name: "200"
@@ -100,9 +103,6 @@ endpoint:
                 schema:
                   type: Any
                   name: schema
-      -
-        method: delete
-        description: Removes a Customer from the system
     parameter:
       -
         name: customer_id
