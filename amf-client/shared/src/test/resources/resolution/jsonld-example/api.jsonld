@@ -1,296 +1,301 @@
 [
-{
-"@id": "",
-"@type": [
-"doc:Document",
-"doc:Fragment",
-"doc:Module",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#3",
-"@type": [
-"schema-org:WebAPI",
-"doc:RootDomainElement",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "Jorge API"
-}
-],
-"raml-http:server": [
-{
-"@id": "#13",
-"@type": [
-"raml-http:Server",
-"doc:DomainElement"
-],
-"raml-http:url": [
-{
-"@value": "https://jorge.uri.com"
-}
-],
-"smaps": {
-"lexical": {
-"raml-http:url": "[(2,0)-(3,0)]"
-},
-"synthesized-field": {
-"#13": "true"
-}
-}
-}
-],
-"schema-org:version": [
-{
-"@value": "v1"
-}
-],
-"raml-http:endpoint": [
-{
-"@id": "#4",
-"@type": [
-"raml-http:EndPoint",
-"doc:DomainElement"
-],
-"raml-http:path": [
-{
-"@value": "/jorgeEndpoint"
-}
-],
-"hydra:supportedOperation": [
-{
-"@id": "#5",
-"@type": [
-"hydra:Operation",
-"doc:DomainElement"
-],
-"hydra:method": [
-{
-"@value": "get"
-}
-],
-"hydra:returns": [
-{
-"@id": "#6",
-"@type": [
-"raml-http:Response",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "200"
-}
-],
-"hydra:statusCode": [
-{
-"@value": "200"
-}
-],
-"raml-http:payload": [
-{
-"@id": "#7",
-"@type": [
-"raml-http:Payload",
-"doc:DomainElement"
-],
-"raml-http:mediaType": [
-{
-"@value": "application/json"
-}
-],
-"raml-http:schema": [
-{
-"@id": "#8",
-"@type": [
-"raml-shapes:AnyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:name": [
-{
-"@value": "schema"
-}
-],
-"doc:examples": [
-{
-"@id": "#9",
-"@type": [
-"doc:Example",
-"doc:DomainElement"
-],
-"doc:strict": [
-{
-"@value": true
-}
-],
-"doc:structuredValue": [
-{
-"@id": "#10",
-"@type": [
-"data:Array",
-"rdf:Seq"
-],
-"rdf:member": [
-{
-"@id": "#11",
-"@type": [
-"data:Object"
-],
-"data:%40id": [
-{
-"@id": "#12",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#12": "[(3,11)-(3,73)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#11": "%40id->[(3,4)-(3,11)]"
-},
-"lexical": {
-"data:%40id": "[(3,11)-(3,73)]",
-"#11": "[(2,2)-(4,3)]"
-}
-}
-}
-],
-"data:pos0": [
-{
-"@id": "#11"
-}
-],
-"smaps": {
-"parsed-json-example": {
-"#10": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
-},
-"lexical": {
-"#10": "[(1,0)-(5,1)]"
-}
-}
-}
-],
-"doc:reference-id": [
-{
-"@id": "#2"
-}
-],
-"smaps": {
-"synthesized-field": {
-"doc:strict": "true"
-},
-"lexical": {
-"#9": "[(11,21)-(11,51)]"
-},
-"tracked-element": {
-"#9": "amf://id#7"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"#8": "[(10,10)-(11,51)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"#7": "[(10,10)-(11,51)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"raml-http:payload": "[(9,8)-(11,51)]",
-"#6": "[(8,6)-(11,51)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"hydra:returns": "[(7,4)-(11,51)]",
-"#5": "[(6,2)-(11,51)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"#4": "[(5,0)-(11,51)]"
-}
-}
-}
-],
-"smaps": {
-"source-vendor": {
-"#3": "RAML 1.0"
-},
-"lexical": {
-"schema-org:version": "[(4,0)-(5,0)]",
-"schema-org:name": "[(3,0)-(4,0)]",
-"#3": "[(2,0)-(11,51)]",
-"raml-http:server": "[(2,0)-(3,0)]"
-}
-}
-}
-],
-"doc:references": [
-{
-"@id": "#1",
-"@type": [
-"doc:ExternalFragment",
-"doc:Fragment",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#2",
-"@type": [
-"doc:ExternalDomainElement",
-"doc:DomainElement"
-],
-"doc:raw": [
-{
-"@value": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
-}
-],
-"raml-http:mediaType": [
-{
-"@value": "application/json"
-}
-]
-}
-]
-}
-],
-"@context": {
-"@base": "amf://id",
-"raml-http": "http://a.ml/vocabularies/http#",
-"shacl": "http://www.w3.org/ns/shacl#",
-"raml-shapes": "http://a.ml/vocabularies/shapes#",
-"data": "http://a.ml/vocabularies/data#",
-"doc": "http://a.ml/vocabularies/document#",
-"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-"schema-org": "http://schema.org/",
-"xsd": "http://www.w3.org/2001/XMLSchema#",
-"hydra": "http://www.w3.org/ns/hydra/core#"
-}
-}
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#3",
+        "@type": [
+          "schema-org:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "Jorge API"
+          }
+        ],
+        "raml-http:server": [
+          {
+            "@id": "#13",
+            "@type": [
+              "raml-http:Server",
+              "doc:DomainElement"
+            ],
+            "raml-http:url": [
+              {
+                "@value": "https://jorge.uri.com"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "raml-http:url": "[(2,0)-(3,0)]"
+              },
+              "synthesized-field": {
+                "#13": "true"
+              }
+            }
+          }
+        ],
+        "schema-org:version": [
+          {
+            "@value": "v1"
+          }
+        ],
+        "raml-http:endpoint": [
+          {
+            "@id": "#4",
+            "@type": [
+              "raml-http:EndPoint",
+              "doc:DomainElement"
+            ],
+            "raml-http:path": [
+              {
+                "@value": "/jorgeEndpoint"
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@id": "#5",
+                "@type": [
+                  "hydra:Operation",
+                  "doc:DomainElement"
+                ],
+                "hydra:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "hydra:returns": [
+                  {
+                    "@id": "#6",
+                    "@type": [
+                      "raml-http:Response",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "hydra:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "raml-http:payload": [
+                      {
+                        "@id": "#7",
+                        "@type": [
+                          "raml-http:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-http:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-http:schema": [
+                          {
+                            "@id": "#8",
+                            "@type": [
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape"
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "doc:examples": [
+                              {
+                                "@id": "#9",
+                                "@type": [
+                                  "doc:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#10",
+                                    "@type": [
+                                      "data:Array",
+                                      "rdf:Seq",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "rdf:member": [
+                                      {
+                                        "@id": "#11",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:%40id": [
+                                          {
+                                            "@id": "#12",
+                                            "@type": [
+                                              "data:Scalar",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:value": [
+                                              {
+                                                "@value": "http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#",
+                                                "@type": "xsd:string"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "#12": "[(3,11)-(3,73)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "data-node-properties": {
+                                            "#11": "%40id->[(3,4)-(3,11)]"
+                                          },
+                                          "lexical": {
+                                            "#11": "[(2,2)-(4,3)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "data:pos0": [
+                                      {
+                                        "@id": "#11"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "parsed-json-example": {
+                                        "#10": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
+                                      },
+                                      "lexical": {
+                                        "#10": "[(1,0)-(5,1)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "doc:reference-id": [
+                                  {
+                                    "@id": "#2"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "#9": "[(11,21)-(11,51)]"
+                                  },
+                                  "tracked-element": {
+                                    "#9": "amf://id#7"
+                                  }
+                                }
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#8": "[(10,10)-(11,51)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#7": "[(10,10)-(11,51)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "raml-http:payload": "[(9,8)-(11,51)]",
+                        "#6": "[(8,6)-(11,51)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "hydra:returns": "[(7,4)-(11,51)]",
+                    "#5": "[(6,2)-(11,51)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#4": "[(5,0)-(11,51)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#3": "RAML 1.0"
+          },
+          "lexical": {
+            "schema-org:version": "[(4,0)-(5,0)]",
+            "schema-org:name": "[(3,0)-(4,0)]",
+            "#3": "[(2,0)-(11,51)]",
+            "raml-http:server": "[(2,0)-(3,0)]"
+          }
+        }
+      }
+    ],
+    "doc:references": [
+      {
+        "@id": "#1",
+        "@type": [
+          "doc:ExternalFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#2",
+            "@type": [
+              "doc:ExternalDomainElement",
+              "doc:DomainElement"
+            ],
+            "doc:raw": [
+              {
+                "@value": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
+              }
+            ],
+            "raml-http:mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-http": "http://a.ml/vocabularies/http#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "schema-org": "http://schema.org/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "hydra": "http://www.w3.org/ns/hydra/core#"
+    }
+  }
 ]

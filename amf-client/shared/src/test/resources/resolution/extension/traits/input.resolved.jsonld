@@ -1,375 +1,387 @@
 [
-{
-"@id": "",
-"@type": [
-"doc:Document",
-"doc:Fragment",
-"doc:Module",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#10",
-"@type": [
-"schema-org:WebAPI",
-"doc:RootDomainElement",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "overlay"
-}
-],
-"schema-org:description": [
-{
-"@value": "some overlaid description"
-}
-],
-"raml-http:endpoint": [
-{
-"@id": "#11",
-"@type": [
-"raml-http:EndPoint",
-"doc:DomainElement"
-],
-"raml-http:path": [
-{
-"@value": "/master"
-}
-],
-"hydra:supportedOperation": [
-{
-"@id": "#13",
-"@type": [
-"hydra:Operation",
-"doc:DomainElement"
-],
-"hydra:method": [
-{
-"@value": "get"
-}
-],
-"schema-org:description": [
-{
-"@value": "Master description"
-}
-],
-"doc:extends": [
-{
-"@id": "#14",
-"@type": [
-"doc:ParametrizedTrait",
-"doc:ParametrizedDeclaration",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "slave"
-}
-],
-"doc:target": [
-{
-"@id": "#5",
-"@type": [
-"doc:Trait",
-"doc:AbstractDeclaration",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "slave"
-}
-],
-"doc:dataNode": [
-{
-"@id": "#6",
-"@type": [
-"data:Object"
-],
-"data:description": [
-{
-"@id": "#7",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Slave description",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#7": "[(8,17)-(8,34)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#6": "description->[(8,4)-(10,0)]"
-},
-"lexical": {
-"data:description": "[(8,17)-(8,34)]",
-"#6": "[(8,4)-(10,0)]"
-}
-}
-}
-],
-"smaps": {
-"extension-provenance": {
-"#5": "id->amf://id#9"
-},
-"lexical": {
-"#5": "[(7,2)-(10,0)]"
-},
-"resolved-link": {
-"#5": "amf://id#8"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"schema-org:name": "[(12,9)-(12,14)]",
-"#14": "[(12,9)-(12,14)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"#13": "[(10,2)-(10,6)]"
-}
-}
-}
-],
-"doc:extends": [
-{
-"@id": "#12",
-"@type": [
-"doc:ParametrizedTrait",
-"doc:ParametrizedDeclaration",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "master"
-}
-],
-"doc:target": [
-{
-"@id": "#1",
-"@type": [
-"doc:Trait",
-"doc:AbstractDeclaration",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "master"
-}
-],
-"doc:dataNode": [
-{
-"@id": "#2",
-"@type": [
-"data:Object"
-],
-"data:description": [
-{
-"@id": "#3",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Master description",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#3": "[(6,17)-(6,35)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#2": "description->[(6,4)-(8,0)]"
-},
-"lexical": {
-"data:description": "[(6,17)-(6,35)]",
-"#2": "[(6,4)-(8,0)]"
-}
-}
-}
-],
-"smaps": {
-"resolved-link": {
-"#1": "amf://id#4"
-},
-"lexical": {
-"#1": "[(5,2)-(8,0)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"schema-org:name": "[(9,7)-(9,13)]",
-"#12": "[(9,7)-(9,13)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"doc:extends": "[(9,2)-(10,0)]",
-"#11": "[(8,0)-(10,6)]"
-}
-}
-}
-],
-"smaps": {
-"source-vendor": {
-"#10": "RAML 1.0"
-},
-"lexical": {
-"#10": "[(2,0)-(10,6)]"
-}
-}
-}
-],
-"doc:references": [],
-"doc:declares": [
-{
-"@id": "#1",
-"@type": [
-"doc:Trait",
-"doc:AbstractDeclaration",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "master"
-}
-],
-"doc:dataNode": [
-{
-"@id": "#2",
-"@type": [
-"data:Object"
-],
-"data:description": [
-{
-"@id": "#3",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Master description",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#3": "[(6,17)-(6,35)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#2": "description->[(6,4)-(8,0)]"
-},
-"lexical": {
-"data:description": "[(6,17)-(6,35)]",
-"#2": "[(6,4)-(8,0)]"
-}
-}
-}
-],
-"smaps": {
-"resolved-link": {
-"#1": "amf://id#4"
-},
-"lexical": {
-"#1": "[(5,2)-(8,0)]"
-}
-}
-},
-{
-"@id": "#5",
-"@type": [
-"doc:Trait",
-"doc:AbstractDeclaration",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "slave"
-}
-],
-"doc:dataNode": [
-{
-"@id": "#6",
-"@type": [
-"data:Object"
-],
-"data:description": [
-{
-"@id": "#7",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Slave description",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#7": "[(8,17)-(8,34)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#6": "description->[(8,4)-(10,0)]"
-},
-"lexical": {
-"data:description": "[(8,17)-(8,34)]",
-"#6": "[(8,4)-(10,0)]"
-}
-}
-}
-],
-"smaps": {
-"extension-provenance": {
-"#5": "id->amf://id#9"
-},
-"lexical": {
-"#5": "[(7,2)-(10,0)]"
-},
-"resolved-link": {
-"#5": "amf://id#8"
-}
-}
-}
-],
-"@context": {
-"@base": "amf://id",
-"raml-http": "http://a.ml/vocabularies/http#",
-"data": "http://a.ml/vocabularies/data#",
-"doc": "http://a.ml/vocabularies/document#",
-"schema-org": "http://schema.org/",
-"xsd": "http://www.w3.org/2001/XMLSchema#",
-"hydra": "http://www.w3.org/ns/hydra/core#"
-}
-}
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#10",
+        "@type": [
+          "schema-org:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "overlay"
+          }
+        ],
+        "schema-org:description": [
+          {
+            "@value": "some overlaid description"
+          }
+        ],
+        "raml-http:endpoint": [
+          {
+            "@id": "#11",
+            "@type": [
+              "raml-http:EndPoint",
+              "doc:DomainElement"
+            ],
+            "raml-http:path": [
+              {
+                "@value": "/master"
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@id": "#13",
+                "@type": [
+                  "hydra:Operation",
+                  "doc:DomainElement"
+                ],
+                "hydra:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "schema-org:description": [
+                  {
+                    "@value": "Master description"
+                  }
+                ],
+                "doc:extends": [
+                  {
+                    "@id": "#14",
+                    "@type": [
+                      "doc:ParametrizedTrait",
+                      "doc:ParametrizedDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "slave"
+                      }
+                    ],
+                    "doc:target": [
+                      {
+                        "@id": "#5",
+                        "@type": [
+                          "doc:Trait",
+                          "doc:AbstractDeclaration",
+                          "doc:DomainElement"
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "slave"
+                          }
+                        ],
+                        "doc:dataNode": [
+                          {
+                            "@id": "#6",
+                            "@type": [
+                              "data:Object",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:description": [
+                              {
+                                "@id": "#7",
+                                "@type": [
+                                  "data:Scalar",
+                                  "data:Node",
+                                  "doc:DomainElement"
+                                ],
+                                "data:value": [
+                                  {
+                                    "@value": "Slave description",
+                                    "@type": "xsd:string"
+                                  }
+                                ],
+                                "smaps": {
+                                  "lexical": {
+                                    "#7": "[(8,17)-(8,34)]"
+                                  }
+                                }
+                              }
+                            ],
+                            "smaps": {
+                              "data-node-properties": {
+                                "#6": "description->[(8,4)-(10,0)]"
+                              },
+                              "lexical": {
+                                "#6": "[(8,4)-(10,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "extension-provenance": {
+                            "#5": "id->amf://id#9"
+                          },
+                          "lexical": {
+                            "#5": "[(7,2)-(10,0)]"
+                          },
+                          "resolved-link": {
+                            "#5": "amf://id#8"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "schema-org:name": "[(12,9)-(12,14)]",
+                        "#14": "[(12,9)-(12,14)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#13": "[(10,2)-(10,6)]"
+                  }
+                }
+              }
+            ],
+            "doc:extends": [
+              {
+                "@id": "#12",
+                "@type": [
+                  "doc:ParametrizedTrait",
+                  "doc:ParametrizedDeclaration",
+                  "doc:DomainElement"
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "master"
+                  }
+                ],
+                "doc:target": [
+                  {
+                    "@id": "#1",
+                    "@type": [
+                      "doc:Trait",
+                      "doc:AbstractDeclaration",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "master"
+                      }
+                    ],
+                    "doc:dataNode": [
+                      {
+                        "@id": "#2",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:description": [
+                          {
+                            "@id": "#3",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Master description",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#3": "[(6,17)-(6,35)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "#2": "description->[(6,4)-(8,0)]"
+                          },
+                          "lexical": {
+                            "#2": "[(6,4)-(8,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "resolved-link": {
+                        "#1": "amf://id#4"
+                      },
+                      "lexical": {
+                        "#1": "[(5,2)-(8,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "schema-org:name": "[(9,7)-(9,13)]",
+                    "#12": "[(9,7)-(9,13)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "doc:extends": "[(9,2)-(10,0)]",
+                "#11": "[(8,0)-(10,6)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#10": "RAML 1.0"
+          },
+          "lexical": {
+            "#10": "[(2,0)-(10,6)]"
+          }
+        }
+      }
+    ],
+    "doc:references": [],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "doc:Trait",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "master"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "#2",
+            "@type": [
+              "data:Object",
+              "data:Node",
+              "doc:DomainElement"
+            ],
+            "data:description": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "data:Scalar",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:value": [
+                  {
+                    "@value": "Master description",
+                    "@type": "xsd:string"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#3": "[(6,17)-(6,35)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "data-node-properties": {
+                "#2": "description->[(6,4)-(8,0)]"
+              },
+              "lexical": {
+                "#2": "[(6,4)-(8,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "resolved-link": {
+            "#1": "amf://id#4"
+          },
+          "lexical": {
+            "#1": "[(5,2)-(8,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#5",
+        "@type": [
+          "doc:Trait",
+          "doc:AbstractDeclaration",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "slave"
+          }
+        ],
+        "doc:dataNode": [
+          {
+            "@id": "#6",
+            "@type": [
+              "data:Object",
+              "data:Node",
+              "doc:DomainElement"
+            ],
+            "data:description": [
+              {
+                "@id": "#7",
+                "@type": [
+                  "data:Scalar",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:value": [
+                  {
+                    "@value": "Slave description",
+                    "@type": "xsd:string"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#7": "[(8,17)-(8,34)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "data-node-properties": {
+                "#6": "description->[(8,4)-(10,0)]"
+              },
+              "lexical": {
+                "#6": "[(8,4)-(10,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "extension-provenance": {
+            "#5": "id->amf://id#9"
+          },
+          "lexical": {
+            "#5": "[(7,2)-(10,0)]"
+          },
+          "resolved-link": {
+            "#5": "amf://id#8"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-http": "http://a.ml/vocabularies/http#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "schema-org": "http://schema.org/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "hydra": "http://www.w3.org/ns/hydra/core#"
+    }
+  }
 ]

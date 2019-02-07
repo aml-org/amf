@@ -1,134 +1,110 @@
 [
-{
-"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml",
-"@type": [
-"http://a.ml/vocabularies/meta#DialectInstance",
-"http://a.ml/vocabularies/document#Document",
-"http://a.ml/vocabularies/document#Fragment",
-"http://a.ml/vocabularies/document#Module",
-"http://a.ml/vocabularies/document#Unit"
-],
-"http://a.ml/vocabularies/meta#definedBy": [
-{
-"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml"
-}
-],
-"http://a.ml/vocabularies/document#encodes": [
-{
-"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/",
-"@type": [
-"http://www.w3.org/ns/ldp#BasicContainer",
-"file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode",
-"http://a.ml/vocabularies/meta#DialectDomainElement",
-"http://a.ml/vocabularies/document#DomainElement"
-],
-"http://www.w3.org/ns/ldp#contains": [
-{
-"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/container",
-"@type": [
-"http://mulesoft.com/vocabularies/amf-learning#Person",
-"file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode",
-"http://a.ml/vocabularies/meta#DialectDomainElement",
-"http://a.ml/vocabularies/document#DomainElement"
-],
-"http://mulesoft.com/vocabularies/amf-learning#name": [
-{
-"@value": "Pablo Marmol"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/container/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://mulesoft.com/vocabularies/amf-learning#name"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(4,6)-(4,18)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/container"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(4,0)-(4,18)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "http://www.w3.org/ns/ldp#contains"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(4,0)-(4,18)]"
-}
-]
-},
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(3,0)-(4,18)]"
-}
-]
-}
-]
-}
-]
-}
-],
-"http://a.ml/vocabularies/document-source-maps#sources": [
-{
-"@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/source-map",
-"@type": [
-"http://a.ml/vocabularies/document-source-maps#SourceMap"
-],
-"http://a.ml/vocabularies/document-source-maps#lexical": [
-{
-"http://a.ml/vocabularies/document-source-maps#element": [
-{
-"@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml"
-}
-],
-"http://a.ml/vocabularies/document-source-maps#value": [
-{
-"@value": "[(3,0)-(4,18)]"
-}
-]
-}
-]
-}
-]
-}
+  {
+    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#DialectInstance",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml"
+      }
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/",
+        "@type": [
+          "http://www.w3.org/ns/ldp#BasicContainer",
+          "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://www.w3.org/ns/ldp#contains": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/container",
+            "@type": [
+              "http://mulesoft.com/vocabularies/amf-learning#Person",
+              "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://mulesoft.com/vocabularies/amf-learning#name": [
+              {
+                "@value": "Pablo Marmol"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/container/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/container"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,0)-(4,18)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,0)-(4,18)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/Instagram/instance2.raml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(4,18)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
 ]

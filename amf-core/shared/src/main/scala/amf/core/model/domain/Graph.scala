@@ -1,6 +1,5 @@
 package amf.core.model.domain
 
-import amf.core.metamodel.domain.DomainElementModel.`type`
 import amf.core.parser.FieldEntry
 import amf.core.vocabulary.Namespace
 

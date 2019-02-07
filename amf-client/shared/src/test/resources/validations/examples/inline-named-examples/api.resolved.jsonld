@@ -1,2395 +1,2443 @@
 [
-{
-"@id": "",
-"@type": [
-"doc:Document",
-"doc:Fragment",
-"doc:Module",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#44",
-"@type": [
-"schema-org:WebAPI",
-"doc:RootDomainElement",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "test"
-}
-],
-"raml-http:endpoint": [
-{
-"@id": "#45",
-"@type": [
-"raml-http:EndPoint",
-"doc:DomainElement"
-],
-"raml-http:path": [
-{
-"@value": "/organizations"
-}
-],
-"hydra:supportedOperation": [
-{
-"@id": "#46",
-"@type": [
-"hydra:Operation",
-"doc:DomainElement"
-],
-"hydra:method": [
-{
-"@value": "put"
-}
-],
-"hydra:expects": [
-{
-"@id": "#47",
-"@type": [
-"raml-http:Request",
-"doc:DomainElement"
-],
-"raml-http:payload": [
-{
-"@id": "#41",
-"@type": [
-"raml-http:Payload",
-"doc:DomainElement"
-],
-"raml-http:mediaType": [
-{
-"@value": "application/json"
-}
-],
-"raml-http:schema": [
-{
-"@id": "#48/linked_1",
-"@type": [
-"raml-shapes:ArrayShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"doc:link-target": [
-{
-"@id": "#48"
-}
-],
-"doc:link-label": [
-{
-"@value": "amf_inline_type_1"
-}
-]
-}
-],
-"smaps": {
-"lexical": {
-"#41": "[(12,6)-(15,0)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"raml-http:payload": "[(11,4)-(15,0)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"#46": "[(10,2)-(15,0)]"
-}
-}
-},
-{
-"@id": "#49",
-"@type": [
-"hydra:Operation",
-"doc:DomainElement"
-],
-"hydra:method": [
-{
-"@value": "get"
-}
-],
-"schema-org:name": [
-{
-"@value": "Get organizations"
-}
-],
-"hydra:returns": [
-{
-"@id": "#50",
-"@type": [
-"raml-http:Response",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "200"
-}
-],
-"hydra:statusCode": [
-{
-"@value": "200"
-}
-],
-"raml-http:payload": [
-{
-"@id": "#40",
-"@type": [
-"raml-http:Payload",
-"doc:DomainElement"
-],
-"raml-http:mediaType": [
-{
-"@value": "application/json"
-}
-],
-"raml-http:schema": [
-{
-"@id": "#51/linked_1",
-"@type": [
-"raml-shapes:ArrayShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"doc:link-target": [
-{
-"@id": "#51"
-}
-],
-"doc:link-label": [
-{
-"@value": "amf_inline_type_2"
-}
-]
-}
-],
-"smaps": {
-"lexical": {
-"#40": "[(20,10)-(24,0)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"raml-http:payload": "[(19,8)-(24,0)]",
-"#50": "[(18,6)-(24,0)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"hydra:returns": "[(17,4)-(24,0)]",
-"#49": "[(15,2)-(24,0)]",
-"schema-org:name": "[(16,4)-(17,0)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"#45": "[(9,0)-(37,3)]"
-}
-}
-},
-{
-"@id": "#52",
-"@type": [
-"raml-http:EndPoint",
-"doc:DomainElement"
-],
-"raml-http:path": [
-{
-"@value": "/organizations/{organization_id}"
-}
-],
-"hydra:supportedOperation": [
-{
-"@id": "#53",
-"@type": [
-"hydra:Operation",
-"doc:DomainElement"
-],
-"hydra:method": [
-{
-"@value": "get"
-}
-],
-"schema-org:name": [
-{
-"@value": "Get organizations by organization ID"
-}
-],
-"hydra:expects": [
-{
-"@id": "#55",
-"@type": [
-"raml-http:Request",
-"doc:DomainElement"
-],
-"raml-http:uriParameter": [
-{
-"@id": "#56",
-"@type": [
-"raml-http:Parameter",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "organization_id"
-}
-],
-"raml-http:paramName": [
-{
-"@value": "organization_id"
-}
-],
-"schema-org:description": [
-{
-"@value": "The organization's specific ID"
-}
-],
-"hydra:required": [
-{
-"@value": true
-}
-],
-"raml-http:binding": [
-{
-"@value": "path"
-}
-],
-"raml-http:schema": [
-{
-"@id": "#57",
-"@type": [
-"raml-shapes:ScalarShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:datatype": [
-{
-"@id": "http://a.ml/vocabularies/shapes#number"
-}
-],
-"shacl:name": [
-{
-"@value": "schema"
-}
-],
-"schema-org:description": [
-{
-"@value": "The organization's specific ID"
-}
-],
-"smaps": {
-"type-property-lexical-info": {
-"#57": "[(27,8)-(27,12)]"
-},
-"lexical": {
-"schema-org:description": "[(28,8)-(29,0)]",
-"#57": "[(26,6)-(29,0)]",
-"shacl:datatype": "[(27,8)-(28,0)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"schema-org:description": "[(28,8)-(29,0)]",
-"#56": "[(26,6)-(29,0)]"
-}
-}
-}
-]
-}
-],
-"hydra:returns": [
-{
-"@id": "#54",
-"@type": [
-"raml-http:Response",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "200"
-}
-],
-"hydra:statusCode": [
-{
-"@value": "200"
-}
-],
-"raml-http:payload": [
-{
-"@id": "#9",
-"@type": [
-"raml-http:Payload",
-"doc:DomainElement"
-],
-"raml-http:mediaType": [
-{
-"@value": "application/json"
-}
-],
-"raml-http:schema": [
-{
-"@id": "#43/linked_1",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"doc:link-target": [
-{
-"@id": "#43"
-}
-],
-"doc:link-label": [
-{
-"@value": "Organization"
-}
-]
-}
-],
-"smaps": {
-"lexical": {
-"#9": "[(34,12)-(37,3)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"raml-http:payload": "[(33,10)-(37,3)]",
-"#54": "[(32,8)-(37,3)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"hydra:returns": "[(31,6)-(37,3)]",
-"#53": "[(29,4)-(37,3)]",
-"schema-org:name": "[(30,6)-(31,0)]"
-}
-}
-}
-],
-"smaps": {
-"parent-end-point": {
-"#52": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations"
-},
-"lexical": {
-"#52": "[(24,2)-(37,3)]"
-}
-}
-}
-],
-"smaps": {
-"source-vendor": {
-"#44": "RAML 1.0"
-},
-"lexical": {
-"schema-org:name": "[(3,0)-(6,0)]",
-"#44": "[(3,0)-(37,3)]"
-}
-}
-}
-],
-"doc:references": [
-{
-"@id": "#1",
-"@type": [
-"doc:NamedExample",
-"doc:Fragment",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#2",
-"@type": [
-"doc:Example",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "value"
-}
-],
-"doc:strict": [
-{
-"@value": true
-}
-],
-"doc:structuredValue": [
-{
-"@id": "#3",
-"@type": [
-"data:Object"
-],
-"data:alternate_id": [
-{
-"@id": "#4",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "1",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#4": "[(3,18)-(3,19)]"
-}
-}
-}
-],
-"data:category": [
-{
-"@id": "#5",
-"@type": [
-"data:Object"
-],
-"data:id": [
-{
-"@id": "#6",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "39691",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#6": "[(5,10)-(5,15)]"
-}
-}
-}
-],
-"data:name": [
-{
-"@id": "#7",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Religious and Spiritual",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#7": "[(6,12)-(6,35)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#5": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
-},
-"lexical": {
-"data:name": "[(6,12)-(6,35)]",
-"#5": "[(5,0)-(7,0)]",
-"data:id": "[(5,10)-(5,15)]"
-}
-}
-}
-],
-"data:created_at": [
-{
-"@id": "#8",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "2013-01-02T22:21:34Z",
-"@type": "xsd:dateTime"
-}
-],
-"smaps": {
-"lexical": {
-"#8": "[(7,16)-(7,36)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"data:created_at": "[(7,16)-(7,36)]",
-"data:alternate_id": "[(3,18)-(3,19)]",
-"#3": "[(3,0)-(9,0)]",
-"data:category": "[(5,0)-(7,0)]"
-},
-"data-node-properties": {
-"data:category": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]",
-"#3": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
-}
-}
-}
-],
-"shacl:raw": [
-{
-"@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
-}
-],
-"smaps": {
-"synthesized-field": {
-"doc:strict": "true"
-},
-"resolved-link": {
-"#2": "amf://id#10"
-},
-"lexical": {
-"shacl:raw": "[(3,0)-(9,0)]",
-"#2": "[(2,0)-(9,0)]",
-"schema-org:name": "[(2,0)-(9,0)]"
-},
-"source-vendor": {
-"#2": "RAML 1.0"
-},
-"local-element": {
-"#2": ""
-},
-"tracked-element": {
-"#2": "amf://id#9"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"#1": "[(2,0)-(9,0)]"
-}
-}
-},
-{
-"@id": "#11",
-"@type": [
-"doc:DataType",
-"doc:Fragment",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#12",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:closed": [
-{
-"@value": false
-}
-],
-"shacl:property": [
-{
-"@id": "#13",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#alternate_id"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#14",
-"@type": [
-"raml-shapes:UnionShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"raml-shapes:anyOf": [
-{
-"@id": "#15",
-"@type": [
-"raml-shapes:ScalarShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:datatype": [
-{
-"@id": "http://a.ml/vocabularies/shapes#number"
-}
-]
-},
-{
-"@id": "#16",
-"@type": [
-"raml-shapes:NilShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-]
-}
-],
-"shacl:name": [
-{
-"@value": "alternate_id?"
-}
-],
-"schema-org:description": [
-{
-"@value": "The alternate ID of the organization"
-}
-],
-"smaps": {
-"inherited-shapes": {
-"#14": "amf://id#17"
-},
-"lexical": {
-"schema-org:description": "[(6,4)-(7,0)]",
-"#14": "[(4,16)-(7,0)]"
-},
-"type-property-lexical-info": {
-"#14": "[(5,4)-(5,8)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 0
-}
-],
-"shacl:name": [
-{
-"@value": "alternate_id"
-}
-],
-"smaps": {
-"lexical": {
-"#13": "[(4,2)-(7,0)]"
-}
-}
-},
-{
-"@id": "#18",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#category"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#19",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:closed": [
-{
-"@value": false
-}
-],
-"shacl:property": [
-{
-"@id": "#20",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#id"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#21",
-"@type": [
-"raml-shapes:ScalarShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:datatype": [
-{
-"@id": "http://a.ml/vocabularies/shapes#number"
-}
-],
-"shacl:name": [
-{
-"@value": "id"
-}
-],
-"schema-org:description": [
-{
-"@value": "ID of the category"
-}
-],
-"smaps": {
-"type-property-lexical-info": {
-"#21": "[(12,8)-(12,12)]"
-},
-"lexical": {
-"schema-org:description": "[(13,8)-(14,0)]",
-"#21": "[(11,6)-(14,0)]",
-"shacl:datatype": "[(12,8)-(13,0)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "id"
-}
-],
-"smaps": {
-"lexical": {
-"#20": "[(11,6)-(14,0)]"
-}
-}
-},
-{
-"@id": "#22",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#name"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#23",
-"@type": [
-"raml-shapes:ScalarShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-],
-"shacl:name": [
-{
-"@value": "name"
-}
-],
-"schema-org:description": [
-{
-"@value": "The name of the category"
-}
-],
-"smaps": {
-"type-property-lexical-info": {
-"#23": "[(15,8)-(15,12)]"
-},
-"lexical": {
-"schema-org:description": "[(16,8)-(17,0)]",
-"#23": "[(14,6)-(17,0)]",
-"shacl:datatype": "[(15,8)-(16,0)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "name"
-}
-],
-"smaps": {
-"lexical": {
-"#22": "[(14,6)-(17,0)]"
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "category"
-}
-],
-"schema-org:description": [
-{
-"@value": "Contains the ID and name of the category the organization is in"
-}
-],
-"smaps": {
-"type-property-lexical-info": {
-"#19": "[(9,4)-(9,8)]"
-},
-"lexical": {
-"schema-org:description": "[(8,4)-(9,0)]",
-"#19": "[(7,2)-(17,0)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "category"
-}
-],
-"smaps": {
-"lexical": {
-"#18": "[(7,2)-(17,0)]"
-}
-}
-},
-{
-"@id": "#24",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#created_at"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#25",
-"@type": [
-"raml-shapes:ScalarShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#dateTime"
-}
-],
-"shacl:name": [
-{
-"@value": "created_at"
-}
-],
-"schema-org:description": [
-{
-"@value": "The date of creation of the organization"
-}
-],
-"smaps": {
-"type-property-lexical-info": {
-"#25": "[(18,4)-(18,8)]"
-},
-"lexical": {
-"schema-org:description": "[(19,4)-(20,0)]",
-"#25": "[(17,2)-(20,0)]",
-"shacl:datatype": "[(18,4)-(19,0)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "created_at"
-}
-],
-"smaps": {
-"lexical": {
-"#24": "[(17,2)-(20,0)]"
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "type"
-}
-],
-"smaps": {
-"source-vendor": {
-"#12": "RAML 1.0"
-},
-"lexical": {
-"#12": "[(2,0)-(20,0)]"
-},
-"type-property-lexical-info": {
-"#12": "[(2,0)-(2,4)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"#11": "[(2,0)-(20,0)]"
-}
-}
-},
-{
-"@id": "#26",
-"@type": [
-"doc:NamedExample",
-"doc:Fragment",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#27",
-"@type": [
-"doc:Example",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "value"
-}
-],
-"doc:strict": [
-{
-"@value": true
-}
-],
-"doc:structuredValue": [
-{
-"@id": "#28",
-"@type": [
-"data:Array",
-"rdf:Seq"
-],
-"rdf:member": [
-{
-"@id": "#29",
-"@type": [
-"data:Object"
-],
-"data:category": [
-{
-"@id": "#30",
-"@type": [
-"data:Object"
-],
-"data:id": [
-{
-"@id": "#31",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "39691",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#31": "[(6,10)-(6,15)]"
-}
-}
-}
-],
-"data:name": [
-{
-"@id": "#32",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Religious and Spiritual",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#32": "[(7,12)-(7,35)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#30": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
-},
-"lexical": {
-"data:name": "[(7,12)-(7,35)]",
-"#29": "[(6,0)-(8,0)]",
-"data:id": "[(6,10)-(6,15)]"
-}
-}
-}
-],
-"data:created_at": [
-{
-"@id": "#33",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "2013-01-02T22:21:34Z",
-"@type": "xsd:dateTime"
-}
-],
-"smaps": {
-"lexical": {
-"#33": "[(8,16)-(8,36)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"data:category": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]",
-"#28": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
-},
-"lexical": {
-"data:created_at": "[(8,16)-(8,36)]",
-"#28": "[(5,0)-(10,0)]",
-"data:category": "[(6,0)-(8,0)]"
-}
-}
-},
-{
-"@id": "#34",
-"@type": [
-"data:Object"
-],
-"data:category": [
-{
-"@id": "#35",
-"@type": [
-"data:Object"
-],
-"data:id": [
-{
-"@id": "#36",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "61111",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#36": "[(12,10)-(12,15)]"
-}
-}
-}
-],
-"data:name": [
-{
-"@id": "#37",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Service",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#37": "[(13,12)-(13,19)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#35": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
-},
-"lexical": {
-"data:name": "[(13,12)-(13,19)]",
-"#34": "[(12,0)-(14,0)]",
-"data:id": "[(12,10)-(12,15)]"
-}
-}
-}
-],
-"data:created_at": [
-{
-"@id": "#38",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "2016-02-01T16:37:02Z",
-"@type": "xsd:dateTime"
-}
-],
-"smaps": {
-"lexical": {
-"#38": "[(14,16)-(14,36)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"data:category": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]",
-"#33": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
-},
-"lexical": {
-"data:created_at": "[(14,16)-(14,36)]",
-"#33": "[(11,0)-(15,3)]",
-"data:category": "[(12,0)-(14,0)]"
-}
-}
-}
-],
-"data:pos0": [
-{
-"@id": "#29"
-}
-],
-"data:pos1": [
-{
-"@id": "#34"
-}
-],
-"smaps": {
-"lexical": {
-"#28": "[(3,0)-(15,3)]"
-}
-}
-}
-],
-"shacl:raw": [
-{
-"@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
-}
-],
-"smaps": {
-"synthesized-field": {
-"doc:strict": "true"
-},
-"resolved-link": {
-"#27": "amf://id#42"
-},
-"lexical": {
-"shacl:raw": "[(3,0)-(15,3)]",
-"#27": "[(2,0)-(15,3)]",
-"schema-org:name": "[(2,0)-(15,3)]"
-},
-"source-vendor": {
-"#27": "RAML 1.0"
-},
-"local-element": {
-"#27": ""
-},
-"tracked-element": {
-"#27": "amf://id#40,amf://id#41"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"#26": "[(2,0)-(15,3)]"
-}
-}
-}
-],
-"doc:declares": [
-{
-"@id": "#43",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:closed": [
-{
-"@value": false
-}
-],
-"shacl:property": [
-{
-"@id": "#13",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#alternate_id"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#14",
-"@type": [
-"raml-shapes:UnionShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"raml-shapes:anyOf": [
-{
-"@id": "#15",
-"@type": [
-"raml-shapes:ScalarShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:datatype": [
-{
-"@id": "http://a.ml/vocabularies/shapes#number"
-}
-]
-},
-{
-"@id": "#16",
-"@type": [
-"raml-shapes:NilShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-]
-}
-],
-"shacl:name": [
-{
-"@value": "alternate_id?"
-}
-],
-"schema-org:description": [
-{
-"@value": "The alternate ID of the organization"
-}
-],
-"smaps": {
-"inherited-shapes": {
-"#14": "amf://id#17"
-},
-"lexical": {
-"schema-org:description": "[(6,4)-(7,0)]",
-"#14": "[(4,16)-(7,0)]"
-},
-"type-property-lexical-info": {
-"#14": "[(5,4)-(5,8)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 0
-}
-],
-"shacl:name": [
-{
-"@value": "alternate_id"
-}
-],
-"smaps": {
-"lexical": {
-"#13": "[(4,2)-(7,0)]"
-}
-}
-},
-{
-"@id": "#18",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#category"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#19",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:closed": [
-{
-"@value": false
-}
-],
-"shacl:property": [
-{
-"@id": "#20",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#id"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#21",
-"@type": [
-"raml-shapes:ScalarShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:datatype": [
-{
-"@id": "http://a.ml/vocabularies/shapes#number"
-}
-],
-"shacl:name": [
-{
-"@value": "id"
-}
-],
-"schema-org:description": [
-{
-"@value": "ID of the category"
-}
-],
-"smaps": {
-"type-property-lexical-info": {
-"#21": "[(12,8)-(12,12)]"
-},
-"lexical": {
-"schema-org:description": "[(13,8)-(14,0)]",
-"#21": "[(11,6)-(14,0)]",
-"shacl:datatype": "[(12,8)-(13,0)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "id"
-}
-],
-"smaps": {
-"lexical": {
-"#20": "[(11,6)-(14,0)]"
-}
-}
-},
-{
-"@id": "#22",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#name"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#23",
-"@type": [
-"raml-shapes:ScalarShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#string"
-}
-],
-"shacl:name": [
-{
-"@value": "name"
-}
-],
-"schema-org:description": [
-{
-"@value": "The name of the category"
-}
-],
-"smaps": {
-"type-property-lexical-info": {
-"#23": "[(15,8)-(15,12)]"
-},
-"lexical": {
-"schema-org:description": "[(16,8)-(17,0)]",
-"#23": "[(14,6)-(17,0)]",
-"shacl:datatype": "[(15,8)-(16,0)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "name"
-}
-],
-"smaps": {
-"lexical": {
-"#22": "[(14,6)-(17,0)]"
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "category"
-}
-],
-"schema-org:description": [
-{
-"@value": "Contains the ID and name of the category the organization is in"
-}
-],
-"smaps": {
-"type-property-lexical-info": {
-"#19": "[(9,4)-(9,8)]"
-},
-"lexical": {
-"schema-org:description": "[(8,4)-(9,0)]",
-"#19": "[(7,2)-(17,0)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "category"
-}
-],
-"smaps": {
-"lexical": {
-"#18": "[(7,2)-(17,0)]"
-}
-}
-},
-{
-"@id": "#24",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#created_at"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#25",
-"@type": [
-"raml-shapes:ScalarShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:datatype": [
-{
-"@id": "http://www.w3.org/2001/XMLSchema#dateTime"
-}
-],
-"shacl:name": [
-{
-"@value": "created_at"
-}
-],
-"schema-org:description": [
-{
-"@value": "The date of creation of the organization"
-}
-],
-"smaps": {
-"type-property-lexical-info": {
-"#25": "[(18,4)-(18,8)]"
-},
-"lexical": {
-"schema-org:description": "[(19,4)-(20,0)]",
-"#25": "[(17,2)-(20,0)]",
-"shacl:datatype": "[(18,4)-(19,0)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "created_at"
-}
-],
-"smaps": {
-"lexical": {
-"#24": "[(17,2)-(20,0)]"
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "Organization"
-}
-],
-"doc:examples": [
-{
-"@id": "#2",
-"@type": [
-"doc:Example",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "value"
-}
-],
-"doc:strict": [
-{
-"@value": true
-}
-],
-"doc:structuredValue": [
-{
-"@id": "#3",
-"@type": [
-"data:Object"
-],
-"data:alternate_id": [
-{
-"@id": "#4",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "1",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#4": "[(3,18)-(3,19)]"
-}
-}
-}
-],
-"data:category": [
-{
-"@id": "#5",
-"@type": [
-"data:Object"
-],
-"data:id": [
-{
-"@id": "#6",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "39691",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#6": "[(5,10)-(5,15)]"
-}
-}
-}
-],
-"data:name": [
-{
-"@id": "#7",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Religious and Spiritual",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#7": "[(6,12)-(6,35)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#5": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
-},
-"lexical": {
-"data:name": "[(6,12)-(6,35)]",
-"#5": "[(5,0)-(7,0)]",
-"data:id": "[(5,10)-(5,15)]"
-}
-}
-}
-],
-"data:created_at": [
-{
-"@id": "#8",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "2013-01-02T22:21:34Z",
-"@type": "xsd:dateTime"
-}
-],
-"smaps": {
-"lexical": {
-"#8": "[(7,16)-(7,36)]"
-}
-}
-}
-],
-"smaps": {
-"lexical": {
-"data:created_at": "[(7,16)-(7,36)]",
-"data:alternate_id": "[(3,18)-(3,19)]",
-"#3": "[(3,0)-(9,0)]",
-"data:category": "[(5,0)-(7,0)]"
-},
-"data-node-properties": {
-"data:category": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]",
-"#3": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
-}
-}
-}
-],
-"shacl:raw": [
-{
-"@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
-}
-],
-"smaps": {
-"synthesized-field": {
-"doc:strict": "true"
-},
-"resolved-link": {
-"#2": "amf://id#10"
-},
-"lexical": {
-"shacl:raw": "[(3,0)-(9,0)]",
-"#2": "[(2,0)-(9,0)]",
-"schema-org:name": "[(2,0)-(9,0)]"
-},
-"source-vendor": {
-"#2": "RAML 1.0"
-},
-"local-element": {
-"#2": ""
-},
-"tracked-element": {
-"#2": "amf://id#9"
-}
-}
-}
-],
-"smaps": {
-"declared-element": {
-"#43": ""
-},
-"source-vendor": {
-"#43": "RAML 1.0"
-},
-"lexical": {
-"#43": "[(2,0)-(20,0)]"
-},
-"type-property-lexical-info": {
-"#43": "[(2,0)-(2,4)]"
-},
-"resolved-link": {
-"#43": "amf://id#43"
-}
-}
-},
-{
-"@id": "#48",
-"@type": [
-"raml-shapes:ArrayShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"raml-shapes:items": [
-{
-"@id": "#43/linked_2",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"doc:link-target": [
-{
-"@id": "#43"
-}
-],
-"doc:link-label": [
-{
-"@value": "Organization"
-}
-]
-}
-],
-"shacl:name": [
-{
-"@value": "amf_inline_type_1"
-}
-],
-"doc:examples": [
-{
-"@id": "#27",
-"@type": [
-"doc:Example",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "value"
-}
-],
-"doc:strict": [
-{
-"@value": true
-}
-],
-"doc:structuredValue": [
-{
-"@id": "#28",
-"@type": [
-"data:Array",
-"rdf:Seq"
-],
-"rdf:member": [
-{
-"@id": "#29",
-"@type": [
-"data:Object"
-],
-"data:category": [
-{
-"@id": "#30",
-"@type": [
-"data:Object"
-],
-"data:id": [
-{
-"@id": "#31",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "39691",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#31": "[(6,10)-(6,15)]"
-}
-}
-}
-],
-"data:name": [
-{
-"@id": "#32",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Religious and Spiritual",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#32": "[(7,12)-(7,35)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#30": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
-},
-"lexical": {
-"data:name": "[(7,12)-(7,35)]",
-"#29": "[(6,0)-(8,0)]",
-"data:id": "[(6,10)-(6,15)]"
-}
-}
-}
-],
-"data:created_at": [
-{
-"@id": "#33",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "2013-01-02T22:21:34Z",
-"@type": "xsd:dateTime"
-}
-],
-"smaps": {
-"lexical": {
-"#33": "[(8,16)-(8,36)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"data:category": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]",
-"#28": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
-},
-"lexical": {
-"data:created_at": "[(8,16)-(8,36)]",
-"#28": "[(5,0)-(10,0)]",
-"data:category": "[(6,0)-(8,0)]"
-}
-}
-},
-{
-"@id": "#34",
-"@type": [
-"data:Object"
-],
-"data:category": [
-{
-"@id": "#35",
-"@type": [
-"data:Object"
-],
-"data:id": [
-{
-"@id": "#36",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "61111",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#36": "[(12,10)-(12,15)]"
-}
-}
-}
-],
-"data:name": [
-{
-"@id": "#37",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Service",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#37": "[(13,12)-(13,19)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#35": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
-},
-"lexical": {
-"data:name": "[(13,12)-(13,19)]",
-"#34": "[(12,0)-(14,0)]",
-"data:id": "[(12,10)-(12,15)]"
-}
-}
-}
-],
-"data:created_at": [
-{
-"@id": "#38",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "2016-02-01T16:37:02Z",
-"@type": "xsd:dateTime"
-}
-],
-"smaps": {
-"lexical": {
-"#38": "[(14,16)-(14,36)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"data:category": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]",
-"#33": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
-},
-"lexical": {
-"data:created_at": "[(14,16)-(14,36)]",
-"#33": "[(11,0)-(15,3)]",
-"data:category": "[(12,0)-(14,0)]"
-}
-}
-}
-],
-"data:pos0": [
-{
-"@id": "#29"
-}
-],
-"data:pos1": [
-{
-"@id": "#34"
-}
-],
-"smaps": {
-"lexical": {
-"#28": "[(3,0)-(15,3)]"
-}
-}
-}
-],
-"shacl:raw": [
-{
-"@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
-}
-],
-"smaps": {
-"synthesized-field": {
-"doc:strict": "true"
-},
-"resolved-link": {
-"#27": "amf://id#42"
-},
-"lexical": {
-"shacl:raw": "[(3,0)-(15,3)]",
-"#27": "[(2,0)-(15,3)]",
-"schema-org:name": "[(2,0)-(15,3)]"
-},
-"source-vendor": {
-"#27": "RAML 1.0"
-},
-"local-element": {
-"#27": ""
-},
-"tracked-element": {
-"#27": "amf://id#40,amf://id#41"
-}
-}
-}
-],
-"smaps": {
-"inline-element": {
-"#48": ""
-},
-"lexical": {
-"#48": "[(13,8)-(14,0)]"
-}
-}
-},
-{
-"@id": "#51",
-"@type": [
-"raml-shapes:ArrayShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"raml-shapes:items": [
-{
-"@id": "#43/linked_3",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"doc:link-target": [
-{
-"@id": "#43"
-}
-],
-"doc:link-label": [
-{
-"@value": "Organization"
-}
-]
-}
-],
-"shacl:name": [
-{
-"@value": "amf_inline_type_2"
-}
-],
-"doc:examples": [
-{
-"@id": "#27",
-"@type": [
-"doc:Example",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "value"
-}
-],
-"doc:strict": [
-{
-"@value": true
-}
-],
-"doc:structuredValue": [
-{
-"@id": "#28",
-"@type": [
-"data:Array",
-"rdf:Seq"
-],
-"rdf:member": [
-{
-"@id": "#29",
-"@type": [
-"data:Object"
-],
-"data:category": [
-{
-"@id": "#30",
-"@type": [
-"data:Object"
-],
-"data:id": [
-{
-"@id": "#31",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "39691",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#31": "[(6,10)-(6,15)]"
-}
-}
-}
-],
-"data:name": [
-{
-"@id": "#32",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Religious and Spiritual",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#32": "[(7,12)-(7,35)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#30": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
-},
-"lexical": {
-"data:name": "[(7,12)-(7,35)]",
-"#29": "[(6,0)-(8,0)]",
-"data:id": "[(6,10)-(6,15)]"
-}
-}
-}
-],
-"data:created_at": [
-{
-"@id": "#33",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "2013-01-02T22:21:34Z",
-"@type": "xsd:dateTime"
-}
-],
-"smaps": {
-"lexical": {
-"#33": "[(8,16)-(8,36)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"data:category": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]",
-"#28": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
-},
-"lexical": {
-"data:created_at": "[(8,16)-(8,36)]",
-"#28": "[(5,0)-(10,0)]",
-"data:category": "[(6,0)-(8,0)]"
-}
-}
-},
-{
-"@id": "#34",
-"@type": [
-"data:Object"
-],
-"data:category": [
-{
-"@id": "#35",
-"@type": [
-"data:Object"
-],
-"data:id": [
-{
-"@id": "#36",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "61111",
-"@type": "xsd:integer"
-}
-],
-"smaps": {
-"lexical": {
-"#36": "[(12,10)-(12,15)]"
-}
-}
-}
-],
-"data:name": [
-{
-"@id": "#37",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "Service",
-"@type": "xsd:string"
-}
-],
-"smaps": {
-"lexical": {
-"#37": "[(13,12)-(13,19)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"#35": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
-},
-"lexical": {
-"data:name": "[(13,12)-(13,19)]",
-"#34": "[(12,0)-(14,0)]",
-"data:id": "[(12,10)-(12,15)]"
-}
-}
-}
-],
-"data:created_at": [
-{
-"@id": "#38",
-"@type": [
-"data:Scalar"
-],
-"data:value": [
-{
-"@value": "2016-02-01T16:37:02Z",
-"@type": "xsd:dateTime"
-}
-],
-"smaps": {
-"lexical": {
-"#38": "[(14,16)-(14,36)]"
-}
-}
-}
-],
-"smaps": {
-"data-node-properties": {
-"data:category": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]",
-"#33": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
-},
-"lexical": {
-"data:created_at": "[(14,16)-(14,36)]",
-"#33": "[(11,0)-(15,3)]",
-"data:category": "[(12,0)-(14,0)]"
-}
-}
-}
-],
-"data:pos0": [
-{
-"@id": "#29"
-}
-],
-"data:pos1": [
-{
-"@id": "#34"
-}
-],
-"smaps": {
-"lexical": {
-"#28": "[(3,0)-(15,3)]"
-}
-}
-}
-],
-"shacl:raw": [
-{
-"@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
-}
-],
-"smaps": {
-"synthesized-field": {
-"doc:strict": "true"
-},
-"resolved-link": {
-"#27": "amf://id#42"
-},
-"lexical": {
-"shacl:raw": "[(3,0)-(15,3)]",
-"#27": "[(2,0)-(15,3)]",
-"schema-org:name": "[(2,0)-(15,3)]"
-},
-"source-vendor": {
-"#27": "RAML 1.0"
-},
-"local-element": {
-"#27": ""
-},
-"tracked-element": {
-"#27": "amf://id#40,amf://id#41"
-}
-}
-}
-],
-"smaps": {
-"inline-element": {
-"#51": ""
-},
-"lexical": {
-"#51": "[(21,12)-(22,0)]"
-}
-}
-}
-],
-"@context": {
-"@base": "amf://id",
-"raml-http": "http://a.ml/vocabularies/http#",
-"shacl": "http://www.w3.org/ns/shacl#",
-"raml-shapes": "http://a.ml/vocabularies/shapes#",
-"data": "http://a.ml/vocabularies/data#",
-"doc": "http://a.ml/vocabularies/document#",
-"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-"schema-org": "http://schema.org/",
-"xsd": "http://www.w3.org/2001/XMLSchema#",
-"hydra": "http://www.w3.org/ns/hydra/core#"
-}
-}
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#44",
+        "@type": [
+          "schema-org:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "test"
+          }
+        ],
+        "raml-http:endpoint": [
+          {
+            "@id": "#45",
+            "@type": [
+              "raml-http:EndPoint",
+              "doc:DomainElement"
+            ],
+            "raml-http:path": [
+              {
+                "@value": "/organizations"
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@id": "#46",
+                "@type": [
+                  "hydra:Operation",
+                  "doc:DomainElement"
+                ],
+                "hydra:method": [
+                  {
+                    "@value": "put"
+                  }
+                ],
+                "hydra:expects": [
+                  {
+                    "@id": "#47",
+                    "@type": [
+                      "raml-http:Request",
+                      "doc:DomainElement"
+                    ],
+                    "raml-http:payload": [
+                      {
+                        "@id": "#41",
+                        "@type": [
+                          "raml-http:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-http:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-http:schema": [
+                          {
+                            "@id": "#48/linked_1",
+                            "@type": [
+                              "raml-shapes:ArrayShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#48"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "amf_inline_type_1"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#41": "[(12,6)-(15,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "raml-http:payload": "[(11,4)-(15,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#46": "[(10,2)-(15,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "#49",
+                "@type": [
+                  "hydra:Operation",
+                  "doc:DomainElement"
+                ],
+                "hydra:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "Get organizations"
+                  }
+                ],
+                "hydra:returns": [
+                  {
+                    "@id": "#50",
+                    "@type": [
+                      "raml-http:Response",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "hydra:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "raml-http:payload": [
+                      {
+                        "@id": "#40",
+                        "@type": [
+                          "raml-http:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-http:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-http:schema": [
+                          {
+                            "@id": "#51/linked_1",
+                            "@type": [
+                              "raml-shapes:ArrayShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#51"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "amf_inline_type_2"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#40": "[(20,10)-(24,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "raml-http:payload": "[(19,8)-(24,0)]",
+                        "#50": "[(18,6)-(24,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "hydra:returns": "[(17,4)-(24,0)]",
+                    "#49": "[(15,2)-(24,0)]",
+                    "schema-org:name": "[(16,4)-(17,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#45": "[(9,0)-(37,3)]"
+              }
+            }
+          },
+          {
+            "@id": "#52",
+            "@type": [
+              "raml-http:EndPoint",
+              "doc:DomainElement"
+            ],
+            "raml-http:path": [
+              {
+                "@value": "/organizations/{organization_id}"
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@id": "#53",
+                "@type": [
+                  "hydra:Operation",
+                  "doc:DomainElement"
+                ],
+                "hydra:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "Get organizations by organization ID"
+                  }
+                ],
+                "hydra:expects": [
+                  {
+                    "@id": "#55",
+                    "@type": [
+                      "raml-http:Request",
+                      "doc:DomainElement"
+                    ],
+                    "raml-http:uriParameter": [
+                      {
+                        "@id": "#56",
+                        "@type": [
+                          "raml-http:Parameter",
+                          "doc:DomainElement"
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "organization_id"
+                          }
+                        ],
+                        "raml-http:paramName": [
+                          {
+                            "@value": "organization_id"
+                          }
+                        ],
+                        "schema-org:description": [
+                          {
+                            "@value": "The organization's specific ID"
+                          }
+                        ],
+                        "hydra:required": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "raml-http:binding": [
+                          {
+                            "@value": "path"
+                          }
+                        ],
+                        "raml-http:schema": [
+                          {
+                            "@id": "#57",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://a.ml/vocabularies/shapes#number"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "schema-org:description": [
+                              {
+                                "@value": "The organization's specific ID"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "#57": "[(27,8)-(27,12)]"
+                              },
+                              "lexical": {
+                                "schema-org:description": "[(28,8)-(29,0)]",
+                                "#57": "[(26,6)-(29,0)]",
+                                "shacl:datatype": "[(27,8)-(28,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "schema-org:description": "[(28,8)-(29,0)]",
+                            "#56": "[(26,6)-(29,0)]"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "hydra:returns": [
+                  {
+                    "@id": "#54",
+                    "@type": [
+                      "raml-http:Response",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "hydra:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "raml-http:payload": [
+                      {
+                        "@id": "#9",
+                        "@type": [
+                          "raml-http:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-http:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-http:schema": [
+                          {
+                            "@id": "#43/linked_1",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#43"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "Organization"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#9": "[(34,12)-(37,3)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "raml-http:payload": "[(33,10)-(37,3)]",
+                        "#54": "[(32,8)-(37,3)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "hydra:returns": "[(31,6)-(37,3)]",
+                    "#53": "[(29,4)-(37,3)]",
+                    "schema-org:name": "[(30,6)-(31,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "parent-end-point": {
+                "#52": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations"
+              },
+              "lexical": {
+                "#52": "[(24,2)-(37,3)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#44": "RAML 1.0"
+          },
+          "lexical": {
+            "schema-org:name": "[(3,0)-(6,0)]",
+            "#44": "[(3,0)-(37,3)]"
+          }
+        }
+      }
+    ],
+    "doc:references": [
+      {
+        "@id": "#1",
+        "@type": [
+          "doc:NamedExample",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#2",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:alternate_id": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "1",
+                        "@type": "xsd:integer"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#4": "[(3,18)-(3,19)]"
+                      }
+                    }
+                  }
+                ],
+                "data:category": [
+                  {
+                    "@id": "#5",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:id": [
+                      {
+                        "@id": "#6",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "39691",
+                            "@type": "xsd:integer"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#6": "[(5,10)-(5,15)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:name": [
+                      {
+                        "@id": "#7",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "Religious and Spiritual",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#7": "[(6,12)-(6,35)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "data-node-properties": {
+                        "#5": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                      },
+                      "lexical": {
+                        "#5": "[(5,0)-(7,0)]"
+                      }
+                    }
+                  }
+                ],
+                "data:created_at": [
+                  {
+                    "@id": "#8",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "2013-01-02T22:21:34Z",
+                        "@type": "xsd:dateTime"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#8": "[(7,16)-(7,36)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#3": "[(3,0)-(9,0)]"
+                  },
+                  "data-node-properties": {
+                    "#3": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "resolved-link": {
+                "#2": "amf://id#10"
+              },
+              "lexical": {
+                "shacl:raw": "[(3,0)-(9,0)]",
+                "#2": "[(2,0)-(9,0)]",
+                "schema-org:name": "[(2,0)-(9,0)]"
+              },
+              "source-vendor": {
+                "#2": "RAML 1.0"
+              },
+              "local-element": {
+                "#2": ""
+              },
+              "tracked-element": {
+                "#2": "amf://id#9"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "#1": "[(2,0)-(9,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#11",
+        "@type": [
+          "doc:DataType",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#12",
+            "@type": [
+              "shacl:NodeShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:closed": [
+              {
+                "@value": false
+              }
+            ],
+            "shacl:property": [
+              {
+                "@id": "#13",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#alternate_id"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#14",
+                    "@type": [
+                      "raml-shapes:UnionShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "raml-shapes:anyOf": [
+                      {
+                        "@id": "#15",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "#16",
+                        "@type": [
+                          "raml-shapes:NilShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ]
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "alternate_id?"
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "The alternate ID of the organization"
+                      }
+                    ],
+                    "smaps": {
+                      "inherited-shapes": {
+                        "#14": "amf://id#17"
+                      },
+                      "lexical": {
+                        "schema-org:description": "[(6,4)-(7,0)]",
+                        "#14": "[(4,16)-(7,0)]"
+                      },
+                      "type-property-lexical-info": {
+                        "#14": "[(5,4)-(5,8)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "alternate_id"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#13": "[(4,2)-(7,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "#18",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#category"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#19",
+                    "@type": [
+                      "shacl:NodeShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:closed": [
+                      {
+                        "@value": false
+                      }
+                    ],
+                    "shacl:property": [
+                      {
+                        "@id": "#20",
+                        "@type": [
+                          "shacl:PropertyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ],
+                        "shacl:path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#id"
+                          }
+                        ],
+                        "raml-shapes:range": [
+                          {
+                            "@id": "#21",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://a.ml/vocabularies/shapes#number"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "id"
+                              }
+                            ],
+                            "schema-org:description": [
+                              {
+                                "@value": "ID of the category"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "#21": "[(12,8)-(12,12)]"
+                              },
+                              "lexical": {
+                                "schema-org:description": "[(13,8)-(14,0)]",
+                                "#21": "[(11,6)-(14,0)]",
+                                "shacl:datatype": "[(12,8)-(13,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#20": "[(11,6)-(14,0)]"
+                          }
+                        }
+                      },
+                      {
+                        "@id": "#22",
+                        "@type": [
+                          "shacl:PropertyShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ],
+                        "shacl:path": [
+                          {
+                            "@id": "http://a.ml/vocabularies/data#name"
+                          }
+                        ],
+                        "raml-shapes:range": [
+                          {
+                            "@id": "#23",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "name"
+                              }
+                            ],
+                            "schema-org:description": [
+                              {
+                                "@value": "The name of the category"
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "#23": "[(15,8)-(15,12)]"
+                              },
+                              "lexical": {
+                                "schema-org:description": "[(16,8)-(17,0)]",
+                                "#23": "[(14,6)-(17,0)]",
+                                "shacl:datatype": "[(15,8)-(16,0)]"
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:minCount": [
+                          {
+                            "@value": 1
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "name"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#22": "[(14,6)-(17,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "category"
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "Contains the ID and name of the category the organization is in"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "#19": "[(9,4)-(9,8)]"
+                      },
+                      "lexical": {
+                        "schema-org:description": "[(8,4)-(9,0)]",
+                        "#19": "[(7,2)-(17,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "category"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#18": "[(7,2)-(17,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "#24",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#created_at"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#25",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "created_at"
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "The date of creation of the organization"
+                      }
+                    ],
+                    "smaps": {
+                      "type-property-lexical-info": {
+                        "#25": "[(18,4)-(18,8)]"
+                      },
+                      "lexical": {
+                        "schema-org:description": "[(19,4)-(20,0)]",
+                        "#25": "[(17,2)-(20,0)]",
+                        "shacl:datatype": "[(18,4)-(19,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "created_at"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#24": "[(17,2)-(20,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "type"
+              }
+            ],
+            "smaps": {
+              "source-vendor": {
+                "#12": "RAML 1.0"
+              },
+              "lexical": {
+                "#12": "[(2,0)-(20,0)]"
+              },
+              "type-property-lexical-info": {
+                "#12": "[(2,0)-(2,4)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "#11": "[(2,0)-(20,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#26",
+        "@type": [
+          "doc:NamedExample",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#27",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#28",
+                "@type": [
+                  "data:Array",
+                  "rdf:Seq",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "rdf:member": [
+                  {
+                    "@id": "#29",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:category": [
+                      {
+                        "@id": "#30",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:id": [
+                          {
+                            "@id": "#31",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "39691",
+                                "@type": "xsd:integer"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#31": "[(6,10)-(6,15)]"
+                              }
+                            }
+                          }
+                        ],
+                        "data:name": [
+                          {
+                            "@id": "#32",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Religious and Spiritual",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#32": "[(7,12)-(7,35)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "#30": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
+                          },
+                          "lexical": {
+                            "#30": "[(6,0)-(8,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:created_at": [
+                      {
+                        "@id": "#33",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "2013-01-02T22:21:34Z",
+                            "@type": "xsd:dateTime"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#33": "[(8,16)-(8,36)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "data-node-properties": {
+                        "#29": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
+                      },
+                      "lexical": {
+                        "#29": "[(5,0)-(10,0)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#34",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:category": [
+                      {
+                        "@id": "#35",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:id": [
+                          {
+                            "@id": "#36",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "61111",
+                                "@type": "xsd:integer"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#36": "[(12,10)-(12,15)]"
+                              }
+                            }
+                          }
+                        ],
+                        "data:name": [
+                          {
+                            "@id": "#37",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Service",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#37": "[(13,12)-(13,19)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "#35": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
+                          },
+                          "lexical": {
+                            "#35": "[(12,0)-(14,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:created_at": [
+                      {
+                        "@id": "#38",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "2016-02-01T16:37:02Z",
+                            "@type": "xsd:dateTime"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#38": "[(14,16)-(14,36)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "data-node-properties": {
+                        "#34": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
+                      },
+                      "lexical": {
+                        "#34": "[(11,0)-(15,3)]"
+                      }
+                    }
+                  }
+                ],
+                "data:pos0": [
+                  {
+                    "@id": "#29"
+                  }
+                ],
+                "data:pos1": [
+                  {
+                    "@id": "#34"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#28": "[(3,0)-(15,3)]"
+                  }
+                }
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "resolved-link": {
+                "#27": "amf://id#42"
+              },
+              "lexical": {
+                "shacl:raw": "[(3,0)-(15,3)]",
+                "#27": "[(2,0)-(15,3)]",
+                "schema-org:name": "[(2,0)-(15,3)]"
+              },
+              "source-vendor": {
+                "#27": "RAML 1.0"
+              },
+              "local-element": {
+                "#27": ""
+              },
+              "tracked-element": {
+                "#27": "amf://id#40,amf://id#41"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "#26": "[(2,0)-(15,3)]"
+          }
+        }
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#43",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#13",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#alternate_id"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#14",
+                "@type": [
+                  "raml-shapes:UnionShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "raml-shapes:anyOf": [
+                  {
+                    "@id": "#15",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://a.ml/vocabularies/shapes#number"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#16",
+                    "@type": [
+                      "raml-shapes:NilShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ]
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "alternate_id?"
+                  }
+                ],
+                "schema-org:description": [
+                  {
+                    "@value": "The alternate ID of the organization"
+                  }
+                ],
+                "smaps": {
+                  "inherited-shapes": {
+                    "#14": "amf://id#17"
+                  },
+                  "lexical": {
+                    "schema-org:description": "[(6,4)-(7,0)]",
+                    "#14": "[(4,16)-(7,0)]"
+                  },
+                  "type-property-lexical-info": {
+                    "#14": "[(5,4)-(5,8)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "alternate_id"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#13": "[(4,2)-(7,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#18",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#category"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#19",
+                "@type": [
+                  "shacl:NodeShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [
+                  {
+                    "@id": "#20",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#id"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#21",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://a.ml/vocabularies/shapes#number"
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "id"
+                          }
+                        ],
+                        "schema-org:description": [
+                          {
+                            "@value": "ID of the category"
+                          }
+                        ],
+                        "smaps": {
+                          "type-property-lexical-info": {
+                            "#21": "[(12,8)-(12,12)]"
+                          },
+                          "lexical": {
+                            "schema-org:description": "[(13,8)-(14,0)]",
+                            "#21": "[(11,6)-(14,0)]",
+                            "shacl:datatype": "[(12,8)-(13,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "id"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#20": "[(11,6)-(14,0)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#22",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#name"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#23",
+                        "@type": [
+                          "raml-shapes:ScalarShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "name"
+                          }
+                        ],
+                        "schema-org:description": [
+                          {
+                            "@value": "The name of the category"
+                          }
+                        ],
+                        "smaps": {
+                          "type-property-lexical-info": {
+                            "#23": "[(15,8)-(15,12)]"
+                          },
+                          "lexical": {
+                            "schema-org:description": "[(16,8)-(17,0)]",
+                            "#23": "[(14,6)-(17,0)]",
+                            "shacl:datatype": "[(15,8)-(16,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "name"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#22": "[(14,6)-(17,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "category"
+                  }
+                ],
+                "schema-org:description": [
+                  {
+                    "@value": "Contains the ID and name of the category the organization is in"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#19": "[(9,4)-(9,8)]"
+                  },
+                  "lexical": {
+                    "schema-org:description": "[(8,4)-(9,0)]",
+                    "#19": "[(7,2)-(17,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "category"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#18": "[(7,2)-(17,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#24",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#created_at"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#25",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#dateTime"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "created_at"
+                  }
+                ],
+                "schema-org:description": [
+                  {
+                    "@value": "The date of creation of the organization"
+                  }
+                ],
+                "smaps": {
+                  "type-property-lexical-info": {
+                    "#25": "[(18,4)-(18,8)]"
+                  },
+                  "lexical": {
+                    "schema-org:description": "[(19,4)-(20,0)]",
+                    "#25": "[(17,2)-(20,0)]",
+                    "shacl:datatype": "[(18,4)-(19,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "created_at"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#24": "[(17,2)-(20,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Organization"
+          }
+        ],
+        "doc:examples": [
+          {
+            "@id": "#2",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:alternate_id": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "1",
+                        "@type": "xsd:integer"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#4": "[(3,18)-(3,19)]"
+                      }
+                    }
+                  }
+                ],
+                "data:category": [
+                  {
+                    "@id": "#5",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:id": [
+                      {
+                        "@id": "#6",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "39691",
+                            "@type": "xsd:integer"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#6": "[(5,10)-(5,15)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:name": [
+                      {
+                        "@id": "#7",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "Religious and Spiritual",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#7": "[(6,12)-(6,35)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "data-node-properties": {
+                        "#5": "name->[(6,6)-(7,0)]#id->[(5,6)-(6,0)]"
+                      },
+                      "lexical": {
+                        "#5": "[(5,0)-(7,0)]"
+                      }
+                    }
+                  }
+                ],
+                "data:created_at": [
+                  {
+                    "@id": "#8",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "2013-01-02T22:21:34Z",
+                        "@type": "xsd:dateTime"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#8": "[(7,16)-(7,36)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#3": "[(3,0)-(9,0)]"
+                  },
+                  "data-node-properties": {
+                    "#3": "created_at->[(7,4)-(9,0)]#alternate_id->[(3,4)-(4,0)]#category->[(4,4)-(7,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "resolved-link": {
+                "#2": "amf://id#10"
+              },
+              "lexical": {
+                "shacl:raw": "[(3,0)-(9,0)]",
+                "#2": "[(2,0)-(9,0)]",
+                "schema-org:name": "[(2,0)-(9,0)]"
+              },
+              "source-vendor": {
+                "#2": "RAML 1.0"
+              },
+              "local-element": {
+                "#2": ""
+              },
+              "tracked-element": {
+                "#2": "amf://id#9"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#43": ""
+          },
+          "source-vendor": {
+            "#43": "RAML 1.0"
+          },
+          "lexical": {
+            "#43": "[(2,0)-(20,0)]"
+          },
+          "type-property-lexical-info": {
+            "#43": "[(2,0)-(2,4)]"
+          },
+          "resolved-link": {
+            "#43": "amf://id#43"
+          }
+        }
+      },
+      {
+        "@id": "#48",
+        "@type": [
+          "raml-shapes:ArrayShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "raml-shapes:items": [
+          {
+            "@id": "#43/linked_2",
+            "@type": [
+              "shacl:NodeShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "doc:link-target": [
+              {
+                "@id": "#43"
+              }
+            ],
+            "doc:link-label": [
+              {
+                "@value": "Organization"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "amf_inline_type_1"
+          }
+        ],
+        "doc:examples": [
+          {
+            "@id": "#27",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#28",
+                "@type": [
+                  "data:Array",
+                  "rdf:Seq",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "rdf:member": [
+                  {
+                    "@id": "#29",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:category": [
+                      {
+                        "@id": "#30",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:id": [
+                          {
+                            "@id": "#31",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "39691",
+                                "@type": "xsd:integer"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#31": "[(6,10)-(6,15)]"
+                              }
+                            }
+                          }
+                        ],
+                        "data:name": [
+                          {
+                            "@id": "#32",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Religious and Spiritual",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#32": "[(7,12)-(7,35)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "#30": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
+                          },
+                          "lexical": {
+                            "#30": "[(6,0)-(8,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:created_at": [
+                      {
+                        "@id": "#33",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "2013-01-02T22:21:34Z",
+                            "@type": "xsd:dateTime"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#33": "[(8,16)-(8,36)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "data-node-properties": {
+                        "#29": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
+                      },
+                      "lexical": {
+                        "#29": "[(5,0)-(10,0)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#34",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:category": [
+                      {
+                        "@id": "#35",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:id": [
+                          {
+                            "@id": "#36",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "61111",
+                                "@type": "xsd:integer"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#36": "[(12,10)-(12,15)]"
+                              }
+                            }
+                          }
+                        ],
+                        "data:name": [
+                          {
+                            "@id": "#37",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Service",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#37": "[(13,12)-(13,19)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "#35": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
+                          },
+                          "lexical": {
+                            "#35": "[(12,0)-(14,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:created_at": [
+                      {
+                        "@id": "#38",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "2016-02-01T16:37:02Z",
+                            "@type": "xsd:dateTime"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#38": "[(14,16)-(14,36)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "data-node-properties": {
+                        "#34": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
+                      },
+                      "lexical": {
+                        "#34": "[(11,0)-(15,3)]"
+                      }
+                    }
+                  }
+                ],
+                "data:pos0": [
+                  {
+                    "@id": "#29"
+                  }
+                ],
+                "data:pos1": [
+                  {
+                    "@id": "#34"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#28": "[(3,0)-(15,3)]"
+                  }
+                }
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "resolved-link": {
+                "#27": "amf://id#42"
+              },
+              "lexical": {
+                "shacl:raw": "[(3,0)-(15,3)]",
+                "#27": "[(2,0)-(15,3)]",
+                "schema-org:name": "[(2,0)-(15,3)]"
+              },
+              "source-vendor": {
+                "#27": "RAML 1.0"
+              },
+              "local-element": {
+                "#27": ""
+              },
+              "tracked-element": {
+                "#27": "amf://id#40,amf://id#41"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "inline-element": {
+            "#48": ""
+          },
+          "lexical": {
+            "#48": "[(13,8)-(14,0)]"
+          }
+        }
+      },
+      {
+        "@id": "#51",
+        "@type": [
+          "raml-shapes:ArrayShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "raml-shapes:items": [
+          {
+            "@id": "#43/linked_3",
+            "@type": [
+              "shacl:NodeShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "doc:link-target": [
+              {
+                "@id": "#43"
+              }
+            ],
+            "doc:link-label": [
+              {
+                "@value": "Organization"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "amf_inline_type_2"
+          }
+        ],
+        "doc:examples": [
+          {
+            "@id": "#27",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "value"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#28",
+                "@type": [
+                  "data:Array",
+                  "rdf:Seq",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "rdf:member": [
+                  {
+                    "@id": "#29",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:category": [
+                      {
+                        "@id": "#30",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:id": [
+                          {
+                            "@id": "#31",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "39691",
+                                "@type": "xsd:integer"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#31": "[(6,10)-(6,15)]"
+                              }
+                            }
+                          }
+                        ],
+                        "data:name": [
+                          {
+                            "@id": "#32",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Religious and Spiritual",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#32": "[(7,12)-(7,35)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "#30": "name->[(7,6)-(8,0)]#id->[(6,6)-(7,0)]"
+                          },
+                          "lexical": {
+                            "#30": "[(6,0)-(8,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:created_at": [
+                      {
+                        "@id": "#33",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "2013-01-02T22:21:34Z",
+                            "@type": "xsd:dateTime"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#33": "[(8,16)-(8,36)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "data-node-properties": {
+                        "#29": "created_at->[(8,4)-(10,0)]#category->[(5,4)-(8,0)]"
+                      },
+                      "lexical": {
+                        "#29": "[(5,0)-(10,0)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#34",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:category": [
+                      {
+                        "@id": "#35",
+                        "@type": [
+                          "data:Object",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:id": [
+                          {
+                            "@id": "#36",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "61111",
+                                "@type": "xsd:integer"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#36": "[(12,10)-(12,15)]"
+                              }
+                            }
+                          }
+                        ],
+                        "data:name": [
+                          {
+                            "@id": "#37",
+                            "@type": [
+                              "data:Scalar",
+                              "data:Node",
+                              "doc:DomainElement"
+                            ],
+                            "data:value": [
+                              {
+                                "@value": "Service",
+                                "@type": "xsd:string"
+                              }
+                            ],
+                            "smaps": {
+                              "lexical": {
+                                "#37": "[(13,12)-(13,19)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "data-node-properties": {
+                            "#35": "name->[(13,6)-(14,0)]#id->[(12,6)-(13,0)]"
+                          },
+                          "lexical": {
+                            "#35": "[(12,0)-(14,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:created_at": [
+                      {
+                        "@id": "#38",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "2016-02-01T16:37:02Z",
+                            "@type": "xsd:dateTime"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#38": "[(14,16)-(14,36)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "data-node-properties": {
+                        "#34": "created_at->[(14,4)-(15,3)]#category->[(11,4)-(14,0)]"
+                      },
+                      "lexical": {
+                        "#34": "[(11,0)-(15,3)]"
+                      }
+                    }
+                  }
+                ],
+                "data:pos0": [
+                  {
+                    "@id": "#29"
+                  }
+                ],
+                "data:pos1": [
+                  {
+                    "@id": "#34"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#28": "[(3,0)-(15,3)]"
+                  }
+                }
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "resolved-link": {
+                "#27": "amf://id#42"
+              },
+              "lexical": {
+                "shacl:raw": "[(3,0)-(15,3)]",
+                "#27": "[(2,0)-(15,3)]",
+                "schema-org:name": "[(2,0)-(15,3)]"
+              },
+              "source-vendor": {
+                "#27": "RAML 1.0"
+              },
+              "local-element": {
+                "#27": ""
+              },
+              "tracked-element": {
+                "#27": "amf://id#40,amf://id#41"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "inline-element": {
+            "#51": ""
+          },
+          "lexical": {
+            "#51": "[(21,12)-(22,0)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-http": "http://a.ml/vocabularies/http#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "schema-org": "http://schema.org/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "hydra": "http://www.w3.org/ns/hydra/core#"
+    }
+  }
 ]

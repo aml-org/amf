@@ -1,15 +1,11 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 
-import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Bool, Str}
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
+import amf.core.metamodel.{DynamicObj, Field}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Bool, Str}
-import amf.core.metamodel.{DynamicObj, Field}
-import amf.core.metamodel.Type.Bool
 
 class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),
                                 val typeFields: Seq[Field] = Nil,
@@ -18,9 +14,10 @@ class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),
     with DynamicObj
     with LinkableElementModel {
 
-  val DeclarationName                  = Field(Str, Namespace.Meta + "declarationName")
-  val Abstract                     = Field(Bool, Namespace.Meta + "abstract")
-  override def fields: List[Field] = Abstract :: DeclarationName :: DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields
+  val DeclarationName = Field(Str, Namespace.Meta + "declarationName")
+  val Abstract        = Field(Bool, Namespace.Meta + "abstract")
+  override def fields: List[Field] =
+    Abstract :: DeclarationName :: DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields
   override val `type`: List[ValueType] = typeIri
     .map(iriToValue)
     .toList ++ ((Namespace.Meta + "DialectDomainElement") :: DomainElementModel.`type`)

@@ -82,14 +82,14 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         findPropertyMappingByTermPropertyId(propertyId) match {
           case Some(propertyMapping) =>
             propertyAnnotations.update(propertyMapping.id, loadedField.value.annotations)
-          case _                     =>
+          case _ =>
           // ignore
         }
       case _ => //
     }
   }
 
-  override def dynamicFields: List[Field] = {
+  def dynamicFields: List[Field] = {
     /*
     val mapKeyFields = mapKeyProperties.keys map { propertyId =>
       loadAnnotationsFromParsedFields(propertyId)
@@ -98,7 +98,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         case _                     => throw new Exception(s"Cannot find properties mapping for property: $propertyId")
       }
     }
-    */
+     */
 
     (mapKeyProperties.keys ++ literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).flatMap {
       propertyId =>
@@ -161,8 +161,8 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         case other =>
           AmfScalar(other, annotations)
       }
-    } map {
-      amfElement =>  Value(amfElement, amfElement.annotations)
+    } map { amfElement =>
+      Value(amfElement, amfElement.annotations)
     } orElse {
       fields.fields().find(_.field == f).map(_.value)
     }
@@ -343,7 +343,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       case Some(nodeMapping) =>
         literalProperties.put(nodeMapping.id, value)
         mapKeyProperties.put(nodeMapping.id, value)
-      case _                 =>
+      case _ =>
         throw new UnknownMapKeyProperty(propertyId)
     }
     this
@@ -355,19 +355,6 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     } else {
       new DialectDomainElementModel(instanceTypes.distinct, dynamicFields, Some(definedBy))
     }
-
-  private def dynamicFields = {
-    val mapKeyFields = mapKeyProperties.keys map { propertyId =>
-      Field(Type.Str, ValueType(propertyId))
-    }
-    (literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map {
-      propertyId =>
-        instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId).get.toField
-    }.toList ++ mapKeyFields ++ fields
-      .fields()
-      .filter(f => f.field != LinkableElementModel.Target && f.field != DomainElementModel.CustomDomainProperties)
-      .map(_.field)
-  }
 
   override def adopted(newId: String): DialectDomainElement.this.type =
     if (Option(this.id).isEmpty) simpleAdoption(newId) else this

@@ -1,10 +1,9 @@
 package amf.core.metamodel.domain
 
-import amf.core.metamodel.{DynamicObj, Field, Obj}
 import amf.core.metamodel.Type.{Iri, Str}
+import amf.core.metamodel.{DynamicObj, Field}
 import amf.core.vocabulary.Namespace.{Document, Shacl}
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.core.metamodel.{DynamicObj, Field, Obj}
 
 trait ExternalSourceElementModel extends DynamicObj {
   val Raw = Field(Str,
@@ -19,7 +18,6 @@ trait ExternalSourceElementModel extends DynamicObj {
   val Location = Field(Str,
                        Document + "location",
                        ModelDoc(ModelVocabularies.AmlDoc, "location", "Location of an inlined fragment"))
-
 
 }
 
