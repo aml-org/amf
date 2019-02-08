@@ -322,8 +322,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
       val sources: Seq[Seq[Shape]] = tuple.items.map { shape =>
         normalize(shape) match {
-          case union: UnionShape => union.anyOf
-          case other: Shape      => Seq(other)
+          case other: Shape => Seq(other)
         }
       }
 
