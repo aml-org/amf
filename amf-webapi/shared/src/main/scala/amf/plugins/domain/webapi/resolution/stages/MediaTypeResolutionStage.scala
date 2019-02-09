@@ -101,7 +101,7 @@ class MediaTypeResolutionStage(profile: ProfileName, isValidation: Boolean = fal
             .adopted(parent)
           if (Option(payload.schema).isDefined)
             parsedPayload.fields
-              .setWithoutId(PayloadModel.Schema, tracking(payload.schema, parsedPayload.id)) // TODO we should clone the schema and the examples.
+              .setWithoutId(PayloadModel.Schema, tracking(payload.schema, parsedPayload.id, Some(payload.id)))
           parsedPayload
         }
       }

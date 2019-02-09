@@ -1,5 +1,5 @@
 package amf.core.resolution.stages
-import amf.core.annotations.{DeclaredElement, ResolvedInheritance, ResolvedLinkAnnotation}
+import amf.core.annotations.{DeclaredElement, ResolvedInheritance, ResolvedLinkAnnotation, TrackedElement}
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document, EncodesModel}
 import amf.core.model.domain._
@@ -43,7 +43,9 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
                 case _ => // ignore
               }
               copied
-            case d: DomainElement => d
+            case d: DomainElement =>
+              propagateTracked(l, d)
+              d
           }
           val resolved = innerLinkNodeResolution(target)
           resolved match {
@@ -63,7 +65,18 @@ class ReferenceResolutionStage(keepEditingInfo: Boolean, links: mutable.Map[Stri
     }
   }
 
-  // Links traversion to expand annotations and add links to 'cache'
+  private def propagateTracked(link: DomainElement, element: DomainElement): Unit =
+    link.annotations.find(classOf[TrackedElement]).foreach {
+      case t @ TrackedElement(values) =>
+        val tracked = element.annotations
+          .find(classOf[TrackedElement])
+          .fold(t)(inner => TrackedElement(values ++ inner.parents))
+
+        element.annotations.reject(_.isInstanceOf[TrackedElement])
+        element.add(tracked)
+    }
+
+// Links traversion to expand annotations and add links to 'cache'
   private def traverseLinks(element: DomainElement,
                             resolved: DomainElement,
                             visited: mutable.Set[String] = mutable.Set()): Unit = {
