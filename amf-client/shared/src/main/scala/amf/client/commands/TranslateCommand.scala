@@ -20,6 +20,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       _         <- AMFInit()
       model     <- parseInput(config)
       _         <- checkValidation(config, model)
+      model     <- resolve(config, model)
       generated <- generateOutput(config, model)
     } yield {
       generated

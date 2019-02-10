@@ -134,6 +134,11 @@ object CmdLineParser {
           .abbr("v")
           .text("Perform validation")
           .action((f, c) => c.copy(validate = f))
+
+        opt[Boolean]("resolve")
+          .abbr("r")
+          .text("Resolve after parsing")
+          .action((f, c) => c.copy(resolve = f))
       }
 
     cmd("patch")
@@ -154,7 +159,7 @@ object CmdLineParser {
       var error = ""
       if (c.input.isEmpty) error += "Missing <file_input>\n"
       if (c.inputMediaType.isEmpty) error += "Missing <file_input>\n"
-      if (c.mode.get != ParserConfig.PATCH) {
+      if (c.mode.isDefined && (c.mode.get != ParserConfig.PATCH)) {
         if (c.inputFormat.isEmpty) error += "Missing --format-in\n"
       }
       if (c.inputMediaType.isEmpty) error += "Missing --media-type-in\n"
