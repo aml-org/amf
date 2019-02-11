@@ -1,0 +1,10 @@
+#%RAML 1.0 DataType
+
+type: object
+properties:
+  SSN?:
+    description: SSN/TIN or last 4 of SSN. Non Neg Integer. Only 4 digits or 9 digits can be sent. Validation will be for numeric values. Pattern [0-9]{4,9}
+    example: 000645
+    type: number
+    minimum: 0022
+    maximum: 00000000033
