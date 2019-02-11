@@ -721,6 +721,36 @@ object AMFRawValidations {
       "Violation"
     ),
     AMFValidation(
+      "amf-parser:xml-wrapped-scalar",
+      "XML property 'wrapped' must be false for scalar types",
+      Raml.name,
+      "Domain",
+      "raml-shapes:ScalarShape",
+      "sh:xmlSerialization",
+      "PropertyShape", // Not useful
+      "sh:path", // Not useful
+      "raml-shapes:xmlWrappedScalar",
+      "0",
+      "XML property 'wrapped' must be false for scalar types",
+      "XML property 'wrapped' must be false for scalar types",
+      "Violation"
+    ),
+    AMFValidation(
+      "amf-parser:xml-non-scalar-attribute",
+      "XML property 'attribute' must be false for non-scalar types",
+      Raml.name,
+      "Domain",
+      "raml-shapes:Shape",
+      "sh:xmlSerialization",
+      "PropertyShape", // Not useful
+      "sh:path", // Not useful
+      "raml-shapes:xmlNonScalarAttribute",
+      "0",
+      "XML property 'attribute' must be false for non-scalar types",
+      "XML property 'attribute' must be false for non-scalar types",
+      "Violation"
+    ),
+    AMFValidation(
       Amf.name,
       "Domain",
       "raml-shapes:Shape",

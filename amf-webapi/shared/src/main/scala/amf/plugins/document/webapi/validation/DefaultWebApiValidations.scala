@@ -268,7 +268,34 @@ object JsCustomValidations {
          |    return false;
          |  }
          |}
-      """.stripMargin
+      """.stripMargin,
+    "xmlWrappedScalar" ->
+      """
+        |function(shape) {
+        |  var xmlSerialization = shape["raml-shapes:xmlSerialization"];
+        |  if (!xmlSerialization) return true;
+        |  else {
+        |    var wrapped_ = xmlSerialization[0]["raml-shapes:xmlWrapped"];
+        |    var isWrapped = (wrapped_)? wrapped_[0] : false;
+        |    var isScalar = shape["@type"].indexOf("raml-shapes:ScalarShape") !== -1;
+        |    return !(isWrapped && isScalar);
+        |  }
+        |}
+      """.stripMargin, // TODO
+    "xmlNonScalarAttribute" ->
+      """
+        |function(shape) {
+        |  var xmlSerialization = shape["raml-shapes:xmlSerialization"];
+        |  if (!xmlSerialization) return true;
+        |  else {
+        |    var attribute_ = xmlSerialization[0]["raml-shapes:xmlAttribute"];
+        |    var isAttribute = (attribute_)? attribute_[0] : false;
+        |    var isNonScalar = shape["@type"].indexOf("raml-shapes:ScalarShape") === -1;
+        |    return !(isAttribute && isNonScalar);
+        |  }
+        |}
+      """.stripMargin, // TODO
+
   )
 
   def apply(name: String): Option[String] = functions.get(name)

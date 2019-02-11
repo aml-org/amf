@@ -301,6 +301,43 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
           }
         }
 
+      case Some("xmlWrappedScalar") =>
+        element.fields.fields().find { f =>
+          f.field.value.iri().endsWith("xmlSerialization")
+        } match {
+          case Some(f) =>
+            val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
+            val isWrapped = xmlSerialization.fields
+              .fields()
+              .find(f => f.field.value.iri().endsWith("xmlWrapped"))
+              .get
+              .scalar
+              .toBool
+            if (isWrapped) {
+              reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+            }
+          case None => // Nothing
+        }
+
+      case Some("xmlNonScalarAttribute") =>
+        element.fields.fields().find { f =>
+          f.field.value.iri().endsWith("xmlSerialization")
+        } match {
+          case Some(f) =>
+            val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
+            val isAttribute = xmlSerialization.fields
+              .fields()
+              .find(f => f.field.value.iri().endsWith("xmlAttribute"))
+              .get
+              .scalar
+              .toBool
+            val isNonScalar = !element.isInstanceOf[AmfScalar]
+            if (isAttribute && isNonScalar) {
+              reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+            }
+          case None => // Nothing
+        }
+
       case Some("patternValidation") =>
         element.fields
           .fields()
