@@ -302,21 +302,24 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
         }
 
       case Some("xmlWrappedScalar") =>
-        element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("xmlSerialization")
-        } match {
-          case Some(f) =>
-            val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
-            val isWrapped = xmlSerialization.fields
-              .fields()
-              .find(f => f.field.value.iri().endsWith("xmlWrapped"))
-              .get
-              .scalar
-              .toBool
-            if (isWrapped) {
-              reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-            }
-          case None => // Nothing
+        val isScalar = element.meta.`type`.exists(_.name == "ScalarShape")
+        if (isScalar) {
+          element.fields.fields().find { f =>
+            f.field.value.iri().endsWith("xmlSerialization")
+          } match {
+            case Some(f) =>
+              val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
+              xmlSerialization.fields
+                .fields()
+                .find(f => f.field.value.iri().endsWith("xmlWrapped"))
+                .foreach { isWrappedEntry =>
+                  val isWrapped = isWrappedEntry.scalar.toBool
+                  if (isWrapped) {
+                    reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+                  }
+                }
+            case None => // Nothing
+          }
         }
 
       case Some("xmlNonScalarAttribute") =>
@@ -325,16 +328,16 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
         } match {
           case Some(f) =>
             val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
-            val isAttribute = xmlSerialization.fields
+            xmlSerialization.fields
               .fields()
               .find(f => f.field.value.iri().endsWith("xmlAttribute"))
-              .get
-              .scalar
-              .toBool
-            val isNonScalar = !element.isInstanceOf[AmfScalar]
-            if (isAttribute && isNonScalar) {
-              reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-            }
+              .foreach { isAttributeEntry =>
+                val isAttribute = isAttributeEntry.scalar.toBool
+                val isNonScalar = !element.meta.`type`.exists(_.name == "ScalarShape")
+                if (isAttribute && isNonScalar) {
+                  reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+                }
+              }
           case None => // Nothing
         }
 
