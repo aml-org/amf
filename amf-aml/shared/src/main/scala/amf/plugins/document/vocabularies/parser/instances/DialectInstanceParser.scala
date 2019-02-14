@@ -1075,11 +1075,22 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             parseLiteralValue(elemValue, property, node)
           }
           .collect { case Some(v) => v }
-        node.setLiteralField(property, values, propertyEntry.value)
+        if (values.nonEmpty) {
+          values.head match {
+            case ("link", _: String) =>
+              val links = values.collect { case (_, link) => link }.asInstanceOf[Seq[String]]
+              node.setLinkField(property, links, propertyEntry.value)
+            case _                         =>
+              node.setLiteralField(property, values, propertyEntry.value)
+          }
+        } else {
+          node.setLiteralField(property, values, propertyEntry.value)
+        }
       case _ =>
         parseLiteralValue(propertyEntry.value, property, node) match {
-          case Some(v) => node.setLiteralField(property, Seq(v), propertyEntry.value)
-          case _       => // ignore
+          case Some(("link", v)) => node.setLiteralField(property, Seq(v), propertyEntry.value)
+          case Some(v)           => node.setLiteralField(property, Seq(v), propertyEntry.value)
+          case _                 => // ignore
         }
     }
   }

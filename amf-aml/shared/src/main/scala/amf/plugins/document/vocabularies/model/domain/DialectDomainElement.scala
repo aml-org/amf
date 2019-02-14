@@ -292,6 +292,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
+  def setLinkField(property: PropertyMapping, value: Seq[_], node: YNode): DialectDomainElement = {
+    linkProperties.put(property.id, value)
+    propertyAnnotations.put(property.id, Annotations(node))
+    this
+  }
+
   def setLiteralField(property: PropertyMapping, value: Int, node: YNode): DialectDomainElement = {
     literalProperties.put(property.id, value)
     propertyAnnotations.put(property.id, Annotations(node))
