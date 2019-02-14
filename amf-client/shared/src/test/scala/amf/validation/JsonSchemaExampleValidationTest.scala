@@ -124,5 +124,9 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
     validate("/array_unions.raml", Some("array_unions.report"))
   }
 
+  test("JSON Schema array union 2") {
+    validate("/APIMF-1173/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

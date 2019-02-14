@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: optional-attributes-test
+
+mediaType: application/xml
+
+types:
+  Employee: !include datatypes/employee.raml
+
+/employees:
+  get:
+    body:
+      application/json:
+        type: Employee[]
+        examples: !include examples/employees.raml
+  post:
+    body:
+      application/json:
+        type: Employee
+        examples: !include examples/employee.raml
+  delete:
+    body:
+      application/json:
+        type: Employee
+        examples: !include examples/employee.raml
+  head:
+    body:
+      type: Employee
+      examples: !include examples/employee.raml

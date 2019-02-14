@@ -4,6 +4,8 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.exception.CyclicReferenceException
 import amf.core.model.document._
 import amf.core.parser
+import amf.core.remote.File.FILE_PROTOCOL
+import amf.core.remote.HttpParts.{HTTPS_PROTOCOL, HTTP_PROTOCOL}
 import amf.core.remote.{Cache, Context}
 import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
@@ -116,7 +118,8 @@ object EmptyReferenceCollector extends ReferenceCollector {}
 
 object ReferenceFragmentPartition {
   def apply(url: String): (String, Option[String]) = {
-    if (url.normalizeUrl.startsWith("file://") && !url.startsWith("#")) { // http urls supports # refs
+    if ((url.normalizeUrl.startsWith(FILE_PROTOCOL) || url.startsWith(HTTPS_PROTOCOL) || url.startsWith(HTTP_PROTOCOL)) && !url
+          .startsWith("#")) {
       url.split("#") match { // how can i know if the # its part of the uri or not? uri not valid???
         case Array(u) if u.endsWith("#") => (u.substring(0, u.length - 2), None)
         case Array(u)                    => (u, None)

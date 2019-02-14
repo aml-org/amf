@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.{DeclaredElement, TrackedElement}
+import amf.core.annotations.TrackedElement
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, _}
 import amf.core.utils.Strings

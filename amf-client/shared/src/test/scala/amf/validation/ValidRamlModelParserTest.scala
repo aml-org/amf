@@ -179,5 +179,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("scalar-declaration-keys.raml")
   }
 
+  test("Valid XML attribute property scalar") {
+    checkValid("validXmlAttributeScalar.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

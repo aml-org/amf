@@ -301,6 +301,46 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
           }
         }
 
+      case Some("xmlWrappedScalar") =>
+        val isScalar = element.meta.`type`.exists(_.name == "ScalarShape")
+        if (isScalar) {
+          element.fields.fields().find { f =>
+            f.field.value.iri().endsWith("xmlSerialization")
+          } match {
+            case Some(f) =>
+              val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
+              xmlSerialization.fields
+                .fields()
+                .find(f => f.field.value.iri().endsWith("xmlWrapped"))
+                .foreach { isWrappedEntry =>
+                  val isWrapped = isWrappedEntry.scalar.toBool
+                  if (isWrapped) {
+                    reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+                  }
+                }
+            case None => // Nothing
+          }
+        }
+
+      case Some("xmlNonScalarAttribute") =>
+        element.fields.fields().find { f =>
+          f.field.value.iri().endsWith("xmlSerialization")
+        } match {
+          case Some(f) =>
+            val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
+            xmlSerialization.fields
+              .fields()
+              .find(f => f.field.value.iri().endsWith("xmlAttribute"))
+              .foreach { isAttributeEntry =>
+                val isAttribute = isAttributeEntry.scalar.toBool
+                val isNonScalar = !element.meta.`type`.exists(_.name == "ScalarShape")
+                if (isAttribute && isNonScalar) {
+                  reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+                }
+              }
+          case None => // Nothing
+        }
+
       case Some("patternValidation") =>
         element.fields
           .fields()

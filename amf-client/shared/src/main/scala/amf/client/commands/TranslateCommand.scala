@@ -20,6 +20,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
       _         <- AMFInit()
       model     <- parseInput(config)
       _         <- checkValidation(config, model)
+      model     <- resolve(config, model)
       generated <- generateOutput(config, model)
     } yield {
       generated
@@ -47,7 +48,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
             AMLPlugin.registry.dialectFor(dialectInstance) match {
               case Some(dialect) =>
                 ProfileName(dialect.nameAndVersion())
-              case _             =>
+              case _ =>
                 config.profile
             }
           case _ =>

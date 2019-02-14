@@ -33,5 +33,5 @@ trait AmfElement {
   def fromLocal(): Boolean = annotations.find(classOf[LocalElement]).isDefined
 
   def isTrackedBy(trackId: String): Boolean =
-    annotations.collect({ case t: TrackedElement if t.parent.equals(trackId) => t }).nonEmpty
+    annotations.collect { case t: TrackedElement if t.parents.contains(trackId) => t }.nonEmpty
 }

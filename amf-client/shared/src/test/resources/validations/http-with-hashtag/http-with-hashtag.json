@@ -1,0 +1,21 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "A",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/a": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "A",
+            "schema": {
+              "$ref": "http://json-schema.org/draft-04/schema#/definitions/positiveInteger"
+            }
+          }
+        }
+      }
+    }
+  }
+}

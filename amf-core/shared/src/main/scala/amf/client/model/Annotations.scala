@@ -16,7 +16,7 @@ case class Annotations(_internal: InternalAnnotations) {
   def lexical(): Range = _internal.find(classOf[LexicalInformation]).map(_.range).getOrElse(Range.NONE)
 
   def custom(): ClientList[DomainExtension] =
-    _internal.collect({ case d: DomainExtensionAnnotation => d }).map(_.extension).asClient
+    _internal.collect { case d: DomainExtensionAnnotation => d }.map(_.extension).asClient
 
   def fragmentName(): ClientOption[String] = _internal.find(classOf[ExternalFragmentRef]).map(_.fragment).asClient
 
@@ -25,7 +25,7 @@ case class Annotations(_internal: InternalAnnotations) {
   def isLocal: Boolean = _internal.find(classOf[LocalElement]).isDefined
 
   def isTrackedBy(trackId: String): Boolean =
-    _internal.collect({ case t: TrackedElement if t.parent.equals(trackId) => t }).nonEmpty
+    _internal.collect { case t: TrackedElement if t.parents.contains(trackId) => t }.nonEmpty
 
-  def isTracked: Boolean = _internal.collect({ case t: TrackedElement => t }).nonEmpty
+  def isTracked: Boolean = _internal.collect { case t: TrackedElement => t }.nonEmpty
 }

@@ -45,5 +45,10 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/oas-produces/api.json", OasProfile)
   }
 
+  // Check http inner reference.
+  ignore("Http with # reference") {
+    checkValid("/http-with-hashtag/http-with-hashtag.json", OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }
