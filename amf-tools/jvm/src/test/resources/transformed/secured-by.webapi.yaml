@@ -9,7 +9,50 @@ endpoint:
         security:
           -
             name: oauth_2_0
-            scheme: fragment
+            scheme:
+              name: oauth_2_0
+              type: OAuth 2.0
+              header:
+                -
+                  name: Authorization
+                  paramName: Authorization
+                  description: Used to send a valid OAuth 2 access token.
+                  required: true
+                  binding: header
+                  schema:
+                    type: Scalar
+                    datatype: http://www.w3.org/2001/XMLSchema#string
+                    name: schema
+                    description: Used to send a valid OAuth 2 access token.
+              parameter:
+                -
+                  name: access_token
+                  paramName: access_token
+                  description: Used to send a valid OAuth 2 access token.
+                  required: true
+                  binding: query
+                  schema:
+                    type: Scalar
+                    datatype: http://www.w3.org/2001/XMLSchema#string
+                    name: schema
+                    description: Used to send a valid OAuth 2 access token.
+              response:
+                -
+                  name: "401"
+                  description: Authorization error.
+                  statusCode: "401"
+              settings:
+                type: OAuth2
+                authorizationURI: https://example.com/oauth/authorize
+                accessTokenURI: https://example.com/oauth/token
+                authorizationGrant:
+                  - implicit
+                  - authorization_code
+                scope:
+                  -
+                    name: profile
+                  -
+                    name: history
           -
             name: "null"
     parameter:
@@ -30,7 +73,50 @@ endpoint:
         security:
           -
             name: oauth_2_0
-            scheme: fragment
+            scheme:
+              name: oauth_2_0
+              type: OAuth 2.0
+              header:
+                -
+                  name: Authorization
+                  paramName: Authorization
+                  description: Used to send a valid OAuth 2 access token.
+                  required: true
+                  binding: header
+                  schema:
+                    type: Scalar
+                    datatype: http://www.w3.org/2001/XMLSchema#string
+                    name: schema
+                    description: Used to send a valid OAuth 2 access token.
+              parameter:
+                -
+                  name: access_token
+                  paramName: access_token
+                  description: Used to send a valid OAuth 2 access token.
+                  required: true
+                  binding: query
+                  schema:
+                    type: Scalar
+                    datatype: http://www.w3.org/2001/XMLSchema#string
+                    name: schema
+                    description: Used to send a valid OAuth 2 access token.
+              response:
+                -
+                  name: "401"
+                  description: Authorization error.
+                  statusCode: "401"
+              settings:
+                type: OAuth2
+                authorizationURI: https://example.com/oauth/authorize
+                accessTokenURI: https://example.com/oauth/token
+                authorizationGrant:
+                  - implicit
+                  - authorization_code
+                scope:
+                  -
+                    name: profile
+                  -
+                    name: history
           -
             name: oauth_1_0
             scheme:
@@ -90,7 +176,3 @@ endpoint:
                 signature:
                   - PLAINTEXT
                   - HMAC-SHA1
-security:
-  -
-    name: oauth_2_0
-    scheme: fragment

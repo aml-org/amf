@@ -128,6 +128,10 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
     withDialect("activity.yaml", "stream1.yaml", "stream1.json", VocabularyYamlHint, Amf, basePath + "streams/")
   }
 
+  test("Can parse activity deployments demo") {
+    withDialect("dialect.yaml", "deployment.yaml", "deployment.json", VocabularyYamlHint, Amf, basePath + "deployments_demo/")
+  }
+
 }
 
 class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectInstanceTester {

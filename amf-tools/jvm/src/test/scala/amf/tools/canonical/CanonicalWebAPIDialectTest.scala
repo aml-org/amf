@@ -69,7 +69,8 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with
   )
 
   val resolve: Map[String, Boolean] = Map(
-    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/sample.oas.resolved.jsonld" -> true
+    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/sample.oas.resolved.jsonld" -> true,
+    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/api.raml.jsonld" -> true
   )
 
   tests.foreach {case (input, golden) =>

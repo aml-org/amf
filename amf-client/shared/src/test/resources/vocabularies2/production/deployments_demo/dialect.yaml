@@ -17,57 +17,8 @@ nodeMappings:
   DeploymentNode:
     classTerm: runtime.Deployment
     mapping:
-      name:
-        propertyTerm: schema-org.name
-        range: string
-        mandatory: true
-      deploymentTarget:
-        propertyTerm: runtime.deploymentTarget
-        range: string
-        mandatory: true
-      runtime:
-        propertyTerm: runtime.runtime
-        range: RuntimeNode
-        mandatory: true
       connections:
         propertyTerm: runtime.connections
         range: link
         allowMultiple: true
-        mandatory: true
-      bundle:
-        propertyTerm: runtime.bundledApplication
-        range: link
-        mandatory: true
-
-
-  RuntimeNode:
-    classTerm: runtime.Runtime
-    mapping:
-      version:
-        propertyTerm: schema-org.version
-        range: string
-        mandatory: true
-      workerSize:
-        propertyTerm: runtime.workerSize
-        range: string
-        mandatory: true
-      workers:
-        propertyTerm: runtime.workerType
-        range: string
-        mandatory: true
-      region:
-        propertyTerm: runtime.region
-        range: string
-        mandatory: true
-      autorestart:
-        propertyTerm: runtime.autoRestartOption
-        range: boolean
-        mandatory: true
-      persistentQueues:
-        propertyTerm: runtime.persistentQueuesOption
-        range: boolean
-        mandatory: true
-      encryptQueues:
-        propertyTerm: runtime.encryptQueuesOption
-        range: boolean
         mandatory: true
