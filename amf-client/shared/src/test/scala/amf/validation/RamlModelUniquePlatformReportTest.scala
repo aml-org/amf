@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.{ProfileName, ProfileNames, Raml08Profile}
+import amf.Raml08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
@@ -202,6 +202,10 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Invalid xml attribute non scalar") {
     validate("invalidXmlAttributeNonScalar.raml", Some("invalidXmlAttributeNonScalar.report"))
+  }
+
+  test("NamedExample closed shape") {
+    validate("named-example-closed-shape/named-example-closed-shape.raml", Some("named-example-closed-shape.report"))
   }
 
   override val hint: Hint = RamlYamlHint

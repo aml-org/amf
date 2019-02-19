@@ -41,8 +41,6 @@ object Raml10Syntax extends RamlSyntax {
       "type",
       "default",
       "schema",
-      "example",
-      "examples",
       "displayName",
       "description",
       "facets",
