@@ -18,6 +18,16 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
     Some(ParsedJSONSchema(value))
 }
 
+case class ParsedRamlDatatype(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
+  override val name: String  = "parsed-raml-datatype"
+  override val value: String = rawText
+}
+
+object ParsedRamlDatatype extends AnnotationGraphLoader {
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] =
+    Some(ParsedRamlDatatype(value))
+}
+
 case class ParsedJSONExample(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String  = "parsed-json-example"
   override val value: String = rawText
@@ -31,6 +41,8 @@ object ParsedJSONExample extends AnnotationGraphLoader {
 case class SchemaIsJsonSchema() extends Annotation
 
 case class GeneratedJSONSchema(rawText: String) extends Annotation
+
+case class GeneratedRamlDatatype(rawText: String) extends Annotation
 
 case class JSONSchemaId(id: String) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String  = "json-schema-id"
