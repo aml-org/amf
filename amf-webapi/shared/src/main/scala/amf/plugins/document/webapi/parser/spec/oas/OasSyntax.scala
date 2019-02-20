@@ -49,7 +49,7 @@ object Oas3Syntax extends SpecSyntax {
       "connect",
       "trace",
       "parameters",
-      "$ref"
+      "\\$ref"
     ),
     "operation" -> Set(
       "tags",
@@ -133,8 +133,8 @@ object Oas3Syntax extends SpecSyntax {
       "externalDocs"
     ),
     "schema" -> Set(
-      "$ref",
-      "$schema",
+      "\\$ref",
+      "\\$schema",
       "format",
       "title",
       "description",
@@ -233,7 +233,7 @@ object Oas2Syntax extends SpecSyntax {
       "connect",
       "trace",
       "parameters",
-      "$ref"
+      "\\$ref"
     ),
     "operation" -> Set(
       "tags",
@@ -316,8 +316,8 @@ object Oas2Syntax extends SpecSyntax {
       "externalDocs"
     ),
     "schema" -> Set(
-      "$ref",
-      "$schema",
+      "\\$ref",
+      "\\$schema",
       "format",
       "title",
       "description",

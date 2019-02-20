@@ -444,7 +444,7 @@ abstract class WebApiContext(val loc: String,
           val key: String = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
           if (ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
-          } else if (!properties(key)) {
+          } else if (!properties.exists(key.matches)) {
             violation(ClosedShapeSpecification, node, s"Property $key not supported in a $vendor $shape node", entry)
           }
         }
