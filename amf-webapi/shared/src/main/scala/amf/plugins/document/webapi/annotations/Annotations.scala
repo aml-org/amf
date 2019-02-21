@@ -160,6 +160,10 @@ object WebApiAnnotations {
     ParsedJSONSchema(value)
   }
 
+  private def parsedRamlDatatype(value: String, objects: Map[String, AmfElement]) = {
+    ParsedRamlDatatype(value)
+  }
+
   private def declaredElement(value: String, objects: Map[String, AmfElement]) = {
     DeclaredElement()
   }
