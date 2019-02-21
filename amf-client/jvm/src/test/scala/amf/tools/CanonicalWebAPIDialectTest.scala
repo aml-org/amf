@@ -1,4 +1,4 @@
-package amf.tools.canonical
+package amf.tools
 
 import amf.ProfileName
 import amf.core.AMF
@@ -12,14 +12,14 @@ import amf.facades.{AMFCompiler, Validation}
 import amf.io.BuildCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.webapi.Raml10Plugin
+import amf.tools.canonical.CanonicalWebAPITransformer
 import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with  PlatformSecrets {
 
   val CANONICAL_WEBAPI_DIALECT = "file://vocabularies/dialects/canonical_webapi.yaml"
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   override def basePath: String = "amf-tools/jvm/src/test/resources/transformed/"
 
   def checkCanonicalDialectTransformation(amfWebApi: String, canonicalTarget: String, shouldTranform: Boolean): Future[Assertion] = {

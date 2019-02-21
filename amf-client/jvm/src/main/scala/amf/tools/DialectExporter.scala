@@ -2,8 +2,8 @@ package amf.tools
 import amf.core.AMF
 import amf.core.emitter.RenderOptions
 import amf.core.services.RuntimeSerializer
+import amf.dialects.OAS20Dialect
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.webapi.dialects.OAS20Dialect
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration

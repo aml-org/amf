@@ -1,4 +1,4 @@
-package amf.plugins.document.webapi.dialects
+package amf.dialects
 import amf.core.annotations.Aliases
 import amf.core.metamodel.domain.ModelVocabularies
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
