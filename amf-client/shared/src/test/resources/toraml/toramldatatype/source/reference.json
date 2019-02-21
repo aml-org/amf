@@ -1,0 +1,50 @@
+{
+  "swagger": "2.0",
+  "definitions": {
+    "AnotherThing": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "d"
+      ],
+      "properties": {
+        "d": {
+          "type": "string"
+        }
+      }
+    },
+    "Thing": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "a",
+        "b"
+      ],
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "c": {
+              "$ref": "#/definitions/AnotherThing"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/things/{thingId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/Thing"}
+          }
+        }
+      }
+    }
+  }
+}
