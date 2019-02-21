@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: recursive
+
+types:
+  recursive:
+    properties:
+      a: string
+      b:
+        properties:
+          c?: recursive
+
+/AllergyIntolerance:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: recursive
