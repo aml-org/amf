@@ -29,52 +29,53 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
     cycle("array-of-object.json", "array-of-object.raml", func)
   }
 
-  // test("Test array annotation type") {
-  //   val func = (u: BaseUnit) =>
-  //     encodedWebApi(u)
-  //       .flatMap(_.endPoints.headOption)
-  //       .flatMap(_.operations.headOption)
-  //       .flatMap(_.request.queryParameters.headOption)
-  //       .map(_.schema)
-  //       .collectFirst({ case any: AnyShape => any })
-  //   cycle("param-with-annotation.json", "param-with-annotation.raml", func)
-  // }
+  test("Test array annotation type") {
+    val func = (u: BaseUnit) =>
+      encodedWebApi(u)
+        .flatMap(_.endPoints.headOption)
+        .flatMap(_.operations.headOption)
+        .flatMap(_.responses.headOption)
+        .flatMap(_.payloads.headOption)
+        .map(_.schema)
+        .collectFirst({ case any: AnyShape => any })
+    cycle("param-with-annotation.json", "param-with-annotation.raml", func)
+  }
 
-  // test("Test parsed from json expression generations") {
-  //   val func = (u: BaseUnit) =>
-  //     encodedWebApi(u)
-  //       .flatMap(_.endPoints.headOption)
-  //       .flatMap(_.operations.headOption)
-  //       .flatMap(_.responses.headOption)
-  //       .flatMap(_.payloads.headOption)
-  //       .map(_.schema)
-  //       .collectFirst({ case any: AnyShape => any })
-  //   cycle("json-expression.json", "json-expression.raml", func)
-  // }
+  test("Test parsed from json expression generations") {
+    val func = (u: BaseUnit) =>
+      encodedWebApi(u)
+        .flatMap(_.endPoints.headOption)
+        .flatMap(_.operations.headOption)
+        .flatMap(_.responses.headOption)
+        .flatMap(_.payloads.headOption)
+        .map(_.schema)
+        .collectFirst({ case any: AnyShape => any })
+    cycle("json-expression.json", "json-expression.raml", func)
+  }
 
-  // test("Test parsed from json expression forced to build new") {
-  //   val func = (u: BaseUnit) =>
-  //     encodedWebApi(u)
-  //       .flatMap(_.endPoints.headOption)
-  //       .flatMap(_.operations.headOption)
-  //       .flatMap(_.responses.headOption)
-  //       .flatMap(_.payloads.headOption)
-  //       .map(_.schema)
-  //       .collectFirst({ case any: AnyShape => any })
-  //   cycle("json-expression.json", "json-expression-new.raml", func, (a: AnyShape) => a.buildRamlDatatype())
-  // }
+  test("Test parsed from json expression forced to build new") {
+    val func = (u: BaseUnit) =>
+      encodedWebApi(u)
+        .flatMap(_.endPoints.headOption)
+        .flatMap(_.operations.headOption)
+        .flatMap(_.responses.headOption)
+        .flatMap(_.payloads.headOption)
+        .map(_.schema)
+        .collectFirst({ case any: AnyShape => any })
+    cycle("json-expression.json", "json-expression-new.raml", func, (a: AnyShape) => a.buildRamlDatatype())
+  }
 
-  // test("Test recursive shape") {
-  //   val func = (u: BaseUnit) =>
-  //     encodedWebApi(u)
-  //       .flatMap(_.endPoints.headOption)
-  //       .flatMap(_.operations.headOption)
-  //       .flatMap(_.responses.headOption)
-  //       .flatMap(_.payloads.headOption)
-  //       .map(_.schema)
-  //       .collectFirst({ case any: AnyShape => any })
-  //   cycle("recursive.json", "recursive.raml", func, (a: AnyShape) => a.buildRamlDatatype())
-  // }
+  test("Test recursive shape") {
+    val func = (u: BaseUnit) =>
+      encodedWebApi(u)
+        .flatMap(_.endPoints.headOption)
+        .flatMap(_.operations.headOption)
+        .flatMap(_.responses.headOption)
+        .flatMap(_.payloads.headOption)
+        .map(_.schema)
+        .collectFirst({ case any: AnyShape => any })
+    cycle("recursive.json", "recursive.raml", func, (a: AnyShape) => a.buildRamlDatatype())
+  }
 
   private val basePath: String   = "file://amf-client/shared/src/test/resources/toraml/toramldatatype/source/"
   private val goldenPath: String = "amf-client/shared/src/test/resources/toraml/toramldatatype/datatypes/"

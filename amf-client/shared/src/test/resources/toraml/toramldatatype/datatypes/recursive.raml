@@ -1,18 +1,16 @@
-#%RAML 1.0
-title: recursive
-
+#%RAML 1.0 Library
 types:
-  recursive:
+  Thing:
+    additionalProperties: true
     properties:
-      a: string
+      a:
+        type: string
+        required: true
       b:
+        type: object
+        additionalProperties: true
         properties:
-          c?: recursive
-
-/AllergyIntolerance:
-    get:
-      responses:
-        200:
-          body:
-            application/json:
-              type: recursive
+          c:
+            type: Thing
+            required: false
+        required: true
