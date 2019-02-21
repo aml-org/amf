@@ -233,6 +233,29 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
           }
         }
 
+      case Some("pathParameterRequiredProperty") =>
+        val optBindingValue = element.fields
+          .fields()
+          .find { f =>
+            f.field.value.iri().endsWith("binding")
+          }
+          .map(field => field.value.value)
+          .collect { case AmfScalar(value, _) => value }
+
+        val optRequiredValue = element.fields
+          .fields()
+          .find { f =>
+            f.field.value.iri().endsWith("required")
+          }
+          .map(field => field.value.value)
+          .collect { case AmfScalar(value, _) => value }
+
+        (optBindingValue, optRequiredValue) match {
+          case (Some("path"), Some(false)) | (Some("path"), None) =>
+            reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+          case _ =>
+        }
+
       case Some("minMaxItemsValidation") =>
         val maybeMinInclusive = element.fields.fields().find { f =>
           f.field.value.iri().endsWith("minCount")

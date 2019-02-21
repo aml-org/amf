@@ -1996,6 +1996,21 @@ object AMFRawValidations {
       "items facet of RAML Array type is required",
       "items property of Schema objects of type 'array' is required",
       "Violation"
+    ),
+    AMFValidation(
+      "amf-parser:path-parameter-required",
+      "Path parameters must have the required property set to true",
+      Oas.name,
+      "Domain",
+      "raml-http:Parameter",
+      "raml-http:binding",
+      "PropertyShape",
+      "sh:path",
+      "raml-shapes:pathParameterRequiredProperty",
+      "0",
+      "Path parameters must have the required property set to true",
+      "Path parameters must have the required property set to true",
+      "Violation"
     )
   )
 

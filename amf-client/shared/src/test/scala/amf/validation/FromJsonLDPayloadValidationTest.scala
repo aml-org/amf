@@ -38,10 +38,12 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     //   we commentated the range of items validation
     //    "types/arrays/wrong_items.jsonld"         -> ExpectedReport(conforms = false, 1, RAMLProfile),
     //    "types/arrays/right_items.jsonld"         -> ExpectedReport(conforms = true, 0, RAMLProfile),
-    "types/arrays/empty_items.jsonld" -> ExpectedReport(conforms = true, 0, RamlProfile),
-    "types/arrays/empty_items.jsonld" -> ExpectedReport(conforms = false, 1, OasProfile),
-    "annotationTypes/invalid.jsonld"  -> ExpectedReport(conforms = false, 1, RamlProfile),
-    "annotationTypes/valid.jsonld"    -> ExpectedReport(conforms = true, 0, RamlProfile)
+    "types/arrays/empty_items.jsonld"                        -> ExpectedReport(conforms = true, 0, RamlProfile),
+    "types/arrays/empty_items.jsonld"                        -> ExpectedReport(conforms = false, 1, OasProfile),
+    "annotationTypes/invalid.jsonld"                         -> ExpectedReport(conforms = false, 1, RamlProfile),
+    "annotationTypes/valid.jsonld"                           -> ExpectedReport(conforms = true, 0, RamlProfile),
+    "path-parameter-required/required-is-not-present.jsonld" -> ExpectedReport(conforms = false, 1, OasProfile),
+    "path-parameter-required/required-set-to-true.jsonld"    -> ExpectedReport(conforms = true, 0, OasProfile)
   )
 
   for {
