@@ -88,6 +88,11 @@ object ParserSideValidations extends Validations {
     "Duplicated endpoint path"
   )
 
+  val DuplicatedOperationId = validation(
+    "duplicated-operation-id",
+    "Duplicated operation id"
+  )
+
   val SchemaDeprecated = validation(
     "schema-deprecated",
     "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
@@ -697,6 +702,7 @@ object ParserSideValidations extends Validations {
     InvalidSecuredByType,
     InvalidEndpointPath,
     DuplicatedEndpointPath,
+    DuplicatedOperationId,
     InvalidOperationType,
     InvalidServerPath,
     ParametersWithoutBaseUri,
