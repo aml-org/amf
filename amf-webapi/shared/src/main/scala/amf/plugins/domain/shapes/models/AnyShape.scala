@@ -113,8 +113,12 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   def buildJsonSchema(): String = generateJsonSchema(this)
 
+  /** Delegates generation of a new RAML Data Type or returns cached
+    * one if it was generated before.
+    */
   def toRamlDatatype: String = toRamlDatatype(this)
 
+  /** Generates a new RAML Data Type. */
   def buildRamlDatatype(): String = generateRamlDatatype(this)
 
   def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =

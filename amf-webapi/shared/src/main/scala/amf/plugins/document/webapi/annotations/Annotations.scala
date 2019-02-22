@@ -18,6 +18,7 @@ object ParsedJSONSchema extends AnnotationGraphLoader {
     Some(ParsedJSONSchema(value))
 }
 
+/** Represents parsed RAML Data Type from any type of RAML document. */
 case class ParsedRamlDatatype(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String  = "parsed-raml-datatype"
   override val value: String = rawText
@@ -42,6 +43,7 @@ case class SchemaIsJsonSchema() extends Annotation
 
 case class GeneratedJSONSchema(rawText: String) extends Annotation
 
+/** Represents generated RAML Data Type. */
 case class GeneratedRamlDatatype(rawText: String) extends Annotation
 
 case class JSONSchemaId(id: String) extends SerializableAnnotation with PerpetualAnnotation {

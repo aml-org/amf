@@ -16,7 +16,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val commonFindShapeFunc = (u: BaseUnit) =>
+  val generalFindShapeFunc = (u: BaseUnit) =>
     encodedWebApi(u)
       .flatMap(_.endPoints.headOption)
       .flatMap(_.operations.headOption)
@@ -26,29 +26,29 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
       .collectFirst({ case any: AnyShape => any })
 
   test("Test array with object items") {
-    cycle("array-of-object.json", "array-of-object.raml", commonFindShapeFunc)
+    cycle("array-of-object.json", "array-of-object.raml")
   }
 
   test("Test array annotation type") {
-    cycle("param-with-annotation.json", "param-with-annotation.raml", commonFindShapeFunc)
+    cycle("param-with-annotation.json", "param-with-annotation.raml")
   }
 
   test("Test parsed from json expression generations") {
-    cycle("json-expression.json", "json-expression.raml", commonFindShapeFunc)
+    cycle("json-expression.json", "json-expression.raml")
   }
 
   test("Test parsed from json expression forced to build new") {
     cycle("json-expression.json", "json-expression-new.raml",
-          commonFindShapeFunc, (a: AnyShape) => a.buildRamlDatatype())
+          generalFindShapeFunc, (a: AnyShape) => a.buildRamlDatatype())
   }
 
   // https://github.com/aml-org/amf/issues/441
   ignore("Test recursive shape") {
-    cycle("recursive.json", "recursive.raml", commonFindShapeFunc)
+    cycle("recursive.json", "recursive.raml")
   }
 
   test("Test shapes references") {
-    cycle("reference.json", "reference.raml", commonFindShapeFunc)
+    cycle("reference.json", "reference.raml")
   }
 
   private val basePath: String   = "file://amf-client/shared/src/test/resources/toraml/toramldatatype/source/"
@@ -56,7 +56,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
 
   private def cycle(sourceFile: String,
                     goldenFile: String,
-                    findShapeFunc: (BaseUnit) => Option[AnyShape],
+                    findShapeFunc: (BaseUnit) => Option[AnyShape] = generalFindShapeFunc,
                     renderFn: (AnyShape) => String = (a: AnyShape) => a.toRamlDatatype): Future[Assertion] = {
     val ramlDatatype: Future[String] = for {
       v          <- Validation(platform)

@@ -8,8 +8,12 @@ import amf.core.services.RuntimeSerializer
 import amf.plugins.document.webapi.annotations.{GeneratedRamlDatatype, ParsedRamlDatatype}
 import amf.plugins.domain.shapes.models.AnyShape
 
+/** Serializes AnyShape to RAML Data Type. */
 trait RamlDatatypeSerializer {
 
+  /** Delegates generation of a new RAML Data Type or returns cached
+    * one if it was generated before.
+    */
   protected def toRamlDatatype(element: AnyShape): String = {
     element.annotations.find(classOf[ParsedRamlDatatype]) match {
       case Some(a) => a.rawText
@@ -21,6 +25,7 @@ trait RamlDatatypeSerializer {
     }
   }
 
+  /** Generates a new RAML Data Type included in RAML 1.0 Library. */
   protected def generateRamlDatatype(element: AnyShape): String = {
     AMFSerializer.init()
     val ramlDatatype = RuntimeSerializer(Module().withDeclaredElement(fixNameIfNeeded(element)),
@@ -32,6 +37,7 @@ trait RamlDatatypeSerializer {
     ramlDatatype
   }
 
+  /** Sets element name to "Root" if the name doesn't exist or equals to "type". */
   private def fixNameIfNeeded(element: AnyShape): AnyShape = {
     if (element.name.option().isEmpty) {
       element.copyShape().withName("Root")
