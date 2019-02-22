@@ -245,7 +245,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     jsDependencies += ProvidedJS / "ajv.min.js",
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fastOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
   )
 
 lazy val clientJVM = client.jvm.in(file("./amf-client/jvm"))
@@ -274,7 +274,7 @@ lazy val toolsJVM = tools.jvm.in(file("./amf-tools/jvm"))
 
 val buildJS = TaskKey[Unit]("buildJS", "Build npm module")
 buildJS := {
-  val _ = (fastOptJS in Compile in clientJS).value
+  val _ = (fullOptJS in Compile in clientJS).value
   "./amf-client/js/build-scripts/buildjs.sh".!
 }
 
