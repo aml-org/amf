@@ -12,7 +12,7 @@ object TraitModel extends AbstractDeclarationModel {
   override def modelInstance = Trait()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Http,
+    ModelVocabularies.AmlDoc,
     "Trait",
     "Type of document base unit encoding a RAML trait"
   )

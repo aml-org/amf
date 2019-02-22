@@ -1,5 +1,7 @@
 package amf.core.rdf
 
+import java.lang.reflect.Modifier
+
 import amf.core.annotations.DomainExtensionAnnotation
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, SourceMapModel}
@@ -497,7 +499,9 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   private def str(property: PropertyObject) = {
     property match {
       case Literal(v, _) => AmfScalar(v)
-      case Uri(v)        => throw new Exception(s"Expecting String literal found URI $v")
+      case Uri(v)        => {
+        throw new Exception(s"Expecting String literal found URI $v")
+      }
     }
   }
 

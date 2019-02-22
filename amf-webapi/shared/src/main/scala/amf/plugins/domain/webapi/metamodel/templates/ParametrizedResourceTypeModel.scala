@@ -12,7 +12,7 @@ object ParametrizedResourceTypeModel extends ParametrizedDeclarationModel {
   override def modelInstance = ParametrizedResourceType()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Http,
+    ModelVocabularies.AmlDoc,
     "Parametrized Resource Type",
     "RAML resource type that can accept parameters"
   )

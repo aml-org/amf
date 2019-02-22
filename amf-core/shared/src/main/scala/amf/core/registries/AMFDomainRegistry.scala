@@ -59,7 +59,6 @@ object AMFDomainRegistry {
     defaultIri(ModuleModel)                -> ModuleModel,
     defaultIri(VariableValueModel)         -> VariableValueModel,
     defaultIri(SourceMapModel)             -> SourceMapModel,
-    defaultIri(ShapeModel)                 -> ShapeModel,
     defaultIri(RecursiveShapeModel)        -> RecursiveShapeModel,
     defaultIri(PropertyShapeModel)         -> PropertyShapeModel,
     defaultIri(ShapeExtensionModel)        -> ShapeExtensionModel,
@@ -81,11 +80,20 @@ object AMFDomainRegistry {
   def registerAnnotation(a: String, agl: AnnotationGraphLoader): Option[AnnotationGraphLoader] =
     annotationsRegistry.put(a, agl)
 
+  def unregisterAnnotaion(a: String): Unit =  annotationsRegistry.remove(a)
+
   def registerModelEntity(entity: Obj): Option[Obj] = {
     metadataRegistry.put(defaultIri(entity), entity)
   }
 
+  def unregisterModelEntity(entity: Obj): Unit = {
+    metadataRegistry.remove(defaultIri(entity))
+  }
+
+
   def registerModelEntityResolver(resolver: AMFDomainEntityResolver): Unit = metadataResolverRegistry.append(resolver)
+
+  def unregisterModelEntityResolver(resolver: AMFDomainEntityResolver): Unit = metadataResolverRegistry.-=(resolver)
 
   protected def defaultIri(metadata: Obj): String = metadata.`type`.head.iri()
 }

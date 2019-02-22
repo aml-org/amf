@@ -138,6 +138,22 @@ object AMFPluginsRegistry {
     }
   }
 
+  def unregisterDomainPlugin(domainPlugin: AMFDomainPlugin) = {
+    domainPluginRegistry.remove(domainPlugin.ID)
+    domainPlugin.serializableAnnotations().foreach {
+      case (name, unloader) =>
+        AMFDomainRegistry.unregisterAnnotaion(name)
+    }
+    domainPlugin.modelEntities.foreach { entity =>
+      AMFDomainRegistry.unregisterModelEntity(entity)
+    }
+
+    domainPlugin.modelEntitiesResolver match {
+      case Some(resolver) => AMFDomainRegistry.unregisterModelEntityResolver(resolver)
+      case _              => // ignore
+    }
+  }
+
   def registerPayloadValidationPlugin(validationPlugin: AMFPayloadValidationPlugin): Unit = {
     payloadValidationPluginIDRegistry.get(validationPlugin.ID) match {
       case Some(_) =>
@@ -171,6 +187,15 @@ object AMFPluginsRegistry {
       case domainPlugin: AMFDomainPlugin     => registerDomainPlugin(domainPlugin)
       case documentPlugin: AMFDocumentPlugin => registerDocumentPlugin(documentPlugin)
       case syntaxPlugin: AMFSyntaxPlugin     => registerSyntaxPlugin(syntaxPlugin)
+      case _                                 => // ignore
+    }
+  }
+
+  protected def unregisterDependencies(plugin: AMFPlugin): Unit = {
+    plugin.dependencies().foreach {
+      case domainPlugin: AMFDomainPlugin     => unregisterDomainPlugin(domainPlugin)
+      case documentPlugin: AMFDocumentPlugin => // ignore
+      case syntaxPlugin: AMFSyntaxPlugin     => // ignore
       case _                                 => // ignore
     }
   }

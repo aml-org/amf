@@ -9,7 +9,6 @@ import amf.core.vocabulary.{Namespace, ValueType}
 
 /**
   * Stores meta-data about the semantics of the domain element
-  * @param classTerm
   * @param displayName
   * @param description
   * @param superClasses

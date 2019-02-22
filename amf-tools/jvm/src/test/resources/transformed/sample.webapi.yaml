@@ -1,0 +1,25 @@
+#%WebAPI 1.0
+name: New API
+server:
+  -
+    url: test.com
+scheme:
+  - HTTP
+version: "1.0"
+endpoint:
+  -
+    path: /ping
+    supportedOperation:
+      -
+        method: get
+        returns:
+          -
+            name: "200"
+            description: ""
+            statusCode: "200"
+        security:
+          -
+            name: basic
+            scheme:
+              name: basic
+              type: Basic Authentication

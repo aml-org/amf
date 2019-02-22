@@ -1,12 +1,10 @@
-package amf
+package amf.tools
 
 import java.io.{File, FileWriter}
 
 import amf.core.metamodel.Type.{Bool, Date, DateTime, Double, EncodedIri, Float, Int, Iri, RegExp, Str, Time}
-import amf.core.metamodel.{Field, Obj, Type}
-import amf.core.metamodel.document.BaseUnitModel
 import amf.core.metamodel.domain._
-import amf.core.parser.SyamlParsedDocument
+import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.vocabulary.Namespace
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
@@ -42,6 +40,7 @@ object VocabularyExporter {
   val reflectionsCoreDoc    = new Reflections("amf.core.metamodel.document", new SubTypesScanner(false))
   val reflectionsCoreDomain = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
   val reflectionsWebApi     = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
+  val reflectionsTemplates  = new Reflections("amf.plugins.domain.webapi.metamodel.templates", new SubTypesScanner(false))
   val reflectionsShapes     = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
 
   var files: Map[String, VocabularyFile]         = Map()
@@ -356,7 +355,7 @@ object VocabularyExporter {
   def buildClassTerm(klassName: String, modelObject: Obj): Option[VocabClassTerm] = {
     val doc         = modelObject.doc
     val types       = modelObject.`type`.map(_.iri())
-    val id          = types.head
+    var id          = types.head
     val displayName = doc.displayName
     val description = doc.description
     val vocab       = doc.vocabulary.filename
@@ -373,9 +372,18 @@ object VocabularyExporter {
       classTerm.id
     }
 
-    val finalSuperclasses = (superClassesInDoc ++ superClassesInInhertiance).distinct.filter(!conflictive.contains(_))
-    var classTerm =
+
+    var finalSuperclasses = (superClassesInDoc ++ superClassesInInhertiance).distinct.filter(!conflictive.contains(_))
+    // We need to solve a problem with the main class for the ShapeModel
+    var classTerm = if (klassName == "amf.core.metamodel.domain.ShapeModel$") {
+      val shapesShape = (Namespace.Shapes + "Shape").iri()
+      val tmp = finalSuperclasses.filter(_ != shapesShape)
+      finalSuperclasses = id :: tmp
+      id = shapesShape
+      VocabClassTerm(id = shapesShape, displayName = displayName, description = description, superClasses = finalSuperclasses)
+    } else {
       VocabClassTerm(id = id, displayName = displayName, description = description, superClasses = finalSuperclasses)
+    }
 
     classes = classes + (id         -> classTerm)
     classToFile = classToFile + (id -> vocab)
@@ -424,6 +432,7 @@ object VocabularyExporter {
     metaObjects(reflectionsCoreDomain, parseMetaObject)
     metaObjects(reflectionsWebApi, parseMetaObject)
     metaObjects(reflectionsShapes, parseMetaObject)
+    metaObjects(reflectionsTemplates, parseMetaObject)
 
     // review
     println(s"*** Parsed classes: ${classes.keys.toSeq.size}")

@@ -121,7 +121,7 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
           case schema: DynamicDomainElement if !schema.isInstanceOf[ExternalSourceElement] =>
             b.entry(
               url,
-              value(f.`type`, Value(amfValue.value, amfValue.value.annotations), id, _ => {}, _, ctx)
+              value(f.`type`, Value(amfValue.value, amfValue.value.annotations), id, sources.property(url), _, ctx)
             )
           case _ =>
             b.entry(

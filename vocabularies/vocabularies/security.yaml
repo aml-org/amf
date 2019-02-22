@@ -25,7 +25,7 @@ classTerms:
       - doc.recursive
       - doc.extends
   OpenIdConnectSettings:
-    displayName: OpenID Setings
+    displayName: OpenID Settings
     description: Settings for an OpenID security scheme
     extends:
       - Settings
@@ -43,7 +43,7 @@ classTerms:
       - settings
       - doc.extends
   ApiKeySettings:
-    displayName: API Key Setings
+    displayName: API Key Settings
     description: Settings for an API Key security scheme
     extends:
       - Settings
@@ -61,7 +61,7 @@ classTerms:
       - description
       - doc.extends
   HttpSettings:
-    displayName: HTTP Setings
+    displayName: HTTP Settings
     description: Settings for an HTTP security scheme
     extends:
       - Settings
@@ -79,7 +79,7 @@ classTerms:
       - additionalProperties
       - doc.extends
   OAuth2Settings:
-    displayName: OAuth2 Setings
+    displayName: OAuth2 Settings
     description: Settings for an OAuth2 security scheme
     extends:
       - Settings
@@ -94,7 +94,7 @@ classTerms:
       - additionalProperties
       - doc.extends
   OAuth1Settings:
-    displayName: OAuth1 Setings
+    displayName: OAuth1 Settings
     description: Settings for an OAuth1 security scheme
     extends:
       - Settings

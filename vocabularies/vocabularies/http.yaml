@@ -11,6 +11,20 @@ external:
   hydra: http://www.w3.org/ns/hydra/core#
   shacl: http://www.w3.org/ns/shacl#
 classTerms:
+  DomainExtension:
+    displayName: Domain Extension
+    description: |-
+      Extension to the model being parsed from RAML annotation or OpenAPI extensions
+      They must be a DomainPropertySchema (only in RAML) defining them.
+      The DomainPropertySchema might have an associated Data Shape that must validate the extension nested graph.
+      They are parsed as RDF graphs using a default transformation from a set of nested records into RDF.
+    extends: doc.DomainElement
+    properties:
+      - doc.name
+      - doc.definedBy
+      - doc.extension
+      - doc.element
+      - doc.extends
   Callback:
     displayName: Callback
     description: Model defining the information for a HTTP callback/ webhook

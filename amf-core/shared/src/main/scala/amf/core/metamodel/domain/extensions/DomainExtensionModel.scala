@@ -40,7 +40,7 @@ object DomainExtensionModel extends DomainExtensionModel {
   override def modelInstance = DomainExtension()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.AmlDoc,
+    ModelVocabularies.Http,
     "Domain Extension",
     "Extension to the model being parsed from RAML annotation or OpenAPI extensions\nThey must be a DomainPropertySchema (only in RAML) defining them.\nThe DomainPropertySchema might have an associated Data Shape that must validate the extension nested graph.\nThey are parsed as RDF graphs using a default transformation from a set of nested records into RDF."
   )

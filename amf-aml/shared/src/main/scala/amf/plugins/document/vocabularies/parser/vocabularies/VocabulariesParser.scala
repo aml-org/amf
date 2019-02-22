@@ -460,7 +460,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           case None => DatatypePropertyTerm(Annotations(propertyTermDeclaration))
           case Some(value) =>
             value.value.as[YScalar].text match {
-              case "string" | "integer" | "float" | "boolean" | "uri" | "any" | "time" | "date" | "dateTime" =>
+              case "string" | "integer" | "float" | "double" | "long" | "boolean" | "uri" | "any" | "time" | "date" | "dateTime" =>
                 DatatypePropertyTerm(Annotations(propertyTermDeclaration))
               case _ => ObjectPropertyTerm(Annotations(propertyTermDeclaration))
             }
@@ -500,7 +500,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
             val rangeId = entry.value.as[YScalar].text match {
               case "uri" => Some((Namespace.Xsd + "anyUri").iri())
               case "any" => Some((Namespace.Xsd + "anyType").iri())
-              case "string" | "integer" | "float" | "boolean" | "time" | "date" | "dateTime" =>
+              case "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" | "dateTime" =>
                 Some((Namespace.Xsd + entry.value.as[YScalar].text).iri())
               case classAlias =>
                 ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {

@@ -35,6 +35,10 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   val basePath = "amf-client/shared/src/test/resources/vocabularies2/production/"
 
+  ignore("Can parse the canonical webapi dialect") {
+    cycle("canonical_webapi.yaml", "canonical_webapi.json", VocabularyYamlHint, Amf, "vocabularies/dialects/")
+  }
+
   test("Can parse validation dialect") {
     cycle("validation_dialect.raml", "validation_dialect.json", VocabularyYamlHint, Amf)
   }
@@ -122,6 +126,10 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   test("Can parse activity instances") {
     withDialect("activity.yaml", "stream1.yaml", "stream1.json", VocabularyYamlHint, Amf, basePath + "streams/")
+  }
+
+  test("Can parse activity deployments demo") {
+    withDialect("dialect.yaml", "deployment.yaml", "deployment.json", VocabularyYamlHint, Amf, basePath + "deployments_demo/")
   }
 
 }
