@@ -128,17 +128,17 @@ class ObjectNode(override val fields: Fields, val annotations: Annotations) exte
       val value = properties(key)
         .replaceVariables(values, maybeTree.map(_.subtrees).getOrElse(Nil))(
           if (decodedKey
-                .endsWith("?") && maybeTree.isEmpty)
+                .endsWith("?") && maybeTree.isEmpty) // TODO review this logic
             (_: String) => Unit
           else reportError) // if its an optional node, ignore the violation of the var not implement
       properties.remove(key)
-      properties += VariableReplacer.replaceVariables(decodedKey, values, reportError) -> value
+      properties += VariableReplacer.replaceVariablesInKey(decodedKey, values, reportError) -> value
     }
 
     propertyAnnotations.keys.foreach { key =>
       val value = propertyAnnotations(key)
       propertyAnnotations.remove(key)
-      propertyAnnotations += VariableReplacer.replaceVariables(key.urlComponentDecoded, values, reportError) -> value
+      propertyAnnotations += VariableReplacer.replaceVariablesInKey(key.urlComponentDecoded, values, reportError) -> value
     }
 
     this

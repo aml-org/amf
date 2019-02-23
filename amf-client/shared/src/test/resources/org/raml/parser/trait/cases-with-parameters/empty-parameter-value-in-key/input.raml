@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: API
+version: 1.0
+traits:
+  t1:
+    <<key>>:
+/endpoint1:
+  put:
+    is:
+      t1:
+        key:

@@ -278,8 +278,14 @@ class ExtendsResolutionStage(
               Some(TraitBranch(key, Operation().withId(err.id + "_op"), Nil))
             case t: Trait =>
               val node: DataNode = t.dataNode.cloneNode()
-              node.replaceVariables(local.variables, subTree)((message: String) =>
-                apiContext.violation(ResolutionValidation, t.id, None, message, t.position(), t.location()))
+              node.replaceVariables(local.variables, subTree)((message: String) => {
+                apiContext.violation(ResolutionValidation,
+                                     t.id,
+                                     None,
+                                     message,
+                                     parameterized.position(),
+                                     parameterized.location())
+              })
 
               val op = ExtendsHelper.asOperation(
                 profile,
