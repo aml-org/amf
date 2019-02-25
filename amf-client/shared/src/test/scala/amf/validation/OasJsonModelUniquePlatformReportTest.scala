@@ -35,5 +35,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("path-parameter-required/required-set-to-false.json", Some("required-set-to-false.report"))
   }
 
+  test("Operation ids are unique") {
+    validate("duplicate-operation-ids.json", Some("duplicate-operation-ids.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }

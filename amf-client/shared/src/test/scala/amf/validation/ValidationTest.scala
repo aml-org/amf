@@ -41,17 +41,6 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   // todo serialize json of validation report?
   // Example validations test and Example model validation test were the same, because the resolution runs always for validation
 
-  ignore("HERE_HERE PROD") {
-    for {
-      validation <- Validation(platform)
-      library    <- AMFCompiler(productionPath + "bdm/0-main.raml", platform, RamlYamlHint, validation).build()
-      report     <- validation.validate(library, RamlProfile)
-    } yield {
-      println(report)
-      assert(report.conforms)
-    }
-  }
-
   //what is speciy testing?? should be partitioned in a some new of tests? extract to tckUtor?
   ignore("Trailing spaces validation") {
     for {

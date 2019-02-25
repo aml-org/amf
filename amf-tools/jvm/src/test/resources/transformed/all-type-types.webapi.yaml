@@ -1,0 +1,107 @@
+#%WebAPI 1.0
+name: test title
+dataShapes:
+  UnionType:
+    type: Union
+    anyOf:
+      -
+        type: Scalar
+        datatype: http://www.w3.org/2001/XMLSchema#integer
+        name: item1
+      -
+        type: Scalar
+        datatype: http://www.w3.org/2001/XMLSchema#string
+        name: item0
+    name: UnionType
+  TimeOnlyType:
+    type: Scalar
+    datatype: http://www.w3.org/2001/XMLSchema#time
+    name: TimeOnlyType
+  StringType:
+    type: Scalar
+    datatype: http://www.w3.org/2001/XMLSchema#string
+    name: StringType
+  PasswordType:
+    type: Scalar
+    datatype: http://a.ml/vocabularies/shapes#password
+    name: PasswordType
+  NumberType:
+    type: Scalar
+    datatype: http://a.ml/vocabularies/shapes#number
+    name: NumberType
+  IntegerType:
+    type: Scalar
+    datatype: http://www.w3.org/2001/XMLSchema#integer
+    name: IntegerType
+  DateTimeType:
+    type: Scalar
+    datatype: http://www.w3.org/2001/XMLSchema#dateTime
+    name: DateTimeType
+  DateTimeOnlyType:
+    type: Scalar
+    datatype: http://a.ml/vocabularies/shapes#dateTimeOnly
+    name: DateTimeOnlyType
+  DateOnlyType:
+    type: Scalar
+    datatype: http://www.w3.org/2001/XMLSchema#date
+    name: DateOnlyType
+  ByteType:
+    type: Scalar
+    datatype: http://www.w3.org/2001/XMLSchema#byte
+    name: ByteType
+  BooleanType:
+    type: Scalar
+    datatype: http://www.w3.org/2001/XMLSchema#boolean
+    name: BooleanType
+  BinaryType:
+    type: Scalar
+    datatype: http://www.w3.org/2001/XMLSchema#base64Binary
+    name: BinaryType
+  NilType:
+    type: Nil
+    name: NilType
+  OrType:
+    type: Any
+    name: OrType
+    or:
+      -
+        type: Scalar
+        datatype: http://www.w3.org/2001/XMLSchema#integer
+        name: item1
+      -
+        type: Scalar
+        datatype: http://www.w3.org/2001/XMLSchema#string
+        name: item0
+  NotType:
+    type: Any
+    name: NotType
+    not:
+      type: Scalar
+      datatype: http://www.w3.org/2001/XMLSchema#string
+      name: not
+  AnyType:
+    type: Any
+    name: AnyType
+  AndType:
+    type: Any
+    name: AndType
+    and:
+      -
+        type: Scalar
+        datatype: http://www.w3.org/2001/XMLSchema#integer
+        name: item1
+      -
+        type: Scalar
+        datatype: http://www.w3.org/2001/XMLSchema#string
+        name: item0
+  ObjectType:
+    type: Node
+    closed: false
+    name: ObjectType
+  FileType:
+    type: File
+    fileType:
+      - image/png
+      - image/jpeg
+    max.Length: 307200
+    name: FileType

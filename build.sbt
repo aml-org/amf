@@ -220,6 +220,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
   .settings(settings)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
+    libraryDependencies += "org.reflections" % "reflections" % "0.9.11",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
     libraryDependencies += "org.topbraid"           % "shacl"                   % "1.2.0-INTERNAL",
@@ -254,21 +255,20 @@ lazy val clientJS  = client.js.in(file("./amf-client/js"))
 /** **********************************************
   * AMF Tools
   ********************************************** */
-lazy val tools = crossProject(JVMPlatform)
-  .settings(Seq(
-    name := "amf-tools",
-    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
-  .dependsOn(core, webapi, vocabularies, validation)
-  .in(file("./amf-tools"))
-  .settings(settings)
-  .jvmSettings(
-    libraryDependencies += "org.reflections" % "reflections" % "0.9.11",
-    mainClass in Compile := Some("amf.VocabularyExporter"),
-    mainClass in assembly := Some("amf.VocabularyExporter"),
-    assemblyOutputPath in assembly := file(s"./amf-${version.value}.jar")
-  )
-
-lazy val toolsJVM = tools.jvm.in(file("./amf-tools/jvm"))
+//lazy val tools = crossProject(JVMPlatform)
+//  .settings(Seq(
+//    name := "amf-tools",
+//    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")))
+//  .dependsOn(core, webapi, vocabularies, validation, client % "compile->compile;test->test")
+//  .in(file("./amf-tools"))
+//  .settings(settings)
+//  .jvmSettings(
+//    mainClass in Compile := Some("amf.VocabularyExporter"),
+//    mainClass in assembly := Some("amf.VocabularyExporter"),
+//    assemblyOutputPath in assembly := file(s"./amf-${version.value}.jar")
+//  )
+//
+//lazy val toolsJVM = tools.jvm.in(file("./amf-tools/jvm"))
 
 // Tasks
 

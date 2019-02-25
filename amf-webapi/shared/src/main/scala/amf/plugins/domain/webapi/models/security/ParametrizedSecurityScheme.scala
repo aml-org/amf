@@ -14,10 +14,12 @@ case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
     with WithSettings {
 
   def name: StrField         = fields.field(Name)
+  def description: StrField  = fields.field(Description)
   def scheme: SecurityScheme = fields.field(Scheme)
   def settings: Settings     = fields.field(SettingsField)
 
   def withName(name: String): this.type             = set(Name, name)
+  def withDescription(descr: String): this.type     = set(Description, descr)
   def withScheme(scheme: SecurityScheme): this.type = set(Scheme, scheme)
   def withSettings(settings: Settings): this.type   = set(SettingsField, settings)
 

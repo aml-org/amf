@@ -23,6 +23,7 @@ import amf.plugins.features.validation.ParserSideValidations.{
   InvalidJsonSchemaVersion
 }
 import org.yaml.model._
+import scala.collection.mutable
 
 class PayloadContext(loc: String,
                      refs: Seq[ParsedReference],
@@ -211,7 +212,8 @@ abstract class OasWebApiContext(loc: String,
                                 refs: Seq[ParsedReference],
                                 private val wrapped: ParserContext,
                                 private val ds: Option[OasWebApiDeclarations] = None,
-                                override val eh: Option[ErrorHandler] = None)
+                                override val eh: Option[ErrorHandler] = None,
+                                private val operationIds: mutable.Set[String] = mutable.HashSet())
     extends WebApiContext(loc, refs, wrapped, ds, eh) {
 
   override val declarations: OasWebApiDeclarations =
@@ -248,6 +250,10 @@ abstract class OasWebApiContext(loc: String,
   }
   override def ignore(shape: String, property: String): Boolean =
     property.startsWith("x-") || property == "$ref" || (property.startsWith("/") && shape == "webApi")
+
+  /** Used for accumulating operation ids.
+    * returns true if id was not present, and false if operation being added is already present. */
+  def registerOperationId(id: String): Boolean = operationIds.add(id)
 }
 
 class Oas2WebApiContext(loc: String,

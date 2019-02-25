@@ -5,14 +5,14 @@ import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.parser.{Annotations, ErrorHandler, Fields}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
-import amf.plugins.document.vocabularies.model.domain.{External, NodeMapping}
+import amf.plugins.document.vocabularies.model.domain.{External, NodeMappable, NodeMapping, UnionNodeMapping}
 
 class DialectReferencesResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
-  def findDeclarations(model: BaseUnit, acc: Map[String, NodeMapping] = Map()): Map[String, NodeMapping] = {
+  def findDeclarations(model: BaseUnit, acc: Map[String, NodeMappable] = Map()): Map[String, NodeMappable] = {
     val updateDeclarations = model match {
       case lib: DeclaresModel => {
-        lib.declares.collect { case nodeMapping: NodeMapping => nodeMapping }.foldLeft(acc) {
+        lib.declares.collect { case nodeMapping: NodeMappable => nodeMapping }.foldLeft(acc) {
           case (acc, mapping) =>
             acc.updated(mapping.id, mapping)
         }
@@ -58,6 +58,7 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
     var allVocabularies = findVocabularies(model)
 
     val finalDeclarations = allDeclarations.values.zipWithIndex.map {
+      // Resolving links in node mappings declarations
       case (mapping: NodeMapping, i) =>
         if (mapping.isLink) {
           val target = mapping.linkTarget.get.asInstanceOf[NodeMapping]
@@ -68,7 +69,11 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
           NodeMapping(fields, Annotations()).withId(mapping.id).withName(s"node$i")
         } else {
           mapping.withName(s"node$i")
+
         }
+
+      // we ignore them in unions
+      case (union: UnionNodeMapping, i) =>union
     }.toSeq
 
     val vocabulariesAliases =

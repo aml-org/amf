@@ -1,0 +1,30 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Github API"
+  },
+  "paths": {
+    "/path": {
+      "get": {
+        "operationId":"someID",
+        "responses": {
+          "default": {
+            "description": "description"
+          }
+        }
+      }
+    },
+    "/otherPath": {
+      "get": {
+        "operationId":"someID",
+        "responses": {
+          "default": {
+            "description": "description"
+          }
+        }
+      }
+    }
+
+  }
+}

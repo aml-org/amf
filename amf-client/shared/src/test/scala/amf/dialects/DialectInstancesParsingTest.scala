@@ -184,6 +184,10 @@ trait DialectInstancesParsingTest extends FunSuiteCycleTests {
     withDialect("dialect24.raml", "example24c.raml", "example24c.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 27a test") {
+    withDialect("dialect27.raml", "example27a.raml", "example27a.json", VocabularyYamlHint, Amf)
+  }
+
   if (platform.name == "jvm") {
     test("generate 1 test") {
       withDialect("dialect1.raml",
@@ -329,6 +333,10 @@ trait DialectInstancesParsingTest extends FunSuiteCycleTests {
 
   test("generate 24 c test") {
     withDialect("dialect24.raml", "example24c.json", "example24c.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 27a test") {
+    withDialect("dialect27.raml", "example27a.json", "example27a.raml", AmfJsonHint, Aml)
   }
 
   test("Generate instance with invalid property terms") {

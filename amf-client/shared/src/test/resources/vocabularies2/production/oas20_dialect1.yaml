@@ -364,6 +364,10 @@ nodeMappings:
         range: ExampleObject
         mapKey: http.mediaType
         mapValue: shacl.raw
+      statusCode:
+        propertyTerm: hydra.statusCode
+        range: string
+        mandatory: true
 
   PathItemObject:
     classTerm: http.EndPoint

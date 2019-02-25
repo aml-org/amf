@@ -112,13 +112,13 @@ case class DataNodeEmitter(
     resolvedLinks: Boolean = false,
     referencesCollector: mutable.Map[String, DomainElement] = mutable.Map())(implicit eh: ErrorHandler)
     extends PartEmitter {
-  private val xsdString: String  = (Namespace.Xsd + "string").iri()
-  private val xsdInteger: String = (Namespace.Xsd + "integer").iri()
-  private val xsdFloat: String   = (Namespace.Xsd + "float").iri()
-  private val amlNumber: String  = (Namespace.Shapes + "number").iri()
-  private val xsdDouble: String  = (Namespace.Xsd + "double").iri()
-  private val xsdBoolean: String = (Namespace.Xsd + "boolean").iri()
-  private val xsdNil: String     = (Namespace.Xsd + "nil").iri()
+  private val xsdString: String  = Namespace.XsdTypes.xsdString.iri()
+  private val xsdInteger: String = Namespace.XsdTypes.xsdInteger.iri()
+  private val xsdFloat: String   = Namespace.XsdTypes.xsdFloat.iri()
+  private val amlNumber: String  = Namespace.XsdTypes.amlNumber.iri()
+  private val xsdDouble: String  = Namespace.XsdTypes.xsdDouble.iri()
+  private val xsdBoolean: String = Namespace.XsdTypes.xsdBoolean.iri()
+  private val xsdNil: String     = Namespace.XsdTypes.xsdNil.iri()
 
   override def emit(b: PartBuilder): Unit = {
     dataNode match {
