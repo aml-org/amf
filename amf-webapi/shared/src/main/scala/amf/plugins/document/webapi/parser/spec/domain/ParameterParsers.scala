@@ -31,6 +31,7 @@ import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
+import scala.collection.mutable
 
 /**
   *
@@ -493,11 +494,29 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
     }
 
   def parse(inRequest: Boolean = false): Parameters = {
-    val parameters = values
+    val oasParameters = values
       .map(value => OasParameterParser(Right(value), parentId, None).parse())
 
-    val formData = parameters.flatMap(_.formData)
-    val body     = parameters.filter(_.isBody)
+    val formData = oasParameters.flatMap(_.formData)
+    val body     = oasParameters.filter(_.isBody)
+
+    val parameters       = oasParameters.flatMap(_.parameter)
+    val nameWithBindings = parameters.map(param => param.parameterName.value() -> param.binding.value())
+    obtainDuplicated(nameWithBindings.toList).foreach {
+      case (name, binding) =>
+        oasParameters
+          .find(oasParam =>
+            oasParam.parameter.exists(param =>
+              param.parameterName.value() == name && param.binding.value() == binding))
+          .foreach(
+            oasParam =>
+              ctx.violation(
+                DuplicatedParameters,
+                oasParam.domainElement.id,
+                s"parameter $name of type $binding was found duplicated",
+                oasParam.ast.get
+            ))
+    }
 
     if (inRequest) {
       if (body.nonEmpty && formData.nonEmpty) {
@@ -514,13 +533,20 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
     }
 
     Parameters(
-      parameters.flatMap(_.query) ++ parameters.flatMap(_.invalids),
-      parameters.flatMap(_.path),
-      parameters.flatMap(_.header),
+      oasParameters.flatMap(_.query) ++ oasParameters.flatMap(_.invalids),
+      oasParameters.flatMap(_.path),
+      oasParameters.flatMap(_.header),
       Nil,
       body.flatMap(_.body) ++ formDataPayload(formData)
     )
   }
+
+  @annotation.tailrec
+  private def obtainDuplicated[A](list: List[A], seen: mutable.Set[A] = mutable.HashSet[A]()): Option[A] =
+    list match {
+      case x :: xs => if (seen.contains(x)) Some(x) else obtainDuplicated(xs, seen += x)
+      case _       => None
+    }
 
   private def validateOasPayloads(params: Seq[OasParameter], id: ValidationSpecification): Unit =
     if (params.length > 1) {

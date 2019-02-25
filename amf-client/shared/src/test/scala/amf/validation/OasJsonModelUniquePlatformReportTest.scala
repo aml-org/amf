@@ -43,5 +43,13 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("read-only-property-marked-required.json", Some("read-only-property-marked-required.report"))
   }
 
+  test("Duplicate parameters both defined inline") {
+    validate("duplicate-parameters/duplicate-parameters.json", Some("duplicate-parameters.report"))
+  }
+
+  test("Duplicate parameters defined with reference") {
+    validate("duplicate-parameters/duplicate-parameters-with-ref.json", Some("duplicate-parameters-with-ref.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }

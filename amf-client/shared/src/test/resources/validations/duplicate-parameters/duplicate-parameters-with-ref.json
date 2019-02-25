@@ -1,0 +1,34 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "api"
+  },
+  "paths": {
+    "/somePath": {
+      "get": {
+        "parameters": [
+          {
+            "name" : "queryParam",
+            "in" : "query",
+            "type" : "string"
+          },
+          {"$ref": "#/parameters/ParameterExample"}
+        ],
+        "responses": {
+          "default": {
+            "description": "Successfully got github user"
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "ParameterExample": {
+      "name" : "queryParam",
+      "in" : "query",
+      "type" : "boolean",
+      "description": "second duplicated param"
+    }
+  }
+}

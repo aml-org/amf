@@ -343,6 +343,11 @@ object ParserSideValidations extends Validations {
     "Only one body parameter is allowed"
   )
 
+  val DuplicatedParameters = validation(
+    "duplicate-parameters",
+    "Sibling parameters must have unique 'name' and 'in' values"
+  )
+
   val OasInvalidParameterBinding = validation(
     "oas-invalid-parameter-binding",
     "Parameter has invalid binding"
@@ -654,6 +659,7 @@ object ParserSideValidations extends Validations {
     MissingFragmentSpecification,
     MissingPropertySpecification,
     OasInvalidBodyParameter,
+    DuplicatedParameters,
     PatternPropertiesOnClosedNodeSpecification,
     DiscriminatorOnExtendedUnionSpecification,
     OasFormDataNotFileSpecification,
