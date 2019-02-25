@@ -500,7 +500,12 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
     val formData = oasParameters.flatMap(_.formData)
     val body     = oasParameters.filter(_.isBody)
 
-    val parameters       = oasParameters.flatMap(_.parameter)
+    val parameters = oasParameters
+      .flatMap(_.parameter)
+      .map(param =>
+        if (param.isLink && param.effectiveLinkTarget().isInstanceOf[Parameter]) {
+          param.effectiveLinkTarget().asInstanceOf[Parameter]
+        } else param)
     val nameWithBindings = parameters.map(param => param.parameterName.value() -> param.binding.value())
     obtainDuplicated(nameWithBindings.toList).foreach {
       case (name, binding) =>
