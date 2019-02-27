@@ -47,6 +47,22 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     * Should use this method when you have mutated this instance */
   def buildJsonSchema(): String = _internal.buildJsonSchema()
 
+  /** If the shape was parsed of RAML, or a new RAML has been previously generated,
+    * returns that value, otherwise generates a new RAML Data Type and stores
+    * the value for futures invocations.
+    * Proxies call to internal AnyShape.toRamlDatatype.
+    */
+  def toRamlDatatype: String = _internal.toRamlDatatype
+
+  /** Forces a new RAML Data Type generation, no matter if the shape was
+    * parsed from that kind of expression or if was previously generated.
+    * Stores the result for futures toRamlDatatype invocations.
+    * Call this method to generate a new RAML Data Type when this
+    * instance was mutated.
+    * Proxies call to internal AnyShape.toRamlDatatype.
+    */
+  def buildRamlDatatype(): String = _internal.buildRamlDatatype
+
   def validate(payload: String, env: Environment): ClientFuture[ValidationReport] =
     _internal.validate(payload, env._internal).asClient
 

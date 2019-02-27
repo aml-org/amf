@@ -1,0 +1,24 @@
+{
+  "swagger": "2.0",
+  "definitions": {
+    "Thing": {
+      "description": "shipmentIds",
+      "type": "array",
+      "x-oas-collectionFormat": "multi",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "paths": {
+    "/things/{thingId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/Thing"}
+          }
+        }
+      }
+    }
+  }
+}
