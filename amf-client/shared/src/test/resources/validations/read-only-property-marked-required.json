@@ -1,0 +1,21 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "some title"
+  },
+  "paths": {
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "canLogin": {
+          "readOnly": true,
+          "type": "boolean"
+        }
+      },
+      "required": ["canLogin"]
+    }
+  }
+}

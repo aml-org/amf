@@ -211,7 +211,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def parseDisjointUnionType(): UnionShape = {
 
     // val detectedTypes = map.key("type").get.value.as[YSequence].nodes.map(_.as[String])
-    val filtered      = YMap(map.entries.filter(_.key.as[String] != "type"), map.sourceName)
+    val filtered = YMap(map.entries.filter(_.key.as[String] != "type"), map.sourceName)
 
     val union = UnionShapeParser(Right(filtered), name).parse()
     adopt(union)
@@ -225,7 +225,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
 
     val exclusiveProps = YMap(finals, finals.headOption.map(_.sourceName).getOrElse(""))
-    var i = 0
+    var i              = 0
     val parsedTypes: Seq[AmfElement] = map.key("type").get.value.as[YSequence].nodes map { node =>
       i += 1
       if (node.tagType == YType.Str) {
@@ -248,9 +248,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             Some(parseAnyType(name + i, exclusiveProps, s => s.withId(union.id + "/any")))
           case other =>
             ctx.violation(InvalidDisjointUnionType,
-              union.id,
-              s"Invalid type for disjointUnion $other",
-              map.key("type").get.value)
+                          union.id,
+                          s"Invalid type for disjointUnion $other",
+                          map.key("type").get.value)
             None
         }
       } else if (node.tagType == YType.Map) {
@@ -258,9 +258,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         OasTypeParser(entry, shape => shape.adopted(union.id), version).parse()
       } else {
         ctx.violation(InvalidDisjointUnionType,
-          union.id,
-          s"Invalid type for disjointUnion ${node.tagType}",
-          map.key("type").get.value)
+                      union.id,
+                      s"Invalid type for disjointUnion ${node.tagType}",
+                      map.key("type").get.value)
         None
       }
     } collect { case Some(t: AmfElement) => t }
@@ -505,11 +505,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
       map
         .key("type")
-        .fold(
-          shape
-            .set(ScalarShapeModel.DataType,
-                 AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)),
-                 Annotations()))(entry =>
+        .fold(shape
+          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations()))(entry =>
           shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(validatedTypeDef)), Annotations(entry)))
 
       shape
@@ -933,7 +930,20 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       property.set(
         PropertyShapeModel.Path,
         AmfScalar((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri(), Annotations(entry.key)))
-      entry.value.toOption[YMap].foreach(_.key("readOnly", PropertyShapeModel.ReadOnly in property))
+      entry.value
+        .toOption[YMap]
+        .foreach(_.key(
+          "readOnly",
+          readOnlyEntry => {
+            PropertyShapeModel.ReadOnly.in(property)(readOnlyEntry)
+            if (version.isInstanceOf[OAS20SchemaVersion] && readOnlyEntry.value.toString().toBoolean && required) {
+              ctx.warning(ReadOnlyPropertyMarkedRequired,
+                          property.id,
+                          "Read only property should not be marked as required by a schema",
+                          entry)
+            }
+          }
+        ))
 
       if (version.isInstanceOf[OAS30SchemaVersion]) {
         entry.value.toOption[YMap].foreach(_.key("writeOnly", PropertyShapeModel.WriteOnly in property))

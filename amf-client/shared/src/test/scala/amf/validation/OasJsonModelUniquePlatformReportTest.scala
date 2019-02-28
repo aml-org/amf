@@ -39,5 +39,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("duplicate-operation-ids.json", Some("duplicate-operation-ids.report"))
   }
 
+  test("Read only property marked as required") {
+    validate("read-only-property-marked-required.json", Some("read-only-property-marked-required.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }
