@@ -23,6 +23,7 @@ object Validator {
       env._internal
     ).map(report => report).asClient
 
-  def loadValidationProfile(url: String): ClientFuture[ProfileName] =
-    RuntimeValidator.loadValidationProfile(url).asClient
+  def loadValidationProfile(url: String,
+                            env: Environment = DefaultEnvironment()): ClientFuture[ProfileName] =
+    RuntimeValidator.loadValidationProfile(url, env).asClient
 }

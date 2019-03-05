@@ -40,7 +40,12 @@ object Core extends PlatformSecrets {
   def validate(model: BaseUnit, profileName: ProfileName, messageStyle: MessageStyle): ClientFuture[ValidationReport] =
     validate(model, profileName, messageStyle, DefaultEnvironment())
 
-  def loadValidationProfile(url: String): ClientFuture[ProfileName] = Validator.loadValidationProfile(url)
+  def loadValidationProfile(url: String,
+                            env: Environment): ClientFuture[ProfileName] =
+    Validator.loadValidationProfile(url, env)
+
+  def loadValidationProfile(url: String): ClientFuture[ProfileName] =
+    loadValidationProfile(url, DefaultEnvironment())
 
   def registerNamespace(alias: String, prefix: String): Boolean = platform.registerNamespace(alias, prefix).isDefined
 

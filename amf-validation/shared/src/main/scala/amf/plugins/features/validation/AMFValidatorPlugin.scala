@@ -68,13 +68,14 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   var customValidationProfiles: Map[String, () => ValidationProfile]  = Map.empty
   var customValidationProfilesPlugins: Map[String, AMFDocumentPlugin] = Map.empty
 
-  override def loadValidationProfile(validationProfilePath: String): Future[ProfileName] = {
+  override def loadValidationProfile(validationProfilePath: String, env: Environment): Future[ProfileName] = {
     RuntimeCompiler(
       validationProfilePath,
       Some("application/yaml"),
       Some(AMLPlugin.ID),
       Context(platform),
-      cache = Cache()
+      cache = Cache(),
+      env = env
     ).map {
         case parsed: DialectInstance if parsed.definedBy().is(url) =>
           parsed.encodes

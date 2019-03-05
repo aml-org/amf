@@ -30,7 +30,7 @@ trait RuntimeValidator {
   /**
     * Loads a validation profile from a URL
     */
-  def loadValidationProfile(validationProfilePath: String): Future[ProfileName]
+  def loadValidationProfile(validationProfilePath: String, env: Environment): Future[ProfileName]
 
   /**
     * Low level validation returning a SHACL validation report
@@ -99,8 +99,8 @@ object RuntimeValidator {
     }
   }
 
-  def loadValidationProfile(validationProfilePath: String): Future[ProfileName] =
-    validator.loadValidationProfile(validationProfilePath)
+  def loadValidationProfile(validationProfilePath: String, env: Environment = Environment()): Future[ProfileName] =
+    validator.loadValidationProfile(validationProfilePath, env)
 
   def shaclValidation(model: BaseUnit,
                       validations: EffectiveValidations,
