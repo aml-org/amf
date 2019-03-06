@@ -103,6 +103,10 @@ object CoreWrapper {
 
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
+  def loadValidationProfile(url: String,
+                            env: Environment): ClientFuture[ProfileName] =
+    Core.loadValidationProfile(url, env)
+
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
   def registerPlugin(plugin: AMFPlugin): Unit = Core.registerPlugin(plugin)
