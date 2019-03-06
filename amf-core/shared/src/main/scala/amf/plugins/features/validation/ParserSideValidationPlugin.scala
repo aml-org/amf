@@ -105,7 +105,9 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
   /**
     * Loads a validation profile from a URL
     */
-  override def loadValidationProfile(validationProfilePath: String): Future[ProfileName] = Future { ProfileName(ID) }
+  override def loadValidationProfile(validationProfilePath: String,
+                                     env: Environment = Environment()): Future[ProfileName] =
+    Future { ProfileName(ID) }
 
   /**
     * Low level validation returning a SHACL validation report

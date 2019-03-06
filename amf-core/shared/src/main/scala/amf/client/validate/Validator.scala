@@ -25,5 +25,5 @@ object Validator {
 
   def loadValidationProfile(url: String,
                             env: Environment = DefaultEnvironment()): ClientFuture[ProfileName] =
-    RuntimeValidator.loadValidationProfile(url, env).asClient
+    RuntimeValidator.loadValidationProfile(url, env._internal).asClient
 }
