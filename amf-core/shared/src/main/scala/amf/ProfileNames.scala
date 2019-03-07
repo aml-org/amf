@@ -14,7 +14,7 @@ object ProfileNames {
   val RAML: ProfileName   = RamlProfile
   val RAML10: ProfileName = Raml10Profile
   val RAML08: ProfileName = Raml08Profile
-  val AML: ProfileName    = RamlProfile
+  val AML: ProfileName    = AmlProfile
 
   lazy val specProfiles: Seq[ProfileName] =
     Seq(AmfProfile, OasProfile, Oas20Profile, Oas30Profile, RamlProfile, Raml08Profile, Raml10Profile)
