@@ -216,12 +216,36 @@
                 {
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
+                      "@value": "http://a.ml/vocabularies/data#b"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "[(10,9)-(13,5)]"
+                    }
+                  ]
+                },
+                {
+                  "http://a.ml/vocabularies/document-source-maps#element": [
+                    {
                       "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations.json#/web-api/foo/object_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
                     {
                       "@value": "[(8,11)-(14,3)]"
+                    }
+                  ]
+                },
+                {
+                  "http://a.ml/vocabularies/document-source-maps#element": [
+                    {
+                      "@value": "http://a.ml/vocabularies/data#a"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/document-source-maps#value": [
+                    {
+                      "@value": "[(9,9)-(9,13)]"
                     }
                   ]
                 }

@@ -1,7 +1,5 @@
 package amf.core.rdf
 
-import java.lang.reflect.Modifier
-
 import amf.core.annotations.DomainExtensionAnnotation
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, SourceMapModel}
@@ -191,10 +189,10 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           link.withId(node.subject)
           node.getKeys().foreach { k =>
             val entries = node.getProperties(k).get
-            if (k == link.Alias.value.iri() && entries.head.isInstanceOf[Literal]) {
+            if (k == LinkNodeModel.Alias.value.iri() && entries.head.isInstanceOf[Literal]) {
               val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
               link.alias = parsedScalar.value
-            } else if (k == link.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
+            } else if (k == LinkNodeModel.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
               val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
               link.value = parsedScalar.value
             }
@@ -499,7 +497,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   private def str(property: PropertyObject) = {
     property match {
       case Literal(v, _) => AmfScalar(v)
-      case Uri(v)        => {
+      case Uri(v) => {
         throw new Exception(s"Expecting String literal found URI $v")
       }
     }

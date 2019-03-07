@@ -789,12 +789,36 @@
                                                   {
                                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                                       {
+                                                        "@value": "http://a.ml/vocabularies/data#type"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(65,166)-(65,178)]"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                                      {
                                                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/any/application%2Fjson/example/default-example/array_1/object_2/object_10"
                                                       }
                                                     ],
                                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                                       {
                                                         "@value": "[(65,157)-(65,198)]"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "http://a.ml/vocabularies/data#totalSeats"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(65,194)-(65,197)]"
                                                       }
                                                     ]
                                                   }
@@ -851,6 +875,18 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
+                                                    "@value": "http://a.ml/vocabularies/data#plane"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "totalSeats->[(65,180)-(65,194)]#type->[(65,158)-(65,166)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
                                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/any/application%2Fjson/example/default-example/array_1/object_2"
                                                   }
                                                 ],
@@ -865,12 +901,108 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
+                                                    "@value": "http://a.ml/vocabularies/data#price"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,56)-(65,59)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#origin"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,102)-(65,107)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#destination"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,124)-(65,129)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#code"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,38)-(65,46)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
                                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/any/application%2Fjson/example/default-example/array_1/object_2"
                                                   }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                                   {
                                                     "@value": "[(65,21)-(65,199)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#ID"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,27)-(65,28)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#departureDate"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,78)-(65,90)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#emptySeats"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,145)-(65,146)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#plane"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,157)-(65,198)]"
                                                   }
                                                 ]
                                               }
@@ -1221,12 +1353,36 @@
                                                   {
                                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                                       {
+                                                        "@value": "http://a.ml/vocabularies/data#type"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(65,350)-(65,362)]"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                                      {
                                                         "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/any/application%2Fjson/example/default-example/array_1/object_13/object_21"
                                                       }
                                                     ],
                                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                                       {
                                                         "@value": "[(65,341)-(65,382)]"
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "http://a.ml/vocabularies/data#totalSeats"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(65,378)-(65,381)]"
                                                       }
                                                     ]
                                                   }
@@ -1283,6 +1439,18 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
+                                                    "@value": "http://a.ml/vocabularies/data#plane"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "totalSeats->[(65,364)-(65,378)]#type->[(65,342)-(65,350)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
                                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/any/application%2Fjson/example/default-example/array_1/object_13"
                                                   }
                                                 ],
@@ -1297,12 +1465,108 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
+                                                    "@value": "http://a.ml/vocabularies/data#price"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,236)-(65,242)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#origin"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,285)-(65,290)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#destination"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,307)-(65,312)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#code"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,217)-(65,225)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
                                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/any/application%2Fjson/example/default-example/array_1/object_13"
                                                   }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                                   {
                                                     "@value": "[(65,201)-(65,383)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#ID"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,207)-(65,208)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#departureDate"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,261)-(65,273)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#emptySeats"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,328)-(65,330)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#plane"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(65,341)-(65,382)]"
                                                   }
                                                 ]
                                               }
@@ -1947,12 +2211,36 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
+                                                    "@value": "http://a.ml/vocabularies/data#type"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(71,153)-(71,165)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
                                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example/object_1/object_8"
                                                   }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                                   {
                                                     "@value": "[(71,144)-(71,185)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#totalSeats"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(71,181)-(71,184)]"
                                                   }
                                                 ]
                                               }
@@ -2023,6 +2311,18 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
+                                                "@value": "http://a.ml/vocabularies/data#plane"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "totalSeats->[(71,167)-(71,181)]#type->[(71,145)-(71,153)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
                                                 "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example/object_1"
                                               }
                                             ],
@@ -2037,12 +2337,96 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
+                                                "@value": "http://a.ml/vocabularies/data#price"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(71,43)-(71,46)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#origin"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(71,89)-(71,94)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#destination"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(71,111)-(71,116)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#code"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(71,25)-(71,33)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
                                                 "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/example/default-example/object_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "[(71,16)-(71,186)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#departureDate"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(71,65)-(71,77)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#emptySeats"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(71,132)-(71,133)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#plane"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(71,144)-(71,185)]"
                                               }
                                             ]
                                           }
@@ -2317,6 +2701,18 @@
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#message"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(78,32)-(78,63)]"
+                                              }
+                                            ]
+                                          },
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -2957,12 +3353,36 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
+                                                    "@value": "http://a.ml/vocabularies/data#type"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(87,167)-(87,179)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
                                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/get/200/application%2Fjson/any/application%2Fjson/example/default-example/object_1/object_9"
                                                   }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                                   {
                                                     "@value": "[(87,158)-(87,199)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#totalSeats"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(87,195)-(87,198)]"
                                                   }
                                                 ]
                                               }
@@ -3033,6 +3453,18 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
+                                                "@value": "http://a.ml/vocabularies/data#plane"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "totalSeats->[(87,181)-(87,195)]#type->[(87,159)-(87,167)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
                                                 "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/get/200/application%2Fjson/any/application%2Fjson/example/default-example/object_1"
                                               }
                                             ],
@@ -3047,12 +3479,108 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
+                                                "@value": "http://a.ml/vocabularies/data#price"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(87,57)-(87,60)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#origin"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(87,103)-(87,108)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#destination"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(87,125)-(87,130)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#code"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(87,39)-(87,47)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
                                                 "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/get/200/application%2Fjson/any/application%2Fjson/example/default-example/object_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "[(87,22)-(87,200)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#ID"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(87,28)-(87,29)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#departureDate"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(87,79)-(87,91)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#emptySeats"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(87,146)-(87,147)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#plane"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(87,158)-(87,199)]"
                                               }
                                             ]
                                           }
@@ -3385,6 +3913,18 @@
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#message"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(95,34)-(95,67)]"
+                                              }
+                                            ]
+                                          },
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -3990,12 +4530,36 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
+                                                    "@value": "http://a.ml/vocabularies/data#type"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(102,155)-(102,165)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
                                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example/object_1/object_8"
                                                   }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                                   {
                                                     "@value": "[(102,146)-(102,185)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#totalSeats"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(102,181)-(102,184)]"
                                                   }
                                                 ]
                                               }
@@ -4066,6 +4630,18 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
+                                                "@value": "http://a.ml/vocabularies/data#plane"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "totalSeats->[(102,167)-(102,181)]#type->[(102,147)-(102,155)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
                                                 "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example/object_1"
                                               }
                                             ],
@@ -4080,12 +4656,96 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
+                                                "@value": "http://a.ml/vocabularies/data#price"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(102,45)-(102,48)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#origin"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(102,91)-(102,96)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#destination"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(102,113)-(102,118)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#code"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(102,27)-(102,35)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
                                                 "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/example/default-example/object_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
                                                 "@value": "[(102,18)-(102,186)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#departureDate"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(102,67)-(102,79)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#emptySeats"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(102,134)-(102,135)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#plane"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(102,146)-(102,185)]"
                                               }
                                             ]
                                           }
@@ -4360,6 +5020,18 @@
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#message"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(109,34)-(109,67)]"
+                                              }
+                                            ]
+                                          },
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {

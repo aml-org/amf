@@ -85,6 +85,18 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
+                    "@value": "http://test.com/tmp#b"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(7,3)-(7,6)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example9.raml#/"
                   }
                 ],
@@ -151,12 +163,36 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
+                        "@value": "http://test.com/tmp#a1"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,8)-(4,12)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/library9.raml#/as/Ho"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(4,0)-(5,10)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://test.com/tmp#a2"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,8)-(5,10)]"
                       }
                     ]
                   }
@@ -318,6 +354,18 @@
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#a1"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(7,6)]"
+                  }
+                ]
+              },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {

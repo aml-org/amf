@@ -66,6 +66,18 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
+                            "@value": "https://www.w3.org/ns/activitystreams/id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(8,10)-(8,20)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
                             "@value": "http://clients.api.org/user132332"
                           }
                         ],
@@ -104,6 +116,18 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
+                            "@value": "http://crm.com/vocabularies/core#Id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(11,10)-(11,16)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
                             "@value": "http://individuals.api.org/i34994"
                           }
                         ],
@@ -128,12 +152,48 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
+                        "@value": "https://www.w3.org/ns/activitystreams/object"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(11,0)-(11,16)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "https://www.w3.org/ns/activitystreams/published"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,15)-(9,34)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(6,0)-(11,16)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "https://www.w3.org/ns/activitystreams/actor"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(8,0)-(9,0)]"
                       }
                     ]
                   }
@@ -152,12 +212,36 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
+                    "@value": "https://www.w3.org/ns/activitystreams/items"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,6)-(11,16)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(3,0)-(11,16)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "https://www.w3.org/ns/activitystreams/totalItems"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,7)-(3,8)]"
                   }
                 ]
               }

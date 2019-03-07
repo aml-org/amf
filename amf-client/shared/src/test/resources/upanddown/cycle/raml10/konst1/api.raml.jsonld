@@ -614,6 +614,20 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/declarations/annotations/a"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
@@ -626,9 +640,7 @@
                     "@value": "[(5,2)-(5,3)]"
                   }
                 ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#declared-element": [
+              },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
@@ -637,7 +649,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": ""
+                    "@value": "[(5,2)-(7,0)]"
                   }
                 ]
               }

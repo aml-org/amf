@@ -90,6 +90,18 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
+                    "@value": "http://test.com/v2#extension"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,4)-(2,28)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example16a.raml#/"
                   }
                 ],
@@ -150,6 +162,18 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
+                            "@value": "http://test.com/v3#z"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(3,5)-(3,20)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
                             "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example16b.raml#/y"
                           }
                         ],
@@ -171,6 +195,18 @@
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://test.com/v3#y"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,0)-(3,20)]"
+                      }
+                    ]
+                  },
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {

@@ -1,9 +1,9 @@
 package amf.core.model.domain
 
 import amf.core.annotations.{DataNodePropertiesAnnotations, LexicalInformation, ScalarType}
-import amf.core.metamodel.Type.{Array, EncodedIri, Str}
-import amf.core.metamodel.domain.{ScalarNodeModel, _}
+import amf.core.metamodel.Type.{EncodedIri, Str}
 import amf.core.metamodel.domain.DataNodeModel._
+import amf.core.metamodel.domain.{ScalarNodeModel, _}
 import amf.core.metamodel.{DynamicObj, Field, ModelDefaultBuilder, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain.templates.Variable
@@ -33,7 +33,7 @@ abstract class DataNode(annotations: Annotations) extends DynamicDomainElement {
   override def componentId: String = "/" + name.option().getOrElse("data-node").urlComponentEncoded
 
   /** Replace all raml variables (any name inside double chevrons -> '<<>>') with the provided values. */
-  def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(reportError: (String) => Unit): DataNode
+  def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(reportError: String => Unit): DataNode
 
   def forceAdopted(parent: String): this.type = {
     val adoptedId = parent + "/" + name.option().map(_.urlComponentEncoded).orNull
@@ -247,11 +247,10 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
 
   override def valueForField(f: Field): Option[Value] = f match {
     case Member => Some(Value(AmfArray(members), Annotations()))
-    case _ if f.value.iri().startsWith((Namespace.Data + "pos").iri()) => {
+    case _ if f.value.iri().startsWith((Namespace.Data + "pos").iri()) =>
       val pos    = Integer.parseInt(f.value.iri().replace((Namespace.Data + "pos").iri(), ""))
       val member = members(pos)
       Some(Value(AmfScalar(member.id), Annotations()))
-    }
     case _ => None
   }
 
@@ -270,7 +269,7 @@ class ArrayNode(override val fields: Fields, val annotations: Annotations) exten
 
   def positionFields(): Seq[Field] = members.zipWithIndex.map {
     case (_, i) =>
-      Field(EncodedIri, Namespace.Data + s"pos$i", ModelDoc(ModelVocabularies.Data, s"pos$i", ""))
+      Field(EncodedIri, Namespace.Data + s"pos$i", ModelDoc(ModelVocabularies.Data, s"pos$i"))
   }
 
   override def meta: Obj = new ArrayNodeDynamicModel
@@ -303,23 +302,21 @@ object ArrayNode {
 class LinkNode(var alias: String, var value: String, override val fields: Fields, val annotations: Annotations)
     extends DataNode(annotations) {
 
-  val Value: Field                               = Field(Str, Namespace.Data + "value", ModelDoc(ModelVocabularies.Data, "value", ""))
-  val Alias: Field                               = Field(Str, Namespace.Data + "alias", ModelDoc(ModelVocabularies.Data, "alias", ""))
   var linkedDomainElement: Option[DomainElement] = None
 
   override def valueForField(f: Field): Option[Value] = {
     val maybeScalar = f match {
-      case Value =>
+      case LinkNodeModel.Value =>
         Some(AmfScalar(value, annotations))
-      case Alias =>
+      case LinkNodeModel.Alias =>
         Some(AmfScalar(alias, annotations))
       case _ => None
     }
     maybeScalar map { amf.core.parser.Value(_, Annotations()) }
   }
 
-  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(
-      reportError: (String) => Unit): DataNode = this
+  override def replaceVariables(values: Set[Variable], keys: Seq[ElementTree])(reportError: String => Unit): DataNode =
+    this
 
   override def cloneNode(): LinkNode = {
     val cloned = LinkNode(annotations)
@@ -336,13 +333,8 @@ class LinkNode(var alias: String, var value: String, override val fields: Fields
     this
   }
 
-  override def meta: Obj = new LinkNodeDynamicModel
+  override def meta: Obj = LinkNodeModel
 
-  class LinkNodeDynamicModel extends DynamicObj with ModelDefaultBuilder {
-    override def modelInstance: AmfObject = LinkNode()
-    override def fields: List[Field]      = List(Value) ++ DataNodeModel.fields
-    override val `type`: List[ValueType]  = Data + "Link" :: DataNodeModel.`type`
-  }
 }
 
 object LinkNode {

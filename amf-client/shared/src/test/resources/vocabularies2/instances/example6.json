@@ -51,6 +51,18 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
+                        "@value": "http://test.com/tmp#a2"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(8,8)-(8,10)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example6.raml#/a/hey"
                       }
                     ],
@@ -131,6 +143,18 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
+                    "@value": "http://test.com/tmp#a"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,2)-(10,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example6.raml#/"
                   }
                 ],
@@ -206,12 +230,36 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
+                    "@value": "http://test.com/tmp#a2"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,8)-(4,10)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example6.raml#/As/Go"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(4,0)-(6,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#a1"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,8)-(5,12)]"
                   }
                 ]
               }

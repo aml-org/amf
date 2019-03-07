@@ -1,7 +1,7 @@
 package amf.plugins.document.graph.parser
 
 import amf.core.metamodel.Type.ObjType
-import amf.core.metamodel.domain.{DomainElementModel, ScalarNodeModel}
+import amf.core.metamodel.domain.{DomainElementModel, LinkNodeModel, ScalarNodeModel}
 import amf.core.model.domain
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, ParserContext, YMapOps}
@@ -97,11 +97,11 @@ class DynamicGraphParser(var nodes: Map[String, AmfElement],
             val uri = entry.key.as[String]
             uri match {
 
-              case _ if uri == link.Alias.value.iri() =>
+              case _ if uri == LinkNodeModel.Alias.value.iri() =>
                 val parsedScalar = parseJSONLDScalar(entry.value)
                 link.alias = parsedScalar.value
 
-              case _ if uri == link.Value.value.iri() =>
+              case _ if uri == LinkNodeModel.Value.value.iri() =>
                 val parsedScalar = parseJSONLDScalar(entry.value)
                 link.value = parsedScalar.value
 

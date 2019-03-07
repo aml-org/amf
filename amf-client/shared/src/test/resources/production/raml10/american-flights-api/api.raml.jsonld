@@ -1148,6 +1148,18 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
+                                                "@value": "http://a.ml/vocabularies/data#message"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(35,23)-(35,52)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
                                                 "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights/post/201/application%2Fjson/any/schema/example/default-example/object_1"
                                               }
                                             ],
@@ -1874,6 +1886,18 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
+                                                "@value": "http://a.ml/vocabularies/data#message"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(52,25)-(52,56)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
                                                 "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/delete/200/application%2Fjson/any/schema/example/default-example/object_1"
                                               }
                                             ],
@@ -2476,6 +2500,18 @@
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#message"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(64,25)-(64,56)]"
+                                              }
+                                            ]
+                                          },
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
@@ -4343,12 +4379,36 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
+                                    "@value": "http://a.ml/vocabularies/data#type"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(12,12)-(12,22)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
                                     "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightsExample.raml#/example/value/array_1/object_2/object_10"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(12,0)-(14,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/data#totalSeats"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(13,18)-(13,21)]"
                                   }
                                 ]
                               }
@@ -4405,6 +4465,18 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
+                                "@value": "http://a.ml/vocabularies/data#plane"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "totalSeats->[(13,6)-(14,0)]#type->[(12,6)-(13,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
                                 "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightsExample.raml#/example/value/array_1/object_2"
                               }
                             ],
@@ -4419,12 +4491,108 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
+                                "@value": "http://a.ml/vocabularies/data#price"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(6,11)-(6,14)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#origin"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(8,12)-(8,15)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#destination"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(9,17)-(9,20)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#code"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(5,10)-(5,16)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
                                 "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightsExample.raml#/example/value/array_1/object_2"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(4,0)-(14,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#ID"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(4,8)-(4,9)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#departureDate"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(7,19)-(7,29)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#emptySeats"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(10,16)-(10,17)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#plane"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(12,0)-(14,0)]"
                               }
                             ]
                           }
@@ -4775,12 +4943,36 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
+                                    "@value": "http://a.ml/vocabularies/data#type"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(23,12)-(23,22)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
                                     "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightsExample.raml#/example/value/array_1/object_13/object_21"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(23,0)-(25,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/data#totalSeats"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(24,18)-(24,21)]"
                                   }
                                 ]
                               }
@@ -4837,6 +5029,18 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
+                                "@value": "http://a.ml/vocabularies/data#plane"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "totalSeats->[(24,6)-(25,0)]#type->[(23,6)-(24,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
                                 "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightsExample.raml#/example/value/array_1/object_13"
                               }
                             ],
@@ -4851,12 +5055,108 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
+                                "@value": "http://a.ml/vocabularies/data#price"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(17,11)-(17,17)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#origin"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(19,12)-(19,15)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#destination"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(20,17)-(20,20)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#code"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(16,10)-(16,16)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
                                 "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightsExample.raml#/example/value/array_1/object_13"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(15,0)-(25,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#ID"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(15,8)-(15,9)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#departureDate"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(18,19)-(18,29)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#emptySeats"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(21,16)-(21,18)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#plane"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(23,0)-(25,0)]"
                               }
                             ]
                           }
@@ -5383,12 +5683,36 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
+                                "@value": "http://a.ml/vocabularies/data#type"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(11,10)-(11,20)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
                                 "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightExample.raml#/example/value/object_1/object_9"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(11,0)-(12,19)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#totalSeats"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(12,16)-(12,19)]"
                               }
                             ]
                           }
@@ -5445,6 +5769,54 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
+                            "@value": "http://a.ml/vocabularies/data#price"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(5,9)-(5,12)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#origin"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(7,10)-(7,13)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#destination"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(8,15)-(8,18)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#code"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(4,8)-(4,13)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
                             "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightExample.raml#/example/value/object_1"
                           }
                         ],
@@ -5453,9 +5825,69 @@
                             "@value": "[(3,0)-(12,19)]"
                           }
                         ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#ID"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(3,6)-(3,7)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#departureDate"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(6,17)-(6,27)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#emptySeats"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(9,14)-(9,17)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#plane"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(11,0)-(12,19)]"
+                          }
+                        ]
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#plane"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "totalSeats->[(12,4)-(12,19)]#type->[(11,4)-(12,0)]"
+                          }
+                        ]
+                      },
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
@@ -5919,12 +6351,36 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
+                                "@value": "http://a.ml/vocabularies/data#type"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(10,10)-(10,20)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
                                 "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightNoIdExample.raml#/example/value/object_1/object_8"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
                                 "@value": "[(10,0)-(11,19)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#totalSeats"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(11,16)-(11,19)]"
                               }
                             ]
                           }
@@ -5981,6 +6437,54 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
+                            "@value": "http://a.ml/vocabularies/data#price"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(4,9)-(4,12)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#origin"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(6,10)-(6,13)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#destination"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(7,15)-(7,18)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#code"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(3,8)-(3,13)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
                             "@value": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/examples/AmericanFlightNoIdExample.raml#/example/value/object_1"
                           }
                         ],
@@ -5989,9 +6493,57 @@
                             "@value": "[(3,0)-(11,19)]"
                           }
                         ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#departureDate"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(5,17)-(5,27)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#emptySeats"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(8,14)-(8,17)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#plane"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(10,0)-(11,19)]"
+                          }
+                        ]
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#plane"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "totalSeats->[(11,4)-(11,19)]#type->[(10,4)-(11,0)]"
+                          }
+                        ]
+                      },
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {

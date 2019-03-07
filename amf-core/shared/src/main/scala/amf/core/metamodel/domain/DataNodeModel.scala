@@ -1,6 +1,6 @@
 package amf.core.metamodel.domain
 
-import amf.core.metamodel.{DynamicObj, Field}
+import amf.core.metamodel.{DynamicObj, Field, ModelDefaultBuilder}
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.model.domain._
@@ -78,7 +78,10 @@ object ArrayNodeModel extends DomainElementModel {
 
 object LinkNodeModel extends DomainElementModel {
 
-  override def fields: List[Field]      = DataNodeModel.fields
+  val Value: Field = Field(Str, Namespace.Data + "value", ModelDoc(ModelVocabularies.Data, "value"))
+  val Alias: Field = Field(Str, Namespace.Data + "alias", ModelDoc(ModelVocabularies.Data, "alias"))
+
+  override def fields: List[Field]      = List(Value) ++ DataNodeModel.fields
   override val `type`: List[ValueType]  = Data + "Link" :: DataNodeModel.`type`
   override def modelInstance: AmfObject = LinkNode()
 
