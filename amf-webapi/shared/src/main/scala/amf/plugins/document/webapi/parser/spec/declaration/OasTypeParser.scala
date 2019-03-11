@@ -935,12 +935,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         .foreach(_.key(
           "readOnly",
           readOnlyEntry => {
-            PropertyShapeModel.ReadOnly.in(property)(readOnlyEntry)
-            if (version.isInstanceOf[OAS20SchemaVersion] && readOnlyEntry.value.toString().toBoolean && required) {
+            (PropertyShapeModel.ReadOnly in property)(readOnlyEntry)
+            if (version.isInstanceOf[OAS20SchemaVersion] && property.readOnly.value() && required) {
               ctx.warning(ReadOnlyPropertyMarkedRequired,
                           property.id,
                           "Read only property should not be marked as required by a schema",
-                          entry)
+                          readOnlyEntry)
             }
           }
         ))
