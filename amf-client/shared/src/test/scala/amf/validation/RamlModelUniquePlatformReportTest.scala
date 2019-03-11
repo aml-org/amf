@@ -208,5 +208,72 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("named-example-closed-shape/named-example-closed-shape.raml", Some("named-example-closed-shape.report"))
   }
 
+  test("Invalid resource type with closed shape") {
+    validate("/resource_types/invalid/resource-type-closed-shape.raml", Some("resource-type-closed-shape.report"))
+  }
+
+  test("Invalid resource type with closed parametrized shape") {
+    validate("/resource_types/invalid/resource-type-closed-parametrized-shape.raml",
+             Some("resource-type-closed-parametrized-shape.report"))
+  }
+
+  test("Invalid trait with closed shape") {
+    validate("/traits/invalid/trait-closed-shape.raml", Some("trait-closed-shape.report"))
+  }
+
+  test("Invalid trait with closed parametrized shape") {
+    validate("/traits/invalid/trait-closed-parametrized-shape.raml", Some("trait-closed-parametrized-shape.report"))
+  }
+
+  // Missing parameters
+
+  test("Missing parameter in trait key") {
+    validate("/traits/invalid/trait-missing-parameter-in-key.raml", Some("trait-missing-parameter-in-key.report"))
+  }
+
+  test("Missing parameter in trait value") {
+    validate("/traits/invalid/trait-missing-parameter-in-value.raml", Some("trait-missing-parameter-in-value.report"))
+  }
+
+  test("Missing parameter in resource type key") {
+    validate("/resource_types/invalid/resource-type-missing-parameter-in-key.raml",
+             Some("resource-type-missing-parameter-in-key.report"))
+  }
+
+  test("Missing parameter in resource type value") {
+    validate("/resource_types/invalid/resource-type-missing-parameter-in-value.raml",
+             Some("resource-type-missing-parameter-in-value.report"))
+  }
+
+  // Optional methods
+
+  test("Closed shape in applied optional method") {
+    validate(
+      "/resource_types/invalid/optional-methods/resource-type-closed-shape-in-applied-optional-method.raml",
+      Some("resource-type-closed-shape-in-applied-optional-method.report")
+    )
+  }
+
+  test("Closed shape in unapplied optional method") {
+    validate(
+      "/resource_types/invalid/optional-methods/resource-type-closed-shape-in-unapplied-optional-method.raml",
+      Some("resource-type-closed-shape-in-unapplied-optional-method.report")
+    )
+  }
+
+  test("Closed parametrized shape in applied optional method") {
+    validate(
+      "/resource_types/invalid/optional-methods/resource-type-closed-parametrized-shape-in-applied-optional-method.raml",
+      Some("resource-type-closed-parametrized-shape-in-applied-optional-method.report")
+    )
+  }
+
+  test("Closed parametrized shape in unapplied optional method") {
+    validate(
+      "/resource_types/invalid/optional-methods/resource-type-closed-parametrized-shape-in-unapplied-optional-method.raml",
+      Some("resource-type-closed-parametrized-shape-in-unapplied-optional-method.report")
+    )
+  }
+
   override val hint: Hint = RamlYamlHint
 }

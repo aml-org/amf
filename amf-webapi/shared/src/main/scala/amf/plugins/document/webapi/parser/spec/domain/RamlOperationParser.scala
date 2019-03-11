@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
+import amf.core.parser.KnownContextVariables.TRAIT_CONTEXT
 import amf.core.parser.{Annotations, _}
 import amf.plugins.features.validation.ParserSideValidations._
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
@@ -49,9 +50,14 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
   }
 
   protected def parseMap(map: YMap, operation: Operation): Operation = {
+    val map     = entry.value.as[YMap]
+    val isTrait = ctx.variables.get[Boolean](TRAIT_CONTEXT).getOrElse(false)
 
-    val map = entry.value.as[YMap]
-    ctx.closedShape(operation.id, map, "operation")
+    if (isTrait) {
+      ctx.closedShape(operation.id, map, "trait")
+    } else {
+      ctx.closedShape(operation.id, map, "operation")
+    }
 
     map.key("displayName", OperationModel.Name in operation)
     map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)

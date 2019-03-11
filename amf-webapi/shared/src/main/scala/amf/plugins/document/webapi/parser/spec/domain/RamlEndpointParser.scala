@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
+import amf.core.parser.KnownContextVariables.RESOURCE_TYPE_CONTEXT
 import amf.core.utils.{Strings, TemplateUri}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
@@ -77,7 +78,13 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   }
 
   protected def parseEndpoint(endpoint: EndPoint, map: YMap): Unit = {
-    ctx.closedShape(endpoint.id, map, "endPoint")
+    val isResourceType = ctx.variables.get[Boolean](RESOURCE_TYPE_CONTEXT).getOrElse(false)
+
+    if (isResourceType) {
+      ctx.closedShape(endpoint.id, map, "resourceType")
+    } else {
+      ctx.closedShape(endpoint.id, map, "endPoint")
+    }
 
     map.key("displayName", (EndPointModel.Name in endpoint).allowingAnnotations)
     map.key("description", (EndPointModel.Description in endpoint).allowingAnnotations)

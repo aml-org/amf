@@ -192,6 +192,7 @@ case class ParserContext(rootContextDocument: String = "",
     extends ErrorHandler {
 
   var globalSpace: mutable.Map[String, Any] = mutable.Map()
+  var variables                             = ContextVariables()
 
   def forLocation(newLocation: String): ParserContext = {
     val copied: ParserContext = this.copy(rootContextDocument = newLocation)
@@ -236,21 +237,21 @@ case class ParserContext(rootContextDocument: String = "",
       eh match {
         case Some(errorHandler) =>
           errorHandler.reportConstraint(id,
-            node,
-            property,
-            message,
-            lexical,
-            level,
-            location.orElse(Some(rootContextDocument)))
+                                        node,
+                                        property,
+                                        message,
+                                        lexical,
+                                        level,
+                                        location.orElse(Some(rootContextDocument)))
         case _ =>
           RuntimeValidator.reportConstraintFailure(level,
-            id,
-            node,
-            property,
-            message,
-            lexical,
-            parserCount,
-            location.orElse(Some(rootContextDocument)))
+                                                   id,
+                                                   node,
+                                                   property,
+                                                   message,
+                                                   lexical,
+                                                   parserCount,
+                                                   location.orElse(Some(rootContextDocument)))
       }
     }
   }
