@@ -274,6 +274,9 @@
 <http://a.ml/vocabularies/amf/parser#pattern-properties-on-closed-node> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#pattern-properties-on-closed-node> <http://www.w3.org/ns/shacl#message> "Closed node cannot define pattern properties" .
 <http://a.ml/vocabularies/amf/parser#pattern-properties-on-closed-node> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#read-only-property-marked-required> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#read-only-property-marked-required> <http://www.w3.org/ns/shacl#message> "Read only property should not be marked as required by a schema" .
+<http://a.ml/vocabularies/amf/parser#read-only-property-marked-required> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#schema-deprecated> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#schema-deprecated> <http://www.w3.org/ns/shacl#message> "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead" .
 <http://a.ml/vocabularies/amf/parser#schema-deprecated> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
