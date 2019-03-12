@@ -35,6 +35,10 @@ declare module 'amf-client-js' {
 
     static loadValidationProfile(url: string): Promise<string>
 
+    static loadValidationProfile(url: string, env: client.environment.Environment): Promise<string>
+
+    static emitShapesGraph(profileName: ProfileName): string
+
     static registerNamespace(alias: string, prefix: string): boolean
 
     // static registerDialect(url: string): Promise<Dialect>
@@ -105,6 +109,10 @@ declare module 'amf-client-js' {
     static validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: MessageStyle, env: client.environment.Environment): Promise<client.validate.ValidationReport>
 
     static loadValidationProfile(url: string): Promise<string>
+
+    static loadValidationProfile(url: string, env: client.environment.Environment): Promise<string>
+
+    static emitShapesGraph(profileName: ProfileName): string
 
     static registerNamespace(alias: string, prefix: string): boolean
 
