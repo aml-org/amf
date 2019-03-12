@@ -129,6 +129,14 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     }
   }
 
+  def unregisterDialect(uri: String): Unit = {
+    map.foreach { case (header, dialect) =>
+      if (dialect.id == uri) {
+        map -= header
+      }
+    }
+  }
+
   def registerDialect(url: String, code: String): Future[Dialect] = registerDialect(url, code, Environment())
 
   def registerDialect(url: String, code: String, env: Environment): Future[Dialect] =
