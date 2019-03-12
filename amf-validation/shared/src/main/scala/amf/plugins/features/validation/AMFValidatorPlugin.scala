@@ -110,7 +110,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   }
 
   def computeValidations(profileName: ProfileName,
-                                  computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
+                         computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
     val maybeProfile = profiles.get(profileName.profile) match {
       case Some(profileGenerator) => Some(profileGenerator())
       case _                      => None
