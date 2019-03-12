@@ -207,11 +207,6 @@ class ParserSideValidationPlugin extends AMFFeaturePlugin with RuntimeValidator 
                           messgeStyle: MessageStyle): RdfModel =
     throw new Exception("SHACL Support not available")
 
-  override def computeValidations(profileName: ProfileName,
-                                  computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations =
-    throw new Exception("SHACL Support not available")
-
-  override def shapesGraph(validations: EffectiveValidations,
-                           profileName: ProfileName): String =
+  override def emitShapesGraph(profileName: ProfileName): String =
     throw new Exception("SHACL Support not available")
 }

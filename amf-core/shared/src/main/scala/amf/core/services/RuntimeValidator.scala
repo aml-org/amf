@@ -40,16 +40,10 @@ trait RuntimeValidator {
                       options: ValidationOptions): Future[ValidationReport]
 
   /**
-    * Computes EffectiveValidations for validation profile
-    */
-  def computeValidations(profileName: ProfileName,
-                         computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations
-
-  /**
     * Generates a JSON-LD graph with the SHACL shapes for the requested profile validations
     * @return JSON-LD graph
     */
-  def shapesGraph(validations: EffectiveValidations, profileName: ProfileName): String
+  def emitShapesGraph(profileName: ProfileName): String
 
   /**
     * Returns a native RDF model with the SHACL shapes graph
@@ -120,12 +114,8 @@ object RuntimeValidator {
                       options: ValidationOptions): Future[ValidationReport] =
     validator.shaclValidation(model, validations, options)
 
-  def computeValidations(profileName: ProfileName,
-                         computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations =
-    validator.computeValidations(profileName)
-
-  def shapesGraph(validations: EffectiveValidations, profileName: ProfileName): String =
-    validator.shapesGraph(validations, profileName)
+  def emitShapesGraph(profileName: ProfileName): String =
+    validator.emitShapesGraph(profileName)
 
   def shaclModel(validations: Seq[ValidationSpecification],
                  validationFunctionUrl: String,
