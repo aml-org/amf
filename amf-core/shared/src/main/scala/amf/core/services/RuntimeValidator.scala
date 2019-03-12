@@ -40,7 +40,7 @@ trait RuntimeValidator {
                       options: ValidationOptions): Future[ValidationReport]
 
   /**
-    * Generates a JSON-LD graph with the SHACL shapes for the requested profile validations
+    * Generates a JSON-LD graph with the SHACL shapes for the requested profile name
     * @return JSON-LD graph
     */
   def emitShapesGraph(profileName: ProfileName): String

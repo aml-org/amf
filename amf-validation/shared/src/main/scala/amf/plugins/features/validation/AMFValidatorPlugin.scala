@@ -248,6 +248,10 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
                           messageStyle: MessageStyle): RdfModel =
     PlatformValidator.instance.shapes(validations, functionUrls)
 
+  /**
+    * Generates a JSON-LD graph with the SHACL shapes for the requested profile name
+    * @return JSON-LD graph
+    */
   override def emitShapesGraph(profileName: ProfileName): String = {
     val effectiveValidations = computeValidations(profileName)
     shapesGraph(effectiveValidations, profileName)
