@@ -109,8 +109,8 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
       }
   }
 
-  def computeValidations(profileName: ProfileName,
-                         computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
+  override def computeValidations(profileName: ProfileName,
+                                  computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
     val maybeProfile = profiles.get(profileName.profile) match {
       case Some(profileGenerator) => Some(profileGenerator())
       case _                      => None
@@ -233,8 +233,8 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     * Generates a JSON-LD graph with the SHACL shapes for the requested profile validations
     * @return JSON-LD graph
     */
-  def shapesGraph(validations: EffectiveValidations, messageStyle: MessageStyle = RAMLStyle): String = {
-    new ValidationJSONLDEmitter(messageStyle.profileName).emitJSON(customValidations(validations))
+  override def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = RamlProfile): String = {
+    new ValidationJSONLDEmitter(profileName).emitJSON(customValidations(validations))
   }
 
   def customValidations(validations: EffectiveValidations): Seq[ValidationSpecification] =

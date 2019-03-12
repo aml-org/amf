@@ -14,6 +14,7 @@ import amf.plugins.document.{Vocabularies, WebApi}
 import amf.plugins.features.AMFValidation
 import amf.plugins.{document, features}
 import amf.{AMFStyle, Core, MessageStyle, ProfileName}
+import amf.core.validation.{EffectiveValidations}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -106,6 +107,9 @@ object CoreWrapper {
   def loadValidationProfile(url: String,
                             env: Environment): ClientFuture[ProfileName] =
     Core.loadValidationProfile(url, env)
+
+  def emitShapesGraph(profileName: ProfileName): String =
+    Core.emitShapesGraph(profileName)
 
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 

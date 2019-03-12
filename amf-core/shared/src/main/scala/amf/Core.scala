@@ -9,6 +9,7 @@ import amf.client.plugins.AMFPlugin
 import amf.client.render.Renderer
 import amf.client.resolve.Resolver
 import amf.client.validate.{ValidationReport, Validator}
+import amf.core.validation.{EffectiveValidations}
 import amf.core.AMF
 import amf.core.unsafe.PlatformSecrets
 
@@ -47,8 +48,10 @@ object Core extends PlatformSecrets {
   def loadValidationProfile(url: String): ClientFuture[ProfileName] =
     loadValidationProfile(url, DefaultEnvironment())
 
+  def emitShapesGraph(profileName: ProfileName): String =
+    Validator.emitShapesGraph(profileName)
+
   def registerNamespace(alias: String, prefix: String): Boolean = platform.registerNamespace(alias, prefix).isDefined
 
   def registerPlugin(plugin: AMFPlugin): Unit = AMF.registerPlugin(plugin)
-
 }
