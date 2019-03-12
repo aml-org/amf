@@ -19,3 +19,8 @@ usage/site/build/
 amf-client/js/amf.js
 amf-client/amf.js
 buildbrowser.sh
+
+# For local development when using "npm link"
+amf-client/js/node_modules/
+!amf-client/js/node_modules/@mulesoft/
+amf-client/js/package-lock.json
