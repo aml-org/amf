@@ -31,7 +31,6 @@ import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
-import scala.collection.mutable
 
 /**
   *
@@ -493,6 +492,8 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       Some(Payload().withName("formData").adopted(parentId).set(PayloadModel.Schema, schema).add(FormBodyParameter()))
     }
 
+  private case class ParameterWithInfo(oasParam: OasParameter, name: String, binding: String)
+
   def parse(inRequest: Boolean = false): Parameters = {
     val oasParameters = values
       .map(value => OasParameterParser(Right(value), parentId, None).parse())
@@ -500,28 +501,37 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
     val formData = oasParameters.flatMap(_.formData)
     val body     = oasParameters.filter(_.isBody)
 
-    val parameters = oasParameters
-      .flatMap(_.parameter)
-      .map(param =>
-        if (param.isLink && param.effectiveLinkTarget().isInstanceOf[Parameter]) {
-          param.effectiveLinkTarget().asInstanceOf[Parameter]
-        } else param)
-    val nameWithBindings = parameters.map(param => param.parameterName.value() -> param.binding.value())
-    obtainDuplicated(nameWithBindings.toList).foreach {
-      case (name, binding) =>
-        oasParameters
-          .find(oasParam =>
-            oasParam.parameter.exists(param =>
-              param.parameterName.value() == name && param.binding.value() == binding))
-          .foreach(
-            oasParam =>
+    val paramsWithInfo = oasParameters.flatMap(
+      oasParam => {
+        oasParam.obtainElement match {
+          case Left(parameter) =>
+            val effectiveParam = parameter.effectiveLinkTarget().asInstanceOf[Parameter]
+            Some(ParameterWithInfo(oasParam, effectiveParam.parameterName.value(), effectiveParam.binding.value()))
+          case Right(payload) =>
+            val effectivePayload = payload.effectiveLinkTarget().asInstanceOf[Payload]
+            val optName          = obtainName(effectivePayload)
+            optName.map(ParameterWithInfo(oasParam, _, if (oasParam.isFormData) "formData" else "body"))
+        }
+      }
+    )
+
+    val equalParamsGrouping = paramsWithInfo.groupBy {
+      case ParameterWithInfo(_oasParam, name, binding) => (name, binding)
+    }.values
+    equalParamsGrouping
+      .foreach {
+        case equalParams if equalParams.length > 1 =>
+          equalParams.init.foreach {
+            case ParameterWithInfo(oasParam, name, binding) =>
               ctx.violation(
                 DuplicatedParameters,
                 oasParam.domainElement.id,
                 s"parameter $name of type $binding was found duplicated",
                 oasParam.ast.get
-            ))
-    }
+              )
+          }
+        case _ =>
+      }
 
     if (inRequest) {
       if (body.nonEmpty && formData.nonEmpty) {
@@ -546,12 +556,12 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
     )
   }
 
-  @annotation.tailrec
-  private def obtainDuplicated[A](list: List[A], seen: mutable.Set[A] = mutable.HashSet[A]()): Option[A] =
-    list match {
-      case x :: xs => if (seen.contains(x)) Some(x) else obtainDuplicated(xs, seen += x)
-      case _       => None
-    }
+  private def obtainName(payload: Payload): Option[String] = {
+    val nameValue = Option(payload.fields.getValue(PayloadModel.Name))
+    nameValue
+      .flatMap(_.annotations.find(classOf[ParameterNameForPayload]).map(_.paramName))
+      .orElse(Some(payload.name.value()))
+  }
 
   private def validateOasPayloads(params: Seq[OasParameter], id: ValidationSpecification): Unit =
     if (params.length > 1) {

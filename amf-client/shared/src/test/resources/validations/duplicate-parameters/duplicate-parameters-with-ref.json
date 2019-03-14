@@ -9,8 +9,8 @@
       "get": {
         "parameters": [
           {
-            "name" : "queryParam",
-            "in" : "query",
+            "name" : "formParam",
+            "in" : "formData",
             "type" : "string"
           },
           {"$ref": "#/parameters/ParameterExample"}
@@ -25,9 +25,9 @@
   },
   "parameters": {
     "ParameterExample": {
-      "name" : "queryParam",
-      "in" : "query",
-      "type" : "boolean",
+      "name" : "formParam",
+      "in" : "formData",
+      "type" : "string",
       "description": "second duplicated param"
     }
   }

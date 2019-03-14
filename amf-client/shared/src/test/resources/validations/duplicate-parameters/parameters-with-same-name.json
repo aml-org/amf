@@ -1,0 +1,30 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "api title"
+  },
+  "paths": {
+    "/somePath": {
+      "get": {
+        "parameters": [
+          {
+            "name" : "sameName",
+            "in" : "query",
+            "type" : "string"
+          },
+          {
+            "name" : "sameName",
+            "in" : "formData",
+            "type" : "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "success"
+          }
+        }
+      }
+    }
+  }
+}

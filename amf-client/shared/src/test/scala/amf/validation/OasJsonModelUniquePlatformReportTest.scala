@@ -39,16 +39,25 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("duplicate-operation-ids.json", Some("duplicate-operation-ids.report"))
   }
 
+  test("Duplicate query parameters both defined inline") {
+    validate("duplicate-parameters/duplicate-query-parameters.json", Some("duplicate-query-parameters.report"))
+  }
+
+  test("Duplicate formData parameters both defined inline") {
+    validate("duplicate-parameters/duplicate-form-parameters.json", Some("duplicate-form-parameters.report"))
+  }
+
   test("Read only property marked as required") {
     validate("read-only-property-marked-required.json", Some("read-only-property-marked-required.report"))
   }
 
-  test("Duplicate parameters both defined inline") {
-    validate("duplicate-parameters/duplicate-parameters.json", Some("duplicate-parameters.report"))
+  test("Duplicate formData parameters defined with reference") {
+    validate("duplicate-parameters/duplicate-parameters-with-ref.json", Some("duplicate-parameters-with-ref.report"))
   }
 
-  test("Duplicate parameters defined with reference") {
-    validate("duplicate-parameters/duplicate-parameters-with-ref.json", Some("duplicate-parameters-with-ref.report"))
+  test("Three duplicated query parameters with reference and inline") {
+    validate("duplicate-parameters/three-duplicated-query-parameters.json",
+             Some("three-duplicated-query-parameters.report"))
   }
 
   override val hint: Hint = OasJsonHint

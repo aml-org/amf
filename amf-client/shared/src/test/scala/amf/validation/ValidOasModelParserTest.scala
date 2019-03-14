@@ -49,6 +49,10 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/path-parameter-required/required-set-to-true.json", OasProfile)
   }
 
+  test("parameters with same name and different binding") {
+    checkValid("/duplicate-parameters/parameters-with-same-name.json", OasProfile)
+  }
+
   // Check http inner reference.
   ignore("Http with # reference") {
     checkValid("/http-with-hashtag/http-with-hashtag.json", OasProfile)
