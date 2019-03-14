@@ -1,0 +1,38 @@
+{
+  "swagger": "2.0",
+  "definitions": {
+    "Thing": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "a",
+        "b"
+      ],
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "c": {
+              "$ref": "#/definitions/Thing"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/things/{thingId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/Thing"}
+          }
+        }
+      }
+    }
+  }
+}

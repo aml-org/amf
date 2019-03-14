@@ -1,0 +1,16 @@
+#%RAML 1.0 Library
+types:
+  Thing:
+    additionalProperties: true
+    properties:
+      a:
+        type: string
+        required: true
+      b:
+        type: object
+        additionalProperties: true
+        properties:
+          c:
+            type: Thing
+            required: false
+        required: true

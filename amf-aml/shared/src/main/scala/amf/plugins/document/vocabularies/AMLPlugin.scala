@@ -131,6 +131,7 @@ object AMLPlugin
     DatatypePropertyTermModel,
     DialectModel,
     NodeMappingModel,
+    UnionNodeMappingModel,
     PropertyMappingModel,
     DocumentsModelModel,
     PublicNodeMappingModel,

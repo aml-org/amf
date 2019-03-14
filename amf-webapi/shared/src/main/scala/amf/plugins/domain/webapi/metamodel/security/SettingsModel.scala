@@ -49,7 +49,7 @@ object OAuth1SettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "OAuth1 Setings",
+    "OAuth1 Settings",
     "Settings for an OAuth1 security scheme"
   )
 }
@@ -80,7 +80,7 @@ object OAuth2SettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "OAuth2 Setings",
+    "OAuth2 Settings",
     "Settings for an OAuth2 security scheme"
   )
 }
@@ -99,7 +99,7 @@ object ApiKeySettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "API Key Setings",
+    "API Key Settings",
     "Settings for an API Key security scheme"
   )
 }
@@ -118,7 +118,7 @@ object HttpSettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "HTTP Setings",
+    "HTTP Settings",
     "Settings for an HTTP security scheme"
   )
 }
@@ -135,7 +135,7 @@ object OpenIdConnectSettingsModel extends SettingsModel {
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Security,
-    "OpenID Setings",
+    "OpenID Settings",
     "Settings for an OpenID security scheme"
   )
 }

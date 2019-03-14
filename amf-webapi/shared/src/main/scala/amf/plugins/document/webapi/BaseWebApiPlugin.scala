@@ -56,6 +56,7 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = Map(
     "parsed-json-schema"         -> ParsedJSONSchema,
+    "parsed-raml-datatype"       -> ParsedRamlDatatype,
     "external-fragment-ref"      -> ExternalFragmentRef,
     "json-schema-id"             -> JSONSchemaId,
     "declared-element"           -> DeclaredElement,

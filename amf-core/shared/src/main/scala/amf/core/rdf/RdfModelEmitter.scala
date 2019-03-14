@@ -328,8 +328,8 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
         case _             => List()
       })
       allTypes.foreach { t =>
-        if (t != "http://a.ml/vocabularies/document#DomainElement" && t != "http://www.w3.org/ns/shacl#Shape" && t != "http://a.ml/vocabularies/shapes#Shape")
-          rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t)
+        //if (t != "http://a.ml/vocabularies/document#DomainElement" && t != "http://www.w3.org/ns/shacl#Shape" && t != "http://a.ml/vocabularies/shapes#Shape")
+        rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t)
       }
     }
 

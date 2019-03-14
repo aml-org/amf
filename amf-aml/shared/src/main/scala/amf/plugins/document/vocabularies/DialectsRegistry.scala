@@ -118,13 +118,27 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
       case Some(dialect) => Future { dialect }
       case _ =>
         RuntimeValidator.disableValidationsAsync() { reenable =>
-          RuntimeCompiler(uri, Some("application/yaml"), Some(Aml.name), Context(platform), env = environment, cache = Cache())
+          RuntimeCompiler(uri,
+                          Some("application/yaml"),
+                          Some(Aml.name),
+                          Context(platform),
+                          env = environment,
+                          cache = Cache())
             .map {
               case dialect: Dialect =>
                 reenable()
                 register(dialect)
                 dialect
             }
+        }
+    }
+  }
+
+  def unregisterDialect(uri: String): Unit = {
+    map.foreach {
+      case (header, dialect) =>
+        if (dialect.id == uri) {
+          map -= header
         }
     }
   }

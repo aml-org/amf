@@ -9,7 +9,7 @@ import amf.core.utils.Strings
 import amf.core.validation.{AMFValidationReport, PayloadValidator, SeverityLevels}
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.annotations.InlineDefinition
-import amf.plugins.document.webapi.parser.spec.common.JsonSchemaSerializer
+import amf.plugins.document.webapi.parser.spec.common.{JsonSchemaSerializer, RamlDatatypeSerializer}
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel._
 import amf.plugins.domain.shapes.validation.PayloadValidationPluginsHandler
@@ -86,6 +86,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
     with JsonSchemaSecrets
     with ShapeHelpers
     with JsonSchemaSerializer
+    with RamlDatatypeSerializer
     with ExternalSourceElement
     with InheritanceChain {
 
@@ -111,6 +112,14 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
   def toJsonSchema: String = toJsonSchema(this)
 
   def buildJsonSchema(): String = generateJsonSchema(this)
+
+  /** Delegates generation of a new RAML Data Type or returns cached
+    * one if it was generated before.
+    */
+  def toRamlDatatype: String = toRamlDatatype(this)
+
+  /** Generates a new RAML Data Type. */
+  def buildRamlDatatype(): String = generateRamlDatatype(this)
 
   def copyAnyShape(fields: Fields = fields, annotations: Annotations = annotations): AnyShape =
     AnyShape(fields, annotations).withId(id)

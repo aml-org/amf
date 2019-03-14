@@ -88,6 +88,11 @@ object ParserSideValidations extends Validations {
     "Duplicated endpoint path"
   )
 
+  val DuplicatedOperationId = validation(
+    "duplicated-operation-id",
+    "Duplicated operation id"
+  )
+
   val SchemaDeprecated = validation(
     "schema-deprecated",
     "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead"
@@ -560,6 +565,11 @@ object ParserSideValidations extends Validations {
     "Example does not validate type"
   )
 
+  val ReadOnlyPropertyMarkedRequired = validation(
+    "read-only-property-marked-required",
+    "Read only property should not be marked as required by a schema"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     OasBodyAndFormDataParameterSpecification.id -> Map(
       OasProfile   -> VIOLATION,
@@ -617,6 +627,7 @@ object ParserSideValidations extends Validations {
       Oas30Profile  -> SeverityLevels.WARNING,
       AmfProfile    -> SeverityLevels.VIOLATION
     ),
+    ReadOnlyPropertyMarkedRequired.id -> all(WARNING),
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -697,6 +708,7 @@ object ParserSideValidations extends Validations {
     InvalidSecuredByType,
     InvalidEndpointPath,
     DuplicatedEndpointPath,
+    DuplicatedOperationId,
     InvalidOperationType,
     InvalidServerPath,
     ParametersWithoutBaseUri,
@@ -728,6 +740,7 @@ object ParserSideValidations extends Validations {
     ExampleValidationErrorSpecification,
     InvalidJsonSchemaType,
     InvalidFragmentRef,
-    CrossSecurityWarningSpecification
+    CrossSecurityWarningSpecification,
+    ReadOnlyPropertyMarkedRequired
   )
 }

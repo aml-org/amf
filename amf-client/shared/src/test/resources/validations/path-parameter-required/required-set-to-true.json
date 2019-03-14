@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Github API"
+  },
+  "paths": {
+    "/{username}": {
+      "get": {
+        "parameters": [
+          {
+            "name" : "username",
+            "in" : "path",
+            "required": true,
+            "type" : "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Successfully got github user"
+          }
+        }
+      }
+    }
+  }
+}

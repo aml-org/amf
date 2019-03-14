@@ -43,7 +43,7 @@ trait ShapeModel extends DomainElementModel with LinkableElementModel with KeyFi
     Array(Iri),
     Shapes + "closure",
     ModelDoc(ModelVocabularies.Shapes,
-             "inheritance closuer",
+             "inheritance closure",
              "Transitive closure of data shapes this particular shape inherits structure from")
   )
 

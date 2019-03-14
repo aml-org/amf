@@ -232,6 +232,18 @@ object JsCustomValidations {
          |  else return (parseFloat(minimum) <= parseFloat(maximum));
          |}
       """.stripMargin,
+    "pathParameterRequiredProperty" ->
+      """|function(parameter) {
+         |  var binding = parameter["http:binding"];
+         |  var requiredValue = parameter["hydra:required"];
+         |  if (binding == 'path' && requiredValue != 'true') {
+         |    return false;
+         |  }
+         |  else {
+         |    return true;
+         |  }
+         |}
+      """.stripMargin,
     "minMaxItemsValidation" ->
       """|function(shape) {
          |  //console.log(JSON.stringify(shape));

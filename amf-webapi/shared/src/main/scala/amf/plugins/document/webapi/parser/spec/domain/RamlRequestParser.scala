@@ -140,22 +140,23 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
             // Now we parsed potentially nested shapes for different data types
             entry.value.to[YMap] match {
               case Right(m) =>
+                val mediaTypeRegexPattern = ".*/.*"
                 m.regex(
-                  ".*/.*",
+                  mediaTypeRegexPattern,
                   entries => {
                     entries.foreach(entry => {
                       payloads += ctx.factory.payloadParser(entry, request.getOrCreate.withPayload, false).parse()
                     })
                   }
                 )
-                val entries = m.entries.filter(e => !e.key.as[YScalar].text.matches(".*/.*"))
+                val entries = m.entries.filter(e => !e.key.as[YScalar].text.matches(mediaTypeRegexPattern))
                 val others  = YMap(entries, m.sourceName)
                 if (others.entries.nonEmpty) {
                   if (payloads.isEmpty) {
                     if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {
                       ctx.violation(UnsupportedExampleMediaTypeErrorSpecification,
                                     request.getOrCreate.id,
-                                    "Invalid media type",
+                                    "No media type defined for request body",
                                     m)
                     }
                     ctx.factory

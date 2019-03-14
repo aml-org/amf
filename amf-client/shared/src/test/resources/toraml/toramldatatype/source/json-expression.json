@@ -1,0 +1,48 @@
+{
+  "swagger": "2.0",
+  "definitions": {
+    "Thing": {
+      "items": {
+        "description": "The team is the basic unit ",
+        "name": "Team",
+        "properties": {
+          "homeCity": {
+            "description": "Name of the city to which this team belongs",
+            "type": "string",
+            "required": true
+          },
+          "id": {
+            "description": "A three-letter code that identifies the team id",
+            "maxLength": 3,
+            "minLength": 3,
+            "type": "string",
+            "required": true
+          },
+          "name": {
+            "description": "Name of the team",
+            "type": "string",
+            "required": true
+          },
+          "stadium": {
+            "description": "Name of the stadium",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "Teams",
+      "type": "array"
+    }
+  },
+  "paths": {
+    "/things/{thingId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "schema": {"$ref": "#/definitions/Thing"}
+          }
+        }
+      }
+    }
+  }
+}

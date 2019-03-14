@@ -65,7 +65,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
     val expanded = Namespace.expand(propertyId).iri()
     val res: Option[Seq[Any]] = _internal.findPropertyMappingByTermPropertyId(expanded) match {
       case Some(mapping) =>
-        _internal.literalProperties.get(mapping.id) flatMap {
+        _internal.literalProperties.get(mapping.id) match {
           case Some(res: Seq[_]) => Some(res)
           case Some(value)       => Some(Seq(value))
           case None =>

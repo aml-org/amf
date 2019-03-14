@@ -27,5 +27,21 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("raml-security-in-oas.json", Some("raml-security-in-oas.report"))
   }
 
+  test("Path parameter must have the property required defined") {
+    validate("path-parameter-required/required-is-not-present.json", Some("required-is-not-present.report"))
+  }
+
+  test("Path parameters must have required set to true") {
+    validate("path-parameter-required/required-set-to-false.json", Some("required-set-to-false.report"))
+  }
+
+  test("Operation ids are unique") {
+    validate("duplicate-operation-ids.json", Some("duplicate-operation-ids.report"))
+  }
+
+  test("Read only property marked as required") {
+    validate("read-only-property-marked-required.json", Some("read-only-property-marked-required.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }

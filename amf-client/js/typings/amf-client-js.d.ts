@@ -860,6 +860,9 @@ declare module 'amf-client-js' {
 
         toJsonSchema: string
 
+        /** RAML Data Type representation. */
+        toRamlDatatype: string
+
         validate(payload: string): Promise<client.validate.ValidationReport>
 
         validate(fragment: model.domain.PayloadFragment): Promise<client.validate.ValidationReport>

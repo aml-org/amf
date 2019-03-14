@@ -419,12 +419,36 @@
 {
 "http://a.ml/vocabularies/document-source-maps#element": [
 {
+"@value": "http://a.ml/vocabularies/data#name"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(11,12)-(11,22)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
 "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/example-key-map-without-value/api.raml#/declarations/types/Person/example/default-example/object_1"
 }
 ],
 "http://a.ml/vocabularies/document-source-maps#value": [
 {
 "@value": "[(11,0)-(12,36)]"
+}
+]
+},
+{
+"http://a.ml/vocabularies/document-source-maps#element": [
+{
+"@value": "http://a.ml/vocabularies/data#description"
+}
+],
+"http://a.ml/vocabularies/document-source-maps#value": [
+{
+"@value": "[(12,19)-(12,36)]"
 }
 ]
 }
