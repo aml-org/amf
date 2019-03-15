@@ -2,7 +2,7 @@ package amf.core.rdf
 
 import amf.core.annotations.{DomainExtensionAnnotation, ScalarType}
 import amf.core.emitter.RenderOptions
-import amf.core.metamodel.Type.{Array, Bool, EncodedIri, Iri, SortedArray, Str}
+import amf.core.metamodel.Type.{Array, Bool, EncodedIri, Iri, LiteralUri, SortedArray, Str}
 import amf.core.metamodel.document.SourceMapModel
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
@@ -187,6 +187,8 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
           iri(subject, property, v.value.asInstanceOf[AmfScalar].toString)
         case EncodedIri =>
           safeIri(subject, property, v.value.asInstanceOf[AmfScalar].toString)
+        case LiteralUri =>
+          typedScalar(subject, property, v.value.asInstanceOf[AmfScalar].toString, (Namespace.Xsd + "anyUri").iri())
         case Str =>
           v.annotations.find(classOf[ScalarType]) match {
             case Some(annotation) =>
@@ -329,7 +331,7 @@ class RdfModelEmitter(rdfmodel: RdfModel) extends MetaModelTypeMapping {
       })
       allTypes.foreach { t =>
         //if (t != "http://a.ml/vocabularies/document#DomainElement" && t != "http://www.w3.org/ns/shacl#Shape" && t != "http://a.ml/vocabularies/shapes#Shape")
-          rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t)
+        rdfmodel.addTriple(id, (Namespace.Rdf + "type").iri(), t)
       }
     }
 

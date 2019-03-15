@@ -19,21 +19,24 @@ object ObjectMapInheritanceProperty extends PropertyClassification
 object ObjectPairProperty           extends PropertyClassification
 object LiteralPropertyCollection    extends PropertyClassification
 
-case class PropertyMapping(fields: Fields, annotations: Annotations) extends DomainElement with MergeableMapping with NodeWithDiscriminator[PropertyMapping] {
+case class PropertyMapping(fields: Fields, annotations: Annotations)
+    extends DomainElement
+    with MergeableMapping
+    with NodeWithDiscriminator[PropertyMapping] {
 
-  def name(): StrField                  = fields.field(Name)
-  def nodePropertyMapping(): StrField   = fields.field(NodePropertyMapping)
-  def literalRange(): StrField          = fields.field(LiteralRange)
-  def mapKeyProperty(): StrField        = fields.field(MapKeyProperty)
-  def mapValueProperty(): StrField      = fields.field(MapValueProperty)
-  def minCount(): IntField              = fields.field(MinCount)
-  def pattern(): StrField               = fields.field(Pattern)
-  def minimum(): DoubleField            = fields.field(Minimum)
-  def maximum(): DoubleField            = fields.field(Maximum)
-  def allowMultiple(): BoolField        = fields.field(AllowMultiple)
-  def sorted(): BoolField               = fields.field(Sorted)
-  def enum(): Seq[AnyField]             = fields.field(PropertyMappingModel.Enum)
-  def unique(): BoolField               = fields.field(Unique)
+  def name(): StrField                = fields.field(Name)
+  def nodePropertyMapping(): StrField = fields.field(NodePropertyMapping)
+  def literalRange(): StrField        = fields.field(LiteralRange)
+  def mapKeyProperty(): StrField      = fields.field(MapKeyProperty)
+  def mapValueProperty(): StrField    = fields.field(MapValueProperty)
+  def minCount(): IntField            = fields.field(MinCount)
+  def pattern(): StrField             = fields.field(Pattern)
+  def minimum(): DoubleField          = fields.field(Minimum)
+  def maximum(): DoubleField          = fields.field(Maximum)
+  def allowMultiple(): BoolField      = fields.field(AllowMultiple)
+  def sorted(): BoolField             = fields.field(Sorted)
+  def enum(): Seq[AnyField]           = fields.field(PropertyMappingModel.Enum)
+  def unique(): BoolField             = fields.field(Unique)
 
   def withName(name: String): PropertyMapping                      = set(Name, name)
   def withNodePropertyMapping(propertyId: String): PropertyMapping = set(NodePropertyMapping, propertyId)
@@ -47,7 +50,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
   def withAllowMultiple(allow: Boolean): PropertyMapping           = set(AllowMultiple, allow)
   def withEnum(values: Seq[Any]): PropertyMapping                  = setArray(PropertyMappingModel.Enum, values.map(AmfScalar(_)))
   def withSorted(sorted: Boolean): PropertyMapping                 = set(Sorted, sorted)
-  def withUnique(unique: Boolean): PropertyMapping = set(Unique, unique)
+  def withUnique(unique: Boolean): PropertyMapping                 = set(Unique, unique)
 
   def classification(): PropertyClassification = {
     val isAnyNode = objectRange().exists { obj =>
@@ -100,6 +103,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations) extends Dom
       } else {
         val fieldType = literalRange().value() match {
           case literal if literal == (Namespace.Shapes + "link").iri()  => Type.Iri
+          case literal if literal == (Namespace.Xsd + "anyUri").iri()   => Type.LiteralUri
           case literal if literal.endsWith("anyType")                   => Type.Any
           case literal if literal.endsWith("number")                    => Type.Float
           case literal if literal == (Namespace.Xsd + "integer").iri()  => Type.Int

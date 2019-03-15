@@ -31,7 +31,6 @@ import amf.plugins.features.validation.ParserSideValidations.{
   InvalidUnionType
 }
 import org.mulesoft.common.time.SimpleDateTime
-import org.yaml.convert.YRead
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -234,8 +233,9 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
     map.key(
       "uses",
       entry => {
-        val annotation: Annotation = AliasesLocation(
-          Annotations(entry.key).find(classOf[LexicalInformation]).map(_.range.start.line).getOrElse(0))
+        val annotation: Annotation =
+          AliasesLocation(
+            Annotations(entry.key).find(classOf[LexicalInformation]).map(_.range.start.line).getOrElse(0))
         dialectInstance.annotations += annotation
         entry.value
           .as[YMap]

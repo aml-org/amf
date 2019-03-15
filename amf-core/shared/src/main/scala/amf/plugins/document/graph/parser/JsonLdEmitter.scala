@@ -2,7 +2,7 @@ package amf.plugins.document.graph.parser
 
 import amf.core.annotations._
 import amf.core.emitter.RenderOptions
-import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, SortedArray, Str}
+import amf.core.metamodel.Type.{Any, Array, Bool, EncodedIri, Iri, LiteralUri, SortedArray, Str}
 import amf.core.metamodel.document.{ModuleModel, SourceMapModel}
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
@@ -42,7 +42,7 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
       _.obj { eb =>
         traverse(unit, eb, ctx)
         emitDeclarations(eb, unit.id, SourceMap(unit.id, unit), ctx)
-        for (e <- entry) unit.fields.setWithoutId(ModuleModel.Declares, e.array)
+        entry.foreach(e => unit.fields.setWithoutId(ModuleModel.Declares, e.array))
         ctx.emitContext(eb)
       }
     }
@@ -262,15 +262,15 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
                         val scalarElement = e.asInstanceOf[AmfScalar]
                         scalarElement.value match {
                           case bool: Boolean =>
-                            typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
+                            typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), ctx, inArray = true)
                           case str: String =>
-                            typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), inArray = true, ctx)
+                            typedScalar(b, str.toString, (Namespace.Xsd + "string").iri(), ctx, inArray = true)
                           case i: Int =>
-                            typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
+                            typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), ctx, inArray = true)
                           case f: Float =>
-                            typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
+                            typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), ctx, inArray = true)
                           case d: Double =>
-                            typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
+                            typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), ctx, inArray = true)
                           case other => scalar(b, other.toString)
                         }
                     }
@@ -301,10 +301,13 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
       case EncodedIri =>
         safeIri(b, v.value.asInstanceOf[AmfScalar].toString, ctx)
         sources(v)
+      case LiteralUri =>
+        typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, (Namespace.Xsd + "anyUri").iri(), ctx)
+        sources(v)
       case Str =>
         v.annotations.find(classOf[ScalarType]) match {
           case Some(annotation) =>
-            typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype, inArray = false, ctx)
+            typedScalar(b, v.value.asInstanceOf[AmfScalar].toString, annotation.datatype, ctx)
           case None =>
             listWithScalar(b, v.value)
         }
@@ -324,7 +327,7 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
         sources(v)
       case Type.DateTime =>
         val dateTime = v.value.asInstanceOf[AmfScalar].value.asInstanceOf[SimpleDateTime]
-        typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
+        typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), ctx)
         sources(v)
       case Type.Date =>
         val maybeDateTime = v.value.asInstanceOf[AmfScalar].value match {
@@ -334,12 +337,11 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
         maybeDateTime match {
           case Some(dateTime) =>
             if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
-              typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
+              typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), ctx)
             } else {
               typedScalar(b,
                           f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
                           (Namespace.Xsd + "date").iri(),
-                          inArray = false,
                           ctx)
 
             }
@@ -370,13 +372,20 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
               seq.values.asInstanceOf[Seq[AmfScalar]].foreach { e =>
                 e.annotations.find(classOf[ScalarType]) match {
                   case Some(annotation) =>
-                    typedScalar(b, e.value.asInstanceOf[AmfScalar].toString, annotation.datatype, inArray = true, ctx)
+                    typedScalar(b, e.value.asInstanceOf[AmfScalar].toString, annotation.datatype, ctx, inArray = true)
                   case None => scalar(b, e.toString)
                 }
               }
             case EncodedIri =>
               seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => safeIri(b, e.toString, ctx, inArray = true))
-            case Iri => seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, ctx, inArray = true))
+            case Iri =>
+              seq.values.asInstanceOf[Seq[AmfScalar]].foreach(e => iri(b, e.toString, ctx, inArray = true))
+            case LiteralUri =>
+              typedScalar(b,
+                          v.value.asInstanceOf[AmfScalar].toString,
+                          (Namespace.Xsd + "anyUri").iri(),
+                          ctx,
+                          inArray = true)
             case Type.Int =>
               seq.values
                 .asInstanceOf[Seq[AmfScalar]]
@@ -394,7 +403,7 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
                 .asInstanceOf[Seq[AmfScalar]]
                 .foreach { e =>
                   val dateTime = e.value.asInstanceOf[SimpleDateTime]
-                  typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray = false, ctx)
+                  typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), ctx)
                 }
             case Type.Date =>
               seq.values
@@ -407,10 +416,10 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
               seq.values.asInstanceOf[Seq[AmfScalar]].foreach { scalarElement =>
                 scalarElement.value match {
                   case bool: Boolean =>
-                    typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
-                  case i: Int              => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
-                  case f: Float            => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
-                  case d: Double           => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
+                    typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), ctx, inArray = true)
+                  case i: Int              => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), ctx, inArray = true)
+                  case f: Float            => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), ctx, inArray = true)
+                  case d: Double           => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), ctx, inArray = true)
                   case sdt: SimpleDateTime => emitSimpleDateTime(b, sdt, inArray = true, ctx)
                   case other               => scalar(b, other.toString)
                 }
@@ -421,24 +430,26 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
 
       case Any if v.value.isInstanceOf[AmfScalar] =>
         v.value.asInstanceOf[AmfScalar].value match {
-          case bool: Boolean       => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), inArray = true, ctx)
-          case i: Int              => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), inArray = true, ctx)
-          case f: Float            => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), inArray = true, ctx)
-          case d: Double           => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), inArray = true, ctx)
+          case bool: Boolean       => typedScalar(b, bool.toString, (Namespace.Xsd + "boolean").iri(), ctx, inArray = true)
+          case i: Int              => typedScalar(b, i.toString, (Namespace.Xsd + "integer").iri(), ctx, inArray = true)
+          case f: Float            => typedScalar(b, f.toString, (Namespace.Xsd + "float").iri(), ctx, inArray = true)
+          case d: Double           => typedScalar(b, d.toString, (Namespace.Xsd + "double").iri(), ctx, inArray = true)
           case sdt: SimpleDateTime => emitSimpleDateTime(b, sdt, inArray = true, ctx)
           case other               => scalar(b, other.toString)
         }
     }
   }
 
-  private def emitSimpleDateTime(b: Part, dateTime: SimpleDateTime, inArray: Boolean = true, ctx: EmissionContext) = {
+  private def emitSimpleDateTime(b: Part,
+                                 dateTime: SimpleDateTime,
+                                 inArray: Boolean = true,
+                                 ctx: EmissionContext): Unit = {
     if (dateTime.timeOfDay.isDefined || dateTime.zoneOffset.isDefined) {
-      typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), inArray, ctx)
+      typedScalar(b, emitDateFormat(dateTime), (Namespace.Xsd + "dateTime").iri(), ctx, inArray)
     } else {
       typedScalar(b,
                   f"${dateTime.year}%04d-${dateTime.month}%02d-${dateTime.day}%02d",
                   (Namespace.Xsd + "date").iri(),
-                  inArray = false,
                   ctx)
     }
   }
@@ -519,8 +530,8 @@ class JsonLdEmitter[T](val builder: DocBuilder[T], val options: RenderOptions) e
   private def typedScalar(b: Part,
                           content: String,
                           dataType: String,
-                          inArray: Boolean = false,
-                          ctx: EmissionContext): Unit = {
+                          ctx: EmissionContext,
+                          inArray: Boolean = false): Unit = {
     def emit(b: Part): Unit = b.obj { m =>
       m.entry("@value", raw(_, content))
       m.entry("@type", raw(_, ctx.emitIri(dataType)))
