@@ -153,6 +153,14 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "tracked-to-linked/")
   }
 
+  test("Adopt tracked-element when merging abstract declarations") {
+    cycle("tracked-from-resource-type.raml",
+          "tracked-from-resource-type.jsonld",
+          RamlYamlHint,
+          Amf,
+          validationsPath + "tracked-from-resource-type/")
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")
