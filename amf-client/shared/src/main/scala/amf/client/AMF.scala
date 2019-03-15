@@ -62,6 +62,9 @@ object AMF {
                             env: Environment): ClientFuture[ProfileName] =
     Core.loadValidationProfile(url, env)
 
+  def emitShapesGraph(profileName: ProfileName): String =
+    Core.emitShapesGraph(profileName)
+
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
   def registerDialect(url: String): ClientFuture[Dialect] = Vocabularies.registerDialect(url)
@@ -106,6 +109,9 @@ object CoreWrapper {
   def loadValidationProfile(url: String,
                             env: Environment): ClientFuture[ProfileName] =
     Core.loadValidationProfile(url, env)
+
+  def emitShapesGraph(profileName: ProfileName): String =
+    Core.emitShapesGraph(profileName)
 
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 

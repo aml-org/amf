@@ -1,6 +1,6 @@
 package amf.facades
 
-import amf.{MessageStyle, ProfileName, RAMLStyle}
+import amf.{MessageStyle, ProfileName, RAMLStyle, RamlProfile}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
@@ -110,8 +110,8 @@ class Validation(platform: Platform) {
 
   def computeValidations(profileName: ProfileName): EffectiveValidations = validator.computeValidations(profileName)
 
-  def shapesGraph(validations: EffectiveValidations, messageStyle: MessageStyle = RAMLStyle): String =
-    validator.shapesGraph(validations, messageStyle)
+  def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = RamlProfile): String =
+    validator.shapesGraph(validations, profileName)
 }
 
 object Validation {
