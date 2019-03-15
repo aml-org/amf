@@ -1,12 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.SynthesizedField
+import amf.core.annotations.{LexicalInformation, SourceLocation, SynthesizedField}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.parser.KnownContextVariables.RESOURCE_TYPE_CONTEXT
 import amf.core.utils.{Strings, TemplateUri}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
@@ -18,6 +17,7 @@ import amf.plugins.features.validation.ParserSideValidations.{
   InvalidEndpointPath,
   UnusedBaseUriParameter
 }
+import amf.plugins.features.validation.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -78,13 +78,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   }
 
   protected def parseEndpoint(endpoint: EndPoint, map: YMap): Unit = {
-    val isResourceType = ctx.variables.get[Boolean](RESOURCE_TYPE_CONTEXT).getOrElse(false)
-
-    if (isResourceType) {
-      ctx.closedShape(endpoint.id, map, "resourceType")
-    } else {
-      ctx.closedShape(endpoint.id, map, "endPoint")
-    }
+    val isResourceType = ctx.contextType == RamlWebApiContextType.RESOURCE_TYPE
+    ctx.closedShape(endpoint.id, map, if (isResourceType) "resourceType" else "endPoint")
 
     map.key("displayName", (EndPointModel.Name in endpoint).allowingAnnotations)
     map.key("description", (EndPointModel.Description in endpoint).allowingAnnotations)
@@ -172,10 +167,25 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
     AnnotationParser(endpoint, map).parse()
 
+    val nestedEndpointRegex = "^/.*"
     map.regex(
-      "^/.*",
+      nestedEndpointRegex,
       entries => {
-        entries.foreach(ctx.factory.endPointParser(_, producer, Some(endpoint), collector, false).parse())
+        if (isResourceType) {
+          entries.foreach { entry =>
+            val nestedEndpointName = entry.key.toString()
+            ctx.violation(
+              NestedEndpoint,
+              endpoint.id.stripSuffix("/applied"),
+              None,
+              s"Nested endpoint in resourceType: '$nestedEndpointName'",
+              Some(LexicalInformation(Range(entry.key.range))),
+              Some(map.sourceName)
+            )
+          }
+        } else {
+          entries.foreach(ctx.factory.endPointParser(_, producer, Some(endpoint), collector, false).parse())
+        }
       }
     )
   }

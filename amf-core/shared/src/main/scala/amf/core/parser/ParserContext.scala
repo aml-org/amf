@@ -192,7 +192,6 @@ case class ParserContext(rootContextDocument: String = "",
     extends ErrorHandler {
 
   var globalSpace: mutable.Map[String, Any] = mutable.Map()
-  var variables                             = ContextVariables()
 
   def forLocation(newLocation: String): ParserContext = {
     val copied: ParserContext = this.copy(rootContextDocument = newLocation)

@@ -77,7 +77,8 @@ abstract class RamlWebApiContext(override val loc: String,
     extends WebApiContext(loc, refs, wrapped, ds, eh)
     with RamlSpecAwareContext {
 
-  var globalMediatype: Boolean = false
+  var globalMediatype: Boolean                 = false
+  var contextType: RamlWebApiContextType.Value = RamlWebApiContextType.DEFAULT
 
   override val declarations: RamlWebApiDeclarations = ds.getOrElse(
     new RamlWebApiDeclarations(alias = None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
@@ -451,4 +452,9 @@ abstract class WebApiContext(val loc: String,
       case None =>
         violation(ClosedShapeSpecification, node, s"Cannot validate unknown node type $shape for $vendor", ast)
     }
+}
+
+object RamlWebApiContextType extends Enumeration {
+  type RamlWebApiContextType = Value
+  val DEFAULT, RESOURCE_TYPE, TRAIT = Value
 }
