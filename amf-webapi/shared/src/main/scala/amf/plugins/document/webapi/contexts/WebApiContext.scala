@@ -29,8 +29,9 @@ class PayloadContext(loc: String,
                      refs: Seq[ParsedReference],
                      private val wrapped: ParserContext,
                      private val ds: Option[RamlWebApiDeclarations] = None,
-                     override val eh: Option[ErrorHandler] = None)
-    extends RamlWebApiContext(loc, refs, wrapped, ds, eh) {
+                     override val eh: Option[ErrorHandler] = None,
+                     contextType: RamlWebApiContextType.Value = RamlWebApiContextType.DEFAULT)
+    extends RamlWebApiContext(loc, refs, wrapped, ds, eh, contextType = contextType) {
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext = {
     new PayloadContext(loc, refs, wrapped, Some(declarations), eh)
   }
@@ -45,8 +46,9 @@ class Raml10WebApiContext(loc: String,
                           refs: Seq[ParsedReference],
                           private val wrapped: ParserContext,
                           private val ds: Option[RamlWebApiDeclarations] = None,
-                          override val eh: Option[ErrorHandler] = None)
-    extends RamlWebApiContext(loc, refs, wrapped, ds, eh) {
+                          override val eh: Option[ErrorHandler] = None,
+                          contextType: RamlWebApiContextType.Value = RamlWebApiContextType.DEFAULT)
+    extends RamlWebApiContext(loc, refs, wrapped, ds, eh, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val vendor: Vendor                  = Raml10
   override val syntax: SpecSyntax              = Raml10Syntax
@@ -59,8 +61,9 @@ class Raml08WebApiContext(loc: String,
                           refs: Seq[ParsedReference],
                           private val wrapped: ParserContext,
                           private val ds: Option[RamlWebApiDeclarations] = None,
-                          override val eh: Option[ErrorHandler] = None)
-    extends RamlWebApiContext(loc, refs, wrapped, ds, eh) {
+                          override val eh: Option[ErrorHandler] = None,
+                          contextType: RamlWebApiContextType.Value = RamlWebApiContextType.DEFAULT)
+    extends RamlWebApiContext(loc, refs, wrapped, ds, eh, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml08VersionFactory()(this)
   override val vendor: Vendor                  = Raml08
   override val syntax: SpecSyntax              = Raml08Syntax
@@ -73,12 +76,12 @@ abstract class RamlWebApiContext(override val loc: String,
                                  refs: Seq[ParsedReference],
                                  private val wrapped: ParserContext,
                                  private val ds: Option[RamlWebApiDeclarations] = None,
-                                 override val eh: Option[ErrorHandler] = None)
+                                 override val eh: Option[ErrorHandler] = None,
+                                 var contextType: RamlWebApiContextType.Value = RamlWebApiContextType.DEFAULT)
     extends WebApiContext(loc, refs, wrapped, ds, eh)
     with RamlSpecAwareContext {
 
-  var globalMediatype: Boolean                 = false
-  var contextType: RamlWebApiContextType.Value = RamlWebApiContextType.DEFAULT
+  var globalMediatype: Boolean = false
 
   override val declarations: RamlWebApiDeclarations = ds.getOrElse(
     new RamlWebApiDeclarations(alias = None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
@@ -122,7 +125,10 @@ abstract class RamlWebApiContext(override val loc: String,
   }
 
   override def ignore(shape: String, property: String): Boolean =
-    (property.startsWith("(") && property.endsWith(")")) || (property.startsWith("/") && (shape == "webApi" || shape == "endPoint"))
+    (property.startsWith("(") && property.endsWith(")")) || (property.startsWith("/") && ignoredSlashShapes.contains(
+      shape))
+
+  private val ignoredSlashShapes = "webApi" :: "endPoint" :: "resourceType" :: "trait" :: Nil
 
   private def isInclude(node: YNode) = node.tagType == YType.Include
 
@@ -186,8 +192,9 @@ class ExtensionLikeWebApiContext(loc: String,
                                  refs: Seq[ParsedReference],
                                  private val wrapped: ParserContext,
                                  private val ds: Option[RamlWebApiDeclarations] = None,
-                                 val parentDeclarations: RamlWebApiDeclarations)
-    extends Raml10WebApiContext(loc, refs, wrapped, ds) {
+                                 val parentDeclarations: RamlWebApiDeclarations,
+                                 contextType: RamlWebApiContextType.Value = RamlWebApiContextType.DEFAULT)
+    extends Raml10WebApiContext(loc, refs, wrapped, ds, contextType = contextType) {
 
   override val declarations: ExtensionWebApiDeclarations =
     ds match {

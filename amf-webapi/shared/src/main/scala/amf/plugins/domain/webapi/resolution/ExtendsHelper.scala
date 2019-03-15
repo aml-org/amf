@@ -7,7 +7,7 @@ import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, ErrorHandler, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
-import amf.core.services.RuntimeValidator
+import amf.core.services.{AllValidationsMerger, RuntimeValidator}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
 import amf.plugins.document.webapi.contexts.{
@@ -100,7 +100,7 @@ object ExtendsHelper {
     }
 
     val operation: Operation =
-      RuntimeValidator.nestedValidation(ResourceTypeAndTraitValidationsMerger(ctx.parserCount)) { // we don't emit validation here, final result will be validated after merging
+      RuntimeValidator.nestedValidation(AllValidationsMerger(ctx.parserCount)) { // we don't emit validation here, final result will be validated after merging
         ctx.adapt(name) { ctxForTrait =>
           (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
             ctx.declarations += e._2
@@ -194,7 +194,7 @@ object ExtendsHelper {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
 
-    RuntimeValidator.nestedValidation(ResourceTypeAndTraitValidationsMerger(ctx.parserCount)) { // we don't emit validation here, final result will be validated after mergin
+    RuntimeValidator.nestedValidation(AllValidationsMerger(ctx.parserCount)) {
       ctx.adapt(name) { ctxForResourceType =>
         (ctxForResourceType.declarations.resourceTypes ++ ctxForResourceType.declarations.traits).foreach { e =>
           ctx.declarations += e._2
