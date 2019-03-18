@@ -68,20 +68,19 @@ object Parameters {
 /**
   * I need to be sure that always i will have either a param or a payload.
   */
-class OasParameter(element: Either[Parameter, Payload], val ast: Option[YPart] = None) {
+class OasParameter(val element: Either[Parameter, Payload], val ast: Option[YPart] = None) {
 
   val isFormData: Boolean = element.right.toOption.exists(
     p =>
       (p.isLink && p.effectiveLinkTarget().annotations.contains(classOf[FormBodyParameter])) || p.annotations.contains(
         classOf[FormBodyParameter]))
-  val isBody: Boolean                           = element.isRight && !isFormData
-  private val paramOption                       = element.left.toOption
-  def query: Option[Parameter]                  = paramOption.filter(_.isQuery)
-  def path: Option[Parameter]                   = paramOption.filter(_.isPath)
-  def header: Option[Parameter]                 = paramOption.filter(_.isHeader)
-  def invalids: Option[Parameter]               = paramOption.filter(p => !p.isQuery && !p.isHeader && !p.isPath)
-  def parameter: Option[Parameter]              = paramOption
-  def obtainElement: Either[Parameter, Payload] = element
+  val isBody: Boolean              = element.isRight && !isFormData
+  private val paramOption          = element.left.toOption
+  def query: Option[Parameter]     = paramOption.filter(_.isQuery)
+  def path: Option[Parameter]      = paramOption.filter(_.isPath)
+  def header: Option[Parameter]    = paramOption.filter(_.isHeader)
+  def invalids: Option[Parameter]  = paramOption.filter(p => !p.isQuery && !p.isHeader && !p.isPath)
+  def parameter: Option[Parameter] = paramOption
 
   def formData: Option[Payload] = if (isFormData) element.right.toOption else None
   def body: Option[Payload]     = if (!isFormData) element.right.toOption else None

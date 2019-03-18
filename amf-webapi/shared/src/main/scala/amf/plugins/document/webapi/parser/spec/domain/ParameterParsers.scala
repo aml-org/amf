@@ -492,7 +492,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       Some(Payload().withName("formData").adopted(parentId).set(PayloadModel.Schema, schema).add(FormBodyParameter()))
     }
 
-  private case class ParameterWithInfo(oasParam: OasParameter, name: String, binding: String)
+  private case class ParameterInformation(oasParam: OasParameter, name: String, binding: String)
 
   def parse(inRequest: Boolean = false): Parameters = {
     val oasParameters = values
@@ -501,32 +501,32 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
     val formData = oasParameters.flatMap(_.formData)
     val body     = oasParameters.filter(_.isBody)
 
-    val paramsWithInfo = oasParameters.flatMap(
+    val paramsInformation = oasParameters.map(
       oasParam => {
-        oasParam.obtainElement match {
+        oasParam.element match {
           case Left(parameter) =>
             val effectiveParam = parameter.effectiveLinkTarget().asInstanceOf[Parameter]
-            Some(ParameterWithInfo(oasParam, effectiveParam.parameterName.value(), effectiveParam.binding.value()))
+            ParameterInformation(oasParam, effectiveParam.parameterName.value(), effectiveParam.binding.value())
           case Right(payload) =>
             val effectivePayload = payload.effectiveLinkTarget().asInstanceOf[Payload]
-            val optName          = obtainName(effectivePayload)
-            optName.map(ParameterWithInfo(oasParam, _, if (oasParam.isFormData) "formData" else "body"))
+            val name             = obtainName(effectivePayload)
+            ParameterInformation(oasParam, name, if (oasParam.isFormData) "formData" else "body")
         }
       }
     )
 
-    val equalParamsGrouping = paramsWithInfo.groupBy {
-      case ParameterWithInfo(_oasParam, name, binding) => (name, binding)
+    val groupedByBinding = paramsInformation.groupBy {
+      case ParameterInformation(_, name, binding) => (name, binding)
     }.values
-    equalParamsGrouping
+    groupedByBinding
       .foreach {
         case equalParams if equalParams.length > 1 =>
-          equalParams.init.foreach {
-            case ParameterWithInfo(oasParam, name, binding) =>
+          equalParams.tail.foreach {
+            case ParameterInformation(oasParam, name, binding) =>
               ctx.violation(
                 DuplicatedParameters,
                 oasParam.domainElement.id,
-                s"parameter $name of type $binding was found duplicated",
+                s"Parameter $name of type $binding was found duplicated",
                 oasParam.ast.get
               )
           }
@@ -556,12 +556,11 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
     )
   }
 
-  private def obtainName(payload: Payload): Option[String] = {
-    val nameValue = Option(payload.fields.getValue(PayloadModel.Name))
-    nameValue
+  private def obtainName(payload: Payload): String =
+    payload.fields
+      .getValueAsOption(PayloadModel.Name)
       .flatMap(_.annotations.find(classOf[ParameterNameForPayload]).map(_.paramName))
-      .orElse(Some(payload.name.value()))
-  }
+      .getOrElse(payload.name.value())
 
   private def validateOasPayloads(params: Seq[OasParameter], id: ValidationSpecification): Unit =
     if (params.length > 1) {
