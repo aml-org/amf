@@ -5,10 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/resolution#nested-endpoint
-  Message: Nested endpoint in trait: '/hi'
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property /hi not supported in a RAML 1.0 trait node
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/trait/invalid/input.raml#/declarations/traits/secured
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/trait/invalid/input.raml#/declarations/traits/secured/applied
   Property: 
-  Position: Some(LexicalInformation([(13,4)-(13,7)]))
+  Position: Some(LexicalInformation([(13,4)-(13,8)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/trait/invalid/input.raml

@@ -130,26 +130,6 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
 
     AnnotationParser(operation, map).parse()
 
-    if (isTrait) {
-      val nestedEndpointRegex = "^/.*"
-      map.regex(
-        nestedEndpointRegex,
-        entries => {
-          entries.foreach { entry =>
-            val nestedEndpointName = entry.key.toString()
-            ctx.violation(
-              NestedEndpoint,
-              operation.id.stripSuffix("/applied"),
-              None,
-              s"Nested endpoint in trait: '$nestedEndpointName'",
-              Some(LexicalInformation(Range(entry.key.range))),
-              Some(map.sourceName)
-            )
-          }
-        }
-      )
-    }
-
     operation
   }
 }

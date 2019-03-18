@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: my api
+version: 1.0
+traits:
+  t1:
+    <<method>>:
+/emptyString:
+  get:
+    is: [t1: {method: "   "}]
+/inferredNull:
+  get:
+    is: [t1: {method: }]
+/explicitNull:
+  get:
+    is: [t1: {method: null}]
