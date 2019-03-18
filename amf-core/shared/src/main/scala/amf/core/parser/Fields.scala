@@ -73,6 +73,9 @@ class Fields {
   /** Return [[Value]] associated to given [[Field]]. */
   def getValue(field: Field): Value = fs.get(field).orNull
 
+  /** Return [[Value]] associated to given [[Field]]. */
+  def getValueAsOption(field: Field): Option[Value] = fs.get(field)
+
   /** Add field array - value. */
   def add(id: String, field: Field, value: AmfElement): this.type = {
     adopt(id, value)
