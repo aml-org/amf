@@ -7,20 +7,19 @@ import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, ErrorHandler, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
-import amf.core.services.{RuntimeValidator, ValidationsMerger}
-import amf.core.validation.AMFValidationResult
+import amf.core.services.{AllValidationsMerger, RuntimeValidator}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.contexts.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  RamlWebApiContextType
+}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
-import amf.plugins.features.validation.ParserSideValidations
-import amf.plugins.features.validation.ResolutionSideValidations.{
-  NestedEndpoint,
-  ParseResourceTypeFail,
-  ResolutionValidation
-}
+import amf.plugins.features.validation.ResolutionSideValidations.{ParseResourceTypeFail, ResolutionValidation}
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
@@ -100,50 +99,24 @@ object ExtendsHelper {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
 
-    val mergeMissingSecuritySchemes = new ValidationsMerger {
-      override val parserRun: Int = ctx.parserCount
-      override def merge(result: AMFValidationResult): Boolean =
-        result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id
-    }
-
     val operation: Operation =
-      RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) { // we don't emit validation here, final result will be validated after merging
+      RuntimeValidator.nestedValidation(AllValidationsMerger(ctx.parserCount)) { // we don't emit validation here, final result will be validated after merging
         ctx.adapt(name) { ctxForTrait =>
           (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
             ctx.declarations += e._2
           }
-          ctxForTrait.factory.operationParser(entry, _ => Operation(), true).parse()
+          ctxForTrait.contextType = RamlWebApiContextType.TRAIT
+          val operation = ctxForTrait.factory
+            .operationParser(entry, _ => Operation().withId(extensionId + "/applied"), true)
+            .parse()
+//          ctxForTrait.futureDeclarations.resolve()
+          operation
         }
       }
-    checkNoNestedEndpoints(entry, ctx, annotations, extensionId, "trait")
 
     if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
     operation
     // new ReferenceResolutionStage(profile, keepEditingInfo).resolveDomainElement(operation)
-  }
-
-  private def checkNoNestedEndpoints(entry: YMapEntry,
-                                     ctx: RamlWebApiContext,
-                                     annotations: Annotations,
-                                     extensionId: String,
-                                     extension: String): Unit = {
-    entry.value.tagType match {
-      case YType.Map =>
-        entry.value.as[YMap].map.keySet.foreach { propertyNode =>
-          val property = propertyNode.as[YScalar].text
-          if (property.startsWith("/")) {
-            ctx.violation(
-              NestedEndpoint,
-              extensionId,
-              None,
-              s"Nested endpoint in $extension: '$property'",
-              annotations.find(classOf[LexicalInformation]),
-              annotations.find(classOf[SourceLocation]).map(_.location)
-            )
-          }
-        }
-      case _ => // ignore
-    }
   }
 
   def asEndpoint[T <: BaseUnit](unit: T,
@@ -221,24 +194,18 @@ object ExtendsHelper {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
 
-    val mergeMissingSecuritySchemes = new ValidationsMerger {
-      override val parserRun: Int = ctx.parserCount
-      override def merge(result: AMFValidationResult): Boolean = {
-        result.validationId == ParserSideValidations.UnknownSecuritySchemeErrorSpecification.id
-      }
-    }
-    RuntimeValidator.nestedValidation(mergeMissingSecuritySchemes) { // we don't emit validation here, final result will be validated after mergin
-      ctx.adapt(name) { ctxForTrait =>
-        (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
+    RuntimeValidator.nestedValidation(AllValidationsMerger(ctx.parserCount)) {
+      ctx.adapt(name) { ctxForResourceType =>
+        (ctxForResourceType.declarations.resourceTypes ++ ctxForResourceType.declarations.traits).foreach { e =>
           ctx.declarations += e._2
         }
-        ctxForTrait.factory
+        ctxForResourceType.contextType = RamlWebApiContextType.RESOURCE_TYPE
+        ctxForResourceType.factory
           .endPointParser(entry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)
           .parse()
+//        ctxForResourceType.futureDeclarations.resolve()
       }
     }
-
-    checkNoNestedEndpoints(entry, ctx, node.annotations, extensionId, "resourceType")
 
     collector.toList match {
       case element :: _ =>

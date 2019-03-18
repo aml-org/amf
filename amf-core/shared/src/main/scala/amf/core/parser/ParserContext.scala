@@ -236,21 +236,21 @@ case class ParserContext(rootContextDocument: String = "",
       eh match {
         case Some(errorHandler) =>
           errorHandler.reportConstraint(id,
-            node,
-            property,
-            message,
-            lexical,
-            level,
-            location.orElse(Some(rootContextDocument)))
+                                        node,
+                                        property,
+                                        message,
+                                        lexical,
+                                        level,
+                                        location.orElse(Some(rootContextDocument)))
         case _ =>
           RuntimeValidator.reportConstraintFailure(level,
-            id,
-            node,
-            property,
-            message,
-            lexical,
-            parserCount,
-            location.orElse(Some(rootContextDocument)))
+                                                   id,
+                                                   node,
+                                                   property,
+                                                   message,
+                                                   lexical,
+                                                   parserCount,
+                                                   location.orElse(Some(rootContextDocument)))
       }
     }
   }

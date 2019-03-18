@@ -6,6 +6,7 @@ import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.JsonSchemaPlugin
+import amf.plugins.document.webapi.contexts.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft3SchemaVersion,
@@ -23,14 +24,16 @@ import amf.plugins.features.validation.ParserSideValidations.{
   InvalidJsonSchemaVersion
 }
 import org.yaml.model._
+
 import scala.collection.mutable
 
 class PayloadContext(loc: String,
                      refs: Seq[ParsedReference],
                      private val wrapped: ParserContext,
                      private val ds: Option[RamlWebApiDeclarations] = None,
-                     override val eh: Option[ErrorHandler] = None)
-    extends RamlWebApiContext(loc, refs, wrapped, ds, eh) {
+                     override val eh: Option[ErrorHandler] = None,
+                     contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
+    extends RamlWebApiContext(loc, refs, wrapped, ds, eh, contextType = contextType) {
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext = {
     new PayloadContext(loc, refs, wrapped, Some(declarations), eh)
   }
@@ -45,8 +48,9 @@ class Raml10WebApiContext(loc: String,
                           refs: Seq[ParsedReference],
                           private val wrapped: ParserContext,
                           private val ds: Option[RamlWebApiDeclarations] = None,
-                          override val eh: Option[ErrorHandler] = None)
-    extends RamlWebApiContext(loc, refs, wrapped, ds, eh) {
+                          override val eh: Option[ErrorHandler] = None,
+                          contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
+    extends RamlWebApiContext(loc, refs, wrapped, ds, eh, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val vendor: Vendor                  = Raml10
   override val syntax: SpecSyntax              = Raml10Syntax
@@ -59,8 +63,9 @@ class Raml08WebApiContext(loc: String,
                           refs: Seq[ParsedReference],
                           private val wrapped: ParserContext,
                           private val ds: Option[RamlWebApiDeclarations] = None,
-                          override val eh: Option[ErrorHandler] = None)
-    extends RamlWebApiContext(loc, refs, wrapped, ds, eh) {
+                          override val eh: Option[ErrorHandler] = None,
+                          contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
+    extends RamlWebApiContext(loc, refs, wrapped, ds, eh, contextType) {
   override val factory: RamlSpecVersionFactory = new Raml08VersionFactory()(this)
   override val vendor: Vendor                  = Raml08
   override val syntax: SpecSyntax              = Raml08Syntax
@@ -73,7 +78,8 @@ abstract class RamlWebApiContext(override val loc: String,
                                  refs: Seq[ParsedReference],
                                  private val wrapped: ParserContext,
                                  private val ds: Option[RamlWebApiDeclarations] = None,
-                                 override val eh: Option[ErrorHandler] = None)
+                                 override val eh: Option[ErrorHandler] = None,
+                                 var contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
     extends WebApiContext(loc, refs, wrapped, ds, eh)
     with RamlSpecAwareContext {
 
@@ -120,8 +126,26 @@ abstract class RamlWebApiContext(override val loc: String,
     }
   }
 
-  override def ignore(shape: String, property: String): Boolean =
-    (property.startsWith("(") && property.endsWith(")")) || (property.startsWith("/") && (shape == "webApi" || shape == "endPoint"))
+  override def ignore(shape: String, property: String): Boolean = {
+    def isAnnotation = property.startsWith("(") && property.endsWith(")")
+
+    def isAllowedNestedEndpoint = {
+      val shapesIgnoringNestedEndpoints = "webApi" :: "endPoint" :: Nil
+      property.startsWith("/") && shapesIgnoringNestedEndpoints.contains(shape)
+    }
+
+    def reportedByOtherConstraint = {
+      val nestedEndpointsConstraintShapes = "resourceType" :: Nil
+      property.startsWith("/") && nestedEndpointsConstraintShapes.contains(shape)
+    }
+
+    def isAllowedParameter = {
+      val shapesWithParameters = "resourceType" :: "trait" :: Nil
+      property.matches("<<.+>>") && shapesWithParameters.contains(shape)
+    }
+
+    isAnnotation || isAllowedNestedEndpoint || isAllowedParameter || reportedByOtherConstraint
+  }
 
   private def isInclude(node: YNode) = node.tagType == YType.Include
 
@@ -185,8 +209,9 @@ class ExtensionLikeWebApiContext(loc: String,
                                  refs: Seq[ParsedReference],
                                  private val wrapped: ParserContext,
                                  private val ds: Option[RamlWebApiDeclarations] = None,
-                                 val parentDeclarations: RamlWebApiDeclarations)
-    extends Raml10WebApiContext(loc, refs, wrapped, ds) {
+                                 val parentDeclarations: RamlWebApiDeclarations,
+                                 contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
+    extends Raml10WebApiContext(loc, refs, wrapped, ds, contextType = contextType) {
 
   override val declarations: ExtensionWebApiDeclarations =
     ds match {
@@ -451,4 +476,9 @@ abstract class WebApiContext(val loc: String,
       case None =>
         violation(ClosedShapeSpecification, node, s"Cannot validate unknown node type $shape for $vendor", ast)
     }
+}
+
+object RamlWebApiContextType extends Enumeration {
+  type RamlWebApiContextType = Value
+  val DEFAULT, RESOURCE_TYPE, TRAIT = Value
 }

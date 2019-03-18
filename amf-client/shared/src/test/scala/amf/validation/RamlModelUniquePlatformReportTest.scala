@@ -7,6 +7,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/model/"
+  override val hint: Hint  = RamlYamlHint
 
   test("Load dialect") {
     validate("data/error1.raml", Some("load-dialect-error1.report"))
@@ -207,6 +208,4 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("NamedExample closed shape") {
     validate("named-example-closed-shape/named-example-closed-shape.raml", Some("named-example-closed-shape.report"))
   }
-
-  override val hint: Hint = RamlYamlHint
 }

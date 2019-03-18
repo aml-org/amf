@@ -10,5 +10,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/resource_types/nested-endpoint.raml#/web-api/end-points/%2Fusers/hasGroups
   Property: 
-  Position: Some(LexicalInformation([(6,4)-(11,0)]))
+  Position: Some(LexicalInformation([(9,4)-(9,11)]))
   Location: file://amf-client/shared/src/test/resources/validations/resource_types/nested-endpoint.raml
