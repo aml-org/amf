@@ -124,11 +124,26 @@ abstract class RamlWebApiContext(override val loc: String,
     }
   }
 
-  override def ignore(shape: String, property: String): Boolean =
-    (property.startsWith("(") && property.endsWith(")")) || (property.startsWith("/") && ignoredSlashShapes.contains(
-      shape))
+  override def ignore(shape: String, property: String): Boolean = {
+    def isAnnotation = property.startsWith("(") && property.endsWith(")")
 
-  private val ignoredSlashShapes = "webApi" :: "endPoint" :: "resourceType" :: "trait" :: Nil
+    def isAllowedNestedEndpoint = {
+      val shapesIgnoringNestedEndpoints = "webApi" :: "endPoint" :: Nil
+      property.startsWith("/") && shapesIgnoringNestedEndpoints.contains(shape)
+    }
+
+    def reportedByOtherConstraint = {
+      val nestedEndpointsConstraintShapes = "trait" :: "resourceType" :: Nil
+      property.startsWith("/") && nestedEndpointsConstraintShapes.contains(shape)
+    }
+
+    def isAllowedParameter = {
+      val shapesWithParameters = "resourceType" :: "trait" :: Nil
+      property.matches("<<.*>>") && shapesWithParameters.contains(shape)
+    }
+
+    isAnnotation || isAllowedNestedEndpoint || isAllowedParameter || reportedByOtherConstraint
+  }
 
   private def isInclude(node: YNode) = node.tagType == YType.Include
 
@@ -452,7 +467,7 @@ abstract class WebApiContext(val loc: String,
           val key: String = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
           if (ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
-          } else if (!properties.exists(key.matches)) {
+          } else if (!properties(key)) {
             violation(ClosedShapeSpecification, node, s"Property $key not supported in a $vendor $shape node", entry)
           }
         }
