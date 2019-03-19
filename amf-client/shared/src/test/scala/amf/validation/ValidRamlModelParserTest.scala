@@ -183,5 +183,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("validXmlAttributeScalar.raml")
   }
 
+  test("Large int valid test") {
+    checkValid("large-int/large-int.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

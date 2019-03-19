@@ -4,7 +4,6 @@ import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.domain.{AmfScalar, Annotation, DataNode}
 import amf.core.parser.{Annotations, ScalarNode, _}
-import amf.core.remote.Vendor
 import amf.plugins.document.webapi.annotations.ParsedJSONExample
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}

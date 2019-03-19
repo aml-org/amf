@@ -192,7 +192,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       case "application/json" => JsonParser(payload)(errorHandler)
       case _                  => YamlParser(payload)(errorHandler)
     }
-    parser.parse(keepTokens = true).collectFirst({ case doc: YDocument => doc.node }) match {
+    parser.parse(keepTokens = true).collectFirst { case doc: YDocument => doc.node } match {
       case Some(node: YNode) =>
         PayloadFragment(DataNodeParser(node)(defaultCtx).parse(), mediaType)
       case None => PayloadFragment(ScalarNode(payload, None), mediaType)

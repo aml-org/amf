@@ -1,6 +1,5 @@
 package amf.error
 
-import amf.core.annotations.LexicalInformation
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.Range
 import amf.core.remote.RamlYamlHint
@@ -126,16 +125,6 @@ class RamlParserErrorTest extends ParserErrorTest {
         invalidSeq.level should be("Violation")
         invalidSeq.message should startWith("Expected scalar but found:")
         invalidSeq.position.map(_.range) should be(Some(Range((42, 33), (50, 21))))
-      }
-    )
-  }
-
-  test("Overflow number") {
-    validate(
-      "error/overflow-number.raml",
-      numberViolation => {
-        numberViolation.level should be("Violation")
-        numberViolation.message should startWith("Cannot parse '9223372036854776000' with tag '!!int'")
       }
     )
   }
