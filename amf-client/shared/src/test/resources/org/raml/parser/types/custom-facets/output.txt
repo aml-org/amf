@@ -1,5 +1,10 @@
 #%RAML 1.0
 title: A
+annotationTypes:
+  reader:
+    type: string
+  writer:
+    type: string
 types:
   myDate:
     (reader): myReaader.ts
@@ -19,8 +24,3 @@ types:
         type: string
         format: YYYY
         (amf-format): YYYY
-annotationTypes:
-  reader:
-    type: string
-  writer:
-    type: string

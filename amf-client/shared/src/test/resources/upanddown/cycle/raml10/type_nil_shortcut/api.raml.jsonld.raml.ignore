@@ -2,6 +2,12 @@
 title: Offices API
 baseUri: http://localhost/office
 annotationTypes:
+  base:
+    anyOf:
+      -
+        type: string
+      -
+        type: nil
   ignored:
     allowedTargets:
       - Method
@@ -25,9 +31,3 @@ annotationTypes:
       This annotation allows to specify a custom parameter name.
     allowedTargets:
       - TypeDeclaration
-  base:
-    anyOf:
-      -
-        type: string
-      -
-        type: nil
