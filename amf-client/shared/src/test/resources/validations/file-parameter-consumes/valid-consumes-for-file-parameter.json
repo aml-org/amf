@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "some api"
+  },
+  "paths": {
+    "/aPath": {
+      "post": {
+        "consumes": ["multipart/form-data", "application/x-www-form-urlencoded"],
+        "parameters": [
+          {
+            "name": "file-parameter",
+            "in": "formData",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "description"
+          }
+        }
+      }
+    }
+  }
+}
