@@ -1,0 +1,27 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "some api"
+  },
+  "paths": {
+    "/aPath": {
+      "post": {
+        "consumes": ["application/json"],
+        "parameters": [
+          {
+            "name": "file-parameter",
+            "in": "formData",
+            "required": true,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "description"
+          }
+        }
+      }
+    }
+  }
+}

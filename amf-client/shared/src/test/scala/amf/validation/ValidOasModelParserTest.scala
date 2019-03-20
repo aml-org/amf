@@ -53,6 +53,10 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/duplicate-parameters/parameters-with-same-name.json", OasProfile)
   }
 
+  test("When file parameter is defined, consumes must have specific value") {
+    checkValid("/file-parameter-consumes/valid-consumes-for-file-parameter.json", OasProfile)
+  }
+
   // Check http inner reference.
   ignore("Http with # reference") {
     checkValid("/http-with-hashtag/http-with-hashtag.json", OasProfile)

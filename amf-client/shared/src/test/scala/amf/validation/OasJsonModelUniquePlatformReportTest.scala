@@ -60,5 +60,18 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Some("three-duplicated-query-parameters.report"))
   }
 
+  test("Parameters of type file defined in path with invalid consumes property") {
+    validate("file-parameter-consumes/parameter-in-path.json", Some("path-file-parameter-invalid-consumes.report"))
+  }
+
+  test("Parameters of type file defined in operation with invalid consumes property") {
+    validate("file-parameter-consumes/parameter-in-operation.json",
+             Some("operation-file-parameter-invalid-consumes.report"))
+  }
+
+  test("Parameter of type file with no consumes property defined") {
+    validate("file-parameter-consumes/no-consumes-defined.json", Some("file-parameter-no-consumes.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }
