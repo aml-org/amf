@@ -55,6 +55,12 @@ object ResolutionSideValidations extends Validations {
     "Failed while parsing an endpoint from a resource type"
   )
 
+  val UnequalMediaTypeDefinitionsInExtendsPayloads = validation(
+    "unequal-media-type-definitions-in-extends-payloads",
+    "Payload media types in traits/resource types and in operations/endpoints should be defined " +
+      "equivalently (inline or using global default)"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     RecursiveShapeSpecification.id -> Map(
       RamlProfile   -> VIOLATION,
@@ -76,6 +82,7 @@ object ResolutionSideValidations extends Validations {
     InvalidTypeInheritanceWarningSpecification,
     NestedEndpoint,
     ParseResourceTypeFail,
-    UnsupportedPipeline
+    UnsupportedPipeline,
+    UnequalMediaTypeDefinitionsInExtendsPayloads
   )
 }

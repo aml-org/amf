@@ -2,13 +2,16 @@ package amf.plugins.domain.webapi.resolution.stages
 
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.models.{Payload, WebApi}
-import amf.{OasProfile, ProfileName}
+import amf.plugins.domain.webapi.models.{Payload, Request, WebApi}
+import amf.{Oas20Profile, OasProfile, ProfileName}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.domain.shapes.models.{FileShape, NodeShape}
+import amf.plugins.features.validation.ParserSideValidations.InvalidConsumesWithFileParameter
 
 /** Apply root and operation mime types to payloads.
   *
@@ -67,6 +70,7 @@ class MediaTypeResolutionStage(profile: ProfileName, isValidation: Boolean = fal
               request.setArray(RequestModel.Payloads, payloads(request.payloads, a, request.id))
             case None =>
           }
+          if (profile == Oas20Profile) validateFilePayloads(request)
         }
 
         operation.responses.foreach { response =>
@@ -112,4 +116,33 @@ class MediaTypeResolutionStage(profile: ProfileName, isValidation: Boolean = fal
 
   def merge(root: Option[Seq[String]], op: Option[Seq[String]]): Option[Seq[String]] =
     op.orElse(root).filter(_.nonEmpty)
+
+  /** Oas 2.0 violation in which all file parameters must comply with specific consumes property */
+  private def validateFilePayloads(request: Request): Unit = {
+    val filePayloads = request.payloads.filter(_.schema match {
+      //another violation is present to make sure all file parameters are NodeShapes
+      case node: NodeShape => node.properties.exists(_.range.isInstanceOf[FileShape])
+      case _               => false
+    })
+    filePayloads
+      .filter(_.mediaType.option() match {
+        case Some("multipart/form-data") | Some("application/x-www-form-urlencoded") => false
+        case _                                                                       => true
+      })
+      .foreach { payload =>
+        val errorProperties = payload.schema match {
+          case n: NodeShape => n.properties.filter(_.range.isInstanceOf[FileShape])
+          case _            => Nil
+        }
+        errorProperties.foreach(mediaTypeError)
+      }
+  }
+
+  private def mediaTypeError(prop: PropertyShape): Unit = errorHandler.violation(
+    InvalidConsumesWithFileParameter,
+    prop.id,
+    "Consumes must be either 'multipart/form-data', 'application/x-www-form-urlencoded', or both when a file parameter is present",
+    prop.range.annotations
+  )
+
 }

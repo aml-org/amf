@@ -1,12 +1,10 @@
 #%RAML 1.0
 title: master
-(another-scalar): overlay
-(scalar): plain
-/home:
-  (object):
-    lat: -34.6
-    long: -58.4
 annotationTypes:
+  scalar:
+    type: string
+  another-scalar:
+    type: string
   object:
     additionalProperties: true
     properties:
@@ -16,7 +14,9 @@ annotationTypes:
       long:
         type: number
         required: true
-  scalar:
-    type: string
-  another-scalar:
-    type: string
+(another-scalar): overlay
+(scalar): plain
+/home:
+  (object):
+    lat: -34.6
+    long: -58.4

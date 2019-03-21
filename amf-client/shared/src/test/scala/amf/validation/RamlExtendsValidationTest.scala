@@ -100,4 +100,8 @@ class RamlExtendsValidationTest extends UniquePlatformReportGenTest {
     validate("/extends/complex-cases/complexParametrizedCases.raml", None)
   }
 
+  // Merge payloads
+  test("Merge payloads with explicit and global media type") {
+    validate("/resource_types/merging-payloads.raml", Some("merging-payloads.report"))
+  }
 }

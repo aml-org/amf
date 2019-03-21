@@ -487,7 +487,7 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
           AnnotationTypesParser(ast, ast.key.as[YScalar].text, ast.value.as[YMap], adopt).parse()
 
         case YType.Seq =>
-          val domainProp = CustomDomainProperty()
+          val domainProp = CustomDomainProperty(ast)
           adopt(domainProp)
           ctx.violation(InvalidAnnotationType,
                         domainProp.id,
@@ -497,13 +497,13 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
         case _ =>
           val key             = ast.key.as[YScalar].text
           val scalar: YScalar = ast.value.as[YScalar]
-          val domainProp      = CustomDomainProperty()
+          val domainProp      = CustomDomainProperty(ast)
           adopt(domainProp)
 
           ctx.declarations.findAnnotation(scalar.text, SearchScope.All) match {
             case Some(a) =>
               val copied: CustomDomainProperty = a.link(scalar.text, Annotations(ast))
-              copied.id = null // we reset the ID so ti can be adopted, there's an extra rule where the id is not set
+              copied.id = null // we reset the ID so it can be adopted, there's an extra rule where the id is not set
               // because the way they are inserted in the mode later in the parsing
               adopt(copied.withName(key))
               copied
