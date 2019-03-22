@@ -8,31 +8,26 @@ import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableEle
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
-import amf.core.parser.{ErrorHandler, FieldEntry, Fields, Value}
+import amf.core.parser.{ErrorHandler, FieldEntry, Value}
 import amf.plugins.document.webapi.annotations.Inferred
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
-import amf.plugins.domain.webapi.metamodel.{PayloadModel, ResponseModel}
-import amf.plugins.domain.webapi.models.{Payload, Response}
-import amf.plugins.features.validation.ResolutionSideValidations.{
-  ResolutionValidation,
-  UnequalMediaTypeDefinitionsInExtendsPayloads
-}
+import amf.plugins.domain.webapi.models.Payload
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 /**
   * Merge 'other' element into 'main' element:
   * 1) 'main' node properties are inspected and those that are undefined in 'other' node remain unchanged.
   * 2) 'main' node receives all properties of 'other' node (excluding optional ones), which are undefined in the 'main' node.
   * 3) Properties defined in both 'main' node and 'other' node (including optional ones) are treated as follows:
-  * a) Scalar properties remain unchanged.
-  * b) Collection properties are merged by value.
-  * c) Values of object properties are subjected to steps 1-3 of this procedure.
+  *     a) Scalar properties remain unchanged.
+  *     b) Collection properties are merged by value.
+  *     c) Values of object properties are subjected to steps 1-3 of this procedure.
   */
 object DomainElementMerging {
 
   def merge[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): T = {
-    MergingValidator.validate(main, other, errorHandler)
     var merged = false
 
     other.fields.fields().filter(ignored).foreach {
@@ -212,10 +207,9 @@ object DomainElementMerging {
 
   /**
     * Adopts recursively different kinds of AMF elements if not yet adopted
-    *
     * @param parentId id of the adopter element
-    * @param target   element to be adopted
-    * @param adopted  utility class containing already adopted elements
+    * @param target element to be adopted
+    * @param adopted utility class containing already adopted elements
     * @return adopted element with newly set ID
     */
   def adoptInner(parentId: String, target: AmfElement, adopted: Adopted = Adopted()): AmfElement = {
@@ -245,8 +239,7 @@ object DomainElementMerging {
 
   /**
     * Adopts target domain element by parent. (Makes element's ID relative to that of parent)
-    *
-    * @param target   adopted
+    * @param target adopted
     * @param parentId id of the adopter element
     * @return adopted element with newly set ID
     */
@@ -391,40 +384,6 @@ object DataNodeMerging {
         if (!existing.contains(scalar.value)) main.addMember(scalar)
       case node =>
         main.addMember(adoptTree(main.id, node))
-    }
-  }
-}
-
-/**
-  * Checks some conditions when merging some nodes
-  */
-object MergingValidator {
-  def validate[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): Unit = {
-    main match {
-      case _: Response =>
-        val mainPayloadsOption  = main.fields.entry(ResponseModel.Payloads)
-        val otherPayloadsOption = other.fields.entry(ResponseModel.Payloads)
-
-        if (mainPayloadsOption.isDefined && otherPayloadsOption.isDefined) {
-          val mainPayloads  = mainPayloadsOption.get.value.value.asInstanceOf[AmfArray]
-          val otherPayloads = otherPayloadsOption.get.value.value.asInstanceOf[AmfArray]
-
-          val mainUsesGlobalMediaType = mainPayloads.values.forall { payload =>
-            payload.asInstanceOf[Payload].fields.entry(PayloadModel.MediaType).isEmpty
-          }
-
-          val otherUsesGlobalMediaType = otherPayloads.values.forall { payload =>
-            payload.asInstanceOf[Payload].fields.entry(PayloadModel.MediaType).isEmpty
-          }
-
-          if (mainUsesGlobalMediaType != otherUsesGlobalMediaType) {
-            errorHandler.violation(UnequalMediaTypeDefinitionsInExtendsPayloads,
-                                   main.id,
-                                   UnequalMediaTypeDefinitionsInExtendsPayloads.message,
-                                   main.annotations)
-          }
-        }
-      case _ => // Nothing
     }
   }
 }
