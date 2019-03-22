@@ -1,0 +1,14 @@
+#%RAML 1.0 Library
+
+
+resourceTypes:              
+  collection-item:
+    description: "Used to fetch and update the details of Collection Item."
+    post:
+      body:
+        application/json:
+          type:
+            properties:
+              content: string
+              secondExample: string
+          example: <<exampleItem>>
