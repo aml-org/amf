@@ -1,11 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
 import amf.plugins.features.validation.ParserSideValidations._
-import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
 import amf.plugins.domain.webapi.metamodel.OperationModel
@@ -14,7 +13,6 @@ import amf.plugins.domain.webapi.models.{Operation, Response}
 import org.yaml.model._
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
-import amf.plugins.features.validation.ResolutionSideValidations.NestedEndpoint
 
 import scala.collection.mutable
 
@@ -51,10 +49,9 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
   }
 
   protected def parseMap(map: YMap, operation: Operation): Operation = {
-    val map     = entry.value.as[YMap]
-    val isTrait = ctx.contextType == RamlWebApiContextType.TRAIT
 
-    ctx.closedShape(operation.id, map, if (isTrait) "trait" else "operation")
+    val map = entry.value.as[YMap]
+    ctx.closedShape(operation.id, map, "operation")
 
     map.key("displayName", OperationModel.Name in operation)
     map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)
