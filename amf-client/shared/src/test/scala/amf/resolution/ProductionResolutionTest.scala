@@ -16,7 +16,7 @@ import scala.concurrent.Future
 
 abstract class RamlResolutionTest extends ResolutionTest {
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    new AMFRenderer(unit, config.target, RenderOptions().withSourceMaps, config.syntax).renderToString
+    new AMFRenderer(unit, config.target, RenderOptions().withSourceMaps.withPrettyPrint, config.syntax).renderToString
   }
 }
 

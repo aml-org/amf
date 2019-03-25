@@ -6,7 +6,7 @@ import amf.core.metamodel.document.BaseUnitModel.{Location, Usage}
 import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.document.DocumentModel.References
 import amf.core.metamodel.domain.DomainElementModel
-import amf.core.metamodel.{MetaModelTypeMapping, Obj}
+import amf.core.metamodel.{DynamicObj, MetaModelTypeMapping, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain._
 import amf.core.parser.{DefaultParserSideErrorHandler, ErrorHandler, FieldEntry, ParserContext, Value}
@@ -70,12 +70,7 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
   /** Finds in the nested model structure AmfObjects with the requested types. */
   def findByType(shapeType: String, cycles: Set[String] = Set.empty): Seq[DomainElement] = {
     val predicate = { element: DomainElement =>
-      val types = element match {
-        case e: DynamicDomainElement =>
-          e.dynamicType.map(t => t.iri()) ++ element.dynamicTypes() ++ metaModel(element).`type`.map(t => t.iri())
-        case _ => element.dynamicTypes() ++ metaModel(element).`type`.map(t => t.iri())
-      }
-      types.contains(shapeType)
+      metaModel(element).`type`.map(t => t.iri()).contains(shapeType)
     }
     findInDeclaredModel(predicate, this, first = false, ListBuffer.empty, cycles) ++
       findInEncodedModel(predicate, this, first = false, ListBuffer.empty, cycles)
@@ -166,11 +161,11 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
         acc
       } else {
         // elements are the values in the properties for the not found object
-        val elements = element match {
-          case dynamicElement: DynamicDomainElement =>
+        val elements = element.meta match {
+          case _: DynamicObj =>
             val values =
-              (dynamicElement.dynamicFields :+ DomainElementModel.CustomDomainProperties)
-                .flatMap(f => dynamicElement.valueForField(f))
+              (element.meta.fields :+ DomainElementModel.CustomDomainProperties)
+                .flatMap(f => element.asInstanceOf[DynamicDomainElement].valueForField(f))
                 .map(_.value)
             val effectiveValues = values.map {
               case d: DomainElement => Seq(d) // set(

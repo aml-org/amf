@@ -1,7 +1,5 @@
 package amf.core.rdf
 
-import java.lang.reflect.Modifier
-
 import amf.core.annotations.DomainExtensionAnnotation
 import amf.core.metamodel.Type.{Array, Bool, Iri, RegExp, SortedArray, Str}
 import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, SourceMapModel}
@@ -179,7 +177,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           scalar.withId(node.subject)
           node.getKeys().foreach { k =>
             val entries = node.getProperties(k).get
-            if (k == scalar.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
+            if (k == ScalarNodeModel.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
               val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
               scalar.value = parsedScalar.value
               scalar.dataType = parsedScalar.dataType
@@ -191,10 +189,10 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
           link.withId(node.subject)
           node.getKeys().foreach { k =>
             val entries = node.getProperties(k).get
-            if (k == link.Alias.value.iri() && entries.head.isInstanceOf[Literal]) {
+            if (k == LinkNodeModel.Alias.value.iri() && entries.head.isInstanceOf[Literal]) {
               val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
               link.alias = parsedScalar.value
-            } else if (k == link.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
+            } else if (k == LinkNodeModel.Value.value.iri() && entries.head.isInstanceOf[Literal]) {
               val parsedScalar = parseDynamicLiteral(entries.head.asInstanceOf[Literal])
               link.value = parsedScalar.value
             }
@@ -499,7 +497,7 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   private def str(property: PropertyObject) = {
     property match {
       case Literal(v, _) => AmfScalar(v)
-      case Uri(v)        => {
+      case Uri(v) => {
         throw new Exception(s"Expecting String literal found URI $v")
       }
     }
@@ -545,10 +543,10 @@ class RdfModelParser(platform: Platform)(implicit val ctx: ParserContext) extend
   }
 
   private val dynamicBuilders: mutable.Map[String, Annotations => AmfObject] = mutable.Map(
-    LinkNode.builderType.iri()   -> domain.LinkNode.apply,
-    ArrayNode.builderType.iri()  -> domain.ArrayNode.apply,
-    ScalarNode.builderType.iri() -> domain.ScalarNode.apply,
-    ObjectNode.builderType.iri() -> domain.ObjectNode.apply
+    LinkNode.builderType.iri()        -> domain.LinkNode.apply,
+    ArrayNode.builderType.iri()       -> domain.ArrayNode.apply,
+    ScalarNodeModel.`type`.head.iri() -> domain.ScalarNode.apply,
+    ObjectNode.builderType.iri()      -> domain.ObjectNode.apply
   )
 
   protected def retrieveSources(id: String, node: Node): SourceMap = {

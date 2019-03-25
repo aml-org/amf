@@ -49,7 +49,7 @@ class AMFSerializer(unit: BaseUnit, mediaType: String, vendor: String, options: 
     if (vendor == Vendor.AMF.name) {
       if (!options.isAmfJsonLdSerilization) parseRdf(writer)
       else {
-        val b = JsonOutputBuilder[W](writer)
+        val b = JsonOutputBuilder[W](writer, options.isPrettyPrint)
         JsonLdEmitter.emit(unit, b, options)
       }
       return

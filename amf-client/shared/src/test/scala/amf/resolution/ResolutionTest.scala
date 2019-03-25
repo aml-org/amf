@@ -27,5 +27,5 @@ abstract class ResolutionTest extends FunSuiteCycleTests {
   }
 
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] =
-    new AMFRenderer(unit, Amf, RenderOptions().withSourceMaps, config.syntax).renderToString
+    new AMFRenderer(unit, Amf, RenderOptions().withSourceMaps.withPrettyPrint, config.syntax).renderToString
 }

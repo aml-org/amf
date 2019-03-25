@@ -23,7 +23,7 @@ class UrlShortenerStage()(override implicit val errorHandler: ErrorHandler) exte
         if (!shorthenId.equals(o.id)) {
           o.withId(shortener.shorten(o.id))
           val fieldEntries = o match {
-            case d: DynamicDomainElement => d.dynamicFields.flatMap(f => d.valueForField(f).map(v => FieldEntry(f, v)))
+            case d: DynamicDomainElement => d.meta.fields.flatMap(f => d.valueForField(f).map(v => FieldEntry(f, v)))
             case _                       => o.fields.fields()
           }
           fieldEntries.foreach {

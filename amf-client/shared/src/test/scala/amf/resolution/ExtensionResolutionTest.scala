@@ -38,6 +38,6 @@ class ExtensionResolutionTest extends ResolutionTest {
   }
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     val target = config.target
-    new AMFRenderer(unit, target, RenderOptions().withSourceMaps, config.syntax).renderToString
+    new AMFRenderer(unit, target, RenderOptions().withSourceMaps.withPrettyPrint, config.syntax).renderToString
   }
 }

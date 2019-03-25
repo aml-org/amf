@@ -18,6 +18,17 @@ class RenderOptions {
   private var amfJsonLdSerialization         = true
   private var useJsonLdEmitter               = false
   private var eh: ErrorHandler               = UnhandledErrorHandler
+  private var prettyPrint                    = false
+
+  def withPrettyPrint: RenderOptions = {
+    prettyPrint = true
+    this
+  }
+
+  def withoutPrettyPrint: RenderOptions = {
+    prettyPrint = true
+    this
+  }
 
   /** Include source maps when rendering to graph. */
   def withSourceMaps: RenderOptions = {
@@ -88,6 +99,7 @@ class RenderOptions {
   def isValidation: Boolean              = validating
   def renderField(field: Field): Boolean = !filterFields(field)
   def errorHandler: ErrorHandler         = eh
+  def isPrettyPrint: Boolean             = prettyPrint
 }
 
 object RenderOptions {
@@ -99,6 +111,7 @@ object RenderOptions {
     opts.amfJsonLdSerialization = client.isAmfJsonLdSerilization
     opts.compactUris = client.isWithCompactUris
     opts.withErrorHandler(ErrorHandlerConverter.asInternal(client.errorHandler))
+    opts.prettyPrint = client.isPrettyPrint
     opts
   }
 }

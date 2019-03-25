@@ -192,7 +192,7 @@ class AMFCompiler(val rawUrl: String,
         AMFPluginsRegistry.documentPluginForVendor(_).find(_.canParse(document))
       })
 
-    val futureDocument = domainPluginOption match {
+    val futureDocument: Future[BaseUnit] = domainPluginOption match {
       case Some(domainPlugin) =>
         ExecutionLog.log(s"AMFCompiler#parseSyntax: parsing domain $rawUrl plugin ${domainPlugin.ID}")
         parseReferences(document, domainPlugin) map { documentWithReferences =>
@@ -226,10 +226,11 @@ class AMFCompiler(val rawUrl: String,
       // we setup the run for the parsed unit
       baseUnit.parserRun = Some(currentRun)
       ExecutionLog.log(s"AMFCompiler#parseDomain: model ready $rawUrl")
-      AMFPluginsRegistry.featurePlugins().foldLeft(baseUnit) {
+      val bu = AMFPluginsRegistry.featurePlugins().foldLeft(baseUnit) {
         case (unit, plugin) =>
           plugin.onModelParsed(path, unit)
       }
+      baseUnit
     }
   }
 

@@ -78,7 +78,7 @@ case class ArrayShape(override val fields: Fields, override val annotations: Ann
 
   override def linkCopy(): ArrayShape = ArrayShape().withId(id)
 
-  override def meta: AnyShapeModel = ArrayShapeModel
+  override val meta: AnyShapeModel = ArrayShapeModel
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ArrayShape.apply
@@ -114,7 +114,7 @@ case class MatrixShape(override val fields: Fields, override val annotations: An
 
   override def linkCopy() = MatrixShape().withId(id)
 
-  override def meta: AnyShapeModel = MatrixShapeModel
+  override val meta: AnyShapeModel = MatrixShapeModel
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = MatrixShape.apply
@@ -140,7 +140,7 @@ case class TupleShape(override val fields: Fields, override val annotations: Ann
 
   override def linkCopy() = TupleShape().withId(id)
 
-  override def meta: AnyShapeModel = TupleShapeModel
+  override val meta: AnyShapeModel = TupleShapeModel
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = TupleShape.apply

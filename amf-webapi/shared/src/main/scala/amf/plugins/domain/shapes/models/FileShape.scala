@@ -18,7 +18,7 @@ case class FileShape(override val fields: Fields, override val annotations: Anno
 
   override def linkCopy(): FileShape = FileShape().withId(id)
 
-  override def meta: AnyShapeModel = FileShapeModel
+  override val meta: AnyShapeModel = FileShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/" + name.option().getOrElse("default-file").urlComponentEncoded

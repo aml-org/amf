@@ -134,7 +134,7 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .settings(Seq(
     name := "amf-webapi"
   ))
-  .dependsOn(core)
+  .dependsOn(core, vocabularies)
   .in(file("./amf-webapi"))
   .settings(settings)
   .jvmSettings(

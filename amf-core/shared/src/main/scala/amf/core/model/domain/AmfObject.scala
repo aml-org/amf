@@ -99,6 +99,4 @@ trait AmfObject extends AmfElement {
     fields.set(id, field, value, annotations)
     this
   }
-
-  def dynamicTypes(): Seq[String] = List()
 }

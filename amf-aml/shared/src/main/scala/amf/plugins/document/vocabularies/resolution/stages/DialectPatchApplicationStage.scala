@@ -74,7 +74,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
           InvalidDialectPatch,
           patchNode.id,
           None,
-          s"Node ${patchNode.dynamicType.map(_.iri()).mkString(",")} cannot be patched",
+          s"Node ${patchNode.meta.`type`.map(_.iri()).mkString(",")} cannot be patched",
           patchNode.annotations.find(classOf[LexicalInformation]),
           None
         )
@@ -380,7 +380,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                               patchLocation: String): Option[DialectDomainElement] = {
     val nodeMapping = patchNode.definedBy
     if (targetNode.isDefined && sameNodeIdentity(targetNode.get, targetLocation, patchNode, patchLocation)) {
-      patchNode.dynamicFields.foreach { patchField =>
+      patchNode.meta.fields.foreach { patchField =>
         patchNode.valueForField(patchField) match {
           case Some(fieldValue) =>
             nodeMapping

@@ -11,7 +11,7 @@ case class NilShape(override val fields: Fields, override val annotations: Annot
 
   override def linkCopy(): NilShape = NilShape().withId(id) // todo review with antonio
 
-  override def meta: AnyShapeModel = NilShapeModel
+  override val meta: AnyShapeModel = NilShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/nil/" + name.option().getOrElse("default-nil").urlComponentEncoded

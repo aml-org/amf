@@ -18,13 +18,12 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
   val basePath = "file://amf-client/shared/src/test/resources/vocabularies2/production/validation/"
 
   private def cycle(exampleFile: String, hint: Hint, syntax: Syntax, target: Vendor): Future[String] = {
-    Validation(platform).flatMap(v => {
-      v.loadValidationDialect().map(_ => v)
-    }) flatMap { v =>
-      AMFCompiler(basePath + exampleFile, platform, hint, v, None, None).build()
-    } flatMap {
-      AMFRenderer(_, target, RenderOptions(), Some(syntax)).renderToString
-    }
+    for {
+      v  <- Validation(platform)
+      _  <- v.loadValidationDialect()
+      bu <- AMFCompiler(basePath + exampleFile, platform, hint, v, None, None).build()
+      r  <- AMFRenderer(bu, target, RenderOptions(), Some(syntax)).renderToString
+    } yield r
   }
 
   test("Loading and serializing validations") {

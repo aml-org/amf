@@ -1,8 +1,6 @@
 package amf.core.model.domain
 
-import amf.core.annotations.{LexicalInformation, SourceAST}
-import amf.core.metamodel.domain.DomainElementModel.`type`
-import amf.core.parser.{FieldEntry, Range}
+import amf.core.parser.FieldEntry
 import amf.core.vocabulary.Namespace
 
 case class Graph(e: DomainElement) {
@@ -12,7 +10,7 @@ case class Graph(e: DomainElement) {
     this
   }
 
-  def types(): Seq[String] = (e.dynamicTypes() ++ `type`.map(_.iri()) ++ e.meta.`type`.map(_.iri())).distinct
+  def types(): Seq[String] = e.meta.`type`.map(_.iri()).distinct
 
   def properties(): Seq[String] = e.fields.fields().map(_.field.value.iri()).toSeq
 
