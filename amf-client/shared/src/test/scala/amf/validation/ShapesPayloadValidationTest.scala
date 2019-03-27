@@ -43,7 +43,9 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
         ExampleInfo("UserYamlExample", Fixture.UserYamlExample, valid = false),
         ExampleInfo("UserJsonExample", Fixture.UserJsonExample, valid = false),
         ExampleInfo("UserXmlExample", Fixture.UserXmlExample, valid = false),
-        ExampleInfo("YamlInvalidStrExample", Fixture.YamlInvalidStrExample, valid = false)
+        ExampleInfo("YamlInvalidStrExample", Fixture.YamlInvalidStrExample, valid = false),
+        ExampleInfo("JsonLargeIntExample", Fixture.JsonLargeIntExample, valid = false),
+        ExampleInfo("JsonLargeIntStrExample", Fixture.JsonLargeIntStrExample, valid = true)
       )
     ),
     ShapeInfo(
@@ -99,6 +101,14 @@ class SchemaPayloadValidationTest extends AsyncFunSuite with ShapesFixture {
       Fixture.SimpleIntScalar,
       Seq(
         ExampleInfo("SimpleScalarNumberExample", "12", valid = true)
+      ),
+      mode = ScalarRelaxedValidationMode
+    ),
+    ShapeInfo(
+      Fixture.SimpleStrScalar,
+      Seq(
+        ExampleInfo("RelaxedLargeInt", Fixture.JsonLargeIntExample, valid = true),
+        ExampleInfo("RelaxedLargeIntStr", Fixture.JsonLargeIntStrExample, valid = true)
       ),
       mode = ScalarRelaxedValidationMode
     )
@@ -259,6 +269,10 @@ trait ShapesFixture {
     val YamlInvalidStrExample = "%7Bversion%7D"
 
     val JsonSimpleStrExample: String = "\"simple\""
+
+    val JsonLargeIntExample: String = "9223372036854775808"
+
+    val JsonLargeIntStrExample: String = "\"9223372036854775808\""
 
     val XmlSimpleStrExample = "<simpleStr>simple</simpleStr>" // validate this
 

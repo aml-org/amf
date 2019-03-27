@@ -39,8 +39,38 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("duplicate-operation-ids.json", Some("duplicate-operation-ids.report"))
   }
 
+  test("Duplicate query parameters both defined inline") {
+    validate("duplicate-parameters/duplicate-query-parameters.json", Some("duplicate-query-parameters.report"))
+  }
+
+  test("Duplicate formData parameters both defined inline") {
+    validate("duplicate-parameters/duplicate-form-parameters.json", Some("duplicate-form-parameters.report"))
+  }
+
   test("Read only property marked as required") {
     validate("read-only-property-marked-required.json", Some("read-only-property-marked-required.report"))
+  }
+
+  test("Duplicate formData parameters defined with reference") {
+    validate("duplicate-parameters/duplicate-parameters-with-ref.json", Some("duplicate-parameters-with-ref.report"))
+  }
+
+  test("Three duplicated query parameters with reference and inline") {
+    validate("duplicate-parameters/three-duplicated-query-parameters.json",
+             Some("three-duplicated-query-parameters.report"))
+  }
+
+  test("Parameters of type file defined in path with invalid consumes property") {
+    validate("file-parameter-consumes/parameter-in-path.json", Some("path-file-parameter-invalid-consumes.report"))
+  }
+
+  test("Parameters of type file defined in operation with invalid consumes property") {
+    validate("file-parameter-consumes/parameter-in-operation.json",
+             Some("operation-file-parameter-invalid-consumes.report"))
+  }
+
+  test("Parameter of type file with no consumes property defined") {
+    validate("file-parameter-consumes/no-consumes-defined.json", Some("file-parameter-no-consumes.report"))
   }
 
   override val hint: Hint = OasJsonHint

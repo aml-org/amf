@@ -40,6 +40,12 @@ trait RuntimeValidator {
                       options: ValidationOptions): Future[ValidationReport]
 
   /**
+    * Generates a JSON-LD graph with the SHACL shapes for the requested profile name
+    * @return JSON-LD graph
+    */
+  def emitShapesGraph(profileName: ProfileName): String
+
+  /**
     * Returns a native RDF model with the SHACL shapes graph
     */
   def shaclModel(validations: Seq[ValidationSpecification],
@@ -106,6 +112,9 @@ object RuntimeValidator {
                       validations: EffectiveValidations,
                       options: ValidationOptions): Future[ValidationReport] =
     validator.shaclValidation(model, validations, options)
+
+  def emitShapesGraph(profileName: ProfileName): String =
+    validator.emitShapesGraph(profileName)
 
   def shaclModel(validations: Seq[ValidationSpecification],
                  validationFunctionUrl: String,

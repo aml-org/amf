@@ -294,7 +294,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
             val parameter = Parameter(map)
             setName(parameter)
             parameter.adopted(parentId)
-            OasParameter(parameter)
+            OasParameter(parameter, Some(map))
         }
     }
   }
@@ -492,12 +492,16 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
       Some(Payload().withName("formData").adopted(parentId).set(PayloadModel.Schema, schema).add(FormBodyParameter()))
     }
 
+  private case class ParameterInformation(oasParam: OasParameter, name: String, binding: String)
+
   def parse(inRequest: Boolean = false): Parameters = {
-    val parameters = values
+    val oasParameters = values
       .map(value => OasParameterParser(Right(value), parentId, None).parse())
 
-    val formData = parameters.flatMap(_.formData)
-    val body     = parameters.filter(_.isBody)
+    val formData = oasParameters.flatMap(_.formData)
+    val body     = oasParameters.filter(_.isBody)
+
+    validateDuplicated(oasParameters)
 
     if (inRequest) {
       if (body.nonEmpty && formData.nonEmpty) {
@@ -514,13 +518,56 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
     }
 
     Parameters(
-      parameters.flatMap(_.query) ++ parameters.flatMap(_.invalids),
-      parameters.flatMap(_.path),
-      parameters.flatMap(_.header),
+      oasParameters.flatMap(_.query) ++ oasParameters.flatMap(_.invalids),
+      oasParameters.flatMap(_.path),
+      oasParameters.flatMap(_.header),
       Nil,
       body.flatMap(_.body) ++ formDataPayload(formData)
     )
   }
+
+  private def validateDuplicated(oasParameters: Seq[OasParameter]): Unit = {
+    val paramsInformation = oasParameters.flatMap(
+      oasParam => {
+        oasParam.element match {
+          case Left(parameter) =>
+            val effectiveParam = parameter.effectiveLinkTarget().asInstanceOf[Parameter]
+            for {
+              name    <- Option(effectiveParam.parameterName.value())
+              binding <- Option(effectiveParam.binding.value())
+            } yield ParameterInformation(oasParam, name, binding)
+          case Right(payload) =>
+            val effectivePayload = payload.effectiveLinkTarget().asInstanceOf[Payload]
+            val name             = obtainName(effectivePayload)
+            Some(ParameterInformation(oasParam, name, if (oasParam.isFormData) "formData" else "body"))
+        }
+      }
+    )
+
+    val groupedByBinding = paramsInformation.groupBy {
+      case ParameterInformation(_, name, binding) => (name, binding)
+    }.values
+    groupedByBinding
+      .foreach {
+        case equalParams if equalParams.length > 1 =>
+          equalParams.tail.foreach {
+            case ParameterInformation(oasParam, name, binding) =>
+              ctx.violation(
+                DuplicatedParameters,
+                oasParam.domainElement.id,
+                s"Parameter $name of type $binding was found duplicated",
+                oasParam.ast.get
+              )
+          }
+        case _ =>
+      }
+  }
+
+  private def obtainName(payload: Payload): String =
+    payload.fields
+      .getValueAsOption(PayloadModel.Name)
+      .flatMap(_.annotations.find(classOf[ParameterNameForPayload]).map(_.paramName))
+      .getOrElse(payload.name.value())
 
   private def validateOasPayloads(params: Seq[OasParameter], id: ValidationSpecification): Unit =
     if (params.length > 1) {

@@ -233,8 +233,8 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
     * Generates a JSON-LD graph with the SHACL shapes for the requested profile validations
     * @return JSON-LD graph
     */
-  def shapesGraph(validations: EffectiveValidations, messageStyle: MessageStyle = RAMLStyle): String = {
-    new ValidationJSONLDEmitter(messageStyle.profileName).emitJSON(customValidations(validations))
+  def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = RamlProfile): String = {
+    new ValidationJSONLDEmitter(profileName).emitJSON(customValidations(validations))
   }
 
   def customValidations(validations: EffectiveValidations): Seq[ValidationSpecification] =
@@ -248,6 +248,14 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
                           messageStyle: MessageStyle): RdfModel =
     PlatformValidator.instance.shapes(validations, functionUrls)
 
+  /**
+    * Generates a JSON-LD graph with the SHACL shapes for the requested profile name
+    * @return JSON-LD graph
+    */
+  override def emitShapesGraph(profileName: ProfileName): String = {
+    val effectiveValidations = computeValidations(profileName)
+    shapesGraph(effectiveValidations, profileName)
+  }
 }
 
 object ValidationMutex {}

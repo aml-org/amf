@@ -51,6 +51,8 @@ object Type {
 
   object EncodedIri extends Scalar("encodedUrl")
 
+  object LiteralUri extends Scalar("literalUri")
+
   object Bool extends Scalar("boolean")
 
   object ObjType extends Obj {

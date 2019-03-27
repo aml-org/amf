@@ -11,7 +11,9 @@ import amf.core.model.domain._
 import amf.core.parser.{ErrorHandler, FieldEntry, Value}
 import amf.plugins.document.webapi.annotations.Inferred
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
+import amf.plugins.domain.webapi.models.Payload
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 /**
@@ -215,6 +217,7 @@ object DomainElementMerging {
       case array: AmfArray =>
         AmfArray(array.values.map(adoptInner(parentId, _, adopted)), array.annotations)
       case element: DomainElement if adopted notYet element.id =>
+        val previousId = element.id
         adoptElementByType(element, parentId)
         adopted += element.id
         element.fields.foreach {
@@ -222,6 +225,11 @@ object DomainElementMerging {
             if (ignored(FieldEntry(f, value))) {
               adoptInner(element.id, value.value, adopted)
             }
+        }
+
+        element match {
+          case p: Payload => tracking(p.schema, element.id, Some(previousId))
+          case _          =>
         }
 
         element

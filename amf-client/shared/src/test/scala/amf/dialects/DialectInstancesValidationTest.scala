@@ -28,7 +28,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   }
 
   test("validation dialect 1 example 1 incorrect") {
-    validate("dialect1.raml", "instance1_incorrect1.raml", 6)
+    validate("dialect1.raml", "instance1_incorrect1.raml", 8)
   }
 
   test("validation dialect 2 example 1 correct") {
@@ -93,14 +93,6 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
 
   test("validation dialect 9 example 1 incorrect") {
     validate("dialect9.raml", "instance9_incorrect1.raml", 1)
-  }
-
-  test("validation dialect 10 example 1 correct") {
-    validate("dialect10.raml", "instance10_correct1.raml", 0)
-  }
-
-  test("validation dialect 10 example 1 incorrect") {
-    validate("dialect10.raml", "instance10_incorrect1.raml", 2)
   }
 
   test("validation mule_config  example 1 correct") {

@@ -8,19 +8,35 @@ nodeMappings:
       str:
         propertyTerm: tmp.str
         range: string
+        mandatory: true
       int:
         propertyTerm: tmp.int
         range: integer
+        mandatory: true
       float:
         propertyTerm: tmp.float
         range: float
+        mandatory: true
       boolean:
         propertyTerm: tmp.boolean
         range: boolean
+        mandatory: true
       number:
         propertyTerm: tmp.number
         range: number
-        allowMultiple: true
+        mandatory: true
+      date:
+        propertyTerm: tmp.date
+        range: date
+        mandatory: true
+      dateTime:
+        propertyTerm: tmp.dateTime
+        range: dateTime
+        mandatory: true
+      uri:
+        propertyTerm: tmp.uri
+        range: uri
+        mandatory: true
 documents:
   root:
     encodes: RootNode

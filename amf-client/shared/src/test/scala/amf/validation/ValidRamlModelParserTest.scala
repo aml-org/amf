@@ -183,5 +183,13 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("validXmlAttributeScalar.raml")
   }
 
+  test("Large int valid test") {
+    checkValid("large-int/large-int.raml")
+  }
+
+  test("escape characters in value of resource type") {
+    checkValid("escaped-chars-resource-type/using-resource-type.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
