@@ -143,6 +143,10 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("shapes/inner-ref-from-jsonschema/api.raml")
   }
 
+  test("Included json schema fragment with inner ref to another") {
+    checkValid("shapes/inner-ref-from-jsonschema-fragment/input.raml")
+  }
+
   test("Included path reference with inner ref to main api") {
     checkValid("shapes/inner-ref-from-jsonschema/api.raml")
   }
