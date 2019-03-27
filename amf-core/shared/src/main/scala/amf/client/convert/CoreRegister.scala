@@ -36,6 +36,16 @@ object CoreRegister {
     platform.registerWrapper(amf.core.metamodel.domain.extensions.PropertyShapeModel) {
       case e: amf.core.model.domain.extensions.PropertyShape => PropertyShape(e)
     }
+    platform.registerWrapper(amf.core.metamodel.domain.ObjectNodeModel) {
+      case d: amf.core.model.domain.ObjectNode => ObjectNodeMatcher.asClient(d)
+    }
+    platform.registerWrapper(amf.core.metamodel.domain.ScalarNodeModel) {
+      case d: amf.core.model.domain.ScalarNode => ScalarNodeMatcher.asClient(d)
+    }
+    // hack for variable value accessor
+    platform.registerWrapper(amf.core.metamodel.domain.ArrayNodeModel) {
+      case d: amf.core.model.domain.ArrayNode => ArrayNodeMatcher.asClient(d)
+    }
     platform.registerWrapper(amf.core.metamodel.domain.DataNodeModel) {
       case d: amf.core.model.domain.DataNode => DataNodeMatcher.asClient(d)
     }

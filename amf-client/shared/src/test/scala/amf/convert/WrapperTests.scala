@@ -13,6 +13,12 @@ import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
 import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
+import amf.core.model.document.{Document => InternalDocument}
+import amf.core.model.domain.{
+  ArrayNode => InternalArrayNode,
+  ScalarNode => InternalScalarNode,
+  ObjectNode => InternalObjectNode
+}
 import amf.common.Diff
 import amf.core.exception.UnsupportedVendorException
 import amf.core.parser.Range
@@ -1548,6 +1554,44 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       report <- AMF.validate(unit, RamlProfile, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Test data nodes client convertions") {
+    val scalarNode: InternalScalarNode =
+      InternalScalarNode("myValue", Some((Namespace.Xsd + "String").iri())).withId("amf://id2")
+    val scalarNode2: InternalScalarNode =
+      InternalScalarNode("myValue2", Some((Namespace.Xsd + "String").iri())).withId("amf://id4")
+    val arrayNode: InternalArrayNode = InternalArrayNode().withId("amf://id3")
+    arrayNode.addMember(scalarNode2)
+    val objectNode: InternalObjectNode = InternalObjectNode().withId("amf://id2").addProperty("myProp1", arrayNode)
+    arrayNode.addMember(objectNode)
+    val document: InternalDocument = InternalDocument()
+      .withId("amf://id1")
+      .withLocation("http://local.com")
+      .withEncodes(scalarNode)
+      .withDeclares(Seq(arrayNode))
+
+    for {
+      _ <- AMF.init().asFuture
+    } yield {
+      val clientUnit = BaseUnitMatcher.asClient(document)
+      val clientDoc  = clientUnit.asInstanceOf[amf.client.model.document.Document]
+      clientDoc.encodes.isInstanceOf[amf.client.model.domain.ScalarNode] shouldBe true
+      val clientArray = clientDoc.declares.asSeq.head.asInstanceOf[ArrayNode]
+      clientArray.isInstanceOf[amf.client.model.domain.ArrayNode] shouldBe true
+      clientArray
+        .asInstanceOf[amf.client.model.domain.ArrayNode]
+        .members
+        .asSeq
+        .head
+        .isInstanceOf[ScalarNode] shouldBe true
+      clientArray
+        .asInstanceOf[amf.client.model.domain.ArrayNode]
+        .members
+        .asSeq(1)
+        .isInstanceOf[ObjectNode] shouldBe true
+
     }
   }
 
