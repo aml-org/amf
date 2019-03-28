@@ -93,7 +93,8 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
-    "com.github.scopt" %%% "scopt"     % "3.7.0"
+    "com.github.scopt" %%% "scopt"     % "3.7.0",
+    "com.github.amlorg" %%% "amf-core" % "4.0.0-SNAPSHOT"
   )
 )
 
@@ -104,29 +105,6 @@ lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
   "Generates the validation dialect documents for the standard profiles")
 
-lazy val core = crossProject(JSPlatform, JVMPlatform)
-  .settings(
-    Seq(
-      name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.8"
-    ))
-  .in(file("./amf-core"))
-  .settings(settings)
-  .jvmSettings(
-    libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
-    libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-core-javadoc.jar"
-  )
-  .jsSettings(
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
-    scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-core-module.js"
-  )
-
-lazy val coreJVM = core.jvm.in(file("./amf-core/jvm"))
-lazy val coreJS  = core.js.in(file("./amf-core/js"))
-
 /** **********************************************
   * AMF-WebAPI
   * ********************************************* */
@@ -134,7 +112,7 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .settings(Seq(
     name := "amf-webapi"
   ))
-  .dependsOn(core, vocabularies)
+  .dependsOn(vocabularies)
   .in(file("./amf-webapi"))
   .settings(settings)
   .jvmSettings(
@@ -160,7 +138,6 @@ lazy val vocabularies = crossProject(JSPlatform, JVMPlatform)
   .settings(Seq(
     name := "amf-aml"
   ))
-  .dependsOn(core)
   .in(file("./amf-aml"))
   .settings(settings)
   .jvmSettings(
@@ -185,7 +162,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
   .settings(Seq(
     name := "amf-validation"
   ))
-  .dependsOn(core, vocabularies)
+  .dependsOn( vocabularies)
   .in(file("./amf-validation"))
   .settings(settings)
   .jvmSettings(
@@ -215,7 +192,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     name := "amf-client",
     fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")
   ))
-  .dependsOn(core, webapi, vocabularies, validation)
+  .dependsOn( webapi, vocabularies, validation)
   .in(file("./amf-client"))
   .settings(settings)
   .jvmSettings(
