@@ -168,5 +168,9 @@ class ResolutionReportTest extends ResolutionForUniquePlatformReportTest {
     checkReport("/resource_types/resolved-link-replacement/api.raml")
   }
 
+  test("Test dataType fragment with nested type fragment in library") {
+    checkReport("/library/nested-dataType/main.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

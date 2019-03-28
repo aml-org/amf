@@ -289,7 +289,10 @@ trait BaseUnit extends AmfObject with MetaModelTypeMapping with PlatformSecrets 
                   doc.fields.fields().filter(f => f.field == DocumentModel.Declares) ++
                   doc.fields
                     .fields()
-                    .filter(f => f.field != DocumentModel.Declares && f.field != DocumentModel.References)
+                    .filterNot(f => f.field == DocumentModel.Declares || f.field == DocumentModel.References)
+              case bu: BaseUnit =>
+                bu.fields.fields().filter(_.field == DocumentModel.References) ++
+                  bu.fields.fields().filterNot(_.field == DocumentModel.References)
               case _ => element.fields.fields()
             }
             effectiveFields
