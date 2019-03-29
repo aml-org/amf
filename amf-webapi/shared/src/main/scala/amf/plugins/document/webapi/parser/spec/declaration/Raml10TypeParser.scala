@@ -575,10 +575,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     } else {
       val shape = ScalarShape(ast).withName(name, nameAnnotations)
       adopt(shape)
-      node
-        .to[YMap] match { // todo review with pedro: in this case use either? or use toOption fold (empty)(default) (more examples bellow)
-        case Right(map) => ScalarShapeParser(typeDef, shape, map).parse()
-        case Left(_) =>
+      node.tagType match {
+        case YType.Map => ScalarShapeParser(typeDef, shape, node.as[YMap]).parse()
+        case YType.Seq =>
+          val entry = ast.asInstanceOf[YMapEntry]
+          InheritanceParser(entry, shape, None).parse()
+          shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef)), Annotations(entry))
+          shape
+        case _ =>
           shape.set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(typeDef), Annotations(node.value)))
       }
     }

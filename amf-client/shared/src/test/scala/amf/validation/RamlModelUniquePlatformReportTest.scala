@@ -208,5 +208,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("named-example-closed-shape/named-example-closed-shape.raml", Some("named-example-closed-shape.report"))
   }
 
+  test("Multiple inheritance with contradicting restrictions defined inline") {
+    validate("multiple-inheritance-restrictions.raml", Some("max-min-restriction.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

@@ -191,7 +191,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("large-int/large-int.raml")
   }
 
-  test("escape characters in value of resource type") {
+  test("Escape characters in value of resource type") {
     checkValid("escaped-chars-resource-type/using-resource-type.raml")
   }
 
