@@ -39,7 +39,7 @@ setSonarProperties := {
     "sonar.sourceEncoding" -> "UTF-8",
     "sonar.github.repository" -> "mulesoft/amf",
 
-    "sonar.modules" -> "amf-webapi,amf-aml,amf-validation,amf-client",
+    "sonar.modules" -> "amf-webapi,amf-validation,amf-client",
 
     "amf-webapi.sonar.sources" -> "shared/src/main/scala",
     "amf-webapi.sonar.scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml",
