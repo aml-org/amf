@@ -169,6 +169,14 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "tracked-from-named-fragment/")
   }
 
+  test("Auto generated payload name annotation") {
+    cycle("auto-generated-schema-name.raml",
+          "auto-generated-schema-name.jsonld",
+          RamlYamlHint,
+          Amf,
+          validationsPath + "auto-generated-schema-name/")
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

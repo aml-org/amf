@@ -210,7 +210,7 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#default-node": [
+                                "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
@@ -234,6 +234,20 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(8,6)-(10,0)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#default-node": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-external-fragment/api.raml#/web-api/end-points/%2Fsessions%2F/post/request/multipart%2Fform-data/any/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": ""
                                       }
                                     ]
                                   }
