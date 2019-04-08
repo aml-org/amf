@@ -4,13 +4,11 @@ import java.util.Properties
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
-
-import scala.collection.JavaConversions
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
-version in ThisBuild := "3.2.0-SNAPSHOT"
+version in ThisBuild := "3.1.10-RC.0"
 
 publish := {}
 
