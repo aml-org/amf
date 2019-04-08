@@ -243,8 +243,8 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
   }
 
   private val (lexical, location) = part match {
-    case p: YPart => (Some(new LexicalInformation(Range(p.range))), p.sourceName.option)
-    case _        => (None, None)
+    case Some(p: YPart) => (Some(new LexicalInformation(Range(p.range))), p.sourceName.option)
+    case _              => (None, None)
   }
 }
 

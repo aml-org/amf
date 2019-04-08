@@ -10,10 +10,12 @@ import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.parser.{ErrorHandler, FieldEntry, Value}
 import amf.plugins.document.webapi.annotations.Inferred
+import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
-import amf.plugins.domain.webapi.models.Payload
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
+import amf.plugins.domain.webapi.models.{Operation, Payload}
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 
 /**
@@ -25,7 +27,7 @@ import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValid
   *     b) Collection properties are merged by value.
   *     c) Values of object properties are subjected to steps 1-3 of this procedure.
   */
-object DomainElementMerging {
+case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
   def merge[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): T = {
     var merged = false
@@ -51,6 +53,13 @@ object DomainElementMerging {
   def handleNewFieldEntry[T <: DomainElement](main: T, otherFieldEntry: FieldEntry): Unit = {
     val otherField = otherFieldEntry.field
     val otherValue = otherFieldEntry.value
+
+    if (otherField == EndPointModel.Operations) {
+      otherValue.value.asInstanceOf[AmfArray].values.foreach {
+        case operation: Operation if !isOptional(OperationModel, operation) => ctx.mergeOperationContext(operation.id)
+        case _                                                              => // Nothing
+      }
+    }
 
     otherField.`type` match {
       case t: OptionalField if isOptional(t, otherValue.value.asInstanceOf[DomainElement]) =>
@@ -330,8 +339,14 @@ object DomainElementMerging {
       obj.fields.entry(key.key) match {
         case Some(value) =>
           if (existing.contains(value.scalar.value)) {
+            if (field == EndPointModel.Operations) {
+              ctx.mergeOperationContext(obj.id)
+            }
             merge(existing(value.scalar.value), obj.adopted(target.id), errorHandler)
           } else if (!isOptional(element, obj)) { // Case (2) -> If node is undefined in 'main' but is optional in 'other'.
+            if (field == EndPointModel.Operations) {
+              ctx.mergeOperationContext(obj.id)
+            }
             target.add(field, adoptInner(target.id, o))
           }
         case _ =>

@@ -426,9 +426,11 @@ class RamlWebApiDeclarations(var externalShapes: Map[String, AnyShape] = Map(),
     merged
   }
 
-//  def addDeclarationsAndReferencesRecursively(dec: ): Unit = {
-//
-//  }
+  def absorb(other: RamlWebApiDeclarations): Unit = {
+    super.mergeParts(other, this)
+    externalShapes.foreach { case (k, s)       => this.externalShapes += (k -> s) }
+    other.externalShapes.foreach { case (k, s) => this.externalShapes += (k -> s) }
+  }
 }
 
 class ExtensionWebApiDeclarations(externalShapes: Map[String, AnyShape] = Map(),

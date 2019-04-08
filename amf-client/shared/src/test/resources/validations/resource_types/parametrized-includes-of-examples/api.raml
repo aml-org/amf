@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: api
+version: 1
+mediaType: application/json
+resourceTypes:
+  rt1:
+    get?:
+      body:
+        type: integer
+        examples: <<examplesParam>>
+/endpoint1:
+  type: rt1
+/endpoint2:
+  type:
+    rt1:
+      examplesParam: !include example.raml
+  get:
+
+

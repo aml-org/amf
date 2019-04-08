@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: api
+version: 1
+resourceTypes:
+  rt1:
+    <<method>>:
+      body:
+        application/json:
+          type: nonExistentType
+/e1: # merged
+  type:
+    rt1:
+      method: post?
+  post:
+/e2: # non merged
+  type:
+    rt1:
+      method: post?

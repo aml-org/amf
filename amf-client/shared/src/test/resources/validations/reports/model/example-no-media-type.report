@@ -5,18 +5,18 @@ Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#unsupported-example-media-type
-  Message: No media type defined for request body
+- Source: http://a.ml/vocabularies/amf/parser#Payload-mediaType-minCount
+  Message: Payload media type is mandatory
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/example-no-media-type.raml#/web-api/end-points/%2Fbad0/post/request
-  Property: 
-  Position: Some(LexicalInformation([(6,0)-(7,0)]))
+  Target: file://amf-client/shared/src/test/resources/validations/examples/example-no-media-type.raml#/web-api/end-points/%2Fbad0/post/request/default
+  Property: http://a.ml/vocabularies/http#mediaType
+  Position: Some(LexicalInformation([(5,4)-(7,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/example-no-media-type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unsupported-example-media-type
-  Message: No media type defined for response body
+- Source: http://a.ml/vocabularies/amf/parser#Payload-mediaType-minCount
+  Message: Payload media type is mandatory
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/example-no-media-type.raml#/web-api/end-points/%2Fbad1/post/201
-  Property: 
-  Position: Some(LexicalInformation([(12,0)-(13,0)]))
+  Target: file://amf-client/shared/src/test/resources/validations/examples/example-no-media-type.raml#/web-api/end-points/%2Fbad1/post/201/default
+  Property: http://a.ml/vocabularies/http#mediaType
+  Position: Some(LexicalInformation([(11,8)-(13,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/example-no-media-type.raml

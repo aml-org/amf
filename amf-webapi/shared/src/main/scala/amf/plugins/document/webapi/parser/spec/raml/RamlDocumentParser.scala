@@ -203,6 +203,7 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
         val endpoints = mutable.ListBuffer[EndPoint]()
         entries.foreach(entry => ctx.factory.endPointParser(entry, api.withEndPoint, None, endpoints, false).parse())
         api.set(WebApiModel.EndPoints, AmfArray(endpoints))
+        ctx.mergeAllOperationContexts()
       }
     )
 

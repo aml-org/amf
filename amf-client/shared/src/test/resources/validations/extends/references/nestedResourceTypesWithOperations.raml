@@ -1,0 +1,26 @@
+#%RAML 1.0
+title: api
+version: 1
+mediaType: application/json
+types:
+  myType: string
+resourceTypes:
+  rt1:
+    type: rt2
+    get:
+      body:
+        type: myType
+  rt2:
+    type: rt3
+    post:
+      body:
+        type: myType
+  rt3:
+    put:
+      body:
+        type: myType
+/e1:
+  type: rt1
+  patch:
+    body:
+      type: myType

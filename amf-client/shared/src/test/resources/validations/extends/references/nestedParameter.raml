@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: api
+version: 1
+mediaType: application/json
+resourceTypes:
+  rt1:
+    get:
+      is:
+        t1:
+          traitParameter: <<rtParameter>>
+traits:
+  t1:
+    body:
+      type: <<traitParameter>>
+/correct:
+  type:
+    rt1:
+      rtParameter: string
+/incorrect:
+  type:
+    rt1:
+      rtParameter: asd

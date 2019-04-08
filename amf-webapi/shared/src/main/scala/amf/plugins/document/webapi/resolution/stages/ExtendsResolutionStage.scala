@@ -20,7 +20,6 @@ import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, Par
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
-import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging._
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
@@ -119,9 +118,9 @@ class ExtendsResolutionStage(
   }
 
   /** Apply specified ResourceTypes to given EndPoint. */
-  def apply(endpoint: EndPoint, resourceTypes: ListBuffer[EndPoint]): EndPoint = {
+  def apply(endpoint: EndPoint, resourceTypes: ListBuffer[EndPoint])(implicit ctx: RamlWebApiContext): EndPoint = {
     resourceTypes.foldLeft(endpoint) {
-      case (current, resourceType) => merge(current, resourceType, errorHandler)
+      case (current, resourceType) => DomainElementMerging()(ctx).merge(current, resourceType, errorHandler)
     }
   }
 
@@ -131,9 +130,10 @@ class ExtendsResolutionStage(
       .add("resourcePath", resourcePath(endpoint))
       .add("resourcePathName", resourcePathName(endpoint))
 
-    val tree          = EndPointTreeBuilder(endpoint).build()
-    val resourceTypes = collectResourceTypes(endpoint, context, ctx(context.model.parserRun.get), tree)
-    apply(endpoint, resourceTypes) // Apply ResourceTypes to EndPoint
+    val tree           = EndPointTreeBuilder(endpoint).build()
+    val extendsContext = ctx(context.model.parserRun.get)
+    val resourceTypes  = collectResourceTypes(endpoint, context, extendsContext, tree)
+    apply(endpoint, resourceTypes)(extendsContext) // Apply ResourceTypes to EndPoint
 
     val resolver = TraitResolver()
 
@@ -144,15 +144,17 @@ class ExtendsResolutionStage(
       val branches = ListBuffer[BranchContainer]()
 
       val operationTree = OperationTreeBuilder(operation).build()
+      val branchesObj   = Branches()(extendsContext)
+
       // Method branch
-      branches += Branches.method(resolver, operation, local, operationTree)
+      branches += branchesObj.method(resolver, operation, local, operationTree)
 
       // EndPoint branch
-      branches += Branches.endpoint(resolver, endpoint, local, tree)
+      branches += branchesObj.endpoint(resolver, endpoint, local, tree)
 
       // ResourceType branches
       resourceTypes.foreach { rt =>
-        branches += Branches.resourceType(resolver, rt, local, operation.method.value(), tree)
+        branches += branchesObj.resourceType(resolver, rt, local, operation.method.value(), tree)
       }
 
       // Compute final traits
@@ -163,7 +165,7 @@ class ExtendsResolutionStage(
 
       // Merge traits into operation
       traits.foldLeft(operation) {
-        case (current, branch) => DomainElementMerging.merge(current, branch.operation, errorHandler)
+        case (current, branch) => DomainElementMerging()(extendsContext).merge(current, branch.operation, errorHandler)
       }
 
       // This is required in the case where the extension comes from an overlay/extension
@@ -175,8 +177,10 @@ class ExtendsResolutionStage(
     // This is required in the case where the extension comes from an overlay/extension
     if (!keepEditingInfo && !fromOverlay) endpoint.fields.removeField(DomainElementModel.Extends)
 
+    extendsContext.futureDeclarations.resolve()
     if (resourceTypes.nonEmpty || traitList.nonEmpty)
-      new ReferenceResolutionStage(keepEditingInfo).resolveDomainElement(endpoint)
+      new ReferenceResolutionStage(keepEditingInfo)
+        .resolveDomainElement(endpoint) // TODO revise why this is not working
     else
       endpoint
   }
@@ -199,7 +203,7 @@ class ExtendsResolutionStage(
     }
   }
 
-  object Branches {
+  case class Branches()(implicit extendsContext: RamlWebApiContext) {
     def apply(branches: Seq[Branch]): BranchContainer = BranchContainer(branches)
 
     def endpoint(resolver: TraitResolver, endpoint: EndPoint, context: Context, tree: ElementTree): BranchContainer = {
@@ -237,7 +241,7 @@ class ExtendsResolutionStage(
                               parameterized: Seq[ParametrizedTrait],
                               context: Context,
                               subTree: Seq[ElementTree]) = {
-      parameterized.flatMap(resolver.resolve(_, context, ctx(context.model.parserRun.get), subTree))
+      parameterized.flatMap(resolver.resolve(_, context, extendsContext, subTree))
     }
   }
 
@@ -278,8 +282,14 @@ class ExtendsResolutionStage(
               Some(TraitBranch(key, Operation().withId(err.id + "_op"), Nil))
             case t: Trait =>
               val node: DataNode = t.dataNode.cloneNode()
-              node.replaceVariables(local.variables, subTree)((message: String) =>
-                apiContext.violation(ResolutionValidation, t.id, None, message, t.position(), t.location()))
+              node.replaceVariables(local.variables, subTree)((message: String) => {
+                apiContext.violation(ResolutionValidation,
+                                     t.id,
+                                     None,
+                                     message,
+                                     parameterized.position(),
+                                     parameterized.location())
+              })
 
               val op = ExtendsHelper.asOperation(
                 profile,

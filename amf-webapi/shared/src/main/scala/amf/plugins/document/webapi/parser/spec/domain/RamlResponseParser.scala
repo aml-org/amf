@@ -128,14 +128,6 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                     val others  = YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
-                        if (others.entries.map(_.key.as[YScalar].text) == List("example") && !ctx.globalMediatype) {
-                          ctx.violation(
-                            UnsupportedExampleMediaTypeErrorSpecification,
-                            res.id,
-                            "No media type defined for response body",
-                            m
-                          )
-                        }
                         ctx.factory
                           .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, defaultType)
                           .parse()

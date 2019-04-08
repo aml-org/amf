@@ -1,0 +1,54 @@
+#%RAML 1.0
+title: api
+version: 1
+types:
+  myInt:
+    type: integer
+    maximum: 10
+    minimum: 0
+
+resourceTypes:
+  nonParametrized:
+    get:
+      body:
+        application/json:
+          type: myInt
+  parametrized:
+    get:
+      body:
+        application/json:
+          type: <<typeParameter>>
+
+/nonParametrizedCorrect:
+  type: nonParametrized
+  get:
+    body:
+      application/json:
+        example: 8
+
+/nonParametrizedIncorrect:
+  type: nonParametrized
+  get:
+    body:
+      application/json:
+        example: 11
+
+/parametrizedCorrect:
+  type:
+    parametrized:
+      typeParameter: myInt
+  get:
+    body:
+      application/json:
+        example: 8
+
+/parametrizedIncorrect:
+  type:
+    parametrized:
+      typeParameter: myInt
+  get:
+    body:
+      application/json:
+        example: 11
+
+

@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: api
+version: 1
+mediaType: application/json
+resourceTypes:
+  rt1:
+    get:
+      body:
+        type: !include type.raml
+traits:
+  t1:
+    body:
+      type: !include type.raml
+/e1:
+  type: rt1
+  post:
+    is: t1

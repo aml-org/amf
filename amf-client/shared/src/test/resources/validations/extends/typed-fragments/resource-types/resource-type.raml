@@ -1,0 +1,19 @@
+#%RAML 1.0 ResourceType
+description: this is a resource type
+<<method>>:
+get:
+  body:
+    application/json:
+      type: inexistentExplicitType
+post:
+  body:
+    application/json:
+      type: <<typeParameter>>
+put?:
+  body:
+    application/json:
+      type: inexistentExplicitTypeInOptional
+delete?:
+  body:
+    application/json:
+      type: <<typeParameterOptional>>

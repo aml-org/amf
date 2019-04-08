@@ -1,0 +1,26 @@
+#%RAML 1.0
+title: api
+version: 1
+types:
+  myType:
+    type: integer
+    minimum: 0
+    maximum: 10
+resourceTypes:
+  rt1:
+    <<method>>:
+      body:
+        application/json:
+          type: myType
+/e1: # merged
+  type:
+    rt1:
+      method: post?
+  post:
+    body:
+      application/json:
+        example: 11
+/e2: # non merged
+  type:
+    rt1:
+      method: post?

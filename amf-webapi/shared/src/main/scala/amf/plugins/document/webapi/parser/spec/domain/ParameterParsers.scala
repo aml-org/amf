@@ -552,12 +552,22 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
         case equalParams if equalParams.length > 1 =>
           equalParams.tail.foreach {
             case ParameterInformation(oasParam, name, binding) =>
-              ctx.violation(
-                DuplicatedParameters,
-                oasParam.domainElement.id,
-                s"Parameter $name of type $binding was found duplicated",
-                oasParam.ast.get
-              )
+              oasParam.ast match {
+                case Some(ast) =>
+                  ctx.violation(
+                    DuplicatedParameters,
+                    oasParam.domainElement.id,
+                    s"Parameter $name of type $binding was found duplicated",
+                    ast
+                  )
+                case None =>
+                  ctx.violation(
+                    DuplicatedParameters,
+                    oasParam.domainElement.id,
+                    s"Parameter $name of type $binding was found duplicated"
+                  )
+              }
+
           }
         case _ =>
       }

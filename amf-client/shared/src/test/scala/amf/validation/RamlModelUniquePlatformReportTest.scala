@@ -7,6 +7,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/model/"
+  override val hint: Hint  = RamlYamlHint
 
   test("Load dialect") {
     validate("data/error1.raml", Some("load-dialect-error1.report"))
@@ -211,6 +212,4 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Multiple inheritance with contradicting restrictions defined inline") {
     validate("multiple-inheritance-restrictions.raml", Some("max-min-restriction.report"))
   }
-
-  override val hint: Hint = RamlYamlHint
 }

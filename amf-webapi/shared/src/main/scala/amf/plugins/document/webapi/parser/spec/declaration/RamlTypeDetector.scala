@@ -5,7 +5,7 @@ import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.Strings
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
@@ -21,14 +21,14 @@ import org.yaml.model._
   */
 object RamlTypeDetection {
   def apply(node: YNode, parent: String, format: Option[String] = None, defaultType: DefaultType = StringDefaultType)(
-      implicit ctx: WebApiContext): Option[TypeDef] =
+      implicit ctx: RamlWebApiContext): Option[TypeDef] =
     RamlTypeDetector(parent, format, defaultType).detect(node)
 }
 
 case class RamlTypeDetector(parent: String,
                             format: Option[String] = None,
                             defaultType: DefaultType = StringDefaultType,
-                            recursive: Boolean = false)(implicit ctx: WebApiContext)
+                            recursive: Boolean = false)(implicit ctx: RamlWebApiContext)
     extends RamlTypeSyntax
     with PlatformSecrets {
   def detect(node: YNode): Option[TypeDef] = node.tagType match {
@@ -69,10 +69,12 @@ case class RamlTypeDetector(parent: String,
       val scalar = node.as[YScalar]
       scalar.text match {
         case t if t.startsWith("<<") && t.endsWith(">>") =>
-          ctx.violation(InvalidAbstractDeclarationParameterInType,
-                        parent,
-                        "Trait/Resource Type parameter in type",
-                        node)
+          if (ctx.contextType == RamlWebApiContextType.DEFAULT) {
+            ctx.violation(InvalidAbstractDeclarationParameterInType,
+                          parent,
+                          s"Resource Type/Trait parameter $t in type",
+                          node)
+          }
           None
 
         case XMLSchema(_) => Some(XMLSchemaType)

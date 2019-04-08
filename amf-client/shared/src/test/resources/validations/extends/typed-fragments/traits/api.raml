@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: api
+version: 1
+traits:
+  t1: !include trait1.raml
+  t2: !include trait2.raml
+  t3: !include trait3.raml
+# --------------------
+# --> 3 violations <--
+# --------------------
+/endpoint:
+  get:
+    description: closed shape # closed shape
+    is:
+      t1:
+        key: closedShape
+  post:
+    description: unresolved explicit reference # unresolved explicit reference
+    is: t2
+  put:
+    description: unresolved parametrized reference # unresolved parameter reference
+    is:
+      t3:
+        typeParameter: inexistentTypeParameter
+

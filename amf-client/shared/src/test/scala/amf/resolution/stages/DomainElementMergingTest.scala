@@ -1,10 +1,11 @@
 package amf.resolution.stages
 
-import amf.core.parser.UnhandledErrorHandler
+import amf.core.parser.{ParserContext, UnhandledErrorHandler}
+import amf.plugins.document.webapi.contexts.Raml10WebApiContext
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.models.templates.{ParametrizedTrait, Trait}
-import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging.merge
+import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import org.scalatest.FunSuite
 import org.scalatest.Matchers._
 
@@ -47,7 +48,7 @@ class DomainElementMergingTest extends FunSuite {
     other.withOperation("put").withSummary("Put other operation")
     other.withOperation("head").withSummary("Head other operation")
 
-    merge(main, other, UnhandledErrorHandler)
+    DomainElementMerging()(ctx).merge(main, other, UnhandledErrorHandler)
 
     main.operations.size should be(4)
 
@@ -95,9 +96,13 @@ class DomainElementMergingTest extends FunSuite {
       .withPath("/other")
       .withExtends(Seq(b))
 
-    merge(main, other, UnhandledErrorHandler)
+    DomainElementMerging()(ctx).merge(main, other, UnhandledErrorHandler)
 
     main.extend.size should be(1)
     main.extend.head should be(a)
+  }
+
+  private def ctx = {
+    new Raml10WebApiContext("", Nil, ParserContext())
   }
 }

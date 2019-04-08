@@ -18,7 +18,7 @@ import amf.core.parser.{
   SimpleReferenceHandler,
   SyamlParsedDocument
 }
-import amf.core.remote.{JsonSchema, Oas30, Platform, Vendor}
+import amf.core.remote.{JsonSchema, Platform, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts._
@@ -40,8 +40,9 @@ class JsonSchemaWebApiContext(loc: String,
                               refs: Seq[ParsedReference],
                               private val wrapped: ParserContext,
                               private val ds: Option[OasWebApiDeclarations],
+                              parserCount: Option[Int] = None,
                               override val eh: Option[ErrorHandler] = None)
-    extends OasWebApiContext(loc, refs, wrapped, ds, eh) {
+    extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax
   override val vendor: Vendor                 = JsonSchema

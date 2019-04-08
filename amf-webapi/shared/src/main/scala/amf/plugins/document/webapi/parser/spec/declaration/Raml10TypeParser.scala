@@ -44,7 +44,13 @@ object Raml10TypeParser {
             isAnnotation: Boolean = false,
             defaultType: DefaultType = StringDefaultType)(implicit ctx: RamlWebApiContext): Raml10TypeParser =
     new Raml10TypeParser(Left(entry), entry.key, adopt, isAnnotation, defaultType)(
-      new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), ctx.eh))
+      new Raml10WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(ctx.declarations),
+                              Some(ctx.parserCount),
+                              ctx.eh,
+                              ctx.contextType))
 
   def apply(node: YNode, name: String, adopt: Shape => Shape, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml10TypeParser =
@@ -142,7 +148,11 @@ object Raml08TypeParser {
   def apply(node: YNode, name: String, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml08TypeParser =
     new Raml08TypeParser(Right(node), name, adopt, isAnnotation, defaultType)(
-      new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
+      new Raml08WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(ctx.declarations),
+                              contextType = ctx.contextType))
 
   def apply(entry: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml08TypeParser =
@@ -1289,7 +1299,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 case _ =>
                   unresolved(entry.value, shape)
               }
-              shape.set(ShapeModel.Inherits, AmfArray(Seq(baseClass), Annotations(entry.value)), Annotations(entry))
+              if (!text.matches("<<.*>>")) {
+                shape.set(ShapeModel.Inherits, AmfArray(Seq(baseClass), Annotations(entry.value)), Annotations(entry))
+              }
           }
 
         case _ =>
