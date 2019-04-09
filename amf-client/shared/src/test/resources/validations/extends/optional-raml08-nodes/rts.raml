@@ -1,0 +1,14 @@
+#%RAML 0.8
+title: api
+version: 1
+resourceTypes:
+  rt1:
+    uriParameters?:
+      name:
+        displayName: name
+        type: string
+/e1:
+  type: rt1
+  uriParameters:
+/e2:
+  type: rt1
