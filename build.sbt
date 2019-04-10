@@ -4,13 +4,11 @@ import java.util.Properties
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
-
-import scala.collection.JavaConversions
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
-version in ThisBuild := "3.2.0-SNAPSHOT"
+version in ThisBuild := "4.0.0-SNAPSHOT"
 
 publish := {}
 
@@ -87,7 +85,8 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
-    "com.github.scopt" %%% "scopt"     % "3.7.0"
+    "com.github.scopt" %%% "scopt"     % "3.7.0",
+    "com.github.amlorg" %%% "amf-aml" % "4.0.4"
   )
 )
 

@@ -407,7 +407,11 @@ object Raml08Syntax extends RamlSyntax {
       "securedBy",
       "baseUriParameters",
       "uriParameters",
-      "usage"
+      "usage",
+      "is?",
+      "securedBy?",
+      "baseUriParameters?",
+      "uriParameters?"
     ),
     "operation" -> Set(
       "displayName",
@@ -433,7 +437,15 @@ object Raml08Syntax extends RamlSyntax {
       "is",
       "securedBy",
       "baseUriParameters",
-      "usage"
+      "usage",
+      "queryParameters?",
+      "headers?",
+      "responses?",
+      "body?",
+      "protocols?",
+      "is?",
+      "securedBy?",
+      "baseUriParameters?"
     ),
   )
 }

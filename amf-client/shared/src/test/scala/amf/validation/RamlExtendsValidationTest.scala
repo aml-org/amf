@@ -1,4 +1,5 @@
 package amf.validation
+import amf.Raml08Profile
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTest {
@@ -194,6 +195,16 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
 
   test("Traits in typed fragment") {
     validate("/extends/typed-fragments/traits/api.raml", Some("typed-fragments-traits.report"))
+  }
+
+  // Merging optional RAML 0.8 nodes
+
+  test("Merging optional nodes in resource types") {
+    validate("/extends/optional-raml08-nodes/rts.raml", profile = Raml08Profile)
+  }
+
+  test("Merging optional nodes in traits") {
+    validate("/extends/optional-raml08-nodes/traits.raml", profile = Raml08Profile)
   }
 
 }
