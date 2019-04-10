@@ -195,5 +195,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("escaped-chars-resource-type/using-resource-type.raml")
   }
 
+  test("Remove BOM character from files") {
+    checkValid("remove-bom/remove-bom.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

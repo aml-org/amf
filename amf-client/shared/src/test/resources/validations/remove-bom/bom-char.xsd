@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://edc.bioclinica.com/ExpressIntegrationWS/V2" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://edc.bioclinica.com/ExpressIntegrationWS/V2" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="MessageEnvelope">
+    <xs:complexType>
+    <xs:sequence>
+      <xs:element name="Configuration" minOccurs='0' maxOccurs='1'>
+        <xs:unique name="UniqueVisitNosInConfiguration">
+          <xs:selector xpath="./*" />
+          <xs:field xpath="@VisitNo" />
+        </xs:unique>
+      </xs:element>
+      <xs:sequence>
+        <xs:element name="Site" minOccurs="0" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:sequence>
+                <xs:element name="Subject" minOccurs="0" maxOccurs="unbounded">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:sequence>
+                        <xs:element name="Visit" minOccurs="0" maxOccurs="unbounded">
+                          <xs:complexType>
+                            <xs:sequence>
+                              <xs:choice minOccurs='0' maxOccurs="unbounded">
+                                <xs:element name="NumberField" nillable="true">
+                                  <xs:complexType>
+                                    <xs:simpleContent>
+                                      <xs:extension base="xs:decimal">
+                                        <xs:attribute name="ID" type="xs:string" use="required" />
+                                        <xs:attribute name="Sequence" type="xs:integer" use="optional" default="1" />
+                                      </xs:extension>
+                                    </xs:simpleContent>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:choice>
+                            </xs:sequence>
+                            <xs:attribute name="VisitNo" type="xs:string" use="required" />
+                            <xs:attribute name="VisitLabel" type="xs:string" use="required" />
+                            <xs:attribute name="Sequence" type="xs:integer" use="optional" default="1" />
+                          </xs:complexType>
+                        </xs:element>
+                      </xs:sequence>
+                    </xs:sequence>
+                    <xs:attribute name="ID" type="xs:string" use="required" />
+                  </xs:complexType>
+                  <xs:unique name="UniqueIDsInSubject">
+                    <xs:selector xpath="./*" />
+                    <xs:field xpath="@ID" />
+                    <xs:field xpath="@Sequence" />
+                  </xs:unique>
+                  <xs:unique name="UniqueVisitNosInSubject">
+                    <xs:selector xpath="./*" />
+                    <xs:field xpath="@VisitNo" />
+                    <xs:field xpath="@Sequence" />
+                  </xs:unique>
+                </xs:element>
+              </xs:sequence>
+            </xs:sequence>
+            <xs:attribute name="ID" type="xs:string" use="required" />
+          </xs:complexType>
+          <xs:unique name="UniqueIDsInSite">
+            <xs:selector xpath="./DateField|DateTimeField|NumberField|TextField" />
+            <xs:field xpath="@ID" />
+            <xs:field xpath="@Sequence" />
+          </xs:unique>
+        </xs:element>
+      </xs:sequence>
+    </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

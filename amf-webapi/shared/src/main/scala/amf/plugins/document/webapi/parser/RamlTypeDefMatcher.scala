@@ -62,7 +62,8 @@ object RamlTypeDefMatcher {
       case _               => default
     }
 
-  def ltrim(s: String) = s.replaceAll("^\\s+", "")
+  private def ltrim(s: String) =
+    s.replaceAll("^(\\s+|[\uFEFF-\uFFFF])", "")
 
   object XMLSchema {
     def unapply(str: String): Option[String] = {
