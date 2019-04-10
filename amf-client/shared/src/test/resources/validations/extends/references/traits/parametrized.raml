@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: api
+version: 1
+mediaType: application/json
+traits:
+  t1:
+    body:
+      type: <<parameter>>
+/endpoint1:
+  get:
+    is:
+      t1:
+        parameter: asd

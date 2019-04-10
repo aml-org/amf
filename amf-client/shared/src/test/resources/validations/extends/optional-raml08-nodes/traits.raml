@@ -1,0 +1,17 @@
+#%RAML 0.8
+title: api
+version: 1
+mediaType: application/json
+traits:
+  t1:
+    body?:
+      type: string
+    protocols?: [HTTP]
+/e1:
+  get:
+    is: [t1]
+    body:
+    protocols: [HTTPS]
+/e2:
+  get:
+    is: [t1]

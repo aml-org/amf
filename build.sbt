@@ -4,13 +4,11 @@ import java.util.Properties
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
-
-import scala.collection.JavaConversions
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
-version in ThisBuild := "3.1.9"
+version in ThisBuild := "3.1.10"
 
 publish := {}
 
@@ -39,17 +37,11 @@ setSonarProperties := {
     "sonar.sourceEncoding" -> "UTF-8",
     "sonar.github.repository" -> "mulesoft/amf",
 
-    "sonar.modules" -> "amf-core,amf-webapi,amf-aml,amf-validation,amf-client",
-
-    "amf-core.sonar.sources" -> "shared/src/main/scala",
-    "amf-core.sonar.scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml",
+    "sonar.modules" -> "amf-webapi,amf-validation,amf-client",
 
     "amf-webapi.sonar.sources" -> "shared/src/main/scala",
     "amf-webapi.sonar.scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml",
-
-    "amf-aml.sonar.sources" -> "shared/src/main/scala",
-    "amf-aml.sonar.scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml",
-
+    
     "amf-validation.sonar.sources" -> "shared/src/main/scala",
     "amf-validation.sonar.scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml",
 
@@ -93,39 +85,14 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
-    "com.github.scopt" %%% "scopt"     % "3.7.0"
+    "com.github.scopt" %%% "scopt"     % "3.7.0",
+    "com.github.amlorg" %%% "amf-aml" % "4.0.4"
   )
 )
 
-/** **********************************************
-  * AMF-Core
-  * ********************************************* */
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
   "Generates the validation dialect documents for the standard profiles")
-
-lazy val core = crossProject(JSPlatform, JVMPlatform)
-  .settings(
-    Seq(
-      name := "amf-core",
-      libraryDependencies += "org.mule.syaml" %%% "syaml" % "0.6.8"
-    ))
-  .in(file("./amf-core"))
-  .settings(settings)
-  .jvmSettings(
-    libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
-    libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-core-javadoc.jar"
-  )
-  .jsSettings(
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
-    scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-core-module.js"
-  )
-
-lazy val coreJVM = core.jvm.in(file("./amf-core/jvm"))
-lazy val coreJS  = core.js.in(file("./amf-core/js"))
 
 /** **********************************************
   * AMF-WebAPI
@@ -134,7 +101,6 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .settings(Seq(
     name := "amf-webapi"
   ))
-  .dependsOn(core)
   .in(file("./amf-webapi"))
   .settings(settings)
   .jvmSettings(
@@ -154,38 +120,12 @@ lazy val webapiJVM = webapi.jvm.in(file("./amf-webapi/jvm"))
 lazy val webapiJS  = webapi.js.in(file("./amf-webapi/js"))
 
 /** **********************************************
-  * AMF-AML
-  * ********************************************* */
-lazy val vocabularies = crossProject(JSPlatform, JVMPlatform)
-  .settings(Seq(
-    name := "amf-aml"
-  ))
-  .dependsOn(core)
-  .in(file("./amf-aml"))
-  .settings(settings)
-  .jvmSettings(
-    libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
-    libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-aml-javadoc.jar"
-  )
-  .jsSettings(
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
-    scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js"
-  )
-
-lazy val vocabulariesJVM = vocabularies.jvm.in(file("./amf-aml/jvm"))
-lazy val vocabulariesJS  = vocabularies.js.in(file("./amf-aml/js"))
-
-/** **********************************************
   * AMF-Validation
   * ********************************************* */
 lazy val validation = crossProject(JSPlatform, JVMPlatform)
   .settings(Seq(
     name := "amf-validation"
   ))
-  .dependsOn(core, vocabularies)
   .in(file("./amf-validation"))
   .settings(settings)
   .jvmSettings(
@@ -215,7 +155,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     name := "amf-client",
     fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")
   ))
-  .dependsOn(core, webapi, vocabularies, validation)
+  .dependsOn( webapi, validation)
   .in(file("./amf-client"))
   .settings(settings)
   .jvmSettings(

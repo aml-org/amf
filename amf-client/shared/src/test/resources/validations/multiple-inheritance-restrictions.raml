@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: Hello world # required title
+version: v1
+types:
+  Number1:
+    type: number
+    minimum: 4
+  Number2:
+    type: number
+    maximum: 2
+  Number3: [ Number1, Number2 ]

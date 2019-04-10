@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: api
+version: 1
+resourceTypes:
+  nonParametrized:
+    get:
+      body:
+        type: !include nonExitentFile.raml
+  parametrized:
+    get:
+      body:
+        type: <<parameter>>
+/e1:
+  type: nonParametrized
+/e2:
+  type:
+    parametrized:
+      parameter: !include nonExistentFile.raml

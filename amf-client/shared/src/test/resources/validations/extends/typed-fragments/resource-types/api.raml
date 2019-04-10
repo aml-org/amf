@@ -1,0 +1,37 @@
+#%RAML 1.0
+title: api
+version: 1
+resourceTypes:
+  rt1: !include resource-type.raml 
+# --------------------
+# --> 9 violations <--
+# --------------------  
+/closed-shape: # closed shape + unresolved explicit reference
+  type:
+    rt1:
+      method: iAmNotAMethod
+      typeParameter: string
+/inexistent-reference-from-parameter: # unresolved parameter reference + unresolved explicit reference
+  type:
+    rt1:
+      method: patch
+      typeParameter: inexistentTypeParameter
+/non-merged-inexistent-optional-reference-from-parameter: # unresolved explicit reference
+  type:
+    rt1:
+      method: patch
+      typeParameter: string
+      typeParameterOptional: inexistentTypeParameterOptionalThatShouldNotFail
+/merged-inexistent-optional-reference-from-parameter: # unresolved parameter optional reference + unresolved explicit reference
+  type:
+    rt1:
+      method: patch
+      typeParameter: string
+      typeParameterOptional: inexistentTypeParameterOptional
+  delete:
+/merged-inexistent-optional-explicit-reference: # unresolved explicit optional reference + unresolved explicit reference
+  type:
+    rt1:
+      method: patch
+      typeParameter: string
+  put:

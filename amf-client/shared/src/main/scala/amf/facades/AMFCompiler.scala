@@ -11,7 +11,7 @@ import amf.plugins.document.vocabularies.RamlHeaderExtractor
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
-
+import scala.concurrent.ExecutionContext.Implicits.global
 class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
@@ -47,7 +47,6 @@ class AMFCompiler private (val url: String,
       baseContext,
       parsingOptions = parsingOptions
     ).build()
-
   }
 
   def root(): Future[Root] = {

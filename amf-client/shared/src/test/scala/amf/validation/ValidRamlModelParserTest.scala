@@ -143,6 +143,10 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("shapes/inner-ref-from-jsonschema/api.raml")
   }
 
+  test("Included json schema fragment with inner ref to another") {
+    checkValid("shapes/inner-ref-from-jsonschema-fragment/input.raml")
+  }
+
   test("Included path reference with inner ref to main api") {
     checkValid("shapes/inner-ref-from-jsonschema/api.raml")
   }
@@ -187,7 +191,7 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("large-int/large-int.raml")
   }
 
-  test("escape characters in value of resource type") {
+  test("Escape characters in value of resource type") {
     checkValid("escaped-chars-resource-type/using-resource-type.raml")
   }
 

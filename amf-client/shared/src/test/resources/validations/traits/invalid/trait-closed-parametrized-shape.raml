@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: API
+version: v1
+traits:
+  t1:
+    <<parameter>>:
+
+/endpoint1:
+  get:
+    is:
+      t1:
+        parameter: a

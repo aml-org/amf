@@ -192,7 +192,7 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   override def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
     new AMFRenderer(unit,
                     config.target,
-                    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris,
+                    RenderOptions().withSourceMaps.withRawSourceMaps.withCompactUris.withPrettyPrint,
                     config.syntax).renderToString
   }
 

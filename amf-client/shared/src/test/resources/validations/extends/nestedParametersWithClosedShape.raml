@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: api
+version: 1
+traits:
+  t1:
+    <<param>>:
+resourceTypes:
+  rt1:
+    is:
+      t1:
+        param: <<rtParam>>
+/e1:
+  type:
+    rt1:
+      rtParam: iAmNotATraitProperty
+  get:

@@ -107,7 +107,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 
-  override def meta: AnyShapeModel = AnyShapeModel
+  override val meta: AnyShapeModel = AnyShapeModel
 
   def toJsonSchema: String = toJsonSchema(this)
 

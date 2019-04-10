@@ -7,7 +7,6 @@ import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
-import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
@@ -121,13 +120,15 @@ case class RamlJsonSchemaExpression(key: YNode,
           ctx.violation(InvalidJsonSchemaExpression, "", "invalid json schema expression", valueAST)
           YDocument(YMap.empty)
       }
-      val context = new JsonSchemaWebApiContext(url, Nil, ctx, None)
-      context.localJSONSchemaContext = Some(schemaEntry.node)
-      context.setJsonSchemaAST(schemaEntry.node)
+      val jsonSchemaContext = toSchemaContext(ctx, valueAST)
+      jsonSchemaContext.localJSONSchemaContext = Some(schemaEntry.node)
+      jsonSchemaContext.setJsonSchemaAST(schemaEntry.node)
+
       Oas2DocumentParser(
-        Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(context)
+        Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
+        jsonSchemaContext)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
-      val libraryShapes = context.declarations.shapes
+      val libraryShapes = jsonSchemaContext.declarations.shapes
       val resolvedShapes = new ReferenceResolutionStage(false)(ctx)
         .resolveDomainElementSet[Shape](libraryShapes.values.toSeq)
 

@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: api
+version: 1
+resourceTypes:
+  rt1:
+    post:
+      body:
+        application/json:
+          type: asd
+/endpoint1:
+  type: rt1
+/endpoint2:
+  type: rt1
+  post:
+/endpoint3:
+  type: rt1
+  post:
+    body:
+      application/json:
+        type: string

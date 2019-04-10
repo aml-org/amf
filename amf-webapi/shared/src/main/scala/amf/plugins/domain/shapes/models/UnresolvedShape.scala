@@ -33,7 +33,7 @@ case class UnresolvedShape(override val fields: Fields,
   /** Resolve [[UnresolvedShape]] as link to specified target. */
   def resolve(target: Shape): Shape = target.link(reference, annotations).asInstanceOf[Shape].withName(name.value())
 
-  override def meta: AnyShapeModel = AnyShapeModel
+  override val meta: AnyShapeModel = AnyShapeModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/unresolved"

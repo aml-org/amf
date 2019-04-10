@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: api
+version: 1
+traits:
+  t1:
+    is: t2
+  t2:
+    is: t3
+/e1:
+  get:
+    is: t1
