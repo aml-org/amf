@@ -1,9 +1,17 @@
 Model: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml
 Profile: RAML 1.0
 Conforms? false
-Number of results: 2
+Number of results: 3
 
 Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+  Message: Property properties not supported in a RAML 1.0 module node
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
+  Property: 
+  Position: Some(LexicalInformation([(3,0)-(5,16)]))
+  Location: file://amf-client/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
   Message: Unresolved reference 'financeDetail.raml' from root context file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml

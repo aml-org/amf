@@ -216,4 +216,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Invalid annotations in 08") {
     validate("invalid-annotations-08/invalid-annotations-08.raml", Some("invalid-annotations-08.report"))
   }
+
+  test("Library closed shape") {
+    validate("invalid-library/invalid-library.raml", Some("invalid-library.report"))
+  }
+
+  test("Library closed shape used in an api") {
+    validate("invalid-library/api.raml", Some("invalid-library-used-in-api.report"))
+  }
 }
