@@ -75,6 +75,8 @@ class Raml08WebApiContext(loc: String,
 
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext =
     new Raml08WebApiContext(loc, refs, wrapped, Some(declarations), eh = eh)
+
+  override protected def supportsAnnotations: Boolean = false
 }
 
 abstract class RamlWebApiContext(override val loc: String,
@@ -147,8 +149,10 @@ abstract class RamlWebApiContext(override val loc: String,
     }
   }
 
+  protected def supportsAnnotations = true
+
   override def ignore(shape: String, property: String): Boolean = {
-    def isAnnotation = property.startsWith("(") && property.endsWith(")")
+    def isAnnotation = supportsAnnotations && property.startsWith("(") && property.endsWith(")")
 
     def isAllowedNestedEndpoint = {
       val shapesIgnoringNestedEndpoints = "webApi" :: "endPoint" :: Nil
@@ -482,15 +486,9 @@ abstract class WebApiContext(val loc: String,
   def ignore(shape: String, property: String): Boolean
 
   /** Validate closed shape. */
-  def closedShape(node: String, ast: YMap, shape: String, annotation: Boolean = false): Unit =
+  def closedShape(node: String, ast: YMap, shape: String): Unit =
     syntax.nodes.get(shape) match {
-      case Some(props) =>
-        val properties = if (annotation) {
-          props ++ syntax.nodes("annotation")
-        } else {
-          props
-        }
-
+      case Some(properties) =>
         ast.entries.foreach { entry =>
           val key: String = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
           if (ignore(shape, key)) {

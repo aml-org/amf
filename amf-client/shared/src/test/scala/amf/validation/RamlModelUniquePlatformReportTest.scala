@@ -212,4 +212,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Multiple inheritance with contradicting restrictions defined inline") {
     validate("multiple-inheritance-restrictions.raml", Some("max-min-restriction.report"))
   }
+
+  test("Invalid annotations in 08") {
+    validate("invalid-annotations-08/invalid-annotations-08.raml", Some("invalid-annotations-08.report"))
+  }
 }

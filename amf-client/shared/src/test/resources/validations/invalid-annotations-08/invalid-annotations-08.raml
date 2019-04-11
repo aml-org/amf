@@ -1,0 +1,12 @@
+#%RAML 0.8
+title: invalid annotations
+(someAnnotation): oh no
+/this-one:
+  (thisOtherOne): nope
+
+  get:
+    (why):
+      ohWhy: I don't know
+
+annotationTypes:
+  someAnnotation: string
