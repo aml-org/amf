@@ -86,7 +86,7 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0",
-    "com.github.amlorg" %%% "amf-aml" % "4.0.4"
+    "com.github.amlorg" %%% "amf-aml" % "4.0.6"
   )
 )
 
