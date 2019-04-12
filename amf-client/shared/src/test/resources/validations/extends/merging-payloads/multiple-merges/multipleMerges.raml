@@ -1,0 +1,61 @@
+#%RAML 1.0
+title: api
+mediaType: application/json
+resourceTypes:
+  explicit:
+    get:
+      body:
+        application/json:
+          type: number
+  implicit:
+    get:
+      body:
+        type: number
+
+traits: 
+  explicit1:
+    body:
+      application/json:
+        type: number
+  explicit2:
+    body:
+      application/xml:
+        type: number
+  implicit:
+    body:
+      type: number
+
+/ok1:
+  type: explicit
+  get:
+    is: [explicit1, explicit2]
+    body:
+      application/json:
+        example: 1
+/ok2:
+  type: implicit
+  get:
+    is: [implicit]
+    body:
+      example: 1
+/err1:
+  type: implicit
+  get:
+    is: [explicit1, explicit2]
+    body:
+      application/json:
+        example: 1
+/err2:
+  type: explicit
+  get:
+    is: [implicit, explicit2]
+    body:
+      application/json:
+        example: 1
+
+/err3:
+  type: implicit
+  get:
+    is: [explicit1, implicit]
+    body:
+      example: 1

@@ -161,6 +161,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
         res
     }
 
+    response.annotations ++= Annotations(entry)
     response
   }
 }

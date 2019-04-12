@@ -6,14 +6,14 @@ import amf.core.utils.{Lazy, Strings}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType, Raml10TypeParser}
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
 import amf.plugins.features.validation.ParserSideValidations.{
   ExclusivePropertiesSpecification,
   UnsupportedExampleMediaTypeErrorSpecification
 }
-import org.yaml.model.{YMap, YScalar, YType}
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import org.yaml.model.{YMap, YNode, YScalar, YType}
 
 import scala.collection.mutable
 
@@ -114,10 +114,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
         entry.value.tagType match {
           case YType.Null =>
             ctx.factory
-              .typeParser(entry,
-                          shape => shape.withName("default").adopted(request.getOrCreate.id),
-                          false,
-                          defaultType)
+              .typeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), false, defaultType)
               .parse()
               .foreach { schema =>
                 val payload = request.getOrCreate.withPayload(None)
@@ -126,10 +123,7 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
 
           case YType.Str =>
             ctx.factory
-              .typeParser(entry,
-                          shape => shape.withName("default").adopted(request.getOrCreate.id),
-                          false,
-                          defaultType)
+              .typeParser(entry, shape => shape.withName("default").adopted(request.getOrCreate.id), false, defaultType)
               .parse()
               .foreach { schema =>
                 val payload = request.getOrCreate.withPayload(None)
@@ -183,6 +177,8 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
       }
     )
     parse(request, target)
+
+    request.option.foreach(_.annotations ++= Annotations(YNode(map)))
 
     request.option
   }

@@ -15,8 +15,11 @@ import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
-import amf.plugins.domain.webapi.models.{Operation, Payload}
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.domain.webapi.models.{Operation, Payload, Request, Response}
+import amf.plugins.features.validation.ResolutionSideValidations.{
+  ResolutionValidation,
+  UnequalMediaTypeDefinitionsInExtendsPayloads
+}
 
 /**
   * Merge 'other' element into 'main' element:
@@ -30,6 +33,7 @@ import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValid
 case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
   def merge[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): T = {
+    MergingValidator.validate(main, other, errorHandler)
     var merged = false
 
     other.fields.fields().filter(ignored).foreach {
@@ -329,27 +333,33 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
                               other: AmfArray,
                               errorHandler: ErrorHandler): Unit = {
 
-    val existing = main.values.flatMap { m =>
+    val existing = main.values.map { m =>
       val obj = m.asInstanceOf[DomainElement]
-      obj.fields.entry(key.key).map(_.scalar.value -> obj)
-    }.toMap // TODO value without key?
+      obj.fields.entry(key.key).map(_.scalar.value).getOrElse(None) -> obj
+    }.toMap
 
     other.values.foreach { o =>
-      val obj = o.asInstanceOf[DomainElement]
-      obj.fields.entry(key.key) match {
-        case Some(value) =>
+      val otherObj = o.asInstanceOf[DomainElement]
+      otherObj.fields.entry(key.key) match {
+        case Some(value) if !existing.contains(None) =>
           if (existing.contains(value.scalar.value)) {
             if (field == EndPointModel.Operations) {
-              ctx.mergeOperationContext(obj.id)
+              ctx.mergeOperationContext(otherObj.id)
             }
-            merge(existing(value.scalar.value), obj.adopted(target.id), errorHandler)
-          } else if (!isOptional(element, obj)) { // Case (2) -> If node is undefined in 'main' but is optional in 'other'.
+            merge(existing(value.scalar.value), otherObj.adopted(target.id), errorHandler)
+          } else if (!isOptional(element, otherObj)) { // Case (2) -> If node is undefined in 'main' but is optional in 'other'.
             if (field == EndPointModel.Operations) {
-              ctx.mergeOperationContext(obj.id)
+              ctx.mergeOperationContext(otherObj.id)
             }
             target.add(field, adoptInner(target.id, o))
           }
-        case _ =>
+        case None if !existing.forall(_._1 != None) =>
+          if (existing.contains(None)) {
+            merge(existing(None), otherObj.adopted(target.id), errorHandler)
+          } else if (!isOptional(element, otherObj)) { // Case (2) -> If node is undefined in 'main' but is optional in 'other'.
+            target.add(field, adoptInner(target.id, o))
+          }
+        case _ => //
       }
     }
   }
@@ -399,6 +409,46 @@ object DataNodeMerging {
         if (!existing.contains(scalar.value)) main.addMember(scalar)
       case node =>
         main.addMember(adoptTree(main.id, node))
+    }
+  }
+}
+
+/**
+  * Checks some conditions when merging some nodes
+  */
+object MergingValidator {
+  def validate[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): Unit = {
+    (main, other) match {
+      case (m: Request, o: Request) =>
+        validatePayloads(main, errorHandler, m.payloads, o.payloads)
+
+      case (m: Response, o: Response) =>
+        validatePayloads(main, errorHandler, m.payloads, o.payloads)
+
+      case _ => // Nothing
+    }
+  }
+
+  private def validatePayloads[T <: DomainElement](main: T,
+                                                   errorHandler: ErrorHandler,
+                                                   m: Seq[Payload],
+                                                   o: Seq[Payload]): Unit = {
+    val mainPayloadsDefineMediaType = m.forall { payload =>
+      payload.mediaType.option().isDefined
+    }
+
+    val otherPayloadsDefineMediaType = o.forall { payload =>
+      payload.mediaType.option().isDefined
+    }
+
+    if (mainPayloadsDefineMediaType != otherPayloadsDefineMediaType) {
+
+      errorHandler.violation(UnequalMediaTypeDefinitionsInExtendsPayloads,
+                             main.id,
+                             None,
+                             UnequalMediaTypeDefinitionsInExtendsPayloads.message,
+                             main.position(),
+                             main.location())
     }
   }
 }
