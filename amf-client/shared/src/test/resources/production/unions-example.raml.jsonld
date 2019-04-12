@@ -2810,6 +2810,28 @@
                           }
                         ]
                       }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/unions-example.raml#/web-api/end-points/%2Fendpoint%2F%7BfileType%7D%2F%7BfileId%7D/get/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(58,0)-(87,31)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ],

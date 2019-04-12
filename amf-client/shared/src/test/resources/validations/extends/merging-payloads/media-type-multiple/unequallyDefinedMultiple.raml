@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: api
+mediaType: [application/json, application/xml]
+resourceTypes:
+  rt-explicit:
+    get:
+      body:
+        application/json:
+          type: number
+        application/xml:
+          type: number
+  rt-implicit:
+    get:
+      body:
+        type: number
+/e-explicit:
+  type: rt-implicit
+  get:
+    body:
+      application/json:
+        example: 1
+      application/xml:
+        example: 1
+/e-implicit:
+  type: rt-explicit
+  get:
+    body:
+      example: 1

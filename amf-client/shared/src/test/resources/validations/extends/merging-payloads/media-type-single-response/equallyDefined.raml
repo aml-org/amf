@@ -1,0 +1,32 @@
+#%RAML 1.0
+title: api
+mediaType: application/json
+resourceTypes:
+  rt-mediaType:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: number
+  rt-no-mediaType:
+    get:
+      responses:
+        200:
+          body:
+            type: number
+/e-mediaType:
+  type: rt-mediaType
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: a # if merged correctly this should fail expected type: Number, found: String
+/e-no-mediaType:
+  type: rt-no-mediaType
+  get:
+    responses:
+      200:
+        body:
+          example: a # if merged correctly this should fail with expected type: Number, found: String

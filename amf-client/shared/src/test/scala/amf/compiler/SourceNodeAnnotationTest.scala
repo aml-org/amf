@@ -3,12 +3,12 @@ package amf.compiler
 import amf.core.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfObject, Shape}
+import amf.core.parser.{Annotations, Range => PositionRange}
 import amf.core.remote.{OasJsonHint, OasYamlHint, RamlYamlHint}
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.models.{Parameter, Response, WebApi}
 import org.mulesoft.lexer.InputRange
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
-import amf.core.parser.{Annotations, Range => PositionRange}
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 import scala.concurrent.ExecutionContext
 
@@ -124,10 +124,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
         case r: Response if r.linkTarget.isDefined => (r.id, r.annotations)
       }) match {
         case Some((id, annotations)) =>
-          assertRangeElement(id,
-                             annotations,
-                             PositionRange((19, 8), (20, 37)),
-                             Some(PositionRange((19, 16), (20, 37))))
+          assertRangeElement(id, annotations, PositionRange((19, 8), (20, 37)), Some(PositionRange((19, 16), (20, 37))))
         case None => fail("Any response with target found")
       }
       succeed
@@ -170,10 +167,7 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
           (serialization.id, serialization.annotations)
       }) match {
         case Some((id, annotations)) =>
-          assertRangeElement(id,
-                             annotations,
-                             PositionRange((12, 0), (13, 21)),
-                             Some(PositionRange((10, 12), (13, 21))))
+          assertRangeElement(id, annotations, PositionRange((12, 0), (13, 21)), Some(PositionRange((10, 12), (13, 21))))
         case None => fail("Any response declared found")
       }
       succeed
@@ -184,21 +178,23 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
                                  annotations: Annotations,
                                  sourceRange: PositionRange,
                                  nodeRange: Option[PositionRange] = None): Assertion = {
-    var c = 0
     annotations.foreach {
       case ast: SourceAST =>
-        c = c + 1
         assertRange(id, ast.ast.range, sourceRange)
       case lex: LexicalInformation =>
-        c = c + 1
         assertRange(id, lex.range, sourceRange)
       case node: SourceNode =>
-        c = c + 1
         assertRange(id, node.node.range, nodeRange.getOrElse(sourceRange))
       case _ =>
     }
-    if (c != 3) fail("Missing some annotation type")
+    if (!containsSourceAnnotations(annotations)) fail("Missing some annotation type")
     succeed
+  }
+
+  def containsSourceAnnotations(annotations: Annotations): Boolean = {
+    annotations.contains(classOf[LexicalInformation]) &&
+    annotations.contains(classOf[SourceAST]) &&
+    annotations.contains(classOf[SourceNode])
   }
 
   private def assertRange(id: String, actual: InputRange, expected: PositionRange): Assertion = {

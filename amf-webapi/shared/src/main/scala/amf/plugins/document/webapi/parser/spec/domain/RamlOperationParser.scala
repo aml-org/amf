@@ -1,20 +1,18 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.annotations.LexicalInformation
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
-import amf.plugins.features.validation.ParserSideValidations._
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
 import amf.plugins.domain.webapi.models.{Operation, Response}
+import amf.plugins.features.validation.ParserSideValidations._
 import org.yaml.model._
-import amf.core.utils.Strings
-import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
-import amf.plugins.features.validation.ResolutionSideValidations.NestedEndpoint
 
 import scala.collection.mutable
 

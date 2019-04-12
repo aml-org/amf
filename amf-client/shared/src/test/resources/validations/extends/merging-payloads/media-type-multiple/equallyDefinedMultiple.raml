@@ -1,0 +1,84 @@
+#%RAML 1.0
+title: Merging payloads with multiple media types
+resourceTypes:
+  rt-single:
+    get:
+      body:
+        application/json:
+          type: number
+
+  rt-multiple:
+    get:
+      body:
+        application/json:
+          type: number
+        application/xml:
+          type: number
+
+/single:
+  /same-single:
+    type: rt-single
+    get:
+      body:
+        application/json:
+          example: this should fail
+   
+  /same-multi:
+    type: rt-multiple
+    get:
+      body:
+        application/json:
+          example: this should fail
+  
+  /another-single:
+    type: rt-single
+    get:
+      body:
+        application/xml:
+          example: 1 # ok 
+
+  /another-multi:
+    type: rt-multiple
+    get:
+      body:
+        application/yaml:
+          example: 1 # ok
+
+/multiple:
+  /same-single:  
+    type: rt-single
+    get:
+      body:
+        application/json:
+          example: this should fail
+        application/xml: 
+          example: 1 # ok  
+
+  /same-multi: 
+    type: rt-multiple
+    get:
+      body:
+        application/json:
+          example: this should fail
+        application/xml: 
+          example: this should fail
+
+  /another-single: 
+    type: rt-single
+    get:
+      body:
+        application/xml: 
+          example: 1 # ok
+        application/yaml:
+          example: 1 # ok
+
+  /another-multi: 
+    type: rt-multiple
+    get:
+      body:
+        application/json: 
+          example: this should fail
+        application/yaml:
+          example: 1 # ok
+
+# If merged correctly this should produce 6 violations with expected type: Number, found: String
