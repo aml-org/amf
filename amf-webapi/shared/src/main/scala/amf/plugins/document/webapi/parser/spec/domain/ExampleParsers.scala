@@ -6,7 +6,7 @@ import amf.core.model.domain.{AmfScalar, Annotation, DataNode}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.ParsedJSONExample
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
-import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.RamlWebApiContextType.DEFAULT
 import amf.plugins.document.webapi.model.NamedExampleFragment
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
@@ -84,9 +84,9 @@ case class RamlExamplesParser(map: YMap,
                   examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer, options).parse())
                 case YType.Null => // ignore
                 case YType.Str
-                  if node.toString().matches("<<.*>>") && ctx
-                    .asInstanceOf[RamlWebApiContext]
-                    .contextType != DEFAULT => // Ignore
+                    if node.toString().matches("<<.*>>") && ctx
+                      .asInstanceOf[RamlWebApiContext]
+                      .contextType != DEFAULT => // Ignore
                 case _ =>
                   ctx.violation(
                     ExamplesMustBeAMap,
