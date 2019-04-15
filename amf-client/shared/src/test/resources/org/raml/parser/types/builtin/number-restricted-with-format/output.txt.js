@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: Priority should be integer
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-restricted-with-format/input.raml#/web-api/end-points/%2Fresource/post/request/application%2Fjson/schema/example/default-example
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-restricted-with-format/input.raml#/web-api/end-points/%2Fresource/post/request/application%2Fjson/schema/examples/example/default-example
   Property: 
   Position: Some(LexicalInformation([(15,0)-(16,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-restricted-with-format/input.raml

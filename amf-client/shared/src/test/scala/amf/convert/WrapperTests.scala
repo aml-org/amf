@@ -921,6 +921,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       val dataNode = webApi.endPoints.asSeq.head.operations.asSeq.head.responses.asSeq.head.payloads.asSeq.head.schema
         .asInstanceOf[AnyShape]
         .examples
+        .examples
         .asSeq
         .head
         .structuredValue
@@ -1256,6 +1257,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .head
         .asInstanceOf[AnyShape]
         .examples
+        .examples
         .asSeq
         .head
         .location
@@ -1448,9 +1450,9 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       option2.isDefined should be(true)
       option2.get.annotations().isTracked should be(true)
 
-      shape.examples.asSeq
+      shape.examples.examples.asSeq
         .find(_.id.equals(
-          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/example/declared"))
+          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/examples/example/declared"))
         .head
         .annotations()
         .isTracked should be(false)

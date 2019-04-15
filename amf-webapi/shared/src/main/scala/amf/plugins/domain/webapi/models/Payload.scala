@@ -5,7 +5,7 @@ import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
-import amf.plugins.domain.shapes.models.{ArrayShape, Example, NodeShape, ScalarShape}
+import amf.plugins.domain.shapes.models.{Examples, _}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.metamodel.PayloadModel.{Encoding => EncodingModel, _}
 import org.yaml.model.YPart
@@ -20,13 +20,19 @@ case class Payload(fields: Fields, annotations: Annotations)
 
   def mediaType: StrField     = fields.field(MediaType)
   def schema: Shape           = fields.field(Schema)
-  def examples: Seq[Example]  = fields.field(Examples)
+  def examples: Examples      = fields.field(PayloadModel.Examples)
   def encoding: Seq[Encoding] = fields.field(EncodingModel)
 
   def withMediaType(mediaType: String): this.type      = set(MediaType, mediaType)
   def withSchema(schema: Shape): this.type             = set(Schema, schema)
-  def withExamples(examples: Seq[Example]): this.type  = setArray(Examples, examples)
   def withEncoding(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
+  def withExamples(examples: Examples): this.type      = set(PayloadModel.Examples, examples)
+  def withExamples(examples: Seq[Example]): this.type = {
+    val ex = Examples()
+    set(PayloadModel.Examples, ex)
+    ex.withExamples(examples)
+    this
+  }
 
   def withObjectSchema(name: String): NodeShape = {
     val node = NodeShape().withName(name)
@@ -46,11 +52,22 @@ case class Payload(fields: Fields, annotations: Annotations)
     array
   }
 
-  def withExample(name: Option[String] = None): Example = {
-    val example = Example()
-    name.foreach { example.withName(_) }
-    add(Examples, example)
-    example
+  def withExample(name: Option[String]): Example = {
+    val newExample = Example()
+    name.foreach(newExample.withName(_))
+    examples match {
+      case e: Examples => e ++ Seq(newExample)
+      case _ =>
+        val newExamples = Examples()
+        withExamples(newExamples)
+        newExamples.withExamples(Seq(newExample))
+    }
+    newExample
+  }
+
+  def exampleValues: Seq[Example] = examples match {
+    case e: Examples => e.examples
+    case _           => Nil
   }
 
   def withEncoding(name: String): Encoding = {

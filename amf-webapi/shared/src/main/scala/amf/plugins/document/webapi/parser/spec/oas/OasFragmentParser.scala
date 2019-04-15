@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
-import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.shapes.models.{Example, Examples}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.ParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YMapEntry, YScalar}
@@ -171,14 +171,16 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
       val namedExample = NamedExampleFragment().adopted(root.location + "#/")
 
       val producer = (name: Option[String]) => {
+        val examples = Examples()
+        namedExample.withEncodes(examples)
         val example = Example()
         name.foreach(example.withName(_))
-        namedExample.withEncodes(example)
+        examples.withExamples(Seq(example))
         example
       }
 
-      namedExample.withEncodes(
-        RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true)).parse())
+      RamlNamedExampleParser(entries.head, producer, ExampleOptions(strictDefault = true, quiet = true)).parse()
+      namedExample
     }
   }
 }

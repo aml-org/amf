@@ -14,6 +14,8 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
+import amf.plugins.domain.webapi.models.Payload
+import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models.{Operation, Payload, Request, Response}
 import amf.plugins.features.validation.ResolutionSideValidations.{
@@ -33,7 +35,6 @@ import amf.plugins.features.validation.ResolutionSideValidations.{
 case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
   def merge[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): T = {
-    MergingValidator.validate(main, other, errorHandler)
     var merged = false
 
     other.fields.fields().filter(ignored).foreach {
@@ -107,7 +108,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
           val target = mainFieldEntry.value.value.asInstanceOf[AnyShape]
           val cloned = otherValue.value.asInstanceOf[AnyShape].cloneShape(None).withName(target.name.value())
 
-          if (target.examples.nonEmpty) cloned.withExamples(target.examples)
+          if (target.exampleValues.nonEmpty) cloned.withExamples(target.examples)
           main.set(otherField, adoptInner(main.id, cloned))
           shouldMerge = false
 
@@ -137,7 +138,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
                     case a: AnyShape =>
                       val examples = s.examples
                       main.set(otherField, adoptInner(main.id, a))
-                      if (examples.nonEmpty)
+                      if (s.exampleValues.nonEmpty)
                         main.fields
                           .entry(otherField)
                           .foreach(_.value.value.asInstanceOf[AnyShape].withExamples(examples))

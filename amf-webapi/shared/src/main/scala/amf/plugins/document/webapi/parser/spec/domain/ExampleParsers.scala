@@ -5,12 +5,13 @@ import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.domain.{AmfScalar, Annotation, DataNode}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.ParsedJSONExample
-import amf.plugins.document.webapi.contexts.RamlWebApiContextType.DEFAULT
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.model.NamedExampleFragment
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
+import amf.plugins.domain.shapes.models.{AnyShape, Example, Examples, ScalarShape}
 import amf.plugins.features.validation.ParserSideValidations.{
   ExamplesMustBeAMap,
   ExclusivePropertiesSpecification,
@@ -31,12 +32,12 @@ case class OasResponseExamplesParser(key: String, map: YMap)(implicit ctx: WebAp
     val results = ListBuffer[Example]()
     map
       .key(key)
-      .foreach(entry => {
+      .foreach { entry =>
         entry.value
           .as[YMap]
           .regex(".*/.*")
           .map(e => results += OasResponseExampleParser(e).parse())
-      })
+      }
 
     results
   }
@@ -55,9 +56,12 @@ case class RamlExamplesParser(map: YMap,
                               multipleExamplesKey: String,
                               parentId: Option[String],
                               producer: Option[String] => Example,
+                              parent: AnyShape,
                               options: ExampleOptions)(implicit ctx: WebApiContext) {
-  def parse(): Seq[Example] = {
-    if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && parentId.isDefined) {
+  def parse(): Examples = {
+    val hasMultiple = map.key(multipleExamplesKey).isDefined
+    val hasSingle   = map.key(singleExampleKey).isDefined
+    if (hasSingle && hasMultiple && parentId.isDefined) {
       ctx.violation(
         ExclusivePropertiesSpecification,
         parentId.get,
@@ -65,60 +69,86 @@ case class RamlExamplesParser(map: YMap,
         map
       )
     }
-    RamlMultipleExampleParser(multipleExamplesKey, map, producer, options).parse() ++
-      RamlSingleExampleParser(singleExampleKey, map, producer, options).parse()
-  }
-}
 
-case class RamlMultipleExampleParser(key: String,
-                                     map: YMap,
-                                     producer: Option[String] => Example,
-                                     options: ExampleOptions)(implicit ctx: WebApiContext) {
-  def parse(): Seq[Example] = {
-    val examples = ListBuffer[Example]()
-
-    map.key(key).foreach { entry =>
-      ctx.link(entry.value) match {
-        case Left(s) =>
-          examples += ctx.declarations.findNamedExampleOrError(entry.value)(s).link(s)
-
-        case Right(node) =>
-          node.tagType match {
-            case YType.Map =>
-              examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer, options).parse())
-            case YType.Null => // ignore
-            case YType.Str
-                if node.toString().matches("<<.*>>") && ctx
-                  .asInstanceOf[RamlWebApiContext]
-                  .contextType != DEFAULT => // Ignore
-            case _ =>
-              ctx.violation(
-                ExamplesMustBeAMap,
-                "",
-                s"Property '$key' should be a map",
-                entry
-              )
+    if (hasMultiple) {
+      map
+        .key(multipleExamplesKey)
+        .map { entry =>
+          ctx.link(entry.value) match {
+            case Left(s) =>
+              ctx.declarations.findNamedExampleOrError(entry.value)(s).link(s)
+            case Right(node) =>
+              val examples = ListBuffer[Example]()
+              node.tagType match {
+                case YType.Map =>
+                  examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer, options).parse())
+                case YType.Null => // ignore
+                case YType.Str
+                  if node.toString().matches("<<.*>>") && ctx
+                    .asInstanceOf[RamlWebApiContext]
+                    .contextType != DEFAULT => // Ignore
+                case _ =>
+                  ctx.violation(
+                    ExamplesMustBeAMap,
+                    "",
+                    s"Property '$multipleExamplesKey' should be a map",
+                    entry
+                  )
+              }
+              val ex = Examples()
+              ex.adopted(parent.id)
+              ex.withExamples(examples)
+              ex
           }
-      }
+        }
+        .getOrElse(Examples())
+    } else {
+      val examples = RamlSingleExampleParser(singleExampleKey, map, producer, options).parse()
+      val ex       = Examples()
+      ex.adopted(parent.id)
+      ex.withExamples(examples.toList)
+      ex
     }
-    examples
   }
 }
 
+/**
+  * NamedExample fragment parser. Parse a map with names as keys and example values as values.
+  * Return an empty Examples object if no example is parsed.
+  */
+case class RamlNamedExamplesParser(map: YMap, parent: NamedExampleFragment, options: ExampleOptions)(
+    implicit ctx: WebApiContext) {
+  def parse(): Unit = {
+    val examples = Examples(map)
+    parent.withEncodes(examples)
+    map.entries.foreach(entry => RamlNamedExampleParser(entry, examples.withExample, options).parse())
+  }
+}
+
+/** Parse one named example from an entry. Fail if it's including a NamedExample fragment. */
 case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => Example, options: ExampleOptions)(
     implicit ctx: WebApiContext) {
   def parse(): Example = {
     val name           = ScalarNode(entry.key)
     val simpleProducer = () => producer(Some(name.text().toString))
-    val example: Example = ctx.link(entry.value) match {
+
+    val example = RamlSingleExampleValueParser(entry, simpleProducer, options)
+      .parse()
+      .set(ExampleModel.Name, name.text(), Annotations(entry))
+
+    ctx.link(entry.value) match {
       case Left(s) =>
-        ctx.declarations
-          .findNamedExample(s)
-          .map(e => e.link(s).asInstanceOf[Example])
-          .getOrElse(RamlSingleExampleValueParser(entry, simpleProducer, options).parse())
-      case Right(_) => RamlSingleExampleValueParser(entry, simpleProducer, options).parse()
+        ctx.declarations.findNamedExample(s).foreach { _ =>
+          ctx.violation(
+            NamedExampleUsedInExample,
+            example.id,
+            "Named example fragments must be included in 'examples' facet",
+            entry.value
+          )
+        }
+      case Right(_) =>
     }
-    example.set(ExampleModel.Name, name.text(), Annotations(entry))
+    example
   }
 }
 
@@ -131,7 +161,7 @@ case class RamlSingleExampleParser(key: String,
     map.key(key).flatMap { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
-          ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example]).foreach { example =>
+          ctx.declarations.findNamedExample(s).foreach { example =>
             ctx.violation(
               NamedExampleUsedInExample,
               example.id,

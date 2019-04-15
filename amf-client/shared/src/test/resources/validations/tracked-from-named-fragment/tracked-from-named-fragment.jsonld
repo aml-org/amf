@@ -1,0 +1,714 @@
+[
+{
+"@id": "",
+"@type": [
+"doc:Document",
+"doc:Fragment",
+"doc:Module",
+"doc:Unit"
+],
+"doc:encodes": [
+{
+"@id": "#20",
+"@type": [
+"schema-org:WebAPI",
+"doc:RootDomainElement",
+"doc:DomainElement"
+],
+"schema-org:name": [
+{
+"@value": "Some API"
+}
+],
+"schema-org:version": [
+{
+"@value": "v1"
+}
+],
+"raml-http:endpoint": [
+{
+"@id": "#21",
+"@type": [
+"raml-http:EndPoint",
+"doc:DomainElement"
+],
+"raml-http:path": [
+{
+"@value": "/someEndpoint"
+}
+],
+"hydra:supportedOperation": [
+{
+"@id": "#22",
+"@type": [
+"hydra:Operation",
+"doc:DomainElement"
+],
+"hydra:method": [
+{
+"@value": "get"
+}
+],
+"hydra:expects": [
+{
+"@id": "#23",
+"@type": [
+"raml-http:Request",
+"doc:DomainElement"
+],
+"raml-http:payload": [
+{
+"@id": "#7",
+"@type": [
+"raml-http:Payload",
+"doc:DomainElement"
+],
+"raml-http:mediaType": [
+{
+"@value": "application/json"
+}
+],
+"raml-http:schema": [
+{
+"@id": "#13/linked_2",
+"@type": [
+"shacl:NodeShape",
+"shacl:Shape",
+"raml-shapes:Shape",
+"doc:DomainElement"
+],
+"doc:link-target": [
+{
+"@id": "#13"
+}
+],
+"doc:link-label": [
+{
+"@value": "Person"
+}
+]
+}
+],
+"smaps": {
+"lexical": {
+"#7": "[(16,6)-(18,39)]"
+}
+}
+}
+],
+"smaps": {
+"lexical": {
+"raml-http:payload": "[(15,4)-(18,39)]"
+}
+}
+}
+],
+"smaps": {
+"lexical": {
+"#22": "[(14,2)-(18,39)]"
+}
+}
+}
+],
+"smaps": {
+"lexical": {
+"#21": "[(13,0)-(18,39)]"
+}
+}
+}
+],
+"smaps": {
+"source-vendor": {
+"#20": "RAML 1.0"
+},
+"lexical": {
+"schema-org:version": "[(4,0)-(6,0)]",
+"#20": "[(3,0)-(18,39)]",
+"schema-org:name": "[(3,0)-(4,0)]"
+}
+}
+}
+],
+"doc:references": [
+{
+"@id": "#1",
+"@type": [
+"doc:NamedExample",
+"doc:Fragment",
+"doc:Unit"
+],
+"doc:encodes": [
+{
+"@id": "#2",
+"@type": [
+"doc:NamedExamples",
+"doc:DomainElement"
+],
+"doc:examples": [
+{
+"@id": "#3",
+"@type": [
+"doc:Example",
+"doc:DomainElement"
+],
+"schema-org:name": [
+{
+"@value": "a"
+}
+],
+"doc:strict": [
+{
+"@value": true
+}
+],
+"doc:structuredValue": [
+{
+"@id": "#4",
+"@type": [
+"data:Object"
+],
+"data:age": [
+{
+"@id": "#5",
+"@type": [
+"data:Scalar"
+],
+"data:value": [
+{
+"@value": "44",
+"@type": "xsd:integer"
+}
+],
+"smaps": {
+"lexical": {
+"#5": "[(5,7)-(5,9)]"
+}
+}
+}
+],
+"data:name": [
+{
+"@id": "#6",
+"@type": [
+"data:Scalar"
+],
+"data:value": [
+{
+"@value": "John Doe",
+"@type": "xsd:string"
+}
+],
+"smaps": {
+"lexical": {
+"#6": "[(4,8)-(4,16)]"
+}
+}
+}
+],
+"smaps": {
+"lexical": {
+"data:name": "[(4,8)-(4,16)]",
+"#4": "[(4,0)-(6,0)]",
+"data:age": "[(5,7)-(5,9)]"
+},
+"data-node-properties": {
+"#4": "name->[(4,2)-(5,0)]#age->[(5,2)-(6,0)]"
+}
+}
+}
+],
+"shacl:raw": [
+{
+"@value": "\n  name: John Doe\n  age: 44\n"
+}
+],
+"smaps": {
+"synthesized-field": {
+"doc:strict": "true"
+},
+"lexical": {
+"shacl:raw": "[(4,0)-(6,0)]",
+"#3": "[(3,0)-(6,0)]",
+"schema-org:name": "[(3,0)-(6,0)]"
+},
+"local-element": {
+"#3": ""
+},
+"tracked-element": {
+"#3": "amf://id#7"
+}
+}
+},
+{
+"@id": "#8",
+"@type": [
+"doc:Example",
+"doc:DomainElement"
+],
+"schema-org:name": [
+{
+"@value": "b"
+}
+],
+"doc:strict": [
+{
+"@value": true
+}
+],
+"doc:structuredValue": [
+{
+"@id": "#9",
+"@type": [
+"data:Object"
+],
+"data:age": [
+{
+"@id": "#10",
+"@type": [
+"data:Scalar"
+],
+"data:value": [
+{
+"@value": "35",
+"@type": "xsd:integer"
+}
+],
+"smaps": {
+"lexical": {
+"#10": "[(8,7)-(8,9)]"
+}
+}
+}
+],
+"data:name": [
+{
+"@id": "#11",
+"@type": [
+"data:Scalar"
+],
+"data:value": [
+{
+"@value": "Jane Doe",
+"@type": "xsd:string"
+}
+],
+"smaps": {
+"lexical": {
+"#11": "[(7,8)-(7,16)]"
+}
+}
+}
+],
+"smaps": {
+"lexical": {
+"data:name": "[(7,8)-(7,16)]",
+"#9": "[(7,0)-(8,9)]",
+"data:age": "[(8,7)-(8,9)]"
+},
+"data-node-properties": {
+"#9": "name->[(7,2)-(8,0)]#age->[(8,2)-(8,9)]"
+}
+}
+}
+],
+"shacl:raw": [
+{
+"@value": "\n  name: Jane Doe\n  age: 35"
+}
+],
+"smaps": {
+"synthesized-field": {
+"doc:strict": "true"
+},
+"lexical": {
+"shacl:raw": "[(7,0)-(8,9)]",
+"#8": "[(6,0)-(8,9)]",
+"schema-org:name": "[(6,0)-(8,9)]"
+},
+"local-element": {
+"#8": ""
+},
+"tracked-element": {
+"#8": "amf://id#7"
+}
+}
+}
+],
+"smaps": {
+"resolved-link": {
+"#2": "amf://id#12"
+},
+"lexical": {
+"#2": "[(3,0)-(8,9)]"
+},
+"source-vendor": {
+"#2": "RAML 1.0"
+}
+}
+}
+],
+"smaps": {
+"lexical": {
+"#1": "[(3,0)-(8,9)]"
+}
+}
+}
+],
+"doc:declares": [
+{
+"@id": "#13",
+"@type": [
+"shacl:NodeShape",
+"shacl:Shape",
+"raml-shapes:Shape",
+"doc:DomainElement"
+],
+"shacl:closed": [
+{
+"@value": false
+}
+],
+"shacl:property": [
+{
+"@id": "#14",
+"@type": [
+"shacl:PropertyShape",
+"shacl:Shape",
+"raml-shapes:Shape"
+],
+"shacl:path": [
+{
+"@id": "http://a.ml/vocabularies/data#name"
+}
+],
+"raml-shapes:range": [
+{
+"@id": "#15",
+"@type": [
+"raml-shapes:ScalarShape",
+"shacl:Shape",
+"raml-shapes:Shape",
+"doc:DomainElement"
+],
+"shacl:datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#string"
+}
+],
+"shacl:name": [
+{
+"@value": "name"
+}
+],
+"smaps": {
+"lexical": {
+"#15": "[(10,6)-(11,0)]"
+}
+}
+}
+],
+"shacl:minCount": [
+{
+"@value": 1
+}
+],
+"shacl:name": [
+{
+"@value": "name"
+}
+],
+"smaps": {
+"lexical": {
+"#14": "[(10,6)-(11,0)]"
+}
+}
+},
+{
+"@id": "#16",
+"@type": [
+"shacl:PropertyShape",
+"shacl:Shape",
+"raml-shapes:Shape"
+],
+"shacl:path": [
+{
+"@id": "http://a.ml/vocabularies/data#age"
+}
+],
+"raml-shapes:range": [
+{
+"@id": "#17",
+"@type": [
+"raml-shapes:ScalarShape",
+"shacl:Shape",
+"raml-shapes:Shape",
+"doc:DomainElement"
+],
+"shacl:datatype": [
+{
+"@id": "http://www.w3.org/2001/XMLSchema#integer"
+}
+],
+"shacl:name": [
+{
+"@value": "age"
+}
+],
+"smaps": {
+"lexical": {
+"#17": "[(11,6)-(13,0)]"
+}
+}
+}
+],
+"shacl:minCount": [
+{
+"@value": 1
+}
+],
+"shacl:name": [
+{
+"@value": "age"
+}
+],
+"smaps": {
+"lexical": {
+"#16": "[(11,6)-(13,0)]"
+}
+}
+}
+],
+"shacl:name": [
+{
+"@value": "Person"
+}
+],
+"doc:examples": [
+{
+"@id": "#18",
+"@type": [
+"doc:NamedExamples",
+"doc:DomainElement"
+],
+"doc:examples": [
+{
+"@id": "#3",
+"@type": [
+"doc:Example",
+"doc:DomainElement"
+],
+"schema-org:name": [
+{
+"@value": "a"
+}
+],
+"doc:strict": [
+{
+"@value": true
+}
+],
+"doc:structuredValue": [
+{
+"@id": "#4",
+"@type": [
+"data:Object"
+],
+"data:age": [
+{
+"@id": "#5",
+"@type": [
+"data:Scalar"
+],
+"data:value": [
+{
+"@value": "44",
+"@type": "xsd:integer"
+}
+],
+"smaps": {
+"lexical": {
+"#5": "[(5,7)-(5,9)]"
+}
+}
+}
+],
+"data:name": [
+{
+"@id": "#6",
+"@type": [
+"data:Scalar"
+],
+"data:value": [
+{
+"@value": "John Doe",
+"@type": "xsd:string"
+}
+],
+"smaps": {
+"lexical": {
+"#6": "[(4,8)-(4,16)]"
+}
+}
+}
+],
+"smaps": {
+"lexical": {
+"data:name": "[(4,8)-(4,16)]",
+"#4": "[(4,0)-(6,0)]",
+"data:age": "[(5,7)-(5,9)]"
+},
+"data-node-properties": {
+"#4": "name->[(4,2)-(5,0)]#age->[(5,2)-(6,0)]"
+}
+}
+}
+],
+"shacl:raw": [
+{
+"@value": "\n  name: John Doe\n  age: 44\n"
+}
+],
+"smaps": {
+"synthesized-field": {
+"doc:strict": "true"
+},
+"lexical": {
+"shacl:raw": "[(4,0)-(6,0)]",
+"#3": "[(3,0)-(6,0)]",
+"schema-org:name": "[(3,0)-(6,0)]"
+},
+"local-element": {
+"#3": ""
+},
+"tracked-element": {
+"#3": "amf://id#7"
+}
+}
+},
+{
+"@id": "#8",
+"@type": [
+"doc:Example",
+"doc:DomainElement"
+],
+"schema-org:name": [
+{
+"@value": "b"
+}
+],
+"doc:strict": [
+{
+"@value": true
+}
+],
+"doc:structuredValue": [
+{
+"@id": "#9",
+"@type": [
+"data:Object"
+],
+"data:age": [
+{
+"@id": "#10",
+"@type": [
+"data:Scalar"
+],
+"data:value": [
+{
+"@value": "35",
+"@type": "xsd:integer"
+}
+],
+"smaps": {
+"lexical": {
+"#10": "[(8,7)-(8,9)]"
+}
+}
+}
+],
+"data:name": [
+{
+"@id": "#11",
+"@type": [
+"data:Scalar"
+],
+"data:value": [
+{
+"@value": "Jane Doe",
+"@type": "xsd:string"
+}
+],
+"smaps": {
+"lexical": {
+"#11": "[(7,8)-(7,16)]"
+}
+}
+}
+],
+"smaps": {
+"lexical": {
+"data:name": "[(7,8)-(7,16)]",
+"#9": "[(7,0)-(8,9)]",
+"data:age": "[(8,7)-(8,9)]"
+},
+"data-node-properties": {
+"#9": "name->[(7,2)-(8,0)]#age->[(8,2)-(8,9)]"
+}
+}
+}
+],
+"shacl:raw": [
+{
+"@value": "\n  name: Jane Doe\n  age: 35"
+}
+],
+"smaps": {
+"synthesized-field": {
+"doc:strict": "true"
+},
+"lexical": {
+"shacl:raw": "[(7,0)-(8,9)]",
+"#8": "[(6,0)-(8,9)]",
+"schema-org:name": "[(6,0)-(8,9)]"
+},
+"local-element": {
+"#8": ""
+},
+"tracked-element": {
+"#8": "amf://id#7"
+}
+}
+}
+]
+}
+],
+"smaps": {
+"resolved-link": {
+"#13": "amf://id#19"
+},
+"type-property-lexical-info": {
+"#13": "[(8,4)-(8,8)]"
+},
+"lexical": {
+"shacl:name": "[(7,2)-(7,8)]",
+"#13": "[(7,2)-(13,0)]"
+},
+"declared-element": {
+"#13": ""
+}
+}
+}
+],
+"@context": {
+"@base": "amf://id",
+"raml-http": "http://a.ml/vocabularies/http#",
+"raml-shapes": "http://a.ml/vocabularies/shapes#",
+"shacl": "http://www.w3.org/ns/shacl#",
+"data": "http://a.ml/vocabularies/data#",
+"doc": "http://a.ml/vocabularies/document#",
+"schema-org": "http://schema.org/",
+"xsd": "http://www.w3.org/2001/XMLSchema#",
+"hydra": "http://www.w3.org/ns/hydra/core#"
+}
+}
+]

@@ -131,6 +131,9 @@ object WebApiRegister {
     platform.registerWrapper(shapes.metamodel.ExampleModel) {
       case s: shapes.models.Example => Example(s)
     }
+    platform.registerWrapper(shapes.metamodel.ExamplesModel) {
+      case s: shapes.models.Examples => Examples(s)
+    }
     platform.registerWrapper(shapes.metamodel.FileShapeModel) {
       case s: shapes.models.FileShape => FileShape(s)
     }

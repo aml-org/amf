@@ -161,6 +161,14 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "tracked-from-resource-type/")
   }
 
+  test("Tracked annotation in example from a link NamedExample") {
+    cycle("tracked-from-named-fragment.raml",
+          "tracked-from-named-fragment.jsonld",
+          RamlYamlHint,
+          Amf,
+          validationsPath + "tracked-from-named-fragment/")
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

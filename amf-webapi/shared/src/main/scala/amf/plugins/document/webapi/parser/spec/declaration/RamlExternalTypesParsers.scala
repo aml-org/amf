@@ -41,7 +41,7 @@ case class RamlJsonSchemaExpression(key: YNode,
             ctx.declarations.fragments
               .get(path)
               .foreach(e => shape.withReference(e.encoded.id + extFragment.getOrElse("")))
-            if (shape.examples.nonEmpty) { // top level inlined shape, we don't want to reuse the ID, this must be an included JSON schema => EDGE CASE!
+            if (Option(shape.examples).nonEmpty) { // top level inlined shape, we don't want to reuse the ID, this must be an included JSON schema => EDGE CASE!
               shape.id = null
               adopt(shape)
               // We remove the examples declared in the previous endpoint for this inlined shape , see previous comment about the edge case

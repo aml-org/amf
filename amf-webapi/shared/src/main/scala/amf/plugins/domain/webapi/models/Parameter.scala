@@ -4,9 +4,9 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{Example, NodeShape, ScalarShape}
+import amf.plugins.domain.shapes.models.{Example, Examples, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
-import amf.plugins.domain.webapi.metamodel.ParameterModel._
+import amf.plugins.domain.webapi.metamodel.ParameterModel.{Examples => ExamplesField, _}
 import org.yaml.model.YPart
 import amf.core.utils.Strings
 
@@ -29,7 +29,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def binding: StrField          = fields.field(Binding)
   def schema: Shape              = fields.field(Schema)
   def payloads: Seq[Payload]     = fields.field(Payloads)
-  def examples: Seq[Example]     = fields.field(Examples)
+  def examples: Examples         = fields.field(ExamplesField)
 
   def withParameterName(name: String): this.type               = set(ParameterName, name)
   def withDescription(description: String): this.type          = set(Description, description)
@@ -42,7 +42,13 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withBinding(binding: String): this.type                  = set(Binding, binding)
   def withSchema(schema: Shape): this.type                     = set(Schema, schema)
   def withPayloads(payloads: Seq[Payload]): this.type          = setArray(Payloads, payloads)
-  def withExamples(examples: Seq[Example]): this.type          = setArray(Examples, examples)
+  def withExamples(examples: Examples): this.type              = set(ExamplesField, examples)
+  def withExamples(examples: Seq[Example]): this.type = {
+    val ex = Examples()
+    set(ExamplesField, ex)
+    ex.withExamples(examples)
+    this
+  }
 
   def isHeader: Boolean = binding.is("header")
   def isQuery: Boolean  = binding.is("query")
@@ -69,11 +75,22 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
     result
   }
 
-  def withExample(name: Option[String] = None): Example = {
-    val example = Example()
-    name.foreach { example.withName(_) }
-    add(Examples, example)
-    example
+  def withExample(name: Option[String]): Example = {
+    val newExample = Example()
+    name.foreach(newExample.withName(_))
+    examples match {
+      case e: Examples => e ++ Seq(newExample)
+      case _ =>
+        val newExamples = Examples()
+        withExamples(newExamples)
+        newExamples.withExamples(Seq(newExample))
+    }
+    newExample
+  }
+
+  def exampleValues: Seq[Example] = examples match {
+    case e: Examples => e.examples
+    case _           => Nil
   }
 
   override def linkCopy(): Parameter = Parameter().withBinding(binding.value()).withId(id)

@@ -431,7 +431,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Example oas to oas") {
-    cycle("examples.json", OasJsonHint)
+    cycle("examples.json", "examples.json.json", OasJsonHint, Oas)
   }
 
   test("Example json to amf") {
@@ -443,7 +443,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Fragment Named Example oas to oas") {
-    cycle("named-example.json", OasJsonHint, referencesPath)
+    cycle("named-example.json", "named-example.json.json", OasJsonHint, Oas, referencesPath)
   }
 
   test("Facets raml to oas") {
@@ -558,8 +558,26 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("collection-format.jsonld", "collection-format.jsonld.json", AmfJsonHint, Oas)
   }
 
-  test("Anonymous and named examples with annotations json to raml") {
-    cycle("anonymous-and-named-examples.jsonld", "anonymous-and-named-examples.raml", AmfJsonHint, Raml)
+  test("Anonymous and named examples with annotations raml to jsonld") {
+    Validation(platform).flatMap { validation =>
+      cycle("anonymous-and-named-examples.raml",
+            "anonymous-and-named-examples.jsonld",
+            RamlYamlHint,
+            Amf,
+            validation = Some(validation.withEnabledValidation(true)))
+    }
+  }
+
+  test("Anonymous and named examples with annotations jsonld to raml") {
+    Validation(platform).flatMap { validation =>
+      cycle(
+        "anonymous-and-named-examples.jsonld",
+        "anonymous-and-named-examples.raml.raml",
+        AmfJsonHint,
+        Raml,
+        validation = Some(validation.withEnabledValidation(true))
+      )
+    }
   }
 
   test("Tags node oas to amf") {

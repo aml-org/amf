@@ -27,7 +27,7 @@ case class Parameter(override private[amf] val _internal: InternalParameter) ext
   def binding: StrField             = _internal.binding
   def schema: Shape                 = _internal.schema
   def payloads: ClientList[Payload] = _internal.payloads.asClient
-  def examples: ClientList[Example] = _internal.examples.asClient
+  def examples: Examples            = _internal.examples
 
   /** Set name property of this Parameter. */
   def withName(name: String): this.type = {

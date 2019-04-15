@@ -1,0 +1,18 @@
+#%RAML 1.0
+
+title: Some API
+version: v1
+
+types:
+  Person:
+    type: object
+    properties:
+      name: string
+      age: integer
+
+/someEndpoint:
+  get:
+    body:
+      application/json:
+        type: Person
+        examples: !include example.raml

@@ -92,17 +92,34 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   def documentation: CreativeWork     = fields.field(Documentation)
   def xmlSerialization: XMLSerializer = fields.field(XMLSerialization)
-  def examples: Seq[Example]          = fields.field(Examples)
+  def examples: Examples              = fields.field(AnyShapeModel.Examples)
 
   def withDocumentation(documentation: CreativeWork): this.type        = set(Documentation, documentation)
   def withXMLSerialization(xmlSerialization: XMLSerializer): this.type = set(XMLSerialization, xmlSerialization)
-  def withExamples(examples: Seq[Example]): this.type                  = setArray(Examples, examples)
+  def withExamples(examples: Examples): this.type                      = set(AnyShapeModel.Examples, examples)
+  def withExamples(examples: Seq[Example]): this.type = {
+    val ex = Examples()
+    set(AnyShapeModel.Examples, ex)
+    ex.withExamples(examples)
+    this
+  }
 
   def withExample(name: Option[String]): Example = {
-    val example = Example()
-    name.foreach { example.withName(_) }
-    add(Examples, example)
-    example
+    val newExample = Example()
+    name.foreach(newExample.withName(_))
+    examples match {
+      case e: Examples => e ++ Seq(newExample)
+      case _ =>
+        val newExamples = Examples()
+        withExamples(newExamples)
+        newExamples.withExamples(Seq(newExample))
+    }
+    newExample
+  }
+
+  def exampleValues: Seq[Example] = examples match {
+    case e: Examples => e.examples
+    case _           => Nil
   }
 
   override def linkCopy(): AnyShape = AnyShape().withId(id)
@@ -168,7 +185,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   override def ramlSyntaxKey: String = "anyShape"
 
-  def trackedExample(trackId: String): Option[Example] = examples.find(_.isTrackedBy(trackId))
+  def trackedExample(trackId: String): Option[Example] = examples.examples.find(_.isTrackedBy(trackId))
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = AnyShape.apply

@@ -1,0 +1,24 @@
+{
+  "swagger": "2.0",
+  "definitions": {
+    "person": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      },
+      "x-amf-examples": {
+        "$ref": "fragments/named-example.json"
+      }
+    }
+  },
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "paths": {}
+}

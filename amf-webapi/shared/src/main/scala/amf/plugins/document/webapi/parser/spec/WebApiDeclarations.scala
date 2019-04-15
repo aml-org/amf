@@ -16,11 +16,11 @@ import amf.core.parser.{
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Examples}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Parameter, Payload, Response}
-import org.yaml.model.{YMap, YNode, YPart}
+import org.yaml.model.{YNode, YPart}
 
 /**
   * Declarations object.
@@ -276,16 +276,16 @@ class WebApiDeclarations(val alias: Option[String],
         ErrorResponse(key, ast)
     }
 
-  def findNamedExampleOrError(ast: YPart)(key: String): Example = findNamedExample(key) match {
+  def findNamedExampleOrError(ast: YPart)(key: String): Examples = findNamedExample(key) match {
     case Some(result) => result
     case _ =>
       error(s"NamedExample '$key' not found", ast)
       ErrorNamedExample(key, ast)
   }
 
-  def findNamedExample(key: String, error: Option[String => Unit] = None): Option[Example] =
+  def findNamedExample(key: String, error: Option[String => Unit] = None): Option[Examples] =
     fragments.get(key).map(_.encoded) match {
-      case Some(e: Example) => Some(e)
+      case Some(e: Examples) => Some(e)
       case Some(other) =>
         error.foreach(
           _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type NamedExample"))
@@ -343,7 +343,7 @@ object WebApiDeclarations {
     withId(idPart)
   }
   case class ErrorNamedExample(idPart: String, ast: YPart)
-      extends Example(Fields(), Annotations(ast))
+      extends Examples(Fields(), Annotations(ast))
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorNamedExample/"
     withId(idPart)

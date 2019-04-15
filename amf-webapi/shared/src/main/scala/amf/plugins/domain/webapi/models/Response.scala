@@ -4,7 +4,7 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.shapes.models.{Example, Examples}
 import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel._
 import amf.core.utils.Strings
@@ -22,15 +22,21 @@ class Response(override val fields: Fields, override val annotations: Annotation
   def statusCode: StrField      = fields.field(StatusCode)
   def headers: Seq[Parameter]   = fields.field(Headers)
   def payloads: Seq[Payload]    = fields.field(Payloads)
-  def examples: Seq[Example]    = fields.field(Examples)
   def links: Seq[TemplatedLink] = fields.field(Links)
+  def examples: Examples        = fields.field(ResponseModel.Examples)
 
   def withDescription(description: String): this.type = set(Description, description)
   def withStatusCode(statusCode: String): this.type   = set(StatusCode, statusCode)
   def withHeaders(headers: Seq[Parameter]): this.type = setArray(Headers, headers)
   def withPayloads(payloads: Seq[Payload]): this.type = setArray(Payloads, payloads)
-  def withExamples(examples: Seq[Example]): this.type = setArray(Examples, examples)
   def withLinks(links: Seq[TemplatedLink]): this.type = setArray(Links, links)
+  def withExamples(examples: Examples): this.type     = set(ResponseModel.Examples, examples)
+  def withExamples(examples: Seq[Example]): this.type = {
+    val ex = Examples()
+    set(ResponseModel.Examples, ex)
+    ex.withExamples(examples)
+    this
+  }
 
   def withHeader(name: String): Parameter = {
     val result = Parameter().withName(name)
@@ -46,9 +52,20 @@ class Response(override val fields: Fields, override val annotations: Annotation
   }
 
   def withExample(mediaType: String): Example = {
-    val example = Example().withMediaType(mediaType)
-    add(Examples, example)
-    example
+    val e = examples match {
+      case e: Examples => e
+      case _ =>
+        val newExamples = Examples()
+        withExamples(newExamples)
+        newExamples
+    }
+
+    e.withExampleWithMediaType(mediaType)
+  }
+
+  def exampleValues: Seq[Example] = examples match {
+    case e: Examples => e.examples
+    case _           => Nil
   }
 
   def cloneResponse(parent: String): Response = {

@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, SpecEmitterConte
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
-import amf.plugins.domain.shapes.models.Example
+import amf.plugins.domain.shapes.models.{Example, Examples}
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import org.yaml.model.YDocument._
 import org.yaml.model._
@@ -26,11 +26,20 @@ case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: Spec
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val examples = f.array.values.collect({ case e: Example => e })
+    val examples = f.element match {
+      case e: Examples => e.examples
+      case _           => Nil
+    }
     b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering)(spec))), _)))
   }
 
-  override def position(): Position = f.array.values.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+  override def position(): Position = {
+    val examples = f.element match {
+      case e: Examples => e.examples
+      case _           => Nil
+    }
+    examples.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+  }
 }
 
 case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
@@ -46,6 +55,24 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(i
   }
 
   override def position(): Position = pos(example.annotations)
+}
+
+case class ExamplesLinkEmitter(key: String, examples: Examples, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    if (examples.isLink) {
+      b.entry(
+        key,
+        b => {
+          examples.linkTarget.foreach(l =>
+            spec.factory.tagToReferenceEmitter(l, examples.linkLabel.option(), references).emit(b))
+        }
+      )
+    }
+  }
+
+  override def position(): Position = pos(examples.annotations)
 }
 
 case class MultipleExampleEmitter(key: String,
@@ -98,6 +125,12 @@ case class SingleExampleEmitter(key: String, example: Example, ordering: SpecOrd
 
   override def position(): Position = pos(example.annotations)
 
+}
+
+case class NamedExamplesEmitter(examples: Examples, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+  def emitters(): Seq[EntryEmitter] = {
+    examples.examples.map(NamedExampleEmitter(_, ordering))
+  }
 }
 
 case class NamedExampleEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)

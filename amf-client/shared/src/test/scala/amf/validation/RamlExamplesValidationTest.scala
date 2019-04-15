@@ -240,12 +240,20 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/inlined-external-example/api.raml")
   }
 
-  test("Multiple named examples in a fragment") {
-    validate("/examples/multiple-example-fragments/api.raml")
-  }
-
   test("Complex inheritance with example") {
     validate("/examples/complex-inheritance/api.raml")
+  }
+
+  test("Invalid NamedExample that includes another NamedExample 1") {
+    validate("/examples/invalid-nested-named-example-1/api.raml", Some("invalid-nested-named-example-1.report"))
+  }
+
+  test("Invalid NamedExample that includes another NamedExample 2") {
+    validate("/examples/invalid-nested-named-example-2/api.raml", Some("invalid-nested-named-example-2.report"))
+  }
+
+  test("NamedExample that includes fragment without header") {
+    validate("/examples/nested-named-example-fragment/api.raml")
   }
 
   override val hint: Hint = RamlYamlHint

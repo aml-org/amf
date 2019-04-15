@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be object
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-inline/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/default-example
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-inline/input.raml#/web-api/end-points/%2Fok0/post/request/default/examples/example/default-example
   Property: 
   Position: Some(LexicalInformation([(8,15)-(8,20)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-inline/input.raml
