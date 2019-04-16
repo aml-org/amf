@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: api
+types:
+  type1: !include type1.raml
+  type2: !include type2.raml
+
+/endpoint:
+  get:
+    body:
+      application/json:
+        type: type1
