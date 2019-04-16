@@ -53,7 +53,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#43",
+                        "@id": "#42",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -86,7 +86,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#43": "[(12,6)-(15,0)]"
+                            "#42": "[(12,6)-(15,0)]"
                           }
                         }
                       }
@@ -140,7 +140,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#42",
+                        "@id": "#41",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -173,7 +173,7 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#42": "[(20,10)-(24,0)]"
+                            "#41": "[(20,10)-(24,0)]"
                           }
                         }
                       }
@@ -583,6 +583,9 @@
                   },
                   "local-element": {
                     "#3": ""
+                  },
+                  "tracked-element": {
+                    "#3": "amf://id#10"
                   }
                 }
               }
@@ -596,9 +599,6 @@
               },
               "source-vendor": {
                 "#2": "RAML 1.0"
-              },
-              "tracked-element": {
-                "#2": "amf://id#10"
               }
             }
           }
@@ -1276,6 +1276,9 @@
                   },
                   "local-element": {
                     "#29": ""
+                  },
+                  "tracked-element": {
+                    "#29": "amf://id#41,amf://id#42"
                   }
                 }
               }
@@ -1289,9 +1292,6 @@
               },
               "source-vendor": {
                 "#28": "RAML 1.0"
-              },
-              "tracked-element": {
-                "#28": "amf://id#42,amf://id#43"
               }
             }
           }
@@ -1831,6 +1831,9 @@
                   },
                   "local-element": {
                     "#3": ""
+                  },
+                  "tracked-element": {
+                    "#3": "amf://id#10"
                   }
                 }
               }
@@ -2161,6 +2164,9 @@
                   },
                   "local-element": {
                     "#29": ""
+                  },
+                  "tracked-element": {
+                    "#29": "amf://id#41,amf://id#42"
                   }
                 }
               }
@@ -2482,6 +2488,9 @@
                   },
                   "local-element": {
                     "#29": ""
+                  },
+                  "tracked-element": {
+                    "#29": "amf://id#41,amf://id#42"
                   }
                 }
               }
