@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: my api
+version: 1.0
+traits:
+  traitOK:
+    description:
+  parametrizedTrait:
+    <<key>>:
+  invalidTrait:
+    asd1:
+resourceTypes:
+  rtOK:
+    is: [traitOK]
+  rtKO:
+    get:
+      is: [invalidTrait]
+  rtParametrizedOK:
+    get:
+      is: [parametrizedTrait: {key: description}]
+  rtParametrizedKO:
+    get:
+      is: [parametrizedTrait: {key: asd1}]
+/e1:
+  type: rtOK
+/e2:
+  type: rtKO
+/e3:
+  type: rtParametrizedOK
+/e4:
+  type: rtParametrizedKO

@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: API
+version: 1.0
+resourceTypes:
+  rt1:
+    post?:
+      <<parameter>>:
+
+/endpoint1:
+  type:
+    rt1:
+      parameter: a

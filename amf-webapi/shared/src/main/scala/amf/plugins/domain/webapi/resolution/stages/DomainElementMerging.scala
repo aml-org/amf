@@ -35,6 +35,7 @@ import amf.plugins.features.validation.ResolutionSideValidations.{
 case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
   def merge[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): T = {
+    MergingValidator.validate(main, other, errorHandler)
     var merged = false
 
     other.fields.fields().filter(ignored).foreach {
