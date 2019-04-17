@@ -56,6 +56,23 @@ object AMF {
                env: Environment): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle, env)
 
+  /**
+    * This method receives a resolved model. Don't use it with an unresolved one.
+    */
+  def validateResolved(model: BaseUnit,
+                       profileName: ProfileName,
+                       messageStyle: MessageStyle): ClientFuture[ValidationReport] =
+    Core.validateResolved(model, profileName, messageStyle)
+
+  /**
+    * This method receives a resolved model. Don't use it with an unresolved one.
+    */
+  def validateResolved(model: BaseUnit,
+                       profileName: ProfileName,
+                       messageStyle: MessageStyle,
+                       env: Environment): ClientFuture[ValidationReport] =
+    Core.validateResolved(model, profileName, messageStyle, env)
+
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
   def loadValidationProfile(url: String,

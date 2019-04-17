@@ -91,8 +91,15 @@ trait BaseWebApiPlugin extends AMFDocumentPlugin with AMFValidationPlugin with W
                         profile: ProfileName,
                         validations: EffectiveValidations,
                         platform: Platform,
-                        env: Environment): Future[AMFValidationReport] = {
-    validationRequestsForBaseUnit(baseUnit, profile, validations, validationProfile.messageStyle, platform, env)
+                        env: Environment,
+                        resolved: Boolean): Future[AMFValidationReport] = {
+    validationRequestsForBaseUnit(baseUnit,
+                                  profile,
+                                  validations,
+                                  validationProfile.messageStyle,
+                                  platform,
+                                  env,
+                                  resolved)
   }
 
   override def init(): Future[AMFPlugin] = Future.successful(this)
