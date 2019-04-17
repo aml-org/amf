@@ -165,6 +165,9 @@ nodeMappings:
       readOnly:
         propertyTerm: shapes.readOnly
         range: boolean
+      additionalProperties:
+        propertyTerm: shapes.additionalProperty
+        range: boolean
       properties:
         propertyTerm: shacl.property
         range: SchemaObject

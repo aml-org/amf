@@ -20,6 +20,9 @@ nodeMappings:
       objectIgnore:
         propertyTerm: v.toIgnore
         range: IgnoreObject
+      objectUpsert:
+        propertyTerm: v.toUpsert
+        range: UpsertObject
   InsertedObject:
     classTerm: v.InsertedObject
     patch: insert
