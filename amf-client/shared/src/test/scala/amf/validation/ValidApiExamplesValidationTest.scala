@@ -236,5 +236,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/examples/schemas-with-definition.raml")
   }
 
+  test("Test union of a type and an array of that type") {
+    checkValid("/union-type-array.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

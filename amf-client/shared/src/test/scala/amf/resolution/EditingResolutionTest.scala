@@ -177,6 +177,10 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "auto-generated-schema-name/")
   }
 
+  test("Declared type union with inherit array link") {
+    cycle("union-type-array.raml", "union-type-array.jsonld", RamlYamlHint, Amf, validationsPath)
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")
