@@ -15,19 +15,20 @@ case class Parameter(override private[amf] val _internal: InternalParameter) ext
   @JSExportTopLevel("model.domain.Parameter")
   def this() = this(InternalParameter())
 
-  def name: StrField                = _internal.name
-  def parameterName: StrField       = _internal.parameterName
-  def description: StrField         = _internal.description
-  def required: BoolField           = _internal.required
-  def deprecated: BoolField         = _internal.deprecated
-  def allowEmptyValue: BoolField    = _internal.allowEmptyValue
-  def style: StrField               = _internal.style
-  def explode: BoolField            = _internal.explode
-  def allowReserved: BoolField      = _internal.allowReserved
-  def binding: StrField             = _internal.binding
-  def schema: Shape                 = _internal.schema
-  def payloads: ClientList[Payload] = _internal.payloads.asClient
-  def examples: Examples            = _internal.examples
+  def name: StrField                     = _internal.name
+  def parameterName: StrField            = _internal.parameterName
+  def description: StrField              = _internal.description
+  def required: BoolField                = _internal.required
+  def deprecated: BoolField              = _internal.deprecated
+  def allowEmptyValue: BoolField         = _internal.allowEmptyValue
+  def style: StrField                    = _internal.style
+  def explode: BoolField                 = _internal.explode
+  def allowReserved: BoolField           = _internal.allowReserved
+  def binding: StrField                  = _internal.binding
+  def schema: Shape                      = _internal.schema
+  def payloads: ClientList[Payload]      = _internal.payloads.asClient
+  def examples: Examples                 = _internal.examples
+  def exampleValues: ClientList[Example] = _internal.exampleValues.asClient
 
   /** Set name property of this Parameter. */
   def withName(name: String): this.type = {

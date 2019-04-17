@@ -14,9 +14,10 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
   @JSExportTopLevel("model.domain.AnyShape")
   def this() = this(InternalAnyShape())
 
-  def documentation: CreativeWork     = _internal.documentation
-  def xmlSerialization: XMLSerializer = _internal.xmlSerialization
-  def examples: Examples              = _internal.examples
+  def documentation: CreativeWork        = _internal.documentation
+  def xmlSerialization: XMLSerializer    = _internal.xmlSerialization
+  def examples: Examples                 = _internal.examples
+  def exampleValues: ClientList[Example] = _internal.exampleValues.asClient
 
   def withDocumentation(documentation: CreativeWork): this.type = {
     _internal.withDocumentation(documentation)
