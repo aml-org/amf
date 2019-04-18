@@ -1,0 +1,23 @@
+#%Vocabulary 1.0
+base: http://www.w3.org/2002/07/owl#
+usage: OWL2 vocabulary
+classTerms:
+  Thing:
+    displayName: Thing
+    description: OWL top concept
+  Class:
+    displayName: Class
+    description: An owl:Class defines a group of individuals that belong together because they share some properties.
+  DatatypeProperty:
+    displayName: DatatypeProperty
+    description: Data properties connect individuals with literals. In some knowledge representation systems, functional data properties are called attributes.
+  ObjectProperty:
+    displayName: ObjectProperty
+    description: Object properties connect pairs of individuals.
+  Ontology:
+    displayName: Ontology
+    description: Set of axioms — statements that say what is true in the domain.
+propertyTerms:
+  imports:
+    displayName: import
+    description: import relationships between vocabularies

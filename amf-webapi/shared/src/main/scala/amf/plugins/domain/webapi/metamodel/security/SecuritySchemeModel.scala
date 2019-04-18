@@ -7,7 +7,7 @@ import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.templates.KeyField
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, ParametersFieldModel, ResponseModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.core.vocabulary.Namespace.{Http, Hydra, Schema, Security}
+import amf.core.vocabulary.Namespace.{ApiContract, Core, Security}
 import amf.core.vocabulary.{Namespace, ValueType}
 
 object SecuritySchemeModel
@@ -18,18 +18,19 @@ object SecuritySchemeModel
     with ParametersFieldModel {
 
   val Name = Field(Str,
-                   Security + "name",
-                   ModelDoc(ModelVocabularies.Security,
+                   Core + "name",
+                   ModelDoc(ModelVocabularies.Core,
                             "name",
                             "Name for the security scheme",
-                            Seq((Namespace.Schema + "name").iri())))
+                            Seq((Namespace.Core + "name").iri())))
 
   val Type = Field(Str, Security + "type", ModelDoc(ModelVocabularies.Security, "type", "Type of security scheme"))
 
+
   val Responses = Field(
     Array(ResponseModel),
-    Hydra + "response",
-    ModelDoc(ExternalModelVocabularies.Hydra, "response", "Response associated to this security scheme"))
+    ApiContract + "response",
+    ModelDoc(ModelVocabularies.ApiContract, "response", "Response associated to this security scheme"))
 
   val Settings = Field(SettingsModel,
                        Security + "settings",

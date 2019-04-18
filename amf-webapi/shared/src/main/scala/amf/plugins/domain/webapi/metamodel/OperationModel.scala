@@ -2,12 +2,11 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type._
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.vocabulary.Namespace.{Document, Http, Hydra, Schema}
+import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.vocabulary.Namespace.{ApiContract, Core}
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.metamodel.common.DocumentationField
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.Operation
@@ -25,42 +24,42 @@ object OperationModel
 
   val Method = Field(
     Str,
-    Hydra + "method",
-    ModelDoc(ExternalModelVocabularies.Hydra, "method", "HTTP method required to invoke the operation"))
+    ApiContract + "method",
+    ModelDoc(ModelVocabularies.ApiContract, "method", "HTTP method required to invoke the operation"))
 
   val Deprecated = Field(Bool,
-                         Document + "deprecated",
-                         ModelDoc(ModelVocabularies.Http, "deprecated", "Marks the operation as deprecated"))
+                         Core + "deprecated",
+                         ModelDoc(ModelVocabularies.Core, "deprecated", "Marks the operation as deprecated"))
 
   val Summary = Field(
     Str,
-    Http + "guiSummary",
-    ModelDoc(ModelVocabularies.Http,
+    ApiContract + "guiSummary",
+    ModelDoc(ModelVocabularies.ApiContract,
              "gui summary",
              "Human readable description of the operation",
-             Seq((Namespace.Schema + "description").iri()))
+             Seq((Namespace.Core + "description").iri()))
   )
 
   val Schemes =
-    Field(Array(Str), Http + "scheme", ModelDoc(ModelVocabularies.Http, "scheme", "URI scheme for the API protocol"))
+    Field(Array(Str), ApiContract + "scheme", ModelDoc(ModelVocabularies.ApiContract, "scheme", "URI scheme for the API protocol"))
 
   val Accepts = Field(Array(Str),
-                      Http + "accepts",
-                      ModelDoc(ModelVocabularies.Http, "accepts", "Media-types accepted in a API request"))
+                      ApiContract + "accepts",
+                      ModelDoc(ModelVocabularies.ApiContract, "accepts", "Media-types accepted in a API request"))
 
   val ContentType = Field(Array(Str),
-                          Http + "contentType",
-                          ModelDoc(ModelVocabularies.Http, "content type", "Media types returned by a API response"))
+                          Core + "mediaType",
+                          ModelDoc(ModelVocabularies.Core, "media type", "Media types returned by a API response"))
 
   val Request = Field(
     RequestModel,
-    Hydra + "expects",
-    ModelDoc(ExternalModelVocabularies.Hydra, "expects", "Request information required by the operation"))
+    ApiContract + "expects",
+    ModelDoc(ModelVocabularies.ApiContract, "expects", "Request information required by the operation"))
 
   val Responses = Field(
     Array(ResponseModel),
-    Hydra + "returns",
-    ModelDoc(ExternalModelVocabularies.Hydra, "returns", "Response data returned by the operation"))
+    ApiContract + "returns",
+    ModelDoc(ModelVocabularies.ApiContract, "returns", "Response data returned by the operation"))
 
   val Security = Field(
     Array(ParametrizedSecuritySchemeModel),
@@ -69,18 +68,18 @@ object OperationModel
   )
 
   val Tags =
-    Field(Array(Str), Http + "tag", ModelDoc(ModelVocabularies.Http, "tag", "Additionally custom tagged information"))
+    Field(Array(Str), ApiContract + "tag", ModelDoc(ModelVocabularies.ApiContract, "tag", "Additionally custom tagged information"))
 
   val Callbacks = Field(Array(CallbackModel),
-                        Http + "callback",
-                        ModelDoc(ModelVocabularies.Http, "callback", "associated callbacks"))
+                        ApiContract + "callback",
+                        ModelDoc(ModelVocabularies.ApiContract, "callback", "associated callbacks"))
 
   val Servers =
-    Field(Array(ServerModel), Http + "server", ModelDoc(ModelVocabularies.Http, "server", "server information"))
+    Field(Array(ServerModel), ApiContract + "server", ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
 
   override val key: Field = Method
 
-  override val `type`: List[ValueType] = Hydra + "Operation" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "Operation" :: DomainElementModel.`type`
 
   override val fields: List[Field] = List(Method,
                                           Name,
@@ -101,7 +100,7 @@ object OperationModel
   override def modelInstance = Operation()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Http,
+    ModelVocabularies.ApiContract,
     "Operation",
     "Action that can be executed using a particular HTTP invocation"
   )

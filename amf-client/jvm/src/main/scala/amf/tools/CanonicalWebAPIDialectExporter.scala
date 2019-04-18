@@ -12,7 +12,7 @@ import org.reflections.scanners.SubTypesScanner
 import scala.collection.mutable
 
 // Case classes to accumulate results
-case class DialectNodeMapping(name: String, classTerm: String, propertyMappings: List[DialectPropertyMapping])
+case class DialectNodeMapping(name: String, classTerm: String, propertyMappings: List[DialectPropertyMapping], isShape: Boolean)
 case class DialectPropertyMapping(name: String, propertyTerm: String, range: String, allowMultiple: Boolean)
 
 /**
@@ -25,18 +25,19 @@ object CanonicalWebAPIDialectExporter {
   val DIALECT_FILE = "canonical_webapi.yaml"
   val WELL_KNOWN_VOCABULARIES = Map[String, String](
     "http://a.ml/vocabularies/document#" -> "../vocabularies/aml_doc.yaml",
-    "http://a.ml/vocabularies/data#"     -> "../vocabularies/data_model.yaml",
-    "http://a.ml/vocabularies/http#"     -> "../vocabularies/http.yaml",
-    "http://a.ml/vocabularies/meta#"     -> "../vocabularies/meta.yaml",
+    "http://a.ml/vocabularies/data#" -> "../vocabularies/data_model.yaml",
+    "http://a.ml/vocabularies/apiContract#" -> "../vocabularies/api_contract.yaml",
+    "http://a.ml/vocabularies/core#" -> "../vocabularies/core.yaml",
+    "http://a.ml/vocabularies/meta#" -> "../vocabularies/aml_meta.yaml",
     "http://a.ml/vocabularies/security#" -> "../vocabularies/security.yaml",
-    "http://a.ml/vocabularies/shapes#"   -> "../vocabularies/shapes.yaml"
+    "http://a.ml/vocabularies/shapes#" -> "../vocabularies/data_shapes.yaml"
   )
 
-  val reflectionsWebApi    = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
-  val reflectionsShapes    = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
-  val reflectionsCore      = new Reflections("amf.core.metamodel.domain.extensions", new SubTypesScanner(false))
-  val reflectionsTemplates = new Reflections("amf.core.metamodel.domain.templates", new SubTypesScanner(false))
-  //val reflectionsDataNode   = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
+  val reflectionsWebApi     = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
+  val reflectionsShapes     = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
+  val reflectionsCore       = new Reflections("amf.core.metamodel.domain.extensions", new SubTypesScanner(false))
+  val reflectionsTemplates  = new Reflections("amf.core.metamodel.domain.templates", new SubTypesScanner(false))
+  val reflectionsDataNode   = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
 
   var nodeMappings: Map[String, DialectNodeMapping] = Map()
 
@@ -91,8 +92,8 @@ object CanonicalWebAPIDialectExporter {
     // index fields
     val propertyTerms = modelObject.fields.map(buildPropertyMapping)
 
-    val nodeMapping =
-      DialectNodeMapping(name = toCamelCase(displayName), classTerm = id, propertyMappings = propertyTerms)
+    val isShape = types.contains((Namespace.Shacl + "Shape").iri())
+    val nodeMapping = DialectNodeMapping(name = toCamelCase(displayName), classTerm = id, propertyMappings = propertyTerms, isShape = isShape)
 
     nodeMapping
   }
@@ -107,6 +108,7 @@ object CanonicalWebAPIDialectExporter {
             case modelObject: Obj =>
               val nodeMapping = buildNodeMapping(klassName, modelObject)
               nodeMappings += (klassName -> nodeMapping)
+              println(klassName)
               Some(nodeMapping)
             case other =>
               //println(s"Other thing: $other")
@@ -120,6 +122,30 @@ object CanonicalWebAPIDialectExporter {
             //println(s"NOT FIELD '${singletonKlassName}'")
             None
         }
+    }
+  }
+
+  def allowedShapePropertyMapping(propertyTerm: String, isBaseShape: Boolean): Boolean = {
+    if (isBaseShape) {
+      val shapeMapping = nodeMappings("amf.core.metamodel.domain.ShapeModel$")
+      val duplicatedPropertyFound = shapeMapping.propertyMappings.find { p =>
+        p.propertyTerm == propertyTerm
+      }
+      duplicatedPropertyFound.isEmpty
+    } else {
+      true
+    }
+  }
+
+  def allowedAnyShapePropertyMapping(propertyTerm: String, isAnyShape: Boolean): Boolean = {
+    if (isAnyShape) {
+      val shapeMapping = nodeMappings("amf.plugins.domain.shapes.metamodel.AnyShapeModel$")
+      val duplicatedPropertyFound = shapeMapping.propertyMappings.find { p =>
+        p.propertyTerm == propertyTerm
+      }
+      duplicatedPropertyFound.isEmpty
+    } else {
+      true
     }
   }
 
@@ -137,7 +163,9 @@ object CanonicalWebAPIDialectExporter {
   // Base classes that should not appear in the dialect
   val blacklistedMappings: Set[String] = Set(
     "Settings",
-    "ParametrizedDeclaration"
+    "ParametrizedDeclaration",
+    "LinkableElement",
+    "DomainElement"
   )
 
   val shapeUnionDeclaration = "DataShapesUnion"
@@ -154,6 +182,7 @@ object CanonicalWebAPIDialectExporter {
       |      Nil: NilShape
       |      Scalar: ScalarShape
       |      Any: AnyShape
+      |      Recursive: RecursiveShape
     """.stripMargin
 
   val shapeUnionRange =
@@ -167,6 +196,7 @@ object CanonicalWebAPIDialectExporter {
       |      - NilShape
       |      - ScalarShape
       |      - AnyShape
+      |      - RecursiveShape
     """.stripMargin
 
   val settingsUnionDeclaration = "SecuritySettingsUnion"
@@ -225,6 +255,38 @@ object CanonicalWebAPIDialectExporter {
       |        allowMultiple: true
     """.stripMargin
 
+  val shapeNodeExtension ="    extends: Shape\n"
+  val anyShapeNodeExtension ="    extends: AnyShape\n"
+
+  // We check if this node mapping is a shape that inherits from AnyShape (and inddirectly frmo Shape), so we can remove common properties
+  // We also set up the node extension correctly to point to the AnyShape node mapping
+  def checkAnyShapeBaseClass(dialectNodeMapping: DialectNodeMapping, stringBuilder: mutable.StringBuilder): Boolean = {
+    if (dialectNodeMapping.isShape &&
+      dialectNodeMapping.classTerm != (Namespace.Shacl + "Shape").iri() &&
+      // dialectNodeMapping.classTerm != (Namespace.Shacl + "NodeShape").iri() && -> Our NodeShape *DOES* extends AnyShape
+      dialectNodeMapping.classTerm != (Namespace.Shacl + "PropertyShape").iri() &&
+      dialectNodeMapping.classTerm != (Namespace.Shapes + "AnyShape").iri()) {
+      stringBuilder.append(anyShapeNodeExtension)
+      true
+    } else {
+      false
+    }
+  }
+
+  // We check if this node mapping is a shape that inherits from Shape and not from AnyShape, so we can remove common properties
+  // We also set up the node extension correctly to point to the Shape node mapping
+  def checkShapeBaseClass(dialectNodeMapping: DialectNodeMapping, stringBuilder: mutable.StringBuilder): Boolean = {
+    if (dialectNodeMapping.isShape && (
+        dialectNodeMapping.classTerm == (Namespace.Shapes + "AnyShape").iri() ||
+        dialectNodeMapping.classTerm == (Namespace.Shacl + "PropertyShape").iri()
+      )) {
+      stringBuilder.append(shapeNodeExtension)
+      true
+    } else {
+      false
+    }
+  }
+
   def renderDialect(): String = {
     val stringBuilder                              = new StringBuilder()
     val externals: mutable.HashMap[String, String] = mutable.HashMap()
@@ -246,22 +308,28 @@ object CanonicalWebAPIDialectExporter {
 
     nodeMappings.foreach {
       case (_, dialectNodeMapping: DialectNodeMapping) =>
-        if (!blacklistedMappings.contains(dialectNodeMapping.name)) {
-          stringBuilder.append(s"  ${dialectNodeMapping.name}:\n")
-          var (compacted, prefix, base) = compact(dialectNodeMapping.classTerm)
-          aggregateExternals(externals, prefix, base)
-          stringBuilder.append(s"    classTerm: $compacted\n")
+      if (!blacklistedMappings.contains(dialectNodeMapping.name)) {
+        stringBuilder.append(s"  ${dialectNodeMapping.name}:\n")
+        var (compacted, prefix, base) = compact(dialectNodeMapping.classTerm)
+        aggregateExternals(externals, prefix, base)
+        stringBuilder.append(s"    classTerm: $compacted\n")
 
-          stringBuilder.append(s"    mapping:\n")
+        // Check inheritance for shapes
+        var isBaseAnyShape = checkAnyShapeBaseClass(dialectNodeMapping, stringBuilder)
+        val isBaseShape = checkShapeBaseClass(dialectNodeMapping, stringBuilder)
 
-          if (dialectNodeMapping.classTerm == (Namespace.Http + "EndPoint").iri()) {
-            stringBuilder.append(endPointExtends + "\n")
-          } else if (dialectNodeMapping.classTerm == (Namespace.Hydra + "Operation").iri()) {
-            stringBuilder.append(operationExtends + "\n")
-          }
+        // Lets find the effecti property mappings for this node mapping
+        val nodeMappingWithProperties = dialectNodeMapping.propertyMappings.filter { propertyMapping =>
+          // dynamic and linking information only relevant for design will not be dumped in the dialect
+          !blacklistedProperties.contains(propertyMapping.propertyTerm) &&
+          !blacklistedRanges.contains(propertyMapping.range) &&
+          allowedShapePropertyMapping(propertyMapping.propertyTerm, isBaseShape) &&
+          allowedAnyShapePropertyMapping(propertyMapping.propertyTerm, isBaseAnyShape)
+        }
 
-          var propertyCounters: mutable.Map[String, Int] = mutable.Map()
-          dialectNodeMapping.propertyMappings.foreach { propertyMapping =>
+<<<<<<< HEAD
+        var propertyCounters: mutable.Map[String, Int] = mutable.Map()
+        dialectNodeMapping.propertyMappings.foreach { propertyMapping =>
             // dynamic and linking information only relevant for design will not be dumped in the dialect
             if (!blacklistedProperties.contains(propertyMapping.propertyTerm) && !blacklistedRanges.contains(
                   propertyMapping.range)) {
@@ -296,7 +364,56 @@ object CanonicalWebAPIDialectExporter {
               if (propertyMapping.allowMultiple) {
                 stringBuilder.append(s"        allowMultiple: ${propertyMapping.allowMultiple}\n")
               }
+=======
+
+        if (nodeMappingWithProperties.nonEmpty) {
+
+          var propertyCounters: mutable.Map[String, Int] = mutable.Map() // for properties with dupplicated labels
+
+          stringBuilder.append(s"    mapping:\n")
+
+          if (dialectNodeMapping.classTerm == (Namespace.ApiContract + "EndPoint").iri()) {
+            stringBuilder.append(endPointExtends + "\n")
+          } else if (dialectNodeMapping.classTerm == (Namespace.ApiContract + "Operation").iri()) {
+            stringBuilder.append(operationExtends + "\n")
+          }
+
+
+
+          nodeMappingWithProperties.map { propertyMapping =>
+            // property names can be duplicated in the WebAPI meta-model, we make sure
+            // we generate unique property mapping alias
+            val name = propertyMapping.name
+            val nextPropertyName = propertyCounters.get(name) match {
+              case None =>
+                propertyCounters.update(name, 1)
+                name
+              case Some(counter) =>
+                propertyCounters.update(name, counter + 1)
+                s"$name$counter"
             }
+            // render the property mapping here
+            stringBuilder.append(s"      $nextPropertyName:\n")
+            var (compacted, prefix, base) = compact(propertyMapping.propertyTerm)
+            aggregateExternals(externals, prefix, base)
+            stringBuilder.append(s"        propertyTerm: $compacted\n")
+            if (propertyMapping.range == "Shape") {
+              stringBuilder.append(s"        range: $shapeUnionDeclaration\n")
+            } else if (propertyMapping.range == "Settings") {
+              stringBuilder.append(s"        range: $settingsUnionDeclaration\n")
+            } else if (propertyMapping.range == "AbstractDeclaration") {
+              stringBuilder.append(s"        range:\n")
+              stringBuilder.append(abstractDeclarationsRange ++ "\n")
+            } else if (propertyMapping.range == "uri") {
+              stringBuilder.append(s"        range: link\n")
+            } else {
+              stringBuilder.append(s"        range: ${propertyMapping.range}\n")
+            }
+            if (propertyMapping.allowMultiple) {
+              stringBuilder.append(s"        allowMultiple: ${propertyMapping.allowMultiple}\n")
+>>>>>>> Updated AML vocabularies for the model
+            }
+
           }
           stringBuilder.append("\n\n")
         }
@@ -350,7 +467,7 @@ object CanonicalWebAPIDialectExporter {
       VocabularyExporter.metaObjects(reflectionsShapes, parseMetaObject)
       VocabularyExporter.metaObjects(reflectionsCore, parseMetaObject)
       VocabularyExporter.metaObjects(reflectionsTemplates, parseMetaObject)
-      //VocabularyExporter.metaObjects(reflectionsDataNode, parseMetaObject)
+      VocabularyExporter.metaObjects(reflectionsDataNode, parseMetaObject)
       val dialectText = renderDialect()
       println(dialectText)
       writer.write(dialectText)

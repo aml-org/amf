@@ -11,28 +11,28 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "Swagger Sample API"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "A sample API"
           }
         ],
-        "http://a.ml/vocabularies/http#server": [
+        "http://a.ml/vocabularies/apiContract#server": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/my.api.com%2Fv1",
             "@type": [
-              "http://a.ml/vocabularies/http#Server",
+              "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#url": [
+            "http://a.ml/vocabularies/apiContract#url": [
               {
                 "@value": "my.api.com/v1"
               }
@@ -47,7 +47,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/http#url"
+                        "@value": "http://a.ml/vocabularies/apiContract#url"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -75,7 +75,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/http#url"
+                        "@value": "http://a.ml/vocabularies/apiContract#url"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -89,12 +89,12 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/http#accepts": [
+        "http://a.ml/vocabularies/apiContract#accepts": [
           {
             "@value": "application/json"
           }
         ],
-        "http://a.ml/vocabularies/http#contentType": [
+        "http://a.ml/vocabularies/apiContract#contentType": [
           {
             "@value": "application/json"
           },
@@ -102,7 +102,7 @@
             "@value": "application/xml"
           }
         ],
-        "http://a.ml/vocabularies/http#scheme": [
+        "http://a.ml/vocabularies/apiContract#scheme": [
           {
             "@value": "http"
           },
@@ -110,29 +110,29 @@
             "@value": "https"
           }
         ],
-        "http://schema.org/version": [
+        "http://a.ml/vocabularies/core#version": [
           {
             "@value": "1.0.9-abcd"
           }
         ],
-        "http://schema.org/termsOfService": [
+        "http://a.ml/vocabularies/core#termsOfService": [
           {
             "@value": "http://swagger.io/terms/"
           }
         ],
-        "http://schema.org/provider": [
+        "http://a.ml/vocabularies/core#provider": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/organization",
             "@type": [
-              "http://schema.org/Organization",
+              "http://a.ml/vocabularies/core#Organization",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/url": [
+            "http://a.ml/vocabularies/core#url": [
               {
                 "@id": "http://swagger.io"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "Swagger API Team"
               }
@@ -147,7 +147,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/name"
+                        "@value": "http://a.ml/vocabularies/core#name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -171,7 +171,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/url"
+                        "@value": "http://a.ml/vocabularies/core#url"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -185,19 +185,19 @@
             ]
           }
         ],
-        "http://schema.org/license": [
+        "http://a.ml/vocabularies/core#license": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/license",
             "@type": [
-              "http://a.ml/vocabularies/http#License",
+              "http://a.ml/vocabularies/core#License",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/url": [
+            "http://a.ml/vocabularies/core#url": [
               {
                 "@id": "http://creativecommons.org/licenses/by/4.0/"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "Creative Commons 4.0 International"
               }
@@ -212,7 +212,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/name"
+                        "@value": "http://a.ml/vocabularies/core#name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -236,7 +236,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/url"
+                        "@value": "http://a.ml/vocabularies/core#url"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -250,31 +250,31 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/http#endpoint": [
+        "http://a.ml/vocabularies/apiContract#endpoint": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D",
             "@type": [
-              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#path": [
+            "http://a.ml/vocabularies/apiContract#path": [
               {
                 "@value": "/user/{id}"
               }
             ],
-            "http://a.ml/vocabularies/http#payload": [
+            "http://a.ml/vocabularies/apiContract#payload": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user",
                 "@type": [
-                  "http://a.ml/vocabularies/http#Payload",
+                  "http://a.ml/vocabularies/apiContract#Payload",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://schema.org/name": [
+                "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "user"
                   }
                 ],
-                "http://a.ml/vocabularies/http#schema": [
+                "http://a.ml/vocabularies/apiContract#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user/array/user",
                     "@type": [
@@ -447,7 +447,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/http#schema"
+                            "@value": "http://a.ml/vocabularies/apiContract#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -471,7 +471,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://schema.org/name"
+                            "@value": "http://a.ml/vocabularies/core#name"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -495,7 +495,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/http#payload"
+                        "@value": "http://a.ml/vocabularies/apiContract#payload"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -545,7 +545,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#endpoint"
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -557,7 +557,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/provider"
+                    "@value": "http://a.ml/vocabularies/core#provider"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -569,7 +569,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/version"
+                    "@value": "http://a.ml/vocabularies/core#version"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -581,7 +581,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#contentType"
+                    "@value": "http://a.ml/vocabularies/apiContract#contentType"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -593,7 +593,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/description"
+                    "@value": "http://a.ml/vocabularies/core#description"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -617,7 +617,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -629,7 +629,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#accepts"
+                    "@value": "http://a.ml/vocabularies/apiContract#accepts"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -641,7 +641,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#scheme"
+                    "@value": "http://a.ml/vocabularies/apiContract#scheme"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -653,7 +653,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/termsOfService"
+                    "@value": "http://a.ml/vocabularies/core#termsOfService"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -665,7 +665,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/license"
+                    "@value": "http://a.ml/vocabularies/core#license"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

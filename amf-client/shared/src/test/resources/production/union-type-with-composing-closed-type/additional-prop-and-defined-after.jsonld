@@ -11,64 +11,64 @@
       {
         "@id": "#14",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "Device Fraud Orchestration Service"
           }
         ],
-        "schema-org:version": [
+        "core:version": [
           {
             "@value": "v1"
           }
         ],
-        "raml-http:endpoint": [
+        "apiContract:endpoint": [
           {
             "@id": "#15",
             "@type": [
-              "raml-http:EndPoint",
+              "apiContract:EndPoint",
               "doc:DomainElement"
             ],
-            "raml-http:path": [
+            "apiContract:path": [
               {
                 "@value": "/events"
               }
             ],
-            "hydra:supportedOperation": [
+            "apiContract:supportedOperation": [
               {
                 "@id": "#16",
                 "@type": [
-                  "hydra:Operation",
+                  "apiContract:Operation",
                   "doc:DomainElement"
                 ],
-                "hydra:method": [
+                "apiContract:method": [
                   {
                     "@value": "post"
                   }
                 ],
-                "hydra:expects": [
+                "apiContract:expects": [
                   {
                     "@id": "#17",
                     "@type": [
-                      "raml-http:Request",
+                      "apiContract:Request",
                       "doc:DomainElement"
                     ],
-                    "raml-http:payload": [
+                    "apiContract:payload": [
                       {
                         "@id": "#18",
                         "@type": [
-                          "raml-http:Payload",
+                          "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "raml-http:mediaType": [
+                        "apiContract:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "raml-http:schema": [
+                        "apiContract:schema": [
                           {
                             "@id": "#9/linked_1",
                             "@type": [
@@ -99,7 +99,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "raml-http:payload": "[(25,4)-(27,24)]",
+                        "apiContract:payload": "[(25,4)-(27,24)]",
                         "#17": "[(25,0)-(27,24)]"
                       }
                     }
@@ -124,9 +124,9 @@
             "#14": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:version": "[(3,0)-(5,0)]",
+            "core:version": "[(3,0)-(5,0)]",
             "#14": "[(2,0)-(27,24)]",
-            "schema-org:name": "[(2,0)-(3,0)]"
+            "core:name": "[(2,0)-(3,0)]"
           }
         }
       }
@@ -577,12 +577,11 @@
     ],
     "@context": {
       "@base": "amf://id",
-      "raml-http": "http://a.ml/vocabularies/http#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",
-      "schema-org": "http://schema.org/",
-      "hydra": "http://www.w3.org/ns/hydra/core#"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
     }
   }
 ]

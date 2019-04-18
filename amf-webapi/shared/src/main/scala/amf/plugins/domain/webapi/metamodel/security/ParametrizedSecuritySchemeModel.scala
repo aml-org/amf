@@ -4,26 +4,26 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.Security
+import amf.core.vocabulary.Namespace.{Core, Security}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
 
 object ParametrizedSecuritySchemeModel extends DomainElementModel with KeyField {
 
   val Name = Field(Str,
-                   Security + "name",
-                   ModelDoc(ModelVocabularies.Security,
+                   Core + "name",
+                   ModelDoc(ModelVocabularies.Core,
                             "name",
                             "Name for the security scheme",
-                            Seq((Namespace.Schema + "name").iri())))
+                            Seq((Namespace.Core + "name").iri())))
 
   val Description = Field(
     Str,
-    Namespace.Schema + "description",
+    Namespace.Core + "description",
     ModelDoc(ModelVocabularies.Security,
              "description",
              "Name for the security scheme",
-             Seq((Namespace.Schema + "description").iri()))
+             Seq((Namespace.Core + "description").iri()))
   )
 
   val Scheme = Field(SecuritySchemeModel, Security + "scheme", ModelDoc(ModelVocabularies.Security, "scheme", ""))

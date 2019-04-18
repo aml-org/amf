@@ -10,20 +10,20 @@
     {
       "@id": "http://test.com/shared/src/test/resources/validations/data/error1.raml#/web-api",
       "@type": [
-        "http://schema.org/WebAPI",
+        "http://a.ml/vocabularies/apiContract#WebAPI",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://schema.org/name": [
+      "http://a.ml/vocabularies/core#name": [
         {
           "@value": "World Music API"
         }
       ],
-      "http://a.ml/vocabularies/http#scheme": [
+      "http://a.ml/vocabularies/apiContract#scheme": [
         {
           "@value": "TEST"
         }
       ],
-      "http://schema.org/version": [
+      "http://a.ml/vocabularies/core#version": [
         {
           "@value": "v1"
         }

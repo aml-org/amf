@@ -5,7 +5,7 @@ import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain._
-import amf.core.vocabulary.Namespace.Http
+import amf.core.vocabulary.Namespace.ApiContract
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.metamodel.common.ExampleField
 import amf.plugins.domain.webapi.models.Payload
@@ -22,17 +22,17 @@ object PayloadModel
     with ExampleField {
 
   val MediaType = Field(Str,
-                        Http + "mediaType",
-                        ModelDoc(ModelVocabularies.Http, "media type", "Media types supported in the payload"))
+                        ApiContract + "mediaType",
+                        ModelDoc(ModelVocabularies.ApiContract, "media type", "Media types supported in the payload"))
 
   val Schema =
-    Field(ShapeModel, Http + "schema", ModelDoc(ModelVocabularies.Http, "schema", "Schema associated to this payload"))
+    Field(ShapeModel, ApiContract + "schema", ModelDoc(ModelVocabularies.ApiContract, "schema", "Schema associated to this payload"))
 
-  val Encoding = Field(Array(EncodingModel), Http + "encoding", ModelDoc(ModelVocabularies.Http, "encoding", ""))
+  val Encoding = Field(Array(EncodingModel), ApiContract + "encoding", ModelDoc(ModelVocabularies.ApiContract, "encoding", ""))
 
   override val key: Field = MediaType
 
-  override val `type`: List[ValueType] = Http + "Payload" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "Payload" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
     Name :: MediaType :: Schema :: Examples :: Encoding :: (DomainElementModel.fields ++ LinkableElementModel.fields)
@@ -40,7 +40,7 @@ object PayloadModel
   override def modelInstance = Payload()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Http,
+    ModelVocabularies.ApiContract,
     "Payload",
     "Encoded payload using certain media-type"
   )

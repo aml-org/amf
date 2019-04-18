@@ -11,74 +11,74 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/json/pathitem-fragment/api.json#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "Swagger Sample API"
           }
         ],
-        "http://schema.org/version": [
+        "http://a.ml/vocabularies/core#version": [
           {
             "@value": "1.0.0"
           }
         ],
-        "http://a.ml/vocabularies/http#endpoint": [
+        "http://a.ml/vocabularies/apiContract#endpoint": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/json/pathitem-fragment/api.json#/web-api/end-points/%2Fbla",
             "@type": [
-              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#path": [
+            "http://a.ml/vocabularies/apiContract#path": [
               {
                 "@value": "/bla"
               }
             ],
-            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/json/pathitem-fragment/api.json#/web-api/end-points/%2Fbla/get",
                 "@type": [
-                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/hydra/core#method": [
+                "http://a.ml/vocabularies/apiContract#method": [
                   {
                     "@value": "get"
                   }
                 ],
-                "http://a.ml/vocabularies/http#contentType": [
+                "http://a.ml/vocabularies/core#mediaType": [
                   {
                     "@value": "application/json"
                   }
                 ],
-                "http://www.w3.org/ns/hydra/core#returns": [
+                "http://a.ml/vocabularies/apiContract#returns": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/json/pathitem-fragment/api.json#/web-api/end-points/%2Fbla/get/200",
                     "@type": [
-                      "http://a.ml/vocabularies/http#Response",
+                      "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://schema.org/name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://www.w3.org/ns/hydra/core#statusCode": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/http#payload": [
+                    "http://a.ml/vocabularies/apiContract#payload": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/json/pathitem-fragment/api.json#/web-api/end-points/%2Fbla/get/200/default",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Payload",
+                          "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/http#schema": [
+                        "http://a.ml/vocabularies/apiContract#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/json/pathitem-fragment/api.json#/web-api/end-points/%2Fbla/get/200/default/scalar/default",
                             "@type": [
@@ -172,7 +172,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/http#schema"
+                                    "@value": "http://a.ml/vocabularies/apiContract#schema"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -232,7 +232,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/hydra/core#returns"
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -256,7 +256,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/http#contentType"
+                            "@value": "http://a.ml/vocabularies/core#mediaType"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -318,7 +318,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#endpoint"
+                    "@value": "http://a.ml/vocabularies/apiContract#endpoint"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -330,7 +330,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -354,7 +354,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/version"
+                    "@value": "http://a.ml/vocabularies/core#version"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -393,7 +393,7 @@
                 "@value": "{\n  \"get\": {\n    \"produces\": [\n      \"application/json\"\n    ],\n    \"responses\": {\n      \"200\": {\n        \"schema\": {\n          \"type\": \"string\"\n        }\n      }\n    }\n  }\n}"
               }
             ],
-            "http://a.ml/vocabularies/http#mediaType": [
+            "http://a.ml/vocabularies/core#mediaType": [
               {
                 "@value": "application/json"
               }

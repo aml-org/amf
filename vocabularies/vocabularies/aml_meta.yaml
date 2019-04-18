@@ -1,0 +1,176 @@
+#%Vocabulary 1.0
+base: http://a.ml/vocabularies/meta#
+usage: Vocabulary containing meta-definitions
+uses:
+  doc: aml_doc.yaml
+  shacl: external/shacl.yaml
+  owl: external/owl.yaml
+classTerms:
+  Dialect:
+    displayName: Dialect
+    description: Definition of an AML dialect, mapping AST nodes from dialect documents into an output semantic graph
+    extends:
+      - doc.Document
+      - doc.Fragment
+      - doc.Module
+      - doc.Unit
+  DialectFragment:
+    displayName: Dialect Fragment
+    description: AML dialect mapping fragment that can be included in multiple AML dialects
+    extends:
+      - doc.Fragment
+      - doc.Unit
+  DialectInstance:
+    displayName: DialectInstance
+    extends:
+      - doc.Document
+      - doc.Fragment
+      - doc.Module
+      - doc.Unit
+  DialectInstanceFragment:
+    displayName: DialectInstanceFragment
+    extends:
+      - doc.Fragment
+      - doc.Unit
+      - doc.Document
+  DialectInstanceLibrary:
+    displayName: DialectInstanceLibrary
+    extends:
+      - doc.Module
+      - doc.Unit
+      - doc.Document
+  DialectInstancePatch:
+    displayName: DialectInstancePatch
+    extends:
+      - doc.DocumentExtension
+      - doc.Unit
+  DialectLibrary:
+    displayName: Dialect Library
+    description: Library of AML mappings that can be reused in different AML dialects
+    extends:
+      - doc.Document
+      - doc.Fragment
+      - doc.Module
+      - doc.Unit
+  DocumentMapping:
+    displayName: Document Mapping
+    description: Mapping for a particular dialect document into a graph base unit
+  DocumentsModel:
+    displayName: Documents Model
+    description: Mapping from different type of dialect documents to base units in the parsed graph
+  ExternalVocabulary:
+    displayName: ExternalVocabulary
+  NodeMapping:
+    displayName: NodeMapping
+    extends: shacl.Shape
+  NodePropertyMapping:
+    displayName: Node Property Mapping
+    description: Semantic mapping from an input AST in a dialect document to the output graph of information for a class of output node
+  Property:
+    displayName: Property
+  PublicNodeMapping:
+    displayName: Public Node Mapping
+    description: Mapping for a graph node mapping to a particular function in a dialect
+  UnionNodeMapping:
+    displayName: UnionNodeMapping
+    extends: shacl.Shape
+  Vocabulary:
+    displayName: Vocabulary
+    description: Basic primitives for the declaration of vocabularies.
+    extends:
+      - owl.Ontology
+      - doc.Unit
+      - doc.Module
+  VocabularyReference:
+    displayName: VocabularyReference
+propertyTerms:
+  allowMultiple:
+    displayName: allow multiple
+    description: Allows multiple mapped nodes for the property mapping
+    range: boolean
+  base:
+    displayName: base
+    description: Base URI for the external model
+    range: string
+  declarationsPath:
+    displayName: declarations path
+    description: Information about the AST location of the declarations to be parsed as declared domain elements
+    range: string
+  declaredNode:
+    displayName: declared node
+    description: Node in the dialect declared in the target mappend base unit
+    range: PublicNodeMapping
+  definedBy:
+    displayName: definedBy
+    range: uri
+  describedBy:
+    displayName: described by
+    description: Link to the AML dialect describing a particular subgraph of information
+    range: uri
+  documents:
+    displayName: documents
+    description: Document mapping for the the dialect
+    range: DocumentsModel
+  encodedNode:
+    displayName: encoded node
+    description: Node in the dialect encoded in the target mapped base unit
+    range: uri
+  externallyLinkable:
+    displayName: linkable
+    description: Marks this object property as supporting external links
+    range: boolean
+  externals:
+    displayName: externals
+    range: owl.Ontology
+  fragments:
+    displayName: fragments
+    description: Mapping of fragment base unit for a particular dialect
+    range: DocumentMapping
+  library:
+    displayName: library
+    description: Mappig of module base unit for a particular dialect
+    range: DocumentMapping
+  mapProperty:
+    displayName: map property
+    description: Marks the mapping as a 'map' mapping syntax
+    range: uri
+  mapValueProperty:
+    displayName: map value property
+    description: Marks the mapping as a 'map value' mapping syntax
+    range: uri
+  mappedNode:
+    displayName: mapped node
+    description: Node in the dialect definition associated to this mapping
+    range: uri
+  mergePolicy:
+    displayName: merge policy
+    description: Indication of how to merge this graph node when applying a patch document
+    range: string
+  properties:
+    displayName: properties
+    description: Properties that have the ClassTerm in the domain
+    range: uri
+  rootDocument:
+    displayName: root document
+    description: Root node encoded in a mapped document base unit
+    range: DocumentMapping
+  selfEncoded:
+    displayName: self encoded
+    description: Information about if the base unit URL should be the same as the URI of the parsed root nodes in the unit
+    range: boolean
+  sorted:
+    displayName: sorted
+    description: Marks the mapping as requiring order in the mapped collection of nodes
+    range: boolean
+  typeDiscriminatorMap:
+    displayName: type discriminator map
+    description: Information about the discriminator values in the source AST for the property mapping
+    range: string
+  typeDiscriminatorName:
+    displayName: type discriminator name
+    description: Information about the field in the source AST to be used as discrimintaro in the property mapping
+    range: string
+  unique:
+    displayName: unique
+    description: Marks the values for the property mapping as a primary key for this type of node
+    range: boolean

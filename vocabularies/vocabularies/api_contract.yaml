@@ -1,0 +1,285 @@
+#%Vocabulary 1.0
+base: http://a.ml/vocabularies/apiContract#
+usage: API contract vocabulary
+uses:
+  doc: aml_doc.yaml
+  core: core.yaml
+  shacl: external/shacl.yaml
+classTerms:
+
+  # document model
+  UserDocumentationFragment:
+    extends: doc.Fragment
+  DataTypeFragment:
+    extends: doc.Fragment
+  NamedExampleFragment:
+    extends: doc.Fragment
+  ResourceTypeFragment:
+    extends: doc.Fragment
+  TraitFragment:
+    extends: doc.Fragment
+  AnnotationTypeDeclarationFragment:
+    extends: doc.Fragment
+  SecuritySchemeFragment:
+    extends: doc.Fragment
+  WebAPIDocument:
+    extends: doc.Document
+  ExtensionDocument:
+    extends: doc.Document
+  OverlayDocument:
+    extends: doc.Document
+  LibraryModule:
+    extends: doc.Module
+
+  # domain model
+  Callback:
+    displayName: Callback
+    description: Model defining the information for a HTTP callback/ webhook
+  DomainExtension:
+    displayName: Domain Extension
+    description: |-
+      Extension to the model being parsed from RAML annotation or OpenAPI extensions
+      They must be a DomainPropertySchema (only in RAML) defining them.
+      The DomainPropertySchema might have an associated Data Shape that must validate the extension nested graph.
+      They are parsed as RDF graphs using a default transformation from a set of nested records into RDF.
+  Encoding:
+    displayName: Encoding
+  EndPoint:
+    displayName: EndPoint
+    description: EndPoint in the API holding a number of executable operations
+  Example:
+    displayName: Example
+    description: Example value for a schema inside an API
+    extends: doc.ExternalSource
+  IriTemplateMapping:
+    displayName: Iri Template
+  NamedExamples:
+    displayName: Examples
+    description: Wrapper for a list of examples
+  Operation:
+    displayName: Operation
+    description: Action that can be executed using a particular HTTP invocation
+  Parameter:
+    displayName: Parameter
+    description: Piece of data required or returned by an Operation
+  Payload:
+    displayName: Payload
+    description: Encoded payload using certain media-type
+  Request:
+    displayName: Request
+    description: Request information for an operation
+  Response:
+    displayName: Response
+    description: Response information for an operation
+  Server:
+    displayName: Server
+    description: Information about the network accessible locations where the API is available
+  ShapeExtension:
+    displayName: Shape Extension
+    description: Custom extensions for a data shape definition inside an API definition
+  Tag:
+    displayName: Tag
+    description: Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format.
+  TemplatedLink:
+    displayName: Templated Link
+    description: Templated link containing URL template and variables mapping
+  WebAPI:
+    displayName: Web API
+    description: Top level element describing a HTTP API
+propertyTerms:
+  accepts:
+    displayName: accepts
+    description: Media-types accepted in a API request
+    range: string
+  allowEmptyValue:
+    displayName: allow empty value
+    description: Parameter can be passed without value
+    range: boolean
+  allowReserved:
+    displayName: allow reserved
+    range: boolean
+  binding:
+    displayName: binding
+    description: Part of the Request model where the parameter can be encoded (header, path, query param, etc.)
+    range: string
+  callback:
+    displayName: callback
+    description: associated callbacks
+    range: Callback
+  contentType:
+    displayName: content type
+    range: string
+  cookieParameter:
+    displayName: cookie parameter
+    range: Parameter
+  encoding:
+    displayName: encoding
+    range: Encoding
+  endpoint:
+    displayName: endpoint
+    description: Endpoint targeted by the callback
+    range: EndPoint
+  examples:
+    displayName: examples
+    description: Examples for a particular domain element
+    range: NamedExamples
+  expects:
+    displayName: expects
+    description: Request information required by the operation
+    range: Request
+  explode:
+    displayName: explode
+    range: boolean
+  expression:
+    displayName: expression
+    description: structural location of the information to fulfill the callback
+    range: string
+  guiSummary:
+    displayName: gui summary
+    description: Human readable description of the operation
+    extends: core.description
+    range: string
+  header:
+    displayName: header
+    range: Parameter
+  link:
+    displayName: links
+    description: Structural definition of links on the source data shape AST
+    range: TemplatedLink
+  linkExpression:
+    displayName: link expression
+    description: OAS 3 link expression
+    range: string
+  mapping:
+    displayName: mapping
+    description: Variable mapping for the URL template
+    range: IriTemplateMapping
+  mediaType:
+    displayName: media type
+    description: Media types supported in the payload
+    range: string
+  method:
+    displayName: method
+    description: HTTP method required to invoke the operation
+    range: string
+  operationId:
+    displayName: operation ID
+    description: Identifier of the target operation
+    range: string
+  paramName:
+    displayName: param name
+    description: Name of a parameter
+    extends: core.name
+    range: string
+  parameter:
+    displayName: parameter
+    description: Additional data required or returned by an operation
+    range: Parameter
+  path:
+    displayName: path
+    description: Path template for an endpoint
+    range: string
+  payload:
+    displayName: payload
+    description: Main payload data required or returned by an operation
+    range: Payload
+  propertyName:
+    displayName: property name
+    range: string
+  queryString:
+    displayName: query string
+    description: Query string associated to this security scheme
+    range: shacl.Shape
+  requestBody:
+    displayName: request body
+    range: string
+  required:
+    displayName: required
+    description: Marks the parameter as required
+    range: boolean
+  response:
+    displayName: response
+    description: Response associated to this security scheme
+    range: Response
+  returns:
+    displayName: returns
+    description: Response data returned by the operation
+    range: Response
+  schema:
+    displayName: schema
+    description: Schema associated to this payload
+    range: shacl.Shape
+  scheme:
+    displayName: scheme
+    description: URI scheme for the API protocol
+    range: string
+  server:
+    displayName: servers
+    description: Specific information about the server where the endpoint is accessible
+    range: Server
+  statusCode:
+    displayName: status code
+    description: HTTP status code returned by a response
+    range: string
+  style:
+    displayName: style
+    range: string
+  supportedOperation:
+    displayName: supported operation
+    description: Operations supported by an endpoint
+    range: Operation
+  tag:
+    displayName: tag
+    description: Additionally custom tagged information
+    range: string
+  template:
+    displayName: template
+    description: URL template for a templated link
+    range: string
+  uriParameter:
+    displayName: uri parameter
+    range: Parameter
+  uriTemplate:
+    displayName: uriTemplate
+    description: URI template that will be used to generate the URI of the parsed nodeds in the graph
+    range: string
+  url:
+    displayName: url
+    description: URL (potentially a template) for the server
+    range: string
+  variable:
+    displayName: variable
+    description: Variable defined inside an URL tempplate
+    range: string
+
+  # new document model properties
+  location:
+    displayName: location
+    description: URL where contract can be accessed
+    range: uri
+  reference:
+    displayName: reference
+    description: reference between documents containing fragments of API contract
+    range: doc.Unit
+  internalReference:
+    extends: reference
+    displayName: internal reference
+    description: reference to a different document in this spec not exposed as publicly
+    range: doc.Unit
+  externalReference:
+    extends: reference
+    displayName: external reference
+    description: reference to a document exposed as a public spec
+    range: doc.Unit
+  extends:
+    displayName: extends
+    description: Structural extension relationship between domain elements in the contract
+    range: doc.DomainElement
+  link-label:
+    displayName: link label
+    description: human readable name for a composition relationship between domain elements in the contract
+    range: string
+  link-target:
+    displayName: link target
+    description: composition relationship between two domain elements in a contract
+    range: doc.DomainElement

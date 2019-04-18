@@ -11,11 +11,11 @@
       {
         "@id": "#9",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "API"
           }
@@ -25,7 +25,7 @@
             "#9": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:name": "[(2,0)-(3,0)]",
+            "core:name": "[(2,0)-(3,0)]",
             "#9": "[(2,0)-(9,16)]"
           }
         }
@@ -271,7 +271,8 @@
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",
-      "schema-org": "http://schema.org/"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
     }
   }
 ]

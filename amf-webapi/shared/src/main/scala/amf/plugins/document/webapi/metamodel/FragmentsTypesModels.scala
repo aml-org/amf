@@ -19,7 +19,7 @@ object FragmentsTypesModels {
     override def modelInstance: AmfObject = DocumentationItemFragment()
 
     override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Http,
+      ModelVocabularies.ApiContract,
       "Documentation Item Fragment",
       "Fragment encoding a RAML documentation item"
     )
@@ -34,7 +34,7 @@ object FragmentsTypesModels {
     override def modelInstance: AmfObject = DataTypeFragment()
 
     override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Http,
+      ModelVocabularies.ApiContract,
       "Data Type Fragment",
       "Fragment encoding a RAML data type"
     )
@@ -49,7 +49,7 @@ object FragmentsTypesModels {
     override def modelInstance: AmfObject = NamedExampleFragment()
 
     override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Http,
+      ModelVocabularies.ApiContract,
       "Named Example Fragment",
       "Fragment encoding a RAML named example"
     )
@@ -64,7 +64,7 @@ object FragmentsTypesModels {
     override def modelInstance: AmfObject = ResourceTypeFragment()
 
     override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Http,
+      ModelVocabularies.ApiContract,
       "Resource Type Fragment",
       "Fragment encoding a RAML resource type"
     )
@@ -79,7 +79,7 @@ object FragmentsTypesModels {
     override def modelInstance: AmfObject = TraitFragment()
 
     override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Http,
+      ModelVocabularies.ApiContract,
       "Trait Fragment",
       "Fragment encoding a RAML trait"
     )
@@ -94,7 +94,7 @@ object FragmentsTypesModels {
     override def modelInstance: AmfObject = AnnotationTypeDeclarationFragment()
 
     override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Http,
+      ModelVocabularies.ApiContract,
       "Annotation Type Fragment",
       "Fragment encoding a RAML annotation type"
     )
@@ -108,7 +108,7 @@ object FragmentsTypesModels {
     override def modelInstance: AmfObject = SecuritySchemeFragment()
 
     override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Http,
+      ModelVocabularies.ApiContract,
       "Security Scheme Fragment",
       "Fragment encoding a RAML security scheme"
     )

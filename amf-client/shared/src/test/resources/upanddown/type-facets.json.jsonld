@@ -11,16 +11,16 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "API with Types"
           }
         ],
-        "http://schema.org/version": [
+        "http://a.ml/vocabularies/core#version": [
           {
             "@value": "1.0"
           }
@@ -49,7 +49,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/version"
+                    "@value": "http://a.ml/vocabularies/core#version"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -73,7 +73,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -463,7 +463,7 @@
           }
         ],
         "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate/amf-facet-noHolidays": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "amf-facet-noHolidays"
             }
@@ -484,7 +484,7 @@
               "@id": "http://www.w3.org/2001/XMLSchema#boolean"
             }
           ],
-          "http://schema.org/name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "scalar_1"
             }

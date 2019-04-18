@@ -11,31 +11,31 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/complete.jsonld#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "test title"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "test description"
           }
         ],
-        "http://a.ml/vocabularies/http#accepts": [
+        "http://a.ml/vocabularies/apiContract#accepts": [
           {
             "@value": "application/yaml"
           }
         ],
-        "http://a.ml/vocabularies/http#contentType": [
+        "http://a.ml/vocabularies/apiContract#contentType": [
           {
             "@value": "application/yaml"
           }
         ],
-        "http://a.ml/vocabularies/http#scheme": [
+        "http://a.ml/vocabularies/apiContract#scheme": [
           {
             "@value": "http"
           },
@@ -43,34 +43,34 @@
             "@value": "https"
           }
         ],
-        "http://schema.org/version": [
+        "http://a.ml/vocabularies/core#version": [
           {
             "@value": "1.1"
           }
         ],
-        "http://schema.org/termsOfService": [
+        "http://a.ml/vocabularies/core#termsOfService": [
           {
             "@value": "terms of service"
           }
         ],
-        "http://schema.org/provider": [
+        "http://a.ml/vocabularies/core#provider": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/complete.jsonld#/web-api/organization",
             "@type": [
-              "http://schema.org/Organization",
+              "http://a.ml/vocabularies/core#Organization",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/url": [
+            "http://a.ml/vocabularies/core#url": [
               {
                 "@id": "contactUrl"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "contactName"
               }
             ],
-            "http://schema.org/email": [
+            "http://a.ml/vocabularies/core#email": [
               {
                 "@value": "contactEmail"
               }
@@ -85,7 +85,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/email"
+                        "@value": "http://a.ml/vocabularies/core#email"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -97,7 +97,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/url"
+                        "@value": "http://a.ml/vocabularies/core#url"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -121,7 +121,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/name"
+                        "@value": "http://a.ml/vocabularies/core#name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -135,19 +135,19 @@
             ]
           }
         ],
-        "http://schema.org/license": [
+        "http://a.ml/vocabularies/core#license": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/complete.jsonld#/web-api/license",
             "@type": [
-              "http://a.ml/vocabularies/http#License",
+              "http://a.ml/vocabularies/core#License",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/url": [
+            "http://a.ml/vocabularies/core#url": [
               {
                 "@id": "licenseUrl"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "licenseName"
               }
@@ -162,7 +162,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/name"
+                        "@value": "http://a.ml/vocabularies/core#name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -186,7 +186,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/url"
+                        "@value": "http://a.ml/vocabularies/core#url"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -200,19 +200,19 @@
             ]
           }
         ],
-        "http://schema.org/documentation": [
+        "http://a.ml/vocabularies/core#documentation": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/complete.jsonld#/web-api/creative-work/externalDocsUrl",
             "@type": [
-              "http://schema.org/CreativeWork",
+              "http://a.ml/vocabularies/core#CreativeWork",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/url": [
+            "http://a.ml/vocabularies/core#url": [
               {
                 "@id": "externalDocsUrl"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "externalDocsDescription"
               }
@@ -227,7 +227,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/description"
+                        "@value": "http://a.ml/vocabularies/core#description"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -251,7 +251,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/url"
+                        "@value": "http://a.ml/vocabularies/core#url"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -275,7 +275,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/termsOfService"
+                    "@value": "http://a.ml/vocabularies/core#termsOfService"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -287,7 +287,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/description"
+                    "@value": "http://a.ml/vocabularies/core#description"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -311,7 +311,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -323,7 +323,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/version"
+                    "@value": "http://a.ml/vocabularies/core#version"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

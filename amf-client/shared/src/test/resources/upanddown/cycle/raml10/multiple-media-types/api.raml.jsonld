@@ -11,23 +11,23 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "Rest Test 3"
           }
         ],
-        "http://a.ml/vocabularies/http#server": [
+        "http://a.ml/vocabularies/apiContract#server": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/http%3A%2F%2Flocalhost%3A8081%2Fapi",
             "@type": [
-              "http://a.ml/vocabularies/http#Server",
+              "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#url": [
+            "http://a.ml/vocabularies/apiContract#url": [
               {
                 "@value": "http://localhost:8081/api"
               }
@@ -42,7 +42,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/http#url"
+                        "@value": "http://a.ml/vocabularies/apiContract#url"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -70,34 +70,34 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/http#accepts": [
+        "http://a.ml/vocabularies/apiContract#accepts": [
           {
             "@value": "application/json"
           }
         ],
-        "http://a.ml/vocabularies/http#contentType": [
+        "http://a.ml/vocabularies/apiContract#contentType": [
           {
             "@value": "application/json"
           }
         ],
-        "http://schema.org/version": [
+        "http://a.ml/vocabularies/core#version": [
           {
             "@value": "v1.0"
           }
         ],
-        "http://schema.org/documentation": [
+        "http://a.ml/vocabularies/core#documentation": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/creative-work/Saas%20Transaction%20Queue%20API",
             "@type": [
-              "http://schema.org/CreativeWork",
+              "http://a.ml/vocabularies/core#CreativeWork",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/title": [
+            "http://a.ml/vocabularies/core#title": [
               {
                 "@value": "Saas Transaction Queue API"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "This API provides a means for adding transactions to the queue for processing."
               }
@@ -112,7 +112,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/description"
+                        "@value": "http://a.ml/vocabularies/core#description"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -136,7 +136,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/title"
+                        "@value": "http://a.ml/vocabularies/core#title"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -150,65 +150,65 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/http#endpoint": [
+        "http://a.ml/vocabularies/apiContract#endpoint": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue",
             "@type": [
-              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#path": [
+            "http://a.ml/vocabularies/apiContract#path": [
               {
                 "@value": "/Queue"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "Transaction Queue"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "A queue that is used to push transactions onto the ESB for processing."
               }
             ],
-            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post",
                 "@type": [
-                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/hydra/core#method": [
+                "http://a.ml/vocabularies/apiContract#method": [
                   {
                     "@value": "post"
                   }
                 ],
-                "http://schema.org/description": [
+                "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "Add a new transaction to the queue."
                   }
                 ],
-                "http://www.w3.org/ns/hydra/core#expects": [
+                "http://a.ml/vocabularies/apiContract#expects": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/request",
                     "@type": [
-                      "http://a.ml/vocabularies/http#Request",
+                      "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/http#payload": [
+                    "http://a.ml/vocabularies/apiContract#payload": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/request/application%2Fjson",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Payload",
+                          "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/http#mediaType": [
+                        "http://a.ml/vocabularies/apiContract#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#schema": [
+                        "http://a.ml/vocabularies/apiContract#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/request/application%2Fjson/schema",
                             "@type": [
@@ -367,15 +367,15 @@
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/request/text%2Fxml",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Payload",
+                          "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/http#mediaType": [
+                        "http://a.ml/vocabularies/apiContract#mediaType": [
                           {
                             "@value": "text/xml"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#schema": [
+                        "http://a.ml/vocabularies/apiContract#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/request/text%2Fxml/any/schema",
                             "@type": [
@@ -462,11 +462,11 @@
                                 ]
                               }
                             ],
-                            "http://a.ml/vocabularies/document#examples": [
+                            "http://a.ml/vocabularies/apiContract#examples": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/request/text%2Fxml/any/schema/example/default-example",
                                 "@type": [
-                                  "http://a.ml/vocabularies/document#Example",
+                                  "http://a.ml/vocabularies/apiContract#Example",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
                                 "http://a.ml/vocabularies/document#strict": [
@@ -627,7 +627,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/http#payload"
+                                "@value": "http://a.ml/vocabularies/apiContract#payload"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -653,36 +653,36 @@
                     ]
                   }
                 ],
-                "http://www.w3.org/ns/hydra/core#returns": [
+                "http://a.ml/vocabularies/apiContract#returns": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/201",
                     "@type": [
-                      "http://a.ml/vocabularies/http#Response",
+                      "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://schema.org/name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "201"
                       }
                     ],
-                    "http://schema.org/description": [
+                    "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "A new transaction was created on the queue."
                       }
                     ],
-                    "http://www.w3.org/ns/hydra/core#statusCode": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "201"
                       }
                     ],
-                    "http://a.ml/vocabularies/http#payload": [
+                    "http://a.ml/vocabularies/apiContract#payload": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/201/default",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Payload",
+                          "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/http#schema": [
+                        "http://a.ml/vocabularies/apiContract#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/201/default/any/default",
                             "@type": [
@@ -782,7 +782,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/http#payload"
+                                "@value": "http://a.ml/vocabularies/apiContract#payload"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -806,7 +806,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://schema.org/description"
+                                "@value": "http://a.ml/vocabularies/core#description"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -830,7 +830,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/hydra/core#expects"
+                            "@value": "http://a.ml/vocabularies/apiContract#expects"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -844,7 +844,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/hydra/core#returns"
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -868,7 +868,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://schema.org/description"
+                            "@value": "http://a.ml/vocabularies/core#description"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -892,7 +892,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/description"
+                        "@value": "http://a.ml/vocabularies/core#description"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -916,7 +916,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/name"
+                        "@value": "http://a.ml/vocabularies/core#name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -940,7 +940,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#contentType"
+                    "@value": "http://a.ml/vocabularies/apiContract#contentType"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -952,7 +952,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#accepts"
+                    "@value": "http://a.ml/vocabularies/apiContract#accepts"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -966,7 +966,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/documentation"
+                    "@value": "http://a.ml/vocabularies/core#documentation"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -978,7 +978,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#contentType"
+                    "@value": "http://a.ml/vocabularies/apiContract#contentType"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -990,7 +990,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#server"
+                    "@value": "http://a.ml/vocabularies/apiContract#server"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1014,7 +1014,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1026,7 +1026,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#accepts"
+                    "@value": "http://a.ml/vocabularies/apiContract#accepts"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1038,7 +1038,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/version"
+                    "@value": "http://a.ml/vocabularies/core#version"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1091,7 +1091,7 @@
                 "@value": "displayName: Transaction Queue\ndescription: A queue that is used to push transactions onto the ESB for processing.\npost:\n  description: Add a new transaction to the queue.\n  body:\n    application/json:\n      type: jsonSchema\n\n    text/xml:\n      type: xmlSchema\n      example: |\n        <saasTxn>\n        <tenant>100</tenant>\n        <objectType>Business Partner</objectType>\n        <objectKey>12345</objectKey>\n        <txnType>Update</txnType>\n        </saasTxn>\n  responses:\n    201:\n      description: A new transaction was created on the queue.\n      body: null\n"
               }
             ],
-            "http://a.ml/vocabularies/http#mediaType": [
+            "http://a.ml/vocabularies/core#mediaType": [
               {
                 "@value": "application/raml+yaml"
               }
@@ -1154,7 +1154,7 @@
                     "@value": "tenant"
                   }
                 ],
-                "http://schema.org/description": [
+                "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "The Tenant ID of the transaction"
                   }
@@ -1183,7 +1183,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://schema.org/description"
+                            "@value": "http://a.ml/vocabularies/core#description"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1299,7 +1299,7 @@
                     "@value": "objectType"
                   }
                 ],
-                "http://schema.org/description": [
+                "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "The type of object being added to the queue"
                   }
@@ -1328,7 +1328,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://schema.org/description"
+                            "@value": "http://a.ml/vocabularies/core#description"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1444,7 +1444,7 @@
                     "@value": "objectKey"
                   }
                 ],
-                "http://schema.org/description": [
+                "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "The unique key of the object being added to the queue"
                   }
@@ -1473,7 +1473,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://schema.org/description"
+                            "@value": "http://a.ml/vocabularies/core#description"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1589,7 +1589,7 @@
                     "@value": "txnType"
                   }
                 ],
-                "http://schema.org/description": [
+                "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "Create, Update, Delete"
                   }
@@ -1618,7 +1618,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://schema.org/description"
+                            "@value": "http://a.ml/vocabularies/core#description"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1707,7 +1707,7 @@
             "@value": "jsonSchema"
           }
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "JSON Schema for Saas Transaction"
           }
@@ -1736,7 +1736,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

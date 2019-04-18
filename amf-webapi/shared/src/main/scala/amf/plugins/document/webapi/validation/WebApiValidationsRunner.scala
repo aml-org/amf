@@ -84,8 +84,9 @@ case class ModelValidationStep(override val validationContext: ValidationContext
 
   override def endStep: Boolean = true
 
-  private def buildValidationResult(r: ValidationResult): Option[AMFValidationResult] =
+  private def buildValidationResult(r: ValidationResult): Option[AMFValidationResult] = {
     buildValidationResult(validationContext.baseUnit, r, validationContext.messageStyle, validationContext.validations)
+  }
 }
 
 case class ExamplesValidationStep(override val validationContext: ValidationContext) extends ValidationStep {

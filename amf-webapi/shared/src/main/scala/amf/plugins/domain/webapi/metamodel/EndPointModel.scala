@@ -2,13 +2,13 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type._
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.KeyField
+import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.vocabulary.Namespace.{ApiContract, Core}
+import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.models.EndPoint
-import amf.core.vocabulary.Namespace.{Http, Hydra, Schema}
-import amf.core.vocabulary.{Namespace, ValueType}
 
 /**
   * EndPoint metaModel
@@ -17,36 +17,34 @@ import amf.core.vocabulary.{Namespace, ValueType}
   */
 object EndPointModel extends DomainElementModel with KeyField with NameFieldSchema with DescriptionField {
 
-  val Path = Field(Str, Http + "path", ModelDoc(ModelVocabularies.Http, "path", "Path template for an endpoint"))
+  val Path = Field(Str, ApiContract + "path", ModelDoc(ModelVocabularies.ApiContract, "path", "Path template for an endpoint"))
 
   val Summary = Field(
     Str,
-    Schema + "summary",
-    ModelDoc(ExternalModelVocabularies.SchemaOrg,
+    Core + "summary",
+    ModelDoc(ModelVocabularies.Core,
              "summary",
-             "Human readable description of the endpoint",
-             Seq((Namespace.Schema + "description").iri()))
-  )
+             "Human readable short description of the endpoint"))
 
   val Operations = Field(
     Array(OperationModel),
-    Hydra + "supportedOperation",
-    ModelDoc(ExternalModelVocabularies.Hydra, "supported operation", "Operations supported by an endpoint")
+    ApiContract + "supportedOperation",
+    ModelDoc(ModelVocabularies.ApiContract, "supported operation", "Operations supported by an endpoint")
   )
 
   val Parameters = Field(
     Array(ParameterModel),
-    Http + "parameter",
-    ModelDoc(ModelVocabularies.Http, "parameter", "Additional data required or returned by an operation"))
+    ApiContract + "parameter",
+    ModelDoc(ModelVocabularies.ApiContract, "parameter", "Additional data required or returned by an operation"))
 
   val Payloads = Field(
     Array(PayloadModel),
-    Http + "payload",
-    ModelDoc(ModelVocabularies.Http, "payload", "Main payload data required or returned by an operation"))
+    ApiContract + "payload",
+    ModelDoc(ModelVocabularies.ApiContract, "payload", "Main payload data required or returned by an operation"))
 
   val Servers = Field(Array(ServerModel),
-                      Http + "server",
-                      ModelDoc(ModelVocabularies.Http,
+                      ApiContract + "server",
+                      ModelDoc(ModelVocabularies.ApiContract,
                                "servers",
                                "Specific information about the server where the endpoint is accessible"))
 
@@ -58,7 +56,7 @@ object EndPointModel extends DomainElementModel with KeyField with NameFieldSche
 
   override val key: Field = Path
 
-  override val `type`: List[ValueType] = Http + "EndPoint" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "EndPoint" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
     List(Path, Name, Summary, Description, Operations, Parameters, Payloads, Servers, Security) ++ DomainElementModel.fields
@@ -66,7 +64,7 @@ object EndPointModel extends DomainElementModel with KeyField with NameFieldSche
   override def modelInstance = EndPoint()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Http,
+    ModelVocabularies.ApiContract,
     "EndPoint",
     "EndPoint in the API holding a number of executable operations"
   )

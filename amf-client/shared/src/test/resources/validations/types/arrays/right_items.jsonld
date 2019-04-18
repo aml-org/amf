@@ -11,16 +11,16 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/validations/facets/test.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "test"
           }
         ],
-        "http://a.ml/vocabularies/http#scheme": [
+        "http://a.ml/vocabularies/apiContract#scheme": [
           {
             "@value": "http"
           },
@@ -28,7 +28,7 @@
             "@value": "https"
           }
         ],
-        "http://schema.org/version": [
+        "http://a.ml/vocabularies/core#version": [
           {
             "@value": "1.0"
           }
@@ -63,7 +63,7 @@
                 "@value": "items"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "b"
               }
@@ -75,7 +75,7 @@
             "@value": "a"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "a description"
           }

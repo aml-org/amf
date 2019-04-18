@@ -227,8 +227,8 @@ object JsCustomValidations {
       """.stripMargin,
     "pathParameterRequiredProperty" ->
       """|function(parameter) {
-         |  var binding = parameter["http:binding"];
-         |  var requiredValue = parameter["hydra:required"];
+         |  var binding = parameter["apiContract:binding"];
+         |  var requiredValue = parameter["apiContract:required"];
          |  if (binding == 'path' && requiredValue != 'true') {
          |    return false;
          |  }
@@ -239,8 +239,8 @@ object JsCustomValidations {
       """.stripMargin,
     "fileParameterMustBeInFormData" ->
       """|function(parameter) {
-         |  var binding = parameter["http:binding"];
-         |  var schema = parameter["http:schema"];
+         |  var binding = parameter["apiContract:binding"];
+         |  var schema = parameter["apiContract:schema"];
          |  var typeList = schema[0]["@type"];
          |  if(Array.isArray(typeList) && typeList.indexOf("raml-shapes:FileShape") != -1){
          |    return binding == 'formData';
@@ -315,7 +315,7 @@ object JsCustomValidations {
     "nonEmptyListOfProtocols" ->
       """
         |function(shape) {
-        |  var protocolsArray = shape["http:scheme"];
+        |  var protocolsArray = shape["apiContract:scheme"];
         |  return !Array.isArray(protocolsArray) || protocolsArray.length > 0;
         |}
       """.stripMargin

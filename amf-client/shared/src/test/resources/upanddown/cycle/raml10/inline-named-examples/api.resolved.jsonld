@@ -11,7 +11,7 @@
       {
         "@id": "#44",
         "@type": [
-          "schema-org:WebAPI",
+          "raml-http:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
@@ -3326,15 +3326,15 @@
     ],
     "@context": {
       "@base": "amf://id",
-      "raml-http": "http://a.ml/vocabularies/http#",
+      "raml-http": "http://a.ml/vocabularies/apiContract#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
       "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-      "schema-org": "http://schema.org/",
+      "schema-org": "http://a.ml/vocabularies/core#",
       "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "hydra": "http://www.w3.org/ns/hydra/core#"
+      "hydra": "http://a.ml/vocabularies/apiContract#"
     }
   }
 ]

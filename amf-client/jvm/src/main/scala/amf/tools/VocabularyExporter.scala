@@ -11,6 +11,8 @@ import org.reflections.scanners.SubTypesScanner
 import org.yaml.model.YDocument
 import org.yaml.render.YamlRender
 
+import scala.collection.mutable
+
 case class VocabularyFile(base: String, usage: String)
 case class VocabClassTerm(id: String,
                           displayName: String,
@@ -27,21 +29,62 @@ case class VocabPropertyTerm(id: String,
 
 object VocabularyExporter {
 
-  val conflictive = Seq((Namespace.Document + "RootDomainElement").iri())
-
-  val blacklist: Map[ModelVocabulary, Seq[ModelVocabulary]] = Map(
-    ModelVocabularies.AmlDoc -> Seq(ModelVocabularies.Security,
-                                    ModelVocabularies.Data,
-                                    ModelVocabularies.Http,
-                                    ModelVocabularies.Shapes),
-    ModelVocabularies.Security -> Seq(ModelVocabularies.Http)
+  val externalDescription: Map[String, String] = Map(
+    (Namespace.Owl + "Class").iri() ->
+      "An owl:Class defines a group of individuals that belong together because they share some properties.",
+    (Namespace.Owl + "DatatypeProperty").iri() ->
+      "Data properties connect individuals with literals. In some knowledge representation systems, functional data properties are called attributes.",
+    (Namespace.Owl + "ObjectProperty").iri() ->
+      "Object properties connect pairs of individuals.",
+    (Namespace.Owl + "Ontology").iri() ->
+      "Set of axioms — statements that say what is true in the domain.",
+    (Namespace.Rdf + "Property").iri() ->
+      "rdf:Property is the class of RDF properties. rdf:Property is an instance of rdfs:Class.",
+    (Namespace.Rdfs + "member").iri() ->
+      "rdfs:member is an instance of rdf:Property that is a super-property of all the container membership properties i.e. each container membership property has an rdfs:subPropertyOf relationship to the property rdfs:member.",
+    (Namespace.Rdfs + "range").iri() ->
+      "rdfs:range is an instance of rdf:Property that is used to state that the values of a property are instances of one or more classes.",
+    (Namespace.Rdfs + "subClassOf").iri() ->
+      "The property rdfs:subClassOf is an instance of rdf:Property that is used to state that all the instances of one class are instances of another.",
+    (Namespace.Rdfs + "subPropertyOf").iri() ->
+      "The property rdfs:subPropertyOf is an instance of rdf:Property that is used to state that all resources related by one property are also related by another.",
+    (Namespace.Shacl + "Shape").iri() ->
+      "shacl:Shape is the SHACL superclass of those two shape types in the SHACL vocabulary. Its subclasses shacl:NodeShape and shacl:PropertyShape can be used as SHACL type of node and property shapes, respectively."
   )
 
-  val reflectionsCoreDoc    = new Reflections("amf.core.metamodel.document", new SubTypesScanner(false))
-  val reflectionsCoreDomain = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
-  val reflectionsWebApi     = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
-  val reflectionsTemplates  = new Reflections("amf.plugins.domain.webapi.metamodel.templates", new SubTypesScanner(false))
-  val reflectionsShapes     = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
+  val dependencies = mutable.Map[String, mutable.ArrayBuffer[ModelVocabulary]]()
+
+  val externalVocabularyClasses = ExternalModelVocabularies.all.foldLeft(mutable.Map[String,mutable.ArrayBuffer[VocabClassTerm]]()) { case (acc, externalVocab) =>
+      acc + (externalVocab.alias -> mutable.ArrayBuffer[VocabClassTerm]())
+  }
+  val externalVocabularyProperties = ExternalModelVocabularies.all.foldLeft(mutable.Map[String,mutable.ArrayBuffer[VocabPropertyTerm]]()) { case (acc, externalVocab) =>
+    acc + (externalVocab.alias -> mutable.ArrayBuffer[VocabPropertyTerm]())
+  }
+
+  def isExternal(prefix: String) = ExternalModelVocabularies.all.find(_.alias == prefix).isDefined
+
+  def allClasses: Seq[VocabClassTerm] = classToFile.keys.map(classes).toSeq
+
+  def allProperties: Seq[VocabPropertyTerm] = allClasses.flatMap { klass => klass.properties }.map { propertyId => properties(propertyId) }
+
+  def findNamespace(id: String) = {
+    (ModelVocabularies.all ++ ExternalModelVocabularies.all).find { vocab =>
+      id.startsWith(vocab.base)
+    }
+  }
+
+  val conflictive = Seq((Namespace.Document + "RootDomainElement").iri(), (Namespace.Document + "DomainElement").iri(), (Namespace.Document + "Linkable").iri())
+
+  val blacklist: Map[ModelVocabulary, Seq[ModelVocabulary]] = Map()
+
+  val reflectionsExtensions   = new Reflections("amf.core.metamodel.domain.extensions", new SubTypesScanner(false))
+  val reflectionsCoreDoc      = new Reflections("amf.core.metamodel.document", new SubTypesScanner(false))
+  val reflectionsCoreDomain   = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
+  val reflectionsWebApi       = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
+  val reflectionsTemplates    = new Reflections("amf.plugins.domain.webapi.metamodel.templates", new SubTypesScanner(false))
+  val reflectionsShapes       = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
+  val reflectionsVocabularies = new Reflections("amf.plugins.document.vocabularies.metamodel.domain", new SubTypesScanner(false))
+  val reflectionsVocabDoc = new Reflections("amf.plugins.document.vocabularies.metamodel.document", new SubTypesScanner(false))
 
   var files: Map[String, VocabularyFile]         = Map()
   var classToFile: Map[String, String]           = Map()
@@ -54,6 +97,7 @@ object VocabularyExporter {
     }
   }
 
+  val emitProperties = false
   def notBlacklisted(klasses: Seq[String], vocabulary: ModelVocabulary) = {
     val vocabBlacklist: Seq[ModelVocabulary] = blacklist.getOrElse(vocabulary, Seq())
     val res = klasses.filter { klassName =>
@@ -68,27 +112,24 @@ object VocabularyExporter {
     res
   }
 
-  def renderVocabulary(vocabulary: ModelVocabulary) = {
-    val uses         = computeUses(vocabulary, ModelVocabularies.all, _.filename)
-    val externals    = computeUses(vocabulary, ExternalModelVocabularies.all, _.base)
-    val vocabClasses = classesForVocabulary(vocabulary)
-    var vocabProperties = vocabClasses
-      .flatMap { klass =>
-        klass.properties.filter { p =>
-          p.startsWith(vocabulary.base) || ExternalModelVocabularies.all.exists(v => p.startsWith(v.base))
-        }
-      }
-      .map(properties(_))
-      .distinct
-      .sortBy(_.id)
-    vocabProperties = properties.values.foldLeft(vocabProperties) {
-      case (acc, prop) =>
-        if (prop.id.startsWith(vocabulary.base) && !vocabProperties.contains(prop)) {
-          acc :+ prop
-        } else {
-          acc
-        }
+  val ShaclShape = (Namespace.Shacl + "Shape").iri()
+  val ShapesShape = (Namespace.Shapes + "Shape").iri()
+  val AnyShape = (Namespace.Shapes + "AnyShape").iri()
+  def blacklistedSuperClass(klass: String, superClass: String) = {
+    (klass, superClass) match {
+      case (ShapesShape, ShaclShape) => false
+      case (AnyShape, ShapesShape)   => false
+      case (AnyShape, ShaclShape)    => true
+      case (base, ShaclShape) if base.startsWith(ModelVocabularies.Shapes.base) => true
+      case (_, ShapesShape) => true
+      case _                => false
     }
+  }
+
+  def renderVocabulary(vocabulary: ModelVocabulary): String = {
+    val vocabClasses    = classesForVocabulary(vocabulary)
+    val vocabProperties = propertiesForVocabulary(vocabulary)
+    val uses            = usesReferences(vocabulary, vocabClasses, vocabProperties)
 
     val document = YDocument(b => {
       b.comment("%Vocabulary 1.0")
@@ -97,26 +138,17 @@ object VocabularyExporter {
           b.entry("base", vocabulary.base)
           b.entry("usage", vocabulary.usage)
 
-          // external vocabularies
+          // vocabularies
           if (uses.nonEmpty) {
             b.entry("uses", b => {
               b.obj { b =>
-                uses.foreach {
-                  case (alias, path) =>
-                    b.entry(alias, path)
-                }
-              }
-            })
-          }
-
-          // external namespaces
-          if (externals.nonEmpty) {
-            b.entry("external", b => {
-              b.obj { b =>
-                externals.foreach {
-                  case (alias, path) =>
-                    b.entry(alias, path)
-                }
+                uses.foreach(vocab =>
+                  if (ExternalModelVocabularies.all.contains(vocab)) {
+                    b.entry(vocab.alias, s"external/${vocab.filename}")
+                  } else {
+                    b.entry(vocab.alias, vocab.filename)
+                  }
+                )
               }
             })
           }
@@ -136,40 +168,29 @@ object VocabularyExporter {
                             b => {
                               b.obj {
                                 b =>
-                                  b.entry("displayName", classTerm.displayName)
+                                  if (classTerm.displayName != null && classTerm.displayName != "") {
+                                    b.entry("displayName", classTerm.displayName)
+                                  } else {
+                                    b.entry("displayName", uriAlias(classTerm.id))
+                                  }
                                   if (classTerm.description != "") {
                                     b.entry("description", classTerm.description)
+                                  } else if (externalDescription.get(classTerm.id).isDefined) {
+                                    b.entry("description", externalDescription(classTerm.id))
                                   }
-                                  val superClasses = notBlacklisted(classTerm.superClasses, vocabulary)
+                                  val superClasses = notBlacklisted(classTerm.superClasses, vocabulary).filter(sk => !blacklistedSuperClass(classTerm.id, sk))
                                   if (superClasses.nonEmpty) {
-                                    if (classTerm.superClasses.length == 1) {
-                                      b.entry("extends", compactUri(classTerm.superClasses.head, vocabulary))
+                                    if (superClasses.length == 1) {
+                                      b.entry("extends", compactUri(superClasses.head, vocabulary))
                                     } else {
                                       b.entry("extends", b => {
                                         b.list { l =>
-                                          classTerm.superClasses.foreach { t =>
+                                          superClasses.foreach { t =>
                                             l += compactUri(t, vocabulary)
                                           }
                                         }
                                       })
                                     }
-                                  }
-
-                                  // only properties in domain
-                                  /*
-                    val exclusiveProperties = classTerm.properties.filter { prop =>
-                      properties(prop).domain.size == 1 && properties(prop).domain.head == classTerm.id
-                    }
-                                   */
-                                  val exclusiveProperties = notBlacklisted(classTerm.properties, vocabulary)
-                                  if (exclusiveProperties.nonEmpty) {
-                                    b.entry("properties", b => {
-                                      b.list { l =>
-                                        exclusiveProperties.foreach { p =>
-                                          l += compactUri(p, vocabulary)
-                                        }
-                                      }
-                                    })
                                   }
                               }
                             }
@@ -195,9 +216,15 @@ object VocabularyExporter {
                             b => {
                               b.obj {
                                 b =>
-                                  b.entry("displayName", propertyTerm.displayName)
+                                  if (propertyTerm.displayName != null && propertyTerm.displayName != "") {
+                                    b.entry("displayName", propertyTerm.displayName)
+                                  } else {
+                                    b.entry("displayName", uriAlias(propertyTerm.id))
+                                  }
                                   if (propertyTerm.description != "") {
                                     b.entry("description", propertyTerm.description)
+                                  } else if (externalDescription.get(propertyTerm.id).isDefined) {
+                                    b.entry("description", externalDescription(propertyTerm.id))
                                   }
                                   val superProperties = notBlacklisted(propertyTerm.superClasses, vocabulary)
                                   if (superProperties.nonEmpty) {
@@ -236,6 +263,14 @@ object VocabularyExporter {
     YamlRender.render(document)
   }
 
+  def uriAlias(uri: String) = {
+    if (uri.contains("#")) {
+      uri.split("#").last
+    } else {
+      uri.split("/").last
+    }
+  }
+
   def compactUri(id: String, current: ModelVocabulary): String = {
     (ModelVocabularies.all ++ ExternalModelVocabularies.all).find { vocab =>
       id.startsWith(vocab.base)
@@ -251,53 +286,102 @@ object VocabularyExporter {
     }
   }
 
-  def classesForVocabulary(vocabulary: ModelVocabulary): Seq[VocabClassTerm] = {
-    val ids: Seq[String] = classToFile.filter {
-      case (k, vocab) =>
-        vocab == vocabulary.filename
-    } map {
-      case (k, _) =>
-        classes(k)
-    } flatMap { klass =>
-      // val superClasses = klass.superClasses.filter(p => !p.startsWith(vocabulary.base))
-      // val klassProperties = klass.properties.map(p => properties(p)).map(_.objectRange).collect { case Some(r) => r}
-      Seq(klass.id) /*++ superClasses ++ klassProperties */
-    } toSeq
-
-    ids.distinct.map(classes(_)).filter { klass: VocabClassTerm =>
-      klass.id.startsWith(vocabulary.base) || ExternalModelVocabularies.all.exists(v => klass.id.startsWith(v.base))
+  def propertiesForVocabulary(vocabulary: ModelVocabulary): Seq[VocabPropertyTerm] = {
+    // Properties declared as belonging to this vocabulary
+    val explicitProperties: Seq[VocabPropertyTerm] = allProperties.filter(property =>
+      property.id.startsWith(vocabulary.base)
+    ) distinct
+    val explicitPropertiesMap = explicitProperties.foldLeft(Map[String, VocabPropertyTerm]()) { case (acc, property) =>
+      acc + (property.id -> property)
     }
+
+    // Properties in this vocabulary because they are used in extension from other properties
+    val implicitPropertiesExtension: Seq[(String, VocabPropertyTerm)] = allProperties.flatMap { property =>
+      property.superClasses.filter { superClass =>
+        superClass.startsWith(vocabulary.base) && !explicitPropertiesMap.contains(superClass)
+      } map { superProperty =>
+        (superProperty, property)
+      }
+    }
+
+    // Implicit IDs -> simple property terms
+    val implicitProperties = implicitPropertiesExtension.distinct.map { case (propertyId: String, property: VocabPropertyTerm) =>
+      VocabPropertyTerm(
+        id = propertyId,
+        displayName = uriAlias(propertyId),
+        description = "",
+        superClasses = Seq(),
+        scalarRange = property.scalarRange,
+        objectRange = property.objectRange,
+        domain = Set())
+    }
+
+    // final set of properties
+    (explicitProperties ++ implicitProperties).sortBy(_.id)
   }
 
-  def computeUses(vocabulary: ModelVocabulary,
-                  vocabs: Seq[ModelVocabulary],
-                  p: ModelVocabulary => String): Map[String, String] = {
-    val allIds: Seq[String] = classToFile.filter {
-      case (k, vocab) =>
-        vocab == vocabulary.filename
-    } map {
-      case (k, _) =>
-        classes(k)
-    } flatMap { klass =>
-      val superClasses = klass.superClasses.filter(p => !p.startsWith(vocabulary.base))
-      val klassProperties =
-        klass.properties.map(p => properties(p)).filter(p => !p.id.startsWith(vocabulary.base)).map(_.id)
-      val klassRanges = klass.properties.map(p => properties(p)).map(_.objectRange).collect { case Some(r) => r }
-      val deps        = superClasses ++ klassProperties ++ klassRanges
-      deps
-    } toSeq
-
-    val blacklisted = blacklist.getOrElse(vocabulary, Seq())
-    allIds.distinct.foldLeft(Map[String, String]()) {
-      case (ns, id) =>
-        vocabs.find { ns =>
-          id.contains(ns.base)
-        } match {
-          case Some(foundVocabulary) if foundVocabulary != vocabulary && !blacklisted.contains(foundVocabulary) =>
-            ns + (foundVocabulary.alias -> p(foundVocabulary))
-          case _ => ns
-        }
+  /**
+    * Load all classes for a given vocabulary.
+    * Classes are returned because they are declared explicitly or used in extends or ranges.
+    * @param vocabulary
+    * @return
+    */
+  def classesForVocabulary(vocabulary: ModelVocabulary): Seq[VocabClassTerm] = {
+    // Classes declared as belonging to this vocabulary
+    val explicitClasses: Seq[VocabClassTerm] = allClasses.filter { klass =>
+      klass.id.startsWith(vocabulary.base)
+    } distinct
+    val explicitClassesMap = explicitClasses.foldLeft(Map[String, VocabClassTerm]()) { case (acc, klass) =>
+      acc + (klass.id -> klass)
     }
+
+    // Classes in this vocabulary because they are used in extension from other classes
+    val implicitClassesExtension: Seq[String] = allClasses.flatMap { klass =>
+      klass.superClasses.filter { superClass =>
+        superClass.startsWith(vocabulary.base) && !explicitClassesMap.contains(superClass)
+      }
+    }
+
+    // Classes in this vocabulary because they are used in the range of properties
+    val maybeImplicitClassesRanges: Seq[Option[String]] = allProperties.map { property =>
+      property.objectRange match {
+        case Some(classId) if classId.startsWith(vocabulary.base) && !explicitClassesMap.contains(classId) =>
+          Some(classId)
+        case _   =>
+          None
+      }
+    }
+    val implicitClassesRanges: Seq[String] = maybeImplicitClassesRanges.collect { case Some(classId) => classId }
+
+    // Implicit IDs -> simple class terms
+    val implicitClasses = (implicitClassesExtension ++ implicitClassesExtension).distinct.map { klassId =>
+      VocabClassTerm(klassId, uriAlias(klassId), "", Seq(), Seq())
+    }
+
+    // final set of classes
+    (explicitClasses ++ implicitClasses).sortBy(_.id)
+  }
+
+  def usesReferences(vocabulary: ModelVocabulary, classTerms: Seq[VocabClassTerm], propertyTerms: Seq[VocabPropertyTerm]): Seq[ModelVocabulary] = {
+    val classExtendsRefs = classTerms.flatMap { klass =>
+      klass.superClasses.filter(!_.startsWith(vocabulary.base))
+    }
+    val propertiesExtendsRefs = propertyTerms.flatMap { property =>
+      property.superClasses.filter(!_.startsWith(vocabulary.base))
+    }
+    val propertiesRangeRefs = propertyTerms.flatMap { property =>
+      property.objectRange.filter { range => !range.startsWith(vocabulary.base) }
+    }
+
+    val vocabularies = (classExtendsRefs ++ propertiesExtendsRefs ++ propertiesRangeRefs).map { id =>
+      findNamespace(id) match {
+        case Some(vocab) => vocab
+        case None        =>
+          throw new Exception(s"Cannot find vocabulary for URI term $id")
+      }
+    }
+
+    vocabularies.distinct
   }
 
   def metaObjects(reflections: Reflections, handler: String => Any) = {
@@ -355,46 +439,50 @@ object VocabularyExporter {
   def buildClassTerm(klassName: String, modelObject: Obj): Option[VocabClassTerm] = {
     val doc         = modelObject.doc
     val types       = modelObject.`type`.map(_.iri())
-    var id          = types.head
-    val displayName = doc.displayName
-    val description = doc.description
-    val vocab       = doc.vocabulary.filename
-
-    var superClassesInDoc = types.tail
-    val superClassesInInhertiance = Seq(modelObject.getClass.getSuperclass) ++ modelObject.getClass.getInterfaces.toSeq
-      .map {
-        case klass if klass.getCanonicalName + "$" != klassName =>
-          val singletonKlassName = s"${klass.getCanonicalName}$$"
-          parseMetaObject(singletonKlassName)
-        case _ =>
-          None
-      } collect { case Some(classTerm: VocabClassTerm) => classTerm } map { classTerm: VocabClassTerm =>
-      classTerm.id
-    }
-
-
-    var finalSuperclasses = (superClassesInDoc ++ superClassesInInhertiance).distinct.filter(!conflictive.contains(_))
-    // We need to solve a problem with the main class for the ShapeModel
-    var classTerm = if (klassName == "amf.core.metamodel.domain.ShapeModel$") {
-      val shapesShape = (Namespace.Shapes + "Shape").iri()
-      val tmp = finalSuperclasses.filter(_ != shapesShape)
-      finalSuperclasses = id :: tmp
-      id = shapesShape
-      VocabClassTerm(id = shapesShape, displayName = displayName, description = description, superClasses = finalSuperclasses)
+    if (types.isEmpty) {
+      None
     } else {
-      VocabClassTerm(id = id, displayName = displayName, description = description, superClasses = finalSuperclasses)
+      var id = types.head
+      val displayName = doc.displayName
+      val description = doc.description
+      val vocab = doc.vocabulary.filename
+
+      var superClassesInDoc = types.tail
+      val superClassesInInhertiance = Seq(modelObject.getClass.getSuperclass) ++ modelObject.getClass.getInterfaces.toSeq
+        .map {
+          case klass if klass.getCanonicalName + "$" != klassName =>
+            val singletonKlassName = s"${klass.getCanonicalName}$$"
+            parseMetaObject(singletonKlassName)
+          case _ =>
+            None
+        } collect { case Some(classTerm: VocabClassTerm) => classTerm } map { classTerm: VocabClassTerm =>
+        classTerm.id
+      }
+
+
+      var finalSuperclasses = (superClassesInDoc ++ superClassesInInhertiance).distinct.filter(!conflictive.contains(_))
+      // We need to solve a problem with the main class for the ShapeModel
+      var classTerm = if (klassName == "amf.core.metamodel.domain.ShapeModel$") {
+        val shapesShape = (Namespace.Shapes + "Shape").iri()
+        val tmp = finalSuperclasses.filter(_ != shapesShape)
+        finalSuperclasses = id :: tmp
+        id = shapesShape
+        VocabClassTerm(id = shapesShape, displayName = displayName, description = description, superClasses = finalSuperclasses)
+      } else {
+        VocabClassTerm(id = id, displayName = displayName, description = description, superClasses = finalSuperclasses)
+      }
+
+      classes = classes + (id -> classTerm)
+      classToFile = classToFile + (id -> vocab)
+
+      // index fields
+      modelObject.fields.foreach { field =>
+        buildPropertyTerm(field, classTerm)
+        classTerm = classes(id) // update after linking in property term
+      }
+
+      Some(classTerm)
     }
-
-    classes = classes + (id         -> classTerm)
-    classToFile = classToFile + (id -> vocab)
-
-    // index fields
-    modelObject.fields.foreach { field =>
-      buildPropertyTerm(field, classTerm)
-      classTerm = classes(id) // update after linking in property term
-    }
-
-    Some(classTerm)
   }
 
   def parseMetaObject(klassName: String): Option[VocabClassTerm] = {
@@ -428,11 +516,14 @@ object VocabularyExporter {
     fillInitialFiles()
 
     println("*** Processing classes")
+    metaObjects(reflectionsExtensions, parseMetaObject)
     metaObjects(reflectionsCoreDoc, parseMetaObject)
     metaObjects(reflectionsCoreDomain, parseMetaObject)
     metaObjects(reflectionsWebApi, parseMetaObject)
     metaObjects(reflectionsShapes, parseMetaObject)
     metaObjects(reflectionsTemplates, parseMetaObject)
+    metaObjects(reflectionsVocabularies, parseMetaObject)
+    metaObjects(reflectionsVocabDoc, parseMetaObject)
 
     // review
     println(s"*** Parsed classes: ${classes.keys.toSeq.size}")
@@ -441,14 +532,21 @@ object VocabularyExporter {
     println(s"*** Parsed properties: ${properties.keys.toSeq.size}")
     //properties.keys.toSeq.sorted.foreach(k => println(s" - ${k}"))
 
-    Seq(ModelVocabularies.AmlDoc,
-        ModelVocabularies.Http,
-        ModelVocabularies.Data,
-        ModelVocabularies.Shapes,
-        ModelVocabularies.Security,
-        ModelVocabularies.Meta).foreach { vocab =>
+    (Seq(ModelVocabularies.AmlDoc,
+         ModelVocabularies.ApiContract,
+         ModelVocabularies.Core,
+         ModelVocabularies.Data,
+         ModelVocabularies.Shapes,
+         ModelVocabularies.Security,
+         ModelVocabularies.Meta) ++
+      ExternalModelVocabularies.all).foreach { vocab =>
       println(s"**** RENDERING ${vocab.filename}")
-      val f      = new File(s"vocabularies/vocabularies/${vocab.filename}")
+      val path = if (ExternalModelVocabularies.all.contains(vocab)) {
+        s"vocabularies/vocabularies/external/${vocab.filename}"
+      } else {
+        s"vocabularies/vocabularies/${vocab.filename}"
+      }
+      val f      = new File(path)
       val writer = new FileWriter(f)
       try {
         val text = renderVocabulary(vocab)

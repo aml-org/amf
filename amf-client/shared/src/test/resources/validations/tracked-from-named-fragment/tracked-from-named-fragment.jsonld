@@ -1,0 +1,726 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#19",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "Some API"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "v1"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#20",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/someEndpoint"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#21",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#22",
+                    "@type": [
+                      "apiContract:Request",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#23",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "apiContract:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "apiContract:schema": [
+                          {
+                            "@id": "#12/linked_2",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#12"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "Person"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#23": "[(16,6)-(18,39)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(15,4)-(18,39)]",
+                        "#22": "[(15,0)-(18,39)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#21": "[(14,2)-(18,39)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#20": "[(13,0)-(18,39)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#19": "RAML 1.0"
+          },
+          "lexical": {
+            "core:version": "[(4,0)-(6,0)]",
+            "#19": "[(3,0)-(18,39)]",
+            "core:name": "[(3,0)-(4,0)]"
+          }
+        }
+      }
+    ],
+    "doc:references": [
+      {
+        "@id": "#1",
+        "@type": [
+          "doc:NamedExample",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#2",
+            "@type": [
+              "apiContract:NamedExamples",
+              "doc:DomainElement"
+            ],
+            "apiContract:examples": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "apiContract:Example",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "a"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:age": [
+                      {
+                        "@id": "#5",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "44",
+                            "@type": "xsd:integer"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#5": "[(5,7)-(5,9)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:name": [
+                      {
+                        "@id": "#6",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "John Doe",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#6": "[(4,8)-(4,16)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:name": "[(4,8)-(4,16)]",
+                        "#4": "[(4,0)-(6,0)]",
+                        "data:age": "[(5,7)-(5,9)]"
+                      },
+                      "data-node-properties": {
+                        "#4": "name->[(4,2)-(5,0)]#age->[(5,2)-(6,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:raw": [
+                  {
+                    "@value": "\n  name: John Doe\n  age: 44\n"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "doc:strict": "true"
+                  },
+                  "lexical": {
+                    "shacl:raw": "[(4,0)-(6,0)]",
+                    "#3": "[(3,0)-(6,0)]",
+                    "core:name": "[(3,0)-(6,0)]"
+                  },
+                  "local-element": {
+                    "#3": ""
+                  }
+                }
+              },
+              {
+                "@id": "#7",
+                "@type": [
+                  "apiContract:Example",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "b"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
+                  {
+                    "@id": "#8",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:age": [
+                      {
+                        "@id": "#9",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "35",
+                            "@type": "xsd:integer"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#9": "[(8,7)-(8,9)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:name": [
+                      {
+                        "@id": "#10",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "Jane Doe",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#10": "[(7,8)-(7,16)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:name": "[(7,8)-(7,16)]",
+                        "#8": "[(7,0)-(8,9)]",
+                        "data:age": "[(8,7)-(8,9)]"
+                      },
+                      "data-node-properties": {
+                        "#8": "name->[(7,2)-(8,0)]#age->[(8,2)-(8,9)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:raw": [
+                  {
+                    "@value": "\n  name: Jane Doe\n  age: 35"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "doc:strict": "true"
+                  },
+                  "lexical": {
+                    "shacl:raw": "[(7,0)-(8,9)]",
+                    "#7": "[(6,0)-(8,9)]",
+                    "core:name": "[(6,0)-(8,9)]"
+                  },
+                  "local-element": {
+                    "#7": ""
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "resolved-link": {
+                "#2": "amf://id#11"
+              },
+              "lexical": {
+                "#2": "[(3,0)-(8,9)]"
+              },
+              "source-vendor": {
+                "#2": "RAML 1.0"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "#1": "[(3,0)-(8,9)]"
+          }
+        }
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#12",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#13",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#name"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#14",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "name"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#14": "[(10,6)-(11,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "name"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#13": "[(10,6)-(11,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#15",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#age"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#16",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "age"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#16": "[(11,6)-(13,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "age"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#15": "[(11,6)-(13,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Person"
+          }
+        ],
+        "apiContract:examples": [
+          {
+            "@id": "#17",
+            "@type": [
+              "apiContract:NamedExamples",
+              "doc:DomainElement"
+            ],
+            "apiContract:examples": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "apiContract:Example",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "a"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:age": [
+                      {
+                        "@id": "#5",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "44",
+                            "@type": "xsd:integer"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#5": "[(5,7)-(5,9)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:name": [
+                      {
+                        "@id": "#6",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "John Doe",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#6": "[(4,8)-(4,16)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:name": "[(4,8)-(4,16)]",
+                        "#4": "[(4,0)-(6,0)]",
+                        "data:age": "[(5,7)-(5,9)]"
+                      },
+                      "data-node-properties": {
+                        "#4": "name->[(4,2)-(5,0)]#age->[(5,2)-(6,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:raw": [
+                  {
+                    "@value": "\n  name: John Doe\n  age: 44\n"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "doc:strict": "true"
+                  },
+                  "lexical": {
+                    "shacl:raw": "[(4,0)-(6,0)]",
+                    "#3": "[(3,0)-(6,0)]",
+                    "core:name": "[(3,0)-(6,0)]"
+                  },
+                  "local-element": {
+                    "#3": ""
+                  }
+                }
+              },
+              {
+                "@id": "#7",
+                "@type": [
+                  "apiContract:Example",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "b"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
+                  {
+                    "@id": "#8",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:age": [
+                      {
+                        "@id": "#9",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "35",
+                            "@type": "xsd:integer"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#9": "[(8,7)-(8,9)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:name": [
+                      {
+                        "@id": "#10",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "Jane Doe",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#10": "[(7,8)-(7,16)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:name": "[(7,8)-(7,16)]",
+                        "#8": "[(7,0)-(8,9)]",
+                        "data:age": "[(8,7)-(8,9)]"
+                      },
+                      "data-node-properties": {
+                        "#8": "name->[(7,2)-(8,0)]#age->[(8,2)-(8,9)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:raw": [
+                  {
+                    "@value": "\n  name: Jane Doe\n  age: 35"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "doc:strict": "true"
+                  },
+                  "lexical": {
+                    "shacl:raw": "[(7,0)-(8,9)]",
+                    "#7": "[(6,0)-(8,9)]",
+                    "core:name": "[(6,0)-(8,9)]"
+                  },
+                  "local-element": {
+                    "#7": ""
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "smaps": {
+          "resolved-link": {
+            "#12": "amf://id#18"
+          },
+          "type-property-lexical-info": {
+            "#12": "[(8,4)-(8,8)]"
+          },
+          "lexical": {
+            "shacl:name": "[(7,2)-(7,8)]",
+            "#12": "[(7,2)-(13,0)]"
+          },
+          "declared-element": {
+            "#12": ""
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#",
+      "xsd": "http://www.w3.org/2001/XMLSchema#"
+    }
+  }
+]

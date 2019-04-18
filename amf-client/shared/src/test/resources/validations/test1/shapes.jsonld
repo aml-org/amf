@@ -9,7 +9,7 @@
     ],
     "http://www.w3.org/ns/shacl#targetClass": [
       {
-        "@id": "http://a.ml/vocabularies/http#DomainElement"
+        "@id": "http://a.ml/vocabularies/apiContract#DomainElement"
       }
     ],
     "http://www.w3.org/ns/shacl#property": [
@@ -17,7 +17,7 @@
         "@id": "http://a.ml/vocabularies/amf/parser/DomainElement-name-datatype#property",
         "http://www.w3.org/ns/shacl#path": [
           {
-            "@id": "http://schema.org/name"
+            "@id": "http://a.ml/vocabularies/core#name"
           }
         ],
         "http://www.w3.org/ns/shacl#datatype": [
@@ -38,7 +38,7 @@
     ],
     "http://www.w3.org/ns/shacl#targetClass": [
       {
-        "@id": "http://schema.org/WebAPI"
+        "@id": "http://a.ml/vocabularies/apiContract#WebAPI"
       }
     ],
     "http://www.w3.org/ns/shacl#property": [
@@ -46,7 +46,7 @@
         "@id": "http://a.ml/vocabularies/amf/parser/mandatory-api-version#property",
         "http://www.w3.org/ns/shacl#path": [
           {
-            "@id": "http://schema.org/version"
+            "@id": "http://a.ml/vocabularies/core#version"
           }
         ],
         "http://www.w3.org/ns/shacl#minCount": [

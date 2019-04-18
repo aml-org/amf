@@ -10,24 +10,24 @@
         {
             "@id": "file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml#/api-documentation",
             "@type": [
-                "http://schema.org/WebAPI",
+                "http://a.ml/vocabularies/apiContract#WebAPI",
                 "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#server": [
+            "http://a.ml/vocabularies/apiContract#server": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/basic.raml#/web-api/api.example.com",
                 "@type": [
-                  "http://a.ml/vocabularies/http#Server",
+                  "http://a.ml/vocabularies/apiContract#Server",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/http#url": [
+                "http://a.ml/vocabularies/apiContract#url": [
                   {
                     "@value": "api.example.com"
                   }
                 ]
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
                 {
                     "@value": "test"
                 }

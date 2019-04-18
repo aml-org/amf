@@ -76,45 +76,45 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |      {
         |        "@id": "file:///tmp/test#/web-api",
         |        "@type": [
-        |          "http://schema.org/WebAPI",
+        |          "http://a.ml/vocabularies/apiContract#WebAPI",
         |          "http://a.ml/vocabularies/document#RootDomainElement",
         |          "http://a.ml/vocabularies/document#DomainElement"
         |        ],
-        |        "http://schema.org/name": [
+        |        "http://a.ml/vocabularies/core#name": [
         |          {
         |            "@value": "test"
         |          }
         |        ],
-        |        "http://schema.org/description": [
+        |        "http://a.ml/vocabularies/core#description": [
         |          {
         |            "@value": "test description"
         |          }
         |        ],
-        |        "http://a.ml/vocabularies/http#server": [
+        |        "http://a.ml/vocabularies/apiContract#server": [
         |          {
         |            "@id": "file:///tmp/test#/web-api/localhost.com%2Fapi",
         |            "@type": [
-        |              "http://a.ml/vocabularies/http#Server",
+        |              "http://a.ml/vocabularies/apiContract#Server",
         |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://a.ml/vocabularies/http#url": [
+        |            "http://a.ml/vocabularies/apiContract#url": [
         |              {
         |                "@value": "localhost.com/api"
         |              }
         |            ]
         |          }
         |        ],
-        |        "http://a.ml/vocabularies/http#accepts": [
+        |        "http://a.ml/vocabularies/apiContract#accepts": [
         |          {
         |            "@value": "application/json"
         |          }
         |        ],
-        |        "http://a.ml/vocabularies/http#contentType": [
+        |        "http://a.ml/vocabularies/apiContract#contentType": [
         |          {
         |            "@value": "application/json"
         |          }
         |        ],
-        |        "http://a.ml/vocabularies/http#scheme": [
+        |        "http://a.ml/vocabularies/apiContract#scheme": [
         |          {
         |            "@value": "http"
         |          },
@@ -122,12 +122,12 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            "@value": "https"
         |          }
         |        ],
-        |        "http://schema.org/version": [
+        |        "http://a.ml/vocabularies/core#version": [
         |          {
         |            "@value": "1.1"
         |          }
         |        ],
-        |        "http://schema.org/termsOfService": [
+        |        "http://a.ml/vocabularies/core#termsOfService": [
         |          {
         |            "@value": "termsOfService"
         |          }
@@ -160,45 +160,45 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |      {
         |        "@id": "file:///tmp/test#/web-api",
         |        "@type": [
-        |          "http://schema.org/WebAPI",
+        |          "http://a.ml/vocabularies/apiContract#WebAPI",
         |          "http://a.ml/vocabularies/document#RootDomainElement",
         |          "http://a.ml/vocabularies/document#DomainElement"
         |        ],
-        |        "http://schema.org/name": [
+        |        "http://a.ml/vocabularies/core#name": [
         |          {
         |            "@value": "test"
         |          }
         |        ],
-        |        "http://schema.org/description": [
+        |        "http://a.ml/vocabularies/core#description": [
         |          {
         |            "@value": "test description"
         |          }
         |        ],
-        |        "http://a.ml/vocabularies/http#server": [
+        |        "http://a.ml/vocabularies/apiContract#server": [
         |          {
         |            "@id": "file:///tmp/test#/web-api/localhost.com%2Fapi",
         |            "@type": [
-        |              "http://a.ml/vocabularies/http#Server",
+        |              "http://a.ml/vocabularies/apiContract#Server",
         |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://a.ml/vocabularies/http#url": [
+        |            "http://a.ml/vocabularies/apiContract#url": [
         |              {
         |                "@value": "localhost.com/api"
         |              }
         |            ]
         |          }
         |        ],
-        |        "http://a.ml/vocabularies/http#accepts": [
+        |        "http://a.ml/vocabularies/apiContract#accepts": [
         |          {
         |            "@value": "application/json"
         |          }
         |        ],
-        |        "http://a.ml/vocabularies/http#contentType": [
+        |        "http://a.ml/vocabularies/apiContract#contentType": [
         |          {
         |            "@value": "application/json"
         |          }
         |        ],
-        |        "http://a.ml/vocabularies/http#scheme": [
+        |        "http://a.ml/vocabularies/apiContract#scheme": [
         |          {
         |            "@value": "http"
         |          },
@@ -206,147 +206,147 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            "@value": "https"
         |          }
         |        ],
-        |        "http://schema.org/version": [
+        |        "http://a.ml/vocabularies/core#version": [
         |          {
         |            "@value": "1.1"
         |          }
         |        ],
-        |        "http://schema.org/termsOfService": [
+        |        "http://a.ml/vocabularies/core#termsOfService": [
         |          {
         |            "@value": "termsOfService"
         |          }
         |        ],
-        |        "http://schema.org/provider": [
+        |        "http://a.ml/vocabularies/core#provider": [
         |          {
         |            "@id": "file:///tmp/test#/web-api/organization",
         |            "@type": [
-        |              "http://schema.org/Organization",
+        |              "http://a.ml/vocabularies/core#Organization",
         |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://schema.org/url": [
+        |            "http://a.ml/vocabularies/core#url": [
         |              {
         |                "@id": "organizationUrl"
         |              }
         |            ],
-        |            "http://schema.org/name": [
+        |            "http://a.ml/vocabularies/core#name": [
         |              {
         |                "@value": "organizationName"
         |              }
         |            ],
-        |            "http://schema.org/email": [
+        |            "http://a.ml/vocabularies/core#email": [
         |              {
         |                "@value": "test@test"
         |              }
         |            ]
         |          }
         |        ],
-        |        "http://schema.org/license": [
+        |        "http://a.ml/vocabularies/core#license": [
         |          {
         |            "@id": "file:///tmp/test#/web-api/license",
         |            "@type": [
-        |              "http://a.ml/vocabularies/http#License",
+        |              "http://a.ml/vocabularies/core#License",
         |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://schema.org/url": [
+        |            "http://a.ml/vocabularies/core#url": [
         |              {
         |                "@id": "licenseUrl"
         |              }
         |            ],
-        |            "http://schema.org/name": [
+        |            "http://a.ml/vocabularies/core#name": [
         |              {
         |                "@value": "licenseName"
         |              }
         |            ]
         |          }
         |        ],
-        |        "http://schema.org/documentation": [
+        |        "http://a.ml/vocabularies/core#documentation": [
         |          {
         |            "@id": "file:///tmp/test#/web-api/creative-work/creativoWorkUrl",
         |            "@type": [
-        |              "http://schema.org/CreativeWork",
+        |              "http://a.ml/vocabularies/core#CreativeWork",
         |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://schema.org/url": [
+        |            "http://a.ml/vocabularies/core#url": [
         |              {
         |                "@id": "creativoWorkUrl"
         |              }
         |            ],
-        |            "http://schema.org/description": [
+        |            "http://a.ml/vocabularies/core#description": [
         |              {
         |                "@value": "creativeWorkDescription"
         |              }
         |            ]
         |          }
         |        ],
-        |        "http://a.ml/vocabularies/http#endpoint": [
+        |        "http://a.ml/vocabularies/apiContract#endpoint": [
         |          {
         |            "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint",
         |            "@type": [
-        |              "http://a.ml/vocabularies/http#EndPoint",
+        |              "http://a.ml/vocabularies/apiContract#EndPoint",
         |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://a.ml/vocabularies/http#path": [
+        |            "http://a.ml/vocabularies/apiContract#path": [
         |              {
         |                "@value": "/endpoint"
         |              }
         |            ],
-        |            "http://schema.org/name": [
+        |            "http://a.ml/vocabularies/core#name": [
         |              {
         |                "@value": "endpoint"
         |              }
         |            ],
-        |            "http://schema.org/description": [
+        |            "http://a.ml/vocabularies/core#description": [
         |              {
         |                "@value": "test endpoint"
         |              }
         |            ],
-        |            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+        |            "http://a.ml/vocabularies/apiContract#supportedOperation": [
         |              {
         |                "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get",
         |                "@type": [
-        |                  "http://www.w3.org/ns/hydra/core#Operation",
+        |                  "http://a.ml/vocabularies/apiContract#Operation",
         |                  "http://a.ml/vocabularies/document#DomainElement"
         |                ],
-        |                "http://www.w3.org/ns/hydra/core#method": [
+        |                "http://a.ml/vocabularies/apiContract#method": [
         |                  {
         |                    "@value": "get"
         |                  }
         |                ],
-        |                "http://schema.org/name": [
+        |                "http://a.ml/vocabularies/core#name": [
         |                  {
         |                    "@value": "test get"
         |                  }
         |                ],
-        |                "http://schema.org/description": [
+        |                "http://a.ml/vocabularies/core#description": [
         |                  {
         |                    "@value": "test operation get"
         |                  }
         |                ],
-        |                "http://a.ml/vocabularies/http#guiSummary": [
+        |                "http://a.ml/vocabularies/apiContract#guiSummary": [
         |                  {
         |                    "@value": "summary of operation get"
         |                  }
         |                ],
-        |                "http://schema.org/documentation": [
+        |                "http://a.ml/vocabularies/core#documentation": [
         |                  {
         |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/get/creative-work/localhost%3A8080%2Fendpoint%2Foperation",
         |                    "@type": [
-        |                      "http://schema.org/CreativeWork",
+        |                      "http://a.ml/vocabularies/core#CreativeWork",
         |                      "http://a.ml/vocabularies/document#DomainElement"
         |                    ],
-        |                    "http://schema.org/url": [
+        |                    "http://a.ml/vocabularies/core#url": [
         |                      {
         |                        "@id": "localhost:8080/endpoint/operation"
         |                      }
         |                    ],
-        |                    "http://schema.org/description": [
+        |                    "http://a.ml/vocabularies/core#description": [
         |                      {
         |                        "@value": "documentation operation"
         |                      }
         |                    ]
         |                  }
         |                ],
-        |                "http://a.ml/vocabularies/http#scheme": [
+        |                "http://a.ml/vocabularies/apiContract#scheme": [
         |                  {
         |                    "@value": "http"
         |                  }
@@ -355,54 +355,54 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |              {
         |                "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post",
         |                "@type": [
-        |                  "http://www.w3.org/ns/hydra/core#Operation",
+        |                  "http://a.ml/vocabularies/apiContract#Operation",
         |                  "http://a.ml/vocabularies/document#DomainElement"
         |                ],
-        |                "http://www.w3.org/ns/hydra/core#method": [
+        |                "http://a.ml/vocabularies/apiContract#method": [
         |                  {
         |                    "@value": "post"
         |                  }
         |                ],
-        |                "http://schema.org/name": [
+        |                "http://a.ml/vocabularies/core#name": [
         |                  {
         |                    "@value": "test post"
         |                  }
         |                ],
-        |                "http://schema.org/description": [
+        |                "http://a.ml/vocabularies/core#description": [
         |                  {
         |                    "@value": "test operation post"
         |                  }
         |                ],
-        |                "http://a.ml/vocabularies/document#deprecated": [
+        |                "http://a.ml/vocabularies/core#deprecated": [
         |                  {
         |                    "@value": true
         |                  }
         |                ],
-        |                "http://a.ml/vocabularies/http#guiSummary": [
+        |                "http://a.ml/vocabularies/apiContract#guiSummary": [
         |                  {
         |                    "@value": "summary of operation post"
         |                  }
         |                ],
-        |                "http://schema.org/documentation": [
+        |                "http://a.ml/vocabularies/core#documentation": [
         |                  {
         |                    "@id": "file:///tmp/test#/web-api/end-points/%2Fendpoint/post/creative-work/localhost%3A8080%2Fendpoint%2Foperation",
         |                    "@type": [
-        |                      "http://schema.org/CreativeWork",
+        |                      "http://a.ml/vocabularies/core#CreativeWork",
         |                      "http://a.ml/vocabularies/document#DomainElement"
         |                    ],
-        |                    "http://schema.org/url": [
+        |                    "http://a.ml/vocabularies/core#url": [
         |                      {
         |                        "@id": "localhost:8080/endpoint/operation"
         |                      }
         |                    ],
-        |                    "http://schema.org/description": [
+        |                    "http://a.ml/vocabularies/core#description": [
         |                      {
         |                        "@value": "documentation operation"
         |                      }
         |                    ]
         |                  }
         |                ],
-        |                "http://a.ml/vocabularies/http#scheme": [
+        |                "http://a.ml/vocabularies/apiContract#scheme": [
         |                  {
         |                    "@value": "http"
         |                  }

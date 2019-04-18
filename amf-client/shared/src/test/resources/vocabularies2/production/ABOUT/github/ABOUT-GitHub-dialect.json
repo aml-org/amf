@@ -8,12 +8,12 @@
       "http://a.ml/vocabularies/document#Module",
       "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://schema.org/name": [
+    "http://a.ml/vocabularies/core#name": [
       {
         "@value": "ABOUT-GitHub"
       }
     ],
-    "http://schema.org/version": [
+    "http://a.ml/vocabularies/core#version": [
       {
         "@value": "0.1"
       }
@@ -26,7 +26,7 @@
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/alias": [
+        "http://a.ml/vocabularies/core#alias": [
           {
             "@value": "owl"
           }
@@ -101,7 +101,7 @@
             "@id": "http://mulesoft.com/vocabularies/about-github#SoftwareProjectGitHubMetadata"
           }
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "SoftwareProjectGitHubMetadataNode"
           }
@@ -119,7 +119,7 @@
                 "@id": "http://www.w3.org/2002/07/owl#partOf"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "partOf"
               }
@@ -164,7 +164,7 @@
                 "@id": "http://mulesoft.com/vocabularies/about-github#stargazersCount"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "stargazersCount"
               }
@@ -209,7 +209,7 @@
                 "@id": "http://mulesoft.com/vocabularies/about-github#name"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "name"
               }
@@ -254,7 +254,7 @@
                 "@id": "http://mulesoft.com/vocabularies/about-github#owner"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "owner"
               }
@@ -299,7 +299,7 @@
                 "@id": "http://mulesoft.com/vocabularies/about-github#ownerAvatar"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "ownerAvatar"
               }
@@ -344,7 +344,7 @@
                 "@id": "http://mulesoft.com/vocabularies/about-github#createdAt"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "createdAt"
               }
@@ -389,7 +389,7 @@
                 "@id": "http://mulesoft.com/vocabularies/about-github#languageUsage"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "languages"
               }
@@ -473,7 +473,7 @@
             "@id": "http://mulesoft.com/vocabularies/about-github#LanguageUsage"
           }
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "LanguageUsageNode"
           }
@@ -491,7 +491,7 @@
                 "@id": "http://mulesoft.com/vocabularies/about-github#language"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "language"
               }
@@ -536,7 +536,7 @@
                 "@id": "http://mulesoft.com/vocabularies/about-github#languageUsage"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "usage"
               }
@@ -602,7 +602,7 @@
           "http://a.ml/vocabularies/meta#Vocabulary",
           "http://a.ml/vocabularies/document#Unit"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "ABOUT-GitHub-vocabulary"
           }
@@ -615,14 +615,14 @@
               "http://a.ml/vocabularies/meta#ExternalVocabulary",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/alias": [
+            "http://a.ml/vocabularies/core#alias": [
               {
                 "@value": "schema-org"
               }
             ],
             "http://a.ml/vocabularies/meta#base": [
               {
-                "@value": "http://schema.org/"
+                "@value": "http://a.ml/vocabularies/core#"
               }
             ]
           }
@@ -639,7 +639,7 @@
                 "@value": "Software Project GitHub metadata"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Software Project GitHub metadata"
               }
@@ -692,7 +692,7 @@
                 "@value": "languageUsage"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Usage of a programming language"
               }
@@ -740,7 +740,7 @@
                 "@value": "name"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Name of the repository in GitHub."
               }
@@ -785,7 +785,7 @@
                 "@value": "stargazerCount"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Repository Starring is a feature that lets users bookmark repositories. Stars are shown next to repositories to show an approximate level of interest."
               }
@@ -830,7 +830,7 @@
                 "@value": "ownerAvatar"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Avatar in GitHub of the owner of the repository"
               }
@@ -842,7 +842,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
               {
-                "@id": "http://schema.org/url"
+                "@id": "http://a.ml/vocabularies/core#url"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -880,7 +880,7 @@
                 "@value": "language"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Programming/MarkUp/etc language used in this project"
               }
@@ -892,7 +892,7 @@
             ],
             "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
               {
-                "@id": "http://schema.org/programmingLanguage"
+                "@id": "http://a.ml/vocabularies/core#programmingLanguage"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -930,7 +930,7 @@
                 "@value": "createdAt"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Date and time when the repository was created"
               }
@@ -975,7 +975,7 @@
                 "@value": "owner"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Organization or user that owns a number of repositories in GitHub."
               }
@@ -1020,7 +1020,7 @@
                 "@value": "usage"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Usage of the programming language in bytes"
               }
@@ -1099,7 +1099,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1137,7 +1137,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/version"
+                "@value": "http://a.ml/vocabularies/core#version"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1161,7 +1161,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/name"
+                "@value": "http://a.ml/vocabularies/core#name"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

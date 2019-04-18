@@ -9,7 +9,7 @@ Level: Violation
   Message: Protocols must have a case insensitive value matching http or https
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/protocols/invalid-method-level.raml#/web-api/end-points/%2FinvalidUnkownValues/post
-  Property: http://a.ml/vocabularies/http#scheme
+  Property: http://a.ml/vocabularies/apiContract#scheme
   Position: Some(LexicalInformation([(21,4)-(22,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/protocols/invalid-method-level.raml
 
@@ -18,5 +18,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/protocols/invalid-method-level.raml#/web-api/end-points/%2FinvalidEmptyArray/post
   Property: http://a.ml/vocabularies/http#scheme
-  Position: Some(LexicalInformation([(29,4)-(30,0)]))
+  Position: Some(LexicalInformation([(28,2)-(33,10)]))
   Location: file://amf-client/shared/src/test/resources/validations/protocols/invalid-method-level.raml

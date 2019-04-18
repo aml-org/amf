@@ -11,64 +11,64 @@
       {
         "@id": "#19",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "myEventpaper"
           }
         ],
-        "schema-org:version": [
+        "core:version": [
           {
             "@value": "v1"
           }
         ],
-        "raml-http:endpoint": [
+        "apiContract:endpoint": [
           {
             "@id": "#20",
             "@type": [
-              "raml-http:EndPoint",
+              "apiContract:EndPoint",
               "doc:DomainElement"
             ],
-            "raml-http:path": [
+            "apiContract:path": [
               {
                 "@value": "/A"
               }
             ],
-            "hydra:supportedOperation": [
+            "apiContract:supportedOperation": [
               {
                 "@id": "#21",
                 "@type": [
-                  "hydra:Operation",
+                  "apiContract:Operation",
                   "doc:DomainElement"
                 ],
-                "hydra:method": [
+                "apiContract:method": [
                   {
                     "@value": "post"
                   }
                 ],
-                "hydra:expects": [
+                "apiContract:expects": [
                   {
                     "@id": "#22",
                     "@type": [
-                      "raml-http:Request",
+                      "apiContract:Request",
                       "doc:DomainElement"
                     ],
-                    "raml-http:payload": [
+                    "apiContract:payload": [
                       {
                         "@id": "#23",
                         "@type": [
-                          "raml-http:Payload",
+                          "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "raml-http:mediaType": [
+                        "apiContract:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "raml-http:schema": [
+                        "apiContract:schema": [
                           {
                             "@id": "#1/linked_3",
                             "@type": [
@@ -99,7 +99,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "raml-http:payload": "[(26,4)-(27,23)]",
+                        "apiContract:payload": "[(26,4)-(27,23)]",
                         "#22": "[(26,0)-(27,23)]"
                       }
                     }
@@ -120,7 +120,7 @@
                   "doc:ParametrizedDeclaration",
                   "doc:DomainElement"
                 ],
-                "schema-org:name": [
+                "core:name": [
                   {
                     "@value": "collection"
                   }
@@ -133,7 +133,7 @@
                       "doc:AbstractDeclaration",
                       "doc:DomainElement"
                     ],
-                    "schema-org:name": [
+                    "core:name": [
                       {
                         "@value": "collection"
                       }
@@ -188,7 +188,7 @@
                                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                                           }
                                         ],
-                                        "schema-org:name": [
+                                        "core:name": [
                                           {
                                             "@value": "scalar_5"
                                           }
@@ -200,7 +200,7 @@
                                         }
                                       }
                                     ],
-                                    "schema-org:name": [
+                                    "core:name": [
                                       {
                                         "@value": "object_4"
                                       }
@@ -213,7 +213,7 @@
                                     }
                                   }
                                 ],
-                                "schema-org:name": [
+                                "core:name": [
                                   {
                                     "@value": "object_3"
                                   }
@@ -226,7 +226,7 @@
                                 }
                               }
                             ],
-                            "schema-org:name": [
+                            "core:name": [
                               {
                                 "@value": "object_2"
                               }
@@ -239,7 +239,7 @@
                             }
                           }
                         ],
-                        "schema-org:name": [
+                        "core:name": [
                           {
                             "@value": "object_1"
                           }
@@ -272,7 +272,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "schema-org:name": "[(24,8)-(24,18)]",
+                    "core:name": "[(24,8)-(24,18)]",
                     "#2": "[(24,8)-(24,18)]"
                   }
                 }
@@ -290,9 +290,9 @@
             "#19": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:version": "[(4,0)-(6,0)]",
+            "core:version": "[(4,0)-(6,0)]",
             "#19": "[(3,0)-(27,23)]",
-            "schema-org:name": "[(3,0)-(4,0)]"
+            "core:name": "[(3,0)-(4,0)]"
           }
         }
       }
@@ -641,7 +641,7 @@
           "doc:AbstractDeclaration",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "collection"
           }
@@ -696,7 +696,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
-                            "schema-org:name": [
+                            "core:name": [
                               {
                                 "@value": "scalar_5"
                               }
@@ -708,7 +708,7 @@
                             }
                           }
                         ],
-                        "schema-org:name": [
+                        "core:name": [
                           {
                             "@value": "object_4"
                           }
@@ -721,7 +721,7 @@
                         }
                       }
                     ],
-                    "schema-org:name": [
+                    "core:name": [
                       {
                         "@value": "object_3"
                       }
@@ -734,7 +734,7 @@
                     }
                   }
                 ],
-                "schema-org:name": [
+                "core:name": [
                   {
                     "@value": "object_2"
                   }
@@ -747,7 +747,7 @@
                 }
               }
             ],
-            "schema-org:name": [
+            "core:name": [
               {
                 "@value": "object_1"
               }
@@ -780,13 +780,12 @@
     ],
     "@context": {
       "@base": "amf://id",
-      "raml-http": "http://a.ml/vocabularies/http#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
-      "schema-org": "http://schema.org/",
-      "hydra": "http://www.w3.org/ns/hydra/core#"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
     }
   }
 ]

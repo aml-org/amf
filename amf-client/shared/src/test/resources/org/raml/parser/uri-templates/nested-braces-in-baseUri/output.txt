@@ -9,6 +9,6 @@ Level: Violation
   Message: Invalid path template syntax
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/uri-templates/nested-braces-in-baseUri/input.raml#/web-api/http%3A%2F%2Fmyapi.com%2F%7B%7BnotValid%7D%7D
-  Property: http://a.ml/vocabularies/http#url
+  Property: http://a.ml/vocabularies/apiContract#url
   Position: Some(LexicalInformation([(3,9)-(3,38)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/uri-templates/nested-braces-in-baseUri/input.raml

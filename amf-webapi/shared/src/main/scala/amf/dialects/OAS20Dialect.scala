@@ -412,6 +412,12 @@ object OAS20Dialect {
           .withLiteralRange(xsdBoolean.iri()),
 
         PropertyMapping()
+          .withId(DialectLocation + s"#/declarations/SchemaObject/additionalProperties")
+          .withName("additionalProperties")
+          .withNodePropertyMapping(NodeShapeModel.AdditionalPropertiesSchema.value.iri())
+          .withLiteralRange(xsdBoolean.iri()),
+
+        PropertyMapping()
           .withId(DialectLocation + s"#/declarations/SchemaObject/properties")
           .withName("properties")
           .withNodePropertyMapping(NodeShapeModel.Properties.value.iri())
@@ -1045,19 +1051,14 @@ object OAS20Dialect {
     d.withExternals(Seq(
 
       External()
-        .withId(DialectLocation + "#/externals/schema-org")
-        .withAlias("schema-org")
-        .withBase(Namespace.Schema.base),
+        .withId(DialectLocation + "#/externals/core")
+        .withAlias("core")
+        .withBase(Namespace.Core.base),
 
       External()
         .withId(DialectLocation + "#/externals/shacl")
         .withAlias("shacl")
         .withBase(Namespace.Shacl.base),
-
-      External()
-        .withId(DialectLocation + "#/externals/hydra")
-        .withAlias("hydra")
-        .withBase(Namespace.Hydra.base),
 
       External()
         .withId(DialectLocation + "#/externals/meta")
@@ -1073,7 +1074,7 @@ object OAS20Dialect {
 
     val vocabularies = Seq(
       ModelVocabularies.AmlDoc,
-      ModelVocabularies.Http,
+      ModelVocabularies.ApiContract,
       ModelVocabularies.Shapes,
       ModelVocabularies.Meta,
       ModelVocabularies.Security

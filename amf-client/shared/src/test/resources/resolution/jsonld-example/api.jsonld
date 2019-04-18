@@ -11,30 +11,30 @@
       {
         "@id": "#3",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "Jorge API"
           }
         ],
-        "raml-http:server": [
+        "apiContract:server": [
           {
             "@id": "#13",
             "@type": [
-              "raml-http:Server",
+              "apiContract:Server",
               "doc:DomainElement"
             ],
-            "raml-http:url": [
+            "apiContract:url": [
               {
                 "@value": "https://jorge.uri.com"
               }
             ],
             "smaps": {
               "lexical": {
-                "raml-http:url": "[(2,0)-(3,0)]"
+                "apiContract:url": "[(2,0)-(3,0)]"
               },
               "synthesized-field": {
                 "#13": "true"
@@ -42,65 +42,65 @@
             }
           }
         ],
-        "schema-org:version": [
+        "core:version": [
           {
             "@value": "v1"
           }
         ],
-        "raml-http:endpoint": [
+        "apiContract:endpoint": [
           {
             "@id": "#4",
             "@type": [
-              "raml-http:EndPoint",
+              "apiContract:EndPoint",
               "doc:DomainElement"
             ],
-            "raml-http:path": [
+            "apiContract:path": [
               {
                 "@value": "/jorgeEndpoint"
               }
             ],
-            "hydra:supportedOperation": [
+            "apiContract:supportedOperation": [
               {
                 "@id": "#5",
                 "@type": [
-                  "hydra:Operation",
+                  "apiContract:Operation",
                   "doc:DomainElement"
                 ],
-                "hydra:method": [
+                "apiContract:method": [
                   {
                     "@value": "get"
                   }
                 ],
-                "hydra:returns": [
+                "apiContract:returns": [
                   {
                     "@id": "#6",
                     "@type": [
-                      "raml-http:Response",
+                      "apiContract:Response",
                       "doc:DomainElement"
                     ],
-                    "schema-org:name": [
+                    "core:name": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "hydra:statusCode": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "raml-http:payload": [
+                    "apiContract:payload": [
                       {
                         "@id": "#7",
                         "@type": [
-                          "raml-http:Payload",
+                          "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "raml-http:mediaType": [
+                        "apiContract:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "raml-http:schema": [
+                        "apiContract:schema": [
                           {
                             "@id": "#8",
                             "@type": [
@@ -114,11 +114,11 @@
                                 "@value": "schema"
                               }
                             ],
-                            "doc:examples": [
+                            "apiContract:examples": [
                               {
                                 "@id": "#9",
                                 "@type": [
-                                  "doc:Example",
+                                  "apiContract:Example",
                                   "doc:DomainElement"
                                 ],
                                 "doc:strict": [
@@ -135,7 +135,7 @@
                                       "data:Node",
                                       "doc:DomainElement"
                                     ],
-                                    "rdf:member": [
+                                    "rdfs:member": [
                                       {
                                         "@id": "#11",
                                         "@type": [
@@ -161,7 +161,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "schema-org:name": [
+                                            "core:name": [
                                               {
                                                 "@value": "scalar_3"
                                               }
@@ -173,7 +173,7 @@
                                             }
                                           }
                                         ],
-                                        "schema-org:name": [
+                                        "core:name": [
                                           {
                                             "@value": "object_2"
                                           }
@@ -186,7 +186,7 @@
                                         }
                                       }
                                     ],
-                                    "schema-org:name": [
+                                    "core:name": [
                                       {
                                         "@value": "array_1"
                                       }
@@ -244,7 +244,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "raml-http:payload": "[(9,8)-(11,51)]",
+                        "apiContract:payload": "[(9,8)-(11,51)]",
                         "#6": "[(8,6)-(11,51)]"
                       }
                     }
@@ -252,7 +252,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "hydra:returns": "[(7,4)-(11,51)]",
+                    "apiContract:returns": "[(7,4)-(11,51)]",
                     "#5": "[(6,2)-(11,51)]"
                   }
                 }
@@ -270,10 +270,10 @@
             "#3": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:version": "[(4,0)-(5,0)]",
-            "schema-org:name": "[(3,0)-(4,0)]",
+            "core:version": "[(4,0)-(5,0)]",
+            "core:name": "[(3,0)-(4,0)]",
             "#3": "[(2,0)-(11,51)]",
-            "raml-http:server": "[(2,0)-(3,0)]"
+            "apiContract:server": "[(2,0)-(3,0)]"
           }
         }
       }
@@ -303,7 +303,7 @@
                 "@value": "[\n  {\n    \"@id\": \"http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#\"\n  }\n]\n"
               }
             ],
-            "raml-http:mediaType": [
+            "core:mediaType": [
               {
                 "@value": "application/json"
               }
@@ -319,14 +319,14 @@
     ],
     "@context": {
       "@base": "amf://id",
-      "raml-http": "http://a.ml/vocabularies/http#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
-      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-      "schema-org": "http://schema.org/",
-      "hydra": "http://www.w3.org/ns/hydra/core#"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     }
   }
 ]

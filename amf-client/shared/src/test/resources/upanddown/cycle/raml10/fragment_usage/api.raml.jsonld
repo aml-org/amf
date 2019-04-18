@@ -161,11 +161,11 @@
             "@value": "type"
           }
         ],
-        "http://a.ml/vocabularies/document#examples": [
+        "http://a.ml/vocabularies/apiContract#examples": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml#/shape/example/default-example",
             "@type": [
-              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/document#strict": [
@@ -199,7 +199,7 @@
                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                       }
                     ],
-                    "http://schema.org/name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "scalar_2"
                       }
@@ -237,7 +237,7 @@
                       "http://a.ml/vocabularies/data#Node",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                    "http://www.w3.org/2000/01/rdf-schema#member": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml#/shape/example/default-example/object_1/array_3/object_4",
                         "@type": [
@@ -263,7 +263,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "scalar_5"
                               }
@@ -310,7 +310,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "scalar_6"
                               }
@@ -339,7 +339,7 @@
                             ]
                           }
                         ],
-                        "http://schema.org/name": [
+                        "http://a.ml/vocabularies/core#name": [
                           {
                             "@value": "object_4"
                           }
@@ -416,7 +416,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "scalar_8"
                               }
@@ -463,7 +463,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "scalar_9"
                               }
@@ -492,7 +492,7 @@
                             ]
                           }
                         ],
-                        "http://schema.org/name": [
+                        "http://a.ml/vocabularies/core#name": [
                           {
                             "@value": "object_7"
                           }
@@ -569,7 +569,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "scalar_11"
                               }
@@ -616,7 +616,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "scalar_12"
                               }
@@ -645,7 +645,7 @@
                             ]
                           }
                         ],
-                        "http://schema.org/name": [
+                        "http://a.ml/vocabularies/core#name": [
                           {
                             "@value": "object_10"
                           }
@@ -722,7 +722,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#integer"
                               }
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "scalar_14"
                               }
@@ -769,7 +769,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#integer"
                               }
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "scalar_15"
                               }
@@ -798,7 +798,7 @@
                             ]
                           }
                         ],
-                        "http://schema.org/name": [
+                        "http://a.ml/vocabularies/core#name": [
                           {
                             "@value": "object_13"
                           }
@@ -851,7 +851,7 @@
                         ]
                       }
                     ],
-                    "http://schema.org/name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "array_3"
                       }
@@ -880,7 +880,7 @@
                     ]
                   }
                 ],
-                "http://schema.org/name": [
+                "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "object_1"
                   }

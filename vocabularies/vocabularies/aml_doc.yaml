@@ -2,162 +2,16 @@
 base: http://a.ml/vocabularies/document#
 usage: Document Model vocabulary for AMF. The Document Model defines the basic modular units where domain descriptions can be encoded.
 uses:
-  meta: meta.yaml
-external:
-  schema-org: http://schema.org/
-  shacl: http://www.w3.org/ns/shacl#
-  rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns#
-  rdfs: http://www.w3.org/2000/01/rdf-schema#
+  rdf: external/rdf.yaml
+  core: core.yaml
+  data: data_model.yaml
 classTerms:
-  ParametrizedResourceType:
-    displayName: Parametrized Resource Type
-    description: RAML resource type that can accept parameters
-    extends:
-      - ParametrizedDeclaration
-      - DomainElement
-    properties:
-      - schema-org.name
-      - target
-      - variable
-      - extends
-  ExternalFragment:
-    displayName: External Fragment
-    description: Fragment encoding an external entity
-    extends:
-      - Fragment
-      - Unit
-    properties:
-      - encodes
-      - references
-      - usage
-      - meta.describedBy
-  Unit:
-    displayName: Base Unit
-    description: Base class for every single document model unit. After parsing a document the parser generate parsing Units. Units encode the domain elements and can reference other units to re-use descriptions.
-    properties:
-      - references
-      - usage
-      - meta.describedBy
-  Example:
-    displayName: Example
-    description: Example value for a schema inside an API
-    extends:
-      - DomainElement
-      - Linkable
-      - ExternalSource
-    properties:
-      - schema-org.name
-      - displayName
-      - schema-org.description
-      - externalValue
-      - strict
-      - structuredValue
-      - extends
-      - link-target
-      - link-label
-      - recursive
-      - shacl.raw
-      - reference-id
-  Trait:
-    displayName: Trait
-    description: Type of document base unit encoding a RAML trait
-    extends:
-      - AbstractDeclaration
-      - DomainElement
-    properties:
-      - schema-org.name
-      - schema-org.description
-      - dataNode
-      - variable
-      - link-target
-      - link-label
-      - recursive
-      - extends
-  Module:
-    displayName: Module
-    description: |-
-      A Module is a parsing Unit that declares DomainElements that can be referenced from the DomainElements in other parsing Units.
-      It main purpose is to expose the declared references so they can be re-used
-    extends: Unit
-    properties:
-      - declares
-      - references
-      - usage
-      - meta.describedBy
-  ParametrizedDeclaration:
-    displayName: Parametrized Declaration
-    description: Generic graph template supporting variables that can be transformed into a domain element
-    extends: DomainElement
-    properties:
-      - schema-org.name
-      - target
-      - variable
-      - extends
-  ResourceType:
-    displayName: Resource Type
-    description: Type of document base unit encoding a RAML resource type
-    extends:
-      - AbstractDeclaration
-      - DomainElement
-    properties:
-      - schema-org.name
-      - schema-org.description
-      - dataNode
-      - variable
-      - link-target
-      - link-label
-      - recursive
-      - extends
-  DomainElement:
-    displayName: Domain element
-    description: Base class for any element describing a domain model. Domain Elements are encoded or declared into base units
-    properties:
-      - extends
-  ParametrizedTrait:
-    displayName: Parametrized Trait
-    description: RAML trait with declared parameters
-    extends:
-      - ParametrizedDeclaration
-      - DomainElement
-    properties:
-      - schema-org.name
-      - target
-      - variable
-      - extends
-  Linkable:
-    displayName: Linkable Element
-    description: |-
-      Reification of a link between elements in the model. Used when we want to capture the structure of the source document
-      in the graph itself. Linkable elements are just replaced by regular links after resolution.
-    properties:
-      - link-target
-      - link-label
-      - recursive
   AbstractDeclaration:
     displayName: Abstract Declaration
     description: |-
       Graph template that can be used to declare a re-usable graph structure that can be applied to different domain elements
       in order to re-use common semantics. Similar to a Lisp macro or a C++ template.
       It can be extended by any domain element adding bindings for the variables in the declaration.
-    extends: DomainElement
-    properties:
-      - schema-org.name
-      - schema-org.description
-      - dataNode
-      - variable
-      - link-target
-      - link-label
-      - recursive
-      - extends
-  Fragment:
-    displayName: Fragment
-    description: A Fragment is a parsing Unit that encodes a DomainElement
-    extends: Unit
-    properties:
-      - encodes
-      - references
-      - usage
-      - meta.describedBy
   Document:
     displayName: Document
     description: |-
@@ -168,12 +22,13 @@ classTerms:
       - Fragment
       - Module
       - Unit
-    properties:
-      - encodes
-      - declares
-      - references
-      - usage
-      - meta.describedBy
+  DocumentExtension:
+    displayName: Document Extension
+    description: A Document that extends a target document, overwriting part of the information or overlaying additional information.
+    extends: Unit
+  DomainElement:
+    displayName: Domain element
+    description: Base class for any element describing a domain model. Domain Elements are encoded or declared into base units
   DomainProperty:
     displayName: Custom Domain Property
     description: |-
@@ -184,74 +39,109 @@ classTerms:
             Contrast this extension mechanism with the creation of a propertyTerm in a vocabulary, a more
       re-usable and generic way of achieving the same functionality.
       It can be validated using a SHACL shape
-    extends:
-      - rdf.Property
-      - DomainElement
-    properties:
-      - rdfs.domain
-      - name
-      - link-target
-      - link-label
-      - recursive
-      - extends
+    extends: rdf.Property
   ExternalDomainElement:
     displayName: External Domain Element
     description: Domain element containing foreign information that cannot be included into the model semantics
-    extends: DomainElement
-    properties:
-      - raw
-  VariableValue:
-    displayName: Variable Value
-    description: Value for a variable in a graph template
-    extends: DomainElement
-    properties:
-      - name
-      - value
-      - extends
-  DocumentExtension:
-    displayName: Document Extension
-    description: A Document that extends a target document, overwriting part of the information or overlaying additional information.
-    extends: Unit
-    properties:
-      - extends
-      - encodes
-      - declares
-      - references
-      - usage
-      - meta.describedBy
+  ExternalFragment:
+    displayName: External Fragment
+    description: Fragment encoding an external entity
+    extends:
+      - Fragment
+      - Unit
   ExternalSource:
     displayName: External Source Element
     description: Inlined fragment of information
-    properties:
-      - shacl.raw
-      - reference-id
+  Fragment:
+    displayName: Fragment
+    description: A Fragment is a parsing Unit that encodes a DomainElement
+    extends: Unit
+  Linkable:
+    displayName: Linkable Element
+    description: |-
+      Reification of a link between elements in the model. Used when we want to capture the structure of the source document
+      in the graph itself. Linkable elements are just replaced by regular links after resolution.
+  Module:
+    displayName: Module
+    description: |-
+      A Module is a parsing Unit that declares DomainElements that can be referenced from the DomainElements in other parsing Units.
+      It main purpose is to expose the declared references so they can be re-used
+    extends: Unit
+  ParametrizedDeclaration:
+    displayName: Parametrized Declaration
+    description: Generic graph template supporting variables that can be transformed into a domain element
+  ParametrizedResourceType:
+    displayName: Parametrized Resource Type
+    description: RAML resource type that can accept parameters
+    extends: ParametrizedDeclaration
+  ParametrizedTrait:
+    displayName: Parametrized Trait
+    description: RAML trait with declared parameters
+    extends: ParametrizedDeclaration
+  PayloadFragment:
+    displayName: Payload Fragment
+    description: Fragment encoding HTTP payload information
+    extends:
+      - Fragment
+      - Unit
+  ResourceType:
+    displayName: Resource Type
+    description: Type of document base unit encoding a RAML resource type
+    extends: AbstractDeclaration
+  Trait:
+    displayName: Trait
+    description: Type of document base unit encoding a RAML trait
+    extends: AbstractDeclaration
+  Unit:
+    displayName: Base Unit
+    description: Base class for every single document model unit. After parsing a document the parser generate parsing Units. Units encode the domain elements and can reference other units to re-use descriptions.
+  VariableValue:
+    displayName: Variable Value
+    description: Value for a variable in a graph template
 propertyTerms:
+  Reference:
+    displayName: Reference
+    range: string
   dataNode:
     displayName: data node
     description: Associated dynamic structure for the declaration
+    range: data.Node
   declares:
     displayName: declares
     description: |-
       The declares relationship exposes a DomainElement as a re-usable unit that can be referenced from other units.
       URIs for the declared DomainElement are considered to be stable and safe to reference from other DomainElements.
-    range: DomainElement
-  displayName:
-    displayName: display name
-    description: Human readable name for the example
-    extends: schema-org.name
+  definedBy:
+    displayName: defined by
+    description: Definition for the extended entity
+    range: DomainProperty
+  deprecated:
+    displayName: deprecated
+    description: Marks the parameter as deprecated
+    range: boolean
+  element:
+    displayName: element
+    description: Element being extended
     range: string
   encodes:
     displayName: encodes
     description: The encodes relationship links a parsing Unit with the DomainElement from a particular domain the unit contains.
-    range: DomainElement
   extends:
     displayName: extends
-    description: Target base unit being extended by this extension model
-    range: uri
+    description: |-
+      Entity that is going to be extended overlaying or adding additional information
+      The type of the relationship provide the semantics about thow the referenced and referencer elements must be combined when generating the domain model from the document model.
+  extension:
+    displayName: extension
+    description: Data structure associated to the extension
+    range: data.Node
   externalValue:
     displayName: external value
     description: Raw text containing an unparsable example
     range: string
+  graphDependencies:
+    displayName: graphDependencies
+    range: uri
   link-label:
     displayName: link label
     description: Label for the type of link
@@ -260,9 +150,9 @@ propertyTerms:
     displayName: link target
     description: URI of the linked element
     range: uri
-  name:
-    displayName: name
-    description: Name of an entity
+  location:
+    displayName: location
+    description: location of the metadata document that generated this base unit
     range: string
   raw:
     displayName: raw
@@ -287,6 +177,7 @@ propertyTerms:
   structuredValue:
     displayName: structured value
     description: Data structure containing the value of the example
+    range: data.Node
   target:
     displayName: target
     description: Target node for the parameter
@@ -294,47 +185,13 @@ propertyTerms:
   usage:
     displayName: usage
     description: Human readable description of the unit
-    extends: schema-org.description
+    extends: core.description
     range: string
   value:
     displayName: value
     description: value of the variables
+    range: data.Node
   variable:
     displayName: variable
     description: Variables to be replaced in the graph template introduced by an AbstractDeclaration
     range: VariableValue
-  schema-org.description:
-    displayName: description
-    description: Human readable description of an element
-    range: string
-  schema-org.name:
-    displayName: name
-    description: Name of the shape
-    range: string
-  rdfs.domain:
-    displayName: domain
-    description: RDFS domain property
-    range: uri
-  shacl.raw:
-    displayName: raw
-    description: Raw textual information that cannot be processed for the current model semantics.
-    range: string
-  extension:
-    displayName: extension
-    description: Data structure associated to the extension
-  examples:
-    displayName: examples
-    description: Examples for a particular domain element
-    range: Example
-  deprecated:
-    displayName: deprecated
-    description: Marks the operation as deprecated
-    range: boolean
-  element:
-    displayName: element
-    description: Element being extended
-    range: string
-  definedBy:
-    displayName: defined by
-    description: Definition for the extended entity
-    range: DomainProperty

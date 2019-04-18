@@ -11,11 +11,11 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "test API"
           }
@@ -44,7 +44,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -561,11 +561,11 @@
             "@value": "T1"
           }
         ],
-        "http://a.ml/vocabularies/document#examples": [
+        "http://a.ml/vocabularies/apiContract#examples": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/boolean-value-in-example/api.raml#/declarations/types/T1/example/default-example",
             "@type": [
-              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/document#strict": [
@@ -599,7 +599,7 @@
                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                       }
                     ],
-                    "http://schema.org/name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "scalar_2"
                       }
@@ -646,7 +646,7 @@
                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                       }
                     ],
-                    "http://schema.org/name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "scalar_3"
                       }
@@ -693,7 +693,7 @@
                         "@id": "http://www.w3.org/2001/XMLSchema#integer"
                       }
                     ],
-                    "http://schema.org/name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "scalar_4"
                       }
@@ -740,7 +740,7 @@
                         "@id": "http://www.w3.org/2001/XMLSchema#boolean"
                       }
                     ],
-                    "http://schema.org/name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "scalar_5"
                       }
@@ -769,7 +769,7 @@
                     ]
                   }
                 ],
-                "http://schema.org/name": [
+                "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "object_1"
                   }

@@ -25,21 +25,21 @@ object ResponseModel
 
   val StatusCode = Field(
     Str,
-    Hydra + "statusCode",
-    ModelDoc(ExternalModelVocabularies.Hydra, "status code", "HTTP status code returned by a response"))
+    ApiContract + "statusCode",
+    ModelDoc(ModelVocabularies.ApiContract, "status code", "HTTP status code returned by a response"))
 
   val Payloads = Field(Array(PayloadModel),
-                       Http + "payload",
-                       ModelDoc(ModelVocabularies.Http, "payload", "Payload for a Request/Response"))
+                       ApiContract + "payload",
+                       ModelDoc(ModelVocabularies.ApiContract, "payload", "Payload for a Request/Response"))
 
   val Links = Field(
     Array(TemplatedLinkModel),
-    Http + "link",
-    ModelDoc(ModelVocabularies.Http, "links", "Structural definition of links on the source data shape AST"))
+    ApiContract + "link",
+    ModelDoc(ModelVocabularies.ApiContract, "links", "Structural definition of links on the source data shape AST"))
 
   override val key: Field = StatusCode
 
-  override val `type`: List[ValueType] = Http + "Response" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "Response" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
     LinkableElementModel.fields ++
@@ -48,7 +48,7 @@ object ResponseModel
   override def modelInstance = Response()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Http,
+    ModelVocabularies.ApiContract,
     "Response",
     "Response information for an operation"
   )

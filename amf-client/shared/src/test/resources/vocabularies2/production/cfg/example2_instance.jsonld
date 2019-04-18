@@ -31,14 +31,9 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/cfg#fileName": [
+            "http://a.ml/vocabularies/cfg#version": [
               {
-                "@value": "vdp-binary"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#gavGroup": [
-              {
-                "@value": "com.mulesoft.tokenizer"
+                "@value": "1.0.0"
               }
             ],
             "http://a.ml/vocabularies/cfg#gavArtifact": [
@@ -46,14 +41,19 @@
                 "@value": "vdp-from-exchange"
               }
             ],
-            "http://a.ml/vocabularies/cfg#version": [
+            "http://a.ml/vocabularies/cfg#fileName": [
               {
-                "@value": "1.0.0"
+                "@value": "vdp-binary"
               }
             ],
             "http://a.ml/vocabularies/cfg#classifier": [
               {
                 "@value": "vdp"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#gavGroup": [
+              {
+                "@value": "com.mulesoft.tokenizer"
               }
             ],
             "http://a.ml/vocabularies/cfg#packaging": [
@@ -76,31 +76,31 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(11,15)-(11,18)]"
+                        "@value": "[(11,4)-(13,0)]"
                       }
                     ]
                   },
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/cfg#version"
+                        "@value": "http://a.ml/vocabularies/cfg#classifier"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(9,13)-(9,18)]"
+                        "@value": "[(10,4)-(11,0)]"
                       }
                     ]
                   },
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/cfg#gavGroup"
+                        "@value": "http://a.ml/vocabularies/cfg#gavArtifact"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(7,13)-(7,35)]"
+                        "@value": "[(8,4)-(9,0)]"
                       }
                     ]
                   },
@@ -119,6 +119,18 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
+                        "@value": "http://a.ml/vocabularies/cfg#version"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,4)-(10,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
                         "@value": "http://a.ml/vocabularies/cfg#fileName"
                       }
                     ],
@@ -131,24 +143,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/cfg#gavArtifact"
+                        "@value": "http://a.ml/vocabularies/cfg#gavGroup"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(8,16)-(8,33)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/cfg#classifier"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(10,16)-(10,19)]"
+                        "@value": "[(7,4)-(8,0)]"
                       }
                     ]
                   }
@@ -164,9 +164,9 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/cfg#fileName": [
+            "http://a.ml/vocabularies/cfg#version": [
               {
-                "@value": "vdp-key"
+                "@value": "v1"
               }
             ],
             "http://a.ml/vocabularies/cfg#type": [
@@ -174,19 +174,9 @@
                 "@value": "CSM"
               }
             ],
-            "http://a.ml/vocabularies/cfg#version": [
+            "http://a.ml/vocabularies/cfg#fileName": [
               {
-                "@value": "v1"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#secretGroup": [
-              {
-                "@value": "xyz"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#secretType": [
-              {
-                "@value": "sharedSecrets"
+                "@value": "vdp-key"
               }
             ],
             "http://a.ml/vocabularies/cfg#secretId": [
@@ -194,9 +184,19 @@
                 "@value": "44e94628-54ee-11e7-b114-b2f933d5fe66"
               }
             ],
+            "http://a.ml/vocabularies/cfg#secretGroup": [
+              {
+                "@value": "xyz"
+              }
+            ],
             "http://a.ml/vocabularies/cfg#packaging": [
               {
                 "@value": "secret"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#secretType": [
+              {
+                "@value": "sharedSecrets"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -209,36 +209,24 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/cfg#packaging"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(20,15)-(20,21)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
                         "@value": "http://a.ml/vocabularies/cfg#secretType"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(18,16)-(18,29)]"
+                        "@value": "[(18,4)-(19,0)]"
                       }
                     ]
                   },
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/cfg#version"
+                        "@value": "http://a.ml/vocabularies/cfg#secretGroup"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(16,13)-(16,15)]"
+                        "@value": "[(17,4)-(18,0)]"
                       }
                     ]
                   },
@@ -251,6 +239,18 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(13,2)-(13,9)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/cfg#version"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(16,4)-(17,0)]"
                       }
                     ]
                   },
@@ -274,19 +274,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(15,10)-(15,13)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/cfg#secretGroup"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(17,17)-(17,20)]"
+                        "@value": "[(15,4)-(16,0)]"
                       }
                     ]
                   },
@@ -298,7 +286,19 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(19,14)-(19,50)]"
+                        "@value": "[(19,4)-(20,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/cfg#packaging"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(20,4)-(21,0)]"
                       }
                     ]
                   }

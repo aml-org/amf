@@ -11,11 +11,11 @@
       {
         "@id": "#7",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "test"
           }
@@ -25,7 +25,7 @@
             "#7": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:name": "[(2,0)-(3,0)]",
+            "core:name": "[(2,0)-(3,0)]",
             "#7": "[(2,0)-(8,13)]"
           }
         }
@@ -114,11 +114,11 @@
             "@value": "A"
           }
         ],
-        "doc:examples": [
+        "apiContract:examples": [
           {
             "@id": "#2",
             "@type": [
-              "doc:Example",
+              "apiContract:Example",
               "doc:DomainElement"
             ],
             "doc:strict": [
@@ -152,7 +152,7 @@
                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                       }
                     ],
-                    "schema-org:name": [
+                    "core:name": [
                       {
                         "@value": "scalar_2"
                       }
@@ -164,7 +164,7 @@
                     }
                   }
                 ],
-                "schema-org:name": [
+                "core:name": [
                   {
                     "@value": "object_1"
                   }
@@ -211,7 +211,8 @@
       "shacl": "http://www.w3.org/ns/shacl#",
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
-      "schema-org": "http://schema.org/"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
     }
   }
 ]

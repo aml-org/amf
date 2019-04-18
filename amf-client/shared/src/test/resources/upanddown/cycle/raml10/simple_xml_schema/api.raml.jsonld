@@ -11,11 +11,11 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/simple_xml_schema/api.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "test"
           }
@@ -44,7 +44,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -151,16 +151,16 @@
             "@value": "XmlSchema"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "XML type that has only xsd schema and example\n"
           }
         ],
-        "http://a.ml/vocabularies/document#examples": [
+        "http://a.ml/vocabularies/apiContract#examples": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/simple_xml_schema/api.raml#/declarations/types/schema/XmlSchema/example/default-example",
             "@type": [
-              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/document#strict": [
@@ -236,7 +236,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/description"
+                    "@value": "http://a.ml/vocabularies/core#description"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

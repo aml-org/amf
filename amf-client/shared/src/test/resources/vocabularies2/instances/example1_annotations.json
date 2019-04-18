@@ -21,7 +21,7 @@
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/alias": [
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "a"
           }
@@ -39,7 +39,7 @@
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/alias": [
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "b"
           }
@@ -93,7 +93,7 @@
           }
         ],
         "http://test.com/a#hey": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "(a.hey)"
             }
@@ -134,7 +134,7 @@
           ]
         },
         "http://test.com/a#hey2": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "x-a-hey2"
             }
@@ -175,7 +175,7 @@
           ]
         },
         "http://a.ml/vocabularies/data#anon1": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "(anon1)"
             }
@@ -216,7 +216,7 @@
           ]
         },
         "http://a.ml/vocabularies/data#anon2": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "x-anon2"
             }
@@ -257,7 +257,7 @@
           ]
         },
         "http://test.com/b#ho": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "(b.ho)"
             }
@@ -298,7 +298,7 @@
           ]
         },
         "http://test.com/b#ho2": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "x-b-ho2"
             }

@@ -650,33 +650,39 @@ object RAML10Dialect {
               .withEncoded(DialectNodes.RootNode.id)
           ))
 
-    d.withExternals(
-      Seq(
-        External()
-          .withId(DialectLocation + "#/externals/schema-org")
-          .withAlias("schema-org")
-          .withBase(Namespace.Schema.base),
-        External()
-          .withId(DialectLocation + "#/externals/shacl")
-          .withAlias("shacl")
-          .withBase(Namespace.Shacl.base),
-        External()
-          .withId(DialectLocation + "#/externals/hydra")
-          .withAlias("hydra")
-          .withBase(Namespace.Hydra.base),
-        External()
-          .withId(DialectLocation + "#/externals/meta")
-          .withAlias("meta")
-          .withBase(Namespace.Meta.base),
-        External()
-          .withId(DialectLocation + "#/externals/owl")
-          .withAlias("owl")
-          .withBase(Namespace.Owl.base)
-      ))
+    d.withExternals(Seq(
+
+      External()
+        .withId(DialectLocation + "#/externals/core")
+        .withAlias("core")
+        .withBase(Namespace.Core.base),
+
+      External()
+        .withId(DialectLocation + "#/externals/shacl")
+        .withAlias("shacl")
+        .withBase(Namespace.Shacl.base),
+
+      External()
+        .withId(DialectLocation + "#/externals/apiContract")
+        .withAlias("apiContract")
+        .withBase(Namespace.ApiContract.base),
+
+      External()
+        .withId(DialectLocation + "#/externals/meta")
+        .withAlias("meta")
+        .withBase(Namespace.Meta.base),
+
+      External()
+        .withId(DialectLocation + "#/externals/owl")
+        .withAlias("owl")
+        .withBase(Namespace.Owl.base)
+
+    ))
 
     val vocabularies = Seq(
       ModelVocabularies.AmlDoc,
-      ModelVocabularies.Http,
+      ModelVocabularies.ApiContract,
+      ModelVocabularies.Core,
       ModelVocabularies.Shapes,
       ModelVocabularies.Meta,
       ModelVocabularies.Security

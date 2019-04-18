@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain._
-import amf.core.vocabulary.Namespace.{Http, Hydra, Schema}
+import amf.core.vocabulary.Namespace.{ApiContract, Core}
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.webapi.models.TemplatedLink
 
@@ -18,26 +18,26 @@ object TemplatedLinkModel
     with DescriptionField {
 
   val Template = Field(Str,
-                       Hydra + "template",
-                       ModelDoc(ExternalModelVocabularies.Hydra, "template", "URL template for a templated link"))
+                       ApiContract + "template",
+                       ModelDoc(ModelVocabularies.ApiContract, "template", "URL template for a templated link"))
 
   val OperationId = Field(Str,
-                          Http + "operationId",
-                          ModelDoc(ModelVocabularies.Http, "operation ID", "Identifier of the target operation"))
+                          ApiContract + "operationId",
+                          ModelDoc(ModelVocabularies.ApiContract, "operation ID", "Identifier of the target operation"))
 
   val OperationRef = Field(Str,
     Http + "operationRef",
     ModelDoc(ModelVocabularies.Http, "operation Ref", "Reference of the target operation"))
 
   val Mapping = Field(Array(IriTemplateMappingModel),
-                      Hydra + "mapping",
-                      ModelDoc(ExternalModelVocabularies.Hydra, "mapping", "Variable mapping for the URL template"))
+                      ApiContract + "mapping",
+                      ModelDoc(ModelVocabularies.ApiContract, "mapping", "Variable mapping for the URL template"))
 
-  val RequestBody = Field(Str, Http + "requestBody", ModelDoc(ModelVocabularies.Http, "request body", ""))
+  val RequestBody = Field(Str, ApiContract + "requestBody", ModelDoc(ModelVocabularies.ApiContract, "request body", ""))
 
-  val Server = Field(ServerModel, Http + "server", ModelDoc(ModelVocabularies.Http, "server", ""))
+  val Server = Field(ServerModel, ApiContract + "server", ModelDoc(ModelVocabularies.ApiContract, "server", ""))
 
-  override val `type`: List[ValueType] = Hydra + "TemplatedLink" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "TemplatedLink" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
     Name :: Template :: OperationId :: Mapping :: RequestBody :: Description :: Server :: (DomainElementModel.fields ++ LinkableElementModel.fields)
@@ -45,7 +45,7 @@ object TemplatedLinkModel
   override def modelInstance = TemplatedLink()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Http,
+    ModelVocabularies.ApiContract,
     "Templated Link",
     "Templated link containing URL template and variables mapping"
   )

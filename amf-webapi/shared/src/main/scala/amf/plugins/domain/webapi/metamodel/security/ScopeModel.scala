@@ -12,7 +12,7 @@ object ScopeModel extends DomainElementModel {
   val Name = Field(
     Str,
     Security + "name",
-    ModelDoc(ModelVocabularies.Security, "name", "Name of the scope", Seq((Namespace.Schema + "name").iri())))
+    ModelDoc(ModelVocabularies.Security, "name", "Name of the scope", Seq((Namespace.Core + "name").iri())))
 
   val Description = Field(
     Str,
@@ -20,7 +20,7 @@ object ScopeModel extends DomainElementModel {
     ModelDoc(ModelVocabularies.Security,
              "description",
              "Human readable description for the scope",
-             Seq((Namespace.Schema + "description").iri()))
+             Seq((Namespace.Core + "description").iri()))
   )
 
   override def fields: List[Field] = List(Name, Description) ++ DomainElementModel.fields

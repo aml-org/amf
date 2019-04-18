@@ -6,7 +6,7 @@
       "http://www.w3.org/2002/07/owl#Ontology",
       "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://schema.org/name": [
+    "http://a.ml/vocabularies/core#name": [
       {
         "@value": "test2"
       }
@@ -55,7 +55,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/name"
+                "@value": "http://a.ml/vocabularies/core#name"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -73,6 +73,11 @@
         "@type": [
           "http://www.w3.org/2002/07/owl#Class",
           "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "A"
+          }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {

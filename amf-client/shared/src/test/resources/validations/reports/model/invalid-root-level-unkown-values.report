@@ -9,6 +9,6 @@ Level: Violation
   Message: Protocols must have a case insensitive value matching http or https
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/protocols/invalid-root-level-unkown-values.raml#/web-api
-  Property: http://a.ml/vocabularies/http#scheme
+  Property: http://a.ml/vocabularies/apiContract#scheme
   Position: Some(LexicalInformation([(4,0)-(5,7)]))
   Location: file://amf-client/shared/src/test/resources/validations/protocols/invalid-root-level-unkown-values.raml

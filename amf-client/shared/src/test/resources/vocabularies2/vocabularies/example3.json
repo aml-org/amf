@@ -6,7 +6,7 @@
       "http://www.w3.org/2002/07/owl#Ontology",
       "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://schema.org/name": [
+    "http://a.ml/vocabularies/core#name": [
       {
         "@value": "test2"
       }
@@ -55,7 +55,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/name"
+                "@value": "http://a.ml/vocabularies/core#name"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -74,12 +74,17 @@
           "http://www.w3.org/2002/07/owl#Class",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/meta#displayName": [
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "C"
+          }
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "class C"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "C"
           }
@@ -121,12 +126,17 @@
           "http://www.w3.org/2002/07/owl#Class",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/meta#displayName": [
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "A"
+          }
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "class A"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "description"
           }
@@ -160,12 +170,17 @@
           "http://www.w3.org/2002/07/owl#Class",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/meta#displayName": [
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "B"
+          }
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "class B"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "B"
           }

@@ -1,0 +1,170 @@
+#%Vocabulary 1.0
+base: http://a.ml/vocabularies/shapes#
+usage: Vocabulary defining data shapes, used as an extension to SHACL
+uses:
+  shacl: external/shacl.yaml
+classTerms:
+  AnyShape:
+    displayName: Any Shape
+    description: Base class for all shapes stored in the graph model
+    extends: Shape
+  ArrayShape:
+    displayName: Array Shape
+    description: Shape that contains a nested collection of data shapes
+  FileShape:
+    displayName: File Shape
+    description: Shape describing data uploaded in an API request
+    extends: AnyShape
+  MatrixShape:
+    displayName: Matrix Shape
+    description: Data shape containing nested multi-dimensional collection shapes
+    extends: ArrayShape
+  NilShape:
+    displayName: Nil Shape
+    description: Data shape representing the null/nil value in the input schema
+    extends: AnyShape
+  PropertyDependencies:
+    displayName: Property Dependencies
+    description: Dependency between sets of property shapes
+  RecursiveShape:
+    displayName: Recursive Shape
+    description: Recursion on a Shape structure, used when expanding a shape and finding the canonical representation of that shape.
+  ScalarShape:
+    displayName: Scalar Shape
+    description: Data shape describing a scalar value in the input data model, reified as an scalar node in the mapped graph
+    extends: AnyShape
+  SchemaShape:
+    displayName: Schema Shape
+    description: Raw schema that cannot be parsed using AMF shapes model
+    extends: AnyShape
+  Shape:
+    displayName: Shape
+    description: |-
+      Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph.
+      They can be used to define and enforce schemas for the data graph information through SHACL.
+      Shapes can be recursive and inherit from other shapes.
+    extends: shacl.Shape
+  TupleShape:
+    displayName: Tuple Shape
+    description: Data shape containing a multi-valued collection of shapes
+    extends: ArrayShape
+  UnionShape:
+    displayName: Union Shape
+    description: Shape representing the union of many alternative data shapes
+    extends: AnyShape
+  XMLSerializer:
+    displayName: XML Serializer
+    description: Information about how to encode into XML a particular data shape
+propertyTerms:
+  additionalItems:
+    displayName: additional items
+    description: Constraint allowing additional shapes in the collection
+    range: boolean
+  anyOf:
+    displayName: any of
+    description: Data shapes in the union
+    range: shacl.Shape
+  closure:
+    displayName: inheritance closure
+    description: Transitive closure of data shapes this particular shape inherits structure from
+    range: uri
+  collectionFormat:
+    displayName: collection format
+    description: Input collection format information
+    range: string
+  dependencies:
+    displayName: dependencies
+    description: Dependent properties constraint
+    range: PropertyDependencies
+  discriminator:
+    displayName: discriminator
+    description: Discriminator property
+    range: string
+  discriminatorValue:
+    displayName: discriminator value
+    description: Values for the discriminator property
+    range: string
+  fileType:
+    displayName: file type
+    description: Type of file described by this shape
+    range: string
+  fixPoint:
+    displayName: fixpoint
+    description: Link to the base of the recursion for a recursive shape
+    range: uri
+  format:
+    displayName: format
+    description: Format constraint
+    range: string
+  inherits:
+    displayName: inherits
+    description: Relationship of inheritance between data shapes
+    range: shacl.Shape
+  items:
+    displayName: items
+    description: Shapes inside the data arrangement
+    range: shacl.Shape
+  maxProperties:
+    displayName: max properties
+    description: Maximum number of properties in the input node constraint
+    range: integer
+  minProperties:
+    displayName: min properties
+    description: Minimum number of properties in the input node constraint
+    range: integer
+  multipleOf:
+    displayName: multiple of
+    description: Multiple of constraint
+    range: double
+  patternName:
+    displayName: pattern name
+    description: Patterned property constraint
+    range: string
+  propertySource:
+    displayName: property source
+    description: Source property shape in the dependency
+    range: uri
+  propertyTarget:
+    displayName: property target
+    description: Target property shape in the dependency
+    range: uri
+  range:
+    displayName: range
+    description: Range property constraint
+    range: shacl.Shape
+  readOnly:
+    displayName: read only
+    description: Read only property constraint
+    range: boolean
+  schema:
+    displayName: schema
+    description: Schema for an entity
+    range: shacl.Shape
+  uniqueItems:
+    displayName: uinque items
+    description: Unique items constraint
+    range: boolean
+  xmlAttribute:
+    displayName: xml attribute
+    description: XML attribute mapping
+    range: boolean
+  xmlName:
+    displayName: xml name
+    description: XML name mapping
+    range: string
+  xmlNamespace:
+    displayName: xml namespace
+    description: XML namespace mapping
+    range: string
+  xmlPrefix:
+    displayName: xml prefix
+    description: XML prefix mapping
+    range: string
+  xmlSerialization:
+    displayName: XML serialization
+    description: information about how to serialize
+    range: XMLSerializer
+  xmlWrapped:
+    displayName: xml wrapped
+    description: XML wrapped mapping flag
+    range: boolean

@@ -139,7 +139,7 @@ case class ShaclPayloadValidation(validationCandidates: Seq[ValidationCandidate]
     var validationsAcc = validations
     for {
       pc <- validation.propertyConstraints
-      if pc.ramlPropertyId == (Namespace.Rdf + "member").iri()
+      if pc.ramlPropertyId == (Namespace.Rdfs + "member").iri()
       itemsValidationId <- pc.node
       (id, v)           <- validationsAcc
       if id == itemsValidationId

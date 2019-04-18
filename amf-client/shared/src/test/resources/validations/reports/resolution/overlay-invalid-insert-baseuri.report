@@ -5,10 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#resolution-validation
-  Message: Property 'ValueType(Namespace(http://a.ml/vocabularies/http#),server)' of type 'AmfArray' is not allowed to be overriden or added in overlays
+- Source: http://a.ml/vocabularies/amf/resolution#resolution-validation
+  Message: Property 'ValueType(Namespace(http://a.ml/vocabularies/apiContract#),server)' of type 'AmfArray' is not allowed to be overriden or added in overlays
   Level: Violation
-  Target: ValueType(Namespace(http://a.ml/vocabularies/http#),server)
+  Target: ValueType(Namespace(http://a.ml/vocabularies/apiContract#),server)
   Property: 
   Position: Some(LexicalInformation([(3,0)-(3,30)]))
   Location: file://amf-client/shared/src/test/resources/validations/overlays/invalid-insertion-baseuri/overlay.raml

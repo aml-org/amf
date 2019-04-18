@@ -1,0 +1,119 @@
+#%Vocabulary 1.0
+base: http://www.w3.org/ns/shacl#
+usage: SHACL vocabulary
+classTerms:
+  NodeShape:
+    displayName: Node Shape
+    description: Shape that validates a record of fields, like a JS object
+    extends: Shape
+  PropertyShape:
+    displayName: Property Shape
+    description: Constraint over a property in a data shape.
+    extends: Shape
+  Shape:
+    displayName: Shape
+    description: shacl:Shape is the SHACL superclass of those two shape types in the SHACL vocabulary. Its subclasses shacl:NodeShape and shacl:PropertyShape can be used as SHACL type of node and property shapes, respectively.
+propertyTerms:
+  additionalPropertiesSchema:
+    displayName: additional properties schema
+    range: Shape
+  and:
+    displayName: and
+    description: Logical and composition of data shapes
+    range: Shape
+  closed:
+    displayName: closed
+    description: Additional properties in the input node accepted constraint
+    range: boolean
+  datatype:
+    displayName: datatype
+    description: Scalar range constraining this scalar shape
+    range: uri
+  defaultValue:
+    displayName: default value
+    description: Default value parsed for a data shape property
+    range: uri
+  defaultValueStr:
+    displayName: default value String
+    description: Textual representation of the parsed default value for the shape property
+    range: string
+  in:
+    displayName: in
+    description: Enumeration of possible values for a data shape property
+    range: uri
+  maxCount:
+    displayName: max. count
+    description: Maximum count property constraint
+    range: integer
+  maxExclusive:
+    displayName: max. exclusive
+    description: Maximum exclusive constraint
+    range: boolean
+  maxInclusive:
+    displayName: max. inclusive
+    description: Maximum inclusive constraint
+    range: double
+  maxLength:
+    displayName: max. length
+    description: Maximum length constraint
+    range: integer
+  mediaType:
+    displayName: media type
+    description: Media type associated to a shape
+    range: string
+  minCount:
+    displayName: min. count
+    description: Minimum count property constraint
+    range: integer
+  minExclusive:
+    displayName: min. exclusive
+    description: Minimum exclusive constraint
+    range: boolean
+  minInclusive:
+    displayName: min. inclusive
+    description: Minimum inclusive constraint
+    range: double
+  minLength:
+    displayName: min. length
+    description: Minimum lenght constraint
+    range: integer
+  name:
+    displayName: name
+    description: Name for a data shape
+    range: string
+  node:
+    displayName: range
+    description: Object constraint over the type of the mapped property
+    range: uri
+  not:
+    displayName: not
+    description: Logical not composition of data shapes
+    range: Shape
+  or:
+    displayName: or
+    description: Logical or composition of data shapes
+    range: Shape
+  path:
+    displayName: path
+    description: Path to the constrained property
+    range: uri
+  pattern:
+    displayName: pattern
+    description: Pattern constraint
+    range: string
+  property:
+    displayName: property
+    description: Properties associated to this node
+    range: PropertyShape
+  raw:
+    displayName: raw
+    description: Raw textual information that cannot be processed for the current model semantics.
+    range: string
+  targetClass:
+    displayName: target class
+    description: Target class whose instances will need to match the constraint described for the node
+    range: uri
+  xone:
+    displayName: exclusive or
+    description: Logical exclusive or composition of data shapes
+    range: Shape

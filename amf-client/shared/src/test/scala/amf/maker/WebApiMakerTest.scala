@@ -459,8 +459,8 @@ trait WebApiMakerTest extends AsyncFunSuite with CompilerTestBuilder with ListAs
   }
 
   test("Generate amf example with types") {
-
-    assertFixture(webApiWithTypes(), "example-types.raml.jsonld", AmfJsonHint)
+    val data = webApiWithTypes()
+    assertFixture(data, "example-types.raml.jsonld", AmfJsonHint)
   }
 
   test("Generate oas example with types") {

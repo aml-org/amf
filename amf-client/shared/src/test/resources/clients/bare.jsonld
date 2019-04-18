@@ -11,25 +11,25 @@
       {
         "@id": "file:///tmp/test#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "test"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "test description"
           }
         ],
-        "http://a.ml/vocabularies/http#host": [
+        "http://a.ml/vocabularies/apiContract#host": [
           {
             "@value": "localhost.com"
           }
         ],
-        "http://a.ml/vocabularies/http#scheme": [
+        "http://a.ml/vocabularies/apiContract#scheme": [
           {
             "@value": "http"
           },
@@ -37,27 +37,27 @@
             "@value": "https"
           }
         ],
-        "http://a.ml/vocabularies/http#basePath": [
+        "http://a.ml/vocabularies/apiContract#basePath": [
           {
             "@value": "api"
           }
         ],
-        "http://a.ml/vocabularies/http#accepts": [
+        "http://a.ml/vocabularies/apiContract#accepts": [
           {
             "@value": "application/json"
           }
         ],
-        "http://a.ml/vocabularies/http#contentType": [
+        "http://a.ml/vocabularies/apiContract#contentType": [
           {
             "@value": "application/json"
           }
         ],
-        "http://schema.org/version": [
+        "http://a.ml/vocabularies/core#version": [
           {
             "@value": "1.1"
           }
         ],
-        "http://schema.org/termsOfService": [
+        "http://a.ml/vocabularies/core#termsOfService": [
           {
             "@value": "termsOfService"
           }

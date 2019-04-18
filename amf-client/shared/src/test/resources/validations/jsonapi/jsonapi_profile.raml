@@ -34,9 +34,9 @@ validations:
   # JSON API documents are defined in JavaScript Object Notation (JSON) [RFC7159].
   json-api-json-specific-media-type:
     message: JSON API documents used the 'application/vnd.api+json' media type. Media type of Payloads must match.
-    targetClass: raml-http.Payload
+    targetClass: apiContract.Payload
     propertyConstraints:
-      raml-http.mediaType:
+      apiContract.mediaType:
         in: [ "application/vnd.api+json" ]
 
   # Content Negotiation
@@ -46,11 +46,11 @@ validations:
   # Clients MUST send all JSON API data in request documents with the header Content-Type
   json-api-content-type-content-headers-request:
     message: Clients request must at least specify the content-type header
-    targetClass: raml-http.Request
+    targetClass: apiContract.Request
     functionConstraint:
       code: |
         function(request) {
-          var headerNames = path(request, 'http:header / schema:name');
+          var headerNames = path(request, 'apiContract:header / core:name');
           for (var i=0; i<headerNames.length; i++) {
             if(headerNames[i] == "Content-type")
               return true;
@@ -63,12 +63,12 @@ validations:
   # Servers MUST send all JSON API data in response documents with the header Content-Type
   json-api-content-type-content-headers-response:
     message: Server responses must at least specify the content-type header
-    targetClass: hydra.Operation
+    targetClass: apiContract.Operation
     functionConstraint:
       code: |
         function(operation) {
-          if (value(operation, 'hydra:method', 'get')) {
-            return value(operation, 'hydra:returns / http:header / schema:name', 'Content-type');
+          if (value(operation, 'apiContract:method', 'get')) {
+            return value(operation, 'apiContract:returns / apiContract:header / core:name', 'Content-type');
           }
           return true;
         }
@@ -77,12 +77,12 @@ validations:
   # the header Content-Type: application/vnd.api+json with any media type parameters.
   json-api-415-server-response:
     message: Servers MUST support a 415 response code for requests with content-type header with type parameters
-    targetClass: hydra.Operation
+    targetClass: apiContract.Operation
     functionConstraint:
       code: |
         function(operation) {
-           if (value(operation, 'hydra:method', 'post')) {
-             return value(operation, "hydra:returns / hydra:statusCode", "415");
+           if (value(operation, 'apiContract:method', 'post')) {
+             return value(operation, "apiContract:returns / apiContract:statusCode", "415");
            } else {
              return true
            }
@@ -92,12 +92,12 @@ validations:
   # media type and all instances of that media type are modified with media type parameters.
   json-api-406-server-response:
     message: Servers MUST support a 406 response code for requests with accept header with type parameters
-    targetClass: hydra.Operation
+    targetClass: apiContract.Operation
     functionConstraint:
       code: |
         function(operation) {
-           if (value(operation, 'hydra:method', 'post')) {
-             return value(operation, "hydra:returns / hydra:statusCode", "406");
+           if (value(operation, 'apiContract:method', 'post')) {
+             return value(operation, "apiContract:returns / apiContract:statusCode", "406");
            } else {
              return true
            }
@@ -109,12 +109,12 @@ validations:
   # A JSON object MUST be at the root of every JSON API request and response containing data. This object defines a document’s “top level”.
   json-api-top-level-object:
     message: A JSON object MUST be at the root of every JSON API request and response containing data. This object defines a document’s “top level”.
-    targetClass: raml-http.Payload
+    targetClass: apiContract.Payload
     functionConstraint:
       code: |
         function(payload)  {
-          if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {
-            var schema = path(payload, 'http:schema')[0]
+          if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
+            var schema = path(payload, 'apiContract:schema')[0]
             return isModelType(schema, 'shacl:NodeShape');
           } else {
             return true;
@@ -128,14 +128,14 @@ validations:
   #     meta: a meta object that contains non-standard meta-information.
   json-api-valid-payload:
     message: A document MUST contain at least one of the following top-level members data, errors or meta
-    targetClass: raml-http.Payload
+    targetClass: apiContract.Payload
     functionConstraint:
       code: |
         function(payload) {
-          if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {
-            var hasData = value(payload, 'http:schema / shacl:property / shacl:name', 'data');
-            var hasErrors = value(payload, 'http:schema / shacl:property / shacl:name', 'errors');
-            var hasMeta = value(payload, 'http:schema / shacl:property / shacl:name', 'meta');
+          if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
+            var hasData = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'data');
+            var hasErrors = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'errors');
+            var hasMeta = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'meta');
             return (hasData || hasErrors || hasMeta);
           } else {
             return true;
@@ -145,13 +145,13 @@ validations:
   # The members data and errors MUST NOT coexist in the same document.
   json-api-valid-payload-data-errors-exclusive:
     message: The members data and errors MUST NOT coexist in the same document.
-    targetClass: raml-http.Payload
+    targetClass: apiContract.Payload
     functionConstraint:
       code: |
         function(payload) {
-          if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {
-            var hasData = value(payload, 'http:schema / shacl:property / shacl:name', 'data');
-            var hasErrors = value(payload, 'http:schema / shacl:property / shacl:name', 'errors');
+          if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
+            var hasData = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'data');
+            var hasErrors = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'errors');
             return !(hasData && hasErrors)
           } else {
             return true;
@@ -161,13 +161,13 @@ validations:
   # If a document does not contain a top-level data key, the included member MUST NOT be present either
   json-api-valid-payload-no-includes-without-data:
     message: If a document does not contain a top-level data key, the included member MUST NOT be present either
-    targetClass: raml-http.Payload
+    targetClass: apiContract.Payload
     functionConstraint:
       code: |
         function(payload) {
-          if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {
-            var hasData = value(payload, 'http:schema / shacl:property / shacl:name', 'data');
-            var hasLinks = value(payload, 'http:schema / shacl:property / shacl:name', 'links');
+          if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
+            var hasData = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'data');
+            var hasLinks = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'links');
             if (!hasData) {
               return !hasLinks
             } else {
@@ -184,12 +184,12 @@ validations:
   #  - an array of resource objects, an array of resource identifier objects, or an empty array ([]), for requests that target resource collections
   json-api-valid-primary-data:
     message: Primary data of a payload must be either single resource or an array of resources
-    targetClass: raml-http.Payload
+    targetClass: apiContract.Payload
     functionConstraint:
       code: |
         function(payload) {
-            if (value(payload, 'http:mediaType', 'application/vnd.api+json')) {
-              var schemas = path(payload, 'http:schema');
+            if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
+              var schemas = path(payload, 'apiContract:schema');
               var dataSchema = filterByPropertyValue(schemas, 'shacl:property / shacl:name', 'data')[0];
               if (dataSchema != null) {
                 var properties = path(dataSchema, 'shacl:property');

@@ -8,12 +8,12 @@
       "http://a.ml/vocabularies/document#Module",
       "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://schema.org/name": [
+    "http://a.ml/vocabularies/core#name": [
       {
         "@value": "Instagram Data"
       }
     ],
-    "http://schema.org/version": [
+    "http://a.ml/vocabularies/core#version": [
       {
         "@value": "0.1"
       }
@@ -26,7 +26,7 @@
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/alias": [
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "linked-data-platform"
           }
@@ -44,7 +44,7 @@
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/alias": [
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "tests"
           }
@@ -70,7 +70,7 @@
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/meta#name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "Instagram Data 0.1"
               }
@@ -114,7 +114,7 @@
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/document#Unit"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "Custom Vocabulary"
           }
@@ -126,12 +126,17 @@
               "http://www.w3.org/2002/07/owl#Class",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/meta#displayName": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "Person"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#displayName": [
+              {
+                "@value": "Person"
+              }
+            ],
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Person description"
               }
@@ -171,12 +176,12 @@
               "http://a.ml/vocabularies/meta#Property",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/meta#displayName": [
+            "http://a.ml/vocabularies/core#displayName": [
               {
                 "@value": "Name"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Name description"
               }
@@ -247,7 +252,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -309,7 +314,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/version"
+                "@value": "http://a.ml/vocabularies/core#version"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -333,7 +338,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/name"
+                "@value": "http://a.ml/vocabularies/core#name"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -358,7 +363,7 @@
             "@id": "http://mulesoft.com/vocabularies/amf-learning#Person"
           }
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "PersonNode"
           }
@@ -375,7 +380,7 @@
                 "@id": "http://mulesoft.com/vocabularies/amf-learning#name"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "id"
               }
@@ -449,7 +454,7 @@
             "@id": "http://a.ml/vocabularies/tests#FirstLevelNode"
           }
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "FirstLevelNode"
           }
@@ -466,7 +471,7 @@
                 "@id": "http://a.ml/vocabularies/tests#nextLevel"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "second"
               }
@@ -546,7 +551,7 @@
             "@id": "http://www.w3.org/ns/ldp#BasicContainer"
           }
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "ContainerNode"
           }
@@ -563,7 +568,7 @@
                 "@id": "http://www.w3.org/ns/ldp#contains"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "container"
               }

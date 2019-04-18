@@ -11,74 +11,74 @@
       {
         "@id": "#8",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "test"
           }
         ],
-        "raml-http:endpoint": [
+        "apiContract:endpoint": [
           {
             "@id": "#9",
             "@type": [
-              "raml-http:EndPoint",
+              "apiContract:EndPoint",
               "doc:DomainElement"
             ],
-            "raml-http:path": [
+            "apiContract:path": [
               {
                 "@value": "/resource"
               }
             ],
-            "hydra:supportedOperation": [
+            "apiContract:supportedOperation": [
               {
                 "@id": "#11",
                 "@type": [
-                  "hydra:Operation",
+                  "apiContract:Operation",
                   "doc:DomainElement"
                 ],
-                "hydra:method": [
+                "apiContract:method": [
                   {
                     "@value": "post"
                   }
                 ],
-                "hydra:expects": [
+                "apiContract:expects": [
                   {
                     "@id": "#12",
                     "@type": [
-                      "raml-http:Request",
+                      "apiContract:Request",
                       "doc:DomainElement"
                     ],
-                    "raml-http:parameter": [
+                    "apiContract:parameter": [
                       {
                         "@id": "#13",
                         "@type": [
-                          "raml-http:Parameter",
+                          "apiContract:Parameter",
                           "doc:DomainElement"
                         ],
-                        "schema-org:name": [
+                        "core:name": [
                           {
                             "@value": "qp1"
                           }
                         ],
-                        "raml-http:paramName": [
+                        "apiContract:paramName": [
                           {
                             "@value": "qp1"
                           }
                         ],
-                        "hydra:required": [
+                        "apiContract:required": [
                           {
                             "@value": true
                           }
                         ],
-                        "raml-http:binding": [
+                        "apiContract:binding": [
                           {
                             "@value": "query"
                           }
                         ],
-                        "raml-http:schema": [
+                        "apiContract:schema": [
                           {
                             "@id": "#14",
                             "@type": [
@@ -111,14 +111,14 @@
                         ],
                         "smaps": {
                           "extension-provenance": {
-                            "raml-http:binding": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                            "raml-http:paramName": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "apiContract:binding": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "apiContract:paramName": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
                             "#13": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                            "schema-org:name": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                            "hydra:required": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                            "core:name": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                            "apiContract:required": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                           },
                           "lexical": {
-                            "raml-http:schema": "[(6,8)-(6,12)]",
+                            "apiContract:schema": "[(6,8)-(6,12)]",
                             "#13": "[(6,8)-(6,12)]"
                           }
                         }
@@ -126,10 +126,10 @@
                     ],
                     "smaps": {
                       "extension-provenance": {
-                        "raml-http:parameter": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                        "apiContract:parameter": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                       },
                       "lexical": {
-                        "raml-http:parameter": "[(5,6)-(6,12)]",
+                        "apiContract:parameter": "[(5,6)-(6,12)]",
                         "#12": "[(5,6)-(6,12)]"
                       }
                     }
@@ -137,7 +137,7 @@
                 ],
                 "smaps": {
                   "extension-provenance": {
-                    "hydra:method": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                    "apiContract:method": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
                     "#11": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                   },
                   "lexical": {
@@ -154,7 +154,7 @@
                   "doc:ParametrizedDeclaration",
                   "doc:DomainElement"
                 ],
-                "schema-org:name": [
+                "core:name": [
                   {
                     "@value": "lib.rt"
                   }
@@ -167,7 +167,7 @@
                       "doc:AbstractDeclaration",
                       "doc:DomainElement"
                     ],
-                    "schema-org:name": [
+                    "core:name": [
                       {
                         "@value": "rt"
                       }
@@ -214,7 +214,7 @@
                                         "@id": "http://www.w3.org/2001/XMLSchema#nil"
                                       }
                                     ],
-                                    "schema-org:name": [
+                                    "core:name": [
                                       {
                                         "@value": "scalar_4"
                                       }
@@ -226,7 +226,7 @@
                                     }
                                   }
                                 ],
-                                "schema-org:name": [
+                                "core:name": [
                                   {
                                     "@value": "object_3"
                                   }
@@ -239,7 +239,7 @@
                                 }
                               }
                             ],
-                            "schema-org:name": [
+                            "core:name": [
                               {
                                 "@value": "object_2"
                               }
@@ -252,7 +252,7 @@
                             }
                           }
                         ],
-                        "schema-org:name": [
+                        "core:name": [
                           {
                             "@value": "object_1"
                           }
@@ -280,7 +280,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "schema-org:name": "[(8,8)-(8,14)]",
+                    "core:name": "[(8,8)-(8,14)]",
                     "#10": "[(8,8)-(8,14)]"
                   }
                 }
@@ -298,7 +298,7 @@
             "#8": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:name": "[(2,0)-(4,0)]",
+            "core:name": "[(2,0)-(4,0)]",
             "#8": "[(2,0)-(8,14)]"
           }
         }
@@ -324,7 +324,7 @@
               "doc:AbstractDeclaration",
               "doc:DomainElement"
             ],
-            "schema-org:name": [
+            "core:name": [
               {
                 "@value": "rt"
               }
@@ -371,7 +371,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#nil"
                               }
                             ],
-                            "schema-org:name": [
+                            "core:name": [
                               {
                                 "@value": "scalar_4"
                               }
@@ -383,7 +383,7 @@
                             }
                           }
                         ],
-                        "schema-org:name": [
+                        "core:name": [
                           {
                             "@value": "object_3"
                           }
@@ -396,7 +396,7 @@
                         }
                       }
                     ],
-                    "schema-org:name": [
+                    "core:name": [
                       {
                         "@value": "object_2"
                       }
@@ -409,7 +409,7 @@
                     }
                   }
                 ],
-                "schema-org:name": [
+                "core:name": [
                   {
                     "@value": "object_1"
                   }
@@ -457,13 +457,12 @@
     },
     "@context": {
       "@base": "amf://id",
-      "raml-http": "http://a.ml/vocabularies/http#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
-      "schema-org": "http://schema.org/",
-      "hydra": "http://www.w3.org/ns/hydra/core#"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
     }
   }
 ]

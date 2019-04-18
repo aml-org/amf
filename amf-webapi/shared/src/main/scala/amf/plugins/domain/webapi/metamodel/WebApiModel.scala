@@ -2,13 +2,13 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
-import amf.plugins.domain.webapi.models.WebApi
+import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.vocabulary.Namespace._
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
+import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
+import amf.plugins.domain.webapi.models.WebApi
 
 /**
   * Web Api metamodel
@@ -16,43 +16,43 @@ import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 object WebApiModel extends DomainElementModel with NameFieldSchema with DescriptionField {
 
   val Servers =
-    Field(Array(ServerModel), Http + "server", ModelDoc(ModelVocabularies.Http, "server", "server information"))
+    Field(Array(ServerModel), ApiContract + "server", ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
 
   val Accepts = Field(Array(Str),
-                      Http + "accepts",
-                      ModelDoc(ModelVocabularies.Http, "accepts", "Media-types accepted in a API request"))
+                      ApiContract + "accepts",
+                      ModelDoc(ModelVocabularies.ApiContract, "accepts", "Media-types accepted in a API request"))
 
   val ContentType = Field(Array(Str),
-                          Http + "contentType",
-                          ModelDoc(ModelVocabularies.Http, "content type", "Media types returned by a API response"))
+                          ApiContract + "contentType",
+                          ModelDoc(ModelVocabularies.ApiContract, "content type", "Media types returned by a API response"))
 
   val Schemes =
-    Field(Array(Str), Http + "scheme", ModelDoc(ModelVocabularies.Http, "scheme", "URI scheme for the API protocol"))
+    Field(Array(Str), ApiContract + "scheme", ModelDoc(ModelVocabularies.ApiContract, "scheme", "URI scheme for the API protocol"))
 
   val Version =
-    Field(Str, Schema + "version", ModelDoc(ExternalModelVocabularies.SchemaOrg, "version", "Version of the API"))
+    Field(Str, Core + "version", ModelDoc(ModelVocabularies.Core, "version", "Version of the API"))
 
   val TermsOfService = Field(
     Str,
-    Schema + "termsOfService",
-    ModelDoc(ExternalModelVocabularies.SchemaOrg, "terms of service", "Terms and conditions when using the API"))
+    Core + "termsOfService",
+    ModelDoc(ModelVocabularies.Core, "terms of service", "Terms and conditions when using the API"))
 
   val Provider = Field(OrganizationModel,
-                       Schema + "provider",
-                       ModelDoc(ExternalModelVocabularies.SchemaOrg, "provider", "The API provider"))
+                       Core + "provider",
+                       ModelDoc(ModelVocabularies.Core, "provider", "The API provider"))
 
   val License = Field(LicenseModel,
-                      Schema + "license",
-                      ModelDoc(ExternalModelVocabularies.SchemaOrg, "license", "License for the API"))
+                      Core + "license",
+                      ModelDoc(ModelVocabularies.Core, "license", "License for the API"))
 
   val Documentations = Field(
     Array(CreativeWorkModel),
-    Schema + "documentation",
-    ModelDoc(ExternalModelVocabularies.SchemaOrg, "documentation", "Documentation associated to the API"))
+    Core + "documentation",
+    ModelDoc(ModelVocabularies.Core, "documentation", "Documentation associated to the API"))
 
   val EndPoints = Field(Array(EndPointModel),
-                        Http + "endpoint",
-                        ModelDoc(ModelVocabularies.Http, "endpoint", "End points defined in the API"))
+                        ApiContract + "endpoint",
+                        ModelDoc(ModelVocabularies.ApiContract, "endpoint", "End points defined in the API"))
 
   val Security = Field(
     Array(ParametrizedSecuritySchemeModel),
@@ -61,11 +61,11 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
   )
 
   val Tags = Field(Array(TagModel),
-                   Http + "tag",
-                   ModelDoc(ModelVocabularies.Http, "tag", "Additionally custom tagged information"))
+                   ApiContract + "tag",
+                   ModelDoc(ModelVocabularies.ApiContract, "tag", "Additionally custom tagged information"))
 
   override val `type`
-    : List[ValueType] = Schema + "WebAPI" :: Document + "RootDomainElement" :: DomainElementModel.`type`
+    : List[ValueType] = ApiContract + "WebAPI" :: Document + "RootDomainElement" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
     List(
@@ -88,7 +88,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
   override def modelInstance = WebApi()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Http,
+    ModelVocabularies.ApiContract,
     "Web API",
     "Top level element describing a HTTP API"
   )

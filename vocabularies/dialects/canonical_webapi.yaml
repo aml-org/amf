@@ -4,16 +4,16 @@ dialect: WebAPI
 version: 1.0
 
 uses:
-  raml-http: ../vocabularies/http.yaml
-  raml-shapes: ../vocabularies/shapes.yaml
+  raml-shapes: ../vocabularies/data_shapes.yaml
   security: ../vocabularies/security.yaml
   doc: ../vocabularies/aml_doc.yaml
+  data: ../vocabularies/data_model.yaml
+  apiContract: ../vocabularies/api_contract.yaml
+  core: ../vocabularies/core.yaml
 
 external:
   shacl: http://www.w3.org/ns/shacl#
   rdfs: http://www.w3.org/2000/01/rdf-schema#
-  schema-org: http://schema.org/
-  hydra: http://www.w3.org/ns/hydra/core#
 
 nodeMappings:
 
@@ -29,7 +29,6 @@ nodeMappings:
       Nil: NilShape
       Scalar: ScalarShape
       Any: AnyShape
-    
     union:
       - UnionShape
       - TupleShape
@@ -50,7 +49,6 @@ nodeMappings:
       APIKey: APIKeySettings
       Http: HTTPSettings
       OpenID: OpenIDSettings
-    
     union:
       - OAuth2Settings
       - OAuth1Settings
@@ -59,103 +57,58 @@ nodeMappings:
       - OpenIDSettings
     
   SchemaShape:
-    classTerm: shacl.SchemaShape
+    classTerm: raml-shapes.SchemaShape
+    extends: AnyShape
     mapping:
       mediaType:
         propertyTerm: shacl.mediaType
         range: string
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
+
+  RecursiveShape:
+    classTerm: raml-shapes.RecursiveShape
+    extends: AnyShape
+    mapping:
+      fixpoint:
+        propertyTerm: raml-shapes.fixPoint
         range: link
-        allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-      location:
-        propertyTerm: doc.location
-        range: string
 
 
   Request:
-    classTerm: raml-http.Request
+    classTerm: apiContract.Request
     mapping:
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       required:
-        propertyTerm: raml-http.required
+        propertyTerm: apiContract.required
         range: boolean
       parameter:
-        propertyTerm: raml-http.parameter
+        propertyTerm: apiContract.parameter
         range: Parameter
         allowMultiple: true
       header:
-        propertyTerm: raml-http.header
+        propertyTerm: apiContract.header
         range: Parameter
         allowMultiple: true
       payload:
-        propertyTerm: raml-http.payload
+        propertyTerm: apiContract.payload
         range: Payload
         allowMultiple: true
       queryString:
-        propertyTerm: raml-http.queryString
+        propertyTerm: apiContract.queryString
         range: DataShapesUnion
       uriParameter:
-        propertyTerm: raml-http.uriParameter
+        propertyTerm: apiContract.uriParameter
         range: Parameter
         allowMultiple: true
       cookieParameter:
-        propertyTerm: raml-http.cookieParameter
+        propertyTerm: apiContract.cookieParameter
         range: Parameter
         allowMultiple: true
 
 
   Operation:
-    classTerm: hydra.Operation
+    classTerm: apiContract.Operation
     mapping:
       extends:
         propertyTerm: doc.extends
@@ -165,42 +118,41 @@ nodeMappings:
         range:
           - ParametrizedTrait
         allowMultiple: true
-    
       method:
-        propertyTerm: hydra.method
+        propertyTerm: apiContract.method
         range: string
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       deprecated:
-        propertyTerm: doc.deprecated
+        propertyTerm: core.deprecated
         range: boolean
       guiSummary:
-        propertyTerm: raml-http.guiSummary
+        propertyTerm: apiContract.guiSummary
         range: string
       documentation:
-        propertyTerm: schema-org.documentation
+        propertyTerm: core.documentation
         range: CreativeWork
       scheme:
-        propertyTerm: raml-http.scheme
+        propertyTerm: apiContract.scheme
         range: string
         allowMultiple: true
       accepts:
-        propertyTerm: raml-http.accepts
+        propertyTerm: apiContract.accepts
         range: string
         allowMultiple: true
-      contentType:
-        propertyTerm: raml-http.contentType
+      mediaType:
+        propertyTerm: core.mediaType
         range: string
         allowMultiple: true
       expects:
-        propertyTerm: hydra.expects
+        propertyTerm: apiContract.expects
         range: Request
       returns:
-        propertyTerm: hydra.returns
+        propertyTerm: apiContract.returns
         range: Response
         allowMultiple: true
       security:
@@ -208,17 +160,28 @@ nodeMappings:
         range: ParametrizedSecurityScheme
         allowMultiple: true
       tag:
-        propertyTerm: raml-http.tag
+        propertyTerm: apiContract.tag
         range: string
         allowMultiple: true
       callback:
-        propertyTerm: raml-http.callback
+        propertyTerm: apiContract.callback
         range: Callback
         allowMultiple: true
       server:
-        propertyTerm: raml-http.server
+        propertyTerm: apiContract.server
         range: Server
         allowMultiple: true
+
+
+  LinkNode:
+    classTerm: data.Link
+    mapping:
+      value:
+        propertyTerm: data.value
+        range: string
+      name:
+        propertyTerm: core.name
+        range: string
 
 
   Scope:
@@ -233,49 +196,48 @@ nodeMappings:
 
 
   Parameter:
-    classTerm: raml-http.Parameter
+    classTerm: apiContract.Parameter
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       paramName:
-        propertyTerm: raml-http.paramName
+        propertyTerm: apiContract.paramName
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       required:
-        propertyTerm: hydra.required
+        propertyTerm: apiContract.required
         range: boolean
       deprecated:
         propertyTerm: doc.deprecated
         range: boolean
       allowEmptyValue:
-        propertyTerm: raml-http.allowEmptyValue
+        propertyTerm: apiContract.allowEmptyValue
         range: boolean
       style:
-        propertyTerm: raml-http.style
+        propertyTerm: apiContract.style
         range: string
       explode:
-        propertyTerm: raml-http.explode
+        propertyTerm: apiContract.explode
         range: boolean
       allowReserved:
-        propertyTerm: raml-http.allowReserved
+        propertyTerm: apiContract.allowReserved
         range: boolean
       binding:
-        propertyTerm: raml-http.binding
+        propertyTerm: apiContract.binding
         range: string
       schema:
-        propertyTerm: raml-http.schema
+        propertyTerm: apiContract.schema
         range: DataShapesUnion
       payload:
-        propertyTerm: raml-http.payload
+        propertyTerm: apiContract.payload
         range: Payload
         allowMultiple: true
-      example:
-        propertyTerm: raml-http.example
-        range: Example
-        allowMultiple: true
+      examples:
+        propertyTerm: apiContract.examples
+        range: Examples
 
 
   OAuth2Settings:
@@ -303,14 +265,22 @@ nodeMappings:
         allowMultiple: true
 
 
+  ObjectNode:
+    classTerm: data.Object
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+
+
   ResourceType:
     classTerm: doc.ResourceType
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       variable:
         propertyTerm: doc.variable
@@ -322,7 +292,7 @@ nodeMappings:
     classTerm: doc.ParametrizedTrait
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       target:
         propertyTerm: doc.target
@@ -337,17 +307,28 @@ nodeMappings:
 
 
   Callback:
-    classTerm: raml-http.Callback
+    classTerm: apiContract.Callback
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       expression:
-        propertyTerm: raml-http.expression
+        propertyTerm: apiContract.expression
         range: string
       endpoint:
-        propertyTerm: raml-http.endpoint
+        propertyTerm: apiContract.endpoint
         range: EndPoint
+
+
+  ExternalDomainElement:
+    classTerm: doc.ExternalDomainElement
+    mapping:
+      raw:
+        propertyTerm: doc.raw
+        range: string
+      mediaType:
+        propertyTerm: core.mediaType
+        range: string
 
 
   PropertyDependencies:
@@ -366,10 +347,10 @@ nodeMappings:
     classTerm: doc.AbstractDeclaration
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       variable:
         propertyTerm: doc.variable
@@ -379,6 +360,7 @@ nodeMappings:
 
   FileShape:
     classTerm: raml-shapes.FileShape
+    extends: AnyShape
     mapping:
       fileType:
         propertyTerm: raml-shapes.fileType
@@ -411,64 +393,11 @@ nodeMappings:
       multipleOf:
         propertyTerm: raml-shapes.multipleOf
         range: double
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-      location:
-        propertyTerm: doc.location
-        range: string
 
 
   PropertyShape:
     classTerm: shacl.PropertyShape
+    extends: Shape
     mapping:
       path:
         propertyTerm: shacl.path
@@ -488,41 +417,6 @@ nodeMappings:
       patternName:
         propertyTerm: raml-shapes.patternName
         range: string
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
 
 
   OAuth1Settings:
@@ -556,6 +450,7 @@ nodeMappings:
 
   MatrixShape:
     classTerm: raml-shapes.MatrixShape
+    extends: AnyShape
     mapping:
       items:
         propertyTerm: raml-shapes.items
@@ -572,127 +467,19 @@ nodeMappings:
       collectionFormat:
         propertyTerm: raml-shapes.collectionFormat
         range: string
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-      location:
-        propertyTerm: doc.location
-        range: string
 
 
   VariableValue:
     classTerm: doc.VariableValue
     mapping:
       name:
-        propertyTerm: doc.name
+        propertyTerm: core.name
         range: string
 
 
   NilShape:
     classTerm: raml-shapes.NilShape
-    mapping:
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-      location:
-        propertyTerm: doc.location
-        range: string
+    extends: AnyShape
 
 
   XMLSerializer:
@@ -716,48 +503,48 @@ nodeMappings:
 
 
   WebAPI:
-    classTerm: schema-org.WebAPI
+    classTerm: apiContract.WebAPI
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       server:
-        propertyTerm: raml-http.server
+        propertyTerm: apiContract.server
         range: Server
         allowMultiple: true
       accepts:
-        propertyTerm: raml-http.accepts
+        propertyTerm: apiContract.accepts
         range: string
         allowMultiple: true
       contentType:
-        propertyTerm: raml-http.contentType
+        propertyTerm: apiContract.contentType
         range: string
         allowMultiple: true
       scheme:
-        propertyTerm: raml-http.scheme
+        propertyTerm: apiContract.scheme
         range: string
         allowMultiple: true
       version:
-        propertyTerm: schema-org.version
+        propertyTerm: core.version
         range: string
       termsOfService:
-        propertyTerm: schema-org.termsOfService
+        propertyTerm: core.termsOfService
         range: string
       provider:
-        propertyTerm: schema-org.provider
+        propertyTerm: core.provider
         range: Organization
       license:
-        propertyTerm: schema-org.license
+        propertyTerm: core.license
         range: License
       documentation:
-        propertyTerm: schema-org.documentation
+        propertyTerm: core.documentation
         range: CreativeWork
         allowMultiple: true
       endpoint:
-        propertyTerm: raml-http.endpoint
+        propertyTerm: apiContract.endpoint
         range: EndPoint
         allowMultiple: true
       security:
@@ -765,13 +552,14 @@ nodeMappings:
         range: ParametrizedSecurityScheme
         allowMultiple: true
       tag:
-        propertyTerm: raml-http.tag
+        propertyTerm: apiContract.tag
         range: Tag
         allowMultiple: true
 
 
   ScalarShape:
     classTerm: raml-shapes.ScalarShape
+    extends: AnyShape
     mapping:
       datatype:
         propertyTerm: shacl.datatype
@@ -803,94 +591,40 @@ nodeMappings:
       multipleOf:
         propertyTerm: raml-shapes.multipleOf
         range: double
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-      location:
-        propertyTerm: doc.location
-        range: string
 
 
   SecurityScheme:
     classTerm: security.SecurityScheme
     mapping:
       name:
-        propertyTerm: security.name
+        propertyTerm: core.name
         range: string
       type:
         propertyTerm: security.type
         range: string
       displayName:
-        propertyTerm: schema-org.displayName
+        propertyTerm: core.displayName
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       header:
-        propertyTerm: raml-http.header
+        propertyTerm: apiContract.header
         range: Parameter
         allowMultiple: true
       parameter:
-        propertyTerm: raml-http.parameter
+        propertyTerm: apiContract.parameter
         range: Parameter
         allowMultiple: true
       response:
-        propertyTerm: hydra.response
+        propertyTerm: apiContract.response
         range: Response
         allowMultiple: true
       settings:
         propertyTerm: security.settings
         range: SecuritySettingsUnion
       queryString:
-        propertyTerm: raml-http.queryString
+        propertyTerm: apiContract.queryString
         range: DataShapesUnion
 
 
@@ -898,7 +632,7 @@ nodeMappings:
     classTerm: doc.ParametrizedResourceType
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       target:
         propertyTerm: doc.target
@@ -914,61 +648,23 @@ nodeMappings:
 
   AnyShape:
     classTerm: raml-shapes.AnyShape
+    extends: Shape
     mapping:
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
       raw:
         propertyTerm: shacl.raw
         range: string
       referenceId:
         propertyTerm: doc.reference-id
         range: link
-      location:
-        propertyTerm: doc.location
-        range: string
+      documentation:
+        propertyTerm: core.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: apiContract.examples
+        range: Examples
 
 
   CustomDomainProperty:
@@ -982,130 +678,116 @@ nodeMappings:
         propertyTerm: raml-shapes.schema
         range: DataShapesUnion
       name:
-        propertyTerm: doc.name
+        propertyTerm: core.name
         range: string
+
+
+  Examples:
+    classTerm: apiContract.NamedExamples
+    mapping:
+      examples:
+        propertyTerm: apiContract.examples
+        range: Example
+        allowMultiple: true
 
 
   Tag:
-    classTerm: raml-http.Tag
+    classTerm: apiContract.Tag
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
-      externalDocs:
-        propertyTerm: schema-org.externalDocs
+      documentation:
+        propertyTerm: core.documentation
         range: CreativeWork
+
+
+  ArrayNode:
+    classTerm: data.Array
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
 
 
   IriTemplate:
-    classTerm: hydra.IriTemplateMapping
+    classTerm: apiContract.IriTemplateMapping
     mapping:
       variable:
-        propertyTerm: hydra.variable
+        propertyTerm: apiContract.variable
         range: string
-      linkExprssion:
-        propertyTerm: raml-http.linkExpression
+      linkExpression:
+        propertyTerm: apiContract.linkExpression
         range: string
 
 
-  ShapeExtension:
-    classTerm: raml-http.ShapeExtension
+  ExternalSourceElement:
+    classTerm: doc.ExternalSource
     mapping:
-      definedBy:
-        propertyTerm: doc.definedBy
-        range: CustomDomainProperty
-
-
-  UnionShape:
-    classTerm: raml-shapes.UnionShape
-    mapping:
-      anyOf:
-        propertyTerm: raml-shapes.anyOf
-        range: DataShapesUnion
-        allowMultiple: true
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
       raw:
         propertyTerm: shacl.raw
         range: string
       referenceId:
         propertyTerm: doc.reference-id
         range: link
-      location:
-        propertyTerm: doc.location
+
+
+  ShapeExtension:
+    classTerm: apiContract.ShapeExtension
+    mapping:
+      definedBy:
+        propertyTerm: doc.definedBy
+        range: CustomDomainProperty
+
+
+  ScalarNode:
+    classTerm: data.Scalar
+    mapping:
+      value:
+        propertyTerm: data.value
         range: string
+      name:
+        propertyTerm: core.name
+        range: string
+
+
+  UnionShape:
+    classTerm: raml-shapes.UnionShape
+    extends: AnyShape
+    mapping:
+      anyOf:
+        propertyTerm: raml-shapes.anyOf
+        range: DataShapesUnion
+        allowMultiple: true
 
 
   TemplatedLink:
-    classTerm: hydra.TemplatedLink
+    classTerm: apiContract.TemplatedLink
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       template:
-        propertyTerm: hydra.template
+        propertyTerm: apiContract.template
         range: string
       operationID:
-        propertyTerm: raml-http.operationId
+        propertyTerm: apiContract.operationId
         range: string
       mapping:
-        propertyTerm: hydra.mapping
+        propertyTerm: apiContract.mapping
         range: IriTemplate
         allowMultiple: true
       requestBody:
-        propertyTerm: raml-http.requestBody
+        propertyTerm: apiContract.requestBody
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       server:
-        propertyTerm: raml-http.server
+        propertyTerm: apiContract.server
         range: Server
 
 
@@ -1132,7 +814,7 @@ nodeMappings:
     classTerm: security.ParametrizedSecurityScheme
     mapping:
       name:
-        propertyTerm: security.name
+        propertyTerm: core.name
         range: string
       scheme:
         propertyTerm: security.scheme
@@ -1143,36 +825,36 @@ nodeMappings:
 
 
   Server:
-    classTerm: raml-http.Server
+    classTerm: apiContract.Server
     mapping:
       url:
-        propertyTerm: raml-http.url
+        propertyTerm: apiContract.url
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       variable:
-        propertyTerm: raml-http.variable
+        propertyTerm: apiContract.variable
         range: Parameter
         allowMultiple: true
 
 
   CreativeWork:
-    classTerm: schema-org.CreativeWork
+    classTerm: core.CreativeWork
     mapping:
       url:
-        propertyTerm: schema-org.url
+        propertyTerm: core.url
         range: link
       title:
-        propertyTerm: schema-org.title
+        propertyTerm: core.title
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
 
 
   EndPoint:
-    classTerm: raml-http.EndPoint
+    classTerm: apiContract.EndPoint
     mapping:
       extends:
         propertyTerm: doc.extends
@@ -1186,31 +868,31 @@ nodeMappings:
         allowMultiple: true
     
       path:
-        propertyTerm: raml-http.path
+        propertyTerm: apiContract.path
         range: string
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       summary:
-        propertyTerm: schema-org.summary
+        propertyTerm: core.summary
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       supportedOperation:
-        propertyTerm: hydra.supportedOperation
+        propertyTerm: apiContract.supportedOperation
         range: Operation
         allowMultiple: true
       parameter:
-        propertyTerm: raml-http.parameter
+        propertyTerm: apiContract.parameter
         range: Parameter
         allowMultiple: true
       payload:
-        propertyTerm: raml-http.payload
+        propertyTerm: apiContract.payload
         range: Payload
         allowMultiple: true
       servers:
-        propertyTerm: raml-http.server
+        propertyTerm: apiContract.server
         range: Server
         allowMultiple: true
       security:
@@ -1221,6 +903,7 @@ nodeMappings:
 
   TupleShape:
     classTerm: raml-shapes.TupleShape
+    extends: AnyShape
     mapping:
       items:
         propertyTerm: raml-shapes.items
@@ -1241,131 +924,76 @@ nodeMappings:
       collectionFormat:
         propertyTerm: raml-shapes.collectionFormat
         range: string
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-      location:
-        propertyTerm: doc.location
-        range: string
 
 
   License:
-    classTerm: raml-http.License
+    classTerm: core.License
     mapping:
       url:
-        propertyTerm: schema-org.url
+        propertyTerm: core.url
         range: link
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
 
 
   Response:
-    classTerm: raml-http.Response
+    classTerm: apiContract.Response
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       statusCode:
-        propertyTerm: hydra.statusCode
+        propertyTerm: apiContract.statusCode
         range: string
       header:
-        propertyTerm: raml-http.header
+        propertyTerm: apiContract.header
         range: Parameter
         allowMultiple: true
       payload:
-        propertyTerm: raml-http.payload
+        propertyTerm: apiContract.payload
         range: Payload
         allowMultiple: true
       links:
-        propertyTerm: raml-http.link
+        propertyTerm: apiContract.link
         range: TemplatedLink
         allowMultiple: true
       examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
+        propertyTerm: apiContract.examples
+        range: Examples
 
 
   Organization:
-    classTerm: schema-org.Organization
+    classTerm: core.Organization
     mapping:
       url:
-        propertyTerm: schema-org.url
+        propertyTerm: core.url
         range: link
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       email:
-        propertyTerm: schema-org.email
+        propertyTerm: core.email
         range: string
 
 
   Example:
-    classTerm: doc.Example
+    classTerm: apiContract.Example
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       displayName:
-        propertyTerm: doc.displayName
+        propertyTerm: core.displayName
         range: string
       guiSummary:
-        propertyTerm: raml-http.guiSummary
+        propertyTerm: apiContract.guiSummary
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       externalValue:
         propertyTerm: doc.externalValue
@@ -1374,7 +1002,7 @@ nodeMappings:
         propertyTerm: doc.strict
         range: boolean
       mediaType:
-        propertyTerm: raml-http.mediaType
+        propertyTerm: core.mediaType
         range: string
       raw:
         propertyTerm: shacl.raw
@@ -1388,32 +1016,31 @@ nodeMappings:
 
 
   Payload:
-    classTerm: raml-http.Payload
+    classTerm: apiContract.Payload
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       mediaType:
-        propertyTerm: raml-http.mediaType
+        propertyTerm: apiContract.mediaType
         range: string
       schema:
-        propertyTerm: raml-http.schema
+        propertyTerm: apiContract.schema
         range: DataShapesUnion
-      example:
-        propertyTerm: raml-http.example
-        range: Example
-        allowMultiple: true
+      examples:
+        propertyTerm: apiContract.examples
+        range: Examples
       encoding:
-        propertyTerm: raml-http.encoding
+        propertyTerm: apiContract.encoding
         range: Encoding
         allowMultiple: true
 
 
   DomainExtension:
-    classTerm: raml-http.DomainExtension
+    classTerm: apiContract.DomainExtension
     mapping:
       name:
-        propertyTerm: doc.name
+        propertyTerm: core.name
         range: string
       definedBy:
         propertyTerm: doc.definedBy
@@ -1425,6 +1052,7 @@ nodeMappings:
 
   NodeShape:
     classTerm: shacl.NodeShape
+    extends: AnyShape
     mapping:
       minProperties:
         propertyTerm: raml-shapes.minProperties
@@ -1452,14 +1080,19 @@ nodeMappings:
         propertyTerm: raml-shapes.dependencies
         range: PropertyDependencies
         allowMultiple: true
+
+
+  Shape:
+    classTerm: shacl.Shape
+    mapping:
       name:
         propertyTerm: shacl.name
         range: string
       name1:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       inherits:
         propertyTerm: raml-shapes.inherits
@@ -1487,35 +1120,16 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-      location:
-        propertyTerm: doc.location
-        range: string
 
 
   Trait:
     classTerm: doc.Trait
     mapping:
       name:
-        propertyTerm: schema-org.name
+        propertyTerm: core.name
         range: string
       description:
-        propertyTerm: schema-org.description
+        propertyTerm: core.description
         range: string
       variable:
         propertyTerm: doc.variable
@@ -1524,31 +1138,40 @@ nodeMappings:
 
 
   Encoding:
-    classTerm: raml-http.Encoding
+    classTerm: apiContract.Encoding
     mapping:
       propertyName:
-        propertyTerm: raml-http.propertyName
+        propertyTerm: apiContract.propertyName
         range: string
       contentType:
-        propertyTerm: raml-http.contentType
+        propertyTerm: apiContract.contentType
         range: string
       header:
-        propertyTerm: raml-http.header
+        propertyTerm: apiContract.header
         range: Parameter
         allowMultiple: true
       style:
-        propertyTerm: raml-http.style
+        propertyTerm: apiContract.style
         range: string
       explode:
-        propertyTerm: raml-http.explode
+        propertyTerm: apiContract.explode
         range: boolean
       allowReserved:
-        propertyTerm: raml-http.allowReserved
+        propertyTerm: apiContract.allowReserved
         range: boolean
+
+
+  DataNode:
+    classTerm: data.Node
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
 
 
   ArrayShape:
     classTerm: raml-shapes.ArrayShape
+    extends: AnyShape
     mapping:
       items:
         propertyTerm: raml-shapes.items
@@ -1565,61 +1188,6 @@ nodeMappings:
       collectionFormat:
         propertyTerm: raml-shapes.collectionFormat
         range: string
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: schema-org.name
-        range: string
-      description:
-        propertyTerm: schema-org.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
-      documentation:
-        propertyTerm: schema-org.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: doc.examples
-        range: Example
-        allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-      location:
-        propertyTerm: doc.location
-        range: string
-
 
 
 
@@ -1630,4 +1198,8 @@ documents:
       dataShapes: DataShapesUnion
       resourceTypes: ResourceType
       traits: Trait
+      securitySchemes: SecurityScheme
+      parameters: Parameter
+      responses: Response
+
   

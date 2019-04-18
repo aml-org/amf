@@ -11,16 +11,16 @@
       {
         "@id": "#14",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "STEP REST API V2"
           }
         ],
-        "schema-org:version": [
+        "core:version": [
           {
             "@value": "1.0.0"
           }
@@ -30,9 +30,9 @@
             "#14": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:version": "[(4,0)-(5,0)]",
+            "core:version": "[(4,0)-(5,0)]",
             "#14": "[(3,0)-(19,42)]",
-            "schema-org:name": "[(3,0)-(4,0)]"
+            "core:name": "[(3,0)-(4,0)]"
           }
         }
       }
@@ -639,7 +639,8 @@
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",
-      "schema-org": "http://schema.org/"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
     }
   }
 ]

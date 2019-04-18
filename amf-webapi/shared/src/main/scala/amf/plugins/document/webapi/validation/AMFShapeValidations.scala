@@ -224,7 +224,7 @@ class AMFShapeValidations(root: Shape) {
 
       val itemsValidationId = validationId(array) + "/prop"
       val itemsConstraint = PropertyConstraint(
-        ramlPropertyId = (Namespace.Rdf + "member").iri(),
+        ramlPropertyId = (Namespace.Rdfs + "member").iri(),
         name = itemsValidationId,
         message = Some(s"Array items at $context must be valid"),
         node = Some(validationId(array.items))
@@ -875,7 +875,7 @@ class AMFShapeValidations(root: Shape) {
       case Some(itemsMinimum) =>
         val msg = s"Number of items at $context must be greater than $itemsMinimum"
         val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Rdf + "member").iri(),
+          ramlPropertyId = (Namespace.Rdfs + "member").iri(),
           name = validation.name + "_validation_minItems/prop",
           message = Some(msg),
           minCount = Some(s"$itemsMinimum"),
@@ -893,7 +893,7 @@ class AMFShapeValidations(root: Shape) {
       case Some(itemsMaximum) =>
         val msg = s"Number of items at $context must be smaller than $itemsMaximum"
         val propertyValidation = PropertyConstraint(
-          ramlPropertyId = (Namespace.Rdf + "member").iri(),
+          ramlPropertyId = (Namespace.Rdfs + "member").iri(),
           name = validation.name + "_validation_maxItems/prop",
           message = Some(msg),
           maxCount = Some(s"$itemsMaximum"),

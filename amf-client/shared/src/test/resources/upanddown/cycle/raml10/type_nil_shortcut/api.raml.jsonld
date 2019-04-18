@@ -11,23 +11,23 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "Offices API"
           }
         ],
-        "http://a.ml/vocabularies/http#server": [
+        "http://a.ml/vocabularies/apiContract#server": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type_nil_shortcut/api.raml#/web-api/http%3A%2F%2Flocalhost%2Foffice",
             "@type": [
-              "http://a.ml/vocabularies/http#Server",
+              "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#url": [
+            "http://a.ml/vocabularies/apiContract#url": [
               {
                 "@value": "http://localhost/office"
               }
@@ -42,7 +42,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/http#url"
+                        "@value": "http://a.ml/vocabularies/apiContract#url"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -94,7 +94,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#server"
+                    "@value": "http://a.ml/vocabularies/apiContract#server"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -118,7 +118,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -215,7 +215,7 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "base"
           }
@@ -244,7 +244,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/document#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -278,7 +278,7 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
           {
-            "@id": "http://www.w3.org/ns/hydra/core#Operation"
+            "@id": "http://a.ml/vocabularies/apiContract#Operation"
           }
         ],
         "http://a.ml/vocabularies/shapes#schema": [
@@ -311,7 +311,7 @@
                     "@value": ""
                   }
                 ],
-                "http://schema.org/description": [
+                "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "This annotation allows to specify a method which will not be transformed into an operation.\nOptionally, a reason can be defined.\n"
                   }
@@ -340,7 +340,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://schema.org/description"
+                            "@value": "http://a.ml/vocabularies/core#description"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -394,7 +394,7 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "ignored"
           }
@@ -423,7 +423,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/document#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -481,7 +481,7 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#domain": [
           {
-            "@id": "http://www.w3.org/ns/hydra/core#Operation"
+            "@id": "http://a.ml/vocabularies/apiContract#Operation"
           }
         ],
         "http://a.ml/vocabularies/shapes#schema": [
@@ -504,7 +504,7 @@
                 "@value": "schema"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "This annotation allows to specify a custom operation name.\n"
               }
@@ -533,7 +533,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/description"
+                        "@value": "http://a.ml/vocabularies/core#description"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -571,7 +571,7 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "operationName"
           }
@@ -600,7 +600,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/document#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -681,7 +681,7 @@
                 "@value": "schema"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "This annotation allows to specify a custom parameter name.\n"
               }
@@ -710,7 +710,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/description"
+                        "@value": "http://a.ml/vocabularies/core#description"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -748,7 +748,7 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "parameterName"
           }
@@ -777,7 +777,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/document#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

@@ -121,12 +121,38 @@ object CanonicalWebAPITransformer extends PlatformSecrets {
         nativeModel.createProperty((Namespace.Rdf + "type").iri())
       )
 
+
+      // We need to deal with node shape inheritance
+      // These flags allow us to track if we found anyshape or shape in case
+      // we cannot find a more specific shape
+      var foundShape: Option[String] = None
+      var foundAnyShape:Option[String] = None
+      var found = false
       while (nodeIt.hasNext) {
         val nextType = nodeIt.next().asResource().getURI
         mapping.get(nextType) match {
-          case Some(dialectNode) => domainElementsMapping += (domainElement -> dialectNode)
+          case Some(dialectNode) =>
+            // dealing with inheritance here
+            if (! dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape")) {
+              found = true
+              domainElementsMapping += (domainElement -> dialectNode)
+            } else if (dialectNode.endsWith("#/declarations/Shape")) {
+              foundShape = Some(dialectNode)
+            } else if (dialectNode.endsWith("#/declarations/AnyShape")) {
+              foundAnyShape = Some(dialectNode)
+            }
           case _                 => // ignore
         }
+      }
+
+      // Set the base shape node if we have find it and we didn't find anything more specific
+      if (!found && foundAnyShape.isDefined) {
+        domainElementsMapping += (domainElement -> foundAnyShape.get)
+        found = true
+      }
+      if (!found && foundShape.isDefined) {
+        domainElementsMapping += (domainElement -> foundShape.get)
+        found = true
       }
     }
 

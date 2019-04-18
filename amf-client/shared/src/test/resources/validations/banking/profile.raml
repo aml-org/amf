@@ -22,36 +22,36 @@ validations:
 
   mandatory-version:
     message: All APIs must have a version
-    targetClass: schema-org.WebAPI
+    targetClass: apiContract.WebAPI
     propertyConstraints:
-      schema.version:
+      core.version:
         minCount: 1
 
   version-format:
     message: The version must be formatted as v[Major].[Minor] or v[Major], for example v2.3
-    targetClass: schema-org.WebAPI
+    targetClass: apiContract.WebAPI
     propertyConstraints:
-      schema.version:
+      core.version:
         pattern: "v[0-9]+(.[0-9]+)?"
 
   version-in-urls:
     message: The version must be before the resource name, for example v1.3/payments/
-    targetClass: http.EndPoint
+    targetClass: apiContract.EndPoint
     propertyConstraints:
-      http.path:
+      apiContract.path:
         pattern: "v[0-9]+(.[0-9]+)?\/.*"
 
   matching-version-in-urls:
     message: The version of the resource URLs must match the API version
-    targetClass: schema.WebAPI
+    targetClass: apiContract.WebAPI
     functionConstraint:
       code: |
         function(api) {
-          var version = api['schema:version'][0];
-          var endpoints = api['http:endpoint'];
+          var version = api['core:version'][0];
+          var endpoints = api['apiContract:endpoint'];
           for (var i=0; i<endpoints.length; i++) {
             var endpoint = endpoints[i];
-            var path = endpoint['http:path'][0];
+            var path = endpoint['apiContract:path'][0];
             if (path.indexOf('/'+version) !== 0) {
               return false;
             }
@@ -61,18 +61,18 @@ validations:
 
   resource-camel-case-identifiers:
     message: Identifiers must be camel-cased
-    targetClass: http.EndPoint
+    targetClass: apiContract.EndPoint
     propertyConstraints:
-      schema.name:
+      core.name:
         pattern: "[a-zA-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*"
 
   unique-identifiers:
     message: Resource names must be unique
-    targetClass: http.EndPoint
+    targetClass: apiContract.EndPoint
     functionConstraint:
       code: |
         function(resource) {
-          var name = (resource['schema:name'] || [])[0];
+          var name = (resource['core:name'] || [])[0];
           if(accumulators[name] == null) {
             accumulators[name] = true;
             return true;
@@ -83,16 +83,16 @@ validations:
 
   json-payloads:
     message: JSON should be used to format content passed in and out of an API in the message body
-    targetClass: http.Payload
+    targetClass: apiContract.Payload
     propertyConstraints:
-      http.mediaType:
+      apiContract.mediaType:
         in: ["application/json"]
 
   allowed-payloads:
     message: JSON should be used to format content passed in and out of an API in the message body
-    targetClass: http.Payload
+    targetClass: apiContract.Payload
     propertyConstraints:
-      http.mediaType:
+      apiContract.mediaType:
         in: ["application/json", "application/xml"]
 
   json-properties:
@@ -104,11 +104,11 @@ validations:
 
   response-with-accepts:
     message: Resource format may be accepted in header
-    targetClass: http.Request
+    targetClass: apiContract.Request
     functionConstraint:
       code: |
         function(response) {
-          var headerNames = path(response, 'http:header / schema:name');
+          var headerNames = path(response, 'apiContract:header / core:name');
           for (var i=0; i<headerNames.length; i++) {
             if (headerNames[i] === "Accept") {
               return true;

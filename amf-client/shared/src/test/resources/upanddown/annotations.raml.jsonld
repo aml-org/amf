@@ -11,17 +11,17 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "test api"
           }
         ],
         "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/foo": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "foo"
             }
@@ -43,6 +43,16 @@
               "http://a.ml/vocabularies/data#value": [
                 {
                   "@value": "is"
+                }
+              ],
+              "http://www.w3.org/ns/shacl#datatype": [
+                {
+                  "@id": "http://www.w3.org/2001/XMLSchema#string"
+                }
+              ],
+              "http://a.ml/vocabularies/core#name": [
+                {
+                  "@value": "scalar_2"
                 }
               ],
               "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -78,7 +88,7 @@
                 "http://a.ml/vocabularies/data#Node",
                 "http://a.ml/vocabularies/document#DomainElement"
               ],
-              "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+              "http://www.w3.org/2000/01/rdf-schema#member": [
                 {
                   "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/foo/object_1/array_3/scalar_4",
                   "@type": [
@@ -89,6 +99,16 @@
                   "http://a.ml/vocabularies/data#value": [
                     {
                       "@value": "1"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "scalar_4"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -126,6 +146,16 @@
                       "@value": "2"
                     }
                   ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                    }
+                  ],
+                  "http://a.ml/vocabularies/core#name": [
+                    {
+                      "@value": "scalar_5"
+                    }
+                  ],
                   "http://a.ml/vocabularies/document-source-maps#sources": [
                     {
                       "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/foo/object_1/array_3/scalar_5/source-map",
@@ -148,6 +178,11 @@
                       ]
                     }
                   ]
+                }
+              ],
+              "http://a.ml/vocabularies/core#name": [
+                {
+                  "@value": "array_3"
                 }
               ],
               "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -174,25 +209,16 @@
               ]
             }
           ],
+          "http://a.ml/vocabularies/core#name": [
+            {
+              "@value": "foo"
+            }
+          ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
               "@id": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/foo/object_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
-              ],
-              "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                {
-                  "http://a.ml/vocabularies/document-source-maps#element": [
-                    {
-                      "@value": "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/foo/object_1"
-                    }
-                  ],
-                  "http://a.ml/vocabularies/document-source-maps#value": [
-                    {
-                      "@value": "b->[(6,2)-(8,6)]#a->[(5,2)-(6,0)]"
-                    }
-                  ]
-                }
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
@@ -212,7 +238,7 @@
           ]
         },
         "file://amf-client/shared/src/test/resources/upanddown/annotations.raml#/web-api/wadus": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "wadus"
             }
@@ -226,6 +252,16 @@
           "http://a.ml/vocabularies/data#value": [
             {
               "@value": "hello"
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://a.ml/vocabularies/core#name": [
+            {
+              "@value": "wadus"
             }
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -283,7 +319,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

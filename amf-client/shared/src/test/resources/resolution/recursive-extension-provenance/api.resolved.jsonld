@@ -11,59 +11,59 @@
       {
         "@id": "#26",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "test"
           }
         ],
-        "raml-http:endpoint": [
+        "apiContract:endpoint": [
           {
             "@id": "#27",
             "@type": [
-              "raml-http:EndPoint",
+              "apiContract:EndPoint",
               "doc:DomainElement"
             ],
-            "raml-http:path": [
+            "apiContract:path": [
               {
                 "@value": "/CodeableConcept"
               }
             ],
-            "hydra:supportedOperation": [
+            "apiContract:supportedOperation": [
               {
                 "@id": "#28",
                 "@type": [
-                  "hydra:Operation",
+                  "apiContract:Operation",
                   "doc:DomainElement"
                 ],
-                "hydra:method": [
+                "apiContract:method": [
                   {
                     "@value": "post"
                   }
                 ],
-                "hydra:expects": [
+                "apiContract:expects": [
                   {
                     "@id": "#29",
                     "@type": [
-                      "raml-http:Request",
+                      "apiContract:Request",
                       "doc:DomainElement"
                     ],
-                    "raml-http:payload": [
+                    "apiContract:payload": [
                       {
                         "@id": "#30",
                         "@type": [
-                          "raml-http:Payload",
+                          "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "raml-http:mediaType": [
+                        "apiContract:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "raml-http:schema": [
+                        "apiContract:schema": [
                           {
                             "@id": "#4/linked_1",
                             "@type": [
@@ -87,7 +87,7 @@
                         ],
                         "smaps": {
                           "extension-provenance": {
-                            "raml-http:mediaType": "id->amf://id#2",
+                            "apiContract:mediaType": "id->amf://id#2",
                             "#30": "id->amf://id#2"
                           },
                           "lexical": {
@@ -98,10 +98,10 @@
                     ],
                     "smaps": {
                       "extension-provenance": {
-                        "raml-http:payload": "id->amf://id#2"
+                        "apiContract:payload": "id->amf://id#2"
                       },
                       "lexical": {
-                        "raml-http:payload": "[(23,6)-(25,36)]",
+                        "apiContract:payload": "[(23,6)-(25,36)]",
                         "#29": "[(23,6)-(25,36)]"
                       }
                     }
@@ -109,7 +109,7 @@
                 ],
                 "smaps": {
                   "extension-provenance": {
-                    "hydra:method": "id->amf://id#2",
+                    "apiContract:method": "id->amf://id#2",
                     "#28": "id->amf://id#2"
                   },
                   "lexical": {
@@ -126,7 +126,7 @@
                   "doc:ParametrizedDeclaration",
                   "doc:DomainElement"
                 ],
-                "schema-org:name": [
+                "core:name": [
                   {
                     "@value": "fhirResourceType"
                   }
@@ -139,7 +139,7 @@
                       "doc:AbstractDeclaration",
                       "doc:DomainElement"
                     ],
-                    "schema-org:name": [
+                    "core:name": [
                       {
                         "@value": "fhirResourceType"
                       }
@@ -194,7 +194,7 @@
                                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                                           }
                                         ],
-                                        "schema-org:name": [
+                                        "core:name": [
                                           {
                                             "@value": "scalar_5"
                                           }
@@ -206,7 +206,7 @@
                                         }
                                       }
                                     ],
-                                    "schema-org:name": [
+                                    "core:name": [
                                       {
                                         "@value": "object_4"
                                       }
@@ -219,7 +219,7 @@
                                     }
                                   }
                                 ],
-                                "schema-org:name": [
+                                "core:name": [
                                   {
                                     "@value": "object_3"
                                   }
@@ -232,7 +232,7 @@
                                 }
                               }
                             ],
-                            "schema-org:name": [
+                            "core:name": [
                               {
                                 "@value": "object_2"
                               }
@@ -245,7 +245,7 @@
                             }
                           }
                         ],
-                        "schema-org:name": [
+                        "core:name": [
                           {
                             "@value": "object_1"
                           }
@@ -278,7 +278,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "schema-org:name": "[(28,8)-(28,24)]",
+                    "core:name": "[(28,8)-(28,24)]",
                     "#2": "[(28,8)-(28,24)]"
                   }
                 }
@@ -296,7 +296,7 @@
             "#26": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:name": "[(2,0)-(3,0)]",
+            "core:name": "[(2,0)-(3,0)]",
             "#26": "[(2,0)-(28,24)]"
           }
         }
@@ -966,7 +966,7 @@
           "doc:AbstractDeclaration",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "fhirResourceType"
           }
@@ -1021,7 +1021,7 @@
                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                               }
                             ],
-                            "schema-org:name": [
+                            "core:name": [
                               {
                                 "@value": "scalar_5"
                               }
@@ -1033,7 +1033,7 @@
                             }
                           }
                         ],
-                        "schema-org:name": [
+                        "core:name": [
                           {
                             "@value": "object_4"
                           }
@@ -1046,7 +1046,7 @@
                         }
                       }
                     ],
-                    "schema-org:name": [
+                    "core:name": [
                       {
                         "@value": "object_3"
                       }
@@ -1059,7 +1059,7 @@
                     }
                   }
                 ],
-                "schema-org:name": [
+                "core:name": [
                   {
                     "@value": "object_2"
                   }
@@ -1072,7 +1072,7 @@
                 }
               }
             ],
-            "schema-org:name": [
+            "core:name": [
               {
                 "@value": "object_1"
               }
@@ -1105,13 +1105,12 @@
     ],
     "@context": {
       "@base": "amf://id",
-      "raml-http": "http://a.ml/vocabularies/http#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
-      "schema-org": "http://schema.org/",
-      "hydra": "http://www.w3.org/ns/hydra/core#"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
     }
   }
 ]

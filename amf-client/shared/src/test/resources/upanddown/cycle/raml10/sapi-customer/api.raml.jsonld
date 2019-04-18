@@ -11,69 +11,69 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "test"
           }
         ],
-        "http://a.ml/vocabularies/http#endpoint": [
+        "http://a.ml/vocabularies/apiContract#endpoint": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer",
             "@type": [
-              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#path": [
+            "http://a.ml/vocabularies/apiContract#path": [
               {
                 "@value": "/customer"
               }
             ],
-            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get",
                 "@type": [
-                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/hydra/core#method": [
+                "http://a.ml/vocabularies/apiContract#method": [
                   {
                     "@value": "get"
                   }
                 ],
-                "http://www.w3.org/ns/hydra/core#returns": [
+                "http://a.ml/vocabularies/apiContract#returns": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get/200",
                     "@type": [
-                      "http://a.ml/vocabularies/http#Response",
+                      "http://a.ml/vocabularies/apiContract#Response",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://schema.org/name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://www.w3.org/ns/hydra/core#statusCode": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/http#payload": [
+                    "http://a.ml/vocabularies/apiContract#payload": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get/200/application%2Fjson",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Payload",
+                          "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/http#mediaType": [
+                        "http://a.ml/vocabularies/apiContract#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#schema": [
+                        "http://a.ml/vocabularies/apiContract#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get/200/application%2Fjson/array/schema",
                             "@type": [
@@ -158,11 +158,11 @@
                                 ]
                               }
                             ],
-                            "http://a.ml/vocabularies/document#examples": [
+                            "http://a.ml/vocabularies/apiContract#examples": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get/200/application%2Fjson/array/schema/example/default-example",
                                 "@type": [
-                                  "http://a.ml/vocabularies/document#Example",
+                                  "http://a.ml/vocabularies/apiContract#Example",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
                                 "http://a.ml/vocabularies/document#strict": [
@@ -179,7 +179,7 @@
                                       "http://a.ml/vocabularies/data#Node",
                                       "http://a.ml/vocabularies/document#DomainElement"
                                     ],
-                                    "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                                    "http://www.w3.org/2000/01/rdf-schema#member": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get/200/application%2Fjson/array/schema/example/default-example/array_1/object_2",
                                         "@type": [
@@ -205,7 +205,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_3"
                                               }
@@ -252,7 +252,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_4"
                                               }
@@ -299,7 +299,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_5"
                                               }
@@ -346,7 +346,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_6"
                                               }
@@ -392,7 +392,7 @@
                                                   "http://a.ml/vocabularies/data#Node",
                                                   "http://a.ml/vocabularies/document#DomainElement"
                                                 ],
-                                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                                                "http://www.w3.org/2000/01/rdf-schema#member": [
                                                   {
                                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get/200/application%2Fjson/array/schema/example/default-example/array_1/object_2/object_7/array_8/scalar_9",
                                                     "@type": [
@@ -410,7 +410,7 @@
                                                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                       }
                                                     ],
-                                                    "http://schema.org/name": [
+                                                    "http://a.ml/vocabularies/core#name": [
                                                       {
                                                         "@value": "scalar_9"
                                                       }
@@ -439,7 +439,7 @@
                                                     ]
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "array_8"
                                                   }
@@ -486,7 +486,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_10"
                                                   }
@@ -533,7 +533,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_11"
                                                   }
@@ -580,7 +580,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_12"
                                                   }
@@ -627,7 +627,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_13"
                                                   }
@@ -656,7 +656,7 @@
                                                 ]
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "object_7"
                                               }
@@ -762,7 +762,7 @@
                                                   "http://a.ml/vocabularies/data#Node",
                                                   "http://a.ml/vocabularies/document#DomainElement"
                                                 ],
-                                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                                                "http://www.w3.org/2000/01/rdf-schema#member": [
                                                   {
                                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get/200/application%2Fjson/array/schema/example/default-example/array_1/object_2/object_14/array_15/scalar_16",
                                                     "@type": [
@@ -780,7 +780,7 @@
                                                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                       }
                                                     ],
-                                                    "http://schema.org/name": [
+                                                    "http://a.ml/vocabularies/core#name": [
                                                       {
                                                         "@value": "scalar_16"
                                                       }
@@ -825,7 +825,7 @@
                                                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                       }
                                                     ],
-                                                    "http://schema.org/name": [
+                                                    "http://a.ml/vocabularies/core#name": [
                                                       {
                                                         "@value": "scalar_17"
                                                       }
@@ -854,7 +854,7 @@
                                                     ]
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "array_15"
                                                   }
@@ -901,7 +901,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_18"
                                                   }
@@ -948,7 +948,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_19"
                                                   }
@@ -995,7 +995,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_20"
                                                   }
@@ -1042,7 +1042,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_21"
                                                   }
@@ -1071,7 +1071,7 @@
                                                 ]
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "object_14"
                                               }
@@ -1160,7 +1160,7 @@
                                             ]
                                           }
                                         ],
-                                        "http://schema.org/name": [
+                                        "http://a.ml/vocabularies/core#name": [
                                           {
                                             "@value": "object_2"
                                           }
@@ -1285,7 +1285,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_23"
                                               }
@@ -1332,7 +1332,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_24"
                                               }
@@ -1379,7 +1379,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_25"
                                               }
@@ -1426,7 +1426,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_26"
                                               }
@@ -1472,7 +1472,7 @@
                                                   "http://a.ml/vocabularies/data#Node",
                                                   "http://a.ml/vocabularies/document#DomainElement"
                                                 ],
-                                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                                                "http://www.w3.org/2000/01/rdf-schema#member": [
                                                   {
                                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get/200/application%2Fjson/array/schema/example/default-example/array_1/object_22/object_27/array_28/scalar_29",
                                                     "@type": [
@@ -1490,7 +1490,7 @@
                                                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                       }
                                                     ],
-                                                    "http://schema.org/name": [
+                                                    "http://a.ml/vocabularies/core#name": [
                                                       {
                                                         "@value": "scalar_29"
                                                       }
@@ -1519,7 +1519,7 @@
                                                     ]
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "array_28"
                                                   }
@@ -1566,7 +1566,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_30"
                                                   }
@@ -1613,7 +1613,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_31"
                                                   }
@@ -1660,7 +1660,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_32"
                                                   }
@@ -1707,7 +1707,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_33"
                                                   }
@@ -1736,7 +1736,7 @@
                                                 ]
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "object_27"
                                               }
@@ -1842,7 +1842,7 @@
                                                   "http://a.ml/vocabularies/data#Node",
                                                   "http://a.ml/vocabularies/document#DomainElement"
                                                 ],
-                                                "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                                                "http://www.w3.org/2000/01/rdf-schema#member": [
                                                   {
                                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/get/200/application%2Fjson/array/schema/example/default-example/array_1/object_22/object_34/array_35/scalar_36",
                                                     "@type": [
@@ -1860,7 +1860,7 @@
                                                         "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                       }
                                                     ],
-                                                    "http://schema.org/name": [
+                                                    "http://a.ml/vocabularies/core#name": [
                                                       {
                                                         "@value": "scalar_36"
                                                       }
@@ -1889,7 +1889,7 @@
                                                     ]
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "array_35"
                                                   }
@@ -1936,7 +1936,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_37"
                                                   }
@@ -1983,7 +1983,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_38"
                                                   }
@@ -2030,7 +2030,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_39"
                                                   }
@@ -2077,7 +2077,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_40"
                                                   }
@@ -2106,7 +2106,7 @@
                                                 ]
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "object_34"
                                               }
@@ -2195,7 +2195,7 @@
                                             ]
                                           }
                                         ],
-                                        "http://schema.org/name": [
+                                        "http://a.ml/vocabularies/core#name": [
                                           {
                                             "@value": "object_22"
                                           }
@@ -2296,7 +2296,7 @@
                                         ]
                                       }
                                     ],
-                                    "http://schema.org/name": [
+                                    "http://a.ml/vocabularies/core#name": [
                                       {
                                         "@value": "array_1"
                                       }
@@ -2497,7 +2497,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/http#payload"
+                                "@value": "http://a.ml/vocabularies/apiContract#payload"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2533,7 +2533,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/hydra/core#returns"
+                            "@value": "http://a.ml/vocabularies/apiContract#returns"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2561,34 +2561,34 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/post",
                 "@type": [
-                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/hydra/core#method": [
+                "http://a.ml/vocabularies/apiContract#method": [
                   {
                     "@value": "post"
                   }
                 ],
-                "http://www.w3.org/ns/hydra/core#expects": [
+                "http://a.ml/vocabularies/apiContract#expects": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/post/request",
                     "@type": [
-                      "http://a.ml/vocabularies/http#Request",
+                      "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/http#payload": [
+                    "http://a.ml/vocabularies/apiContract#payload": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/post/request/application%2Fjson",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Payload",
+                          "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/http#mediaType": [
+                        "http://a.ml/vocabularies/apiContract#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#schema": [
+                        "http://a.ml/vocabularies/apiContract#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/post/request/application%2Fjson/schema",
                             "@type": [
@@ -2671,11 +2671,11 @@
                                 ]
                               }
                             ],
-                            "http://a.ml/vocabularies/document#examples": [
+                            "http://a.ml/vocabularies/apiContract#examples": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/post/request/application%2Fjson/schema/example/default-example",
                                 "@type": [
-                                  "http://a.ml/vocabularies/document#Example",
+                                  "http://a.ml/vocabularies/apiContract#Example",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
                                 "http://a.ml/vocabularies/document#strict": [
@@ -2709,7 +2709,7 @@
                                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                                           }
                                         ],
-                                        "http://schema.org/name": [
+                                        "http://a.ml/vocabularies/core#name": [
                                           {
                                             "@value": "scalar_2"
                                           }
@@ -2756,7 +2756,7 @@
                                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                                           }
                                         ],
-                                        "http://schema.org/name": [
+                                        "http://a.ml/vocabularies/core#name": [
                                           {
                                             "@value": "scalar_3"
                                           }
@@ -2803,7 +2803,7 @@
                                             "@id": "http://www.w3.org/2001/XMLSchema#string"
                                           }
                                         ],
-                                        "http://schema.org/name": [
+                                        "http://a.ml/vocabularies/core#name": [
                                           {
                                             "@value": "scalar_4"
                                           }
@@ -2849,7 +2849,7 @@
                                               "http://a.ml/vocabularies/data#Node",
                                               "http://a.ml/vocabularies/document#DomainElement"
                                             ],
-                                            "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                                            "http://www.w3.org/2000/01/rdf-schema#member": [
                                               {
                                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/post/request/application%2Fjson/schema/example/default-example/object_1/object_5/array_6/scalar_7",
                                                 "@type": [
@@ -2867,7 +2867,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_7"
                                                   }
@@ -2896,7 +2896,7 @@
                                                 ]
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "array_6"
                                               }
@@ -2943,7 +2943,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_8"
                                               }
@@ -2990,7 +2990,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_9"
                                               }
@@ -3037,7 +3037,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_10"
                                               }
@@ -3084,7 +3084,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_11"
                                               }
@@ -3113,7 +3113,7 @@
                                             ]
                                           }
                                         ],
-                                        "http://schema.org/name": [
+                                        "http://a.ml/vocabularies/core#name": [
                                           {
                                             "@value": "object_5"
                                           }
@@ -3219,7 +3219,7 @@
                                               "http://a.ml/vocabularies/data#Node",
                                               "http://a.ml/vocabularies/document#DomainElement"
                                             ],
-                                            "http://www.w3.org/1999/02/22-rdf-syntax-ns#member": [
+                                            "http://www.w3.org/2000/01/rdf-schema#member": [
                                               {
                                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/sapi-customer/api.raml#/web-api/end-points/%2Fcustomer/post/request/application%2Fjson/schema/example/default-example/object_1/object_12/array_13/scalar_14",
                                                 "@type": [
@@ -3237,7 +3237,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_14"
                                                   }
@@ -3282,7 +3282,7 @@
                                                     "@id": "http://www.w3.org/2001/XMLSchema#string"
                                                   }
                                                 ],
-                                                "http://schema.org/name": [
+                                                "http://a.ml/vocabularies/core#name": [
                                                   {
                                                     "@value": "scalar_15"
                                                   }
@@ -3311,7 +3311,7 @@
                                                 ]
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "array_13"
                                               }
@@ -3358,7 +3358,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_16"
                                               }
@@ -3405,7 +3405,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_17"
                                               }
@@ -3452,7 +3452,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_18"
                                               }
@@ -3499,7 +3499,7 @@
                                                 "@id": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
-                                            "http://schema.org/name": [
+                                            "http://a.ml/vocabularies/core#name": [
                                               {
                                                 "@value": "scalar_19"
                                               }
@@ -3528,7 +3528,7 @@
                                             ]
                                           }
                                         ],
-                                        "http://schema.org/name": [
+                                        "http://a.ml/vocabularies/core#name": [
                                           {
                                             "@value": "object_12"
                                           }
@@ -3617,7 +3617,7 @@
                                         ]
                                       }
                                     ],
-                                    "http://schema.org/name": [
+                                    "http://a.ml/vocabularies/core#name": [
                                       {
                                         "@value": "object_1"
                                       }
@@ -3864,7 +3864,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/http#payload"
+                                "@value": "http://a.ml/vocabularies/apiContract#payload"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3900,7 +3900,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/hydra/core#expects"
+                            "@value": "http://a.ml/vocabularies/apiContract#expects"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3976,7 +3976,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4027,7 +4027,7 @@
                 "@value": "#%RAML 1.0 NamedExample\nname: Michelle Ruiz\nemail: mruiz0@qq.com\nphone: 1-(951)768-8479\nbillingAddress:\n  line:\n    - Eastlawn 42\n  city: Riverside\n  state: California\n  postalCode: \"92513\"\n  country: USA\nshippingAddress:\n  line:\n    - South\n    - \"07\"\n  city: Houston\n  state: Texas\n  postalCode: \"77045\"\n  country: USA\n"
               }
             ],
-            "http://a.ml/vocabularies/http#mediaType": [
+            "http://a.ml/vocabularies/core#mediaType": [
               {
                 "@value": "application/raml+yaml"
               }
@@ -4103,7 +4103,7 @@
                 "@value": "#%RAML 1.0 NamedExample\n- id: \"1\"\n  name: Michelle Ruiz\n  email: mruiz0@qq.com\n  phone: 1-(951)768-8479\n  billingAddress:\n    line:\n      - Eastlawn 42\n    city: Riverside\n    state: California\n    postalCode: alberto gomez\n    country: USA\n  shippingAddress:\n    line:\n      - South\n      - \"07\"\n    city: Houston\n    state: Texas\n    postalCode: \"77045\"\n    country: USA\n- id: \"2\"\n  name: Jeremy Adams\n  email: jadams1@instagram.com\n  phone: 1-(216)797-9178\n  billingAddress:\n    line:\n      - Eastwood 442\n    city: Cleveland\n    state: Ohio\n    postalCode: \"44191\"\n    country: USA\n  shippingAddress:\n    line:\n      - Menomonie 5\n    city: South Bend\n    state: Indiana\n    postalCode: \"46614\"\n    country: USA\n"
               }
             ],
-            "http://a.ml/vocabularies/http#mediaType": [
+            "http://a.ml/vocabularies/core#mediaType": [
               {
                 "@value": "application/raml+yaml"
               }

@@ -11,35 +11,35 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "test"
           }
         ],
-        "http://a.ml/vocabularies/http#endpoint": [
+        "http://a.ml/vocabularies/apiContract#endpoint": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers",
             "@type": [
-              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#path": [
+            "http://a.ml/vocabularies/apiContract#path": [
               {
                 "@value": "/users"
               }
             ],
-            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers/get",
                 "@type": [
-                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/hydra/core#method": [
+                "http://a.ml/vocabularies/apiContract#method": [
                   {
                     "@value": "get"
                   }
@@ -51,7 +51,7 @@
                       "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/security#name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "oauth_2_0"
                       }
@@ -63,7 +63,7 @@
                           "http://a.ml/vocabularies/security#SecurityScheme",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/security#name": [
+                        "http://a.ml/vocabularies/core#name": [
                           {
                             "@value": "oauth_2_0"
                           }
@@ -73,39 +73,39 @@
                             "@value": "OAuth 2.0"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#header": [
+                        "http://a.ml/vocabularies/apiContract#header": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
                             "@type": [
-                              "http://a.ml/vocabularies/http#Parameter",
+                              "http://a.ml/vocabularies/apiContract#Parameter",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "Authorization"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#paramName": [
+                            "http://a.ml/vocabularies/apiContract#paramName": [
                               {
                                 "@value": "Authorization"
                               }
                             ],
-                            "http://schema.org/description": [
+                            "http://a.ml/vocabularies/core#description": [
                               {
                                 "@value": "Used to send a valid OAuth 2 access token."
                               }
                             ],
-                            "http://www.w3.org/ns/hydra/core#required": [
+                            "http://a.ml/vocabularies/apiContract#required": [
                               {
                                 "@value": true
                               }
                             ],
-                            "http://a.ml/vocabularies/http#binding": [
+                            "http://a.ml/vocabularies/apiContract#binding": [
                               {
                                 "@value": "header"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#schema": [
+                            "http://a.ml/vocabularies/apiContract#schema": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                                 "@type": [
@@ -125,7 +125,7 @@
                                     "@value": "schema"
                                   }
                                 ],
-                                "http://schema.org/description": [
+                                "http://a.ml/vocabularies/core#description": [
                                   {
                                     "@value": "Used to send a valid OAuth 2 access token."
                                   }
@@ -154,7 +154,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://schema.org/description"
+                                            "@value": "http://a.ml/vocabularies/core#description"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -202,7 +202,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/http#schema"
+                                        "@value": "http://a.ml/vocabularies/apiContract#schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -226,7 +226,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://schema.org/description"
+                                        "@value": "http://a.ml/vocabularies/core#description"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -240,39 +240,39 @@
                             ]
                           }
                         ],
-                        "http://a.ml/vocabularies/http#parameter": [
+                        "http://a.ml/vocabularies/apiContract#parameter": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token",
                             "@type": [
-                              "http://a.ml/vocabularies/http#Parameter",
+                              "http://a.ml/vocabularies/apiContract#Parameter",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "access_token"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#paramName": [
+                            "http://a.ml/vocabularies/apiContract#paramName": [
                               {
                                 "@value": "access_token"
                               }
                             ],
-                            "http://schema.org/description": [
+                            "http://a.ml/vocabularies/core#description": [
                               {
                                 "@value": "Used to send a valid OAuth 2 access token."
                               }
                             ],
-                            "http://www.w3.org/ns/hydra/core#required": [
+                            "http://a.ml/vocabularies/apiContract#required": [
                               {
                                 "@value": true
                               }
                             ],
-                            "http://a.ml/vocabularies/http#binding": [
+                            "http://a.ml/vocabularies/apiContract#binding": [
                               {
                                 "@value": "query"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#schema": [
+                            "http://a.ml/vocabularies/apiContract#schema": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema",
                                 "@type": [
@@ -292,7 +292,7 @@
                                     "@value": "schema"
                                   }
                                 ],
-                                "http://schema.org/description": [
+                                "http://a.ml/vocabularies/core#description": [
                                   {
                                     "@value": "Used to send a valid OAuth 2 access token."
                                   }
@@ -307,7 +307,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://schema.org/description"
+                                            "@value": "http://a.ml/vocabularies/core#description"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -343,7 +343,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/http#schema"
+                                        "@value": "http://a.ml/vocabularies/apiContract#schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -367,7 +367,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://schema.org/description"
+                                        "@value": "http://a.ml/vocabularies/core#description"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -381,41 +381,41 @@
                             ]
                           }
                         ],
-                        "http://www.w3.org/ns/hydra/core#response": [
+                        "http://a.ml/vocabularies/apiContract#response": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401",
                             "@type": [
-                              "http://a.ml/vocabularies/http#Response",
+                              "http://a.ml/vocabularies/apiContract#Response",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "401"
                               }
                             ],
-                            "http://schema.org/description": [
+                            "http://a.ml/vocabularies/core#description": [
                               {
                                 "@value": "Authorization error."
                               }
                             ],
-                            "http://www.w3.org/ns/hydra/core#statusCode": [
+                            "http://a.ml/vocabularies/apiContract#statusCode": [
                               {
                                 "@value": "401"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#payload": [
+                            "http://a.ml/vocabularies/apiContract#payload": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401/application%2Fjson",
                                 "@type": [
-                                  "http://a.ml/vocabularies/http#Payload",
+                                  "http://a.ml/vocabularies/apiContract#Payload",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/http#mediaType": [
+                                "http://a.ml/vocabularies/apiContract#mediaType": [
                                   {
                                     "@value": "application/json"
                                   }
                                 ],
-                                "http://a.ml/vocabularies/http#schema": [
+                                "http://a.ml/vocabularies/apiContract#schema": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401/application%2Fjson/schema",
                                     "@type": [
@@ -639,7 +639,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/http#payload"
+                                        "@value": "http://a.ml/vocabularies/apiContract#payload"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -663,7 +663,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://schema.org/description"
+                                        "@value": "http://a.ml/vocabularies/core#description"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -849,7 +849,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/http#parameter"
+                                    "@value": "http://a.ml/vocabularies/apiContract#parameter"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -885,7 +885,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/security#name"
+                                    "@value": "http://a.ml/vocabularies/core#name"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -897,7 +897,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/http#header"
+                                    "@value": "http://a.ml/vocabularies/apiContract#header"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -909,7 +909,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://www.w3.org/ns/hydra/core#response"
+                                    "@value": "http://a.ml/vocabularies/apiContract#response"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -952,7 +952,7 @@
                       "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/security#name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "oauth_1_0"
                       }
@@ -964,7 +964,7 @@
                           "http://a.ml/vocabularies/security#SecurityScheme",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/security#name": [
+                        "http://a.ml/vocabularies/core#name": [
                           {
                             "@value": "oauth_1_0"
                           }
@@ -974,7 +974,7 @@
                             "@value": "OAuth 1.0"
                           }
                         ],
-                        "http://schema.org/description": [
+                        "http://a.ml/vocabularies/core#description": [
                           {
                             "@value": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred."
                           }
@@ -1142,7 +1142,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/security#name"
+                                    "@value": "http://a.ml/vocabularies/core#name"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1154,7 +1154,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://schema.org/description"
+                                    "@value": "http://a.ml/vocabularies/core#description"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1242,61 +1242,61 @@
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists",
             "@type": [
-              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#path": [
+            "http://a.ml/vocabularies/apiContract#path": [
               {
                 "@value": "/users/{userid}/gists"
               }
             ],
-            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get",
                 "@type": [
-                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/hydra/core#method": [
+                "http://a.ml/vocabularies/apiContract#method": [
                   {
                     "@value": "get"
                   }
                 ],
-                "http://www.w3.org/ns/hydra/core#expects": [
+                "http://a.ml/vocabularies/apiContract#expects": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/get/request",
                     "@type": [
-                      "http://a.ml/vocabularies/http#Request",
+                      "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/http#uriParameter": [
+                    "http://a.ml/vocabularies/apiContract#uriParameter": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/parameter/userid",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Parameter",
+                          "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://schema.org/name": [
+                        "http://a.ml/vocabularies/core#name": [
                           {
                             "@value": "userid"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#paramName": [
+                        "http://a.ml/vocabularies/apiContract#paramName": [
                           {
                             "@value": "userid"
                           }
                         ],
-                        "http://www.w3.org/ns/hydra/core#required": [
+                        "http://a.ml/vocabularies/apiContract#required": [
                           {
                             "@value": true
                           }
                         ],
-                        "http://a.ml/vocabularies/http#binding": [
+                        "http://a.ml/vocabularies/apiContract#binding": [
                           {
                             "@value": "path"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#schema": [
+                        "http://a.ml/vocabularies/apiContract#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/parameter/userid/scalar/userid",
                             "@type": [
@@ -1351,7 +1351,7 @@
                       "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/security#name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "null"
                       }
@@ -1399,7 +1399,7 @@
                       "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/security#name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "oauth_2_0"
                       }
@@ -1411,7 +1411,7 @@
                           "http://a.ml/vocabularies/security#SecurityScheme",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/security#name": [
+                        "http://a.ml/vocabularies/core#name": [
                           {
                             "@value": "oauth_2_0"
                           }
@@ -1421,39 +1421,39 @@
                             "@value": "OAuth 2.0"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#header": [
+                        "http://a.ml/vocabularies/apiContract#header": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
                             "@type": [
-                              "http://a.ml/vocabularies/http#Parameter",
+                              "http://a.ml/vocabularies/apiContract#Parameter",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "Authorization"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#paramName": [
+                            "http://a.ml/vocabularies/apiContract#paramName": [
                               {
                                 "@value": "Authorization"
                               }
                             ],
-                            "http://schema.org/description": [
+                            "http://a.ml/vocabularies/core#description": [
                               {
                                 "@value": "Used to send a valid OAuth 2 access token."
                               }
                             ],
-                            "http://www.w3.org/ns/hydra/core#required": [
+                            "http://a.ml/vocabularies/apiContract#required": [
                               {
                                 "@value": true
                               }
                             ],
-                            "http://a.ml/vocabularies/http#binding": [
+                            "http://a.ml/vocabularies/apiContract#binding": [
                               {
                                 "@value": "header"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#schema": [
+                            "http://a.ml/vocabularies/apiContract#schema": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                                 "@type": [
@@ -1473,7 +1473,7 @@
                                     "@value": "schema"
                                   }
                                 ],
-                                "http://schema.org/description": [
+                                "http://a.ml/vocabularies/core#description": [
                                   {
                                     "@value": "Used to send a valid OAuth 2 access token."
                                   }
@@ -1502,7 +1502,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://schema.org/description"
+                                            "@value": "http://a.ml/vocabularies/core#description"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1550,7 +1550,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/http#schema"
+                                        "@value": "http://a.ml/vocabularies/apiContract#schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1574,7 +1574,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://schema.org/description"
+                                        "@value": "http://a.ml/vocabularies/core#description"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1588,39 +1588,39 @@
                             ]
                           }
                         ],
-                        "http://a.ml/vocabularies/http#parameter": [
+                        "http://a.ml/vocabularies/apiContract#parameter": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token",
                             "@type": [
-                              "http://a.ml/vocabularies/http#Parameter",
+                              "http://a.ml/vocabularies/apiContract#Parameter",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "access_token"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#paramName": [
+                            "http://a.ml/vocabularies/apiContract#paramName": [
                               {
                                 "@value": "access_token"
                               }
                             ],
-                            "http://schema.org/description": [
+                            "http://a.ml/vocabularies/core#description": [
                               {
                                 "@value": "Used to send a valid OAuth 2 access token."
                               }
                             ],
-                            "http://www.w3.org/ns/hydra/core#required": [
+                            "http://a.ml/vocabularies/apiContract#required": [
                               {
                                 "@value": true
                               }
                             ],
-                            "http://a.ml/vocabularies/http#binding": [
+                            "http://a.ml/vocabularies/apiContract#binding": [
                               {
                                 "@value": "query"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#schema": [
+                            "http://a.ml/vocabularies/apiContract#schema": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema",
                                 "@type": [
@@ -1640,7 +1640,7 @@
                                     "@value": "schema"
                                   }
                                 ],
-                                "http://schema.org/description": [
+                                "http://a.ml/vocabularies/core#description": [
                                   {
                                     "@value": "Used to send a valid OAuth 2 access token."
                                   }
@@ -1655,7 +1655,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://schema.org/description"
+                                            "@value": "http://a.ml/vocabularies/core#description"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1691,7 +1691,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/http#schema"
+                                        "@value": "http://a.ml/vocabularies/apiContract#schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1715,7 +1715,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://schema.org/description"
+                                        "@value": "http://a.ml/vocabularies/core#description"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1729,41 +1729,41 @@
                             ]
                           }
                         ],
-                        "http://www.w3.org/ns/hydra/core#response": [
+                        "http://a.ml/vocabularies/apiContract#response": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401",
                             "@type": [
-                              "http://a.ml/vocabularies/http#Response",
+                              "http://a.ml/vocabularies/apiContract#Response",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://schema.org/name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "401"
                               }
                             ],
-                            "http://schema.org/description": [
+                            "http://a.ml/vocabularies/core#description": [
                               {
                                 "@value": "Authorization error."
                               }
                             ],
-                            "http://www.w3.org/ns/hydra/core#statusCode": [
+                            "http://a.ml/vocabularies/apiContract#statusCode": [
                               {
                                 "@value": "401"
                               }
                             ],
-                            "http://a.ml/vocabularies/http#payload": [
+                            "http://a.ml/vocabularies/apiContract#payload": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401/application%2Fjson",
                                 "@type": [
-                                  "http://a.ml/vocabularies/http#Payload",
+                                  "http://a.ml/vocabularies/apiContract#Payload",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/http#mediaType": [
+                                "http://a.ml/vocabularies/apiContract#mediaType": [
                                   {
                                     "@value": "application/json"
                                   }
                                 ],
-                                "http://a.ml/vocabularies/http#schema": [
+                                "http://a.ml/vocabularies/apiContract#schema": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401/application%2Fjson/schema",
                                     "@type": [
@@ -1987,7 +1987,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/http#payload"
+                                        "@value": "http://a.ml/vocabularies/apiContract#payload"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2011,7 +2011,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://schema.org/description"
+                                        "@value": "http://a.ml/vocabularies/core#description"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2197,7 +2197,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/http#parameter"
+                                    "@value": "http://a.ml/vocabularies/apiContract#parameter"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2233,7 +2233,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/security#name"
+                                    "@value": "http://a.ml/vocabularies/core#name"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2245,7 +2245,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/http#header"
+                                    "@value": "http://a.ml/vocabularies/apiContract#header"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2257,7 +2257,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://www.w3.org/ns/hydra/core#response"
+                                    "@value": "http://a.ml/vocabularies/apiContract#response"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2425,7 +2425,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2463,7 +2463,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "oauth_2_0"
           }
@@ -2473,39 +2473,39 @@
             "@value": "OAuth 2.0"
           }
         ],
-        "http://a.ml/vocabularies/http#header": [
+        "http://a.ml/vocabularies/apiContract#header": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization",
             "@type": [
-              "http://a.ml/vocabularies/http#Parameter",
+              "http://a.ml/vocabularies/apiContract#Parameter",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "Authorization"
               }
             ],
-            "http://a.ml/vocabularies/http#paramName": [
+            "http://a.ml/vocabularies/apiContract#paramName": [
               {
                 "@value": "Authorization"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Used to send a valid OAuth 2 access token."
               }
             ],
-            "http://www.w3.org/ns/hydra/core#required": [
+            "http://a.ml/vocabularies/apiContract#required": [
               {
                 "@value": true
               }
             ],
-            "http://a.ml/vocabularies/http#binding": [
+            "http://a.ml/vocabularies/apiContract#binding": [
               {
                 "@value": "header"
               }
             ],
-            "http://a.ml/vocabularies/http#schema": [
+            "http://a.ml/vocabularies/apiContract#schema": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                 "@type": [
@@ -2525,7 +2525,7 @@
                     "@value": "schema"
                   }
                 ],
-                "http://schema.org/description": [
+                "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "Used to send a valid OAuth 2 access token."
                   }
@@ -2554,7 +2554,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://schema.org/description"
+                            "@value": "http://a.ml/vocabularies/core#description"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2602,7 +2602,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/http#schema"
+                        "@value": "http://a.ml/vocabularies/apiContract#schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2626,7 +2626,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/description"
+                        "@value": "http://a.ml/vocabularies/core#description"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2640,39 +2640,39 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/http#parameter": [
+        "http://a.ml/vocabularies/apiContract#parameter": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token",
             "@type": [
-              "http://a.ml/vocabularies/http#Parameter",
+              "http://a.ml/vocabularies/apiContract#Parameter",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "access_token"
               }
             ],
-            "http://a.ml/vocabularies/http#paramName": [
+            "http://a.ml/vocabularies/apiContract#paramName": [
               {
                 "@value": "access_token"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Used to send a valid OAuth 2 access token."
               }
             ],
-            "http://www.w3.org/ns/hydra/core#required": [
+            "http://a.ml/vocabularies/apiContract#required": [
               {
                 "@value": true
               }
             ],
-            "http://a.ml/vocabularies/http#binding": [
+            "http://a.ml/vocabularies/apiContract#binding": [
               {
                 "@value": "query"
               }
             ],
-            "http://a.ml/vocabularies/http#schema": [
+            "http://a.ml/vocabularies/apiContract#schema": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema",
                 "@type": [
@@ -2692,7 +2692,7 @@
                     "@value": "schema"
                   }
                 ],
-                "http://schema.org/description": [
+                "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "Used to send a valid OAuth 2 access token."
                   }
@@ -2707,7 +2707,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://schema.org/description"
+                            "@value": "http://a.ml/vocabularies/core#description"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2743,7 +2743,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/http#schema"
+                        "@value": "http://a.ml/vocabularies/apiContract#schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2767,7 +2767,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/description"
+                        "@value": "http://a.ml/vocabularies/core#description"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2781,41 +2781,41 @@
             ]
           }
         ],
-        "http://www.w3.org/ns/hydra/core#response": [
+        "http://a.ml/vocabularies/apiContract#response": [
           {
             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401",
             "@type": [
-              "http://a.ml/vocabularies/http#Response",
+              "http://a.ml/vocabularies/apiContract#Response",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "401"
               }
             ],
-            "http://schema.org/description": [
+            "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Authorization error."
               }
             ],
-            "http://www.w3.org/ns/hydra/core#statusCode": [
+            "http://a.ml/vocabularies/apiContract#statusCode": [
               {
                 "@value": "401"
               }
             ],
-            "http://a.ml/vocabularies/http#payload": [
+            "http://a.ml/vocabularies/apiContract#payload": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401/application%2Fjson",
                 "@type": [
-                  "http://a.ml/vocabularies/http#Payload",
+                  "http://a.ml/vocabularies/apiContract#Payload",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/http#mediaType": [
+                "http://a.ml/vocabularies/apiContract#mediaType": [
                   {
                     "@value": "application/json"
                   }
                 ],
-                "http://a.ml/vocabularies/http#schema": [
+                "http://a.ml/vocabularies/apiContract#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401/application%2Fjson/schema",
                     "@type": [
@@ -3039,7 +3039,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/http#payload"
+                        "@value": "http://a.ml/vocabularies/apiContract#payload"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3063,7 +3063,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/description"
+                        "@value": "http://a.ml/vocabularies/core#description"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3249,7 +3249,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#parameter"
+                    "@value": "http://a.ml/vocabularies/apiContract#parameter"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3285,7 +3285,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/security#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3297,7 +3297,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/http#header"
+                    "@value": "http://a.ml/vocabularies/apiContract#header"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3309,7 +3309,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/hydra/core#response"
+                    "@value": "http://a.ml/vocabularies/apiContract#response"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3328,7 +3328,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "oauth_1_0"
           }
@@ -3338,7 +3338,7 @@
             "@value": "OAuth 1.0"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "OAuth 1.0 continues to be supported for all API requests, but OAuth 2.0 is now preferred."
           }
@@ -3506,7 +3506,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/security#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3518,7 +3518,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/description"
+                    "@value": "http://a.ml/vocabularies/core#description"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

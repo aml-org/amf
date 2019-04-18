@@ -11,11 +11,11 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "examples"
           }
@@ -44,7 +44,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -61,7 +61,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,0)-(17,23)]"
+                    "@value": "[(2,0)-(16,23)]"
                   }
                 ]
               }
@@ -72,9 +72,10 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person",
+        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -86,11 +87,12 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/name",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
@@ -99,9 +101,10 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/name/scalar/name",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -118,20 +121,46 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/name/scalar/name/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(7,8)-(7,12)]"
+                          }
+                        ]
+                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/name/scalar/name"
+                            "@value": "http://www.w3.org/ns/shacl#datatype"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(6,6)-(7,0)]"
+                            "@value": "[(7,8)-(8,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/scalar/name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(6,6)-(8,0)]"
                           }
                         ]
                       }
@@ -152,7 +181,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/name/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -160,12 +189,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/name"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(6,6)-(7,0)]"
+                        "@value": "[(6,6)-(8,0)]"
                       }
                     ]
                   }
@@ -174,11 +203,12 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/lastname",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname",
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
@@ -187,9 +217,10 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/lastname/scalar/lastname",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -206,20 +237,46 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/lastname/scalar/lastname/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(9,8)-(9,12)]"
+                          }
+                        ]
+                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/lastname/scalar/lastname"
+                            "@value": "http://www.w3.org/ns/shacl#datatype"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(7,6)-(8,0)]"
+                            "@value": "[(9,8)-(10,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/scalar/lastname"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(8,6)-(10,0)]"
                           }
                         ]
                       }
@@ -240,7 +297,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/lastname/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -248,12 +305,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/property/lastname"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/property/lastname"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(7,6)-(8,0)]"
+                        "@value": "[(8,6)-(10,0)]"
                       }
                     ]
                   }
@@ -267,147 +324,186 @@
             "@value": "Person"
           }
         ],
-        "http://a.ml/vocabularies/document#examples": [
+        "http://a.ml/vocabularies/apiContract#examples": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan",
             "@type": [
-              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "titan"
               }
             ],
-            "http://a.ml/vocabularies/document#value": [
+            "http://a.ml/vocabularies/document#strict": [
+              {
+                "@value": true
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#name": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_2",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "martin"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_2"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_2/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_2"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(12,14)-(12,20)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#lastname": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_3",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "palermo"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_3"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_3/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/scalar_3"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(13,18)-(13,25)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#lastname"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(13,8)-(14,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/object_1"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(12,0)-(14,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(12,8)-(13,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
               {
                 "@value": "\n        name: martin\n        lastname: palermo\n"
               }
             ],
-            "http://a.ml/vocabularies/document#strict": [
-              {
-                "@value": true
-              }
-            ],
-            "http://a.ml/vocabularies/document#structuredValue": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Object"
-                ],
-                "http://a.ml/vocabularies/data#lastname": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1/scalar_3",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "palermo",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1/scalar_3/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1/scalar_3"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(14,18)-(14,25)]"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/data#name": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1/scalar_2",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "martin",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1/scalar_2/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1/scalar_2"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(13,14)-(13,20)]"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(12,12)-(15,0)]"
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "name->[(13,8)-(14,0)]#lastname->[(14,8)-(15,0)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -429,48 +525,48 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
+                        "@value": "http://www.w3.org/ns/shacl#raw"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(12,0)-(14,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/core#name"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(11,6)-(14,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/titan"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(11,6)-(14,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
                         "@value": "http://a.ml/vocabularies/document#structuredValue"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(12,12)-(15,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://schema.org/name"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(12,6)-(15,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/titan"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(12,12)-(15,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/document#value"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(13,0)-(15,0)]"
+                        "@value": "[(11,12)-(14,0)]"
                       }
                     ]
                   }
@@ -479,145 +575,184 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache",
             "@type": [
-              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/apiContract#Example",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "apache"
               }
             ],
-            "http://a.ml/vocabularies/document#value": [
+            "http://a.ml/vocabularies/document#strict": [
+              {
+                "@value": true
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/data#name": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_2",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "carlos"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_2"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_2/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_2"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(15,14)-(15,20)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#lastname": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_3",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "tevez"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "scalar_3"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_3/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/scalar_3"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(16,18)-(16,23)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/core#name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#lastname"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(16,8)-(16,23)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/object_1"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(15,0)-(16,23)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(15,8)-(16,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
               {
                 "@value": "\n        name: carlos\n        lastname: tevez"
               }
             ],
-            "http://a.ml/vocabularies/document#strict": [
-              {
-                "@value": true
-              }
-            ],
-            "http://a.ml/vocabularies/document#structuredValue": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Object"
-                ],
-                "http://a.ml/vocabularies/data#lastname": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1/scalar_3",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "tevez",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1/scalar_3/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1/scalar_3"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(17,18)-(17,23)]"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/data#name": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1/scalar_2",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "carlos",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1/scalar_2/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1/scalar_2"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(16,14)-(16,20)]"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(15,13)-(17,23)]"
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "name->[(16,8)-(17,0)]#lastname->[(17,8)-(17,23)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -639,208 +774,39 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/document#structuredValue"
+                        "@value": "http://www.w3.org/ns/shacl#raw"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(15,13)-(17,23)]"
+                        "@value": "[(15,0)-(16,23)]"
                       }
                     ]
                   },
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://schema.org/name"
+                        "@value": "http://a.ml/vocabularies/core#name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(15,6)-(17,23)]"
+                        "@value": "[(14,6)-(16,23)]"
                       }
                     ]
                   },
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/apache"
+                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/example/apache"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(15,13)-(17,23)]"
+                        "@value": "[(14,6)-(16,23)]"
                       }
                     ]
                   },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/document#value"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(16,0)-(17,23)]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null",
-            "@type": [
-              "http://a.ml/vocabularies/document#Example",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/document#value": [
-              {
-                "@value": "      name: juanroman\n      lastname: riquelme\n"
-              }
-            ],
-            "http://a.ml/vocabularies/document#strict": [
-              {
-                "@value": true
-              }
-            ],
-            "http://a.ml/vocabularies/document#structuredValue": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1",
-                "@type": [
-                  "http://a.ml/vocabularies/data#Object"
-                ],
-                "http://a.ml/vocabularies/data#lastname": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1/scalar_3",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "riquelme",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1/scalar_3/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1/scalar_3"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(10,16)-(10,24)]"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/data#name": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1/scalar_2",
-                    "@type": [
-                      "http://a.ml/vocabularies/data#Scalar"
-                    ],
-                    "http://a.ml/vocabularies/data#value": [
-                      {
-                        "@value": "juanroman",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1/scalar_2/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1/scalar_2"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(9,12)-(9,21)]"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(9,0)-(11,0)]"
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "name->[(9,6)-(10,0)]#lastname->[(10,6)-(11,0)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/document#strict"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "true"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
@@ -849,31 +815,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(9,0)-(11,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/example/null"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(9,0)-(11,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/document#value"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(9,0)-(11,0)]"
+                        "@value": "[(14,13)-(16,23)]"
                       }
                     ]
                   }
@@ -884,7 +826,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person/source-map",
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -892,7 +834,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -906,24 +848,36 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#property"
+                    "@value": "http://www.w3.org/ns/shacl#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(5,4)-(8,0)]"
+                    "@value": "[(4,2)-(4,8)]"
                   }
                 ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/Person"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/anonymous-and-named-examples.raml#/declarations/types/Person"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,2)-(17,23)]"
+                    "@value": "[(4,2)-(16,23)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#property"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,4)-(10,0)]"
                   }
                 ]
               }

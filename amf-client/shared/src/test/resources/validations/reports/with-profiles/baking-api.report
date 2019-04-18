@@ -63,7 +63,7 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpath/get/200/application%2Fxml"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://a.ml/vocabularies/http#mediaType"
+        "@id": "http://a.ml/vocabularies/apiContract#mediaType"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
       "http://www.w3.org/ns/shacl#sourceShape": {
@@ -92,7 +92,7 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpathxml/get/request/application%2Fxml"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://a.ml/vocabularies/http#mediaType"
+        "@id": "http://a.ml/vocabularies/apiContract#mediaType"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
       "http://www.w3.org/ns/shacl#sourceShape": {
@@ -121,7 +121,7 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpathxml/get/200/application%2Fblah"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://a.ml/vocabularies/http#mediaType"
+        "@id": "http://a.ml/vocabularies/apiContract#mediaType"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
       "http://www.w3.org/ns/shacl#sourceShape": {
@@ -150,7 +150,7 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpathxml/get/200/application%2Fblah"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://a.ml/vocabularies/http#mediaType"
+        "@id": "http://a.ml/vocabularies/apiContract#mediaType"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "JSON should be used to format content passed in and out of an API in the message body",
       "http://www.w3.org/ns/shacl#sourceShape": {
@@ -179,7 +179,7 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.5%2Fresource%2Fnested"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://schema.org/name"
+        "@id": "http://a.ml/vocabularies/core#name"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "Identifiers must be camel-cased",
       "http://www.w3.org/ns/shacl#sourceShape": {
@@ -237,7 +237,7 @@
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fpath%2Fduplicated"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://a.ml/vocabularies/http#path"
+        "@id": "http://a.ml/vocabularies/apiContract#path"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "The version must be before the resource name, for example v1.3/payments/",
       "http://www.w3.org/ns/shacl#sourceShape": {

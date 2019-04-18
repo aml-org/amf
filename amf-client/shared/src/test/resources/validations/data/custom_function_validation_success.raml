@@ -16,9 +16,9 @@ validations:
 
   my_custom_validation:
     message: This is a function constraint
-    targetClass: schema.WebAPI
+    targetClass: apiContract.WebAPI
     functionConstraint:
       code: |
         function(webapi) {
-          return webapi["http:scheme"].length === 1;
+          return webapi["apiContract:scheme"].length === 1;
         }

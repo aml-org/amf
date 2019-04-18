@@ -1,0 +1,70 @@
+#%Vocabulary 1.0
+base: http://a.ml/vocabularies/core#
+usage: Core vocabulary with common classes and properties
+classTerms:
+  CreativeWork:
+    displayName: Creative Work
+    description: The most generic kind of creative work, including books, movies, photographs, software programs, etc.
+  License:
+    displayName: License
+    description: Licensing information for a resource
+  Organization:
+    displayName: Organization
+    description: Organization providing an good or service
+propertyTerms:
+  deprecated:
+    displayName: deprecated
+    description: Marks the operation as deprecated
+    range: boolean
+  description:
+    displayName: description
+    description: Human readable description of an element
+    range: string
+  displayName:
+    displayName: display name
+    description: Human readable name for an entity
+    range: string
+  documentation:
+    displayName: documentation
+    description: Documentation about the tag
+    range: CreativeWork
+  email:
+    displayName: email
+    description: Contact email for the organization
+    range: string
+  license:
+    displayName: license
+    description: License for the API
+    range: License
+  mediaType:
+    displayName: mediaType
+    description: HTTP Media type associated to the encoded fragment information
+    range: string
+  name:
+    displayName: name
+    description: name for an entity
+    range: string
+  provider:
+    displayName: provider
+    description: The API provider
+    range: Organization
+  summary:
+    displayName: summary
+    description: Human readable short description of the endpoint
+    range: string
+  termsOfService:
+    displayName: terms of service
+    description: Terms and conditions when using the API
+    range: string
+  title:
+    displayName: title
+    description: Title of the creative work
+    range: string
+  url:
+    displayName: url
+    description: URL identifying the organization
+    range: uri
+  version:
+    displayName: version
+    description: Version of the API
+    range: string

@@ -1,498 +1,478 @@
-#%WebAPI 1.0
-name: ACME Banking HTTP API
-server:
-  -
-    url: acme-banking.com/apis
-accepts:
-  - application/json
-contentType:
-  - application/json
-version: "1.0"
-endpoint:
-  -
-    path: /customers/{customer_id}/accounts
-    supportedOperation:
-      -
-        method: post
-        description: Requests the creation of a new BankAccount
-        expects:
-          payload:
+#%WebAPI Spec 1.0
+encodes:
+  name: ACME Banking HTTP API
+  security:
+    -
+      name: oauth2_0
+      scheme:
+        name: oauth2_0
+  server:
+    -
+      url: acme-banking.com/apis
+  accepts:
+    - application/json
+  version: "1.0"
+  endpoint:
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          description: Returns the repayments schedule for a Loan
+          returns:
             -
-              mediaType: application/json
-              schema:
-                type: Node
-                closed: false
-                name: schema
-                inherits:
-                  - uses__2.NewBankAccountRequestData
-      -
-        extends:
-          -
-            type: AppliedTrait
-            name: traits.sortable
-          -
-            type: AppliedTrait
-            name: traits.pageable
-        method: get
-        description: Returns a collection accounts
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
+              name: "200"
+              payload:
+                -
+                  schema:
+                    shapeType: Node
+                    name: body
+              statusCode: "200"
+          method: get
+      path: /customers/{customer_id}/loans/schedule
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          expects:
             payload:
               -
                 mediaType: application/json
                 schema:
-                  type: Array
+                  shapeType: Node
                   name: schema
                   inherits:
                     -
-                      type: Array
-                      items: uses__2.BankAccountData
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/{customer_id}/accounts/{account_id}
-    supportedOperation:
-      -
-        extends:
-          -
-            type: AppliedTrait
-            name: traits.partial
-        method: get
-        description: Returns BankAccount data
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
-            payload:
-              -
-                mediaType: application/json
-                schema:
-                  type: Node
+                      shapeType: Node
+                      name: NewCreditCardRequestData
                   closed: false
-                  name: schema
-                  inherits:
-                    - uses__2.BankAccountData
-      -
-        method: delete
-        description: Removes a BankAccount from the system
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-      -
-        name: account_id
-        paramName: account_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/{customer_id}/cards
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/{customer_id}/cards/debit/{card_id}
-    supportedOperation:
-      -
-        extends:
-          -
-            type: AppliedTrait
-            name: traits.partial
-        method: get
-        description: Returns DebitCard data
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
-            payload:
-              -
-                mediaType: application/json
-                schema:
-                  type: Node
-                  closed: false
-                  name: schema
-                  inherits:
-                    - uses__2.DebitCardData
-      -
-        method: delete
-        description: Removes a DebitCard from the system
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-      -
-        name: card_id
-        paramName: card_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/{customer_id}/cards/credit
-    supportedOperation:
-      -
-        method: post
-        description: Requests the creation of a new CreditCard
-        expects:
-          payload:
+          description: Requests the creation of a new CreditCard
+          method: post
+        -
+          description: Returns a collection accounts
+          returns:
             -
-              mediaType: application/json
-              schema:
-                type: Node
-                closed: false
-                name: schema
-                inherits:
-                  - uses__2.NewCreditCardRequestData
-      -
-        extends:
-          -
-            type: AppliedTrait
-            name: traits.sortable
-          -
-            type: AppliedTrait
-            name: traits.pageable
-          -
-            type: AppliedTrait
-            name: contentCacheable
-        method: get
-        description: Returns a collection accounts
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
+              name: "200"
+              payload:
+                -
+                  mediaType: application/json
+                  schema:
+                    shapeType: Array
+                    name: schema
+                    inherits:
+                      -
+                        shapeType: Array
+                        items:
+                          shapeType: Node
+              statusCode: "200"
+          method: get
+      path: /customers/{customer_id}/cards/credit
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          expects:
             payload:
               -
                 mediaType: application/json
                 schema:
-                  type: Array
+                  shapeType: Node
                   name: schema
                   inherits:
                     -
-                      type: Array
-                      items: uses__2.CreditCardData
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/{customer_id}
-    supportedOperation:
-      -
-        extends:
-          -
-            type: AppliedTrait
-            name: traits.partial
-        method: get
-        description: Returns Customer data
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
-            payload:
-              -
-                mediaType: application/json
-                schema:
-                  type: Node
+                      shapeType: Node
+                      name: NewBankAccountRequestData
                   closed: false
-                  name: schema
-                  inherits:
-                    - CustomerMemberResponse
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/{customer_id}/cards/credit/{card_id}
-    supportedOperation:
-      -
-        extends:
-          -
-            type: AppliedTrait
-            name: traits.partial
-        method: get
-        description: Returns DebitCard data
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
-            payload:
-              -
-                mediaType: application/json
-                schema:
-                  type: Node
-                  closed: false
-                  name: schema
-                  inherits:
-                    - uses__2.CreditCardData
-      -
-        method: delete
-        description: Removes a CreditCard from the system
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-      -
-        name: card_id
-        paramName: card_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/{customer_id}/loans/schedule
-    supportedOperation:
-      -
-        method: get
-        description: Returns the repayments schedule for a Loan
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
-            payload:
-              -
-                schema: uses__2.RepaymentSpecificationData
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/{customer_id}/loans
-    supportedOperation:
-      -
-        method: post
-        description: Requests the creation of a new Loan
-        expects:
-          payload:
+          description: Requests the creation of a new BankAccount
+          method: post
+        -
+          description: Returns a collection accounts
+          returns:
             -
-              mediaType: application/json
-              schema:
-                type: Node
-                closed: false
-                name: schema
-                inherits:
-                  - uses__2.NewLoanRequestData
-      -
-        extends:
-          -
-            type: AppliedTrait
-            name: traits.sortable
-          -
-            type: AppliedTrait
-            name: traits.pageable
-          -
-            type: AppliedTrait
-            name: contentCacheable
-        method: get
-        description: Returns a collection accounts
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
+              name: "200"
+              payload:
+                -
+                  mediaType: application/json
+                  schema:
+                    shapeType: Array
+                    name: schema
+                    inherits:
+                      -
+                        shapeType: Array
+                        items:
+                          shapeType: Node
+              statusCode: "200"
+          method: get
+      path: /customers/{customer_id}/accounts
+    -
+      parameter:
+        -
+          required: true
+          paramName: loan_id
+          name: loan_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          description: Returns Loan data
+          returns:
+            -
+              name: "200"
+              payload:
+                -
+                  mediaType: application/json
+                  schema:
+                    shapeType: Node
+                    name: schema
+                    inherits:
+                      -
+                        shapeType: Node
+                        name: LoanData
+                    closed: false
+              statusCode: "200"
+          method: get
+      path: /customers/{customer_id}/loans/{loan_id}
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+        -
+          required: true
+          paramName: card_id
+          name: card_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          description: Returns DebitCard data
+          returns:
+            -
+              name: "200"
+              payload:
+                -
+                  mediaType: application/json
+                  schema:
+                    shapeType: Node
+                    name: schema
+                    inherits:
+                      -
+                        shapeType: Node
+                        name: DebitCardData
+                    closed: false
+              statusCode: "200"
+          method: get
+        -
+          description: Removes a DebitCard from the system
+          method: delete
+      path: /customers/{customer_id}/cards/debit/{card_id}
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          expects:
             payload:
               -
                 mediaType: application/json
                 schema:
-                  type: Array
+                  shapeType: Node
                   name: schema
                   inherits:
                     -
-                      type: Array
-                      items: uses__2.LoanData
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/corporate
-    supportedOperation:
-      -
-        method: post
-        description: Customer data created correctly for an Organization
-        expects:
-          payload:
-            -
-              schema: uses__2.NewOrganizationData
-  -
-    path: /customers/{customer_id}/loans/{loan_id}
-    supportedOperation:
-      -
-        extends:
-          -
-            type: AppliedTrait
-            name: traits.partial
-        method: get
-        description: Returns Loan data
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
-            payload:
-              -
-                mediaType: application/json
-                schema:
-                  type: Node
+                      shapeType: Node
+                      name: NewDebitCardRequestData
                   closed: false
-                  name: schema
-                  inherits:
-                    - uses__2.LoanData
-    parameter:
-      -
-        name: loan_id
-        paramName: loan_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-  -
-    path: /customers/commercial
-    supportedOperation:
-      -
-        method: post
-        description: Customer data created correctly for a Person
-        expects:
-          payload:
+          description: Requests the creation of a new DebitCard
+          method: post
+        -
+          description: Returns a collection of cards
+          returns:
             -
-              schema: uses__2.NewPersonData
-  -
-    path: /customers
-    name: Customer Resource
-  -
-    path: /customers/{customer_id}/cards/debit
-    supportedOperation:
-      -
-        method: post
-        description: Requests the creation of a new DebitCard
-        expects:
-          payload:
-            -
-              mediaType: application/json
-              schema:
-                type: Node
-                closed: false
-                name: schema
-                inherits:
-                  - uses__2.NewDebitCardRequestData
-      -
-        extends:
-          -
-            type: AppliedTrait
-            name: traits.sortable
-          -
-            type: AppliedTrait
-            name: traits.pageable
-        method: get
-        description: Returns a collection of cards
-        returns:
-          -
-            name: "200"
-            statusCode: "200"
+              name: "200"
+              payload:
+                -
+                  mediaType: application/json
+                  schema:
+                    shapeType: Array
+                    name: schema
+                    inherits:
+                      -
+                        shapeType: Array
+                        items:
+                          shapeType: Node
+              statusCode: "200"
+          method: get
+      path: /customers/{customer_id}/cards/debit
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          expects:
             payload:
               -
                 mediaType: application/json
                 schema:
-                  type: Array
+                  shapeType: Node
                   name: schema
                   inherits:
                     -
-                      type: Array
-                      items: uses__2.DebitCardData
-    parameter:
-      -
-        name: customer_id
-        paramName: customer_id
-        required: true
-        binding: path
-        schema:
-          type: Scalar
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: schema
-security:
+                      shapeType: Node
+                      name: NewLoanRequestData
+                  closed: false
+          description: Requests the creation of a new Loan
+          method: post
+        -
+          description: Returns a collection accounts
+          returns:
+            -
+              name: "200"
+              payload:
+                -
+                  mediaType: application/json
+                  schema:
+                    shapeType: Array
+                    name: schema
+                    inherits:
+                      -
+                        shapeType: Array
+                        items:
+                          shapeType: Node
+              statusCode: "200"
+          method: get
+      path: /customers/{customer_id}/loans
+    -
+      supportedOperation:
+        -
+          expects:
+            payload:
+              -
+                schema:
+                  shapeType: Node
+                  name: body
+          description: Customer data created correctly for a Person
+          method: post
+      path: /customers/commercial
+    -
+      name: Customer Resource
+      path: /customers
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+        -
+          required: true
+          paramName: card_id
+          name: card_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          description: Returns DebitCard data
+          returns:
+            -
+              name: "200"
+              payload:
+                -
+                  mediaType: application/json
+                  schema:
+                    shapeType: Node
+                    name: schema
+                    inherits:
+                      -
+                        shapeType: Node
+                        name: CreditCardData
+                    closed: false
+              statusCode: "200"
+          method: get
+        -
+          description: Removes a CreditCard from the system
+          method: delete
+      path: /customers/{customer_id}/cards/credit/{card_id}
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          description: Returns Customer data
+          returns:
+            -
+              name: "200"
+              payload:
+                -
+                  mediaType: application/json
+                  schema:
+                    shapeType: Node
+                    name: schema
+                    inherits:
+                      -
+                        shapeType: Union
+                        name: CustomerMemberResponse
+                    closed: false
+              statusCode: "200"
+          method: get
+      path: /customers/{customer_id}
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+        -
+          required: true
+          paramName: account_id
+          name: account_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      supportedOperation:
+        -
+          description: Returns BankAccount data
+          returns:
+            -
+              name: "200"
+              payload:
+                -
+                  mediaType: application/json
+                  schema:
+                    shapeType: Node
+                    name: schema
+                    inherits:
+                      -
+                        shapeType: Node
+                        name: BankAccountData
+                    closed: false
+              statusCode: "200"
+          method: get
+        -
+          description: Removes a BankAccount from the system
+          method: delete
+      path: /customers/{customer_id}/accounts/{account_id}
+    -
+      supportedOperation:
+        -
+          expects:
+            payload:
+              -
+                schema:
+                  shapeType: Node
+                  name: body
+          description: Customer data created correctly for an Organization
+          method: post
+      path: /customers/corporate
+    -
+      parameter:
+        -
+          required: true
+          paramName: customer_id
+          name: customer_id
+          schema:
+            shapeType: Scalar
+            datatype: http://www.w3.org/2001/XMLSchema#string
+            name: schema
+          binding: path
+      path: /customers/{customer_id}/cards
+  contentType:
+    - application/json
+declares:
   -
-    name: oauth2_0
-    scheme: fragment
-dataShapes:
-  CustomerMemberResponse:
-    type: Union
-    anyOf:
-      - uses__2.OrganizationData
+    declarationType: Union
     name: CustomerMemberResponse
-uses:
-  uses__1: traits/traits.raml
-  uses__2: dataTypes/shapes.raml
+    anyOf:
+      -
+        shapeType: Node
+  -
+    declarationType: Trait
+    name: contentCacheable
+  -
+    declarationType: SecurityScheme
+    name: oauth2_0

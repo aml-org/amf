@@ -11,59 +11,59 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/web-api",
         "@type": [
-          "http://schema.org/WebAPI",
+          "http://a.ml/vocabularies/apiContract#WebAPI",
           "http://a.ml/vocabularies/document#RootDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "test API"
           }
         ],
-        "http://a.ml/vocabularies/http#endpoint": [
+        "http://a.ml/vocabularies/apiContract#endpoint": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/web-api/end-points/%2Fresource",
             "@type": [
-              "http://a.ml/vocabularies/http#EndPoint",
+              "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/http#path": [
+            "http://a.ml/vocabularies/apiContract#path": [
               {
                 "@value": "/resource"
               }
             ],
-            "http://www.w3.org/ns/hydra/core#supportedOperation": [
+            "http://a.ml/vocabularies/apiContract#supportedOperation": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/web-api/end-points/%2Fresource/get",
                 "@type": [
-                  "http://www.w3.org/ns/hydra/core#Operation",
+                  "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/hydra/core#method": [
+                "http://a.ml/vocabularies/apiContract#method": [
                   {
                     "@value": "get"
                   }
                 ],
-                "http://www.w3.org/ns/hydra/core#expects": [
+                "http://a.ml/vocabularies/apiContract#expects": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/web-api/end-points/%2Fresource/get/request",
                     "@type": [
-                      "http://a.ml/vocabularies/http#Request",
+                      "http://a.ml/vocabularies/apiContract#Request",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/http#payload": [
+                    "http://a.ml/vocabularies/apiContract#payload": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/web-api/end-points/%2Fresource/get/request/application%2Fjson",
                         "@type": [
-                          "http://a.ml/vocabularies/http#Payload",
+                          "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/http#mediaType": [
+                        "http://a.ml/vocabularies/apiContract#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/http#schema": [
+                        "http://a.ml/vocabularies/apiContract#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/web-api/end-points/%2Fresource/get/request/application%2Fjson/schema",
                             "@type": [
@@ -113,7 +113,7 @@
                                       }
                                     ],
                                     "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/declarations/annotations/a": {
-                                      "http://a.ml/vocabularies/document#name": [
+                                      "http://a.ml/vocabularies/core#name": [
                                         {
                                           "@value": "a"
                                         }
@@ -134,7 +134,7 @@
                                           "@id": "http://www.w3.org/2001/XMLSchema#string"
                                         }
                                       ],
-                                      "http://schema.org/name": [
+                                      "http://a.ml/vocabularies/core#name": [
                                         {
                                           "@value": "scalar_1"
                                         }
@@ -231,7 +231,7 @@
                               }
                             ],
                             "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/declarations/annotations/a": {
-                              "http://a.ml/vocabularies/document#name": [
+                              "http://a.ml/vocabularies/core#name": [
                                 {
                                   "@value": "a"
                                 }
@@ -252,7 +252,7 @@
                                   "@id": "http://www.w3.org/2001/XMLSchema#string"
                                 }
                               ],
-                              "http://schema.org/name": [
+                              "http://a.ml/vocabularies/core#name": [
                                 {
                                   "@value": "scalar_1"
                                 }
@@ -383,7 +383,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/http#payload"
+                                "@value": "http://a.ml/vocabularies/apiContract#payload"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -410,7 +410,7 @@
                   }
                 ],
                 "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/declarations/annotations/a": {
-                  "http://a.ml/vocabularies/document#name": [
+                  "http://a.ml/vocabularies/core#name": [
                     {
                       "@value": "a"
                     }
@@ -431,7 +431,7 @@
                       "@id": "http://www.w3.org/2001/XMLSchema#string"
                     }
                   ],
-                  "http://schema.org/name": [
+                  "http://a.ml/vocabularies/core#name": [
                     {
                       "@value": "scalar_1"
                     }
@@ -474,7 +474,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/hydra/core#expects"
+                            "@value": "http://a.ml/vocabularies/apiContract#expects"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -503,7 +503,7 @@
               }
             ],
             "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/declarations/annotations/a": {
-              "http://a.ml/vocabularies/document#name": [
+              "http://a.ml/vocabularies/core#name": [
                 {
                   "@value": "a"
                 }
@@ -524,7 +524,7 @@
                   "@id": "http://www.w3.org/2001/XMLSchema#string"
                 }
               ],
-              "http://schema.org/name": [
+              "http://a.ml/vocabularies/core#name": [
                 {
                   "@value": "scalar_1"
                 }
@@ -605,7 +605,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -688,7 +688,7 @@
             ]
           }
         ],
-        "http://a.ml/vocabularies/document#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "a"
           }
@@ -717,7 +717,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/document#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -791,7 +791,7 @@
                   }
                 ],
                 "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/declarations/annotations/a": {
-                  "http://a.ml/vocabularies/document#name": [
+                  "http://a.ml/vocabularies/core#name": [
                     {
                       "@value": "a"
                     }
@@ -812,7 +812,7 @@
                       "@id": "http://www.w3.org/2001/XMLSchema#string"
                     }
                   ],
-                  "http://schema.org/name": [
+                  "http://a.ml/vocabularies/core#name": [
                     {
                       "@value": "scalar_1"
                     }
@@ -909,7 +909,7 @@
           }
         ],
         "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/konst1/api.raml#/declarations/annotations/a": {
-          "http://a.ml/vocabularies/document#name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "a"
             }
@@ -930,7 +930,7 @@
               "@id": "http://www.w3.org/2001/XMLSchema#string"
             }
           ],
-          "http://schema.org/name": [
+          "http://a.ml/vocabularies/core#name": [
             {
               "@value": "scalar_1"
             }

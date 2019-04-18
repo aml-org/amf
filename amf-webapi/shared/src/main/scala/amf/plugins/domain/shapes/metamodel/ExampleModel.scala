@@ -21,22 +21,22 @@ trait ExampleModel
 
   val DisplayName = Field(
     Str,
-    Document + "displayName",
-    ModelDoc(ModelVocabularies.AmlDoc,
+    Core + "displayName",
+    ModelDoc(ModelVocabularies.Core,
              "display name",
              "Human readable name for the example",
-             Seq((Namespace.Schema + "name").iri()))
+             Seq((Namespace.Core + "name").iri()))
   )
   val Summary = Field(
     Str,
-    Http + "guiSummary",
-    ModelDoc(ModelVocabularies.Http,
+    ApiContract + "guiSummary",
+    ModelDoc(ModelVocabularies.ApiContract,
              "gui summary",
              "Human readable description of the example",
-             Seq((Namespace.Schema + "description").iri()))
+             Seq((Namespace.ApiContract + "description").iri()))
   )
   val Description =
-    Field(Str, Schema + "description", ModelDoc(ExternalModelVocabularies.SchemaOrg, "description", ""))
+    Field(Str, Core + "description", ModelDoc(ModelVocabularies.Core, "description", ""))
   val ExternalValue = Field(
     Str,
     Document + "externalValue",
@@ -51,20 +51,20 @@ trait ExampleModel
                               "strict",
                               "Indicates if this example should be validated against an associated schema"))
   val MediaType = Field(Str,
-                        Http + "mediaType",
-                        ModelDoc(ModelVocabularies.Http, "media type", "Media type associated to the example"))
+                        Core + "mediaType",
+                        ModelDoc(ModelVocabularies.Core, "media type", "Media type associated to the example"))
 
   override val key: Field = Name
 
   override val fields: List[Field] =
     List(Name, DisplayName, Summary, Description, ExternalValue, Strict, MediaType, StructuredValue) ++ DomainElementModel.fields ++ LinkableElementModel.fields ++ ExternalSourceElementModel.fields
 
-  override val `type`: List[ValueType] = Document + "Example" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "Example" :: DomainElementModel.`type`
 
   override def modelInstance = Example()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.AmlDoc,
+    ModelVocabularies.ApiContract,
     "Example",
     "Example value for a schema inside an API"
   )

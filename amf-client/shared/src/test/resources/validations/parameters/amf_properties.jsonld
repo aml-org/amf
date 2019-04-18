@@ -1,25 +1,25 @@
 {
   "@id": "http://test.com/the-parameter",
   "@type": [
-    "http://a.ml/vocabularies/http#Parameter",
+    "http://a.ml/vocabularies/apiContract#Parameter",
     "http://a.ml/vocabularies/document#DomainElement"
   ],
-  "http://a.ml/vocabularies/http#binding": [
+  "http://a.ml/vocabularies/apiContract#binding": [
     {
       "@value": "wadus"
     }
   ],
-  "http://www.w3.org/ns/hydra/core#required": [
+  "http://a.ml/vocabularies/apiContract#required": [
     {
       "@value": "wadus"
     }
   ],
-  "http://a.ml/vocabularies/http#schema": [
+  "http://a.ml/vocabularies/apiContract#schema": [
     {
       "@value": "wadus"
     }
   ],
-  "http://schema.org/name": [
+  "http://a.ml/vocabularies/core#name": [
     {
       "@value": 22
     }

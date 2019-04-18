@@ -11,30 +11,30 @@
       {
         "@id": "#16",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "test"
           }
         ],
-        "raml-http:server": [
+        "apiContract:server": [
           {
             "@id": "#25",
             "@type": [
-              "raml-http:Server",
+              "apiContract:Server",
               "doc:DomainElement"
             ],
-            "raml-http:url": [
+            "apiContract:url": [
               {
                 "@value": "aa-bbb.com/apis"
               }
             ],
             "smaps": {
               "lexical": {
-                "raml-http:url": "[(4,0)-(6,0)]"
+                "apiContract:url": "[(4,0)-(6,0)]"
               },
               "synthesized-field": {
                 "#25": "true"
@@ -42,31 +42,31 @@
             }
           }
         ],
-        "schema-org:version": [
+        "core:version": [
           {
             "@value": "1.0"
           }
         ],
-        "raml-http:endpoint": [
+        "apiContract:endpoint": [
           {
             "@id": "#17",
             "@type": [
-              "raml-http:EndPoint",
+              "apiContract:EndPoint",
               "doc:DomainElement"
             ],
-            "raml-http:path": [
+            "apiContract:path": [
               {
                 "@value": "/customers"
               }
             ],
-            "schema-org:name": [
+            "core:name": [
               {
                 "@value": "Customer Resource"
               }
             ],
             "smaps": {
               "lexical": {
-                "schema-org:name": "[(19,2)-(20,0)]",
+                "core:name": "[(19,2)-(20,0)]",
                 "#17": "[(18,0)-(27,21)]"
               }
             }
@@ -74,51 +74,51 @@
           {
             "@id": "#18",
             "@type": [
-              "raml-http:EndPoint",
+              "apiContract:EndPoint",
               "doc:DomainElement"
             ],
-            "raml-http:path": [
+            "apiContract:path": [
               {
                 "@value": "/customers/corporate"
               }
             ],
-            "hydra:supportedOperation": [
+            "apiContract:supportedOperation": [
               {
                 "@id": "#19",
                 "@type": [
-                  "hydra:Operation",
+                  "apiContract:Operation",
                   "doc:DomainElement"
                 ],
-                "hydra:method": [
+                "apiContract:method": [
                   {
                     "@value": "post"
                   }
                 ],
-                "schema-org:description": [
+                "core:description": [
                   {
                     "@value": "Customer data created correctly for an Organization"
                   }
                 ],
-                "hydra:expects": [
+                "apiContract:expects": [
                   {
                     "@id": "#20",
                     "@type": [
-                      "raml-http:Request",
+                      "apiContract:Request",
                       "doc:DomainElement"
                     ],
-                    "raml-http:payload": [
+                    "apiContract:payload": [
                       {
                         "@id": "#21",
                         "@type": [
-                          "raml-http:Payload",
+                          "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "raml-http:mediaType": [
+                        "apiContract:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "raml-http:schema": [
+                        "apiContract:schema": [
                           {
                             "@id": "#22",
                             "@type": [
@@ -516,7 +516,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "raml-http:payload": "[(23,6)-(27,21)]",
+                        "apiContract:payload": "[(23,6)-(27,21)]",
                         "#20": "[(22,0)-(27,21)]"
                       }
                     }
@@ -524,7 +524,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "schema-org:description": "[(22,6)-(23,0)]",
+                    "core:description": "[(22,6)-(23,0)]",
                     "#19": "[(21,4)-(27,21)]"
                   }
                 }
@@ -545,10 +545,10 @@
             "#16": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:version": "[(3,0)-(4,0)]",
-            "schema-org:name": "[(2,0)-(3,0)]",
+            "core:version": "[(3,0)-(4,0)]",
+            "core:name": "[(2,0)-(3,0)]",
             "#16": "[(2,0)-(27,21)]",
-            "raml-http:server": "[(4,0)-(6,0)]"
+            "apiContract:server": "[(4,0)-(6,0)]"
           }
         }
       }
@@ -1111,12 +1111,11 @@
     ],
     "@context": {
       "@base": "amf://id",
-      "raml-http": "http://a.ml/vocabularies/http#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "doc": "http://a.ml/vocabularies/document#",
-      "schema-org": "http://schema.org/",
-      "hydra": "http://www.w3.org/ns/hydra/core#"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
     }
   }
 ]
