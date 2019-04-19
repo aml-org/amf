@@ -654,18 +654,13 @@ trait ExamplesEmitter {
         if (examples.nonEmpty)
           results += ExamplesLinkEmitter("examples", examples.get, ordering, references)
       case e: Examples =>
-        val (anonymous, named) =
-          spec
-            .filterLocal(shape.exampleValues)
-            .partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
-        val examples = shape.exampleValues
-        anonymous.headOption.foreach { a =>
-          results += SingleExampleEmitter("example", a, ordering)
+        spec.filterLocal(shape.exampleValues).toList match {
+          case Nil => // ignore
+          case head :: Nil if head.name.option().isEmpty =>
+            results += SingleExampleEmitter("example", head, ordering)
+          case list =>
+            results += MultipleExampleEmitter("examples", list, ordering, references)
         }
-        results += MultipleExampleEmitter("examples",
-                                          named ++ (if (anonymous.lengthCompare(1) > 0) examples.tail else None),
-                                          ordering,
-                                          references)
       case _ => // ignore
     }
   }

@@ -90,7 +90,8 @@ case class MultipleExampleEmitter(key: String,
             examples.head.linkTarget.foreach(l =>
               spec.factory.tagToReferenceEmitter(l, examples.head.linkLabel.option(), references).emit(b))
           else {
-            val emitters = examples.map(NamedExampleEmitter(_, ordering))
+            val gendId   = new IdCounter()
+            val emitters = examples.map(NamedExampleEmitter(_, ordering, gendId))
             b.obj(traverse(ordering.sorted(emitters), _))
           }
 
@@ -128,15 +129,18 @@ case class SingleExampleEmitter(key: String, example: Example, ordering: SpecOrd
 }
 
 case class NamedExamplesEmitter(examples: Examples, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+  val nameGenerator = new IdCounter()
   def emitters(): Seq[EntryEmitter] = {
-    examples.examples.map(NamedExampleEmitter(_, ordering))
+    examples.examples.map(NamedExampleEmitter(_, ordering, nameGenerator))
   }
 }
 
-case class NamedExampleEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+case class NamedExampleEmitter(example: Example, ordering: SpecOrdering, idCounter: IdCounter = new IdCounter())(
+    implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(example.name.value(), ExampleValuesEmitter(example, ordering).emit(_))
+    val name = example.name.option().getOrElse(idCounter.genId("example"))
+    b.entry(name, ExampleValuesEmitter(example, ordering).emit(_))
   }
 
   override def position(): Position = pos(example.annotations)

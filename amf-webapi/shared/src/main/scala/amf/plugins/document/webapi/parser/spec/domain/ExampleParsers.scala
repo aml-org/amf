@@ -70,45 +70,45 @@ case class RamlExamplesParser(map: YMap,
       )
     }
 
-    if (hasMultiple) {
-      map
-        .key(multipleExamplesKey)
-        .map { entry =>
-          ctx.link(entry.value) match {
-            case Left(s) =>
-              ctx.declarations.findNamedExampleOrError(entry.value)(s).link(s)
-            case Right(node) =>
-              val examples = ListBuffer[Example]()
-              node.tagType match {
-                case YType.Map =>
-                  examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer, options).parse())
-                case YType.Null => // ignore
-                case YType.Str
-                    if node.toString().matches("<<.*>>") && ctx
-                      .asInstanceOf[RamlWebApiContext]
-                      .contextType != DEFAULT => // Ignore
-                case _ =>
-                  ctx.violation(
-                    ExamplesMustBeAMap,
-                    "",
-                    s"Property '$multipleExamplesKey' should be a map",
-                    entry
-                  )
-              }
-              val ex = Examples()
-              ex.adopted(parent.id)
-              ex.withExamples(examples)
-              ex
-          }
+    val ex = Examples()
+    ex.adopted(parent.id)
+    val newEx = (if (hasMultiple) parseMultiple(ex) else None).getOrElse(ex)
+    if (hasSingle) parseSingle(newEx)
+    newEx
+  }
+
+  private def parseMultiple(ex: Examples): Option[Examples] =
+    map
+      .key(multipleExamplesKey)
+      .map { entry =>
+        ctx.link(entry.value) match {
+          case Left(s) =>
+            ctx.declarations.findNamedExampleOrError(entry.value)(s).link(s)
+          case Right(node) =>
+            val examples = ListBuffer[Example]()
+            node.tagType match {
+              case YType.Map =>
+                examples ++= node.as[YMap].entries.map(RamlNamedExampleParser(_, producer, options).parse())
+              case YType.Null => // ignore
+              case YType.Str
+                  if node.toString().matches("<<.*>>") && ctx
+                    .asInstanceOf[RamlWebApiContext]
+                    .contextType != DEFAULT => // Ignore
+              case _ =>
+                ctx.violation(
+                  ExamplesMustBeAMap,
+                  "",
+                  s"Property '$multipleExamplesKey' should be a map",
+                  entry
+                )
+            }
+            ex.withExamples(examples)
         }
-        .getOrElse(Examples())
-    } else {
-      val examples = RamlSingleExampleParser(singleExampleKey, map, producer, options).parse()
-      val ex       = Examples()
-      ex.adopted(parent.id)
-      ex.withExamples(examples.toList)
-      ex
-    }
+      }
+
+  private def parseSingle(ex: Examples) = {
+    val examples = RamlSingleExampleParser(singleExampleKey, map, producer, options).parse()
+    ex.withExamples(ex.examples ++ examples.toList)
   }
 }
 
