@@ -706,7 +706,7 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
-                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
@@ -715,7 +715,7 @@
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "true"
+                                        "@value": ""
                                       }
                                     ]
                                   }
@@ -730,6 +730,20 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(21,6)-(22,0)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/201/default/any/default"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "true"
                                       }
                                     ]
                                   }

@@ -176,6 +176,15 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           Amf,
           validationsPath + "auto-generated-schema-name/")
   }
+  test("Auto generated payload name annotation with default mediaType") {
+    cycle(
+      "auto-generated-schema-name-with-default.raml",
+      "auto-generated-schema-name-with-default.jsonld",
+      RamlYamlHint,
+      Amf,
+      validationsPath + "auto-generated-schema-name/"
+    )
+  }
 
   test("Declared type union with inherit array link") {
     cycle("union-type-array.raml", "union-type-array.jsonld", RamlYamlHint, Amf, validationsPath)
