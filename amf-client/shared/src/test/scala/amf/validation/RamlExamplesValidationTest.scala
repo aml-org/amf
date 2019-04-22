@@ -252,6 +252,10 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/invalid-nested-named-example-2/api.raml", Some("invalid-nested-named-example-2.report"))
   }
 
+  test("Invalid NamedExample that includes another NamedExample 3") {
+    validate("/examples/invalid-nested-named-example-3/api.raml", Some("invalid-nested-named-example-3.report"))
+  }
+
   test("NamedExample that includes fragment without header") {
     validate("/examples/nested-named-example-fragment/api.raml")
   }

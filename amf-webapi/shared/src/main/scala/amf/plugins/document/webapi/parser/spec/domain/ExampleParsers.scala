@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.contexts.RamlWebApiContextType.DEFAULT
 import amf.plugins.document.webapi.model.NamedExampleFragment
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, FragmentKind, SpecParserOps}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, Examples, ScalarShape}
 import amf.plugins.features.validation.ParserSideValidations.{
@@ -132,23 +132,9 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
     val name           = ScalarNode(entry.key)
     val simpleProducer = () => producer(Some(name.text().toString))
 
-    val example = RamlSingleExampleValueParser(entry, simpleProducer, options)
+    RamlSingleExampleValueParser(entry, simpleProducer, options)
       .parse()
       .set(ExampleModel.Name, name.text(), Annotations(entry))
-
-    ctx.link(entry.value) match {
-      case Left(s) =>
-        ctx.declarations.findNamedExample(s).foreach { _ =>
-          ctx.violation(
-            NamedExampleUsedInExample,
-            example.id,
-            "Named example fragments must be included in 'examples' facet",
-            entry.value
-          )
-        }
-      case Right(_) =>
-    }
-    example
   }
 }
 
@@ -304,7 +290,7 @@ case class NodeDataNodeParser(node: YNode,
 
   private def parseDataNode(exampleNode: Option[YNode], ann: Seq[Annotation] = Seq()) = {
     val dataNode = exampleNode.map { ex =>
-      val dataNode = DataNodeParser(ex, parent = Some(parentId)).parse()
+      val dataNode = DataNodeParser(ex, parent = Some(parentId), kind = FragmentKind.NAMED_EXAMPLE).parse()
       dataNode.annotations.reject(_.isInstanceOf[LexicalInformation])
       dataNode.annotations += LexicalInformation(Range(ex.value.range))
       ann.foreach { a =>
