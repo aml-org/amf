@@ -185,7 +185,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   override def ramlSyntaxKey: String = "anyShape"
 
-  def trackedExample(trackId: String): Option[Example] = examples.examples.find(_.isTrackedBy(trackId))
+  def trackedExample(trackId: String): Option[Example] = exampleValues.find(_.isTrackedBy(trackId))
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = AnyShape.apply
