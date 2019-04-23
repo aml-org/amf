@@ -190,6 +190,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     cycle("union-type-array.raml", "union-type-array.jsonld", RamlYamlHint, Amf, validationsPath)
   }
 
+  test("Tracked oas examples") {
+    cycle(
+      "tracked-oas-examples.json",
+      "tracked-oas-examples.jsonld",
+      OasJsonHint,
+      Amf,
+      validationsPath + "tracked-oas-examples/"
+    )
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
+import amf.core.annotations.TrackedElement
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
@@ -33,6 +34,7 @@ class ExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler
                 p.schema match {
                   case shape: AnyShape =>
                     example.withName(example.mediaType.value() + index)
+                    example.add(TrackedElement(p.id))
                     shape.withExamples(shape.examples ++ Seq(example))
                   case _ => response.withExamples(response.examples ++ Seq(example))
                 }
