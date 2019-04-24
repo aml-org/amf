@@ -22,10 +22,6 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
     cycle("example9.raml", "example9.resolved.raml", VocabularyYamlHint, Aml)
   }
 
-  test("resolve library test") {
-    cycle("example7.raml", "example7.resolved.raml", VocabularyYamlHint, Aml)
-  }
-
   test("resolve 13 test") {
     cycle("example13.raml", "example13.resolved.raml", VocabularyYamlHint, Aml)
   }
