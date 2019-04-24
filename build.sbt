@@ -8,7 +8,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf"
 
-version in ThisBuild := "4.0.0-RC.0"
+version in ThisBuild := "4.0.0-RC.1"
 
 publish := {}
 
@@ -86,7 +86,7 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0",
-    "com.github.amlorg" %%% "amf-aml" % "4.0.11"
+    "com.github.amlorg" %%% "amf-aml" % "4.0.13"
   )
 )
 
@@ -98,8 +98,8 @@ lazy val workspaceDirectory: File =
 
 lazy val amfAmlJVMRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJVM")
 lazy val amfAmlJSRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJS")
-lazy val amfAmlLibJVM = "com.github.amlorg" %% "amf-aml" % "4.0.11"
-lazy val amfAmlLibJS = "com.github.amlorg" %% "amf-aml_sjs0.6" % "4.0.11"
+lazy val amfAmlLibJVM = "com.github.amlorg" %% "amf-aml" % "4.0.13"
+lazy val amfAmlLibJS = "com.github.amlorg" %% "amf-aml_sjs0.6" % "4.0.13"
 
 
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
