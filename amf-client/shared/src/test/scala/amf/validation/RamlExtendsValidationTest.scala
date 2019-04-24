@@ -136,6 +136,12 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
     validate("/extends/merging-payloads/multiple-merges/multipleMerges.raml",
              Some("payloadMergingMultipleMerges.report"))
   }
+
+  test("Merging extends with no payload") {
+    validate("/extends/merging-payloads/merging-extends-with-no-payload.raml",
+             Some("merging-extends-with-no-payload.report"))
+  }
+
   // References
 
   test("Inexistent references in non optional operations") {
