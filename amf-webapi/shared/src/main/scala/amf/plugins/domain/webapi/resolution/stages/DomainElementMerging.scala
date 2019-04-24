@@ -14,8 +14,6 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
-import amf.plugins.domain.webapi.models.Payload
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models.{Operation, Payload, Request, Response}
 import amf.plugins.features.validation.ResolutionSideValidations.{
@@ -435,22 +433,28 @@ object MergingValidator {
                                                    errorHandler: ErrorHandler,
                                                    m: Seq[Payload],
                                                    o: Seq[Payload]): Unit = {
-    val mainPayloadsDefineMediaType = m.forall { payload =>
-      payload.mediaType.option().isDefined
-    }
 
-    val otherPayloadsDefineMediaType = o.forall { payload =>
-      payload.mediaType.option().isDefined
-    }
+    val shouldRevisePayloads = m.nonEmpty && m.forall(_.isInstanceOf[Payload]) &&
+      o.nonEmpty && o.forall(_.isInstanceOf[Payload])
 
-    if (mainPayloadsDefineMediaType != otherPayloadsDefineMediaType) {
+    if (shouldRevisePayloads) {
+      val mainPayloadsDefineMediaType = m.forall { payload =>
+        payload.mediaType.option().isDefined
+      }
 
-      errorHandler.violation(UnequalMediaTypeDefinitionsInExtendsPayloads,
-                             main.id,
-                             None,
-                             UnequalMediaTypeDefinitionsInExtendsPayloads.message,
-                             main.position(),
-                             main.location())
+      val otherPayloadsDefineMediaType = o.forall { payload =>
+        payload.mediaType.option().isDefined
+      }
+
+      if (mainPayloadsDefineMediaType != otherPayloadsDefineMediaType) {
+
+        errorHandler.violation(UnequalMediaTypeDefinitionsInExtendsPayloads,
+                               main.id,
+                               None,
+                               UnequalMediaTypeDefinitionsInExtendsPayloads.message,
+                               main.position(),
+                               main.location())
+      }
     }
   }
 }

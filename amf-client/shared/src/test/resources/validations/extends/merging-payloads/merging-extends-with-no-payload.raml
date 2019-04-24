@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: api
+traits:
+  trait1: # no payload defined
+    headers:
+      header1: string
+resourceTypes:
+  rt1: # no payload defined
+    post:
+      headers:
+        header2: string
+/endpoint1:
+  post:
+    is: [trait1]
+    body:
+/endpoint2:
+  type: rt1
+  post:
+    body:
