@@ -14,6 +14,7 @@ import amf.core.validation.{EffectiveValidations, SeverityLevels}
 import amf.core.vocabulary.Namespace
 import amf.{OASStyle, RAMLStyle}
 import org.yaml.model.YScalar
+import amf.plugins.domain._
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -252,6 +253,31 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
             reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
           case _ =>
         }
+
+      case Some("fileParameterMustBeInFormData") =>
+        val optBindingValue = element.fields
+          .fields()
+          .find { f =>
+            f.field.value.iri().endsWith("binding")
+          }
+          .map(field => field.value.value)
+          .collect { case AmfScalar(value, _) => value }
+
+        val optSchemaValueIsFile = element.fields
+          .fields()
+          .find { f =>
+            f.field.value.iri().endsWith("schema")
+          }
+          .flatMap(field =>
+            field.value.value match {
+              case shape: Shape => Some(shape.ramlSyntaxKey == "fileShape")
+              case _            => None
+          })
+
+        optSchemaValueIsFile.foreach(
+          isFile =>
+            if (isFile && (optBindingValue.isEmpty || optBindingValue.get != "formData"))
+              reportFailure(validationSpecification, functionConstraint, element.id, element.annotations))
 
       case Some("minMaxItemsValidation") =>
         val maybeMinInclusive = element.fields.fields().find { f =>

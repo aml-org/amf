@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "some title"
+  },
+  "paths": {
+    "/somepath": {
+      "post": {
+        "consumes": ["multipart/form-data"],
+        "parameters": [
+          {
+            "name" : "file-parameter",
+            "in" : "query",
+            "type" : "file"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "a description"
+          }
+        }
+      }
+    }
+  }
+}

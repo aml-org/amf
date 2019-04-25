@@ -1,0 +1,213 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#1",
+        "@type": [
+          "schema-org:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "some title"
+          }
+        ],
+        "schema-org:version": [
+          {
+            "@value": "0.0.1"
+          }
+        ],
+        "raml-http:endpoint": [
+          {
+            "@id": "#2",
+            "@type": [
+              "raml-http:EndPoint",
+              "doc:DomainElement"
+            ],
+            "raml-http:path": [
+              {
+                "@value": "/somepath"
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "hydra:Operation",
+                  "doc:DomainElement"
+                ],
+                "hydra:method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "hydra:expects": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "raml-http:Request",
+                      "doc:DomainElement"
+                    ],
+                    "raml-http:payload": [
+                      {
+                        "@id": "#5",
+                        "@type": [
+                          "raml-http:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-http:mediaType": [
+                          {
+                            "@value": "multipart/form-data"
+                          }
+                        ],
+                        "raml-http:schema": [
+                          {
+                            "@id": "#6",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [
+                              {
+                                "@id": "#7",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape"
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#8",
+                                    "@type": [
+                                      "raml-shapes:FileShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape"
+                                    ],
+                                    "shacl:name": [
+                                      {
+                                        "@value": "file-parameter"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "type-property-lexical-info": {
+                                        "#8": "[(15,12)-(15,18)]"
+                                      },
+                                      "lexical": {
+                                        "shacl:name": "[(13,12)-(13,21)]",
+                                        "#8": "[(12,10)-(16,11)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "file-parameter"
+                                  }
+                                ]
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "formData"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "form-body-parameter": {
+                            "#5": "true"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "hydra:returns": [
+                  {
+                    "@id": "#9",
+                    "@type": [
+                      "raml-http:Response",
+                      "doc:DomainElement"
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "schema-org:description": [
+                      {
+                        "@value": "Successfully got github user"
+                      }
+                    ],
+                    "hydra:statusCode": [
+                      {
+                        "@value": "default"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "schema-org:description": "[(20,12)-(20,27)]",
+                        "#9": "[(19,10)-(19,21)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "hydra:returns": "[(18,8)-(18,21)]",
+                    "#3": "[(9,6)-(9,14)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(8,4)-(8,17)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#1": "OAS 2.0"
+          },
+          "lexical": {
+            "raml-http:endpoint": "[(7,11)-(25,3)]",
+            "schema-org:name": "[(5,4)-(5,13)]",
+            "#1": "[(1,0)-(26,1)]",
+            "schema-org:version": "[(4,4)-(4,15)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-http": "http://a.ml/vocabularies/http#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "schema-org": "http://schema.org/",
+      "hydra": "http://www.w3.org/ns/hydra/core#"
+    }
+  }
+]
