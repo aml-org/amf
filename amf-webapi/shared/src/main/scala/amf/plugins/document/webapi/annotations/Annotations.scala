@@ -137,6 +137,8 @@ case class EndPointBodyParameter() extends Annotation
 
 case class DefaultPayload() extends Annotation
 
+case class EmptyPayload() extends Annotation
+
 case class EndPointParameter() extends Annotation
 
 // save original text link?
