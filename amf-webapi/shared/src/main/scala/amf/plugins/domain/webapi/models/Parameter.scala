@@ -50,6 +50,17 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
     this
   }
 
+  def withExample(newExample: Example): Examples = {
+    examples match {
+      case e: Examples => e ++ Seq(newExample)
+      case _ =>
+        val newExamples = Examples()
+        withExamples(newExamples)
+        newExamples.withExamples(Seq(newExample))
+    }
+    examples
+  }
+
   def isHeader: Boolean = binding.is("header")
   def isQuery: Boolean  = binding.is("query")
   def isBody: Boolean   = binding.is("body")

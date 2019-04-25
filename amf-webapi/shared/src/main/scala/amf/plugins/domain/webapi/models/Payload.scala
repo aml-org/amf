@@ -65,6 +65,17 @@ case class Payload(fields: Fields, annotations: Annotations)
     newExample
   }
 
+  def withExample(newExample: Example): Examples = {
+    examples match {
+      case e: Examples => e ++ Seq(newExample)
+      case _ =>
+        val newExamples = Examples()
+        withExamples(newExamples)
+        newExamples.withExamples(Seq(newExample))
+    }
+    examples
+  }
+
   def exampleValues: Seq[Example] = examples match {
     case e: Examples => e.examples
     case _           => Nil

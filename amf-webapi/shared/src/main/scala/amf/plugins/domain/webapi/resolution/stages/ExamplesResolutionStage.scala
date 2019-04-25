@@ -35,7 +35,7 @@ class ExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler
                   case shape: AnyShape =>
                     example.withName(example.mediaType.value() + index)
                     example.add(TrackedElement(p.id))
-                    shape.withExamples(shape.examples ++ Seq(example))
+                    shape.withExample(example)
                   case _ => response.withExamples(response.examples ++ Seq(example))
                 }
               case _ =>

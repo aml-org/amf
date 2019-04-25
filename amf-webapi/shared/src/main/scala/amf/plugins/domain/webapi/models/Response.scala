@@ -63,6 +63,17 @@ class Response(override val fields: Fields, override val annotations: Annotation
     e.withExampleWithMediaType(mediaType)
   }
 
+  def withExample(newExample: Example): Examples = {
+    examples match {
+      case e: Examples => e ++ Seq(newExample)
+      case _ =>
+        val newExamples = Examples()
+        withExamples(newExamples)
+        newExamples.withExamples(Seq(newExample))
+    }
+    examples
+  }
+
   def exampleValues: Seq[Example] = examples match {
     case e: Examples => e.examples
     case _           => Nil
