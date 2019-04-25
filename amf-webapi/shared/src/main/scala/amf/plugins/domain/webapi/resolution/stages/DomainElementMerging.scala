@@ -9,7 +9,7 @@ import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.parser.{ErrorHandler, FieldEntry, Value}
-import amf.plugins.document.webapi.annotations.Inferred
+import amf.plugins.document.webapi.annotations.{EmptyPayload, Inferred}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
@@ -434,10 +434,15 @@ object MergingValidator {
                                                    m: Seq[Payload],
                                                    o: Seq[Payload]): Unit = {
 
-    val shouldRevisePayloads = m.nonEmpty && m.forall(_.isInstanceOf[Payload]) &&
-      o.nonEmpty && o.forall(_.isInstanceOf[Payload])
+    val shouldRevise = (payloads: Seq[Payload]) => {
+      payloads.nonEmpty && payloads.forall { payload =>
+        payload.isInstanceOf[Payload] && !payload.annotations.contains(classOf[EmptyPayload])
+      }
+    }
 
-    if (shouldRevisePayloads) {
+    val shouldReviseBoth = shouldRevise(m) && shouldRevise(o)
+
+    if (shouldReviseBoth) {
       val mainPayloadsDefineMediaType = m.forall { payload =>
         payload.mediaType.option().isDefined
       }
