@@ -28,6 +28,12 @@
             "@type": "http://www.w3.org/2001/XMLSchema#date"
           }
         ],
+        "http://test.com/tmp#uriLiteral": [
+          {
+            "@value": "http://test.com/a-link4",
+            "@type": "http://www.w3.org/2001/XMLSchema#anyUri"
+          }
+        ],
         "http://test.com/tmp#str": [
           {
             "@value": "hey"
@@ -122,24 +128,36 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example1.raml#/"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(2,0)-(9,29)]"
-                  }
-                ]
-              },
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
                     "@value": "http://test.com/tmp#date"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(7,6)-(7,16)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example1.raml#/"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(10,35)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#uriLiteral"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(10,12)-(10,35)]"
                   }
                 ]
               },
@@ -199,7 +217,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(2,0)-(9,29)]"
+                "@value": "[(2,0)-(10,35)]"
               }
             ]
           }
