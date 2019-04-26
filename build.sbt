@@ -85,8 +85,7 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   aggregate in assembly := false,
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
-    "com.github.scopt" %%% "scopt"     % "3.7.0",
-    "com.github.amlorg" %%% "amf-aml" % "4.0.11"
+    "com.github.scopt" %%% "scopt"     % "3.7.0"
   )
 )
 
@@ -96,10 +95,12 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
+val amfAmlVersion = "4.0.16"
+
 lazy val amfAmlJVMRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJVM")
 lazy val amfAmlJSRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJS")
-lazy val amfAmlLibJVM = "com.github.amlorg" %% "amf-aml" % "4.0.11"
-lazy val amfAmlLibJS = "com.github.amlorg" %% "amf-aml_sjs0.6" % "4.0.11"
+lazy val amfAmlLibJVM = "com.github.amlorg" %% "amf-aml" % amfAmlVersion
+lazy val amfAmlLibJS = "com.github.amlorg" %% "amf-aml_sjs0.6" % amfAmlVersion
 
 
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
