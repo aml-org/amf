@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: Device Fraud Orchestration Service
+version: v1
+
+types:
+  oneOffPaymentInstruction:
+    type: object
+    additionalProperties: false
+    properties:
+      payment:
+        type: string
+
+  standingOrderScheduleInstruction:
+    type: object
+    properties:
+      order:
+        type: string
+
+  paymentInstructionOneOffOrStandingOrder:
+    type: oneOffPaymentInstruction | standingOrderScheduleInstruction
+
+
+/events:
+  post:
+    body:
+      application/json:
+        type: paymentInstructionOneOffOrStandingOrder

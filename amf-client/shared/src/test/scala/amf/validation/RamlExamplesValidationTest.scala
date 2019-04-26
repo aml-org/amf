@@ -241,7 +241,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Complex inheritance with example") {
-    validate("/examples/complex-inheritance/api.raml")
+    validate("/examples/complex-inheritance/api.raml", Some("complex-inheritance.report"))
   }
 
   test("Invalid NamedExample that includes another NamedExample 1") {
