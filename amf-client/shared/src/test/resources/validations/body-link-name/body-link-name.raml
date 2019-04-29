@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: Inline Type
+
+mediaType: application/xml
+
+types:
+  schema:
+    properties:
+      tag1: string
+      tag2: string
+
+/test-named:
+  post:
+    body: schema
+
+/test-named-2:
+  post:
+    body:
+      application/json: schema
