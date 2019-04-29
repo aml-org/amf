@@ -1,0 +1,122 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API with Examples",
+    "version": "1.0"
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "lastname": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "name": "Bob",
+        "lastname": "Marley"
+      }
+    },
+    "Org": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "name": "Bob",
+        "lastname": "Marley"
+      }
+    }
+  },
+  "paths": {
+    "/organization": {
+      "post": {
+        "parameters": [
+          {
+            "type": "string",
+            "name": "UserID",
+            "description": "description: the identifier for the user who posts a new organization",
+            "in": "header",
+            "example": "SWED-123"
+          },
+          {
+            "name": "bodyParam",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/Org"
+                }
+              ],
+              "type": "object",
+              "example": {
+                "value": {
+                  "name": "Doe Enterprise",
+                  "value": "Silver"
+                }
+              }
+            },
+            "x-amf-mediaType": "application/json",
+            "in": "body"
+          }
+        ],
+        "responses": {}
+      },
+      "get": {
+        "description": "Returns an organization entity.",
+        "responses": {
+          "201": {
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/definitions/Org"
+                }
+              ],
+              "type": "object",
+              "example": {
+                "name": "Acme"
+              },
+              "x-amf-examples": {
+                "softwareCorp": {
+                  "value": {
+                    "name": "Software Corp",
+                    "address": "35 Central Street",
+                    "value": "Gold"
+                  }
+                }
+              }
+            },
+            "examples": {
+              "application/json": {
+                "name": "Puma",
+                "type": "Dog",
+                "color": "Black",
+                "gender": "Female",
+                "breed": "Mixed"
+              },
+              "application/xml": {
+                "name": "Puma",
+                "type": "Dog",
+                "color": "Black",
+                "gender": "Female",
+                "breed": "Mixed"
+              }
+            },
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}

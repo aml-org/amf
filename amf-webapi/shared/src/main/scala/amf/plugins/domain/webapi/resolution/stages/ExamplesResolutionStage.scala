@@ -1,5 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
+import amf.core.annotations.TrackedElement
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
@@ -24,7 +25,7 @@ class ExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler
 
     allResponses.zipWithIndex.foreach {
       case (response, index) =>
-        val mappedExamples = response.examples.map(e => e.mediaType.value() -> e).toMap
+        val mappedExamples = response.exampleValues.map(e => e.mediaType.value() -> e).toMap
         response.fields.removeField(ResponseModel.Examples)
         mappedExamples.foreach {
           case (mediaType, example) =>
@@ -33,10 +34,15 @@ class ExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler
                 p.schema match {
                   case shape: AnyShape =>
                     example.withName(example.mediaType.value() + index)
-                    shape.withExamples(shape.examples ++ Seq(example))
+                    example.add(TrackedElement(p.id))
+                    shape.withExample(example)
                   case _ => response.withExamples(response.examples ++ Seq(example))
                 }
-              case _ => response.withExamples(response.examples ++ Seq(example))
+              case _ =>
+                Option(response.examples) match {
+                  case Some(e) => e ++ Seq(example)
+                  case None    => response.withExamples(Seq(example))
+                }
             }
         }
     }

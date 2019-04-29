@@ -11,7 +11,7 @@ Values[2] should match some schema in anyOf
 Values[2].a should be string
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/examples/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/array_unions.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/examples/example/default-example
   Position: Some(LexicalInformation([(50,20)-(57,21)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/array_unions.raml

@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#22",
+        "@id": "#23",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,7 +22,7 @@
         ],
         "raml-http:endpoint": [
           {
-            "@id": "#23",
+            "@id": "#24",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#24",
+                "@id": "#25",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -46,14 +46,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#25",
+                    "@id": "#26",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#14",
+                        "@id": "#15",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -86,26 +86,27 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#14": "[(15,6)-(21,0)]"
+                            "#15": "[(15,6)-(21,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "raml-http:payload": "[(14,4)-(21,0)]"
+                        "raml-http:payload": "[(14,4)-(21,0)]",
+                        "#26": "[(14,0)-(21,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#24": "[(13,2)-(21,0)]"
+                    "#25": "[(13,2)-(21,0)]"
                   }
                 }
               },
               {
-                "@id": "#26",
+                "@id": "#27",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -117,14 +118,14 @@
                 ],
                 "hydra:expects": [
                   {
-                    "@id": "#27",
+                    "@id": "#28",
                     "@type": [
                       "raml-http:Request",
                       "doc:DomainElement"
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#19",
+                        "@id": "#20",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -157,39 +158,40 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#19": "[(23,6)-(28,19)]"
+                            "#20": "[(23,6)-(28,19)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "raml-http:payload": "[(22,4)-(28,19)]"
+                        "raml-http:payload": "[(22,4)-(28,19)]",
+                        "#28": "[(22,0)-(28,19)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#26": "[(21,2)-(28,19)]"
+                    "#27": "[(21,2)-(28,19)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#23": "[(12,0)-(28,19)]"
+                "#24": "[(12,0)-(28,19)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#22": "RAML 1.0"
+            "#23": "RAML 1.0"
           },
           "lexical": {
             "schema-org:name": "[(2,0)-(3,0)]",
-            "#22": "[(2,0)-(28,19)]"
+            "#23": "[(2,0)-(28,19)]"
           }
         }
       }
@@ -327,301 +329,310 @@
           {
             "@id": "#6",
             "@type": [
-              "doc:Example",
+              "doc:NamedExamples",
               "doc:DomainElement"
             ],
-            "schema-org:name": [
-              {
-                "@value": "declared"
-              }
-            ],
-            "doc:strict": [
-              {
-                "@value": true
-              }
-            ],
-            "doc:structuredValue": [
+            "doc:examples": [
               {
                 "@id": "#7",
                 "@type": [
-                  "data:Object",
-                  "data:Node",
+                  "doc:Example",
                   "doc:DomainElement"
                 ],
-                "data:a": [
+                "schema-org:name": [
+                  {
+                    "@value": "declared"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
                   {
                     "@id": "#8",
                     "@type": [
-                      "data:Scalar",
+                      "data:Object",
                       "data:Node",
                       "doc:DomainElement"
                     ],
-                    "data:value": [
+                    "data:a": [
                       {
-                        "@value": "cristian",
-                        "@type": "xsd:string"
+                        "@id": "#9",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "cristian",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#9": "[(10,11)-(10,19)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:b": [
+                      {
+                        "@id": "#10",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "pavon",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#10": "[(11,11)-(11,16)]"
+                          }
+                        }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#8": "[(10,11)-(10,19)]"
+                        "data:b": "[(11,11)-(11,16)]",
+                        "#8": "[(10,0)-(12,0)]",
+                        "data:a": "[(10,11)-(10,19)]"
+                      },
+                      "data-node-properties": {
+                        "#8": "b->[(11,8)-(12,0)]#a->[(10,8)-(11,0)]"
                       }
                     }
                   }
                 ],
-                "data:b": [
+                "shacl:raw": [
                   {
-                    "@id": "#9",
-                    "@type": [
-                      "data:Scalar",
-                      "data:Node",
-                      "doc:DomainElement"
-                    ],
-                    "data:value": [
-                      {
-                        "@value": "pavon",
-                        "@type": "xsd:string"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#9": "[(11,11)-(11,16)]"
-                      }
-                    }
+                    "@value": "\n        a: cristian\n        b: pavon\n"
                   }
                 ],
                 "smaps": {
-                  "lexical": {
-                    "data:b": "[(11,11)-(11,16)]",
-                    "#7": "[(10,0)-(12,0)]",
-                    "data:a": "[(10,11)-(10,19)]"
+                  "synthesized-field": {
+                    "doc:strict": "true"
                   },
-                  "data-node-properties": {
-                    "#7": "b->[(11,8)-(12,0)]#a->[(10,8)-(11,0)]"
+                  "lexical": {
+                    "shacl:raw": "[(10,0)-(12,0)]",
+                    "#7": "[(9,6)-(12,0)]",
+                    "schema-org:name": "[(9,6)-(12,0)]"
                   }
                 }
-              }
-            ],
-            "shacl:raw": [
-              {
-                "@value": "\n        a: cristian\n        b: pavon\n"
-              }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "doc:strict": "true"
               },
-              "lexical": {
-                "shacl:raw": "[(10,0)-(12,0)]",
-                "#6": "[(9,6)-(12,0)]",
-                "schema-org:name": "[(9,6)-(12,0)]"
-              }
-            }
-          },
-          {
-            "@id": "#10",
-            "@type": [
-              "doc:Example",
-              "doc:DomainElement"
-            ],
-            "schema-org:name": [
-              {
-                "@value": "endpoint1"
-              }
-            ],
-            "doc:strict": [
-              {
-                "@value": true
-              }
-            ],
-            "doc:structuredValue": [
               {
                 "@id": "#11",
                 "@type": [
-                  "data:Object",
-                  "data:Node",
+                  "doc:Example",
                   "doc:DomainElement"
                 ],
-                "data:a": [
+                "schema-org:name": [
+                  {
+                    "@value": "endpoint1"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
                   {
                     "@id": "#12",
                     "@type": [
-                      "data:Scalar",
+                      "data:Object",
                       "data:Node",
                       "doc:DomainElement"
                     ],
-                    "data:value": [
+                    "data:a": [
                       {
-                        "@value": "roman",
-                        "@type": "xsd:string"
+                        "@id": "#13",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "roman",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#13": "[(19,15)-(19,20)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:b": [
+                      {
+                        "@id": "#14",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "riquelme",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#14": "[(20,15)-(20,23)]"
+                          }
+                        }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#12": "[(19,15)-(19,20)]"
+                        "data:b": "[(20,15)-(20,23)]",
+                        "#12": "[(19,0)-(21,0)]",
+                        "data:a": "[(19,15)-(19,20)]"
+                      },
+                      "data-node-properties": {
+                        "#12": "b->[(20,12)-(21,0)]#a->[(19,12)-(20,0)]"
                       }
                     }
                   }
                 ],
-                "data:b": [
+                "shacl:raw": [
                   {
-                    "@id": "#13",
-                    "@type": [
-                      "data:Scalar",
-                      "data:Node",
-                      "doc:DomainElement"
-                    ],
-                    "data:value": [
-                      {
-                        "@value": "riquelme",
-                        "@type": "xsd:string"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#13": "[(20,15)-(20,23)]"
-                      }
-                    }
+                    "@value": "\n            a: roman\n            b: riquelme\n"
                   }
                 ],
                 "smaps": {
-                  "lexical": {
-                    "data:b": "[(20,15)-(20,23)]",
-                    "#11": "[(19,0)-(21,0)]",
-                    "data:a": "[(19,15)-(19,20)]"
+                  "synthesized-field": {
+                    "doc:strict": "true"
                   },
-                  "data-node-properties": {
-                    "#11": "b->[(20,12)-(21,0)]#a->[(19,12)-(20,0)]"
+                  "lexical": {
+                    "shacl:raw": "[(19,0)-(21,0)]",
+                    "#11": "[(18,10)-(21,0)]",
+                    "schema-org:name": "[(18,10)-(21,0)]"
+                  },
+                  "local-element": {
+                    "#11": ""
+                  },
+                  "tracked-element": {
+                    "#11": "amf://id#15"
                   }
                 }
-              }
-            ],
-            "shacl:raw": [
-              {
-                "@value": "\n            a: roman\n            b: riquelme\n"
-              }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "doc:strict": "true"
               },
-              "lexical": {
-                "shacl:raw": "[(19,0)-(21,0)]",
-                "#10": "[(18,10)-(21,0)]",
-                "schema-org:name": "[(18,10)-(21,0)]"
-              },
-              "local-element": {
-                "#10": ""
-              },
-              "tracked-element": {
-                "#10": "amf://id#14"
-              }
-            }
-          },
-          {
-            "@id": "#15",
-            "@type": [
-              "doc:Example",
-              "doc:DomainElement"
-            ],
-            "schema-org:name": [
-              {
-                "@value": "endpointP"
-              }
-            ],
-            "doc:strict": [
-              {
-                "@value": true
-              }
-            ],
-            "doc:structuredValue": [
               {
                 "@id": "#16",
                 "@type": [
-                  "data:Object",
-                  "data:Node",
+                  "doc:Example",
                   "doc:DomainElement"
                 ],
-                "data:a": [
+                "schema-org:name": [
+                  {
+                    "@value": "endpointP"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
                   {
                     "@id": "#17",
                     "@type": [
-                      "data:Scalar",
+                      "data:Object",
                       "data:Node",
                       "doc:DomainElement"
                     ],
-                    "data:value": [
+                    "data:a": [
                       {
-                        "@value": "leonardo",
-                        "@type": "xsd:string"
+                        "@id": "#18",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "leonardo",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#18": "[(27,15)-(27,23)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:b": [
+                      {
+                        "@id": "#19",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "jara",
+                            "@type": "xsd:string"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#19": "[(28,15)-(28,19)]"
+                          }
+                        }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#17": "[(27,15)-(27,23)]"
+                        "data:b": "[(28,15)-(28,19)]",
+                        "#17": "[(27,0)-(28,19)]",
+                        "data:a": "[(27,15)-(27,23)]"
+                      },
+                      "data-node-properties": {
+                        "#17": "b->[(28,12)-(28,19)]#a->[(27,12)-(28,0)]"
                       }
                     }
                   }
                 ],
-                "data:b": [
+                "shacl:raw": [
                   {
-                    "@id": "#18",
-                    "@type": [
-                      "data:Scalar",
-                      "data:Node",
-                      "doc:DomainElement"
-                    ],
-                    "data:value": [
-                      {
-                        "@value": "jara",
-                        "@type": "xsd:string"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#18": "[(28,15)-(28,19)]"
-                      }
-                    }
+                    "@value": "\n            a: leonardo\n            b: jara"
                   }
                 ],
                 "smaps": {
-                  "lexical": {
-                    "data:b": "[(28,15)-(28,19)]",
-                    "#16": "[(27,0)-(28,19)]",
-                    "data:a": "[(27,15)-(27,23)]"
+                  "synthesized-field": {
+                    "doc:strict": "true"
                   },
-                  "data-node-properties": {
-                    "#16": "b->[(28,12)-(28,19)]#a->[(27,12)-(28,0)]"
+                  "lexical": {
+                    "shacl:raw": "[(27,0)-(28,19)]",
+                    "#16": "[(26,10)-(28,19)]",
+                    "schema-org:name": "[(26,10)-(28,19)]"
+                  },
+                  "local-element": {
+                    "#16": ""
+                  },
+                  "tracked-element": {
+                    "#16": "amf://id#20"
                   }
                 }
               }
-            ],
-            "shacl:raw": [
-              {
-                "@value": "\n            a: leonardo\n            b: jara"
-              }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "doc:strict": "true"
-              },
-              "lexical": {
-                "shacl:raw": "[(27,0)-(28,19)]",
-                "#15": "[(26,10)-(28,19)]",
-                "schema-org:name": "[(26,10)-(28,19)]"
-              },
-              "local-element": {
-                "#15": ""
-              },
-              "tracked-element": {
-                "#15": "amf://id#19"
-              }
-            }
+            ]
           }
         ],
         "smaps": {
           "resolved-link": {
-            "#1": "amf://id#21"
+            "#1": "amf://id#22"
           },
           "lexical": {
             "shacl:name": "[(4,2)-(4,3)]",

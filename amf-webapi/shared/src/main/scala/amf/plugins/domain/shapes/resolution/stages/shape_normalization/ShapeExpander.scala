@@ -25,7 +25,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   protected val traversed: IdsTraversionCheck =
     IdsTraversionCheck().withAllowedCyclesInstances(Seq(classOf[UnresolvedShape]))
 
-  protected def ensureCorrect(shape: Shape): Unit = {
+  protected def ensureHasId(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {
       context.errorHandler.violation(ResolutionValidation,
                                      shape.id,
@@ -46,7 +46,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
         recursionRegister.recursionAndError(root, None, shape, traversed)
 
       case _ =>
-        ensureCorrect(shape)
+        ensureHasId(shape)
         traversed + shape.id
         traversed.runPushed(_ => {
           shape match {

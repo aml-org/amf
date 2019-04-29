@@ -103,9 +103,10 @@ class Validation(platform: Platform) {
   def validate(model: BaseUnit,
                profileName: ProfileName,
                messageStyle: MessageStyle = RAMLStyle,
-               env: Environment = Environment()): Future[AMFValidationReport] = {
+               env: Environment = Environment(),
+               resolved: Boolean = false): Future[AMFValidationReport] = {
 
-    validator.validate(model, profileName, messageStyle, env)
+    validator.validate(model, profileName, messageStyle, env, resolved)
   }
 
   def computeValidations(profileName: ProfileName): EffectiveValidations = validator.computeValidations(profileName)

@@ -115,6 +115,37 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
     validate("/extends/rt-global-mediatype.raml", None)
   }
 
+  // Merge payloads
+
+  test("Single media type defined unequally in request") {
+    validate("/extends/merging-payloads/media-type-single-request/unequallyDefined.raml",
+             Some("unequallyDefinedPayloads.report"))
+  }
+
+  test("Single media type defined unequally in response") {
+    validate("/extends/merging-payloads/media-type-single-response/unequallyDefined.raml",
+             Some("unequallyDefinedPayloadsResponse.report"))
+  }
+
+  test("Multiple media types defined unequally") {
+    validate("/extends/merging-payloads/media-type-multiple/unequallyDefinedMultiple.raml",
+             Some("unequallyDefinedMultiplePayloads.report"))
+  }
+
+  test("Merge payloads in nested extends") {
+    validate("/extends/merging-payloads/multiple-merges/multipleMerges.raml",
+             Some("payloadMergingMultipleMerges.report"))
+  }
+
+  test("Merging extends with no payload") {
+    validate("/extends/merging-payloads/merging-extends-with-no-payload.raml",
+             Some("merging-extends-with-no-payload.report"))
+  }
+
+  test("Merge extends with empty payload") {
+    validate("/extends/merging-payloads/empty-payload.raml", None)
+  }
+
   // References
 
   test("Inexistent references in non optional operations") {
@@ -213,6 +244,23 @@ class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest 
   override val basePath: String    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath: String = "amf-client/shared/src/test/resources/validations/reports/extends/"
   override val hint: Hint          = RamlYamlHint
+
+  // Payload merging
+
+  test("Single media type defined equally in request") {
+    validate("/extends/merging-payloads/media-type-single-request/equallyDefined.raml",
+             Some("equallyDefinedPayloads.report"))
+  }
+
+  test("Single media type defined equally in response") {
+    validate("/extends/merging-payloads/media-type-single-response/equallyDefined.raml",
+             Some("equallyDefinedPayloadsResponse.report"))
+  }
+
+  test("Multiple media types defined equally") {
+    validate("/extends/merging-payloads/media-type-multiple/equallyDefinedMultiple.raml",
+             Some("equallyDefinedMultiplePayloads.report"))
+  }
 
   // References
 

@@ -10,6 +10,7 @@ import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.domain.shapes.models.Examples
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.{YMap, YMapEntry}
@@ -63,8 +64,11 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
           res.set(ResponseModel.Payloads, AmfArray(payloads))
 
         val examples = OasResponseExamplesParser("examples", map).parse()
-        if (examples.nonEmpty) res.set(ResponseModel.Examples, AmfArray(examples))
-        examples.foreach(_.annotations += TrackedElement(res.id))
+        if (examples.nonEmpty) {
+          val ex = Examples()
+          res.set(ResponseModel.Examples, ex)
+          ex.withExamples(examples)
+        }
 
         AnnotationParser(res, map).parse()
 

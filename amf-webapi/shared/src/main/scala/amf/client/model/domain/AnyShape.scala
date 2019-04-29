@@ -14,9 +14,10 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
   @JSExportTopLevel("model.domain.AnyShape")
   def this() = this(InternalAnyShape())
 
-  def documentation: CreativeWork     = _internal.documentation
-  def xmlSerialization: XMLSerializer = _internal.xmlSerialization
-  def examples: ClientList[Example]   = _internal.examples.asClient
+  def documentation: CreativeWork        = _internal.documentation
+  def xmlSerialization: XMLSerializer    = _internal.xmlSerialization
+  def examples: Examples                 = _internal.examples
+  def exampleValues: ClientList[Example] = _internal.exampleValues.asClient
 
   def withDocumentation(documentation: CreativeWork): this.type = {
     _internal.withDocumentation(documentation)
@@ -30,6 +31,11 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
 
   def withExamples(examples: ClientList[Example]): this.type = {
     _internal.withExamples(examples.asInternal)
+    this
+  }
+
+  def withExamples(examples: Examples): this.type = {
+    _internal.withExamples(examples)
     this
   }
 
@@ -61,7 +67,7 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     * instance was mutated.
     * Proxies call to internal AnyShape.toRamlDatatype.
     */
-  def buildRamlDatatype(): String = _internal.buildRamlDatatype
+  def buildRamlDatatype(): String = _internal.buildRamlDatatype()
 
   def validate(payload: String, env: Environment): ClientFuture[ValidationReport] =
     _internal.validate(payload, env._internal).asClient

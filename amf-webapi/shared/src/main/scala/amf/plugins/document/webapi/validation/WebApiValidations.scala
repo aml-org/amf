@@ -24,15 +24,19 @@ trait WebApiValidations extends ValidationResultProcessor {
         })
     }
 
-  protected def validationRequestsForBaseUnit(unresolvedUnit: BaseUnit,
+  protected def validationRequestsForBaseUnit(unit: BaseUnit,
                                               profile: ProfileName,
                                               validations: EffectiveValidations,
                                               messageStyle: MessageStyle,
                                               platform: Platform,
-                                              env: Environment): Future[AMFValidationReport] = {
+                                              env: Environment,
+                                              resolved: Boolean): Future[AMFValidationReport] = {
 
     // Before validating we need to resolve to get all the model information
-    val baseUnit = ValidationResolutionPipeline(profile, unresolvedUnit)
+    val baseUnit =
+      if (resolved) unit
+      else ValidationResolutionPipeline(profile, unit)
+
     WebApiValidationsRunner(ValidationContext(baseUnit, profile, platform, messageStyle, validations, env)).runSteps
   }
 

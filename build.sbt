@@ -8,7 +8,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf"
 
-version in ThisBuild := "3.1.10"
+version in ThisBuild := "4.0.0"
 
 publish := {}
 
@@ -86,9 +86,21 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0",
-    "com.github.amlorg" %%% "amf-aml" % "4.0.4"
+    "com.github.amlorg" %%% "amf-aml" % "4.0.13"
   )
 )
+
+lazy val workspaceDirectory: File =
+  sys.props.get("sbt.mulesoft") match {
+    case Some(x) => file(x)
+    case _       => Path.userHome / "mulesoft"
+  }
+
+lazy val amfAmlJVMRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJVM")
+lazy val amfAmlJSRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJS")
+lazy val amfAmlLibJVM = "com.github.amlorg" %% "amf-aml" % "4.0.13"
+lazy val amfAmlLibJS = "com.github.amlorg" %% "amf-aml_sjs0.6" % "4.0.13"
+
 
 lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "defaultValidationProfilesGeneration",
@@ -116,8 +128,8 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js"
   )
 
-lazy val webapiJVM = webapi.jvm.in(file("./amf-webapi/jvm"))
-lazy val webapiJS  = webapi.js.in(file("./amf-webapi/js"))
+lazy val webapiJVM = webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(amfAmlJVMRef, amfAmlLibJVM)
+lazy val webapiJS  = webapi.js.in(file("./amf-webapi/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS)
 
 /** **********************************************
   * AMF-Validation
@@ -144,8 +156,8 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
   )
 
-lazy val validationJVM = validation.jvm.in(file("./amf-validation/jvm"))
-lazy val validationJS  = validation.js.in(file("./amf-validation/js"))
+lazy val validationJVM = validation.jvm.in(file("./amf-validation/jvm")).sourceDependency(amfAmlJVMRef, amfAmlLibJVM)
+lazy val validationJS  = validation.js.in(file("./amf-validation/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS)
 
 /** **********************************************
   * AMF Client

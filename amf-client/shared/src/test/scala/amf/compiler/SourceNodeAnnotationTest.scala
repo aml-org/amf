@@ -3,12 +3,12 @@ package amf.compiler
 import amf.core.annotations.{LexicalInformation, SourceAST, SourceNode}
 import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfObject, Shape}
+import amf.core.parser.{Annotations, Range => PositionRange}
 import amf.core.remote.{OasJsonHint, OasYamlHint, RamlYamlHint}
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.models.{Parameter, Response, WebApi}
 import org.mulesoft.lexer.InputRange
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
-import amf.core.parser.{Annotations, Range => PositionRange}
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 
 import scala.concurrent.ExecutionContext
 
@@ -184,21 +184,23 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
                                  annotations: Annotations,
                                  sourceRange: PositionRange,
                                  nodeRange: Option[PositionRange] = None): Assertion = {
-    var c = 0
     annotations.foreach {
       case ast: SourceAST =>
-        c = c + 1
         assertRange(id, ast.ast.range, sourceRange)
       case lex: LexicalInformation =>
-        c = c + 1
         assertRange(id, lex.range, sourceRange)
       case node: SourceNode =>
-        c = c + 1
         assertRange(id, node.node.range, nodeRange.getOrElse(sourceRange))
       case _ =>
     }
-    if (c != 3) fail("Missing some annotation type")
+    if (!containsSourceAnnotations(annotations)) fail("Missing some annotation type")
     succeed
+  }
+
+  def containsSourceAnnotations(annotations: Annotations): Boolean = {
+    annotations.contains(classOf[LexicalInformation]) &&
+    annotations.contains(classOf[SourceAST]) &&
+    annotations.contains(classOf[SourceNode])
   }
 
   private def assertRange(id: String, actual: InputRange, expected: PositionRange): Assertion = {

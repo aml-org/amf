@@ -9,7 +9,7 @@ import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model.{YMap, YNode}
 
-case class OasPayloadParser(node: YNode, producer: (Option[String]) => Payload)(implicit ctx: OasWebApiContext)
+case class OasPayloadParser(node: YNode, producer: Option[String] => Payload)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
   def parse(): Payload = {
     val map = node.as[YMap]
@@ -25,7 +25,7 @@ case class OasPayloadParser(node: YNode, producer: (Option[String]) => Payload)(
     map.key(
       "schema",
       entry => {
-        OasTypeParser(entry, (shape) => shape.withName("schema").adopted(payload.id))
+        OasTypeParser(entry, shape => shape.withName("schema").adopted(payload.id))
           .parse()
           .map(s => payload.set(PayloadModel.Schema, tracking(s, payload.id), Annotations(entry)))
       }

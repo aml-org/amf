@@ -1,0 +1,11 @@
+#%RAML 1.0
+
+title: invalid nested example
+
+types:
+  Person:
+    type: object
+    properties:
+      name: string
+      age: integer
+    examples: !include example-1.raml

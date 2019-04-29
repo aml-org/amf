@@ -23,6 +23,7 @@ import amf.common.Diff
 import amf.core.exception.UnsupportedVendorException
 import amf.core.parser.Range
 import amf.core.remote.{Aml, Oas20, Raml10}
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
@@ -920,7 +921,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       val webApi = unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi]
       val dataNode = webApi.endPoints.asSeq.head.operations.asSeq.head.responses.asSeq.head.payloads.asSeq.head.schema
         .asInstanceOf[AnyShape]
-        .examples
+        .exampleValues
         .asSeq
         .head
         .structuredValue
@@ -1255,7 +1256,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .asSeq
         .head
         .asInstanceOf[AnyShape]
-        .examples
+        .exampleValues
         .asSeq
         .head
         .location
@@ -1448,9 +1449,9 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       option2.isDefined should be(true)
       option2.get.annotations().isTracked should be(true)
 
-      shape.examples.asSeq
+      shape.exampleValues.asSeq
         .find(_.id.equals(
-          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/example/declared"))
+          "file://amf-client/shared/src/test/resources/resolution/payloads-examples-resolution.raml#/declarations/types/A/examples/example/declared"))
         .head
         .annotations()
         .isTracked should be(false)
@@ -1592,6 +1593,34 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .asSeq(1)
         .isInstanceOf[ObjectNode] shouldBe true
 
+    }
+  }
+
+  test("Test validation with resolved model") {
+    val api =
+      """|#%RAML 1.0
+          |title: My API With Union Type
+          |traits:
+          |  secured:
+          |    usage: Apply this to any method that needs to be secured
+          |    description: Some requests require authentication.
+          |/test:
+          |  is:
+          |    - secured
+          |  get:
+          |    description: Some requests require authentication.""".stripMargin
+
+    for {
+      _         <- AMF.init().asFuture
+      unit      <- new RamlParser().parseStringAsync(api).asFuture
+      resolved  <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      _         <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+      generated <- AMF.raml10Generator().generateString(resolved).asFuture
+    } yield {
+      // With a normal resolution, used in normal validation, the extends field will disappears
+      val deltas = Diff.ignoreAllSpace.diff(api, generated)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
     }
   }
 

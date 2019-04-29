@@ -17,7 +17,11 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
+import amf.plugins.document.webapi.parser.spec.domain.{
+  ExamplesLinkEmitter,
+  MultipleExampleEmitter,
+  SingleExampleEmitter
+}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.annotations.{NilUnion, ParsedFromTypeExpression}
@@ -411,7 +415,7 @@ case class RamlJsonShapeEmitter(shape: AnyShape,
   override def emit(b: PartBuilder): Unit = {
     shape.annotations.find(classOf[ParsedJSONSchema]) match {
       case Some(json) =>
-        if (shape.examples.nonEmpty) {
+        if (Option(shape.examples).exists(_.linkNorEmpty)) {
           val results = mutable.ListBuffer[EntryEmitter]()
           emitExamples(shape, results, ordering, references)
           results += MapEntryEmitter(typeKey, json.rawText)
@@ -432,7 +436,7 @@ case class RamlSchemaShapeEmitter(shape: SchemaShape, ordering: SpecOrdering, re
     implicit spec: RamlSpecEmitterContext)
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
-    if (shape.examples.nonEmpty) {
+    if (shape.exampleValues.nonEmpty) {
       val fs     = shape.fields
       val result = mutable.ListBuffer[EntryEmitter]()
       result ++= RamlAnyShapeEmitter(shape, ordering, references).emitters()
@@ -643,22 +647,22 @@ trait ExamplesEmitter {
                    results: ListBuffer[EntryEmitter],
                    ordering: SpecOrdering,
                    references: Seq[BaseUnit])(implicit spec: SpecEmitterContext): Unit = {
-    shape.fields
-      .entry(AnyShapeModel.Examples)
-      .map(f => {
-        val (anonymous, named) =
-          spec
-            .filterLocal(shape.examples)
-            .partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
-        val examples = spec.filterLocal(f.array.values.collect({ case e: Example => e }))
-        anonymous.headOption.foreach { a =>
-          results += SingleExampleEmitter("example", a, ordering)
+
+    shape.examples match {
+      case e: Examples if e.isLink =>
+        val examples = spec.filterLocal(Seq(e)).headOption
+        if (examples.nonEmpty)
+          results += ExamplesLinkEmitter("examples", examples.get, ordering, references)
+      case e: Examples =>
+        spec.filterLocal(shape.exampleValues).toList match {
+          case Nil => // ignore
+          case head :: Nil if head.name.option().isEmpty =>
+            results += SingleExampleEmitter("example", head, ordering)
+          case list =>
+            results += MultipleExampleEmitter("examples", list, ordering, references)
         }
-        results += MultipleExampleEmitter("examples",
-                                          named ++ (if (anonymous.lengthCompare(1) > 0) examples.tail else None),
-                                          ordering,
-                                          references)
-      })
+      case _ => // ignore
+    }
   }
 }
 
@@ -1280,7 +1284,8 @@ case class OasTypeEmitter(shape: Shape,
         OasArrayShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
       case matrix: MatrixShape =>
         val copiedMatrix = matrix.copy(fields = matrix.fields.filter(f => !ignored.contains(f._1))).withId(matrix.id)
-        OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
+        OasArrayShapeEmitter(copiedMatrix.toArrayShape, ordering, references, pointer, updatedSchemaPath, isHeader)
+          .emitters()
       case array: TupleShape =>
         val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
         OasTupleShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
@@ -1542,8 +1547,16 @@ class OasAnyShapeEmitter(shape: AnyShape,
     shape.fields
       .entry(AnyShapeModel.Examples)
       .map(f => {
-        val examples = spec.filterLocal(f.array.values.collect({ case e: Example => e }))
-        val tuple    = examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
+        val examples =
+          spec.filterLocal(f.element match {
+            case e: Examples if e.isLink =>
+              result += ExamplesLinkEmitter("x-amf-examples", e, ordering, references)
+              Nil
+            case e: Examples => e.examples
+            case _           => Nil
+          })
+
+        val tuple = examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
 
         result ++= (tuple match {
           case (Nil, Nil)         => Nil
@@ -1557,7 +1570,7 @@ class OasAnyShapeEmitter(shape: AnyShape,
   }
 
   private def examplesEmitters(main: Option[Example], extentions: Seq[Example], isHeader: Boolean) = {
-    val em = ListBuffer[EntryEmitter]()
+    val em    = ListBuffer[EntryEmitter]()
     val label = if (isHeader) "x-amf-example" else "example"
     main.foreach(a => em += SingleExampleEmitter(label, a, ordering))
     val labesl = if (isHeader) "x-amf-examples" else "examples"
@@ -1990,8 +2003,10 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
 
 }
 
-case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, references: Seq[BaseUnit], isHeader: Boolean = false)(
-    override implicit val spec: OasSpecEmitterContext)
+case class OasScalarShapeEmitter(scalar: ScalarShape,
+                                 ordering: SpecOrdering,
+                                 references: Seq[BaseUnit],
+                                 isHeader: Boolean = false)(override implicit val spec: OasSpecEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 
@@ -2028,8 +2043,10 @@ case class OasScalarShapeEmitter(scalar: ScalarShape, ordering: SpecOrdering, re
   }
 }
 
-case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit], isHeader: Boolean)(
-    override implicit val spec: OasSpecEmitterContext)
+case class OasFileShapeEmitter(scalar: FileShape,
+                               ordering: SpecOrdering,
+                               references: Seq[BaseUnit],
+                               isHeader: Boolean)(override implicit val spec: OasSpecEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 
@@ -2116,7 +2133,7 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
     property.fields.entry(PropertyShapeModel.ReadOnly).map(fe => ValueEmitter("readOnly", fe))
 
   val propertyName: String = property.patternName.option().getOrElse(property.name.value())
-  val propertyKey = YNode(YScalar(propertyName), YType.Str)
+  val propertyKey          = YNode(YScalar(propertyName), YType.Str)
 
   val computedEmitters: Either[PartEmitter, Seq[EntryEmitter]] =
     emitter(pointer ++ Seq("properties", propertyName), schemaPath)
@@ -2159,8 +2176,8 @@ case class Raml08TypeEmitter(shape: Shape, ordering: SpecOrdering)(implicit spec
     val results = mutable.ListBuffer[EntryEmitter]()
     results += emitter
     shape match {
-      case any: AnyShape if any.examples.nonEmpty => emitExamples(any, results, ordering, Nil)
-      case _                                      => // ignore
+      case any: AnyShape if any.exampleValues.nonEmpty => emitExamples(any, results, ordering, Nil)
+      case _                                           => // ignore
     }
 
     results
@@ -2258,7 +2275,7 @@ case class SimpleTypeEmitter(shape: ScalarShape, ordering: SpecOrdering)(implici
     fs.entry(ScalarShapeModel.Maximum)
       .map(f => result += ValueEmitter("maximum", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
 
-    shape.examples.headOption.foreach(e => result += SingleExampleEmitter("example", e, ordering))
+    shape.exampleValues.headOption.foreach(e => result += SingleExampleEmitter("example", e, ordering))
 
     fs.entry(ShapeModel.Default)
       .map(f => {

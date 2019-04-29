@@ -2,12 +2,12 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Bool, Str}
+import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.metamodel.domain._
 import amf.core.vocabulary.Namespace.{Document, Http, Hydra}
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.domain.shapes.metamodel.common.ExampleField
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.webapi.models.Parameter
 
 /**
@@ -19,7 +19,7 @@ object ParameterModel
     with KeyField
     with NameFieldSchema
     with OptionalField
-    with ExampleField
+    with ExamplesField
     with DescriptionField {
 
   val ParameterName = Field(

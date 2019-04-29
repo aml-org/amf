@@ -10,8 +10,8 @@ Level: Warning
 phoneNo should be integer
 
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/example/default-example
+  Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/examples/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/User/examples/example/default-example
   Position: Some(LexicalInformation([(256,18)-(283,7)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json
 
@@ -22,7 +22,7 @@ user.dateOfBirth should match format "date-time"
 user.monthsAtCurrAdd should be integer
 
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/example/default-example
+  Target: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/examples/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json#/declarations/types/LoanApplication/examples/example/default-example
   Position: Some(LexicalInformation([(339,18)-(437,7)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json

@@ -10,7 +10,7 @@ import amf.core.remote.Raml
 import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
+import amf.plugins.document.webapi.parser.spec.domain.NamedExamplesEmitter
 import amf.plugins.document.webapi.parser.{RamlFragmentHeader, RamlHeader}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
@@ -152,7 +152,8 @@ class RamlFragmentEmitter(fragment: Fragment)(implicit val spec: RamlSpecEmitter
 
     override val header: RamlHeader = RamlFragmentHeader.Raml10NamedExample
 
-    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] = Seq(NamedExampleEmitter(example.encodes, ordering))
+    def emitters(references: Seq[BaseUnit]): Seq[EntryEmitter] =
+      NamedExamplesEmitter(example.encodes, ordering).emitters()
 
   }
 }

@@ -161,6 +161,45 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "tracked-from-resource-type/")
   }
 
+  test("Tracked annotation in example from a link NamedExample") {
+    cycle("tracked-from-named-fragment.raml",
+          "tracked-from-named-fragment.jsonld",
+          RamlYamlHint,
+          Amf,
+          validationsPath + "tracked-from-named-fragment/")
+  }
+
+  test("Auto generated payload name annotation") {
+    cycle("auto-generated-schema-name.raml",
+          "auto-generated-schema-name.jsonld",
+          RamlYamlHint,
+          Amf,
+          validationsPath + "auto-generated-schema-name/")
+  }
+  test("Auto generated payload name annotation with default mediaType") {
+    cycle(
+      "auto-generated-schema-name-with-default.raml",
+      "auto-generated-schema-name-with-default.jsonld",
+      RamlYamlHint,
+      Amf,
+      validationsPath + "auto-generated-schema-name/"
+    )
+  }
+
+  test("Declared type union with inherit array link") {
+    cycle("union-type-array.raml", "union-type-array.jsonld", RamlYamlHint, Amf, validationsPath)
+  }
+
+  test("Tracked oas examples") {
+    cycle(
+      "tracked-oas-examples.json",
+      "tracked-oas-examples.jsonld",
+      OasJsonHint,
+      Amf,
+      validationsPath + "tracked-oas-examples/"
+    )
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

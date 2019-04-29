@@ -183,14 +183,16 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     n.annotations.contains(classOf[DeclaredElement]) && inherits.size == 1 && n.properties.isEmpty
 
   private def copyExamples(from: AnyShape, to: AnyShape): Unit = {
-    from.examples.foreach(e1 => {
-      to.examples.find(e2 => {
+    from.exampleValues.foreach(e1 => {
+      to.exampleValues.find(e2 => {
         e1.id == e2.id || e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim
       }) match {
         case Some(_) => // duplicated
         case None =>
           e1.annotations += LocalElement()
-          to.setArrayWithoutId(AnyShapeModel.Examples, to.examples ++ Seq(e1))
+          val ex = Examples()
+          ex.setArrayWithoutId(ExamplesModel.Examples, to.exampleValues ++ Seq(e1))
+          to.withExamples(ex)
       }
     })
   }
@@ -206,8 +208,8 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
         val namesCache: mutable.Set[String] = mutable.Set() // duplicated names
         // we give proper names if there are more than one example, so it cannot be null
-        if (to.examples.size > 1) {
-          to.examples.foreach { example =>
+        if (to.exampleValues.size > 1) {
+          to.exampleValues.foreach { example =>
             // we generate a unique new name if the no name or the name is already in the list of named examples
             if (example.name.option().isEmpty || namesCache.contains(example.name.value())) {
               var i    = 0

@@ -271,6 +271,16 @@ object Raml10Syntax extends RamlSyntax {
       "displayName",
       "description",
       "allowedTargets"
+    ),
+    "module" -> Set(
+      "uses",
+      "usage",
+      "types",
+      "schemas",
+      "resourceTypes",
+      "traits",
+      "securitySchemes",
+      "annotationTypes"
     )
   )
 }

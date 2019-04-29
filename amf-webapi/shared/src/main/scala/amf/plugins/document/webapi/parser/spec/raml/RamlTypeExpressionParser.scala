@@ -202,6 +202,8 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
     shape match {
       case array: ArrayShape if array.isLink && array.effectiveLinkTarget().isInstanceOf[DataArrangementShape] =>
         isEmptyArray(array.effectiveLinkTarget().asInstanceOf[DataArrangementShape])
+      case array: ArrayShape if array.inherits.nonEmpty =>
+        false
       case array: ArrayShape =>
         Option(array.items).isEmpty
       case matrix: MatrixShape if matrix.isLink && matrix.effectiveLinkTarget().isInstanceOf[DataArrangementShape] =>

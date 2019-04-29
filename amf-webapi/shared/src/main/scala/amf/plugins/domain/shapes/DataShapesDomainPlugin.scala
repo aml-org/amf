@@ -42,7 +42,13 @@ object DataShapesDomainPlugin extends AMFDomainPlugin {
     UnionShapeModel,
     XMLSerializerModel,
     ShapeExtensionModel,
-    ExampleModel
+    ExampleModel,
+    ExamplesModel,
+    ObjectNodeModel,
+    ScalarNodeModel,
+    ArrayNodeModel,
+    LinkNodeModel,
+    RecursiveShapeModel
   )
 
   override def init(): Future[AMFPlugin] = Future { this }

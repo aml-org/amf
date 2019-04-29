@@ -53,6 +53,18 @@ class ExtensionsResolutionStage(val profile: ProfileName, val keepEditingInfo: B
   }
 }
 
+case class IdTracker() {
+  private val knownIds: mutable.Set[String] = mutable.Set()
+
+  def track(id: String): Unit = knownIds += id
+
+  def track(ids: Seq[String]): Unit = knownIds ++= ids
+
+  def notTracking(id: String): Boolean = !knownIds.contains(id)
+
+  def notTracking(ids: Seq[String]): Boolean = ids.forall(id => notTracking(id))
+}
+
 abstract class MergingRestrictions() {
   def allowsOverride(field: Field): Boolean
   def allowsNodeInsertionIn(field: Field): Boolean
@@ -162,9 +174,10 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             merge(masterTree,
                   extension.encodes,
                   extension.id,
-                  ExtendsHelper.findUnitLocationOfElement(extension.id, model))
+                  ExtendsHelper.findUnitLocationOfElement(extension.id, model),
+                  IdTracker())
 
-            adoptIris(iriMerger, masterTree)
+            adoptIris(iriMerger, masterTree, IdTracker())
 
             // Traits and Resource Types applications are applied one more time to the Target Tree.
             extendsStage.resolve(document)
@@ -184,68 +197,74 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
   def merge(master: DomainElement,
             overlay: DomainElement,
             extensionId: String,
-            extensionLocation: Option[String]): DomainElement = {
-    cleanSynthesizedFacets(master)
-    overlay.fields.fields().filter(f => ignored(f, master)).foreach {
-      case entry @ FieldEntry(field, value) =>
-        master.fields.entry(field) match {
-          case None if restrictions allowsNodeInsertionIn field =>
-            val newValue = adoptInner(master.id, value.value)
-            if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
-            master.set(field, newValue) // Set field if it doesn't exist.
-          case None if field == ScalarShapeModel.DataType && value.annotations.contains(classOf[Inferred]) =>
-          // If the overlay field is a datatype and the type is inferred it must be a type that add only an example
-          // Nothing to do
-          case None => // not allowed insert a new obj node. Not exists node in master.
-            val node = value.value match {
-              case amfObject: AmfObject => amfObject.id
-              case _                    => field.value.toString
-            }
+            extensionLocation: Option[String],
+            idTracker: IdTracker): DomainElement = {
+    val ids = master.id :: overlay.id :: Nil
+    if (idTracker.notTracking(ids)) {
+      idTracker.track(ids)
+      cleanSynthesizedFacets(master)
+      overlay.fields.fields().filter(f => ignored(f, master)).foreach {
+        case entry @ FieldEntry(field, value) =>
+          master.fields.entry(field) match {
+            case None if restrictions allowsNodeInsertionIn field =>
+              val newValue = adoptInner(master.id, value.value, idTracker)
+              if (keepEditingInfo) newValue.annotations += ExtensionProvenance(extensionId, extensionLocation)
+              master.set(field, newValue) // Set field if it doesn't exist.
+            case None if field == ScalarShapeModel.DataType && value.annotations.contains(classOf[Inferred]) =>
+            // If the overlay field is a datatype and the type is inferred it must be a type that add only an example
+            // Nothing to do
+            case None => // not allowed insert a new obj node. Not exists node in master.
+              val node = value.value match {
+                case amfObject: AmfObject => amfObject.id
+                case _                    => field.value.toString
+              }
 
-            errorHandler.violation(
-              ResolutionValidation,
-              node,
-              s"Property '$node' of type '${value.value.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
-              value.annotations
-            )
+              errorHandler.violation(
+                ResolutionValidation,
+                node,
+                s"Property '$node' of type '${value.value.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
+                value.annotations
+              )
 
-          case Some(existing) if restrictions allowsOverride field =>
-            field.`type` match {
-              case _: Type.Scalar =>
-                if (keepEditingInfo) value.value.annotations += ExtensionProvenance(extensionId, extensionLocation)
-                master.set(field, value.value)
-              case Type.ArrayLike(element) =>
-                mergeByValue(master, field, element, existing.value, value, extensionId, extensionLocation)
-              case DataNodeModel =>
-                mergeDataNode(master,
-                              field,
-                              existing.value.value.asInstanceOf[DomainElement],
-                              value.value.asInstanceOf[DomainElement],
-                              extensionId,
-                              extensionLocation)
-              case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
-                master.set(field, entry.domainElement, Annotations(ExtensionProvenance(overlay.id, extensionLocation)))
-              case _: DomainElementModel =>
-                merge(existing.domainElement, entry.domainElement, extensionId, extensionLocation)
-              case _ =>
+            case Some(existing) if restrictions allowsOverride field =>
+              field.`type` match {
+                case _: Type.Scalar =>
+                  if (keepEditingInfo) value.value.annotations += ExtensionProvenance(extensionId, extensionLocation)
+                  master.set(field, value.value)
+                case Type.ArrayLike(element) =>
+                  mergeByValue(master, field, element, existing.value, value, extensionId, extensionLocation)
+                case DataNodeModel =>
+                  mergeDataNode(master,
+                                field,
+                                existing.value.value.asInstanceOf[DomainElement],
+                                value.value.asInstanceOf[DomainElement],
+                                extensionId,
+                                extensionLocation)
+                case _: ShapeModel if incompatibleType(existing.domainElement, entry.domainElement) =>
+                  master
+                    .set(field, entry.domainElement, Annotations(ExtensionProvenance(overlay.id, extensionLocation)))
+                case _: DomainElementModel =>
+                  merge(existing.domainElement, entry.domainElement, extensionId, extensionLocation, idTracker)
+                case _ =>
+                  errorHandler.violation(
+                    ResolutionValidation,
+                    field.toString,
+                    None,
+                    s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)",
+                    value.value.annotations.find(classOf[LexicalInformation]),
+                    value.value.annotations.find(classOf[SourceLocation]).map(_.location)
+                  )
+              }
+            case Some(existing) => // cannot be override
+              if (!isSameValue(existing, entry))
                 errorHandler.violation(
                   ResolutionValidation,
                   field.toString,
-                  None,
-                  s"Cannot merge '${field.`type`}':not a (Scalar|Array|Object)",
-                  value.value.annotations.find(classOf[LexicalInformation]),
-                  value.value.annotations.find(classOf[SourceLocation]).map(_.location)
+                  s"Property '${existing.field.toString}' in '${master.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
+                  value.annotations
                 )
-            }
-          case Some(existing) => // cannot be override
-            if (!isSameValue(existing, entry))
-              errorHandler.violation(
-                ResolutionValidation,
-                field.toString,
-                s"Property '${existing.field.toString}' in '${master.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
-                value.annotations
-              )
-        }
+          }
+      }
     }
     master
   }
@@ -291,11 +310,13 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     val declarations = WebApiDeclarations(master.declares, Some(ctx), EmptyFutureDeclarations())
 
     // Extension declarations will be added to master document. The ones with the same name will be merged.
+    val mergingTracker = IdTracker()
     extension.declares.foreach { declaration =>
       declarations.findEquivalent(declaration) match {
-        case Some(equivalent) => merge(equivalent, declaration, extensionId, extensionLocation)
+        case Some(equivalent) => merge(equivalent, declaration, extensionId, extensionLocation, mergingTracker)
         case None =>
-          val extendedDeclaration = adoptInner(master.id + "#/declarations", declaration).asInstanceOf[DomainElement]
+          val extendedDeclaration =
+            adoptInner(master.id + "#/declarations", declaration, mergingTracker).asInstanceOf[DomainElement]
           if (keepEditingInfo) extendedDeclaration.annotations += ExtensionProvenance(extensionId, extensionLocation)
           declarations += extendedDeclaration
       }
@@ -303,7 +324,8 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
     val declarables = declarations.declarables()
 
-    declarables.foreach(adoptIris(iriMerger, _))
+    val adoptIrisTracker = IdTracker()
+    declarables.foreach(adoptIris(iriMerger, _, adoptIrisTracker))
 
     master.withDeclares(declarables)
   }
@@ -379,6 +401,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
     extension.values.foreach {
       case obj: DomainElement =>
+        val tracker = IdTracker()
         obj.fields.entry(key.key) match {
           case Some(value) =>
             val keyValue = value.scalar.value
@@ -388,11 +411,12 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                                                      obj,
                                                      extensionId,
                                                      extensionLocation,
-                                                     field)
+                                                     field,
+                                                     tracker)
 
           case _ => // If key is null and nullKey exists, merge if it is not a simpleProperty. Else just override.
-            nullKey =
-              Some(mergeByKeyResult(target, asSimpleProperty, nullKey, obj, extensionId, extensionLocation, field))
+            nullKey = Some(
+              mergeByKeyResult(target, asSimpleProperty, nullKey, obj, extensionId, extensionLocation, field, tracker))
         }
     }
 
@@ -405,9 +429,10 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                                obj: DomainElement,
                                extensionId: String,
                                extensionLocation: Option[String],
-                               field: Field) = {
+                               field: Field,
+                               idTracker: IdTracker) = {
     existing match {
-      case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), extensionId, extensionLocation)
+      case Some(e) if !asSimpleProperty => merge(e, obj.adopted(target.id), extensionId, extensionLocation, idTracker)
       case None if !(restrictions allowsNodeInsertionIn field) =>
         errorHandler.violation(
           ResolutionValidation,
@@ -417,7 +442,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
         )
         obj
       case _ =>
-        adoptInner(target.id, obj).asInstanceOf[DomainElement]
+        adoptInner(target.id, obj, idTracker).asInstanceOf[DomainElement]
     }
   }
 
@@ -427,34 +452,42 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
     case _                                                                            => true
   }
 
-  def adoptInner(id: String, target: AmfElement): AmfElement = target match {
-    case array: AmfArray =>
-      AmfArray(array.values.map(adoptInner(id, _)), array.annotations)
-    case dataNode: DataNode =>
-      adoptTree(id, dataNode)
-    case element: DomainElement =>
-      element.adopted(id)
-
-      element.fields.foreach {
-        case (_, value) => adoptInner(element.id, value.value)
+  def adoptInner(id: String, target: AmfElement, idTracker: IdTracker): AmfElement = {
+    if (idTracker.notTracking(id)) {
+      idTracker.track(id)
+      target match {
+        case array: AmfArray =>
+          AmfArray(array.values.map(adoptInner(id, _, idTracker)), array.annotations)
+        case dataNode: DataNode =>
+          adoptTree(id, dataNode)
+        case element: DomainElement =>
+          element.adopted(id)
+          element.fields.foreach {
+            case (_, value) => adoptInner(element.id, value.value, idTracker)
+          }
+          element
+        case _ => target
       }
-
-      element
-    case _ => target
+    } else {
+      target
+    }
   }
 
-  def adoptIris(iriMerger: IriMerger, target: DomainElement): Unit = {
-    target.fields.foreach {
-      case (field, value) =>
-        field.`type` match {
-          case Type.Iri => iriMerger.merge(target, field, value.value)
-          case Type.ArrayLike(_: DomainElementModel) =>
-            value.value.asInstanceOf[AmfArray].values.collect { case d: DomainElement => d }.foreach {
-              adoptIris(iriMerger, _)
-            }
-          case _: DomainElementModel => adoptIris(iriMerger, value.value.asInstanceOf[DomainElement])
-          case _                     =>
-        }
+  def adoptIris(iriMerger: IriMerger, target: DomainElement, tracker: IdTracker): Unit = {
+    if (tracker.notTracking(target.id)) {
+      tracker.track(target.id)
+      target.fields.foreach {
+        case (field, value) =>
+          field.`type` match {
+            case Type.Iri => iriMerger.merge(target, field, value.value)
+            case Type.ArrayLike(_: DomainElementModel) =>
+              value.value.asInstanceOf[AmfArray].values.collect { case d: DomainElement => d }.foreach {
+                adoptIris(iriMerger, _, tracker)
+              }
+            case _: DomainElementModel => adoptIris(iriMerger, value.value.asInstanceOf[DomainElement], tracker)
+            case _                     =>
+          }
+      }
     }
   }
 
@@ -543,7 +576,6 @@ object MergingRestrictions {
       TagModel.Documentation,
       WebApiModel.Documentations,
       BaseUnitModel.Usage,
-      ExampleField.Examples,
       ExamplesField.Examples,
       DomainElementModel.CustomDomainProperties
     )

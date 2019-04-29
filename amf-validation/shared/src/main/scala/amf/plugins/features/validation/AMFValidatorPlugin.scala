@@ -198,12 +198,13 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   override def validate(model: BaseUnit,
                         given: ProfileName,
                         messageStyle: MessageStyle,
-                        env: Environment): Future[AMFValidationReport] = {
+                        env: Environment,
+                        resolved: Boolean = false): Future[AMFValidationReport] = {
 
     val profileName = profileForUnit(model, given)
-    super.validate(model, profileName, messageStyle, env) flatMap {
+    super.validate(model, profileName, messageStyle, env, resolved) flatMap {
       case parseSideValidation if !parseSideValidation.conforms => Future.successful(parseSideValidation)
-      case _                                                    => modelValidation(model, profileName, messageStyle, env)
+      case _                                                    => modelValidation(model, profileName, messageStyle, env, resolved)
     }
 
   }
@@ -211,13 +212,14 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   private def modelValidation(model: BaseUnit,
                               profileName: ProfileName,
                               messageStyle: MessageStyle,
-                              env: Environment): Future[AMFValidationReport] = {
+                              env: Environment,
+                              resolved: Boolean): Future[AMFValidationReport] = {
 
     profilesPlugins.get(profileName.profile) match {
       case Some(domainPlugin: AMFValidationPlugin) =>
         val validations = computeValidations(profileName)
         domainPlugin
-          .validationRequest(model, profileName, validations, platform, env)
+          .validationRequest(model, profileName, validations, platform, env, resolved)
       case _ =>
         Future {
           profileNotFoundWarningReport(model, profileName)

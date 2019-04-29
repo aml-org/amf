@@ -10,15 +10,15 @@ Level: Violation
 [1][1] should be number
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/array/Matrix/example/default-example
-  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/array/Matrix/example/default-example
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/array/Matrix/examples/example/default-example
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/array/Matrix/examples/example/default-example
   Position: Some(LexicalInformation([(6,13)-(6,39)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: family[1] should be string
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/badExample
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/examples/example/badExample
   Property: 
   Position: Some(LexicalInformation([(26,0)-(31,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
@@ -28,8 +28,8 @@ Level: Violation
 should have required property 'family'
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/anotherBadExample
-  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/anotherBadExample
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/examples/example/anotherBadExample
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/examples/example/anotherBadExample
   Position: Some(LexicalInformation([(32,0)-(33,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
@@ -38,8 +38,8 @@ should have required property 'family'
 name should be string
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/anotherOne
-  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/anotherOne
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/examples/example/anotherOne
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/examples/example/anotherOne
   Position: Some(LexicalInformation([(34,0)-(39,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
@@ -49,15 +49,15 @@ users[1].family[2] should be string
 users[2].age should be integer
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/one
-  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/one
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/examples/example/one
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/examples/example/one
   Position: Some(LexicalInformation([(51,0)-(72,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: authors[1] should be string
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/two
+  Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/examples/example/two
   Property: 
   Position: Some(LexicalInformation([(73,0)-(84,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml

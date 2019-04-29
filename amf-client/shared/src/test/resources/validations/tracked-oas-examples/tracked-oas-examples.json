@@ -1,0 +1,106 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MockingServiceProxyAutomationTests",
+    "version": "v1"
+  },
+  "definitions": {
+    "exampleType": {
+      "example": {
+        "prop1": "John Doe",
+        "prop2": 1
+      },
+      "type": "object",
+      "properties": {
+        "prop1": {
+          "type": "string"
+        },
+        "prop2": {
+          "type": "number"
+        }
+      }
+    }
+  },
+  "paths": {
+    "/examples": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "prop1": "example5",
+                "prop2": 5
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/exampleType"
+            }
+          }
+        }
+      }
+    },
+    "/exampleType": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/exampleType"
+            }
+          }
+        }
+      }
+    },
+    "/exampleInTypeAndResource": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "examples": {
+              "application/json": {
+                "prop1": "resource example",
+                "prop2": 10
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/exampleType"
+            }
+          }
+        }
+      }
+    },
+    "/examplesInResource": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "example": {
+                "prop1": "something",
+                "prop2": 20
+              },
+              "type": "object",
+              "properties": {
+                "prop1": {
+                  "type": "string"
+                },
+                "prop2": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

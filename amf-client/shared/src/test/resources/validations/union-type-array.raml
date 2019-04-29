@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: some api
+
+types:
+  user:
+    properties:
+      user-id:
+        type: string
+  users:
+    type: user[]
+
+  theUnion:
+    type: user | users

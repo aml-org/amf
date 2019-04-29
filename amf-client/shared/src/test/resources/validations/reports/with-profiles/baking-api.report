@@ -8,19 +8,6 @@
         "@id": "http://www.w3.org/ns/shacl#Violation"
       },
       "http://www.w3.org/ns/shacl#focusNode": {
-        "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpath/get/request"
-      },
-      "http://www.w3.org/ns/shacl#resultMessage": "Resource format may be accepted in header",
-      "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://a.ml/vocabularies/data#response-with-accepts"
-      }
-    },
-    {
-      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
-      "http://www.w3.org/ns/shacl#resultSeverity": {
-        "@id": "http://www.w3.org/ns/shacl#Violation"
-      },
-      "http://www.w3.org/ns/shacl#focusNode": {
         "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "The version of the resource URLs must match the API version",
@@ -37,6 +24,32 @@
         "http://a.ml/vocabularies/amf/parser#end": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
           "http://a.ml/vocabularies/amf/parser#line": 70,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-client/shared/src/test/resources/validations/banking/api.raml#/web-api/end-points/%2Fv3.4%2Fpath/get/request"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Resource format may be accepted in header",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/data#response-with-accepts"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 10,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 19,
           "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }

@@ -6,16 +6,15 @@ import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.{ErrorHandler, Position}
-import amf.core.parser.Position.ZERO
 import amf.core.remote.Oas
-import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, OasSpecEmitterContext, SpecEmitterContext}
+import amf.core.utils.Strings
+import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, OasSpecEmitterContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
-import org.yaml.model.{YDocument, YNode, YScalar, YType}
+import amf.plugins.document.webapi.parser.spec.domain.NamedExamplesEmitter
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Strings
+import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
 /**
   *
@@ -148,7 +147,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
 
     override val header = OasHeaderEmitter(OasHeader.Oas20NamedExample)
 
-    val emitters: Seq[EntryEmitter] = Seq(NamedExampleEmitter(namedExample.encodes, ordering))
+    val emitters: Seq[EntryEmitter] = NamedExamplesEmitter(namedExample.encodes, ordering).emitters()
   }
 
   case class OasHeaderEmitter(oasHeader: OasHeader) extends EntryEmitter {

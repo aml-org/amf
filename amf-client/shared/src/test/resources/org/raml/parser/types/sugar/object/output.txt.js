@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: name should be integer
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/types/Person/example/default-example
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/types/Person/examples/example/default-example
   Property: 
   Position: Some(LexicalInformation([(8,0)-(8,18)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml

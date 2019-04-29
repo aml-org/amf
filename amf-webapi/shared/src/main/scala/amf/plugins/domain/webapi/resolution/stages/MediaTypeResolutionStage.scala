@@ -3,15 +3,14 @@ package amf.plugins.domain.webapi.resolution.stages
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfScalar, DomainElement, Shape}
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
+import amf.plugins.domain.shapes.models.{ExampleTracking, FileShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.{Payload, Request, WebApi}
-import amf.{Oas20Profile, OasProfile, ProfileName}
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.{FileShape, NodeShape}
 import amf.plugins.features.validation.ParserSideValidations.InvalidConsumesWithFileParameter
+import amf.{Oas20Profile, OasProfile, ProfileName}
 
 /** Apply root and operation mime types to payloads.
   *
@@ -105,14 +104,26 @@ class MediaTypeResolutionStage(profile: ProfileName, isValidation: Boolean = fal
             .adopted(parent)
           if (Option(payload.schema).isDefined)
             parsedPayload.fields
-              .setWithoutId(PayloadModel.Schema, tracking(payload.schema, parsedPayload.id, Some(payload.id)))
+              .setWithoutId(PayloadModel.Schema, replaceTrackedAnnotation(payload, parsedPayload.id))
           parsedPayload
         }
       }
+
+      /** Remove old tracking from new payloads with the same examples.
+        * Done here because of multiple media type propagation. */
+      result.foreach(newPayload => removeTracked(newPayload, payload.id))
     }
 
     result
   }
+
+  /** Remove tracking from examples in the given payload */
+  private def removeTracked(p: Payload, idToRemove: String): Unit =
+    ExampleTracking.removeTracking(p.schema, idToRemove)
+
+  /** Add tracked annotation only to examples that tracked the old payload with no media type. */
+  private def replaceTrackedAnnotation(payload: Payload, newPayloadId: String): Shape =
+    ExampleTracking.replaceTracking(payload.schema, newPayloadId, payload.id)
 
   def merge(root: Option[Seq[String]], op: Option[Seq[String]]): Option[Seq[String]] =
     op.orElse(root).filter(_.nonEmpty)
@@ -120,7 +131,7 @@ class MediaTypeResolutionStage(profile: ProfileName, isValidation: Boolean = fal
   /** Oas 2.0 violation in which all file parameters must comply with specific consumes property */
   private def validateFilePayloads(request: Request): Unit = {
     val filePayloads = request.payloads.filter(_.schema match {
-      //another violation is present to make sure all file parameters are NodeShapes
+      // another violation is present to make sure all file parameters are NodeShapes
       case node: NodeShape => node.properties.exists(_.range.isInstanceOf[FileShape])
       case _               => false
     })

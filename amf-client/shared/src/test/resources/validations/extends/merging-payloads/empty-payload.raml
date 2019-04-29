@@ -1,0 +1,82 @@
+#%RAML 1.0
+title: api
+mediaType: application/json
+
+resourceTypes:
+
+  undefined-rt:
+    get:
+      body: # request
+    put:
+      responses: 
+        200:
+          body: # response
+
+  defined-rt:
+    get:
+      body: # request
+        application/json:
+    put:
+      responses: 
+        200:
+          body: # response
+            application/json:
+              
+
+traits:
+
+  undefined-request-trait:
+    body:
+
+  defined-request-trait:
+    body:
+      application/json:
+
+  undefined-respose-trait:
+    responses:
+      200:
+        body:
+
+  defined-respose-trait:
+    responses:
+      200:
+        body:
+          application/json:
+
+/defined-endpoint:
+  type: undefined-rt
+  get:
+    body: # request
+      application/json:
+  put:
+    responses:
+      200:
+        body: # response
+          application/json:
+  post:
+    is: undefined-request-trait
+    body:
+      application/json:
+  patch:
+    is: undefined-respose-trait
+    responses:
+      200:
+        body:
+          application/json:
+
+/undefined-endpoint:
+  type: defined-rt
+  get:
+    body: # request
+  put:
+    responses:
+      200:
+        body: # response
+  post:
+    is: defined-request-trait
+    body:
+  patch:
+    is: defined-respose-trait
+    responses:
+      200:
+        body:

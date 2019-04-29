@@ -4,6 +4,7 @@ import amf.client.model.domain.{
   AnyShape => ClientAnyShape,
   ArrayShape => ClientArrayShape,
   Example => ClientExample,
+  Examples => ClientExamples,
   FileShape => ClientFileShape,
   NilShape => ClientNilShape,
   NodeShape => ClientNodeShape,
@@ -29,6 +30,7 @@ trait DataShapesBaseConverter
     with TupleShapeConverter
     with XMLSerializerConverter
     with ExampleConverter
+    with ExamplesConverter
     with UnionShapeConverter
     with PropertyDependenciesConverter
 
@@ -109,6 +111,14 @@ trait ExampleConverter extends PlatformSecrets {
   implicit object ExampleMatcher extends BidirectionalMatcher[Example, ClientExample] {
     override def asClient(from: Example): ClientExample   = platform.wrap[ClientExample](from)
     override def asInternal(from: ClientExample): Example = from._internal
+  }
+}
+
+trait ExamplesConverter extends PlatformSecrets {
+
+  implicit object ExamplesMatcher extends BidirectionalMatcher[Examples, ClientExamples] {
+    override def asClient(from: Examples): ClientExamples   = platform.wrap[ClientExamples](from)
+    override def asInternal(from: ClientExamples): Examples = from._internal
   }
 }
 

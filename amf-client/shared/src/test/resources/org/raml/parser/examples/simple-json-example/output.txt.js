@@ -10,7 +10,7 @@ Level: Violation
 name should NOT be longer than 5 characters
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/types/User/example/default-example
-  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/types/User/example/default-example
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/types/User/examples/example/default-example
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml#/declarations/types/User/examples/example/default-example
   Position: Some(LexicalInformation([(14,12)-(17,13)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/simple-json-example/input.raml

@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: Inline Type
+
+mediaType: application/xml
+
+types:
+  theType:
+    properties:
+      one: string
+      two: string
+
+/test-inline:
+  post:
+    body:
+      properties:
+        foo: string
+        bar: string
+    responses:
+      200:
+        body: theType
+      201:
+        body:
+          type: theType

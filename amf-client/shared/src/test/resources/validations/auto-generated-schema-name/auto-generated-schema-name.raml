@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: a title
+
+types:
+   schema:
+       type: object
+       properties:
+           tiene: number
+           nombre: number
+
+/anonymous:
+   post:
+       body:
+           application/xml:
+               type: object
+               properties:
+                   noTiene: number
+                   nombre: number
+
+/linked:
+   post:
+       body:
+           application/json:
+               type: schema
