@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.core.annotations.LexicalInformation
 import amf.core.model.document.{EncodesModel, ExternalFragment}
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, _}
@@ -10,6 +11,7 @@ import amf.plugins.document.webapi.model.NamedExampleFragment
 import amf.plugins.document.webapi.parser.spec.common.FragmentKind.{DEFAULT, FragmentKind, NAMED_EXAMPLE}
 import amf.plugins.features.validation.ParserSideValidations.{NamedExampleUsedInExample, SyamlError}
 import org.mulesoft.common.time.SimpleDateTime
+import org.mulesoft.lexer.InputRange
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
@@ -124,6 +126,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
           case Some(ref) if ref.unit.isInstanceOf[EncodesModel] =>
             val link: LinkNode =
               parseLink(reference.text).withLinkedDomainElement(ref.unit.asInstanceOf[EncodesModel].encodes)
+            link.annotations += LexicalInformation(inputRangeString(node.range))
             kind match {
               case NAMED_EXAMPLE if ref.unit.isInstanceOf[NamedExampleFragment] =>
                 ctx.violation(
@@ -147,6 +150,9 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
         parseLink(node.value.toString)
     }
   }
+
+  private def inputRangeString(range: InputRange): String =
+    s"[(${range.lineFrom},${range.columnFrom})-(${range.lineTo},${range.columnTo})]"
 
   def parseIncludedAST(raw: String, node: YNode): DataNode = {
     YamlParser(raw, node.sourceName).withIncludeTag("!include").parse().find(_.isInstanceOf[YNode]) match {

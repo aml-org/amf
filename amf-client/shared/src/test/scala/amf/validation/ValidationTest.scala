@@ -343,16 +343,25 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
   test("Numeric status codes in OAS responses") {
     for {
       validation <- Validation(platform)
-      doc <- AMFCompiler(productionPath + "/oas_numeric_resources.yaml",
-        platform,
-        OasYamlHint,
-        validation)
+      doc <- AMFCompiler(productionPath + "/oas_numeric_resources.yaml", platform, OasYamlHint, validation)
         .build()
       report <- validation.validate(doc, Oas20Profile)
     } yield {
       assert(report.conforms)
     }
   }
+
+//  test("Test test") {
+//    for {
+//      validation <- Validation(platform)
+//      doc <- AMFCompiler(validationsPath + "/traits/Test/api.raml", platform, RamlYamlHint, validation)
+//        .build()
+//      report <- validation.validate(doc, Raml10Profile)
+//    } yield {
+//      print(report.toString())
+//      assert(report.conforms)
+//    }
+//  }
 
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 

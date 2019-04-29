@@ -132,9 +132,22 @@ case class RamlNamedExampleParser(entry: YMapEntry, producer: Option[String] => 
     val name           = ScalarNode(entry.key)
     val simpleProducer = () => producer(Some(name.text().toString))
 
-    RamlSingleExampleValueParser(entry, simpleProducer, options)
-      .parse()
-      .set(ExampleModel.Name, name.text(), Annotations(entry))
+    ctx.link(entry.value) match {
+      case Left(s) =>
+        ctx.declarations.findNamedExample(s).foreach { _ =>
+          ctx.violation(
+            NamedExampleUsedInExample,
+            s,
+            "Named example fragments must be included in 'examples' facet",
+            entry
+          )
+        }
+        Example()
+      case Right(_) =>
+        RamlSingleExampleValueParser(entry, simpleProducer, options)
+          .parse()
+          .set(ExampleModel.Name, name.text(), Annotations(entry))
+    }
   }
 }
 

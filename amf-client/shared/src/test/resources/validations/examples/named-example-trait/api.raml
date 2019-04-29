@@ -1,0 +1,24 @@
+#%RAML 1.0
+
+title: Test
+
+types:
+  Person:
+    type: object
+    properties:
+      name: string
+      age: integer
+
+traits:
+  trait: !include trait.raml
+
+/someEndpoint:
+  get:
+    is: [
+      trait: {
+        a: Person,
+        b: {
+          e1: !include example.raml
+        }
+      }
+    ]

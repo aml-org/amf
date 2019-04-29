@@ -260,5 +260,9 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/nested-named-example-fragment/api.raml")
   }
 
+  test("NamedExample error nested in a trait") {
+    validate("/examples/named-example-trait/api.raml", Some("named-example-trait.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }
