@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 Profile: RAML 1.0
 Conforms? false
-Number of results: 11
+Number of results: 10
 
 Level: Violation
 
@@ -22,14 +22,6 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 Level: Warning
-
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
-  Message: closed shapes cannot inherit from open shapes
-  Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedAdditionalProperties
-  Property: http://www.w3.org/ns/shacl#closed
-  Position: Some(LexicalInformation([(12,26)-(12,30)]))
-  Location: [(11,2)-(15,0)]
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for max-properties than base type for maxProperties

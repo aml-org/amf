@@ -204,6 +204,26 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     cycle("body-link-name.raml", "body-link-name.jsonld", RamlYamlHint, Amf, validationsPath + "body-link-name/")
   }
 
+  test("Union type defined under composing types, with one type defined as closed") {
+    cycle(
+      "additional-prop-and-defined-after.raml",
+      "additional-prop-and-defined-after.jsonld",
+      RamlYamlHint,
+      Amf,
+      productionPath + "union-type-with-composing-closed-type/"
+    )
+  }
+
+  test("Union type defined before composing types, with one type defined as closed") {
+    cycle(
+      "additional-prop-and-defined-before.raml",
+      "additional-prop-and-defined-before.jsonld",
+      RamlYamlHint,
+      Amf,
+      productionPath + "union-type-with-composing-closed-type/"
+    )
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")
