@@ -5,7 +5,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
+import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.{Annotations, RuntimeErrorHandler, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
@@ -425,7 +425,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     } yield {
       try {
         val newShape = unionContext.minShape(baseShape, superUnionElement)
-        superUnionElement.name.option().foreach(n => newShape.withName(n))
+        setValuesOfUnionElement(newShape, superUnionElement)
         Some(newShape)
       } catch {
         case _: Exception => None
@@ -469,6 +469,26 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     }
 
     superUnion
+  }
+
+  private def setValuesOfUnionElement(newShape: Shape, superUnionElement: Shape): Unit = {
+    superUnionElement.name.option().foreach(n => newShape.withName(n))
+    /*
+    overrides additionalProperties value of unionElement to newShape to generate consistency with restrictShape method
+    that is called when a union type is parsed as AnyShape.
+     */
+    (newShape, superUnionElement) match {
+      case (newShape: NodeShape, superUnion: NodeShape) =>
+        newShape.fields
+          .getValueAsOption(NodeShapeModel.Closed)
+          .map(
+            closedValue =>
+              newShape.set(NodeShapeModel.Closed,
+                           AmfScalar(superUnion.closed.value(), closedValue.value.annotations),
+                           closedValue.annotations)
+          )
+      case _ =>
+    }
   }
 
   def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {

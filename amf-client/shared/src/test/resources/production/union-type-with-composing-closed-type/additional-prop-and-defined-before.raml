@@ -3,6 +3,10 @@ title: Device Fraud Orchestration Service
 version: v1
 
 types:
+  unionShape:
+    type: closedShapeType | openShape
+
+
   closedShapeType:
     type: object
     additionalProperties: false
@@ -15,10 +19,6 @@ types:
     properties:
       order:
         type: string
-
-  unionShape:
-    type: closedShapeType | openShape
-
 
 /events:
   post:
