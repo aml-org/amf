@@ -224,6 +224,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Tracking equal example in different endpoints") {
+    cycle(
+      "dup-name-example-tracking.raml",
+      "dup-name-example-tracking.jsonld",
+      RamlYamlHint,
+      Amf,
+      validationsPath + "dup-name-example-tracking/"
+    )
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

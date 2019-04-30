@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: Testing same example with different names
+
+mediaType: application/json
+
+types:
+  UsingObj:
+    properties:
+      ok: boolean
+
+/one:
+  get:
+    body:
+      application/json:
+        type: UsingObj
+        examples:
+          sameExample1: !include same-example.json
+          sameExample2: |
+            {
+              "ok" : true
+            }
+/two:
+  get:
+    body:
+        type: UsingObj
+        examples:
+          sameExample1: !include same-example.json
+          sameExample3: |
+            {
+              "ok" : true
+            }

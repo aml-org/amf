@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.{DeclaredElement, ExplicitField, LocalElement, ResolvedInheritance}
+import amf.core.annotations._
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
@@ -184,10 +184,13 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
   private def copyExamples(from: AnyShape, to: AnyShape): Unit = {
     from.exampleValues.foreach(e1 => {
-      to.exampleValues.find(e2 => {
-        e1.id == e2.id || e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim
-      }) match {
-        case Some(_) => // duplicated
+      to.exampleValues.find { e2 =>
+        e1.id == e2.id || (e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim && e1.name
+          .value() == e2.name.value())
+      } match {
+        case Some(toExample) =>
+          // duplicated
+          copyTracking(e1, toExample)
         case None =>
           e1.annotations += LocalElement()
           val ex = Examples()
@@ -195,6 +198,17 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
           to.withExamples(ex)
       }
     })
+  }
+
+  private def copyTracking(duplicate: Example, receiver: Example): Unit = {
+    duplicate.annotations.find(classOf[TrackedElement]).foreach { dupAnnotation =>
+      receiver.annotations += receiver.annotations
+        .find(classOf[TrackedElement])
+        .fold(TrackedElement(dupAnnotation.parents)) { receiverAnnotation =>
+          receiver.annotations.reject(_.isInstanceOf[TrackedElement])
+          TrackedElement(receiverAnnotation.parents ++ dupAnnotation.parents)
+        }
+    }
   }
 
   protected def aggregateExamples(shape: Shape, referencedShape: Shape): Unit = {
