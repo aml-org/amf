@@ -43,7 +43,9 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "annotationTypes/invalid.jsonld"                         -> ExpectedReport(conforms = false, 1, RamlProfile),
     "annotationTypes/valid.jsonld"                           -> ExpectedReport(conforms = true, 0, RamlProfile),
     "path-parameter-required/required-is-not-present.jsonld" -> ExpectedReport(conforms = false, 1, OasProfile),
-    "path-parameter-required/required-set-to-true.jsonld"    -> ExpectedReport(conforms = true, 0, OasProfile)
+    "path-parameter-required/required-set-to-true.jsonld"    -> ExpectedReport(conforms = true, 0, OasProfile),
+    "file-parameter/invalid.jsonld"                          -> ExpectedReport(conforms = false, 1, OasProfile),
+//  "file-parameter/valid.jsonld"                            -> ExpectedReport(conforms = true, 0, OasProfile) fails in clientJVM with unkown error
   )
 
   for {
