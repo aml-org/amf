@@ -1624,6 +1624,33 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test union shape generation") {
+    val api =
+      """#%RAML 1.0
+        |title: New API
+        |
+        |types:
+        |  UnionType:
+        |    type: string|integer
+        |
+        |/someEndpoint:
+        |  post:
+        |    body:
+        |      application/json:
+        |        type: UnionType""".stripMargin
+
+    for {
+      _         <- AMF.init().asFuture
+      unit      <- new RamlParser().parseStringAsync(api).asFuture
+      generated <- AMF.raml10Generator().generateString(unit).asFuture
+    } yield {
+      // With a normal resolution, used in normal validation, the extends field will disappears
+      val deltas = Diff.ignoreAllSpace.diff(api, generated)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }

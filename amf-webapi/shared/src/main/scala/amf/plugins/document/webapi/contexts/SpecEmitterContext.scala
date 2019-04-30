@@ -26,7 +26,7 @@ import amf.plugins.document.webapi.parser.{
   RamlHeader
 }
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.domain.shapes.models.{AnyShape, UnionShape}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
@@ -64,10 +64,14 @@ abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter) 
   def ramlTypePropertyEmitter(typeName: String, shape: Shape): Option[MapEntryEmitter] = {
     shape.fields.?(NodeShapeModel.Inherits) match {
       case None =>
-        shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
-          case Some(lexicalInfo) =>
-            Some(MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start))
-          case _ => None
+        // If the type is union and anyOf is empty it isn't resolved and type will be emitted in the UnionEmitter
+        if (typeName == "union" && shape.asInstanceOf[UnionShape].anyOf.nonEmpty) None
+        else {
+          shape.annotations.find(classOf[TypePropertyLexicalInfo]) match {
+            case Some(lexicalInfo) =>
+              Some(MapEntryEmitter("type", typeName, YType.Str, lexicalInfo.range.start))
+            case _ => None
+          }
         }
       case _ => None
     }
