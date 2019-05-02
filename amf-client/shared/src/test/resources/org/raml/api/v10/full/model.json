@@ -282,11 +282,7 @@ annotationTypes:
         type: number
       two:
         items:
-          anyOf:
-            -
-              type: string
-            -
-              type: number
+          type: string | number
       three?:
         type: integer
       four?:

@@ -941,6 +941,21 @@ case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
+    //TODO refactor this. To can emit all union inlined I need to verify if the shape (non scalar, non link) is in declarations.
+    // If it is, print the name, if not should extract to declarations.
+    //Temporal workaround: if the anyOf is a scalar or a link, emit it inline. If not, emit expanded.
+    if (shape.anyOf.forall(
+          s =>
+            (s.isInstanceOf[ScalarShape] && s.fields.fields().size <= 2 && s.fields
+              .fields()
+              .map(_.field)
+              .forall(f => f == ScalarShapeModel.Name || f == ScalarShapeModel.DataType)) ||
+              (s.isLink && s.linkLabel.option().isDefined)))
+      emitUnionInlined(b)
+    else emitUnionExpanded(b)
+  }
+
+  def emitUnionExpanded(b: EntryBuilder): Unit = {
     b.entry(
       "anyOf",
       _.list { b =>
@@ -951,6 +966,19 @@ case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
         ordering.sorted(emitters).foreach(_.emit(b))
       }
     )
+  }
+
+  def emitUnionInlined(b: EntryBuilder): Unit = {
+    val types = shape.anyOf.map {
+      case scalar: ScalarShape =>
+        RamlTypeDefStringValueMatcher
+          .matchType(TypeDefXsdMapping.typeDef(scalar.dataType.value()), scalar.format.option())
+          ._1
+      case a: AnyShape if a.isLink && a.linkLabel.option().isDefined =>
+        a.linkLabel.value()
+      case _ => // ignore
+    }
+    b.entry("type", types.mkString(" | "))
   }
 
   override def position(): Position = pos(shape.fields.get(UnionShapeModel.AnyOf).annotations)

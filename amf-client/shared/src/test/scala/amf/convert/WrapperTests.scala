@@ -1631,7 +1631,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         |
         |types:
         |  UnionType:
-        |    type: string|integer
+        |    type: string | integer
         |
         |/someEndpoint:
         |  post:
@@ -1645,7 +1645,257 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       generated <- AMF.raml10Generator().generateString(unit).asFuture
     } yield {
       // With a normal resolution, used in normal validation, the extends field will disappears
-      val deltas = Diff.ignoreAllSpace.diff(api, generated)
+      val deltas = Diff.ignoreAllSpace.diff(generated, api)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  test("Test resolved union shape generation - Basic scalar") {
+    val api =
+      """#%RAML 1.0
+        |title: New API
+        |
+        |types:
+        |  UnionType:
+        |    type: string | integer
+        |
+        |/someEndpoint:
+        |  post:
+        |    body:
+        |      application/json:
+        |        type: UnionType""".stripMargin
+
+    val golden =
+      """#%RAML 1.0
+        |title: New API
+        |
+        |types:
+        |  UnionType:
+        |    type: string | integer
+        |
+        |/someEndpoint:
+        |  post:
+        |    body:
+        |      application/json:
+        |        type: string | integer""".stripMargin
+
+    for {
+      _         <- AMF.init().asFuture
+      unit      <- new RamlParser().parseStringAsync(api).asFuture
+      resolved  <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      generated <- AMF.raml10Generator().generateString(resolved).asFuture
+    } yield {
+      // With a normal resolution, used in normal validation, the extends field will disappears
+      val deltas = Diff.ignoreAllSpace.diff(generated, golden)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  test("Test resolved union shape generation - Complex scalar") {
+    val api =
+      """#%RAML 1.0
+        |title: New API
+        |
+        |types:
+        |  UnionType:
+        |    type: string | ScalarType
+        |  ScalarType:
+        |    type: string
+        |    description: some scalar with extra fields
+        |    example: a string
+        |
+        |/someEndpoint:
+        |  post:
+        |    body:
+        |      application/json:
+        |        type: UnionType""".stripMargin
+
+    val golden =
+      """#%RAML 1.0
+        |title: New API
+        |types:
+        |  UnionType:
+        |    anyOf:
+        |      -
+        |        type: string
+        |        description: some scalar with extra fields
+        |        example: a string
+        |      -
+        |        type: string
+        |  ScalarType:
+        |    type: string
+        |    description: some scalar with extra fields
+        |    example: a string
+        |/someEndpoint:
+        |  post:
+        |    body:
+        |      application/json:
+        |        anyOf:
+        |          -
+        |            type: string
+        |            description: some scalar with extra fields
+        |            example: a string
+        |          -
+        |            type: string""".stripMargin
+
+    for {
+      _         <- AMF.init().asFuture
+      unit      <- new RamlParser().parseStringAsync(api).asFuture
+      resolved  <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      generated <- AMF.raml10Generator().generateString(resolved).asFuture
+    } yield {
+      // With a normal resolution, used in normal validation, the extends field will disappears
+      val deltas = Diff.ignoreAllSpace.diff(generated, golden)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  test("Test union shape generation - Non resolved link") {
+    val api =
+      """#%RAML 1.0
+        |title: New API
+        |
+        |types:
+        |  UnionType:
+        |    type: SomeType | integer
+        |  SomeType:
+        |    type: object
+        |    properties:
+        |      a:
+        |       type: string
+        |      b:
+        |       type: integer
+        |
+        |/someEndpoint:
+        |  post:
+        |    body:
+        |      application/json:
+        |        type: UnionType""".stripMargin
+
+    for {
+      _         <- AMF.init().asFuture
+      unit      <- new RamlParser().parseStringAsync(api).asFuture
+      generated <- AMF.raml10Generator().generateString(unit).asFuture
+    } yield {
+      // With a normal resolution, used in normal validation, the extends field will disappears
+      val deltas = Diff.ignoreAllSpace.diff(generated, api)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  test("Test union shape generation - Resolved link") {
+    val api =
+      """#%RAML 1.0
+        |title: New API
+        |
+        |types:
+        |  UnionType:
+        |    type: SomeType | integer
+        |  SomeType:
+        |    type: object
+        |    properties:
+        |      a:
+        |       type: string
+        |      b:
+        |       type: integer
+        |
+        |/someEndpoint:
+        |  post:
+        |    body:
+        |      application/json:
+        |        type: UnionType""".stripMargin
+
+    val golden =
+      """#%RAML 1.0
+        |title: New API
+        |types:
+        |  UnionType:
+        |    anyOf:
+        |      -
+        |        type: object
+        |        additionalProperties: true
+        |        properties:
+        |          a:
+        |            type: string
+        |            required: true
+        |          b:
+        |            type: integer
+        |            required: true
+        |      -
+        |        type: integer
+        |  SomeType:
+        |    type: object
+        |    additionalProperties: true
+        |    properties:
+        |      a:
+        |        type: string
+        |        required: true
+        |      b:
+        |        type: integer
+        |        required: true
+        |/someEndpoint:
+        |  post:
+        |    body:
+        |      application/json:
+        |        anyOf:
+        |          -
+        |            type: object
+        |            additionalProperties: true
+        |            properties:
+        |              a:
+        |                type: string
+        |                required: true
+        |              b:
+        |                type: integer
+        |                required: true
+        |          -
+        |            type: integer""".stripMargin
+
+    for {
+      _         <- AMF.init().asFuture
+      unit      <- new RamlParser().parseStringAsync(api).asFuture
+      resolved  <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      generated <- AMF.raml10Generator().generateString(resolved).asFuture
+    } yield {
+      // With a normal resolution, used in normal validation, the extends field will disappears
+      val deltas = Diff.ignoreAllSpace.diff(generated, golden)
+      if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
+      else succeed
+    }
+  }
+
+  test("Test union shape generation - Resolved anyOf Scalars") {
+    val api =
+      """#%RAML 1.0
+        |types:
+        |  UnionType:
+        |    type: union
+        |    anyOf:
+        |      -
+        |        type: string
+        |      -
+        |        type: integer
+        |title: test title""".stripMargin
+
+    val golden =
+      """#%RAML 1.0
+        |types:
+        |  UnionType:
+        |    type: string | integer
+        |title: test title""".stripMargin
+
+    for {
+      _         <- AMF.init().asFuture
+      unit      <- new RamlParser().parseStringAsync(api).asFuture
+      resolved  <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      generated <- AMF.raml10Generator().generateString(resolved).asFuture
+    } yield {
+      // With a normal resolution, used in normal validation, the extends field will disappears
+      val deltas = Diff.ignoreAllSpace.diff(generated, golden)
       if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
       else succeed
     }
