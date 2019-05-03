@@ -161,14 +161,6 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "tracked-from-resource-type/")
   }
 
-  test("Tracked annotation in example from a link NamedExample") {
-    cycle("tracked-from-named-fragment.raml",
-          "tracked-from-named-fragment.jsonld",
-          RamlYamlHint,
-          Amf,
-          validationsPath + "tracked-from-named-fragment/")
-  }
-
   test("Auto generated payload name annotation") {
     cycle("auto-generated-schema-name.raml",
           "auto-generated-schema-name.jsonld",

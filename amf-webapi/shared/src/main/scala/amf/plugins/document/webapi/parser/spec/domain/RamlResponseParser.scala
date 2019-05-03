@@ -13,7 +13,6 @@ import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import amf.plugins.features.validation.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.Examples
 
 import scala.collection.mutable
 
@@ -158,11 +157,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
         )
 
         val examples = OasResponseExamplesParser("examples".asRamlAnnotation, map).parse()
-        if (examples.nonEmpty) {
-          val ex = Examples()
-          res.withExamples(ex)
-          ex.withExamples(examples)
-        }
+        if (examples.nonEmpty) res.set(ResponseModel.Examples, AmfArray(examples))
 
         ctx.closedShape(res.id, map, "response")
 

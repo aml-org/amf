@@ -49,7 +49,7 @@ object Oas3Syntax extends SpecSyntax {
       "connect",
       "trace",
       "parameters",
-      "$ref"
+      "\\$ref"
     ),
     "operation" -> Set(
       "tags",

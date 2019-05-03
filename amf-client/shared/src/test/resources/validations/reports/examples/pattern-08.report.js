@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should match pattern "^[^0-9]*$"
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/08/pattern.raml#/web-api/end-points/%2Fresources/get/request/parameter/param/scalar/param/examples/example/default-example
+  Target: file://amf-client/shared/src/test/resources/validations/08/pattern.raml#/web-api/end-points/%2Fresources/get/request/parameter/param/scalar/param/example/default-example
   Property: 
   Position: Some(LexicalInformation([(11,21)-(11,24)]))
   Location: file://amf-client/shared/src/test/resources/validations/08/pattern.raml

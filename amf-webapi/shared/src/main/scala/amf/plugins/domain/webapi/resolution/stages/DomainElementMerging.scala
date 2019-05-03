@@ -107,7 +107,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
           val target = mainFieldEntry.value.value.asInstanceOf[AnyShape]
           val cloned = otherValue.value.asInstanceOf[AnyShape].cloneShape(None).withName(target.name.value())
 
-          if (target.exampleValues.nonEmpty) cloned.withExamples(target.examples)
+          if (target.examples.nonEmpty) cloned.withExamples(target.examples)
           main.set(otherField, adoptInner(main.id, cloned))
           shouldMerge = false
 
@@ -137,7 +137,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
                     case a: AnyShape =>
                       val examples = s.examples
                       main.set(otherField, adoptInner(main.id, a))
-                      if (s.exampleValues.nonEmpty)
+                      if (examples.nonEmpty)
                         main.fields
                           .entry(otherField)
                           .foreach(_.value.value.asInstanceOf[AnyShape].withExamples(examples))

@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: prop2 should be number
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/number-prop-bool-example.raml#/web-api/end-points/%2Fteams/get/request/application%2Fxml/schema/examples/example/default-example
+  Target: file://amf-client/shared/src/test/resources/validations/examples/number-prop-bool-example.raml#/web-api/end-points/%2Fteams/get/request/application%2Fxml/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(16,0)-(20,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/number-prop-bool-example.raml

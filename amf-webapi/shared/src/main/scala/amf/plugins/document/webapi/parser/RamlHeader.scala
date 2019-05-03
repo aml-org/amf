@@ -11,8 +11,6 @@ import scala.util.matching.Regex
   */
 case class RamlHeader(text: String) {
   def asRegExp(): Regex = ("\\s*" + text.replaceAll(" ", "\\\\s*") + "\\s*").r
-
-  override def toString: String = text
 }
 
 trait RamlFragment

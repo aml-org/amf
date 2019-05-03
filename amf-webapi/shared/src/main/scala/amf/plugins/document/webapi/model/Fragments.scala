@@ -6,7 +6,7 @@ import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
-import amf.plugins.domain.shapes.models.{CreativeWork, Examples}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 
 // todo review
 
@@ -25,7 +25,7 @@ case class DataTypeFragment(fields: Fields, annotations: Annotations) extends Fr
 }
 
 case class NamedExampleFragment(fields: Fields, annotations: Annotations) extends Fragment {
-  override def encodes: Examples = super.encodes.asInstanceOf[Examples]
+  override def encodes: Example = super.encodes.asInstanceOf[Example]
 
   /** Meta data for the document */
   override def meta: Obj = NamedExampleFragmentModel

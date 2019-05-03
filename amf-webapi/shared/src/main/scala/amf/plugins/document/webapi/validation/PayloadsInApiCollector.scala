@@ -36,7 +36,7 @@ class PayloadsInApiCollector(model: BaseUnit) {
       case shape: AnyShape if shape.meta == AnyShapeModel && !anyShapeRestrictions.exists(shape.fields.exists) => // ignore any shape without logical restrictions, any payload it's valid
       case shape: AnyShape if results.keys.exists(_.equals(shape.id)) =>
         val currentExamples: Seq[CollectedElement] = results(shape.id)
-        Option(shape.examples).foreach(_.examples.foreach { e =>
+        shape.examples.foreach(e => {
           if (!currentExamples.exists(_.id.equals(e.id))) {
             e match {
               case example: Example
@@ -50,17 +50,16 @@ class PayloadsInApiCollector(model: BaseUnit) {
               case example: Example
                   if example.fields.exists(ExampleModel.Raw)
                     && example.strict.option().getOrElse(true) && !currentExamples.exists(_.id.equals(example.id)) =>
-                results.update(shape.id,
-                               currentExamples :+ StringCollectedElement(example.id,
-                                                                         example.raw.value(),
-                                                                         example.annotations))
+                results.update(
+                  shape.id,
+                  currentExamples :+ StringCollectedElement(example.id, example.raw.value(), example.annotations))
               case _ =>
             }
           }
         })
         results.update(shape.id, results(shape.id) ++ getDefault(shape))
       case shape: AnyShape =>
-        val examples = shape.exampleValues.collect({
+        val examples = shape.examples.collect({
           case example: Example
               if example.fields.exists(ExampleModel.StructuredValue) && example.strict.option().getOrElse(true) =>
             DataNodeCollectedElement(example.structuredValue, example.id, example.raw.value(), example.annotations)

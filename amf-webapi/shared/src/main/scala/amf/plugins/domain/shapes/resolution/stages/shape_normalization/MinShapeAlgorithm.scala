@@ -443,7 +443,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         shape.id = shape.id + s"_$i"
         shape match {
           case any: AnyShape =>
-            accExamples ++= any.exampleValues
+            accExamples ++= any.examples
             any.fields.removeField(AnyShapeModel.Examples)
           case _ => // ignore
         }
@@ -462,11 +462,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         }
     }
 
-    if (accExamples.nonEmpty) {
-      val ex = Examples()
-      superUnion.set(AnyShapeModel.Examples, ex)
-      ex.setArrayWithoutId(ExamplesModel.Examples, accExamples.distinct)
-    }
+    if (accExamples.nonEmpty)
+      superUnion.fields.setWithoutId(AnyShapeModel.Examples, AmfArray(accExamples.distinct))
 
     superUnion
   }

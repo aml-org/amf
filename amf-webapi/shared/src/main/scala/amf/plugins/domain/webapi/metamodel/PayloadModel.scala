@@ -2,12 +2,12 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
+import amf.core.metamodel.domain._
 import amf.core.vocabulary.Namespace.Http
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.shapes.metamodel.common.ExamplesField
+import amf.plugins.domain.shapes.metamodel.common.ExampleField
 import amf.plugins.domain.webapi.models.Payload
 
 /**
@@ -19,7 +19,7 @@ object PayloadModel
     with OptionalField
     with NameFieldSchema
     with LinkableElementModel
-    with ExamplesField {
+    with ExampleField {
 
   val MediaType = Field(Str,
                         Http + "mediaType",
@@ -28,7 +28,7 @@ object PayloadModel
   val Schema =
     Field(ShapeModel, Http + "schema", ModelDoc(ModelVocabularies.Http, "schema", "Schema associated to this payload"))
 
-  val Encoding = Field(Array(EncodingModel), Http + "encoding", ModelDoc(ModelVocabularies.Http, "encoding"))
+  val Encoding = Field(Array(EncodingModel), Http + "encoding", ModelDoc(ModelVocabularies.Http, "encoding", ""))
 
   override val key: Field = MediaType
 

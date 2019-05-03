@@ -113,14 +113,17 @@ types:
     type:
       std.collection:
         itemCreateRequestType : RegistrationRequest
-        itemCreateRequestExamples: !include examples/AgentRegistrationRequest.raml
+        itemCreateRequestExamples:
+          mc-deployment-request: !include examples/AgentRegistrationRequest.raml
         collectionExamples:
     post:
       description: Entry point to register new Agents
       is: [
         std.sync-create: {
           itemCreateResponseType: RegistrationResponse,
-          itemCreateResponseExamples: !include examples/AgentResponseExample.raml
+          itemCreateResponseExamples: {
+              registration-response: !include examples/AgentResponseExample.raml
+            }
           }
         ]
   /info:

@@ -17,14 +17,13 @@ case class Response(override private[amf] val _internal: InternalResponse)
   @JSExportTopLevel("model.domain.Response")
   def this() = this(InternalResponse())
 
-  def name: StrField                     = _internal.name
-  def description: StrField              = _internal.description
-  def statusCode: StrField               = _internal.statusCode
-  def headers: ClientList[Parameter]     = _internal.headers.asClient
-  def payloads: ClientList[Payload]      = _internal.payloads.asClient
-  def examples: Examples                 = _internal.examples
-  def exampleValues: ClientList[Example] = _internal.exampleValues.asClient
-  def links: ClientList[TemplatedLink]   = _internal.links.asClient
+  def name: StrField                   = _internal.name
+  def description: StrField            = _internal.description
+  def statusCode: StrField             = _internal.statusCode
+  def headers: ClientList[Parameter]   = _internal.headers.asClient
+  def payloads: ClientList[Payload]    = _internal.payloads.asClient
+  def examples: ClientList[Example]    = _internal.examples.asClient
+  def links: ClientList[TemplatedLink] = _internal.links.asClient
 
   /** Set name property of this Response. */
   def withName(name: String): this.type = {
@@ -59,12 +58,6 @@ case class Response(override private[amf] val _internal: InternalResponse)
   /** Set examples property of this Response] */
   def withExamples(examples: ClientList[Example]): this.type = {
     _internal.withExamples(examples.asInternal)
-    this
-  }
-
-  /** Set examples property of this Response] */
-  def withExamples(examples: Examples): this.type = {
-    _internal.withExamples(examples)
     this
   }
 

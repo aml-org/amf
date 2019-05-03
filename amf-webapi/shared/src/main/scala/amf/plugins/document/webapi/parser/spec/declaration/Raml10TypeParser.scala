@@ -74,16 +74,10 @@ trait ExampleParser {
   def parseExamples(shape: AnyShape, map: YMap, options: ExampleOptions = DefaultExampleOptions)(
       implicit ctx: WebApiContext): Unit = {
     val examples =
-      RamlExamplesParser(map,
-                         "example",
-                         "examples",
-                         Option(shape.id),
-                         shape.withExample,
-                         shape,
-                         options.checkScalar(shape))
+      RamlExamplesParser(map, "example", "examples", Option(shape.id), shape.withExample, options.checkScalar(shape))
         .parse()
-    if (examples.linkNorEmpty)
-      shape.withExamples(examples)
+    if (examples.nonEmpty)
+      shape.setArray(AnyShapeModel.Examples, examples)
   }
 }
 
@@ -154,7 +148,11 @@ object Raml08TypeParser {
   def apply(node: YNode, name: String, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml08TypeParser =
     new Raml08TypeParser(Right(node), name, adopt, isAnnotation, defaultType)(
-      new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
+      new Raml08WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(ctx.declarations),
+                              contextType = ctx.contextType))
 
   def apply(entry: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml08TypeParser =
@@ -206,10 +204,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
                 .parse()
                 .fold(s) { e =>
                   inherits.set(ShapeModel.Inherits, AmfArray(Seq(s)))
-                  val ex = Examples()
-                  inherits.set(ScalarShapeModel.Examples, ex)
-                  ex.withExamples(Seq(e))
-                  inherits
+                  inherits.setArray(ScalarShapeModel.Examples, Seq(e))
                 }
             }
           }
@@ -439,11 +434,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
                             shape.withExample,
                             ExampleOptions(strictDefault = true, quiet = true).checkScalar(shape))
       .parse()
-      .foreach { e =>
-        val ex = Examples()
-        shape.withExamples(ex)
-        ex.withExamples(Seq(e))
-      }
+      .foreach(e => shape.setArray(ScalarShapeModel.Examples, Seq(e)))
 
     map.key(
       "default",

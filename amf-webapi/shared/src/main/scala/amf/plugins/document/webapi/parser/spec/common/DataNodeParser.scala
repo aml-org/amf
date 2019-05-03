@@ -7,9 +7,7 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.model.NamedExampleFragment
-import amf.plugins.document.webapi.parser.spec.common.FragmentKind.{DEFAULT, FragmentKind, NAMED_EXAMPLE}
-import amf.plugins.features.validation.ParserSideValidations.{NamedExampleUsedInExample, SyamlError}
+import amf.plugins.features.validation.ParserSideValidations.SyamlError
 import org.mulesoft.common.time.SimpleDateTime
 import org.mulesoft.lexer.InputRange
 import org.yaml.model._
@@ -23,14 +21,13 @@ import scala.collection.mutable.ListBuffer
 case class DataNodeParser(node: YNode,
                           parameters: AbstractVariables = AbstractVariables(),
                           parent: Option[String] = None,
-                          idCounter: IdCounter = new IdCounter,
-                          kind: FragmentKind = DEFAULT)(implicit ctx: WebApiContext) {
+                          idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
   def parse(): DataNode = {
     node.tag.tagType match {
       case YType.Seq => parseArray(node.as[Seq[YNode]], node)
       case YType.Map => parseObject(node.as[YMap])
-      case _         => ScalarNodeParser(parameters, parent, idCounter, kind).parse(node)
+      case _         => ScalarNodeParser(parameters, parent, idCounter).parse(node)
     }
   }
 
@@ -38,7 +35,7 @@ case class DataNodeParser(node: YNode,
     val node = DataArrayNode(Annotations(ast)).withName(idCounter.genId("array"))
     parent.foreach(node.adopted)
     seq.foreach { v =>
-      val element = DataNodeParser(v, parameters, Some(node.id), idCounter, kind).parse().forceAdopted(node.id)
+      val element = DataNodeParser(v, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
       node.addMember(element)
     }
     node
@@ -53,8 +50,7 @@ case class DataNodeParser(node: YNode,
       val value               = ast.value
       val propertyAnnotations = Annotations(ast)
 
-      val propertyNode =
-        DataNodeParser(value, parameters, Some(node.id), idCounter, kind).parse().forceAdopted(node.id)
+      val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
       node.addProperty(key.urlComponentEncoded, propertyNode, propertyAnnotations)
       node.lexicalPropertiesAnnotation.map(a => node.annotations += a)
     }
@@ -64,8 +60,7 @@ case class DataNodeParser(node: YNode,
 
 case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
                             parent: Option[String] = None,
-                            idCounter: IdCounter = new IdCounter,
-                            kind: FragmentKind = DEFAULT)(implicit ctx: WebApiContext) {
+                            idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
     val finalDataType =
@@ -107,7 +102,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
         }
 
       // Included external fragment
-      case _ if node.tagType == YType.Include => parseInclusion(node, kind)
+      case _ if node.tagType == YType.Include => parseInclusion(node)
 
       case other =>
         val parsed = parseScalar(YScalar(other.toString()), "string")
@@ -116,7 +111,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
     }
   }
 
-  protected def parseInclusion(node: YNode, kind: FragmentKind = DEFAULT): DataNode = {
+  protected def parseInclusion(node: YNode): DataNode = {
     node.value match {
       case reference: YScalar =>
         ctx.refs.find(ref => ref.origin.url == reference.text) match {
@@ -124,20 +119,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
             val includedText = ref.unit.asInstanceOf[ExternalFragment].encodes.raw.value()
             parseIncludedAST(includedText, node)
           case Some(ref) if ref.unit.isInstanceOf[EncodesModel] =>
-            val link: LinkNode =
-              parseLink(reference.text).withLinkedDomainElement(ref.unit.asInstanceOf[EncodesModel].encodes)
-            link.annotations += LexicalInformation(inputRangeString(node.range))
-            kind match {
-              case NAMED_EXAMPLE if ref.unit.isInstanceOf[NamedExampleFragment] =>
-                ctx.violation(
-                  NamedExampleUsedInExample,
-                  link.id,
-                  "Named example fragments must be included in 'examples' facet",
-                  node
-                )
-              case _ => // nothing to do
-            }
-            link
+            parseLink(reference.text).withLinkedDomainElement(ref.unit.asInstanceOf[EncodesModel].encodes)
           case _ =>
             ctx.declarations.fragments.get(reference.text).map(_.encoded) match {
               case Some(domainElement) =>
@@ -156,7 +138,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
 
   def parseIncludedAST(raw: String, node: YNode): DataNode = {
     YamlParser(raw, node.sourceName).withIncludeTag("!include").parse().find(_.isInstanceOf[YNode]) match {
-      case Some(node: YNode) => DataNodeParser(node, parameters, parent, idCounter, kind).parse()
+      case Some(node: YNode) => DataNodeParser(node, parameters, parent, idCounter).parse()
       case _                 => ScalarNode(raw, Some((Namespace.Xsd + "string").iri())).withId(parent.getOrElse("") + "/included")
     }
   }
@@ -211,9 +193,4 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
 object DataNodeParser {
   def parse(parent: Option[String])(node: YNode)(implicit ctx: WebApiContext): DataNode =
     DataNodeParser(node, parent = parent).parse()
-}
-
-object FragmentKind extends Enumeration {
-  type FragmentKind = Value
-  val DEFAULT, NAMED_EXAMPLE = Value
 }

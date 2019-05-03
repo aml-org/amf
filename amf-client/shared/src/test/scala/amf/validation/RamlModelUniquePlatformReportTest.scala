@@ -7,6 +7,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/model/"
+  override val hint: Hint  = RamlYamlHint
 
   test("Load dialect") {
     validate("data/error1.raml", Some("load-dialect-error1.report"))
@@ -208,10 +209,6 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("named-example-closed-shape/named-example-closed-shape.raml", Some("named-example-closed-shape.report"))
   }
 
-  test("Multiple example fragments") {
-    validate("examples/multiple-example-fragments/api.raml", Some("multiple-example-fragments.report"))
-  }
-
   test("Multiple inheritance with contradicting restrictions defined inline") {
     validate("multiple-inheritance-restrictions.raml", Some("max-min-restriction.report"))
   }
@@ -227,14 +224,4 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Library closed shape used in an api") {
     validate("invalid-library/api.raml", Some("invalid-library-used-in-api.report"))
   }
-
-  test("Recursion in extension") {
-    validate("recursion-in-extension/extension.raml", Some("recursion-in-extension.report"))
-  }
-
-  test("Recursion in extension 2") {
-    validate("recursion-in-extension/extension.raml", Some("recursion-in-extension2.report"))
-  }
-
-  override val hint: Hint = RamlYamlHint
 }

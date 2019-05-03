@@ -131,6 +131,10 @@ class ValidRamlModelParserTest extends ValidModelTest {
     validate("examples/float-validation/api.raml")
   }
 
+  test("Multiple example fragments") {
+    validate("examples/multiple-example-fragments/api.raml")
+  }
+
   test("Included json schema with ref to himself with file name") {
     checkValid("shapes/ref-recursive-samefilename/api.raml")
   }

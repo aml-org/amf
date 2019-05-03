@@ -10,15 +10,15 @@ Level: Violation
 middlename should be null
 
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/examples/example/wrong-type
-  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/examples/example/wrong-type
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/wrong-type
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/wrong-type
   Position: Some(LexicalInformation([(15,0)-(18,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should have required property 'middlename'
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/examples/example/missing-field
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/missing-field
   Property: 
   Position: Some(LexicalInformation([(19,0)-(21,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml
