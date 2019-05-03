@@ -28,9 +28,9 @@
     "/organization": {
       "get": {
         "description": "Returns an organization entity.",
+        "produces": ["application/json", "application/xml"],
         "responses": {
           "201": {
-            "x-amf-mediaType": "application/json",
             "schema": {
               "allOf": [
                 {

@@ -55,6 +55,12 @@
 <http://a.ml/vocabularies/amf/parser#examples-must-be-map> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#examples-must-be-map> <http://www.w3.org/ns/shacl#message> "Examples value should be a map" .
 <http://a.ml/vocabularies/amf/parser#examples-must-be-map> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#examples-with-invalid-mime-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#examples-with-invalid-mime-type> <http://www.w3.org/ns/shacl#message> "Mime type defined in 'examples' must be present in a 'produces' property" .
+<http://a.ml/vocabularies/amf/parser#examples-with-invalid-mime-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#examples-with-no-schema-defined> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#examples-with-no-schema-defined> <http://www.w3.org/ns/shacl#message> "When schema is undefined, 'examples' facet is invalid as no content is returned as part of the response" .
+<http://a.ml/vocabularies/amf/parser#examples-with-no-schema-defined> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#exclusive-properties-error> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#exclusive-properties-error> <http://www.w3.org/ns/shacl#message> "Exclusive properties declared together" .
 <http://a.ml/vocabularies/amf/parser#exclusive-properties-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
