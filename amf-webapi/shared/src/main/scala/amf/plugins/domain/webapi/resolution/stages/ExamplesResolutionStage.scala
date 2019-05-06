@@ -4,9 +4,10 @@ import amf.core.annotations.TrackedElement
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import amf.plugins.domain.webapi.metamodel.ResponseModel
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.{Payload, WebApi}
+import amf.plugins.features.validation.ParserSideValidations.{ExamplesWithInvalidMimeType, ExamplesWithNoSchemaDefined}
 
 /** Apply response examples to payloads schemas matching by media type
   *
@@ -38,10 +39,27 @@ class ExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler
                     shape.withExamples(shape.examples ++ Seq(example))
                   case _ => response.withExamples(response.examples ++ Seq(example))
                 }
-              case _ => response.withExamples(response.examples ++ Seq(example))
+              case _ =>
+                violationForUnmappedExample(example, mediaType, response.payloads)
+                response.withExamples(response.examples ++ Seq(example))
             }
         }
     }
     webApi
+  }
+
+  private def violationForUnmappedExample(example: Example, mediaType: String, payloads: Seq[Payload]): Unit = {
+    if (payloads.isEmpty)
+      errorHandler.violation(
+        ExamplesWithNoSchemaDefined,
+        example.id,
+        "When schema is undefined, 'examples' facet is invalid as no content is returned as part of the response",
+        example.annotations
+      )
+    else
+      errorHandler.violation(ExamplesWithInvalidMimeType,
+                             example.id,
+                             s"Mime type '$mediaType' defined in examples must be present in a 'produces' property",
+                             example.annotations)
   }
 }

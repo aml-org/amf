@@ -77,5 +77,13 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("file-parameter/file-parameter-incorrect-binding.json", Some("file-parameter-incorrect-binding.report"))
   }
 
+  test("Examples with invalid mime type") {
+    validate("examples-mime-type/invalid-mime-type.json", Some("invalid-mime-type.report"))
+  }
+
+  test("Response with examples defined and no schema") {
+    validate("examples-mime-type/response-with-no-schema.json", Some("response-with-no-schema.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }

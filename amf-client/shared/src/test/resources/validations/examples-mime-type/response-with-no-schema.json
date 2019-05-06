@@ -1,0 +1,25 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "some api"
+  },
+  "paths": {
+    "/aPath": {
+      "post": {
+        "produces": ["application/json"],
+
+        "responses": {
+          "default": {
+
+            "examples": {
+              "application/json": {
+                "name": "name-example"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

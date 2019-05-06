@@ -7,7 +7,7 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, ResolutionStage}
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
-import amf.plugins.domain.webapi.resolution.stages.MediaTypeResolutionStage
+import amf.plugins.domain.webapi.resolution.stages.{ExamplesResolutionStage, MediaTypeResolutionStage}
 
 class ValidationResolutionPipeline(profile: ProfileName, override val eh: ErrorHandler)
     extends ResolutionPipeline(eh) {
@@ -17,7 +17,8 @@ class ValidationResolutionPipeline(profile: ProfileName, override val eh: ErrorH
     new ExternalSourceRemovalStage,
     new ExtensionsResolutionStage(profile, keepEditingInfo = false),
     new ShapeNormalizationStage(profile, keepEditingInfo = false),
-    new MediaTypeResolutionStage(profile, isValidation = true)
+    new MediaTypeResolutionStage(profile, isValidation = true),
+    new ExamplesResolutionStage()
   )
 
   override def profileName: ProfileName = profile
