@@ -29,7 +29,7 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMaxProperties
   Property: http://a.ml/vocabularies/shapes#maxProperties
   Position: Some(LexicalInformation([(19,19)-(19,20)]))
-  Location: [(18,2)-(22,0)]
+  Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for min-properties than base type for minProperties
@@ -37,7 +37,7 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMinProperties
   Property: http://a.ml/vocabularies/shapes#minProperties
   Position: Some(LexicalInformation([(26,19)-(26,20)]))
-  Location: [(25,2)-(29,0)]
+  Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: different values for discriminator constraint
@@ -45,7 +45,7 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedDiscriminator
   Property: http://a.ml/vocabularies/shapes#discriminator
   Position: Some(LexicalInformation([(36,19)-(36,21)]))
-  Location: [(34,2)-(40,0)]
+  Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties
@@ -53,7 +53,7 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMaxLength/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#maxLength
   Position: Some(LexicalInformation([(51,19)-(51,22)]))
-  Location: [(49,6)-(53,0)]
+  Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: different values for pattern constraint
@@ -61,7 +61,7 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedPattern/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#pattern
   Position: Some(LexicalInformation([(64,8)-(66,0)]))
-  Location: [(62,6)-(66,0)]
+  Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for maximum than base type for maximum
@@ -69,7 +69,7 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMaximum/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#maxInclusive
   Position: Some(LexicalInformation([(77,17)-(77,20)]))
-  Location: [(75,6)-(79,0)]
+  Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Resolution error: sub type has a weaker constraint for min-minimum than base type for minimum
@@ -77,7 +77,7 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMinimum/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#minInclusive
   Position: Some(LexicalInformation([(90,17)-(90,20)]))
-  Location: [(88,6)-(92,0)]
+  Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
   Message: Values in subtype enumeration (f) not found in the supertype enumeration (a,b)
@@ -85,4 +85,4 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedEnum/property/a/scalar/a
   Property: http://www.w3.org/ns/shacl#in
   Position: Some(LexicalInformation([(103,15)-(103,18)]))
-  Location: [(101,6)-(105,0)]
+  Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
