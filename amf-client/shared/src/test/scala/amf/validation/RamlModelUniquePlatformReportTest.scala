@@ -224,4 +224,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Library closed shape used in an api") {
     validate("invalid-library/api.raml", Some("invalid-library-used-in-api.report"))
   }
+
+  test("Recursion in extension") {
+    validate("recursion-in-extension/extension.raml", Some("recursion-in-extension.report"))
+  }
+
+  test("Recursion in extension 2") {
+    validate("recursion-in-extension/extension.raml", Some("recursion-in-extension2.report"))
+  }
 }
