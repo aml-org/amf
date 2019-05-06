@@ -156,8 +156,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
           derivedShape.id,
           e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
           e.getMessage,
-          e.position,
-          e.location
+          e.position.orElse(derivedShape.position()),
+          e.location.orElse(derivedShape.location())
         )
         derivedShape
     }
