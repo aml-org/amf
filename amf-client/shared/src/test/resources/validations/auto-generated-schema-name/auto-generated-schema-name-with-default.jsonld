@@ -20,6 +20,16 @@
             "@value": "Inline Type"
           }
         ],
+        "raml-http:accepts": [
+          {
+            "@value": "application/xml"
+          }
+        ],
+        "raml-http:contentType": [
+          {
+            "@value": "application/xml"
+          }
+        ],
         "raml-http:endpoint": [
           {
             "@id": "#9",
@@ -358,12 +368,18 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#8": "RAML 1.0"
+          "single-value-array": {
+            "raml-http:contentType": "",
+            "raml-http:accepts": ""
           },
           "lexical": {
+            "raml-http:contentType": "[(4,0)-(6,0)]",
             "schema-org:name": "[(2,0)-(4,0)]",
-            "#8": "[(2,0)-(23,23)]"
+            "#8": "[(2,0)-(23,23)]",
+            "raml-http:accepts": "[(4,0)-(6,0)]"
+          },
+          "source-vendor": {
+            "#8": "RAML 1.0"
           }
         }
       }

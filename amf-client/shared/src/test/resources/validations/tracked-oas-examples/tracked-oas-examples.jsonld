@@ -49,6 +49,11 @@
                     "@value": "get"
                   }
                 ],
+                "raml-http:contentType": [
+                  {
+                    "@value": "application/json"
+                  }
+                ],
                 "hydra:returns": [
                   {
                     "@id": "#14",
@@ -111,7 +116,8 @@
                 "smaps": {
                   "lexical": {
                     "hydra:returns": "[(30,8)-(30,21)]",
-                    "#24": "[(26,6)-(26,13)]"
+                    "#24": "[(26,6)-(26,13)]",
+                    "raml-http:contentType": "[(27,8)-(27,20)]"
                   }
                 }
               }
@@ -143,6 +149,11 @@
                 "hydra:method": [
                   {
                     "@value": "get"
+                  }
+                ],
+                "raml-http:contentType": [
+                  {
+                    "@value": "application/json"
                   }
                 ],
                 "hydra:returns": [
@@ -207,7 +218,8 @@
                 "smaps": {
                   "lexical": {
                     "hydra:returns": "[(50,8)-(50,21)]",
-                    "#26": "[(46,6)-(46,13)]"
+                    "#26": "[(46,6)-(46,13)]",
+                    "raml-http:contentType": "[(47,8)-(47,20)]"
                   }
                 }
               }
@@ -239,6 +251,11 @@
                 "hydra:method": [
                   {
                     "@value": "get"
+                  }
+                ],
+                "raml-http:contentType": [
+                  {
+                    "@value": "application/json"
                   }
                 ],
                 "hydra:returns": [
@@ -303,7 +320,8 @@
                 "smaps": {
                   "lexical": {
                     "hydra:returns": "[(64,8)-(64,21)]",
-                    "#30": "[(60,6)-(60,13)]"
+                    "#30": "[(60,6)-(60,13)]",
+                    "raml-http:contentType": "[(61,8)-(61,20)]"
                   }
                 }
               }
@@ -335,6 +353,11 @@
                 "hydra:method": [
                   {
                     "@value": "get"
+                  }
+                ],
+                "raml-http:contentType": [
+                  {
+                    "@value": "application/json"
                   }
                 ],
                 "hydra:returns": [
@@ -618,7 +641,8 @@
                 "smaps": {
                   "lexical": {
                     "hydra:returns": "[(84,8)-(84,21)]",
-                    "#32": "[(80,6)-(80,13)]"
+                    "#32": "[(80,6)-(80,13)]",
+                    "raml-http:contentType": "[(81,8)-(81,20)]"
                   }
                 }
               }
