@@ -964,164 +964,57 @@
                             ],
                             "http://a.ml/vocabularies/document#examples": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/",
+                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example",
                                 "@type": [
-                                  "http://a.ml/vocabularies/document#NamedExamples",
+                                  "http://a.ml/vocabularies/document#Example",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/document#examples": [
+                                "http://a.ml/vocabularies/document#strict": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example",
+                                    "@value": true
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#structuredValue": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1",
                                     "@type": [
-                                      "http://a.ml/vocabularies/document#Example",
+                                      "http://a.ml/vocabularies/data#Object",
+                                      "http://a.ml/vocabularies/data#Node",
                                       "http://a.ml/vocabularies/document#DomainElement"
                                     ],
-                                    "http://a.ml/vocabularies/document#strict": [
+                                    "http://a.ml/vocabularies/data#one": [
                                       {
-                                        "@value": true
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document#structuredValue": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2",
                                         "@type": [
                                           "http://a.ml/vocabularies/data#Object",
                                           "http://a.ml/vocabularies/data#Node",
                                           "http://a.ml/vocabularies/document#DomainElement"
                                         ],
-                                        "http://a.ml/vocabularies/data#one": [
+                                        "http://a.ml/vocabularies/data#prop1": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2/scalar_3",
                                             "@type": [
-                                              "http://a.ml/vocabularies/data#Object",
+                                              "http://a.ml/vocabularies/data#Scalar",
                                               "http://a.ml/vocabularies/data#Node",
                                               "http://a.ml/vocabularies/document#DomainElement"
                                             ],
-                                            "http://a.ml/vocabularies/data#prop1": [
+                                            "http://a.ml/vocabularies/data#value": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2/scalar_3",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar",
-                                                  "http://a.ml/vocabularies/data#Node",
-                                                  "http://a.ml/vocabularies/document#DomainElement"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "something",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                                  {
-                                                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2/scalar_3/source-map",
-                                                    "@type": [
-                                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                                    ],
-                                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                                      {
-                                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                                          {
-                                                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2/scalar_3"
-                                                          }
-                                                        ],
-                                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                                          {
-                                                            "@value": "[(102,27)-(102,38)]"
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/data#prop2": [
-                                              {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2/scalar_4",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar",
-                                                  "http://a.ml/vocabularies/data#Node",
-                                                  "http://a.ml/vocabularies/document#DomainElement"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "20",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                                  }
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                                  {
-                                                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2/scalar_4/source-map",
-                                                    "@type": [
-                                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                                    ],
-                                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                                      {
-                                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                                          {
-                                                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2/scalar_4"
-                                                          }
-                                                        ],
-                                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                                          {
-                                                            "@value": "[(103,27)-(103,29)]"
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
+                                                "@value": "something",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#sources": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2/source-map",
+                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2/scalar_3/source-map",
                                                 "@type": [
                                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                                                  {
-                                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                                      {
-                                                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2"
-                                                      }
-                                                    ],
-                                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                                      {
-                                                        "@value": "prop2->[(103,18)-(103,27)]#prop1->[(102,18)-(102,27)]"
-                                                      }
-                                                    ]
-                                                  }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                                   {
                                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                                       {
-                                                        "@value": "http://a.ml/vocabularies/data#prop2"
-                                                      }
-                                                    ],
-                                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                                      {
-                                                        "@value": "[(103,27)-(103,29)]"
-                                                      }
-                                                    ]
-                                                  },
-                                                  {
-                                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                                      {
-                                                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_2"
-                                                      }
-                                                    ],
-                                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                                      {
-                                                        "@value": "[(101,23)-(104,17)]"
-                                                      }
-                                                    ]
-                                                  },
-                                                  {
-                                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                                      {
-                                                        "@value": "http://a.ml/vocabularies/data#prop1"
+                                                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2/scalar_3"
                                                       }
                                                     ],
                                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1135,139 +1028,139 @@
                                             ]
                                           }
                                         ],
-                                        "http://a.ml/vocabularies/data#two": [
+                                        "http://a.ml/vocabularies/data#prop2": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2/scalar_4",
                                             "@type": [
-                                              "http://a.ml/vocabularies/data#Object",
+                                              "http://a.ml/vocabularies/data#Scalar",
                                               "http://a.ml/vocabularies/data#Node",
                                               "http://a.ml/vocabularies/document#DomainElement"
                                             ],
-                                            "http://a.ml/vocabularies/data#prop1": [
+                                            "http://a.ml/vocabularies/data#value": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5/scalar_6",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar",
-                                                  "http://a.ml/vocabularies/data#Node",
-                                                  "http://a.ml/vocabularies/document#DomainElement"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "other",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#string"
-                                                  }
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                                  {
-                                                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5/scalar_6/source-map",
-                                                    "@type": [
-                                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                                    ],
-                                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                                      {
-                                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                                          {
-                                                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5/scalar_6"
-                                                          }
-                                                        ],
-                                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                                          {
-                                                            "@value": "[(106,27)-(106,34)]"
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/data#prop2": [
-                                              {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5/scalar_7",
-                                                "@type": [
-                                                  "http://a.ml/vocabularies/data#Scalar",
-                                                  "http://a.ml/vocabularies/data#Node",
-                                                  "http://a.ml/vocabularies/document#DomainElement"
-                                                ],
-                                                "http://a.ml/vocabularies/data#value": [
-                                                  {
-                                                    "@value": "21",
-                                                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                                                  }
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                                  {
-                                                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5/scalar_7/source-map",
-                                                    "@type": [
-                                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                                    ],
-                                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                                      {
-                                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                                          {
-                                                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5/scalar_7"
-                                                          }
-                                                        ],
-                                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                                          {
-                                                            "@value": "[(107,27)-(107,29)]"
-                                                          }
-                                                        ]
-                                                      }
-                                                    ]
-                                                  }
-                                                ]
+                                                "@value": "20",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#sources": [
                                               {
-                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5/source-map",
+                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2/scalar_4/source-map",
                                                 "@type": [
                                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                                                  {
-                                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                                      {
-                                                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5"
-                                                      }
-                                                    ],
-                                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                                      {
-                                                        "@value": "prop2->[(107,18)-(107,27)]#prop1->[(106,18)-(106,27)]"
-                                                      }
-                                                    ]
-                                                  }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                                                   {
                                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                                       {
-                                                        "@value": "http://a.ml/vocabularies/data#prop2"
+                                                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2/scalar_4"
                                                       }
                                                     ],
                                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                                       {
-                                                        "@value": "[(107,27)-(107,29)]"
+                                                        "@value": "[(103,27)-(103,29)]"
                                                       }
                                                     ]
-                                                  },
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2/source-map",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "prop2->[(103,18)-(103,27)]#prop1->[(102,18)-(102,27)]"
+                                                  }
+                                                ]
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#prop2"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(103,27)-(103,29)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_2"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(101,23)-(104,17)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "http://a.ml/vocabularies/data#prop1"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(102,27)-(102,38)]"
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/data#two": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5",
+                                        "@type": [
+                                          "http://a.ml/vocabularies/data#Object",
+                                          "http://a.ml/vocabularies/data#Node",
+                                          "http://a.ml/vocabularies/document#DomainElement"
+                                        ],
+                                        "http://a.ml/vocabularies/data#prop1": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5/scalar_6",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/data#Scalar",
+                                              "http://a.ml/vocabularies/data#Node",
+                                              "http://a.ml/vocabularies/document#DomainElement"
+                                            ],
+                                            "http://a.ml/vocabularies/data#value": [
+                                              {
+                                                "@value": "other",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5/scalar_6/source-map",
+                                                "@type": [
+                                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#lexical": [
                                                   {
                                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                                       {
-                                                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/object_5"
-                                                      }
-                                                    ],
-                                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                                      {
-                                                        "@value": "[(105,23)-(108,17)]"
-                                                      }
-                                                    ]
-                                                  },
-                                                  {
-                                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                                      {
-                                                        "@value": "http://a.ml/vocabularies/data#prop1"
+                                                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5/scalar_6"
                                                       }
                                                     ],
                                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1281,17 +1174,81 @@
                                             ]
                                           }
                                         ],
+                                        "http://a.ml/vocabularies/data#prop2": [
+                                          {
+                                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5/scalar_7",
+                                            "@type": [
+                                              "http://a.ml/vocabularies/data#Scalar",
+                                              "http://a.ml/vocabularies/data#Node",
+                                              "http://a.ml/vocabularies/document#DomainElement"
+                                            ],
+                                            "http://a.ml/vocabularies/data#value": [
+                                              {
+                                                "@value": "21",
+                                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                                              {
+                                                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5/scalar_7/source-map",
+                                                "@type": [
+                                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                                  {
+                                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                                      {
+                                                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5/scalar_7"
+                                                      }
+                                                    ],
+                                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                                      {
+                                                        "@value": "[(107,27)-(107,29)]"
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ],
                                         "http://a.ml/vocabularies/document-source-maps#sources": [
                                           {
-                                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1/source-map",
+                                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5/source-map",
                                             "@type": [
                                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "prop2->[(107,18)-(107,27)]#prop1->[(106,18)-(106,27)]"
+                                                  }
+                                                ]
+                                              }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
-                                                    "@value": "http://a.ml/vocabularies/data#two"
+                                                    "@value": "http://a.ml/vocabularies/data#prop2"
+                                                  }
+                                                ],
+                                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                                  {
+                                                    "@value": "[(107,27)-(107,29)]"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                                  {
+                                                    "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/object_5"
                                                   }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1303,62 +1260,12 @@
                                               {
                                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                                   {
-                                                    "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1"
+                                                    "@value": "http://a.ml/vocabularies/data#prop1"
                                                   }
                                                 ],
                                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                                   {
-                                                    "@value": "[(100,25)-(109,15)]"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "http://a.ml/vocabularies/data#one"
-                                                  }
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "[(101,23)-(104,17)]"
-                                                  }
-                                                ]
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                                              {
-                                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "http://a.ml/vocabularies/data#two"
-                                                  }
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "prop2->[(107,18)-(107,27)]#prop1->[(106,18)-(106,27)]"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/object_1"
-                                                  }
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "one->[(101,16)-(101,23)]#two->[(105,16)-(105,23)]"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                                  {
-                                                    "@value": "http://a.ml/vocabularies/data#one"
-                                                  }
-                                                ],
-                                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                                  {
-                                                    "@value": "prop2->[(103,18)-(103,27)]#prop1->[(102,18)-(102,27)]"
+                                                    "@value": "[(106,27)-(106,34)]"
                                                   }
                                                 ]
                                               }
@@ -1367,36 +1274,29 @@
                                         ]
                                       }
                                     ],
-                                    "http://www.w3.org/ns/shacl#raw": [
-                                      {
-                                        "@value": "\"one\":\n  \"prop1\": \"something\":\n  \"prop2\": 20: :\n\"two\":\n  \"prop1\": \"other\":\n  \"prop2\": 21: : "
-                                      }
-                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [
                                       {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example/source-map",
+                                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1/source-map",
                                         "@type": [
                                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                                          {
-                                            "http://a.ml/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "http://a.ml/vocabularies/document#strict"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "true"
-                                              }
-                                            ]
-                                          }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "http://www.w3.org/ns/shacl#raw"
+                                                "@value": "http://a.ml/vocabularies/data#two"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "[(105,23)-(108,17)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1408,28 +1308,119 @@
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example"
+                                                "@value": "http://a.ml/vocabularies/data#one"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "[(100,14)-(100,25)]"
+                                                "@value": "[(101,23)-(104,17)]"
                                               }
                                             ]
                                           }
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                                        "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
                                           {
                                             "http://a.ml/vocabularies/document-source-maps#element": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/examples/example/default-example"
+                                                "@value": "http://a.ml/vocabularies/data#two"
                                               }
                                             ],
                                             "http://a.ml/vocabularies/document-source-maps#value": [
                                               {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/application%2Fjson"
+                                                "@value": "prop2->[(107,18)-(107,27)]#prop1->[(106,18)-(106,27)]"
                                               }
                                             ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/object_1"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "one->[(101,16)-(101,23)]#two->[(105,16)-(105,23)]"
+                                              }
+                                            ]
+                                          },
+                                          {
+                                            "http://a.ml/vocabularies/document-source-maps#element": [
+                                              {
+                                                "@value": "http://a.ml/vocabularies/data#one"
+                                              }
+                                            ],
+                                            "http://a.ml/vocabularies/document-source-maps#value": [
+                                              {
+                                                "@value": "prop2->[(103,18)-(103,27)]#prop1->[(102,18)-(102,27)]"
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "\"one\":\n  \"prop1\": \"something\":\n  \"prop2\": 20: :\n\"two\":\n  \"prop1\": \"other\":\n  \"prop2\": 21: : "
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/document#strict"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(100,25)-(109,15)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(100,14)-(100,25)]"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/default/default/example/default-example"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResource/get/200/application%2Fjson"
                                           }
                                         ]
                                       }
@@ -2149,110 +2140,41 @@
         ],
         "http://a.ml/vocabularies/document#examples": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/",
+            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example",
             "@type": [
-              "http://a.ml/vocabularies/document#NamedExamples",
+              "http://a.ml/vocabularies/document#Example",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/document#examples": [
+            "http://a.ml/vocabularies/document#strict": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example",
+                "@value": true
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1",
                 "@type": [
-                  "http://a.ml/vocabularies/document#Example",
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/document#strict": [
+                "http://a.ml/vocabularies/data#prop1": [
                   {
-                    "@value": true
-                  }
-                ],
-                "http://a.ml/vocabularies/document#structuredValue": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1/scalar_2",
                     "@type": [
-                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/data#prop1": [
+                    "http://a.ml/vocabularies/data#value": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1/scalar_2",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar",
-                          "http://a.ml/vocabularies/data#Node",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "John Doe",
-                            "@type": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1/scalar_2/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1/scalar_2"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(11,17)-(11,27)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/data#prop2": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1/scalar_3",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar",
-                          "http://a.ml/vocabularies/data#Node",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "1",
-                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1/scalar_3/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1/scalar_3"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(12,17)-(12,18)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
+                        "@value": "John Doe",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1/scalar_2/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2260,31 +2182,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/data#prop2"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(12,17)-(12,18)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(10,17)-(13,7)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/data#prop1"
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1/scalar_2"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2293,17 +2191,41 @@
                               }
                             ]
                           }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#prop2": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1/scalar_3",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "1",
+                        "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1/scalar_3/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/object_1"
+                                "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1/scalar_3"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "prop2->[(12,8)-(12,17)]#prop1->[(11,8)-(11,17)]"
+                                "@value": "[(12,17)-(12,18)]"
                               }
                             ]
                           }
@@ -2312,36 +2234,29 @@
                     ]
                   }
                 ],
-                "http://www.w3.org/ns/shacl#raw": [
-                  {
-                    "@value": "\"prop1\": \"John Doe\":\n\"prop2\": 1: "
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/document#strict"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "true"
-                          }
-                        ]
-                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/shacl#raw"
+                            "@value": "http://a.ml/vocabularies/data#prop2"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(12,17)-(12,18)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2353,127 +2268,134 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/default-example"
+                            "@value": "http://a.ml/vocabularies/data#prop1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(10,6)-(10,17)]"
+                            "@value": "[(11,17)-(11,27)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/object_1"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "prop2->[(12,8)-(12,17)]#prop1->[(11,8)-(11,17)]"
                           }
                         ]
                       }
                     ]
                   }
                 ]
-              },
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson0",
+                "@value": "\"prop1\": \"John Doe\":\n\"prop2\": 1: "
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example/source-map",
                 "@type": [
-                  "http://a.ml/vocabularies/document#Example",
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#strict"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#raw"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,17)-(13,7)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/default-example"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,6)-(10,17)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson0",
+            "@type": [
+              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "application/json0"
+              }
+            ],
+            "http://a.ml/vocabularies/document#strict": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/http#mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "null/object_1",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://schema.org/name": [
+                "http://a.ml/vocabularies/data#prop1": [
                   {
-                    "@value": "application/json0"
-                  }
-                ],
-                "http://a.ml/vocabularies/document#strict": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "http://a.ml/vocabularies/http#mediaType": [
-                  {
-                    "@value": "application/json"
-                  }
-                ],
-                "http://a.ml/vocabularies/document#structuredValue": [
-                  {
-                    "@id": "null/object_1",
+                    "@id": "null/object_1/scalar_2",
                     "@type": [
-                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/data#prop1": [
+                    "http://a.ml/vocabularies/data#value": [
                       {
-                        "@id": "null/object_1/scalar_2",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar",
-                          "http://a.ml/vocabularies/data#Node",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "example5",
-                            "@type": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "null/object_1/scalar_2/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "null/object_1/scalar_2"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(41,25)-(41,35)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/data#prop2": [
-                      {
-                        "@id": "null/object_1/scalar_3",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar",
-                          "http://a.ml/vocabularies/data#Node",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "5",
-                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "null/object_1/scalar_3/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "null/object_1/scalar_3"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(42,25)-(42,26)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
+                        "@value": "example5",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "null/object_1/source-map",
+                        "@id": "null/object_1/scalar_2/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2481,31 +2403,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/data#prop2"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(42,25)-(42,26)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "null/object_1"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(40,34)-(43,15)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/data#prop1"
+                                "@value": "null/object_1/scalar_2"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2514,17 +2412,41 @@
                               }
                             ]
                           }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#prop2": [
+                  {
+                    "@id": "null/object_1/scalar_3",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "5",
+                        "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "null/object_1/scalar_3/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "null/object_1"
+                                "@value": "null/object_1/scalar_3"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "prop2->[(42,16)-(42,25)]#prop1->[(41,16)-(41,25)]"
+                                "@value": "[(42,25)-(42,26)]"
                               }
                             ]
                           }
@@ -2533,36 +2455,29 @@
                     ]
                   }
                 ],
-                "http://www.w3.org/ns/shacl#raw": [
-                  {
-                    "@value": "\"prop1\": \"example5\":\n\"prop2\": 5: "
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson0/source-map",
+                    "@id": "null/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/document#strict"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "true"
-                          }
-                        ]
-                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/shacl#raw"
+                            "@value": "http://a.ml/vocabularies/data#prop2"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(42,25)-(42,26)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "null/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2574,141 +2489,148 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson0"
+                            "@value": "http://a.ml/vocabularies/data#prop1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(40,14)-(40,34)]"
+                            "@value": "[(41,25)-(41,35)]"
                           }
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson0"
+                            "@value": "null/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get/200/application%2Fjson"
+                            "@value": "prop2->[(42,16)-(42,25)]#prop1->[(41,16)-(41,25)]"
                           }
                         ]
                       }
                     ]
                   }
                 ]
-              },
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson2",
+                "@value": "\"prop1\": \"example5\":\n\"prop2\": 5: "
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson0/source-map",
                 "@type": [
-                  "http://a.ml/vocabularies/document#Example",
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#strict"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#raw"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(40,34)-(43,15)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson0"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(40,14)-(40,34)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson0"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2Fexamples/get/200/application%2Fjson"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson2",
+            "@type": [
+              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "application/json2"
+              }
+            ],
+            "http://a.ml/vocabularies/document#strict": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/http#mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "null/object_1",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://schema.org/name": [
+                "http://a.ml/vocabularies/data#prop1": [
                   {
-                    "@value": "application/json2"
-                  }
-                ],
-                "http://a.ml/vocabularies/document#strict": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "http://a.ml/vocabularies/http#mediaType": [
-                  {
-                    "@value": "application/json"
-                  }
-                ],
-                "http://a.ml/vocabularies/document#structuredValue": [
-                  {
-                    "@id": "null/object_1",
+                    "@id": "null/object_1/scalar_2",
                     "@type": [
-                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Scalar",
                       "http://a.ml/vocabularies/data#Node",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/data#prop1": [
+                    "http://a.ml/vocabularies/data#value": [
                       {
-                        "@id": "null/object_1/scalar_2",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar",
-                          "http://a.ml/vocabularies/data#Node",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "resource example",
-                            "@type": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "null/object_1/scalar_2/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "null/object_1/scalar_2"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(79,25)-(79,43)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://a.ml/vocabularies/data#prop2": [
-                      {
-                        "@id": "null/object_1/scalar_3",
-                        "@type": [
-                          "http://a.ml/vocabularies/data#Scalar",
-                          "http://a.ml/vocabularies/data#Node",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/data#value": [
-                          {
-                            "@value": "10",
-                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "null/object_1/scalar_3/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "null/object_1/scalar_3"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(80,25)-(80,27)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
+                        "@value": "resource example",
+                        "@type": "http://www.w3.org/2001/XMLSchema#string"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "null/object_1/source-map",
+                        "@id": "null/object_1/scalar_2/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
@@ -2716,31 +2638,7 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/data#prop2"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(80,25)-(80,27)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "null/object_1"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(78,34)-(81,15)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/data#prop1"
+                                "@value": "null/object_1/scalar_2"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2749,17 +2647,41 @@
                               }
                             ]
                           }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#prop2": [
+                  {
+                    "@id": "null/object_1/scalar_3",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Scalar",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#value": [
+                      {
+                        "@value": "10",
+                        "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "null/object_1/scalar_3/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "null/object_1"
+                                "@value": "null/object_1/scalar_3"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "prop2->[(80,16)-(80,25)]#prop1->[(79,16)-(79,25)]"
+                                "@value": "[(80,25)-(80,27)]"
                               }
                             ]
                           }
@@ -2768,36 +2690,29 @@
                     ]
                   }
                 ],
-                "http://www.w3.org/ns/shacl#raw": [
-                  {
-                    "@value": "\"prop1\": \"resource example\":\n\"prop2\": 10: "
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson2/source-map",
+                    "@id": "null/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/document#strict"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "true"
-                          }
-                        ]
-                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/shacl#raw"
+                            "@value": "http://a.ml/vocabularies/data#prop2"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(80,25)-(80,27)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "null/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2809,195 +2724,164 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson2"
+                            "@value": "http://a.ml/vocabularies/data#prop1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(78,14)-(78,34)]"
+                            "@value": "[(79,25)-(79,43)]"
                           }
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson2"
+                            "@value": "null/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get/200/application%2Fjson"
+                            "@value": "prop2->[(80,16)-(80,25)]#prop1->[(79,16)-(79,25)]"
                           }
                         ]
                       }
                     ]
                   }
                 ]
-              },
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson4",
+                "@value": "\"prop1\": \"resource example\":\n\"prop2\": 10: "
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson2/source-map",
                 "@type": [
-                  "http://a.ml/vocabularies/document#Example",
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#strict"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#raw"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(78,34)-(81,15)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson2"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(78,14)-(78,34)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson2"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexampleInTypeAndResource/get/200/application%2Fjson"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson4",
+            "@type": [
+              "http://a.ml/vocabularies/document#Example",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "application/json4"
+              }
+            ],
+            "http://a.ml/vocabularies/document#strict": [
+              {
+                "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/http#mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ],
+            "http://a.ml/vocabularies/document#structuredValue": [
+              {
+                "@id": "null/object_1",
+                "@type": [
+                  "http://a.ml/vocabularies/data#Object",
+                  "http://a.ml/vocabularies/data#Node",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://schema.org/name": [
+                "http://a.ml/vocabularies/data#one": [
                   {
-                    "@value": "application/json4"
-                  }
-                ],
-                "http://a.ml/vocabularies/document#strict": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "http://a.ml/vocabularies/http#mediaType": [
-                  {
-                    "@value": "application/json"
-                  }
-                ],
-                "http://a.ml/vocabularies/document#structuredValue": [
-                  {
-                    "@id": "null/object_1",
+                    "@id": "null/object_1/object_2",
                     "@type": [
                       "http://a.ml/vocabularies/data#Object",
                       "http://a.ml/vocabularies/data#Node",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/data#one": [
+                    "http://a.ml/vocabularies/data#prop1": [
                       {
-                        "@id": "null/object_1/object_2",
+                        "@id": "null/object_1/object_2/scalar_3",
                         "@type": [
-                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Scalar",
                           "http://a.ml/vocabularies/data#Node",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/data#prop1": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "null/object_1/object_2/scalar_3",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "something else",
-                                "@type": "http://www.w3.org/2001/XMLSchema#string"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "null/object_1/object_2/scalar_3/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "null/object_1/object_2/scalar_3"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(140,27)-(140,43)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ],
-                        "http://a.ml/vocabularies/data#prop2": [
-                          {
-                            "@id": "null/object_1/object_2/scalar_4",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "30",
-                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "null/object_1/object_2/scalar_4/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "null/object_1/object_2/scalar_4"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(141,27)-(141,29)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
+                            "@value": "something else",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "null/object_1/object_2/source-map",
+                            "@id": "null/object_1/object_2/scalar_3/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "null/object_1/object_2"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "prop2->[(141,18)-(141,27)]#prop1->[(140,18)-(140,27)]"
-                                  }
-                                ]
-                              }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/data#prop2"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(141,27)-(141,29)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "null/object_1/object_2"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(139,23)-(142,17)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/data#prop1"
+                                    "@value": "null/object_1/object_2/scalar_3"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3011,139 +2895,139 @@
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/data#two": [
+                    "http://a.ml/vocabularies/data#prop2": [
                       {
-                        "@id": "null/object_1/object_5",
+                        "@id": "null/object_1/object_2/scalar_4",
                         "@type": [
-                          "http://a.ml/vocabularies/data#Object",
+                          "http://a.ml/vocabularies/data#Scalar",
                           "http://a.ml/vocabularies/data#Node",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/data#prop1": [
+                        "http://a.ml/vocabularies/data#value": [
                           {
-                            "@id": "null/object_1/object_5/scalar_6",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "another",
-                                "@type": "http://www.w3.org/2001/XMLSchema#string"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "null/object_1/object_5/scalar_6/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "null/object_1/object_5/scalar_6"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(144,27)-(144,36)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ],
-                        "http://a.ml/vocabularies/data#prop2": [
-                          {
-                            "@id": "null/object_1/object_5/scalar_7",
-                            "@type": [
-                              "http://a.ml/vocabularies/data#Scalar",
-                              "http://a.ml/vocabularies/data#Node",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://a.ml/vocabularies/data#value": [
-                              {
-                                "@value": "31",
-                                "@type": "http://www.w3.org/2001/XMLSchema#integer"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "null/object_1/object_5/scalar_7/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "null/object_1/object_5/scalar_7"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(145,27)-(145,29)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
+                            "@value": "30",
+                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "null/object_1/object_5/source-map",
+                            "@id": "null/object_1/object_2/scalar_4/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "null/object_1/object_5"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "prop2->[(145,18)-(145,27)]#prop1->[(144,18)-(144,27)]"
-                                  }
-                                ]
-                              }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/data#prop2"
+                                    "@value": "null/object_1/object_2/scalar_4"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(145,27)-(145,29)]"
+                                    "@value": "[(141,27)-(141,29)]"
                                   }
                                 ]
-                              },
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "null/object_1/object_2/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "null/object_1/object_2"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "prop2->[(141,18)-(141,27)]#prop1->[(140,18)-(140,27)]"
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#prop2"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(141,27)-(141,29)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "null/object_1/object_2"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(139,23)-(142,17)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/data#prop1"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(140,27)-(140,43)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/data#two": [
+                  {
+                    "@id": "null/object_1/object_5",
+                    "@type": [
+                      "http://a.ml/vocabularies/data#Object",
+                      "http://a.ml/vocabularies/data#Node",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/data#prop1": [
+                      {
+                        "@id": "null/object_1/object_5/scalar_6",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "another",
+                            "@type": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "null/object_1/object_5/scalar_6/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "null/object_1/object_5"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(143,23)-(146,17)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/data#prop1"
+                                    "@value": "null/object_1/object_5/scalar_6"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3157,17 +3041,81 @@
                         ]
                       }
                     ],
+                    "http://a.ml/vocabularies/data#prop2": [
+                      {
+                        "@id": "null/object_1/object_5/scalar_7",
+                        "@type": [
+                          "http://a.ml/vocabularies/data#Scalar",
+                          "http://a.ml/vocabularies/data#Node",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/data#value": [
+                          {
+                            "@value": "31",
+                            "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "null/object_1/object_5/scalar_7/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "null/object_1/object_5/scalar_7"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(145,27)-(145,29)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "null/object_1/source-map",
+                        "@id": "null/object_1/object_5/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "null/object_1/object_5"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "prop2->[(145,18)-(145,27)]#prop1->[(144,18)-(144,27)]"
+                              }
+                            ]
+                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/data#two"
+                                "@value": "http://a.ml/vocabularies/data#prop2"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(145,27)-(145,29)]"
+                              }
+                            ]
+                          },
+                          {
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "null/object_1/object_5"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3179,62 +3127,12 @@
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "null/object_1"
+                                "@value": "http://a.ml/vocabularies/data#prop1"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(138,34)-(147,15)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/data#one"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(139,23)-(142,17)]"
-                              }
-                            ]
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/data#two"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "prop2->[(145,18)-(145,27)]#prop1->[(144,18)-(144,27)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "null/object_1"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "one->[(139,16)-(139,23)]#two->[(143,16)-(143,23)]"
-                              }
-                            ]
-                          },
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/data#one"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "prop2->[(141,18)-(141,27)]#prop1->[(140,18)-(140,27)]"
+                                "@value": "[(144,27)-(144,36)]"
                               }
                             ]
                           }
@@ -3243,36 +3141,29 @@
                     ]
                   }
                 ],
-                "http://www.w3.org/ns/shacl#raw": [
-                  {
-                    "@value": "\"one\":\n  \"prop1\": \"something else\":\n  \"prop2\": 30: :\n\"two\":\n  \"prop1\": \"another\":\n  \"prop2\": 31: : "
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson4/source-map",
+                    "@id": "null/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/document#strict"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "true"
-                          }
-                        ]
-                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/shacl#raw"
+                            "@value": "http://a.ml/vocabularies/data#two"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(143,23)-(146,17)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "null/object_1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -3284,28 +3175,119 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson4"
+                            "@value": "http://a.ml/vocabularies/data#one"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(138,14)-(138,34)]"
+                            "@value": "[(139,23)-(142,17)]"
                           }
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/examples/example/application%2Fjson4"
+                            "@value": "http://a.ml/vocabularies/data#two"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get/200/application%2Fjson"
+                            "@value": "prop2->[(145,18)-(145,27)]#prop1->[(144,18)-(144,27)]"
                           }
                         ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "null/object_1"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "one->[(139,16)-(139,23)]#two->[(143,16)-(143,23)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/data#one"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "prop2->[(141,18)-(141,27)]#prop1->[(140,18)-(140,27)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://www.w3.org/ns/shacl#raw": [
+              {
+                "@value": "\"one\":\n  \"prop1\": \"something else\":\n  \"prop2\": 30: :\n\"two\":\n  \"prop1\": \"another\":\n  \"prop2\": 31: : "
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson4/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/document#strict"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#raw"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(138,34)-(147,15)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson4"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(138,14)-(138,34)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/declarations/types/exampleType/example/application%2Fjson4"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/production/oas-multiple-example.json#/web-api/end-points/%2FexamplesInResourceAndType/get/200/application%2Fjson"
                       }
                     ]
                   }

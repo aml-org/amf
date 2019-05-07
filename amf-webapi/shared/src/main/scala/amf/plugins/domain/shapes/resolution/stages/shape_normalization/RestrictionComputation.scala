@@ -160,11 +160,13 @@ private[shape_normalization] trait RestrictionComputation {
                             superEnumeration: Seq[AmfElement],
                             annotations: Annotations): Unit = {
     if (derivedEnumeration.nonEmpty && superEnumeration.nonEmpty) {
-      if (derivedEnumeration.headOption.exists(h => superEnumeration.headOption.exists(_.getClass != h.getClass)))
+      val headOption = derivedEnumeration.headOption
+      if (headOption.exists(h => superEnumeration.headOption.exists(_.getClass != h.getClass)))
         throw new InheritanceIncompatibleShapeError(
           s"Values in subtype enumeration are from different class '${derivedEnumeration.head.getClass}' of the super type enumeration '${superEnumeration.head.getClass}'",
           Some(ShapeModel.Values.value.iri()),
-          annotations.find(classOf[LexicalInformation])
+          headOption.flatMap(_.location()),
+          headOption.flatMap(_.position())
         )
 
       derivedEnumeration match {
@@ -177,7 +179,8 @@ private[shape_normalization] trait RestrictionComputation {
                 s"Values in subtype enumeration (${ds.map(_.value).mkString(",")}) not found in the supertype enumeration (${superScalars
                   .mkString(",")})",
                 Some(ShapeModel.Values.value.iri()),
-                e.annotations.find(classOf[LexicalInformation])
+                e.location(),
+                e.position()
               )
             }
           }
@@ -189,6 +192,7 @@ private[shape_normalization] trait RestrictionComputation {
   protected def computeStringEquality(lvalue: AmfElement,
                                       rvalue: AmfElement,
                                       property: Option[String] = None,
+                                      position: Option[String],
                                       lexicalInfo: Option[LexicalInformation] = None): Boolean = {
     lvalue match {
       case scalar: AmfScalar
@@ -200,6 +204,7 @@ private[shape_normalization] trait RestrictionComputation {
       case _ =>
         throw new InheritanceIncompatibleShapeError("Cannot compare non numeric or missing values",
                                                     property,
+                                                    position,
                                                     lexicalInfo)
     }
   }
@@ -218,7 +223,8 @@ private[shape_normalization] trait RestrictionComputation {
                                          lvalue: AmfElement,
                                          rvalue: AmfElement,
                                          property: Option[String] = None,
-                                         lexicalInformation: Option[LexicalInformation] = None): Boolean = {
+                                         lexicalInformation: Option[LexicalInformation] = None,
+                                         location: Option[String]): Boolean = {
     lvalue match {
       case scalar: AmfScalar
           if Option(scalar.value).isDefined && rvalue.isInstanceOf[AmfScalar] && Option(
@@ -234,11 +240,13 @@ private[shape_normalization] trait RestrictionComputation {
           case _ =>
             throw new InheritanceIncompatibleShapeError(s"Unknown numeric comparison $comparison",
                                                         property,
+                                                        location,
                                                         lexicalInformation)
         }
       case _ =>
         throw new InheritanceIncompatibleShapeError("Cannot compare non numeric or missing values",
                                                     property,
+                                                    location,
                                                     lexicalInformation)
     }
   }
@@ -279,7 +287,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(NodeShapeModel.MinProperties.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("max",
                                     superValue,
                                     derivedValue,
@@ -289,7 +298,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for min-properties than base type for minProperties",
             Some(NodeShapeModel.MinProperties.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -298,7 +308,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(NodeShapeModel.MaxProperties.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("min",
                                     superValue,
                                     derivedValue,
@@ -308,7 +319,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for max-properties than base type for maxProperties",
             Some(NodeShapeModel.MaxProperties.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -317,7 +329,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(ScalarShapeModel.MinLength.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("max",
                                     superValue,
                                     derivedValue,
@@ -327,7 +340,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for min-length than base type for maxProperties",
             Some(ScalarShapeModel.MinLength.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -336,7 +350,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(ScalarShapeModel.MaxLength.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("min",
                                     superValue,
                                     derivedValue,
@@ -346,7 +361,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for max-length than base type for maxProperties",
             Some(ScalarShapeModel.MaxLength.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -355,7 +371,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(ScalarShapeModel.Minimum.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("max",
                                     superValue,
                                     derivedValue,
@@ -365,7 +382,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for min-minimum than base type for minimum",
             Some(ScalarShapeModel.Minimum.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -374,7 +392,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(ScalarShapeModel.Maximum.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("min",
                                     superValue,
                                     derivedValue,
@@ -384,7 +403,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for maximum than base type for maximum",
             Some(ScalarShapeModel.Maximum.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -393,7 +413,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(ArrayShapeModel.MinItems.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("max",
                                     superValue,
                                     derivedValue,
@@ -403,7 +424,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for minItems than base type for minItems",
             Some(ArrayShapeModel.MinItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -412,7 +434,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(ArrayShapeModel.MaxItems.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("min",
                                     superValue,
                                     derivedValue,
@@ -422,7 +445,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for maxItems than base type for maxItems",
             Some(ArrayShapeModel.MaxItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -430,37 +454,43 @@ private[shape_normalization] trait RestrictionComputation {
         if (computeStringEquality(superValue,
                                   derivedValue,
                                   Some(ScalarShapeModel.Format.value.iri()),
-                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                  derivedValue.location(),
+                                  derivedValue.position())) {
           derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for format constraint",
                                                       Some(ScalarShapeModel.Format.value.iri()),
-                                                      derivedValue.annotations.find(classOf[LexicalInformation]))
+                                                      derivedValue.location(),
+                                                      derivedValue.position())
         }
 
       case ScalarShapeModel.Pattern =>
         if (computeStringEquality(superValue,
                                   derivedValue,
                                   Some(ScalarShapeModel.Pattern.value.iri()),
-                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                  derivedValue.location(),
+                                  derivedValue.position())) {
           derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for pattern constraint",
                                                       Some(ScalarShapeModel.Pattern.value.iri()),
-                                                      derivedValue.annotations.find(classOf[LexicalInformation]))
+                                                      derivedValue.location(),
+                                                      derivedValue.position())
         }
 
       case NodeShapeModel.Discriminator =>
         if (computeStringEquality(superValue,
                                   derivedValue,
                                   Some(NodeShapeModel.Discriminator.value.iri()),
-                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                  derivedValue.location(),
+                                  derivedValue.position())) {
           derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError(
             "different values for discriminator constraint",
             Some(NodeShapeModel.Discriminator.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -468,13 +498,15 @@ private[shape_normalization] trait RestrictionComputation {
         if (computeStringEquality(superValue,
                                   derivedValue,
                                   Some(NodeShapeModel.DiscriminatorValue.value.iri()),
-                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                  derivedValue.location(),
+                                  derivedValue.position())) {
           derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError(
             "different values for discriminator value constraint",
             Some(NodeShapeModel.DiscriminatorValue.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -514,7 +546,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "different values for unique items constraint",
             Some(ArrayShapeModel.UniqueItems.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -523,7 +556,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(PropertyShapeModel.MinCount.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("max",
                                     superValue,
                                     derivedValue,
@@ -533,7 +567,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for minCount than base type for minCount",
             Some(PropertyShapeModel.MinCount.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -542,7 +577,8 @@ private[shape_normalization] trait RestrictionComputation {
                                      superValue,
                                      derivedValue,
                                      Some(PropertyShapeModel.MaxCount.value.iri()),
-                                     derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                     derivedValue.position(),
+                                     derivedValue.location())) {
           computeNumericRestriction("min",
                                     superValue,
                                     derivedValue,
@@ -552,7 +588,8 @@ private[shape_normalization] trait RestrictionComputation {
           throw new InheritanceIncompatibleShapeError(
             "Resolution error: sub type has a weaker constraint for maxCount than base type for maxCount",
             Some(PropertyShapeModel.MaxCount.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -560,25 +597,29 @@ private[shape_normalization] trait RestrictionComputation {
         if (computeStringEquality(superValue,
                                   derivedValue,
                                   Some(PropertyShapeModel.Path.value.iri()),
-                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                  derivedValue.location(),
+                                  derivedValue.position())) {
           derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError("different values for discriminator value path",
                                                       Some(PropertyShapeModel.Path.value.iri()),
-                                                      derivedValue.annotations.find(classOf[LexicalInformation]))
+                                                      derivedValue.location(),
+                                                      derivedValue.position())
         }
 
       case PropertyShapeModel.Range =>
         if (computeStringEquality(superValue,
                                   derivedValue,
                                   Some(PropertyShapeModel.Range.value.iri()),
-                                  derivedValue.annotations.find(classOf[LexicalInformation]))) {
+                                  derivedValue.location(),
+                                  derivedValue.position())) {
           derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError(
             "different values for discriminator value range",
             Some(PropertyShapeModel.Range.value.iri()),
-            derivedValue.annotations.find(classOf[LexicalInformation])
+            derivedValue.location(),
+            derivedValue.position()
           )
         }
 
@@ -600,8 +641,8 @@ private[shape_normalization] trait RestrictionComputation {
               derivedValue.annotations.find(classOf[LexicalInformation])
             ) ||
             computeBooleanComparison(
-              lcomparison = false,
-              rcomparison = true,
+              lcomparison = true,
+              rcomparison = false,
               superValue,
               derivedValue,
               Some(NodeShapeModel.Closed.value.iri()),
@@ -609,9 +650,11 @@ private[shape_normalization] trait RestrictionComputation {
             )) {
           derivedValue
         } else {
+          // base has closed properties while super is open
           throw new InheritanceIncompatibleShapeError("closed shapes cannot inherit from open shapes",
                                                       Some(NodeShapeModel.Closed.value.iri()),
-                                                      derivedValue.annotations.find(classOf[LexicalInformation]))
+                                                      derivedValue.location(),
+                                                      derivedValue.position())
         }
 
       case _ => derivedValue

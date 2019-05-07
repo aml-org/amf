@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.{DeclaredElement, ExplicitField, LocalElement, ResolvedInheritance}
+import amf.core.annotations._
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
@@ -183,18 +183,30 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     n.annotations.contains(classOf[DeclaredElement]) && inherits.size == 1 && n.properties.isEmpty
 
   private def copyExamples(from: AnyShape, to: AnyShape): Unit = {
-    from.exampleValues.foreach(e1 => {
-      to.exampleValues.find(e2 => {
-        e1.id == e2.id || e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim
-      }) match {
-        case Some(_) => // duplicated
+    from.examples.foreach(e1 => {
+      to.examples.find { e2 =>
+        e1.id == e2.id || (e1.raw.option().getOrElse("").trim == e2.raw.option().getOrElse("").trim && e1.name
+          .value() == e2.name.value())
+      } match {
+        case Some(toExample) =>
+          // duplicated
+          copyTracking(e1, toExample)
         case None =>
           e1.annotations += LocalElement()
-          val ex = Examples()
-          ex.setArrayWithoutId(ExamplesModel.Examples, to.exampleValues ++ Seq(e1))
-          to.withExamples(ex)
+          to.setArrayWithoutId(AnyShapeModel.Examples, to.examples ++ Seq(e1))
       }
     })
+  }
+
+  private def copyTracking(duplicate: Example, receiver: Example): Unit = {
+    duplicate.annotations.find(classOf[TrackedElement]).foreach { dupAnnotation =>
+      receiver.annotations += receiver.annotations
+        .find(classOf[TrackedElement])
+        .fold(TrackedElement(dupAnnotation.parents)) { receiverAnnotation =>
+          receiver.annotations.reject(_.isInstanceOf[TrackedElement])
+          TrackedElement(receiverAnnotation.parents ++ dupAnnotation.parents)
+        }
+    }
   }
 
   protected def aggregateExamples(shape: Shape, referencedShape: Shape): Unit = {
@@ -208,8 +220,8 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
         val namesCache: mutable.Set[String] = mutable.Set() // duplicated names
         // we give proper names if there are more than one example, so it cannot be null
-        if (to.exampleValues.size > 1) {
-          to.exampleValues.foreach { example =>
+        if (to.examples.size > 1) {
+          to.examples.foreach { example =>
             // we generate a unique new name if the no name or the name is already in the list of named examples
             if (example.name.option().isEmpty || namesCache.contains(example.name.value())) {
               var i    = 0

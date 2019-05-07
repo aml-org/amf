@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be integer
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/double-example-inttype.raml#/declarations/types/orders/property/Priority/scalar/Priority/examples/example/default-example
+  Target: file://amf-client/shared/src/test/resources/validations/examples/double-example-inttype.raml#/declarations/types/orders/property/Priority/scalar/Priority/example/default-example
   Property: 
   Position: Some(LexicalInformation([(9,17)-(9,20)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/double-example-inttype.raml

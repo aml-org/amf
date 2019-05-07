@@ -576,6 +576,7 @@ object MergingRestrictions {
       TagModel.Documentation,
       WebApiModel.Documentations,
       BaseUnitModel.Usage,
+      ExampleField.Examples,
       ExamplesField.Examples,
       DomainElementModel.CustomDomainProperties
     )

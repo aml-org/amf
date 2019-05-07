@@ -70,10 +70,10 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
 
   private def findExample(unit: BaseUnit, removeRaw: Boolean) = unit match {
     case f: NamedExampleFragment if removeRaw =>
-      val example = f.encodes.examples.head
+      val example = f.encodes
       example.raw.remove()
       Future.successful(example)
-    case f: NamedExampleFragment => Future.successful(f.encodes.examples.head)
+    case f: NamedExampleFragment => Future.successful(f.encodes)
     case _                       => Future.failed(fail("Not a named example fragment"))
   }
 

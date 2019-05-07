@@ -161,14 +161,6 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "tracked-from-resource-type/")
   }
 
-  test("Tracked annotation in example from a link NamedExample") {
-    cycle("tracked-from-named-fragment.raml",
-          "tracked-from-named-fragment.jsonld",
-          RamlYamlHint,
-          Amf,
-          validationsPath + "tracked-from-named-fragment/")
-  }
-
   test("Auto generated payload name annotation") {
     cycle("auto-generated-schema-name.raml",
           "auto-generated-schema-name.jsonld",
@@ -197,6 +189,40 @@ class EditingResolutionTest extends FunSuiteCycleTests {
       OasJsonHint,
       Amf,
       validationsPath + "tracked-oas-examples/"
+    )
+  }
+
+  test("Keep schema name in body link schema") {
+    cycle("body-link-name.raml", "body-link-name.jsonld", RamlYamlHint, Amf, validationsPath + "body-link-name/")
+  }
+
+  test("Union type defined under composing types, with one type defined as closed") {
+    cycle(
+      "additional-prop-and-defined-after.raml",
+      "additional-prop-and-defined-after.jsonld",
+      RamlYamlHint,
+      Amf,
+      productionPath + "union-type-with-composing-closed-type/"
+    )
+  }
+
+  test("Union type defined before composing types, with one type defined as closed") {
+    cycle(
+      "additional-prop-and-defined-before.raml",
+      "additional-prop-and-defined-before.jsonld",
+      RamlYamlHint,
+      Amf,
+      productionPath + "union-type-with-composing-closed-type/"
+    )
+  }
+
+  test("Tracking equal example in different endpoints") {
+    cycle(
+      "dup-name-example-tracking.raml",
+      "dup-name-example-tracking.jsonld",
+      RamlYamlHint,
+      Amf,
+      validationsPath + "dup-name-example-tracking/"
     )
   }
 

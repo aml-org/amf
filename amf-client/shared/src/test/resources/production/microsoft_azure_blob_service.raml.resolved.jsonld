@@ -93,103 +93,94 @@
                             ],
                             "http://a.ml/vocabularies/document#examples": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml/any/schema/examples/",
+                                "@id": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml/any/schema/example/Get_storage_stats%22",
                                 "@type": [
-                                  "http://a.ml/vocabularies/document#NamedExamples",
+                                  "http://a.ml/vocabularies/document#Example",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/document#examples": [
+                                "http://schema.org/name": [
                                   {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml/any/schema/examples/example/Get_storage_stats%22",
+                                    "@value": "Get_storage_stats\""
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#raw": [
+                                  {
+                                    "@value": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<StorageServiceStats>\n  <GeoReplication>\n      <Status>live|bootstrap|unavailable</Status>\n      <LastSyncTime>sync-time|<empty></LastSyncTime>\n  </GeoReplication>"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml/any/schema/example/Get_storage_stats%22/source-map",
                                     "@type": [
-                                      "http://a.ml/vocabularies/document#Example",
-                                      "http://a.ml/vocabularies/document#DomainElement"
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
-                                    "http://schema.org/name": [
+                                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                                       {
-                                        "@value": "Get_storage_stats\""
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document#strict": [
-                                      {
-                                        "@value": true
-                                      }
-                                    ],
-                                    "http://www.w3.org/ns/shacl#raw": [
-                                      {
-                                        "@value": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<StorageServiceStats>\n  <GeoReplication>\n      <Status>live|bootstrap|unavailable</Status>\n      <LastSyncTime>sync-time|<empty></LastSyncTime>\n  </GeoReplication>"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml/any/schema/examples/example/Get_storage_stats%22/source-map",
-                                        "@type": [
-                                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "http://a.ml/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "http://a.ml/vocabularies/document#strict"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "true"
-                                              }
-                                            ]
+                                            "@value": "http://a.ml/vocabularies/document#strict"
                                           }
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "http://a.ml/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "http://www.w3.org/ns/shacl#raw"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(12,34)-(18,35)]"
-                                              }
-                                            ]
-                                          },
+                                            "@value": "true"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "http://a.ml/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml/any/schema/examples/example/Get_storage_stats%22"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(12,14)-(18,35)]"
-                                              }
-                                            ]
-                                          },
-                                          {
-                                            "http://a.ml/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "http://schema.org/name"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "[(12,14)-(18,35)]"
-                                              }
-                                            ]
+                                            "@value": "http://www.w3.org/ns/shacl#raw"
                                           }
                                         ],
-                                        "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
                                           {
-                                            "http://a.ml/vocabularies/document-source-maps#element": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml/any/schema/examples/example/Get_storage_stats%22"
-                                              }
-                                            ],
-                                            "http://a.ml/vocabularies/document-source-maps#value": [
-                                              {
-                                                "@value": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml"
-                                              }
-                                            ]
+                                            "@value": "[(12,34)-(18,35)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml/any/schema/example/Get_storage_stats%22"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(12,14)-(18,35)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://schema.org/name"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(12,14)-(18,35)]"
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#tracked-element": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml/any/schema/example/Get_storage_stats%22"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/microsoft_azure_blob_service.raml#/web-api/end-points/%2F/get/200/application%2Fxml"
                                           }
                                         ]
                                       }

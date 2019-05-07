@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: age should be integer
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml#/declarations/types/User/examples/example/bad-int
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml#/declarations/types/User/example/bad-int
   Property: 
   Position: Some(LexicalInformation([(20,0)-(22,21)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml

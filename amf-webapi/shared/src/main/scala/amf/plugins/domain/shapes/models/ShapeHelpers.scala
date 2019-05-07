@@ -35,7 +35,7 @@ trait ShapeHelpers { this: Shape =>
 
   def cloneAllExamples(cloned: Shape, s: Shape): Unit = (cloned, s) match {
     case (cloned: AnyShape, s: AnyShape) =>
-      cloned.withExamples(s.exampleValues.map { e =>
+      cloned.withExamples(s.examples.map { e =>
         e.copyElement().asInstanceOf[Example]
       })
   }

@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be string
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/examples/example/invalidInt1
+  Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidInt1
   Property: 
   Position: Some(LexicalInformation([(11,19)-(11,20)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml
@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be string
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/examples/example/invalidInt2
+  Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidInt2
   Property: 
   Position: Some(LexicalInformation([(12,19)-(12,31)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml
@@ -24,7 +24,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be string
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/examples/example/invalidBoolean
+  Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidBoolean
   Property: 
   Position: Some(LexicalInformation([(13,22)-(13,26)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml
@@ -32,7 +32,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be string
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/examples/example/invalidNumber
+  Target: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml#/declarations/types/scalar/SomeType/example/invalidNumber
   Property: 
   Position: Some(LexicalInformation([(14,21)-(14,24)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/string-hierarchy.raml

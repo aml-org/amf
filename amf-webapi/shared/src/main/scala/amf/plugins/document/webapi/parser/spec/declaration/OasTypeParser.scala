@@ -8,7 +8,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
+import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -765,11 +765,11 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
 
-    private def parseExample(): Unit = {
-      val examples =
-        RamlExamplesParser(map, "example", "examples".asOasExtension, None, shape.withExample, shape, options).parse()
-      if (examples.linkNorEmpty)
-        shape.withExamples(examples)
+    private def parseExample() = {
+      val examples: Seq[Example] =
+        RamlExamplesParser(map, "example", "examples".asOasExtension, None, shape.withExample, options).parse()
+      if (examples.nonEmpty)
+        shape.setArray(AnyShapeModel.Examples, examples)
     }
   }
 

@@ -5,7 +5,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfArray, RecursiveShape, Shape}
+import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.{Annotations, RuntimeErrorHandler, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
@@ -22,7 +22,8 @@ import scala.collection.mutable
 
 class InheritanceIncompatibleShapeError(val message: String,
                                         val property: Option[String] = None,
-                                        val lexicalInfo: Option[LexicalInformation] = None)
+                                        val location: Option[String] = None,
+                                        val position: Option[LexicalInformation] = None)
     extends Exception(message)
 
 private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationContext) extends RestrictionComputation {
@@ -155,8 +156,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
           derivedShape.id,
           e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
           e.getMessage,
-          e.lexicalInfo,
-          derivedShape.position().map(_.value)
+          e.position.orElse(derivedShape.position()),
+          e.location.orElse(derivedShape.location())
         )
         derivedShape
     }
@@ -229,6 +230,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         throw new InheritanceIncompatibleShapeError(
           "Cannot inherit from a tuple shape with different number of elements",
           None,
+          baseTuple.location(),
           baseTuple.position())
       }
     } else {
@@ -382,6 +384,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         if (finalMinShapes.isEmpty)
           throw new InheritanceIncompatibleShapeError("Cannot compute inheritance for union",
                                                       None,
+                                                      baseUnion.location(),
                                                       baseUnion.position())
         finalMinShapes
       }
@@ -425,7 +428,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     } yield {
       try {
         val newShape = unionContext.minShape(baseShape, superUnionElement)
-        superUnionElement.name.option().foreach(n => newShape.withName(n))
+        setValuesOfUnionElement(newShape, superUnionElement)
         Some(newShape)
       } catch {
         case _: Exception => None
@@ -433,7 +436,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     }
     val newUnionItems = minItems collect { case Some(s) => s }
     if (newUnionItems.isEmpty) {
-      throw new InheritanceIncompatibleShapeError("Cannot compute inheritance from union", None, baseShape.position())
+      throw new InheritanceIncompatibleShapeError("Cannot compute inheritance from union",
+                                                  None,
+                                                  baseShape.location(),
+                                                  baseShape.position())
     }
 
     var accExamples = List[Example]()
@@ -443,7 +449,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         shape.id = shape.id + s"_$i"
         shape match {
           case any: AnyShape =>
-            accExamples ++= any.exampleValues
+            accExamples ++= any.examples
             any.fields.removeField(AnyShapeModel.Examples)
           case _ => // ignore
         }
@@ -462,13 +468,30 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         }
     }
 
-    if (accExamples.nonEmpty) {
-      val ex = Examples()
-      superUnion.set(AnyShapeModel.Examples, ex)
-      ex.setArrayWithoutId(ExamplesModel.Examples, accExamples.distinct)
-    }
+    if (accExamples.nonEmpty)
+      superUnion.fields.setWithoutId(AnyShapeModel.Examples, AmfArray(accExamples.distinct))
 
     superUnion
+  }
+
+  private def setValuesOfUnionElement(newShape: Shape, superUnionElement: Shape): Unit = {
+    superUnionElement.name.option().foreach(n => newShape.withName(n))
+    /*
+    overrides additionalProperties value of unionElement to newShape to generate consistency with restrictShape method
+    that is called when a union type is parsed as AnyShape.
+     */
+    (newShape, superUnionElement) match {
+      case (newShape: NodeShape, superUnion: NodeShape) =>
+        newShape.fields
+          .getValueAsOption(NodeShapeModel.Closed)
+          .map(
+            closedValue =>
+              newShape.set(NodeShapeModel.Closed,
+                           AmfScalar(superUnion.closed.value(), closedValue.value.annotations),
+                           closedValue.annotations)
+          )
+      case _ =>
+    }
   }
 
   def computeMinProperty(baseProperty: PropertyShape, superProperty: PropertyShape): Shape = {

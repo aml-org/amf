@@ -112,6 +112,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Invalid link to named example with ast") {
     Validation(platform)
       .flatMap(v => {
+
         build("file://amf-client/shared/src/test/resources/invalids/error-named-example.raml",
               RamlYamlHint,
               validation = Some(v))
@@ -120,7 +121,7 @@ class InvalidsRefElementTest extends AsyncFunSuite with CompilerTestBuilder {
         val declaration = unit.asInstanceOf[Document].declares.head
         assert(declaration.isInstanceOf[AnyShape])
         val shape   = declaration.asInstanceOf[AnyShape]
-        val example = shape.examples
+        val example = shape.examples.head
         assert(example.linkTarget.isDefined)
         assert(example.linkTarget.get.annotations.contains(classOf[SourceAST]))
         assert(example.linkTarget.get.id.startsWith("http://amferror.com/#errorNamedExample/"))

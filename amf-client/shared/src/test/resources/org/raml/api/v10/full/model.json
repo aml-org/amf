@@ -282,11 +282,7 @@ annotationTypes:
         type: number
       two:
         items:
-          anyOf:
-            -
-              type: string
-            -
-              type: number
+          type: string | number
       three?:
         type: integer
       four?:
@@ -347,6 +343,10 @@ annotationTypes:
                 firstname: tato
                 lastname: bores
                 age: 66
+              example_1:
+                firstname: tato
+                lastname: bores
+                age: 66
             additionalProperties: true
             properties:
               firstname:
@@ -403,6 +403,10 @@ annotationTypes:
             height: 1.563
             goggles: true
           example_0:
+            firstname: tato
+            lastname: bores
+            age: 66
+          example_1:
             firstname: tato
             lastname: bores
             age: 66

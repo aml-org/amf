@@ -244,6 +244,18 @@ object JsCustomValidations {
          |  }
          |}
       """.stripMargin,
+    "fileParameterMustBeInFormData" ->
+      """|function(parameter) {
+         |  var binding = parameter["http:binding"];
+         |  var schema = parameter["http:schema"];
+         |  var typeList = schema[0]["@type"];
+         |  if(Array.isArray(typeList) && typeList.indexOf("raml-shapes:FileShape") != -1){
+         |    return binding == 'formData';
+         |  } else {
+         |    return true;
+         |  }
+         |}
+      """.stripMargin,
     "minMaxItemsValidation" ->
       """|function(shape) {
          |  //console.log(JSON.stringify(shape));

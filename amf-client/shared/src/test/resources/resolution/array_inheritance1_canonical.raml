@@ -5,11 +5,7 @@ types:
       additionalProperties: true
       properties:
         a:
-          anyOf:
-            -
-              type: string
-            -
-              type: integer
+          type: string | integer
           required: true
         b:
           type: nil

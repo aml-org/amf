@@ -351,6 +351,18 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
     }
   }
 
+//  test("Test test") {
+//    for {
+//      validation <- Validation(platform)
+//      doc <- AMFCompiler(validationsPath + "/traits/Test/api.raml", platform, RamlYamlHint, validation)
+//        .build()
+//      report <- validation.validate(doc, Raml10Profile)
+//    } yield {
+//      print(report.toString())
+//      assert(report.conforms)
+//    }
+//  }
+
   //test("Test resource type non string scalar parameter example") { its already tested in java parser tests
 
   //test("pattern raml example test") { was duplicated by   test("Param in raml 0.8 api") {

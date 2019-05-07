@@ -8,7 +8,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: bar should be integer
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/examples/example/default-example
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example
   Property: 
   Position: Some(LexicalInformation([(31,0)-(31,23)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api2.raml

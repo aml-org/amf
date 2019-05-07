@@ -2011,6 +2011,21 @@ object AMFRawValidations {
       "Path parameters must have the required property set to true",
       "Path parameters must have the required property set to true",
       "Violation"
+    ),
+    AMFValidation(
+      "amf-parser:file-parameter-in-form-data",
+      "Parameter of type file must set property 'in' to formData",
+      Oas.name,
+      "Domain",
+      "raml-http:Parameter",
+      "raml-http:schema",
+      "PropertyShape",
+      "sh:path",
+      "raml-shapes:fileParameterMustBeInFormData",
+      "0",
+      "Parameter of type file must set property 'in' to formData",
+      "Parameter of type file must set property 'in' to formData",
+      "Violation"
     )
   )
 

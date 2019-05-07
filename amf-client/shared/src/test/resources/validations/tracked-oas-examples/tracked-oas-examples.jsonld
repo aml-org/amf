@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#21",
+        "@id": "#22",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -27,7 +27,7 @@
         ],
         "raml-http:endpoint": [
           {
-            "@id": "#22",
+            "@id": "#23",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -39,7 +39,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#23",
+                "@id": "#24",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -51,7 +51,7 @@
                 ],
                 "hydra:returns": [
                   {
-                    "@id": "#24",
+                    "@id": "#14",
                     "@type": [
                       "raml-http:Response",
                       "doc:DomainElement"
@@ -103,7 +103,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#24": "[(31,10)-(31,17)]"
+                        "#14": "[(31,10)-(31,17)]"
                       }
                     }
                   }
@@ -111,14 +111,14 @@
                 "smaps": {
                   "lexical": {
                     "hydra:returns": "[(30,8)-(30,21)]",
-                    "#23": "[(26,6)-(26,13)]"
+                    "#24": "[(26,6)-(26,13)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#22": "[(25,4)-(25,17)]"
+                "#23": "[(25,4)-(25,17)]"
               }
             }
           },
@@ -243,7 +243,7 @@
                 ],
                 "hydra:returns": [
                   {
-                    "@id": "#31",
+                    "@id": "#17",
                     "@type": [
                       "raml-http:Response",
                       "doc:DomainElement"
@@ -260,7 +260,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#17",
+                        "@id": "#18",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -295,7 +295,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#31": "[(65,10)-(65,17)]"
+                        "#17": "[(65,10)-(65,17)]"
                       }
                     }
                   }
@@ -315,7 +315,7 @@
             }
           },
           {
-            "@id": "#32",
+            "@id": "#31",
             "@type": [
               "raml-http:EndPoint",
               "doc:DomainElement"
@@ -327,7 +327,7 @@
             ],
             "hydra:supportedOperation": [
               {
-                "@id": "#33",
+                "@id": "#32",
                 "@type": [
                   "hydra:Operation",
                   "doc:DomainElement"
@@ -339,7 +339,7 @@
                 ],
                 "hydra:returns": [
                   {
-                    "@id": "#34",
+                    "@id": "#33",
                     "@type": [
                       "raml-http:Response",
                       "doc:DomainElement"
@@ -356,7 +356,7 @@
                     ],
                     "raml-http:payload": [
                       {
-                        "@id": "#35",
+                        "@id": "#34",
                         "@type": [
                           "raml-http:Payload",
                           "doc:DomainElement"
@@ -368,7 +368,7 @@
                         ],
                         "raml-http:schema": [
                           {
-                            "@id": "#36",
+                            "@id": "#35",
                             "@type": [
                               "shacl:NodeShape",
                               "shacl:Shape",
@@ -382,7 +382,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#37",
+                                "@id": "#36",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -395,7 +395,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#38",
+                                    "@id": "#37",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -414,11 +414,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#38": "[(94,18)-(94,24)]"
+                                        "#37": "[(94,18)-(94,24)]"
                                       },
                                       "lexical": {
                                         "shacl:datatype": "[(94,18)-(94,26)]",
-                                        "#38": "[(93,16)-(93,25)]"
+                                        "#37": "[(93,16)-(93,25)]"
                                       }
                                     }
                                   }
@@ -435,12 +435,12 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#37": "[(93,16)-(93,25)]"
+                                    "#36": "[(93,16)-(93,25)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#39",
+                                "@id": "#38",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -453,7 +453,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#40",
+                                    "@id": "#39",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "shacl:Shape",
@@ -472,11 +472,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#40": "[(97,18)-(97,24)]"
+                                        "#39": "[(97,18)-(97,24)]"
                                       },
                                       "lexical": {
                                         "shacl:datatype": "[(97,18)-(97,26)]",
-                                        "#40": "[(96,16)-(96,25)]"
+                                        "#39": "[(96,16)-(96,25)]"
                                       }
                                     }
                                   }
@@ -493,7 +493,7 @@
                                 ],
                                 "smaps": {
                                   "lexical": {
-                                    "#39": "[(96,16)-(96,25)]"
+                                    "#38": "[(96,16)-(96,25)]"
                                   }
                                 }
                               }
@@ -505,112 +505,103 @@
                             ],
                             "doc:examples": [
                               {
-                                "@id": "#41",
+                                "@id": "#40",
                                 "@type": [
-                                  "doc:NamedExamples",
+                                  "doc:Example",
                                   "doc:DomainElement"
                                 ],
-                                "doc:examples": [
+                                "doc:strict": [
                                   {
-                                    "@id": "#42",
+                                    "@value": true
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#41",
                                     "@type": [
-                                      "doc:Example",
+                                      "data:Object",
+                                      "data:Node",
                                       "doc:DomainElement"
                                     ],
-                                    "doc:strict": [
+                                    "data:prop1": [
                                       {
-                                        "@value": true
-                                      }
-                                    ],
-                                    "doc:structuredValue": [
-                                      {
-                                        "@id": "#43",
+                                        "@id": "#42",
                                         "@type": [
-                                          "data:Object",
+                                          "data:Scalar",
                                           "data:Node",
                                           "doc:DomainElement"
                                         ],
-                                        "data:prop1": [
+                                        "data:value": [
                                           {
-                                            "@id": "#44",
-                                            "@type": [
-                                              "data:Scalar",
-                                              "data:Node",
-                                              "doc:DomainElement"
-                                            ],
-                                            "data:value": [
-                                              {
-                                                "@value": "something",
-                                                "@type": "xsd:string"
-                                              }
-                                            ],
-                                            "smaps": {
-                                              "lexical": {
-                                                "#44": "[(88,25)-(88,36)]"
-                                              }
-                                            }
-                                          }
-                                        ],
-                                        "data:prop2": [
-                                          {
-                                            "@id": "#45",
-                                            "@type": [
-                                              "data:Scalar",
-                                              "data:Node",
-                                              "doc:DomainElement"
-                                            ],
-                                            "data:value": [
-                                              {
-                                                "@value": "20",
-                                                "@type": "xsd:integer"
-                                              }
-                                            ],
-                                            "smaps": {
-                                              "lexical": {
-                                                "#45": "[(89,25)-(89,27)]"
-                                              }
-                                            }
+                                            "@value": "something",
+                                            "@type": "xsd:string"
                                           }
                                         ],
                                         "smaps": {
                                           "lexical": {
-                                            "data:prop2": "[(89,25)-(89,27)]",
-                                            "#43": "[(87,25)-(90,15)]",
-                                            "data:prop1": "[(88,25)-(88,36)]"
-                                          },
-                                          "data-node-properties": {
-                                            "#43": "prop2->[(89,16)-(89,25)]#prop1->[(88,16)-(88,25)]"
+                                            "#42": "[(88,25)-(88,36)]"
                                           }
                                         }
                                       }
                                     ],
-                                    "shacl:raw": [
+                                    "data:prop2": [
                                       {
-                                        "@value": "\"prop1\": \"something\":\n\"prop2\": 20: "
+                                        "@id": "#43",
+                                        "@type": [
+                                          "data:Scalar",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:value": [
+                                          {
+                                            "@value": "20",
+                                            "@type": "xsd:integer"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "#43": "[(89,25)-(89,27)]"
+                                          }
+                                        }
                                       }
                                     ],
                                     "smaps": {
-                                      "synthesized-field": {
-                                        "doc:strict": "true"
-                                      },
                                       "lexical": {
-                                        "shacl:raw": "[(87,25)-(90,15)]",
-                                        "#42": "[(87,14)-(87,25)]"
+                                        "data:prop2": "[(89,25)-(89,27)]",
+                                        "#41": "[(87,25)-(90,15)]",
+                                        "data:prop1": "[(88,25)-(88,36)]"
                                       },
-                                      "tracked-element": {
-                                        "#42": "amf://id#35"
+                                      "data-node-properties": {
+                                        "#41": "prop2->[(89,16)-(89,25)]#prop1->[(88,16)-(88,25)]"
                                       }
                                     }
                                   }
-                                ]
+                                ],
+                                "shacl:raw": [
+                                  {
+                                    "@value": "\"prop1\": \"something\":\n\"prop2\": 20: "
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "shacl:raw": "[(87,25)-(90,15)]",
+                                    "#40": "[(87,14)-(87,25)]"
+                                  },
+                                  "tracked-element": {
+                                    "#40": "amf://id#34"
+                                  }
+                                }
                               }
                             ],
                             "smaps": {
                               "type-property-lexical-info": {
-                                "#36": "[(91,14)-(91,20)]"
+                                "#35": "[(91,14)-(91,20)]"
                               },
                               "lexical": {
-                                "#36": "[(86,12)-(86,22)]"
+                                "#35": "[(86,12)-(86,22)]"
                               }
                             }
                           }
@@ -619,7 +610,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#34": "[(85,10)-(85,17)]"
+                        "#33": "[(85,10)-(85,17)]"
                       }
                     }
                   }
@@ -627,26 +618,26 @@
                 "smaps": {
                   "lexical": {
                     "hydra:returns": "[(84,8)-(84,21)]",
-                    "#33": "[(80,6)-(80,13)]"
+                    "#32": "[(80,6)-(80,13)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#32": "[(79,4)-(79,27)]"
+                "#31": "[(79,4)-(79,27)]"
               }
             }
           }
         ],
         "smaps": {
           "source-vendor": {
-            "#21": "OAS 2.0"
+            "#22": "OAS 2.0"
           },
           "lexical": {
             "raml-http:endpoint": "[(24,11)-(105,3)]",
             "schema-org:name": "[(4,4)-(4,13)]",
-            "#21": "[(1,0)-(106,1)]",
+            "#22": "[(1,0)-(106,1)]",
             "schema-org:version": "[(5,4)-(5,15)]"
           }
         }
@@ -798,306 +789,297 @@
           {
             "@id": "#6",
             "@type": [
-              "doc:NamedExamples",
+              "doc:Example",
               "doc:DomainElement"
             ],
-            "doc:examples": [
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
               {
                 "@id": "#7",
                 "@type": [
-                  "doc:Example",
+                  "data:Object",
+                  "data:Node",
                   "doc:DomainElement"
                 ],
-                "doc:strict": [
-                  {
-                    "@value": true
-                  }
-                ],
-                "doc:structuredValue": [
+                "data:prop1": [
                   {
                     "@id": "#8",
                     "@type": [
-                      "data:Object",
+                      "data:Scalar",
                       "data:Node",
                       "doc:DomainElement"
                     ],
-                    "data:prop1": [
+                    "data:value": [
                       {
-                        "@id": "#9",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "John Doe",
-                            "@type": "xsd:string"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#9": "[(10,17)-(10,27)]"
-                          }
-                        }
-                      }
-                    ],
-                    "data:prop2": [
-                      {
-                        "@id": "#10",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "1",
-                            "@type": "xsd:integer"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#10": "[(11,17)-(11,18)]"
-                          }
-                        }
+                        "@value": "John Doe",
+                        "@type": "xsd:string"
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "data:prop2": "[(11,17)-(11,18)]",
-                        "#8": "[(9,17)-(12,7)]",
-                        "data:prop1": "[(10,17)-(10,27)]"
-                      },
-                      "data-node-properties": {
-                        "#8": "prop2->[(11,8)-(11,17)]#prop1->[(10,8)-(10,17)]"
+                        "#8": "[(10,17)-(10,27)]"
                       }
                     }
                   }
                 ],
-                "shacl:raw": [
+                "data:prop2": [
                   {
-                    "@value": "\"prop1\": \"John Doe\":\n\"prop2\": 1: "
-                  }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "doc:strict": "true"
-                  },
-                  "lexical": {
-                    "shacl:raw": "[(9,17)-(12,7)]",
-                    "#7": "[(9,6)-(9,17)]"
-                  }
-                }
-              },
-              {
-                "@id": "#11",
-                "@type": [
-                  "doc:Example",
-                  "doc:DomainElement"
-                ],
-                "schema-org:name": [
-                  {
-                    "@value": "application/json0"
-                  }
-                ],
-                "doc:strict": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "raml-http:mediaType": [
-                  {
-                    "@value": "application/json"
-                  }
-                ],
-                "doc:structuredValue": [
-                  {
-                    "@id": "#12",
+                    "@id": "#9",
                     "@type": [
-                      "data:Object",
+                      "data:Scalar",
                       "data:Node",
                       "doc:DomainElement"
                     ],
-                    "data:prop1": [
+                    "data:value": [
                       {
-                        "@id": "#13",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "example5",
-                            "@type": "xsd:string"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#13": "[(34,25)-(34,35)]"
-                          }
-                        }
-                      }
-                    ],
-                    "data:prop2": [
-                      {
-                        "@id": "#14",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "5",
-                            "@type": "xsd:integer"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#14": "[(35,25)-(35,26)]"
-                          }
-                        }
+                        "@value": "1",
+                        "@type": "xsd:integer"
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "data:prop2": "[(35,25)-(35,26)]",
-                        "#12": "[(33,34)-(36,15)]",
-                        "data:prop1": "[(34,25)-(34,35)]"
-                      },
-                      "data-node-properties": {
-                        "#12": "prop2->[(35,16)-(35,25)]#prop1->[(34,16)-(34,25)]"
+                        "#9": "[(11,17)-(11,18)]"
                       }
                     }
                   }
                 ],
-                "shacl:raw": [
-                  {
-                    "@value": "\"prop1\": \"example5\":\n\"prop2\": 5: "
-                  }
-                ],
                 "smaps": {
-                  "synthesized-field": {
-                    "doc:strict": "true"
-                  },
                   "lexical": {
-                    "shacl:raw": "[(33,34)-(36,15)]",
-                    "#11": "[(33,14)-(33,34)]"
+                    "data:prop2": "[(11,17)-(11,18)]",
+                    "#7": "[(9,17)-(12,7)]",
+                    "data:prop1": "[(10,17)-(10,27)]"
                   },
-                  "tracked-element": {
-                    "#11": "amf://id#15"
-                  }
-                }
-              },
-              {
-                "@id": "#16",
-                "@type": [
-                  "doc:Example",
-                  "doc:DomainElement"
-                ],
-                "schema-org:name": [
-                  {
-                    "@value": "application/json2"
-                  }
-                ],
-                "doc:strict": [
-                  {
-                    "@value": false
-                  }
-                ],
-                "raml-http:mediaType": [
-                  {
-                    "@value": "application/json"
-                  }
-                ],
-                "doc:structuredValue": [
-                  {
-                    "@id": "#12",
-                    "@type": [
-                      "data:Object",
-                      "data:Node",
-                      "doc:DomainElement"
-                    ],
-                    "data:prop1": [
-                      {
-                        "@id": "#13",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "resource example",
-                            "@type": "xsd:string"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#13": "[(68,25)-(68,43)]"
-                          }
-                        }
-                      }
-                    ],
-                    "data:prop2": [
-                      {
-                        "@id": "#14",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "10",
-                            "@type": "xsd:integer"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#14": "[(69,25)-(69,27)]"
-                          }
-                        }
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "data:prop2": "[(69,25)-(69,27)]",
-                        "#12": "[(67,34)-(70,15)]",
-                        "data:prop1": "[(68,25)-(68,43)]"
-                      },
-                      "data-node-properties": {
-                        "#12": "prop2->[(69,16)-(69,25)]#prop1->[(68,16)-(68,25)]"
-                      }
-                    }
-                  }
-                ],
-                "shacl:raw": [
-                  {
-                    "@value": "\"prop1\": \"resource example\":\n\"prop2\": 10: "
-                  }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "doc:strict": "true"
-                  },
-                  "lexical": {
-                    "shacl:raw": "[(67,34)-(70,15)]",
-                    "#16": "[(67,14)-(67,34)]"
-                  },
-                  "tracked-element": {
-                    "#16": "amf://id#17"
+                  "data-node-properties": {
+                    "#7": "prop2->[(11,8)-(11,17)]#prop1->[(10,8)-(10,17)]"
                   }
                 }
               }
-            ]
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\"prop1\": \"John Doe\":\n\"prop2\": 1: "
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "lexical": {
+                "shacl:raw": "[(9,17)-(12,7)]",
+                "#6": "[(9,6)-(9,17)]"
+              }
+            }
+          },
+          {
+            "@id": "#10",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "application/json0"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": false
+              }
+            ],
+            "raml-http:mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#11",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:prop1": [
+                  {
+                    "@id": "#12",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "example5",
+                        "@type": "xsd:string"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#12": "[(34,25)-(34,35)]"
+                      }
+                    }
+                  }
+                ],
+                "data:prop2": [
+                  {
+                    "@id": "#13",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "5",
+                        "@type": "xsd:integer"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#13": "[(35,25)-(35,26)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "data:prop2": "[(35,25)-(35,26)]",
+                    "#11": "[(33,34)-(36,15)]",
+                    "data:prop1": "[(34,25)-(34,35)]"
+                  },
+                  "data-node-properties": {
+                    "#11": "prop2->[(35,16)-(35,25)]#prop1->[(34,16)-(34,25)]"
+                  }
+                }
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\"prop1\": \"example5\":\n\"prop2\": 5: "
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "lexical": {
+                "shacl:raw": "[(33,34)-(36,15)]",
+                "#10": "[(33,14)-(33,34)]"
+              },
+              "tracked-element": {
+                "#10": "amf://id#15"
+              }
+            }
+          },
+          {
+            "@id": "#16",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "application/json2"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": false
+              }
+            ],
+            "raml-http:mediaType": [
+              {
+                "@value": "application/json"
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#11",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:prop1": [
+                  {
+                    "@id": "#12",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "resource example",
+                        "@type": "xsd:string"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#12": "[(68,25)-(68,43)]"
+                      }
+                    }
+                  }
+                ],
+                "data:prop2": [
+                  {
+                    "@id": "#13",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "10",
+                        "@type": "xsd:integer"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#13": "[(69,25)-(69,27)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "data:prop2": "[(69,25)-(69,27)]",
+                    "#11": "[(67,34)-(70,15)]",
+                    "data:prop1": "[(68,25)-(68,43)]"
+                  },
+                  "data-node-properties": {
+                    "#11": "prop2->[(69,16)-(69,25)]#prop1->[(68,16)-(68,25)]"
+                  }
+                }
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\"prop1\": \"resource example\":\n\"prop2\": 10: "
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "lexical": {
+                "shacl:raw": "[(67,34)-(70,15)]",
+                "#16": "[(67,14)-(67,34)]"
+              },
+              "tracked-element": {
+                "#16": "amf://id#18"
+              }
+            }
           }
         ],
         "smaps": {
           "resolved-link": {
-            "#1": "amf://id#20"
+            "#1": "amf://id#21"
           },
           "type-property-lexical-info": {
             "#1": "[(13,6)-(13,12)]"
