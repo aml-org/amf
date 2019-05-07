@@ -22,7 +22,8 @@ import scala.collection.mutable
 
 class InheritanceIncompatibleShapeError(val message: String,
                                         val property: Option[String] = None,
-                                        val lexicalInfo: Option[LexicalInformation] = None)
+                                        val location: Option[String] = None,
+                                        val position: Option[LexicalInformation] = None)
     extends Exception(message)
 
 private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationContext) extends RestrictionComputation {
@@ -155,8 +156,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
           derivedShape.id,
           e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
           e.getMessage,
-          e.lexicalInfo,
-          derivedShape.position().map(_.value)
+          e.position.orElse(derivedShape.position()),
+          e.location.orElse(derivedShape.location())
         )
         derivedShape
     }
@@ -229,6 +230,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         throw new InheritanceIncompatibleShapeError(
           "Cannot inherit from a tuple shape with different number of elements",
           None,
+          baseTuple.location(),
           baseTuple.position())
       }
     } else {
@@ -382,6 +384,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         if (finalMinShapes.isEmpty)
           throw new InheritanceIncompatibleShapeError("Cannot compute inheritance for union",
                                                       None,
+                                                      baseUnion.location(),
                                                       baseUnion.position())
         finalMinShapes
       }
@@ -410,10 +413,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields,
-                              baseUnion,
-                              superNode,
-                              filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }
@@ -433,7 +433,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     }
     val newUnionItems = minItems collect { case Some(s) => s }
     if (newUnionItems.isEmpty) {
-      throw new InheritanceIncompatibleShapeError("Cannot compute inheritance from union", None, baseShape.position())
+      throw new InheritanceIncompatibleShapeError("Cannot compute inheritance from union",
+                                                  None,
+                                                  baseShape.location(),
+                                                  baseShape.position())
     }
 
     var accExamples = List[Example]()

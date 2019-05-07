@@ -11,4 +11,4 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/examples/complex-inheritance/api.raml#/declarations/types/E
   Property: http://www.w3.org/ns/shacl#closed
   Position: Some(LexicalInformation([(38,28)-(38,33)]))
-  Location: [(36,4)-(38,33)]
+  Location: file://amf-client/shared/src/test/resources/validations/examples/complex-inheritance/api.raml

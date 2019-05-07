@@ -29,8 +29,8 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
           derivedShape.id,
           e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
           e.getMessage,
-          e.lexicalInfo,
-          None
+          e.position,
+          e.location
         )
         derivedShape
       case other: Throwable =>
