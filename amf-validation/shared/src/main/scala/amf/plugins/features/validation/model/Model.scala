@@ -2,7 +2,6 @@ package amf.plugins.features.validation.model
 
 import amf.ProfileName
 import amf.core.validation.core._
-import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 
 import scala.collection.mutable
@@ -18,48 +17,27 @@ trait DialectWrapper {
   }
 
   def extractString(node: DialectDomainElement, property: String): Option[String] = {
-    node.definedBy.propertiesMapping().find(_.name().value() == property) match {
-      case Some(profileProperty) if node.literalProperties.contains(profileProperty.id) =>
-        node.literalProperties.get(profileProperty.id).map(_.toString)
-      case Some(profileProperty) if node.mapKeyProperties.contains(profileProperty.nodePropertyMapping().value()) =>
-        node.mapKeyProperties.get(profileProperty.nodePropertyMapping().value()).map(_.toString)
-      case _                     => None
-    }
+    node.definedBy.propertiesMapping().find(_.name().value() == property).flatMap(p => node.literalProperty(p.toField)).map(_.toString)
   }
 
   def extractStrings(node: DialectDomainElement, property: String): Seq[String] = {
-    node.definedBy.propertiesMapping().find(_.name().value() == property) match {
-      case Some(profileProperty) if node.literalProperties.contains(profileProperty.id) =>
-        node.literalProperties(profileProperty.id).asInstanceOf[Seq[String]]
-      case _ => Seq()
-    }
+    node.definedBy.propertiesMapping().find(_.name().value() == property).map(p => node.literalProperties(p.toField).map(_.toString)).getOrElse(Nil)
   }
 
-  def mapEntities[T](node: DialectDomainElement, property: String, f: (DialectDomainElement) => T): Seq[T] = {
-    node.definedBy.propertiesMapping().find(_.name().value() == property) match {
-      case Some(profileProperty) if node.objectCollectionProperties.contains(profileProperty.id) =>
-        node.objectCollectionProperties(profileProperty.id).map(f)
-      case _ => Seq()
-    }
+  def mapEntities[T](node: DialectDomainElement, property: String, f: DialectDomainElement => T): Seq[T] = {
+    node.definedBy.propertiesMapping().find(_.name().value() == property).map(p => node.objectCollectionProperty(p.toField).map(f)).getOrElse(Nil)
   }
 
-  def mapEntity[T](node: DialectDomainElement, property: String, f: (DialectDomainElement) => T): Option[T] = {
-    node.definedBy.propertiesMapping().find(_.name().value() == property) match {
-      case Some(profileProperty) if node.objectProperties.contains(profileProperty.id) =>
-        node.objectProperties.get(profileProperty.id).map(f)
-      case _ => None
-    }
-  }
+  def mapEntity[T](node: DialectDomainElement, property: String, f: DialectDomainElement => T): Option[T] =
+    node.definedBy.propertiesMapping().find(_.name().value() == property).flatMap(p => node.objectProperty(p.toField).map(f))
 
-  def prefixes(node: DialectDomainElement) = {
+  def prefixes(node: DialectDomainElement): mutable.Map[String, String] = {
     val prefixMap: mutable.Map[String,String] = mutable.HashMap()
-    node.definedBy.propertiesMapping().find(_.name().value() == "prefixes") match {
-      case Some(prefixesProperty) => node.objectCollectionProperties.get(prefixesProperty.id).foreach { prefixes =>
-        prefixes foreach  { prefixEntity =>
+    node.definedBy.propertiesMapping().find(_.name().value() == "prefixes").map(_.toField) match {
+      case Some(prefixesProperty) => node.objectCollectionProperty(prefixesProperty).foreach { prefixEntity =>
           val prefix = extractString(prefixEntity, "prefix").getOrElse("")
           val prefixUri = extractString(prefixEntity, "uri").getOrElse("")
           prefixMap.put(prefix, prefixUri)
-        }
       }
       case _ =>
     }

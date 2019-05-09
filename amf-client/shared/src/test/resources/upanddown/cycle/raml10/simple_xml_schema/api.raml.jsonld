@@ -141,11 +141,6 @@
             "@value": "XML type that has only xsd schema and example\n"
           }
         ],
-        "http://a.ml/vocabularies/document#reference-id": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xsd#/external"
-          }
-        ],
         "http://a.ml/vocabularies/document#examples": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/simple_xml_schema/api.raml#/declarations/types/schema/XmlSchema/example/default-example",
@@ -161,6 +156,11 @@
             "http://a.ml/vocabularies/document#reference-id": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xml#/external"
+              }
+            ],
+            "http://a.ml/vocabularies/document#location": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -199,6 +199,16 @@
                 ]
               }
             ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#reference-id": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xsd#/external"
+          }
+        ],
+        "http://a.ml/vocabularies/document#location": [
+          {
+            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xsd"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

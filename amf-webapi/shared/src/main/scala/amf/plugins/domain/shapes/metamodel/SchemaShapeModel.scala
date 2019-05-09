@@ -7,7 +7,7 @@ import amf.core.vocabulary.Namespace.Shacl
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.models.SchemaShape
 
-object SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
+trait SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
   val MediaType = Field(Str,
                         Shacl + "mediaType",
                         ModelDoc(ExternalModelVocabularies.Shacl, "media type", "Media type associated to a shape"))
@@ -28,3 +28,5 @@ object SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
     "Raw schema that cannot be parsed using AMF shapes model"
   )
 }
+
+object SchemaShapeModel extends SchemaShapeModel

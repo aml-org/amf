@@ -104,8 +104,17 @@
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {
-                    "@value": "a",
-                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    "@value": "a"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_1"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -142,8 +151,17 @@
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {
-                    "@value": "b",
-                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    "@value": "b"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -292,8 +310,17 @@
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {
-                    "@value": "1",
-                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                    "@value": "1"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_1"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -330,8 +357,17 @@
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {
-                    "@value": "2",
-                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                    "@value": "2"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -670,8 +706,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "a",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        "@value": "a"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -708,8 +753,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "b",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        "@value": "b"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -736,25 +790,16 @@
                     ]
                   }
                 ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/enums/api.raml#/declarations/types/objectType/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/enums/api.raml#/declarations/types/objectType/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "value1->[(15,8)-(16,0)]#value2->[(16,8)-(17,0)]"
-                          }
-                        ]
-                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
@@ -765,7 +810,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(16,16)-(16,19)]"
+                            "@value": "[(16,8)-(17,0)]"
                           }
                         ]
                       },
@@ -789,7 +834,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(15,16)-(15,19)]"
+                            "@value": "[(15,8)-(16,0)]"
                           }
                         ]
                       }
@@ -816,8 +861,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "c",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        "@value": "c"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -854,8 +908,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "d",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        "@value": "d"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -882,25 +945,16 @@
                     ]
                   }
                 ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/enums/api.raml#/declarations/types/objectType/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/enums/api.raml#/declarations/types/objectType/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "value1->[(17,8)-(18,0)]#value2->[(18,8)-(19,0)]"
-                          }
-                        ]
-                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
@@ -911,7 +965,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(18,16)-(18,19)]"
+                            "@value": "[(18,8)-(19,0)]"
                           }
                         ]
                       },
@@ -935,7 +989,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(17,16)-(17,19)]"
+                            "@value": "[(17,8)-(18,0)]"
                           }
                         ]
                       }
@@ -1100,8 +1154,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "a",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        "@value": "a"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1136,8 +1199,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "b",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        "@value": "b"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1164,14 +1236,9 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/data#pos0": [
+                "http://schema.org/name": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/enums/api.raml#/declarations/types/array/arrayType/array_1/scalar_2"
-                  }
-                ],
-                "http://a.ml/vocabularies/data#pos1": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/enums/api.raml#/declarations/types/array/arrayType/array_1/scalar_3"
+                    "@value": "array_1"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1217,8 +1284,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "c",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        "@value": "c"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1253,8 +1329,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "d",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        "@value": "d"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1281,14 +1366,9 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/data#pos0": [
+                "http://schema.org/name": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/enums/api.raml#/declarations/types/array/arrayType/array_1/scalar_2"
-                  }
-                ],
-                "http://a.ml/vocabularies/data#pos1": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/enums/api.raml#/declarations/types/array/arrayType/array_1/scalar_3"
+                    "@value": "array_1"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [

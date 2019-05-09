@@ -153,8 +153,17 @@
                                             ],
                                             "data:value": [
                                               {
-                                                "@value": "http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#",
-                                                "@type": "xsd:string"
+                                                "@value": "http://0.0.0.0:8080/schema/1849102087946cd861839497ee0ea0f2#"
+                                              }
+                                            ],
+                                            "shacl:datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "schema-org:name": [
+                                              {
+                                                "@value": "scalar_3"
                                               }
                                             ],
                                             "smaps": {
@@ -164,20 +173,22 @@
                                             }
                                           }
                                         ],
+                                        "schema-org:name": [
+                                          {
+                                            "@value": "object_2"
+                                          }
+                                        ],
                                         "smaps": {
-                                          "data-node-properties": {
-                                            "#11": "%40id->[(3,4)-(3,11)]"
-                                          },
                                           "lexical": {
-                                            "data:%40id": "[(3,11)-(3,73)]",
+                                            "data:%40id": "[(3,4)-(3,11)]",
                                             "#11": "[(2,2)-(4,3)]"
                                           }
                                         }
                                       }
                                     ],
-                                    "data:pos0": [
+                                    "schema-org:name": [
                                       {
-                                        "@id": "#11"
+                                        "@value": "array_1"
                                       }
                                     ],
                                     "smaps": {
@@ -195,11 +206,17 @@
                                     "@id": "#2"
                                   }
                                 ],
+                                "doc:location": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/resolution/jsonld-example/examples/dialect.json"
+                                  }
+                                ],
                                 "smaps": {
                                   "synthesized-field": {
                                     "doc:strict": "true"
                                   },
                                   "lexical": {
+                                    "doc:structuredValue": "[(11,21)-(11,51)]",
                                     "#9": "[(11,21)-(11,51)]"
                                   },
                                   "tracked-element": {
@@ -299,7 +316,6 @@
       "doc": "http://a.ml/vocabularies/document#",
       "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
       "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
   }

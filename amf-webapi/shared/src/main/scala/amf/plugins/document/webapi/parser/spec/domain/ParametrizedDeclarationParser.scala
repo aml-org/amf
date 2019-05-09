@@ -49,7 +49,7 @@ case class ParametrizedDeclarationParser(
 
       case YType.Str => fromStringNode(node)
       case _ =>
-        val declaration = producer("") // todo : review with pedro
+        val declaration = producer("")
         ctx.violation(InvalidAbstractDeclarationType, declaration.id, "Invalid model extension.", node)
         declaration
     }

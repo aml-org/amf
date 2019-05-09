@@ -3,7 +3,7 @@ package amf.plugins.domain.shapes.models
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NilShapeModel}
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NilShapeModel, TupleShapeModel}
 import org.yaml.model.YPart
 
 case class NilShape(override val fields: Fields, override val annotations: Annotations)

@@ -51,8 +51,7 @@ case class DataNodeParser(node: YNode,
       val propertyAnnotations = Annotations(ast)
 
       val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addProperty(key.urlComponentEncoded, propertyNode, propertyAnnotations)
-      node.lexicalPropertiesAnnotation.map(a => node.annotations += a)
+      node.addProperty(key, propertyNode, propertyAnnotations)
     }
     node
   }

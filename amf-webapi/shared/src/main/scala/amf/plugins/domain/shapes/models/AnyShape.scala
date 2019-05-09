@@ -2,6 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode}
 import amf.core.annotations.DeclaredElement
+import amf.core.metamodel.domain.ExternalSourceElementModel
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
@@ -107,7 +108,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
 
   override def linkCopy(): AnyShape = AnyShape().withId(id)
 
-  override val meta: AnyShapeModel = AnyShapeModel
+  override def meta: AnyShapeModel = AnyShapeModel
 
   def toJsonSchema: String = toJsonSchema(this)
 

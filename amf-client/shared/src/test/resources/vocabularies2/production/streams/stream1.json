@@ -36,10 +36,54 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "https://www.w3.org/ns/activitystreams/published": [
+            "https://www.w3.org/ns/activitystreams/object": [
               {
-                "@value": "2018-08-30T09:00:00",
-                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
+                "@id": "http://individuals.api.org/i34994",
+                "@type": [
+                  "http://crm.com/vocabularies/core#Individual",
+                  "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode",
+                  "http://a.ml/vocabularies/meta#DialectDomainElement",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://crm.com/vocabularies/core#Id": [
+                  {
+                    "@value": "i34994"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#sources": [
+                  {
+                    "@id": "http://individuals.api.org/i34994#/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://crm.com/vocabularies/core#Id"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(11,10)-(11,16)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://individuals.api.org/i34994"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(11,0)-(11,16)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               }
             ],
             "https://www.w3.org/ns/activitystreams/actor": [
@@ -92,54 +136,10 @@
                 ]
               }
             ],
-            "https://www.w3.org/ns/activitystreams/object": [
+            "https://www.w3.org/ns/activitystreams/published": [
               {
-                "@id": "http://individuals.api.org/i34994",
-                "@type": [
-                  "http://crm.com/vocabularies/core#Individual",
-                  "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode",
-                  "http://a.ml/vocabularies/meta#DialectDomainElement",
-                  "http://a.ml/vocabularies/document#DomainElement"
-                ],
-                "http://crm.com/vocabularies/core#Id": [
-                  {
-                    "@value": "i34994"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#sources": [
-                  {
-                    "@id": "http://individuals.api.org/i34994#/source-map",
-                    "@type": [
-                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://crm.com/vocabularies/core#Id"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(11,10)-(11,16)]"
-                          }
-                        ]
-                      },
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://individuals.api.org/i34994"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(11,0)-(11,16)]"
-                          }
-                        ]
-                      }
-                    ]
-                  }
-                ]
+                "@value": "2018-08-30T09:00:00",
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -152,24 +152,24 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "https://www.w3.org/ns/activitystreams/object"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(11,0)-(11,16)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
                         "@value": "https://www.w3.org/ns/activitystreams/published"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(9,15)-(9,34)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "https://www.w3.org/ns/activitystreams/object"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,11)-(11,16)]"
                       }
                     ]
                   },
@@ -193,7 +193,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(8,0)-(9,0)]"
+                        "@value": "[(7,10)-(9,0)]"
                       }
                     ]
                   }
