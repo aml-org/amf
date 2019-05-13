@@ -38,8 +38,10 @@ class ReferencesCycleTest extends FunSuiteCycleTests with ListAssertions with Co
     "Alias library reference raml test"           -> ("lib-alias-reference.raml", RamlYamlHint)      -> ("lib/lib-declaration.raml", Raml),
     "Security schemes fragment raml to raml"      -> ("security-scheme-fragment.raml", RamlYamlHint) -> ("fragments/security-scheme.raml", Raml),
     "Security schemes fragment oas to oas"        -> ("security-scheme-fragment.json", OasJsonHint)  -> ("fragments/security-scheme.json", Oas),
-    "Named Example fragment raml to raml"         -> ("named-example.raml", RamlYamlHint)            -> ("fragments/named-example.raml", Raml),
-    "Named Example fragment oas to oas"           -> ("named-example.json", OasJsonHint)             -> ("fragments/named-example.json", Oas)
+    //TODO this should be emitted without the '-'? All external fragments (now NamedExample is parsed as an external fragment) are emitted as a String in YAML
+    "Named Example fragment raml to raml" -> ("named-example.raml", RamlYamlHint)     -> ("fragments/named-example.raml.raml", Raml),
+    "Named Example fragment oas to oas"   -> ("named-example.json", OasJsonHint)      -> ("fragments/named-example.json", Oas),
+    "External fragment raml to raml"      -> ("external-fragment.raml", RamlYamlHint) -> ("fragments/external-fragment.raml.raml", Raml)
   )
 
   fixture.foreach {

@@ -1,11 +1,16 @@
 package amf.emit
 
-import amf.core.model.document.BaseUnit
+import amf.core.annotations.SourceAST
+import amf.core.model.document.{BaseUnit, ExternalFragment}
+import amf.core.parser.ParserContext
 import amf.core.remote.RamlYamlHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
-import amf.plugins.document.webapi.model.NamedExampleFragment
+import amf.plugins.document.webapi.contexts.Raml10WebApiContext
+import amf.plugins.document.webapi.parser.spec.domain.{DefaultExampleOptions, RamlExamplesParser}
+import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import org.scalatest.{Assertion, AsyncFunSuite}
+import org.yaml.model.{YDocument, YMap}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -68,13 +73,20 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
     }
   }
 
-  private def findExample(unit: BaseUnit, removeRaw: Boolean) = unit match {
-    case f: NamedExampleFragment if removeRaw =>
-      val example = f.encodes
-      example.raw.remove()
-      Future.successful(example)
-    case f: NamedExampleFragment => Future.successful(f.encodes)
-    case _                       => Future.failed(fail("Not a named example fragment"))
+  private def findExample(unit: BaseUnit, removeRaw: Boolean): Future[Example] = unit match {
+    case f: ExternalFragment =>
+      val sourceAst: Option[SourceAST] = unit.annotations.find(_.isInstanceOf[SourceAST])
+      sourceAst match {
+        case Some(a) =>
+          val ast     = a.ast.asInstanceOf[YDocument].as[YMap]
+          val context = new Raml10WebApiContext("", Nil, ParserContext())
+          val examples =
+            RamlExamplesParser(ast, "example", "examples", None, AnyShape.apply().withExample, DefaultExampleOptions)(
+              context).parse()
+          Future.successful(examples.head)
+        case None => Future.failed(fail("Not a named example fragment"))
+      }
+    case _ => Future.failed(fail("Not a named example fragment"))
   }
 
   private val basePath: String   = "file://amf-client/shared/src/test/resources/tojson/examples/source/"

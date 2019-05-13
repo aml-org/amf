@@ -79,7 +79,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
     }
   }
 
-  private def buildExternalFragment() = {
+  private def buildExternalFragment(): ExternalFragment = {
     ExternalFragment()
       .withLocation(root.location)
       .withId(root.location)
@@ -170,30 +170,6 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
   }
 
   case class NamedExampleFragmentParser(map: YMap) {
-    def parse(): Fragment = {
-
-      map.entries.toList match {
-        // not a valid map
-        case Nil => buildExternalFragment()
-        // good example = name => example body
-        case head :: Nil => parseExample(head)
-        // bad example (no name, example body directly)
-        case _ :: _ => buildExternalFragment()
-      }
-    }
-
-    private def parseExample(entry: YMapEntry) = {
-      val namedExample = NamedExampleFragment().adopted(root.location + "#/")
-
-      val producer = (name: Option[String]) => {
-        val example = Example()
-        name.foreach(example.withName(_))
-        namedExample.withEncodes(example)
-        example
-      }
-
-      namedExample.withEncodes(
-        RamlNamedExampleParser(entry, producer, ExampleOptions(strictDefault = true, quiet = true)).parse())
-    }
+    def parse(): Fragment = buildExternalFragment()
   }
 }

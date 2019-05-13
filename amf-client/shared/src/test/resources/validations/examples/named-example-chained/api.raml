@@ -1,0 +1,17 @@
+#%RAML 1.0
+
+title: Test
+
+types:
+  Employee:
+    type: object
+    properties:
+      position: string
+      person: Person
+    example: !include employee-example.raml
+  Person:
+    type: object
+    properties:
+      name: string
+      age: integer
+    example: !include person-example.raml

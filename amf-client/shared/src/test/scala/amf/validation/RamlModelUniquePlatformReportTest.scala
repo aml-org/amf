@@ -205,10 +205,6 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalidXmlAttributeNonScalar.raml", Some("invalidXmlAttributeNonScalar.report"))
   }
 
-  test("NamedExample closed shape") {
-    validate("named-example-closed-shape/named-example-closed-shape.raml", Some("named-example-closed-shape.report"))
-  }
-
   test("Multiple inheritance with contradicting restrictions defined inline") {
     validate("multiple-inheritance-restrictions.raml", Some("max-min-restriction.report"))
   }
