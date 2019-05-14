@@ -36,18 +36,9 @@ setSonarProperties := {
 
     "sonar.sourceEncoding" -> "UTF-8",
     "sonar.github.repository" -> "mulesoft/amf",
-
-    "sonar.modules" -> "amf-webapi,amf-validation,amf-client",
-
-    "amf-webapi.sonar.sources" -> "shared/src/main/scala",
-    "amf-webapi.sonar.scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml",
     
-    "amf-validation.sonar.sources" -> "shared/src/main/scala",
-    "amf-validation.sonar.scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml",
-
-    "amf-client.sonar.sources" -> "shared/src/main/scala",
-    "amf-client.sonar.tests" -> "shared/src/test/scala",
-    "amf-client.sonar.scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml"
+    "sonar.scala.coverage.reportPaths" -> "amf-client/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-webapi/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-validation/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
+    "sonar.sources" -> "amf-client/shared/src/main/scala,amf-webapi/shared/src/main/scala,amf-validation/shared/src/main/scala"
   )
 
   sonarProperties := values
