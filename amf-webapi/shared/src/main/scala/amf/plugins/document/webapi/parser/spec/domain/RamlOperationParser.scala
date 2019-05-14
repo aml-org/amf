@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
@@ -69,7 +70,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
     ctx.factory
       .requestParser(map, () => operation.withRequest(), parseOptional)
       .parse()
-      .foreach(operation.set(OperationModel.Request, _))
+      .foreach(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
 
     map.key(
       "defaultResponse".asRamlAnnotation,
