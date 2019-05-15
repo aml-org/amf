@@ -1,6 +1,7 @@
 package amf
 
 import amf.client.commands._
+import amf.core.benchmark.ExecutionLog
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.unsafe.PlatformSecrets
 
@@ -19,10 +20,21 @@ import scala.concurrent.ExecutionContext.Implicits.global
 @JSExportAll
 object Main extends PlatformSecrets {
 
+  def enableTracing(cfg: ParserConfig) = {
+    if (cfg.trace) {
+      println("Enabling tracing!")
+      ExecutionLog.start()
+    } else {
+      println("NOT TRACING")
+      println(cfg)
+    }
+  }
+
   def main(rawArgs: js.Array[String]): js.Promise[Any] = {
     val args = rawArgs.toArray
     CmdLineParser.parse(args) match {
       case Some(cfg) =>
+        enableTracing(cfg)
         cfg.mode match {
           case Some(ParserConfig.REPL) =>
             println("REPL not supported in the JS client yet")
@@ -39,7 +51,12 @@ object Main extends PlatformSecrets {
           case Some(ParserConfig.PARSE) =>
             val f = runParse(cfg)
             f.failed.foreach(e => failPromise(e))
-            f.toJSPromise
+            val composed = f.transform { r =>
+              println("... composing...")
+              ExecutionLog.finish().buildReport()
+              r
+            }
+            composed.toJSPromise
           case Some(ParserConfig.PATCH) =>
             val f = runPatch(cfg)
             f.failed.foreach(e => failPromise(e))
