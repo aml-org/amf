@@ -1,26 +1,50 @@
 package amf
 
 import amf.client.commands._
+import amf.core.benchmark.ExecutionLog
 import amf.core.client.{ExitCodes, ParserConfig}
 import amf.core.unsafe.PlatformSecrets
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
+import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
   * Main entry point for the application
   */
 object Main extends PlatformSecrets {
 
+  def enableTracing(cfg: ParserConfig) = {
+    if (cfg.trace) {
+      println("Enabling tracing!")
+      ExecutionLog.start()
+    } else {
+      println("NOT TRACING")
+      println(cfg)
+    }
+  }
+
   def main(args: Array[String]): Unit = {
     CmdLineParser.parse(args) match {
       case Some(cfg) =>
+        enableTracing(cfg)
         cfg.mode match {
           case Some(ParserConfig.REPL)      => runRepl()
           case Some(ParserConfig.TRANSLATE) => Await.result(runTranslate(cfg), 1 day)
           case Some(ParserConfig.VALIDATE)  => Await.result(runValidate(cfg), 1 day)
-          case Some(ParserConfig.PARSE)     => Await.ready(runParse(cfg), 1 day)
+          case Some(ParserConfig.PARSE)     => {
+
+            val f = runParse(cfg)
+            val ff = f.transform { r =>
+              if (cfg.trace) {
+                println("\n\n\n\n")
+                ExecutionLog.finish().buildReport()
+              }
+              r
+            }
+            Await.ready(ff, 1 day)
+          }
           case Some(ParserConfig.PATCH)     => Await.ready(runPatch(cfg), 1 day)
           case _                            => failCommand()
         }
