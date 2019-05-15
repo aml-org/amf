@@ -1,537 +1,591 @@
 [
-{
-"@id": "",
-"@type": [
-"doc:Document",
-"doc:Fragment",
-"doc:Module",
-"doc:Unit"
-],
-"doc:encodes": [
-{
-"@id": "#13",
-"@type": [
-"schema-org:WebAPI",
-"doc:RootDomainElement",
-"doc:DomainElement"
-],
-"schema-org:name": [
-{
-"@value": "STEP REST API V2"
-}
-],
-"schema-org:version": [
-{
-"@value": "1.0.0"
-}
-],
-"smaps": {
-"source-vendor": {
-"#13": "RAML 1.0"
-},
-"lexical": {
-"schema-org:version": "[(4,0)-(5,0)]",
-"#13": "[(3,0)-(19,42)]",
-"schema-org:name": "[(3,0)-(4,0)]"
-}
-}
-}
-],
-"doc:declares": [
-{
-"@id": "#1",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:closed": [
-{
-"@value": false
-}
-],
-"shacl:property": [
-{
-"@id": "#2",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#references"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#3",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:closed": [
-{
-"@value": false
-}
-],
-"shacl:property": [
-{
-"@id": "#4",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#values"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#5",
-"@type": [
-"raml-shapes:UnionShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"raml-shapes:anyOf": [
-[
-{
-"@id": "#6/linked",
-"@type": [
-"raml-shapes:RecursiveShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"doc:link-target": [
-{
-"@id": "#6"
-}
-],
-"doc:link-label": [
-{
-"@value": "Value"
-}
-]
-}
-],
-{
-"@id": "#10",
-"@type": [
-"raml-shapes:RecursiveShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"raml-shapes:fixPoint": [
-{
-"@id": "#1"
-}
-],
-"doc:recursive": [
-{
-"@value": true
-}
-],
-"shacl:name": [
-{
-"@value": "Value"
-}
-],
-"smaps": {
-"resolved-link": {
-"#10": "amf://id#11"
-},
-"type-property-lexical-info": {
-"#10": "[(7,4)-(7,8)]"
-},
-"lexical": {
-"#10": "[(6,2)-(11,0)]"
-},
-"declared-element": {
-"#10": ""
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "Value"
-}
-],
-"smaps": {
-"inherited-shapes": {
-"#5": "amf://id#12"
-},
-"lexical": {
-"shacl:name": "[(18,2)-(18,7)]",
-"#5": "[(19,4)-(19,42)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "values"
-}
-],
-"smaps": {
-"lexical": {
-"#4": "[(14,6)-(16,0)]"
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "ReferenceEntry"
-}
-],
-"smaps": {
-"inherited-shapes": {
-"#3": "amf://id#9"
-},
-"declared-element": {
-"#3": ""
-},
-"lexical": {
-"shacl:name": "[(11,2)-(11,16)]",
-"#3": "[(11,2)-(16,0)]"
-},
-"type-property-lexical-info": {
-"#3": "[(12,4)-(12,8)]"
-},
-"resolved-link": {
-"#3": "amf://id#8"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "references"
-}
-],
-"smaps": {
-"lexical": {
-"#2": "[(9,6)-(11,0)]"
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "MultiReference"
-}
-],
-"smaps": {
-"resolved-link": {
-"#1": "amf://id#11"
-},
-"type-property-lexical-info": {
-"#1": "[(7,4)-(7,8)]"
-},
-"lexical": {
-"shacl:name": "[(6,2)-(6,16)]",
-"#1": "[(6,2)-(11,0)]"
-},
-"declared-element": {
-"#1": ""
-}
-}
-},
-{
-"@id": "#3",
-"@type": [
-"shacl:NodeShape",
-"shacl:Shape",
-"raml-shapes:Shape",
-"doc:DomainElement"
-],
-"shacl:closed": [
-{
-"@value": false
-}
-],
-"shacl:property": [
-{
-"@id": "#4",
-"@type": [
-"shacl:PropertyShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"shacl:path": [
-{
-"@id": "http://a.ml/vocabularies/data#values"
-}
-],
-"raml-shapes:range": [
-{
-"@id": "#5",
-"@type": [
-"raml-shapes:UnionShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"raml-shapes:anyOf": [
-[
-{
-"@id": "#6/linked",
-"@type": [
-"raml-shapes:RecursiveShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"doc:link-target": [
-{
-"@id": "#6"
-}
-],
-"doc:link-label": [
-{
-"@value": "Value"
-}
-]
-}
-],
-{
-"@id": "#10",
-"@type": [
-"raml-shapes:RecursiveShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"raml-shapes:fixPoint": [
-{
-"@id": "#1"
-}
-],
-"doc:recursive": [
-{
-"@value": true
-}
-],
-"shacl:name": [
-{
-"@value": "Value"
-}
-],
-"smaps": {
-"resolved-link": {
-"#10": "amf://id#11"
-},
-"type-property-lexical-info": {
-"#10": "[(7,4)-(7,8)]"
-},
-"lexical": {
-"#10": "[(6,2)-(11,0)]"
-},
-"declared-element": {
-"#10": ""
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "Value"
-}
-],
-"smaps": {
-"inherited-shapes": {
-"#5": "amf://id#12"
-},
-"lexical": {
-"shacl:name": "[(18,2)-(18,7)]",
-"#5": "[(19,4)-(19,42)]"
-}
-}
-}
-],
-"shacl:minCount": [
-{
-"@value": 1
-}
-],
-"shacl:name": [
-{
-"@value": "values"
-}
-],
-"smaps": {
-"lexical": {
-"#4": "[(14,6)-(16,0)]"
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "ReferenceEntry"
-}
-],
-"smaps": {
-"inherited-shapes": {
-"#3": "amf://id#9"
-},
-"declared-element": {
-"#3": ""
-},
-"lexical": {
-"shacl:name": "[(11,2)-(11,16)]",
-"#3": "[(11,2)-(16,0)]"
-},
-"type-property-lexical-info": {
-"#3": "[(12,4)-(12,8)]"
-},
-"resolved-link": {
-"#3": "amf://id#8"
-}
-}
-},
-{
-"@id": "#6",
-"@type": [
-"raml-shapes:RecursiveShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"raml-shapes:fixPoint": [
-{
-"@id": "#3"
-}
-],
-"doc:recursive": [
-{
-"@value": true
-}
-],
-"shacl:name": [
-{
-"@value": "Value"
-}
-],
-"smaps": {
-"inherited-shapes": {
-"#6": "amf://id#9"
-},
-"declared-element": {
-"#6": ""
-},
-"lexical": {
-"#6": "[(11,2)-(16,0)]"
-},
-"type-property-lexical-info": {
-"#6": "[(12,4)-(12,8)]"
-},
-"resolved-link": {
-"#6": "amf://id#8"
-}
-}
-},
-{
-"@id": "#5",
-"@type": [
-"raml-shapes:UnionShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"raml-shapes:anyOf": [
-[
-{
-"@id": "#6/linked",
-"@type": [
-"raml-shapes:RecursiveShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"doc:link-target": [
-{
-"@id": "#6"
-}
-],
-"doc:link-label": [
-{
-"@value": "Value"
-}
-]
-}
-],
-{
-"@id": "#10",
-"@type": [
-"raml-shapes:RecursiveShape",
-"shacl:Shape",
-"raml-shapes:Shape"
-],
-"raml-shapes:fixPoint": [
-{
-"@id": "#1"
-}
-],
-"doc:recursive": [
-{
-"@value": true
-}
-],
-"shacl:name": [
-{
-"@value": "Value"
-}
-],
-"smaps": {
-"resolved-link": {
-"#10": "amf://id#11"
-},
-"type-property-lexical-info": {
-"#10": "[(7,4)-(7,8)]"
-},
-"lexical": {
-"#10": "[(6,2)-(11,0)]"
-},
-"declared-element": {
-"#10": ""
-}
-}
-}
-],
-"shacl:name": [
-{
-"@value": "Value"
-}
-],
-"smaps": {
-"inherited-shapes": {
-"#5": "amf://id#12"
-},
-"lexical": {
-"shacl:name": "[(18,2)-(18,7)]",
-"#5": "[(19,4)-(19,42)]"
-}
-}
-}
-],
-"@context": {
-"@base": "amf://id",
-"raml-shapes": "http://a.ml/vocabularies/shapes#",
-"shacl": "http://www.w3.org/ns/shacl#",
-"doc": "http://a.ml/vocabularies/document#",
-"schema-org": "http://schema.org/"
-}
-}
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#14",
+        "@type": [
+          "schema-org:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "STEP REST API V2"
+          }
+        ],
+        "schema-org:version": [
+          {
+            "@value": "1.0.0"
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#14": "RAML 1.0"
+          },
+          "lexical": {
+            "schema-org:version": "[(4,0)-(5,0)]",
+            "#14": "[(3,0)-(19,42)]",
+            "schema-org:name": "[(3,0)-(4,0)]"
+          }
+        }
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#2",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#references"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "shacl:NodeShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "shacl:property": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "shacl:PropertyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "shacl:path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#values"
+                      }
+                    ],
+                    "raml-shapes:range": [
+                      {
+                        "@id": "#5",
+                        "@type": [
+                          "raml-shapes:UnionShape",
+                          "shacl:Shape",
+                          "raml-shapes:Shape"
+                        ],
+                        "raml-shapes:anyOf": [
+                          {
+                            "@id": "#6",
+                            "@type": [
+                              "raml-shapes:RecursiveShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape"
+                            ],
+                            "raml-shapes:fixPoint": [
+                              {
+                                "@id": "#3"
+                              }
+                            ],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "SingleReference"
+                              }
+                            ],
+                            "smaps": {
+                              "inherited-shapes": {
+                                "#6": "amf://id#9"
+                              },
+                              "declared-element": {
+                                "#6": ""
+                              },
+                              "lexical": {
+                                "#6": "[(11,2)-(16,0)]"
+                              },
+                              "type-property-lexical-info": {
+                                "#6": "[(12,4)-(12,8)]"
+                              },
+                              "resolved-link": {
+                                "#6": "amf://id#8"
+                              }
+                            }
+                          },
+                          {
+                            "@id": "#10",
+                            "@type": [
+                              "raml-shapes:RecursiveShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape"
+                            ],
+                            "raml-shapes:fixPoint": [
+                              {
+                                "@id": "#1"
+                              }
+                            ],
+                            "doc:recursive": [
+                              {
+                                "@value": true
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "MultiReference"
+                              }
+                            ],
+                            "smaps": {
+                              "resolved-link": {
+                                "#10": "amf://id#11"
+                              },
+                              "type-property-lexical-info": {
+                                "#10": "[(7,4)-(7,8)]"
+                              },
+                              "lexical": {
+                                "#10": "[(6,2)-(11,0)]"
+                              },
+                              "declared-element": {
+                                "#10": ""
+                              }
+                            }
+                          }
+                        ],
+                        "shacl:name": [
+                          {
+                            "@value": "Value"
+                          }
+                        ],
+                        "smaps": {
+                          "inherited-shapes": {
+                            "#5": "amf://id#12"
+                          },
+                          "lexical": {
+                            "shacl:name": "[(18,2)-(18,7)]",
+                            "#5": "[(19,4)-(19,42)]"
+                          }
+                        }
+                      }
+                    ],
+                    "shacl:minCount": [
+                      {
+                        "@value": 1
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "values"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#4": "[(14,6)-(16,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "ReferenceEntry"
+                  }
+                ],
+                "smaps": {
+                  "resolved-link": {
+                    "#3": "amf://id#8"
+                  },
+                  "type-property-lexical-info": {
+                    "#3": "[(12,4)-(12,8)]"
+                  },
+                  "lexical": {
+                    "shacl:name": "[(11,2)-(11,16)]",
+                    "#3": "[(11,2)-(16,0)]"
+                  },
+                  "declared-element": {
+                    "#3": ""
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "references"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#2": "[(9,6)-(11,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "MultiReference"
+          }
+        ],
+        "smaps": {
+          "resolved-link": {
+            "#1": "amf://id#11"
+          },
+          "type-property-lexical-info": {
+            "#1": "[(7,4)-(7,8)]"
+          },
+          "lexical": {
+            "shacl:name": "[(6,2)-(6,16)]",
+            "#1": "[(6,2)-(11,0)]"
+          },
+          "declared-element": {
+            "#1": ""
+          }
+        }
+      },
+      {
+        "@id": "#3",
+        "@type": [
+          "shacl:NodeShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#4",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#values"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#5",
+                "@type": [
+                  "raml-shapes:UnionShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape"
+                ],
+                "raml-shapes:anyOf": [
+                  {
+                    "@id": "#6",
+                    "@type": [
+                      "raml-shapes:RecursiveShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "raml-shapes:fixPoint": [
+                      {
+                        "@id": "#3"
+                      }
+                    ],
+                    "doc:recursive": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "SingleReference"
+                      }
+                    ],
+                    "smaps": {
+                      "inherited-shapes": {
+                        "#6": "amf://id#9"
+                      },
+                      "declared-element": {
+                        "#6": ""
+                      },
+                      "lexical": {
+                        "#6": "[(11,2)-(16,0)]"
+                      },
+                      "type-property-lexical-info": {
+                        "#6": "[(12,4)-(12,8)]"
+                      },
+                      "resolved-link": {
+                        "#6": "amf://id#8"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#10",
+                    "@type": [
+                      "raml-shapes:RecursiveShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape"
+                    ],
+                    "raml-shapes:fixPoint": [
+                      {
+                        "@id": "#1"
+                      }
+                    ],
+                    "doc:recursive": [
+                      {
+                        "@value": true
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "MultiReference"
+                      }
+                    ],
+                    "smaps": {
+                      "resolved-link": {
+                        "#10": "amf://id#11"
+                      },
+                      "type-property-lexical-info": {
+                        "#10": "[(7,4)-(7,8)]"
+                      },
+                      "lexical": {
+                        "#10": "[(6,2)-(11,0)]"
+                      },
+                      "declared-element": {
+                        "#10": ""
+                      }
+                    }
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "Value"
+                  }
+                ],
+                "smaps": {
+                  "inherited-shapes": {
+                    "#5": "amf://id#12"
+                  },
+                  "lexical": {
+                    "shacl:name": "[(18,2)-(18,7)]",
+                    "#5": "[(19,4)-(19,42)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "values"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#4": "[(14,6)-(16,0)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "ReferenceEntry"
+          }
+        ],
+        "smaps": {
+          "resolved-link": {
+            "#3": "amf://id#8"
+          },
+          "type-property-lexical-info": {
+            "#3": "[(12,4)-(12,8)]"
+          },
+          "lexical": {
+            "shacl:name": "[(11,2)-(11,16)]",
+            "#3": "[(11,2)-(16,0)]"
+          },
+          "declared-element": {
+            "#3": ""
+          }
+        }
+      },
+      {
+        "@id": "#13",
+        "@type": [
+          "raml-shapes:RecursiveShape",
+          "shacl:Shape",
+          "raml-shapes:Shape"
+        ],
+        "raml-shapes:fixPoint": [
+          {
+            "@id": "#3"
+          }
+        ],
+        "doc:recursive": [
+          {
+            "@value": true
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "SingleReference"
+          }
+        ],
+        "smaps": {
+          "inherited-shapes": {
+            "#13": "amf://id#9"
+          },
+          "declared-element": {
+            "#13": ""
+          },
+          "lexical": {
+            "#13": "[(11,2)-(16,0)]"
+          },
+          "type-property-lexical-info": {
+            "#13": "[(12,4)-(12,8)]"
+          },
+          "resolved-link": {
+            "#13": "amf://id#8"
+          }
+        }
+      },
+      {
+        "@id": "#5",
+        "@type": [
+          "raml-shapes:UnionShape",
+          "shacl:Shape",
+          "raml-shapes:Shape"
+        ],
+        "raml-shapes:anyOf": [
+          {
+            "@id": "#6",
+            "@type": [
+              "raml-shapes:RecursiveShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:fixPoint": [
+              {
+                "@id": "#3"
+              }
+            ],
+            "doc:recursive": [
+              {
+                "@value": true
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "SingleReference"
+              }
+            ],
+            "smaps": {
+              "inherited-shapes": {
+                "#6": "amf://id#9"
+              },
+              "declared-element": {
+                "#6": ""
+              },
+              "lexical": {
+                "#6": "[(11,2)-(16,0)]"
+              },
+              "type-property-lexical-info": {
+                "#6": "[(12,4)-(12,8)]"
+              },
+              "resolved-link": {
+                "#6": "amf://id#8"
+              }
+            }
+          },
+          {
+            "@id": "#10",
+            "@type": [
+              "raml-shapes:RecursiveShape",
+              "shacl:Shape",
+              "raml-shapes:Shape"
+            ],
+            "raml-shapes:fixPoint": [
+              {
+                "@id": "#1"
+              }
+            ],
+            "doc:recursive": [
+              {
+                "@value": true
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "MultiReference"
+              }
+            ],
+            "smaps": {
+              "resolved-link": {
+                "#10": "amf://id#11"
+              },
+              "type-property-lexical-info": {
+                "#10": "[(7,4)-(7,8)]"
+              },
+              "lexical": {
+                "#10": "[(6,2)-(11,0)]"
+              },
+              "declared-element": {
+                "#10": ""
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "Value"
+          }
+        ],
+        "smaps": {
+          "inherited-shapes": {
+            "#5": "amf://id#12"
+          },
+          "lexical": {
+            "shacl:name": "[(18,2)-(18,7)]",
+            "#5": "[(19,4)-(19,42)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "schema-org": "http://schema.org/"
+    }
+  }
 ]

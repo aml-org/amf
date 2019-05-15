@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{AmfArray, Shape}
 import amf.core.parser.{Annotations, Range, SearchScope}
-import amf.core.utils.Strings
+import amf.core.utils.{SimpleCounter, Strings}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
@@ -29,6 +29,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
     parseInput(input).result match {
       case Some(t) =>
         ensureNotEmptyArray(t)
+        ensureAnyOfNamesAndIds(t)
         t.annotations += ParsedFromTypeExpression(expression)
         ast.foreach(p => t.annotations ++= Annotations(p))
         Some(t)
@@ -234,6 +235,23 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
     }
   }
 
+  private def ensureAnyOfNamesAndIds(t: Shape): Unit = {
+    t match {
+      case u: UnionShape =>
+        val counter = new SimpleCounter
+        u.anyOf.foreach {
+          case array: ArrayShape =>
+            array.name.option() match {
+              case None => array.withName(s"array_${counter.next()}")
+              case _    => // Nothing
+            }
+            array.adopted(u.id)
+          case _ => // Nothing
+        }
+      case _ => // Nothing
+    }
+  }
+
   private def ensureNotEmptyArray(t: Shape): Unit = {
     val empty = t match {
       case a: ArrayShape  => isEmptyArray(a)
@@ -251,7 +269,6 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
 }
 
 object RamlTypeExpressionParser {
-  def apply(adopt: Shape => Shape, part: Option[YPart] = None, checking: Boolean = false)(
-      implicit ctx: WebApiContext) =
+  def apply(adopt: Shape => Shape, part: Option[YPart] = None, checking: Boolean = false)(implicit ctx: WebApiContext) =
     new RamlTypeExpressionParser(adopt, 0, part, checking)
 }

@@ -36,7 +36,9 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   private def copy(shape: Shape) = {
     shape match {
       case a: AnyShape => a.copyShape()
-      case _           => shape
+      case r: RecursiveShape =>
+        r.copyShape()
+      case _ => shape
     }
   }
 
@@ -468,7 +470,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     if (accExamples.nonEmpty)
       superUnion.fields.setWithoutId(AnyShapeModel.Examples, AmfArray(accExamples.distinct))
 
-    superUnion
+    superUnion.withId(baseShape.id)
   }
 
   private def setValuesOfUnionElement(newShape: Shape, superUnionElement: Shape): Unit = {
