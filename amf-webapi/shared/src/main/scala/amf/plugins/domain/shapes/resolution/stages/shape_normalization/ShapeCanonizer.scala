@@ -133,15 +133,11 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       var inheritedIds: Seq[String]                   = Nil
 
       superTypes.foreach { superNode =>
-        val canonicalSuperNode = superNode match {
-          case union: UnionShape => normalizeAction(union)
-          case other             => normalize(other)
-        }
+        val canonicalSuperNode = normalize(superNode)
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))
-          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(
-            canonicalSuperNode.asInstanceOf[NodeShape])
+          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(canonicalSuperNode.asInstanceOf[NodeShape])
 
         canonicalSuperNode match {
           case chain: InheritanceChain => inheritedIds ++= (Seq(canonicalSuperNode.id) ++ chain.inheritedIds)
