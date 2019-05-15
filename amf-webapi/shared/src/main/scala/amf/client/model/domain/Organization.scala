@@ -9,7 +9,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Organization model class.
   */
 @JSExportAll
-case class Organization(override private[amf] val _internal: InternalOrganization) extends DomainElement {
+case class Organization(override private[amf] val _internal: InternalOrganization)
+    extends DomainElement
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.Organization")
   def this() = this(InternalOrganization())

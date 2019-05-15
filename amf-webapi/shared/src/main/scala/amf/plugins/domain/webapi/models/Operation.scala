@@ -1,8 +1,8 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.{BoolField, StrField}
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{DomainElement, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.OperationModel
@@ -15,29 +15,27 @@ import amf.core.utils.Strings
   * Operation internal model.
   */
 case class Operation(fields: Fields, annotations: Annotations)
-    extends DomainElement
+    extends NamedDomainElement
     with ExtensibleWebApiDomainElement {
 
-  def method: StrField             = fields.field(Method)
-  def name: StrField               = fields.field(Name)
-  def description: StrField        = fields.field(Description)
-  def deprecated: BoolField        = fields.field(Deprecated)
-  def summary: StrField            = fields.field(Summary)
-  def documentation: CreativeWork  = fields.field(Documentation)
-  def schemes: Seq[StrField]       = fields.field(Schemes)
-  def accepts: Seq[StrField]       = fields.field(Accepts)
-  def contentType: Seq[StrField]   = fields.field(ContentType)
-  def request: Request             = fields.field(OperationRequest)
-  def responses: Seq[Response]     = fields.field(Responses)
+  def method: StrField                          = fields.field(Method)
+  def description: StrField                     = fields.field(Description)
+  def deprecated: BoolField                     = fields.field(Deprecated)
+  def summary: StrField                         = fields.field(Summary)
+  def documentation: CreativeWork               = fields.field(Documentation)
+  def schemes: Seq[StrField]                    = fields.field(Schemes)
+  def accepts: Seq[StrField]                    = fields.field(Accepts)
+  def contentType: Seq[StrField]                = fields.field(ContentType)
+  def request: Request                          = fields.field(OperationRequest)
+  def responses: Seq[Response]                  = fields.field(Responses)
   def security: Seq[ParametrizedSecurityScheme] = fields.field(Security)
-  def tags: Seq[String]            = fields(Tags)
-  def callbacks: Seq[Callback]     = fields.field(Callbacks)
-  def servers: Seq[Server]         = fields.field(Servers)
+  def tags: Seq[String]                         = fields(Tags)
+  def callbacks: Seq[Callback]                  = fields.field(Callbacks)
+  def servers: Seq[Server]                      = fields.field(Servers)
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
   def withMethod(method: String): this.type                     = set(Method, method)
-  def withName(name: String): this.type                         = set(Name, name)
   def withDescription(description: String): this.type           = set(Description, description)
   def withDeprecated(deprecated: Boolean): this.type            = set(Deprecated, deprecated)
   def withSummary(summary: String): this.type                   = set(Summary, summary)
@@ -85,7 +83,8 @@ case class Operation(fields: Fields, annotations: Annotations)
   override def meta: Obj = OperationModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + method.option().getOrElse("default-operation").urlComponentEncoded
+  override def componentId: String        = "/" + method.option().getOrElse("default-operation").urlComponentEncoded
+  override protected def nameField: Field = Name
 }
 
 object Operation {

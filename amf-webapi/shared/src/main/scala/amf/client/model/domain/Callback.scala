@@ -10,7 +10,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Callback model class.
   */
 @JSExportAll
-case class Callback(override private[amf] val _internal: InternalCallback) extends DomainElement {
+case class Callback(override private[amf] val _internal: InternalCallback)
+    extends DomainElement
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.Callback")
   def this() = this(InternalCallback())

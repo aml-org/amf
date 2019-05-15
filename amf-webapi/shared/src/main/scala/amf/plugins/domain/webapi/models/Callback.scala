@@ -1,23 +1,22 @@
 package amf.plugins.domain.webapi.models
 
+import amf.core.metamodel.Field
 import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.Strings
 import amf.plugins.domain.webapi.metamodel.CallbackModel
 import amf.plugins.domain.webapi.metamodel.CallbackModel._
 import org.yaml.model.YMap
-import amf.core.utils.Strings
 
 /**
   * Callback internal model
   */
-case class Callback(fields: Fields, annotations: Annotations) extends DomainElement {
+case class Callback(fields: Fields, annotations: Annotations) extends NamedDomainElement {
 
-  def name: StrField       = fields.field(Name)
   def expression: StrField = fields.field(Expression)
   def endpoint: EndPoint   = fields.field(Endpoint)
 
-  def withName(name: String): this.type             = set(Name, name)
   def withExpression(expression: String): this.type = set(Expression, expression)
   def withEndpoint(endpoint: EndPoint): this.type   = set(Endpoint, endpoint)
 
@@ -30,7 +29,8 @@ case class Callback(fields: Fields, annotations: Annotations) extends DomainElem
   override def meta = CallbackModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/" + name.option().getOrElse("default-callback").urlComponentEncoded
+  override def componentId: String        = "/" + name.option().getOrElse("default-callback").urlComponentEncoded
+  override protected def nameField: Field = Name
 }
 
 object Callback {

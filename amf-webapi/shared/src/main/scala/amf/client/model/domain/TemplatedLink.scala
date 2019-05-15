@@ -7,7 +7,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.plugins.domain.webapi.models.{TemplatedLink => InternalTemplatedLink}
 
 @JSExportAll
-case class TemplatedLink(override private[amf] val _internal: InternalTemplatedLink) extends DomainElement {
+case class TemplatedLink(override private[amf] val _internal: InternalTemplatedLink)
+    extends DomainElement
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.TemplatedLink")
   def this() = this(InternalTemplatedLink())

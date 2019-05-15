@@ -13,10 +13,7 @@ import org.yaml.model.YPart
 /**
   * Payload internal model.
   */
-case class Payload(fields: Fields, annotations: Annotations)
-    extends DomainElement
-    with Linkable
-    with NamedDomainElement {
+case class Payload(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 
   def mediaType: StrField     = fields.field(MediaType)
   def schema: Shape           = fields.field(Schema)

@@ -10,7 +10,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Payload model class.
   */
 @JSExportAll
-case class Payload(override private[amf] val _internal: InternalPayload) extends DomainElement {
+case class Payload(override private[amf] val _internal: InternalPayload)
+    extends DomainElement
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.Payload")
   def this() = this(InternalPayload())

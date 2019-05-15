@@ -1,9 +1,9 @@
 package amf.plugins.domain.webapi.models
 
 import amf.core.annotations.{SourceVendor, SynthesizedField}
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.core.remote.Vendor
 import amf.plugins.domain.shapes.models.CreativeWork
@@ -15,9 +15,8 @@ import org.yaml.model.{YMap, YNode}
 /**
   * Web Api internal model
   */
-case class WebApi(fields: Fields, annotations: Annotations) extends DomainElement {
+case class WebApi(fields: Fields, annotations: Annotations) extends NamedDomainElement {
 
-  def name: StrField                            = fields.field(Name)
   def description: StrField                     = fields.field(Description)
   def schemes: Seq[StrField]                    = fields.field(Schemes)
   def accepts: Seq[StrField]                    = fields.field(Accepts)
@@ -32,7 +31,6 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
   def security: Seq[ParametrizedSecurityScheme] = fields.field(Security)
   def tags: Seq[Tag]                            = fields(Tags)
 
-  def withName(name: String): this.type                                  = set(Name, name)
   def withDescription(description: String): this.type                    = set(Description, description)
   def withSchemes(schemes: Seq[String]): this.type                       = set(Schemes, schemes)
   def withEndPoints(endPoints: Seq[EndPoint]): this.type                 = setArray(EndPoints, endPoints)
@@ -88,6 +86,8 @@ case class WebApi(fields: Fields, annotations: Annotations) extends DomainElemen
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "#/web-api"
+
+  override protected def nameField: Field = Name
 }
 
 object WebApi {

@@ -14,9 +14,8 @@ import amf.core.utils.Strings
   * Parameter internal model.
   */
 class Parameter(override val fields: Fields, override val annotations: Annotations)
-    extends DomainElement
-    with Linkable
-    with NamedDomainElement {
+    extends NamedDomainElement
+    with Linkable {
 
   def parameterName: StrField    = fields.field(ParameterName)
   def description: StrField      = fields.field(Description)

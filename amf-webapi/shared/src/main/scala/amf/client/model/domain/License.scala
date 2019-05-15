@@ -9,7 +9,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * License model class.
   */
 @JSExportAll
-case class License(override private[amf] val _internal: InternalLicense) extends DomainElement {
+case class License(override private[amf] val _internal: InternalLicense)
+    extends DomainElement
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.License")
   def this() = this(InternalLicense())

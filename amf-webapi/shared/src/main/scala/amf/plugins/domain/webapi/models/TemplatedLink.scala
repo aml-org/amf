@@ -1,16 +1,15 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel._
 import amf.core.utils.Strings
 
-case class TemplatedLink(fields: Fields, annotations: Annotations) extends DomainElement with Linkable {
+case class TemplatedLink(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 
-  def name: StrField                   = fields.field(Name)
   def description: StrField            = fields.field(Description)
   def template: StrField               = fields.field(Template)
   def operationId: StrField            = fields.field(OperationId)
@@ -18,7 +17,6 @@ case class TemplatedLink(fields: Fields, annotations: Annotations) extends Domai
   def requestBody: StrField            = fields.field(RequestBody)
   def server: Server                   = fields.field(TemplatedLinkModel.Server)
 
-  def withName(name: String): this.type                        = set(Name, name)
   def withDescription(description: String): this.type          = set(Description, description)
   def withTemplate(template: String): this.type                = set(Template, template)
   def withOperationId(operationId: String): this.type          = set(OperationId, operationId)
@@ -35,6 +33,7 @@ case class TemplatedLink(fields: Fields, annotations: Annotations) extends Domai
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = TemplatedLink.apply
+  override protected def nameField: Field                                                       = Name
 }
 
 object TemplatedLink {

@@ -14,9 +14,8 @@ import org.yaml.model.YMapEntry
   * Response internal model.
   */
 class Response(override val fields: Fields, override val annotations: Annotations)
-    extends DomainElement
-    with Linkable
-    with NamedDomainElement {
+    extends NamedDomainElement
+    with Linkable {
 
   def description: StrField     = fields.field(Description)
   def statusCode: StrField      = fields.field(StatusCode)
