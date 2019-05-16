@@ -6,7 +6,7 @@ Number of results: 3
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Property properties not supported in a RAML 1.0 module node
+  Message: Property 'properties' not supported in a RAML 1.0 module node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/invalid-library-include/financeDetail.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
-  Message: Unresolved reference 'financeDetail.raml' from root context file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml
+  Message: Unresolved reference 'financeDetail.raml'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/invalid-library-include/api.raml#/web-api/end-points/%2Fclaims%2F%7Bclaim-id%7D/patch/request/application%2Fjson/any/schema/unresolved
   Property: 

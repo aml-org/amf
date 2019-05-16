@@ -6,7 +6,7 @@ Number of results: 3
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Property closedShape not supported in a RAML 1.0 trait node
+  Message: Property 'closedShape' not supported in a RAML 1.0 trait node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/traits/trait1.raml#/trait/applied
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/traits/trait1.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
-  Message: Unresolved reference 'inexistentTypeParameter' from root context 
+  Message: Unresolved reference 'inexistentTypeParameter'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml#/web-api/end-points/%2Fendpoint/put/request/application%2Fjson/any/schema/unresolved
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/traits/trait3.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
-  Message: Unresolved reference 'inexistentExplicitType' from root context 
+  Message: Unresolved reference 'inexistentExplicitType'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/traits/api.raml#/web-api/end-points/%2Fendpoint/post/request/application%2Fjson/any/schema/unresolved
   Property: 

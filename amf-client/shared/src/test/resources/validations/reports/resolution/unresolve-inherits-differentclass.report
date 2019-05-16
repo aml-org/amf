@@ -6,7 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
-  Message: Resolution error: Incompatible types [class amf.plugins.domain.shapes.models.ScalarShape, class amf.plugins.domain.shapes.models.NodeShape]
+  Message: Resolution error: Incompatible types [string, object]
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/types/unresolve-inherits-differentclass.raml#/declarations/types/scalar/TYPE2
   Property: http://a.ml/vocabularies/shapes#inherits

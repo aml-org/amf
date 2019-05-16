@@ -129,3 +129,32 @@ object RamlTypeDefStringValueMatcher {
     case UndefinedType    => throw new RuntimeException("Undefined type def")
   }
 }
+
+object RamlShapeTypeBeautifier {
+
+  def beautify(shape: String): String = shape match {
+    case "annotation"        => "annotation"
+    case "anyShape"          => "any"
+    case "arrayShape"        => "array"
+    case "dateScalarShape"   => "date"
+    case "endPoint"          => "endpoint"
+    case "example"           => "example"
+    case "fileShape"         => "file"
+    case "module"            => "library"
+    case "nodeShape"         => "object"
+    case "numberScalarShape" => "number"
+    case "operation"         => "operation"
+    case "resourceType"      => "resource type"
+    case "response"          => "response"
+    case "schemaShape"       => "schema"
+    case "securitySchema"    => "security schema"
+    case "shape"             => "shape"
+    case "stringScalarShape" => "string"
+    case "trait"             => "trait"
+    case "unionShape"        => "union"
+    case "userDocumentation" => "documentation"
+    case "webApi"            => "root"
+    case "xmlSerialization"  => "xml"
+    case other               => other
+  }
+}

@@ -25,8 +25,9 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       basePath + "forward-references-types-error.raml",
       undefined => {
         undefined.level should be("Violation")
-        undefined.message should be(
-          "Unresolved reference 'UndefinedType' from root context file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error.raml")
+        undefined.message should be("Unresolved reference 'UndefinedType'")
+        undefined.location should be(
+          Some("file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error.raml"))
         undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 27))))
       }
     )
@@ -37,8 +38,9 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       basePath + "forward-references-types-error-expression.raml",
       undefined => {
         undefined.level should be("Violation")
-        undefined.message should be(
-          "Unresolved reference 'UndefinedType' from root context file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error-expression.raml")
+        undefined.message should be("Unresolved reference 'UndefinedType'")
+        undefined.location should be(
+          Some("file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error-expression.raml"))
         undefined.position.map(_.range) should be(Some(Range((8, 14), (8, 40))))
       }
     )
@@ -49,8 +51,9 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       basePath + "forward-references-types-error-array.raml",
       undefined => {
         undefined.level should be("Violation")
-        undefined.message should be(
-          "Unresolved reference 'UndefinedType' from root context file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error-array.raml")
+        undefined.message should be("Unresolved reference 'UndefinedType'")
+        undefined.location should be(
+          Some("file://amf-client/shared/src/test/resources/upanddown/forward-references-types-error-array.raml"))
         undefined.position.map(_.range) should be(Some(Range((5, 26), (5, 39))))
       }
     )
@@ -61,14 +64,14 @@ class ForwardReferencesTest extends AsyncFunSuite with PlatformSecrets {
       referencesPath + "contexts/api.raml",
       a => {
         a.level should be("Violation")
-        a.message should be(
-          "Unresolved reference 'A' from root context file://amf-client/shared/src/test/resources/references/contexts/library.raml")
+        a.message should be("Unresolved reference 'A'")
+        a.location should be(Some("file://amf-client/shared/src/test/resources/references/contexts/library.raml"))
         a.position.map(_.range) should be(Some(Range((4, 5), (4, 6))))
       },
       c => {
         c.level should be("Violation")
-        c.message should be(
-          "Unresolved reference 'C' from root context file://amf-client/shared/src/test/resources/references/contexts/nested.raml")
+        c.message should be("Unresolved reference 'C'")
+        c.location should be(Some("file://amf-client/shared/src/test/resources/references/contexts/nested.raml"))
         c.position.map(_.range) should be(Some(Range((6, 5), (6, 6))))
       }
     )

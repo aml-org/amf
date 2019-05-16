@@ -9,6 +9,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.{Annotations, RuntimeErrorHandler, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
+import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
@@ -147,7 +148,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
             InvalidTypeInheritanceErrorSpecification,
             derivedShape,
             Some(ShapeModel.Inherits.value.iri()),
-            s"Resolution error: Incompatible types [${derivedShape.getClass}, ${superShape.getClass}]"
+            s"Resolution error: Incompatible types [${RamlShapeTypeBeautifier
+              .beautify(derivedShape.ramlSyntaxKey)}, ${RamlShapeTypeBeautifier.beautify(superShape.ramlSyntaxKey)}]"
           )
           derivedShape
       }
@@ -415,7 +417,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields,
+                              baseUnion,
+                              superNode,
+                              filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }

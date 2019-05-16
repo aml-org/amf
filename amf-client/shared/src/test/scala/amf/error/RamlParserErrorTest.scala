@@ -111,7 +111,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       },
       unresolvedRef => {
         unresolvedRef.level should be("Violation")
-        unresolvedRef.message should startWith("Unresolved reference 'lib1.B' from root context")
+        unresolvedRef.message should startWith("Unresolved reference 'lib1.B'")
         unresolvedRef.position.map(_.range) should be(Some(Range((9, 9), (9, 15))))
       }
     )
@@ -286,7 +286,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/invalid-mediatype.raml",
       violation => {
         violation.level should be("Violation")
-        violation.message should be("Property applicationjson not supported in a RAML 0.8 shape node")
+        violation.message should be("Property 'applicationjson' not supported in a RAML 0.8 shape node")
         violation.position.map(_.range) should be(Some(Range((8, 10), (8, 26))))
       }
     )
@@ -297,7 +297,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/invalid-payload-facet.raml",
       violation => {
         violation.level should be("Violation")
-        violation.message should be("Properties typically not supported in a RAML 1.0 anyShape node")
+        violation.message should be("Property 'typically' not supported in a RAML 1.0 any node")
         violation.position.map(_.range) should be(Some(Range((10, 12), (15, 30))))
       }
     )
@@ -354,7 +354,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/invalid-lib-and-type-08/api.raml",
       first => {
         first.level should be("Violation")
-        first.message should be("Property uses not supported in a RAML 0.8 webApi node")
+        first.message should be("Property 'uses' not supported in a RAML 0.8 webApi node")
         first.position.map(_.range) should be(Some(Range((4, 0), (8, 0))))
       },
       second => {
@@ -381,7 +381,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/map-key.raml",
       first => {
         first.level should be("Violation")
-        first.message should be("Property {alpha2code: } not supported in a RAML 1.0 webApi node")
+        first.message should be("Property '{alpha2code: }' not supported in a RAML 1.0 webApi node")
         first.position.map(_.range) should be(Some(Range((7, 0), (9, 14))))
       }
     )
@@ -423,7 +423,7 @@ class RamlParserErrorTest extends ParserErrorTest {
         },
         unresolve1 => {
           unresolve1.level should be("Violation")
-          unresolve1.message should startWith("Unresolved reference 'lib.InvoiceId' from root context")
+          unresolve1.message should startWith("Unresolved reference 'lib.InvoiceId'")
         },
         badInclude => {
           badInclude.level should be("Violation")
@@ -431,7 +431,7 @@ class RamlParserErrorTest extends ParserErrorTest {
         },
         unresolve2 => {
           unresolve2.level should be("Violation")
-          unresolve2.message should startWith("Unresolved reference 'typeFragment.raml' from root context")
+          unresolve2.message should startWith("Unresolved reference 'typeFragment.raml'")
         }
       )
     )
@@ -450,7 +450,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "/error/items-key-in-object.raml",
       error => {
         error.level should be("Violation")
-        error.message should be("Properties items not supported in a RAML 1.0 nodeShape node")
+        error.message should be("Property 'items' not supported in a RAML 1.0 object node")
         error.position.map(_.range) should be(Some(Range((14, 4), (14, 16))))
       }
     )
@@ -546,7 +546,7 @@ class RamlParserErrorTest extends ParserErrorTest {
       "error/swap-schema-example/api.raml",
       notYmap => {
         notYmap.level should be("Violation")
-        notYmap.message should be("Yaml map expected")
+        notYmap.message should be("YAML map expected")
       }
     )
   }
@@ -564,8 +564,9 @@ class RamlParserErrorTest extends ParserErrorTest {
       },
       unresolved => {
         unresolved.level should be("Violation")
-        unresolved.message should be(
-          "Unresolved reference 'fragment.raml' from root context file://amf-client/shared/src/test/resources/parser-results/raml/error/invalid-fragment/api.raml")
+        unresolved.message should be("Unresolved reference 'fragment.raml'")
+        unresolved.location should be(
+          Some("file://amf-client/shared/src/test/resources/parser-results/raml/error/invalid-fragment/api.raml"))
       }
     )
   }

@@ -6,7 +6,7 @@ Number of results: 4
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Properties thisIsWrong not supported in a RAML 1.0 shape node
+  Message: Property 'thisIsWrong' not supported in a RAML 1.0 shape node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml#/declarations/types/scalar/ErroneousType
   Property: 
@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Properties noHolidays not supported in a RAML 1.0 unionShape node
+  Message: Property 'noHolidays' not supported in a RAML 1.0 union node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml#/declarations/types/union/Incorrect1
   Property: 
@@ -22,7 +22,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Properties f not supported in a RAML 1.0 unionShape node
+  Message: Property 'f' not supported in a RAML 1.0 union node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml#/declarations/types/union/Incorrect2
   Property: 
@@ -30,7 +30,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#closed-shape
-  Message: Properties error not supported in a RAML 1.0 unionShape node
+  Message: Property 'error' not supported in a RAML 1.0 union node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml#/declarations/types/union/Incorrect3
   Property: 

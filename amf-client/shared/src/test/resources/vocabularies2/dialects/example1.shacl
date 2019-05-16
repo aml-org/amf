@@ -32,7 +32,7 @@
 <http://a.ml/vocabularies/amf/parser#dialect-error> <http://www.w3.org/ns/shacl#message> "Dialect error" .
 <http://a.ml/vocabularies/amf/parser#dialect-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
-<http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#message> "Property discriminator not supported in a node extending a unionShape" .
+<http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#message> "Property 'discriminator' not supported in a node extending a unionShape" .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/ns/shacl#message> "Sibling parameters must have unique 'name' and 'in' values" .
