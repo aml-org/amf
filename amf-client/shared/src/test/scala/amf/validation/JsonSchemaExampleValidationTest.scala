@@ -128,5 +128,13 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
     validate("/APIMF-1173/api.raml")
   }
 
+  test("JSON Schema path with spaces 1") {
+    validate("/json-schema-space/api.raml")
+  }
+
+  test("JSON Schema path with spaces 2") {
+    validate("/json-schema-space other/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

@@ -5,6 +5,7 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.contexts.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
@@ -461,7 +462,7 @@ abstract class WebApiContext(val loc: String,
     else if (str.startsWith("/")) str
     else if (str.contains(":")) str
     else if (str.startsWith("#")) base.split("#").head + str
-    else platform.normalizePath(basePath(base) + str)
+    else platform.normalizePath(basePath(base).urlDecoded + str)
   }
 
   def basePath(path: String): String = {
