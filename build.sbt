@@ -1,6 +1,3 @@
-import java.io.FileOutputStream
-import java.util.Properties
-
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
@@ -14,59 +11,24 @@ publish := {}
 
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
 
-//libraryDependencies += "org.codehaus.sonar.runner" % "sonar-runner-dist" % "2.4"
+lazy val sonarUrl = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
+lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")
 
 enablePlugins(SonarRunnerPlugin)
 
-val setSonarProperties = TaskKey[Unit](
-  "setSonarProperties",
-  "Set sonar properties!"
+sonarProperties ++= Map(
+  "sonar.host.url" -> sonarUrl,
+  "sonar.login" -> sonarToken,
+  "sonar.projectKey" -> "mulesoft.amf",
+  "sonar.projectName" -> "AMF",
+  "sonar.projectVersion" -> "1.0.0",
+
+  "sonar.sourceEncoding" -> "UTF-8",
+  "sonar.github.repository" -> "mulesoft/amf",
+
+  "sonar.scala.coverage.reportPaths" -> "amf-client/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-webapi/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-validation/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
+  "sonar.sources" -> "amf-client/shared/src/main/scala,amf-webapi/shared/src/main/scala,amf-validation/shared/src/main/scala"
 )
-
-setSonarProperties := {
-  lazy val url = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
-  lazy val token = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")
-
-  val values = Map(
-    "sonar.host.url" -> url,
-    "sonar.login" -> token,
-    "sonar.projectKey" -> "mulesoft.amf",
-    "sonar.projectName" -> "AMF",
-    "sonar.projectVersion" -> "1.0.0",
-
-    "sonar.sourceEncoding" -> "UTF-8",
-    "sonar.github.repository" -> "mulesoft/amf",
-    
-    "sonar.scala.coverage.reportPaths" -> "amf-client/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-webapi/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-validation/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
-    "sonar.sources" -> "amf-client/shared/src/main/scala,amf-webapi/shared/src/main/scala,amf-validation/shared/src/main/scala"
-  )
-
-  sonarProperties := values
-
-  val p = new Properties()
-  values.foreach(v => p.put(v._1, v._2))
-  val stream = new FileOutputStream(file("./sonar-project.properties"))
-  p.store(stream, null)
-  stream.close()
-}
-
-val sonarMe = TaskKey[Unit](
-  "sonarMe",
-  "Run sonar!")
-sonarMe := {
-
-//  sonarRunnerOptions := Seq(
-//    "-D",
-//    s"sonar.host.url=$url",
-//    "-D",
-//    s"sonar.login=$token"
-//  )
-
-//  val a = generateSonarConfiguration.value
-
-  setSonarProperties.value
-  sonar.value
-}
 
 val settings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
