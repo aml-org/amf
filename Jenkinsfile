@@ -17,7 +17,7 @@ pipeline {
     }
     stage('Coverage') {
       when {
-        branch 'build/develop'
+        branch 'develop'
       }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
@@ -31,7 +31,7 @@ pipeline {
       when {
         anyOf {
           branch 'master'
-          branch 'build/develop'
+          branch 'develop'
           branch 'release/*'
         }
       }
@@ -43,7 +43,7 @@ pipeline {
     }
     stage('Trigger amf projects') {
       when {
-        branch 'build/develop'
+        branch 'develop'
       }
       steps {
         echo "Starting TCKutor Applications/AMF/amfTCKutor/master"
