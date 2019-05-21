@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
-  Message: Resolution error: Incompatible types [class amf.plugins.domain.shapes.models.NodeShape, class amf.plugins.domain.shapes.models.ScalarShape]
+  Message: Resolution error: Incompatible types [object, string]
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedType1/property/a/a
   Property: http://a.ml/vocabularies/shapes#inherits

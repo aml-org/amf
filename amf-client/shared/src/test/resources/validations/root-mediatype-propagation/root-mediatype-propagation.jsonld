@@ -20,6 +20,22 @@
             "@value": "Some title"
           }
         ],
+        "raml-http:accepts": [
+          {
+            "@value": "application/json"
+          },
+          {
+            "@value": "application/xml"
+          }
+        ],
+        "raml-http:contentType": [
+          {
+            "@value": "application/json"
+          },
+          {
+            "@value": "application/xml"
+          }
+        ],
         "raml-http:endpoint": [
           {
             "@id": "#8",
@@ -289,8 +305,10 @@
             "#7": "RAML 1.0"
           },
           "lexical": {
+            "raml-http:contentType": "[(4,0)-(6,0)]",
             "schema-org:name": "[(2,0)-(4,0)]",
-            "#7": "[(2,0)-(17,22)]"
+            "#7": "[(2,0)-(17,22)]",
+            "raml-http:accepts": "[(4,0)-(6,0)]"
           }
         }
       }

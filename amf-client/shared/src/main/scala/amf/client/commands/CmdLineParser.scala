@@ -100,6 +100,14 @@ object CmdLineParser {
           .abbr("r")
           .text("Resolve after parsing")
           .action((f, c) => c.copy(resolve = f))
+
+        opt[Boolean]("trace")
+          .abbr("t")
+          .text("Trace execution")
+          .action { (f, c) =>
+            println(s"TRACING EXECUTION... ${f} => ${c}")
+            c.copy(trace = true)
+          }
       }
 
     cmd("translate")

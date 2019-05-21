@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: API
+types:
+  type1:
+    properties:
+      prop1:
+        type: string
+  type2:
+    type:
+      - string[]
+  unionType:
+    type:
+      - type1[] | type2
+/test:
+  get:
+    body:
+      application/json:
+        type:
+          - unionType

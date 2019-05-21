@@ -26,7 +26,7 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
     sourceOr(
       response.annotations,
       b.complexEntry(
-        ScalarEmitter(fs.entry(ResponseModel.Name).get.scalar).emit(_),
+        ScalarEmitter(fs.entry(ResponseModel.Name).map(_.scalar).getOrElse(AmfScalar("default"))).emit(_),
         p => {
           if (response.isLink) {
             spec.localReference(response).emit(p)

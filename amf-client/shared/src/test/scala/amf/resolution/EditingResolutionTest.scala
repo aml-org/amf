@@ -226,6 +226,14 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Library with types") {
+    cycle("lib.raml", "lib.jsonld", RamlYamlHint, Amf, productionPath + "lib-types/")
+  }
+
+  ignore("Union of arrays") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "union-of-arrays/")
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

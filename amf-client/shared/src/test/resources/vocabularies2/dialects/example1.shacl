@@ -32,7 +32,7 @@
 <http://a.ml/vocabularies/amf/parser#dialect-error> <http://www.w3.org/ns/shacl#message> "Dialect error" .
 <http://a.ml/vocabularies/amf/parser#dialect-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
-<http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#message> "Property discriminator not supported in a node extending a unionShape" .
+<http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#message> "Property 'discriminator' not supported in a node extending a unionShape" .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/ns/shacl#message> "Sibling parameters must have unique 'name' and 'in' values" .
@@ -55,6 +55,12 @@
 <http://a.ml/vocabularies/amf/parser#examples-must-be-map> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#examples-must-be-map> <http://www.w3.org/ns/shacl#message> "Examples value should be a map" .
 <http://a.ml/vocabularies/amf/parser#examples-must-be-map> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#examples-with-invalid-mime-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#examples-with-invalid-mime-type> <http://www.w3.org/ns/shacl#message> "Mime type defined in 'examples' must be present in a 'produces' property" .
+<http://a.ml/vocabularies/amf/parser#examples-with-invalid-mime-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#examples-with-no-schema-defined> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#examples-with-no-schema-defined> <http://www.w3.org/ns/shacl#message> "When schema is undefined, 'examples' facet is invalid as no content is returned as part of the response" .
+<http://a.ml/vocabularies/amf/parser#examples-with-no-schema-defined> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#exclusive-properties-error> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#exclusive-properties-error> <http://www.w3.org/ns/shacl#message> "Exclusive properties declared together" .
 <http://a.ml/vocabularies/amf/parser#exclusive-properties-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -235,9 +241,6 @@
 <http://a.ml/vocabularies/amf/parser#module-not-found> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#module-not-found> <http://www.w3.org/ns/shacl#message> "Module not found" .
 <http://a.ml/vocabularies/amf/parser#module-not-found> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
-<http://a.ml/vocabularies/amf/parser#named-example-used-inlined-example> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
-<http://a.ml/vocabularies/amf/parser#named-example-used-inlined-example> <http://www.w3.org/ns/shacl#message> "Named example fragments should be included in 'examples' facet" .
-<http://a.ml/vocabularies/amf/parser#named-example-used-inlined-example> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#node-not-found> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#node-not-found> <http://www.w3.org/ns/shacl#message> "Builder for model not found" .
 <http://a.ml/vocabularies/amf/parser#node-not-found> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

@@ -50,7 +50,7 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Parse and validate named examples as external framents") {
-    validate("examples/inline-named-examples/api-for-validate.raml", Some("inline-named-examples.report"))
+    validate("examples/inline-named-examples/api-for-validate.raml")
   }
 
   test("Nil value validation") {
@@ -242,6 +242,54 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
 
   test("Complex inheritance with example") {
     validate("/examples/complex-inheritance/api.raml", Some("complex-inheritance.report"))
+  }
+
+  test("NamedExample fragment in example facet") {
+    validate("/examples/named-example-facet/api.raml")
+  }
+
+  test("NamedExample fragment in example facet with 'value' key") {
+    validate("/examples/named-example-facet-value/api.raml")
+  }
+
+  test("NamedExample fragment in example facet with other key") {
+    validate("/examples/named-example-facet-other/api.raml", Some("named-example-facet-other.report"))
+  }
+
+  test("NamedExample fragment that includes another NamedExample fragment") {
+    validate("/examples/named-example-chained/api.raml")
+  }
+
+  test("NamedExample fragment with invalid example with double key") {
+    validate("/examples/named-example-double-key/api.raml", Some("named-example-double-key.report"))
+  }
+
+  test("NamedExample fragment with multiple examples in example facet") {
+    validate("/examples/named-example-multiple/api.raml", Some("named-example-multiple.report"))
+  }
+
+  test("Shape with multiple includes of NamedExamples") {
+    validate("/examples/named-example-multiple-include/api.raml")
+  }
+
+  test("NamedExample fragment in examples facet with 'value' key") {
+    validate("/examples/named-examples-facet-value/api.raml")
+  }
+
+  test("NamedExample fragment in examples facet without key") {
+    validate("/examples/named-examples-facet-no-key/api.raml", Some("named-examples-facet-no-key.report"))
+  }
+
+  test("NamedExample fragment in examples complex") {
+    validate("/examples/named-examples-value-complex/api.raml")
+  }
+
+  test("NamedExample fragment with a sequence in example") {
+    validate("/examples/named-examples-seq/api.raml")
+  }
+
+  test("NamedExample fragment with invalid sequence in example") {
+    validate("/examples/named-examples-seq-invalid/api.raml", Some("named-examples-seq-invalid.report"))
   }
 
   override val hint: Hint = RamlYamlHint

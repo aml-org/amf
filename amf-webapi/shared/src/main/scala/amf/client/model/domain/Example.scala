@@ -10,7 +10,10 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Example model class
   */
 @JSExportAll
-case class Example(override private[amf] val _internal: InternalExample) extends DomainElement with Linkable {
+case class Example(override private[amf] val _internal: InternalExample)
+    extends DomainElement
+    with Linkable
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.Example")
   def this() = this(InternalExample())

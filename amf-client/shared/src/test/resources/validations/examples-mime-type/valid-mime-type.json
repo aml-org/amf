@@ -1,0 +1,44 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "some api"
+  },
+
+  "produces": ["application/xml", "application/ld+json"],
+
+  "paths": {
+    "/aPath": {
+      "post": {
+        "responses": {
+          "default": {
+
+            "schema": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "age": {
+                  "type": "integer"
+                }
+              }
+            },
+
+            "examples": {
+              "application/xml": {
+                "name": "name-example"
+              },
+              "application/ld+json": {
+                "name": "name-example"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

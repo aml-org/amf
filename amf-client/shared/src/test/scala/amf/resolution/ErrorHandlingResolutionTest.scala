@@ -46,15 +46,6 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
       RamlYamlHint,
       List(
         ErrorContainer(
-          ResolutionValidation.id,
-          "file://amf-client/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection",
-          None,
-          "Variable 'exampleCollection' cannot be replaced with type amf.core.model.domain.LinkNode",
-          None,
-          SeverityLevels.VIOLATION,
-          None
-        ),
-        ErrorContainer(
           UnknownSecuritySchemeErrorSpecification.id,
           "file://amf-client/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection/applied/get/oauth_2_0",
           None,

@@ -1,24 +1,23 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.NamedDomainElement
 import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.Strings
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
-import amf.core.utils.Strings
 
 /**
   * EndPoint internal model
   */
 class EndPoint(override val fields: Fields, override val annotations: Annotations)
-    extends DomainElement
+    extends NamedDomainElement
     with ExtensibleWebApiDomainElement {
 
-  def name: StrField                            = fields.field(Name)
   def description: StrField                     = fields.field(Description)
   def summary: StrField                         = fields.field(Summary)
   def path: StrField                            = fields.field(Path)
@@ -36,7 +35,6 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
 
   def resourceType: Option[ParametrizedResourceType] = extend collectFirst { case r: ParametrizedResourceType => r }
 
-  def withName(name: String): this.type                                  = set(Name, name)
   def withDescription(description: String): this.type                    = set(Description, description)
   def withSummary(summary: String): this.type                            = set(Summary, summary)
   def withPath(path: String): this.type                                  = set(Path, path)
@@ -80,7 +78,8 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   override val meta: Obj = EndPointModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/end-points/" + path.value().urlComponentEncoded
+  override def componentId: String        = "/end-points/" + path.value().urlComponentEncoded
+  override protected def nameField: Field = Name
 }
 
 object EndPoint {

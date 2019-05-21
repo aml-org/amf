@@ -1,5 +1,8 @@
 #%RAML 1.0
 title: New API
+mediaType:
+  - application/json
+  - application/xml
 types:
   Person:
     type: object

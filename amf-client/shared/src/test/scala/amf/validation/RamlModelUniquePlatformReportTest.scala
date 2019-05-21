@@ -205,10 +205,6 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalidXmlAttributeNonScalar.raml", Some("invalidXmlAttributeNonScalar.report"))
   }
 
-  test("NamedExample closed shape") {
-    validate("named-example-closed-shape/named-example-closed-shape.raml", Some("named-example-closed-shape.report"))
-  }
-
   test("Multiple inheritance with contradicting restrictions defined inline") {
     validate("multiple-inheritance-restrictions.raml", Some("max-min-restriction.report"))
   }
@@ -223,5 +219,13 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Library closed shape used in an api") {
     validate("invalid-library/api.raml", Some("invalid-library-used-in-api.report"))
+  }
+
+  test("Recursion in extension") {
+    validate("recursion-in-extension/extension.raml", Some("recursion-in-extension.report"))
+  }
+
+  test("Recursion in extension 2") {
+    validate("recursion-in-extension/extension.raml", Some("recursion-in-extension2.report"))
   }
 }

@@ -6,7 +6,7 @@ Number of results: 1
 Level: Violation
 
 - Source: http://a.ml/vocabularies/amf/parser#syaml-error
-  Message: Yaml sequence expected
+  Message: YAML sequence expected
   Level: Violation
   Target: 
   Property: 

@@ -10,7 +10,9 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Parameter model class.
   */
 @JSExportAll
-case class Parameter(override private[amf] val _internal: InternalParameter) extends DomainElement {
+case class Parameter(override private[amf] val _internal: InternalParameter)
+    extends DomainElement
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.Parameter")
   def this() = this(InternalParameter())

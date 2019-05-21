@@ -15,9 +15,8 @@ import amf.plugins.document.webapi.parser.spec.common.PayloadSerializer
   *
   */
 class Example(override val fields: Fields, override val annotations: Annotations)
-    extends DomainElement
+    extends NamedDomainElement
     with Linkable
-    with NamedDomainElement
     with ExternalSourceElement
     with PayloadSerializer {
 

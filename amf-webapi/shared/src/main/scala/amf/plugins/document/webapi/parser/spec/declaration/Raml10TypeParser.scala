@@ -1222,18 +1222,22 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       entry.value.tagType match {
 
         case YType.Seq =>
-          val inherits: Seq[AmfElement] = entry.value.as[Seq[YNode]].map { node =>
-            node.as[YScalar].text match {
-              case RamlTypeDefMatcher.TypeExpression(s) =>
-                RamlTypeExpressionParser(adopt, Some(node)).parse(s).get.adopted(shape.id)
-              case s if wellKnownType(s) =>
-                parseWellKnownTypeRef(s).withName(s, Annotations(entry.key)).adopted(shape.id)
-              case s =>
-                ctx.declarations.findType(s, SearchScope.All) match {
-                  case Some(ancestor) => ancestor
-                  case _              => unresolved(node, shape)
-                }
-            }
+          val superTypes            = entry.value.as[Seq[YNode]]
+          val isMultipleInheritance = superTypes.size > 1
+          val inherits: Seq[AmfElement] = superTypes.zipWithIndex.map {
+            case (node, i) =>
+              val id = if (isMultipleInheritance) shape.id + i else shape.id
+              node.as[YScalar].text match {
+                case RamlTypeDefMatcher.TypeExpression(s) =>
+                  RamlTypeExpressionParser(adopt, Some(node)).parse(s).get.adopted(id)
+                case s if wellKnownType(s) =>
+                  parseWellKnownTypeRef(s).withName(s, Annotations(entry.key)).adopted(id)
+                case s =>
+                  ctx.declarations.findType(s, SearchScope.All) match {
+                    case Some(ancestor) => ancestor
+                    case _              => unresolved(node, shape)
+                  }
+              }
           }
           checkSchemaInheritance(shape, inherits, Range(node.range))
           shape.fields.setWithoutId(ShapeModel.Inherits,

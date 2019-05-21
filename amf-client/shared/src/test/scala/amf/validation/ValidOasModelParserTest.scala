@@ -57,8 +57,12 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("/file-parameter-consumes/valid-consumes-for-file-parameter.json", OasProfile)
   }
 
-  test("file parameter with correct binding and consumes") {
+  test("File parameter with correct binding and consumes") {
     checkValid("file-parameter/file-parameter-correct-properties.json", OasProfile)
+  }
+
+  test("multiple examples defined with valid mime type with produces general definition") {
+    checkValid("examples-mime-type/valid-mime-type.json", OasProfile)
   }
 
   // Check http inner reference.

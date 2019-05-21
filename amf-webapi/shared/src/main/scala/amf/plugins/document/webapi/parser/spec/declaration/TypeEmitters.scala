@@ -956,7 +956,7 @@ case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
       "anyOf",
       _.list { b =>
         val emitters = shape.anyOf.map {
-          case s: AnyShape =>
+          case s: Shape =>
             Raml10TypePartEmitter(s, ordering, None, references = references)
         }
         ordering.sorted(emitters).foreach(_.emit(b))

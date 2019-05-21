@@ -10,12 +10,14 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * EndPoint model class.
   */
 @JSExportAll
-case class EndPoint(override private[amf] val _internal: InternalEndPoint) extends DomainElement {
+case class EndPoint(override private[amf] val _internal: InternalEndPoint)
+    extends DomainElement
+    with NamedDomainElement {
 
   @JSExportTopLevel("model.domain.EndPoint")
   def this() = this(InternalEndPoint())
 
-  def name: StrField                                   = _internal.name
+  override def name: StrField                          = _internal.name
   def description: StrField                            = _internal.description
   def summary: StrField                                = _internal.summary
   def path: StrField                                   = _internal.path
@@ -29,7 +31,7 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint) exten
   def relativePath: String = _internal.relativePath
 
   /** Set name property of this EndPoint */
-  def withName(name: String): this.type = {
+  override def withName(name: String): this.type = {
     _internal.withName(name)
     this
   }

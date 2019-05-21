@@ -14,7 +14,7 @@ Level: Violation
   Location: file://amf-client/shared/src/test/resources/validations/missing-includes/in-type-def.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
-  Message: Unresolved reference 'conterparty.raml' from root context file://amf-client/shared/src/test/resources/validations/missing-includes/in-type-def.raml
+  Message: Unresolved reference 'conterparty.raml'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/missing-includes/in-type-def.raml#/declarations/types/unresolved
   Property: 

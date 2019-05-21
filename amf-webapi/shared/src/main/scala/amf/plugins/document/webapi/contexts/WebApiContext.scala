@@ -5,8 +5,10 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
+import amf.core.utils.Strings
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.contexts.RamlWebApiContextType.RamlWebApiContextType
+import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft3SchemaVersion,
@@ -184,8 +186,9 @@ abstract class RamlWebApiContext(override val loc: String,
     * can be defined in the AST node
     */
   def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
-    val node   = shape.id
-    val facets = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
+    val node       = shape.id
+    val facets     = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
+    val shapeLabel = RamlShapeTypeBeautifier.beautify(shapeType)
 
     syntax.nodes.get(shapeType) match {
       case Some(props) =>
@@ -211,10 +214,11 @@ abstract class RamlWebApiContext(override val loc: String,
         allResults.find(_.nonEmpty) match {
           case None => // at least we found a solution, this is a valid shape
           case Some(errors: Seq[YMapEntry]) =>
+            val subject = if (errors.size > 1) "Properties" else "Property"
             violation(
               ClosedShapeSpecification,
               node,
-              s"Properties ${errors.map(_.key.as[YScalar].text).mkString(",")} not supported in a $vendor $shapeType node",
+              s"$subject ${errors.map(_.key.as[YScalar].text).map(e => s"'$e'").mkString(",")} not supported in a $vendor $shapeLabel node",
               errors.head
             ) // pointing only to the first failed error
         }
@@ -458,7 +462,7 @@ abstract class WebApiContext(val loc: String,
     else if (str.startsWith("/")) str
     else if (str.contains(":")) str
     else if (str.startsWith("#")) base.split("#").head + str
-    else platform.normalizePath(basePath(base) + str)
+    else platform.normalizePath(basePath(base).urlDecoded + str)
   }
 
   def basePath(path: String): String = {
@@ -494,7 +498,7 @@ abstract class WebApiContext(val loc: String,
           if (ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {
-            violation(ClosedShapeSpecification, node, s"Property $key not supported in a $vendor $shape node", entry)
+            violation(ClosedShapeSpecification, node, s"Property '$key' not supported in a $vendor $shape node", entry)
           }
         }
       case None =>

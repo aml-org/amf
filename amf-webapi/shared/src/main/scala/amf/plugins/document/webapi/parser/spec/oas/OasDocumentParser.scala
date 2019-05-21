@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.core.annotations.{DeclaredElement, SingleValueArray, SourceVendor}
+import amf.core.annotations.{DeclaredElement, SingleValueArray, SourceVendor, SynthesizedField}
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -501,7 +501,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       RequestParser(map, () => operation.withRequest())
         .parse()
-        .map(operation.set(OperationModel.Request, _))
+        .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
 
       map.key(
         "responses",

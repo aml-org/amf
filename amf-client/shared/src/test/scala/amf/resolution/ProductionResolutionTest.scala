@@ -304,7 +304,7 @@ class Raml08ResolutionTest extends RamlResolutionTest {
     recoverToExceptionIf[Exception] {
       cycle("wrong-key.raml", "wrong-key.raml", RamlYamlHint, Raml08)
     }.map { ex =>
-      assert(ex.getMessage.contains(s"Message: Property errorKey not supported in a ${Raml08.name} webApi node"))
+      assert(ex.getMessage.contains(s"Message: Property 'errorKey' not supported in a ${Raml08.name} webApi node"))
     }
   }
 

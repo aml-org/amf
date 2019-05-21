@@ -1,0 +1,26 @@
+#%RAML 1.0 Library
+types:
+  account:
+    type: organization
+  accounts:
+    type: account[]
+
+  organization:
+    type: object
+    properties:
+      contact-personnel:
+        required: false
+        type: person
+
+  person:
+    type: object
+    properties:
+      memberships:
+        type: membership
+
+  membership:
+    type: object
+    properties:
+      member-account:
+        displayName: Member Account
+        type: account

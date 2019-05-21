@@ -1416,7 +1416,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
       val unresolvedRef = seq.last
       unresolvedRef.level should be("Violation")
-      unresolvedRef.message should startWith("Unresolved reference 'https://a.ml/notexists' from root context")
+      unresolvedRef.message should startWith("Unresolved reference 'https://a.ml/notexists'")
       unresolvedRef.position should be(Range((6, 10), (6, 41)))
     }
   }

@@ -1,0 +1,13 @@
+#%RAML 1.0
+
+title: Test
+
+types:
+  Person:
+    type: object
+    properties:
+      name: string
+      age: integer
+  People:
+    type: Person[]
+    example: !include example.raml

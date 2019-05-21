@@ -20,6 +20,16 @@
             "@value": "Testing same example with different names"
           }
         ],
+        "raml-http:accepts": [
+          {
+            "@value": "application/json"
+          }
+        ],
+        "raml-http:contentType": [
+          {
+            "@value": "application/json"
+          }
+        ],
         "raml-http:endpoint": [
           {
             "@id": "#20",
@@ -203,12 +213,18 @@
           }
         ],
         "smaps": {
-          "source-vendor": {
-            "#19": "RAML 1.0"
+          "single-value-array": {
+            "raml-http:contentType": "",
+            "raml-http:accepts": ""
           },
           "lexical": {
+            "raml-http:contentType": "[(4,0)-(6,0)]",
             "schema-org:name": "[(2,0)-(4,0)]",
-            "#19": "[(2,0)-(31,13)]"
+            "#19": "[(2,0)-(31,13)]",
+            "raml-http:accepts": "[(4,0)-(6,0)]"
+          },
+          "source-vendor": {
+            "#19": "RAML 1.0"
           }
         }
       }
