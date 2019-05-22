@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: API
+types:
+  Person:
+    properties:
+      name: string
+/endpoint:
+  get:
+    body:
+      application/json:
+        type: Person
+        properties:
+          employeeNumber: integer

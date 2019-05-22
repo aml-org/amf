@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Annotations
-import amf.plugins.domain.shapes.annotations.InheritedShapes
+import amf.plugins.domain.shapes.annotations.{InheritanceProvenance, InheritedShapes}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
@@ -371,9 +371,20 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       canonicalInheritance(node)
     } else {
       // We start processing the properties by cloning the base node shape
+      def ensureInheritanceAnnotations(property: PropertyShape, canonicalProperty: PropertyShape) = {
+        val annotationOption              = property.annotations.find(classOf[InheritanceProvenance])
+        val annotationOptionFromCanonical = canonicalProperty.annotations.find(classOf[InheritanceProvenance])
+
+        (annotationOption, annotationOptionFromCanonical) match {
+          case (Some(annotation), None) => canonicalProperty.annotations += annotation
+          case _                        => // Nothing
+        }
+      }
       val canonicalProperties: Seq[PropertyShape] = node.properties.map { propertyShape =>
         normalize(propertyShape) match {
-          case canonicalProperty: PropertyShape => canonicalProperty
+          case canonicalProperty: PropertyShape =>
+            ensureInheritanceAnnotations(propertyShape, canonicalProperty)
+            canonicalProperty
           case other =>
             context.errorHandler.violation(ResolutionValidation,
                                            other.id,
