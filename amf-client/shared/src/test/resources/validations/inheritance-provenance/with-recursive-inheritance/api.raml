@@ -1,0 +1,9 @@
+#%RAML 1.0
+title: API
+types:
+  Person:
+    properties:
+      children: Child[]
+      name: string
+  Child:
+    type: Person

@@ -334,7 +334,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
-    val clonedProp = prop.cloneShape(Some(context.errorHandler))
+    val clonedProp = prop.cloneShape(Some(context.errorHandler)) // TODO this might not be working as expected
     if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty)
       clonedProp.annotations += InheritanceProvenance(from.id)
     clonedProp
@@ -417,10 +417,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields,
-                              baseUnion,
-                              superNode,
-                              filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }
