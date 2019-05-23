@@ -38,28 +38,23 @@ object AjvValidator {
     .asInstanceOf[js.Object]
 
   def apply(): Ajv = {
-    js.Dynamic
+    val ajv = js.Dynamic
       .newInstance(nativeAjv)(options)
       .asInstanceOf[Ajv]
       .addMetaSchema(Draft4MetaSchema.instance)
-      .addFormat(
-        "RFC2616",
-        "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$"
-      )
-      .addFormat(
-        "rfc2616",
-        "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$"
-      )
-      .addFormat(
-        "date-time-only",
-        "^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$")
+    setValidators(ajv)
   }
 
   def fast(): Ajv = {
-    js.Dynamic
+    val ajv = js.Dynamic
       .newInstance(nativeAjv)(fastOptions)
       .asInstanceOf[Ajv]
       .addMetaSchema(Draft4MetaSchema.instance)
+    setValidators(ajv)
+  }
+
+  private def setValidators(ajv: Ajv) = {
+    ajv
       .addFormat(
         "RFC2616",
         "^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), (0[1-9]|[12][0-9]|3[01]) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) ([0-9]{4}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60) (GMT)$"
@@ -71,6 +66,7 @@ object AjvValidator {
       .addFormat(
         "date-time-only",
         "^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$")
+      .addFormat("date", "^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$")
   }
 
   def nativeAjv: js.Dynamic =
