@@ -20,20 +20,13 @@ object ResponseModel
     with ExamplesField
     with LinkableElementModel
     with NameFieldSchema
-    with DescriptionField {
+    with DescriptionField
+    with ParametersFieldModel {
 
   val StatusCode = Field(
     Str,
     Hydra + "statusCode",
     ModelDoc(ExternalModelVocabularies.Hydra, "status code", "HTTP status code returned by a response"))
-
-  val Headers = Field(
-    Array(ParameterModel),
-    Http + "header",
-    ModelDoc(ModelVocabularies.Http,
-             "header",
-             "Parameter passed as a header to an operation or returned by a response")
-  )
 
   val Payloads = Field(Array(PayloadModel),
                        Http + "payload",

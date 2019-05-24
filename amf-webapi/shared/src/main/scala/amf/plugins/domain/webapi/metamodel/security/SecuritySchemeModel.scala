@@ -5,12 +5,17 @@ import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.common.{DescriptionField, DisplayNameField}
 import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.templates.KeyField
-import amf.plugins.domain.webapi.metamodel.{ParameterModel, ResponseModel}
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, ParametersFieldModel, ResponseModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.core.vocabulary.Namespace.{Http, Hydra, Schema, Security}
 import amf.core.vocabulary.{Namespace, ValueType}
 
-object SecuritySchemeModel extends DomainElementModel with KeyField with DescriptionField with DisplayNameField {
+object SecuritySchemeModel
+    extends DomainElementModel
+    with KeyField
+    with DescriptionField
+    with DisplayNameField
+    with ParametersFieldModel {
 
   val Name = Field(Str,
                    Security + "name",
@@ -21,14 +26,6 @@ object SecuritySchemeModel extends DomainElementModel with KeyField with Descrip
 
   val Type = Field(Str, Security + "type", ModelDoc(ModelVocabularies.Security, "type", "Type of security scheme"))
 
-  val Headers = Field(Array(ParameterModel),
-                      Http + "header",
-                      ModelDoc(ModelVocabularies.Http, "header", "Security scheme specific headers"))
-
-  val QueryParameters = Field(Array(ParameterModel),
-                              Http + "parameter",
-                              ModelDoc(ModelVocabularies.Http, "parameter", "Security scheme specific parameters"))
-
   val Responses = Field(
     Array(ResponseModel),
     Hydra + "response",
@@ -37,11 +34,6 @@ object SecuritySchemeModel extends DomainElementModel with KeyField with Descrip
   val Settings = Field(SettingsModel,
                        Security + "settings",
                        ModelDoc(ModelVocabularies.Security, "settings", "Security scheme settings"))
-
-  val QueryString = Field(
-    ShapeModel,
-    Http + "queryString",
-    ModelDoc(ModelVocabularies.Http, "query string", "Query string associated to this security scheme"))
 
   override val key: Field = Name
 
