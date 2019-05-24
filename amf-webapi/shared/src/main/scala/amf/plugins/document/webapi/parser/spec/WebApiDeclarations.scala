@@ -287,8 +287,7 @@ class WebApiDeclarations(val alias: Option[String],
     fragments.get(key).map(_.encoded) match {
       case Some(e: Example) => Some(e)
       case Some(other) =>
-        error.foreach(
-          _(s"Fragment of type ${other.getClass.getSimpleName} does not conform to the expected type NamedExample"))
+        error.foreach(_(s"Fragment defined in $key does not conform to the expected type NamedExample"))
         None
       case _ => None
     }

@@ -11,7 +11,11 @@ import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSch
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
-import amf.plugins.features.validation.ParserSideValidations.{ExamplesMustBeAMap, ExclusivePropertiesSpecification}
+import amf.plugins.features.validation.ParserSideValidations.{
+  ExamplesMustBeAMap,
+  ExclusivePropertiesSpecification,
+  InvalidFragmentType
+}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
@@ -127,7 +131,17 @@ case class RamlSingleExampleParser(key: String,
     map.key(key).flatMap { entry =>
       ctx.link(entry.value) match {
         case Left(s) =>
-          ctx.declarations.findNamedExample(s).map(e => e.link(s).asInstanceOf[Example])
+          ctx.declarations
+            .findNamedExample(s,
+                              Some(
+                                errMsg =>
+                                  ctx.violation(
+                                    InvalidFragmentType,
+                                    s,
+                                    errMsg,
+                                    entry.value
+                                )))
+            .map(e => e.link(s).asInstanceOf[Example])
         case Right(node) =>
           node.tagType match {
             case YType.Map =>

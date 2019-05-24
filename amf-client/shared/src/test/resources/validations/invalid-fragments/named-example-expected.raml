@@ -1,0 +1,17 @@
+#%RAML 1.0
+version: v1
+title: test
+types:
+  Product:
+    properties:
+      code: string
+      value: number
+
+/procucts:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Product
+            example: !include data-type.raml
