@@ -1,0 +1,25 @@
+#%RAML 1.0
+title: api
+types:
+  baseType1:
+    properties:
+      baseProp1: string
+
+  baseType2:
+    properties:
+      baseProp2: string
+
+  myArray:
+    type: baseType1[]
+
+  myMatrix:
+    type: baseType1[][]
+
+  myNode:
+    properties:
+      baseType1: baseType1
+      baseType2: baseType2
+
+  myUnion:
+    type: baseType1 | baseType2
+

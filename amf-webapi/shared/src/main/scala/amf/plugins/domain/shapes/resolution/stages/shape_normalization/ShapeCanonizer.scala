@@ -54,7 +54,7 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
       case any: AnyShape             => canonicalAny(any)
     }
     if (!withoutCaching) context.cache + canonical // i should never add a shape if is not resolved yet
-    context.cache.updateFixPointsAndClojures(canonical)
+    context.cache.updateFixPointsAndClosures(canonical)
 
     canonical
   }
@@ -416,16 +416,16 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
         normalizeWithoutCaching(shape) match {
           case nestedUnion: UnionShape =>
             union.closureShapes ++= nestedUnion.closureShapes
-            context.cache.addClojures(nestedUnion.closureShapes.toSeq, union)
+            context.cache.addClosures(nestedUnion.closureShapes.toSeq, union)
             nestedUnion.anyOf.foreach(e => anyOfAcc += e)
           case rec: RecursiveShape =>
             rec.fixpointTarget.foreach(target => {
               union.closureShapes ++= Seq(target).filter(_.id != union.id)
-              context.cache.cacheClojure(target.id, union)
+              context.cache.cacheClosure(target.id, union)
             })
             anyOfAcc += rec
           case other: Shape =>
-            context.cache.addClojures(other.closureShapes.toSeq, union)
+            context.cache.addClosures(other.closureShapes.toSeq, union)
             union.closureShapes ++= other.closureShapes
             anyOfAcc += other
         }
