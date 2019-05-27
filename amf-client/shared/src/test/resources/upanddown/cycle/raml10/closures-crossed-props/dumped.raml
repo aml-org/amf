@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: api
+types:
+  myType1:
+    type: string
+  myType2:
+    type: string
+  crossedNames:
+    properties:
+      myType1: myType2
+      myType2: myType1

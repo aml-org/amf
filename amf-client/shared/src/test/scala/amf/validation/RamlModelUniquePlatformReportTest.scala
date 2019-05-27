@@ -237,4 +237,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-references-to-library/using-uses.raml", Some("include-library-with-includes.report"))
   }
 
+  test("Recursive inheritance case") {
+    validate("complex-recursive-inheritance/lib.raml")
+  }
 }
