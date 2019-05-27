@@ -20,7 +20,7 @@ Before describing the algorithm, we need to describe the data model for a RAML t
 
 A RAML type form is defined using the following algebraic data types:
 
-``` clojure
+``` closure
 (constructor Record [a1:String  f1:RAMLForm, ..., an:String fn:RAMLForm])
 (constructor Seq [a1:RAMLForm, ... an:RAMLForm])
 (constructor Scalar String | Integer | Boolean | $recur | ...)
@@ -30,13 +30,13 @@ A RAML type form is defined using the following algebraic data types:
 
 Since we are going to expand all type expressions, we need to provide a form representation for RAML union type, not currently defined in the spec:
 
-``` clojure
+``` closure
 (constructor Union [a1:RAMLForm, an:RAMLForm]  (Record "type" "union", "of" (Seq a1 ... an)))
 ```
 
 RAML types can be recursive, at the same time they are anonymous, no identifier for a type exist. To address both problems, we introduce another type form to designate a fixpoint recursion:
 
-``` clojure
+``` closure
 (constructor Fixpoint RAMLForm)
 ```
 
@@ -63,7 +63,7 @@ types:
 
 The output of expanding the `Album` type is the following
 
-``` clojure
+``` closure
 {"type" "object"
  "properties" {"title" {"type" "string"
                         "required" true}
@@ -92,7 +92,7 @@ types:
 
 Will be expanded in the following form:
 
-``` clojure
+``` closure
 {:type :fixpoint,
  :value {:type "object",
          :properties {"cell" {:properties {"car" {:type "any", :required true},
@@ -186,7 +186,7 @@ properties:
 
 The computed canonical form of the type is:
 
-``` clojure
+``` closure
 {"type" "union",
  "required" true,
  "of" [{"type" "object"

@@ -49,23 +49,23 @@ private[plugins] class NormalizationContext(final val errorHandler: ErrorHandler
 }
 
 private[shape_normalization] case class NormalizationCache() {
-  def addClojures(closureShapes: Seq[Shape], s: Shape): Unit = {
+  def addClosures(closureShapes: Seq[Shape], s: Shape): Unit = {
     closureShapes.foreach { c =>
-      cacheClojure(c.id, s)
+      cacheClosure(c.id, s)
     }
   }
 
-  def cacheClojure(id: String, array: Shape): this.type = {
-    cacheWithClojures.get(id) match {
-      case Some(seq) => cacheWithClojures.update(id, seq :+ array)
-      case _         => cacheWithClojures.update(id, Seq(array))
+  def cacheClosure(id: String, array: Shape): this.type = {
+    cacheWithClosures.get(id) match {
+      case Some(seq) => cacheWithClosures.update(id, seq :+ array)
+      case _         => cacheWithClosures.update(id, Seq(array))
     }
     this
   }
 
-  def updateFixPointsAndClojures(canonical: Shape): Unit = {
+  def updateFixPointsAndClosures(canonical: Shape): Unit = {
     updateRecursiveTargets(canonical)
-    cacheWithClojures.get(canonical.id) match {
+    cacheWithClosures.get(canonical.id) match {
       case Some(seq) =>
         seq.foreach { s =>
           s.closureShapes.find(clo => clo.id == canonical.id && clo != canonical) match {
@@ -110,8 +110,8 @@ private[shape_normalization] case class NormalizationCache() {
   }
 
   private val cache = mutable.Map[String, Shape]()
-  /* Shape in the clojure -> Shape that in s.clojures contains the shape */
-  private val cacheWithClojures = mutable.Map[String, Seq[Shape]]()
+  /* Shape in the closure -> Shape that in s.closures contains the shape */
+  private val cacheWithClosures = mutable.Map[String, Seq[Shape]]()
 
   private val fixPointCache = mutable.Map[String, Seq[RecursiveShape]]()
   private val mappings      = mutable.Map[String, String]()
