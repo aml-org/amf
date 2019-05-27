@@ -45,7 +45,8 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
 
   override def componentId: String = "/array/" + name.option().getOrElse("default-array").urlComponentEncoded
 
-  override def adopted(parent: String): this.type = {
+  override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
+    val newCycle = cycle :+ id
     if ((parent + "").contains("#")) // TODO: NULL ARRIVING HERE
       simpleAdoption(parent)
     else
@@ -53,7 +54,7 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
     fields.entry(Items) match {
       case Some(items) =>
         items.value.value match {
-          case shape: Shape => shape.adopted(id + "/items")
+          case shape: Shape => shape.adopted(id + "/items", newCycle)
           case arr: AmfArray =>
             simpleAdoption(id + s"/itemsTuple${arr.values.length}")
         }

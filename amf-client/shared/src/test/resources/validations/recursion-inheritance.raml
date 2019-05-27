@@ -1,0 +1,27 @@
+#%RAML 1.0
+
+title: myEventpaper
+version: v1
+
+types:
+  A:
+    type: object
+    properties:
+      a?: B
+  B:
+    type: object
+    properties:
+      b?: A
+
+resourceTypes:
+  collection:
+    post:
+      body:
+        application/json:
+          type: <<resourcePathName>>
+
+/A:
+  type: collection
+  post:
+    body:
+      application/json:

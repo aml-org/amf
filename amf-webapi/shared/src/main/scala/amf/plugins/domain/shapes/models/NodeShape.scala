@@ -9,6 +9,8 @@ import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
 import org.yaml.model.YPart
 import amf.core.utils.Strings
 
+import scala.collection.mutable
+
 /**
   * Node shape.
   */
@@ -55,12 +57,14 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
     result
   }
 
-  override def adopted(parent: String): this.type = {
+  override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
+    val isCycle               = cycle.contains(id)
+    val newCycle: Seq[String] = cycle :+ id
     if (("" + parent).contains("#")) // TODO: NULL ARRIVING HERE
       simpleAdoption(parent)
     else
       simpleAdoption(parent + "#/")
-    properties.foreach(_.adopted(id))
+    if (!isCycle) properties.foreach(_.adopted(id, newCycle))
     this
   }
 
