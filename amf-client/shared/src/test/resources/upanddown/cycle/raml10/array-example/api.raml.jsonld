@@ -75,6 +75,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/Email",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -103,6 +104,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/Email/property/subject/scalar/subject",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -192,6 +194,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/Email/property/body/scalar/body",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -348,6 +351,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails",
         "@type": [
           "http://a.ml/vocabularies/shapes#ArrayShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -372,6 +376,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/array/default-array",
             "@type": [
               "http://a.ml/vocabularies/shapes#ArrayShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -381,6 +386,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/array-example/api.raml#/declarations/types/array/Emails/array/default-array/items/default-node",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"

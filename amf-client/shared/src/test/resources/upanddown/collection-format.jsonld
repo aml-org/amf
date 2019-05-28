@@ -98,6 +98,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/collection-format.json#/web-api/end-points/%2Fsomepath/get/request/parameter/param2/array/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -107,6 +108,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/collection-format.json#/web-api/end-points/%2Fsomepath/get/request/parameter/param2/array/schema/items/scalar/items",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -335,6 +337,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/collection-format.json#/web-api/end-points/%2Fsomepath/get/request/parameter/param1/array/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -344,6 +347,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/collection-format.json#/web-api/end-points/%2Fsomepath/get/request/parameter/param1/array/schema/items/scalar/items",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"

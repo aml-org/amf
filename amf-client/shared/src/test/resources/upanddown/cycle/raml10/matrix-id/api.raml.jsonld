@@ -76,6 +76,7 @@
         "@type": [
           "http://a.ml/vocabularies/shapes#MatrixShape",
           "http://a.ml/vocabularies/shapes#ArrayShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -85,6 +86,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/matrix-id/api.raml#/declarations/types/array/tt/items/array/items",
             "@type": [
               "http://a.ml/vocabularies/shapes#ArrayShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -94,6 +96,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/matrix-id/api.raml#/declarations/types/array/tt/items/array/items/items/scalar/items",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"

@@ -73,6 +73,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/formData",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -91,8 +92,10 @@
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/formData/formData/property/theBody/theBody",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#FileShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
-                                      "http://a.ml/vocabularies/shapes#Shape"
+                                      "http://a.ml/vocabularies/shapes#Shape",
+                                      "http://a.ml/vocabularies/document#DomainElement"
                                     ],
                                     "http://www.w3.org/ns/shacl#name": [
                                       {
@@ -448,6 +451,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/formDataParameters.json#/declarations/parameters/parameter/a/scalar/schema",
             "@type": [
               "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"

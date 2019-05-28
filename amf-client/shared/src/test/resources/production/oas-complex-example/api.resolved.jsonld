@@ -339,6 +339,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/end-points/%2Fpets/get/request/parameter/tags/array/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -348,6 +349,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/end-points/%2Fpets/get/request/parameter/tags/array/schema/items/scalar/items",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -608,6 +610,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/end-points/%2Fpets/get/request/parameter/limit/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -854,6 +857,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/end-points/%2Fpets/get/200/default/array/default",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -863,6 +867,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/linked_5",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -997,6 +1002,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/common/Error.json#/schema/linked_5",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1165,6 +1171,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/schema/linked_2",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1260,6 +1267,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/linked_6",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1351,6 +1359,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/common/Error.json#/schema/linked_6",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1576,6 +1585,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/get/request/parameter/id/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1821,6 +1831,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/linked_7",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1912,6 +1923,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/common/Error.json#/schema/linked_7",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -2101,6 +2113,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/swagger.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/delete/request/parameter/id/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -2403,6 +2416,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/common/Error.json#/schema/linked_8",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -2656,6 +2670,7 @@
         "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -2684,6 +2699,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/id/scalar/id",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -2828,6 +2844,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -2955,6 +2972,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/property/tag/scalar/tag",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -3118,6 +3136,7 @@
         "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/common/Error.json#/schema",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -3146,6 +3165,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/common/Error.json#/schema/property/code/scalar/code",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -3290,6 +3310,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/common/Error.json#/schema/property/message/scalar/message",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -3465,6 +3486,7 @@
         "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/schema",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -3491,6 +3513,7 @@
               "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/Pet.json#/schema/linked_8",
               "@type": [
                 "http://www.w3.org/ns/shacl#NodeShape",
+                "http://a.ml/vocabularies/shapes#AnyShape",
                 "http://www.w3.org/ns/shacl#Shape",
                 "http://a.ml/vocabularies/shapes#Shape",
                 "http://a.ml/vocabularies/document#DomainElement"
@@ -3511,6 +3534,7 @@
             "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/item1",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -3539,6 +3563,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/oas-complex-example/spec/NewPet.json#/item1/property/description/scalar/description",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"

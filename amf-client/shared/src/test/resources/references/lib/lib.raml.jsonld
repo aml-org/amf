@@ -63,6 +63,7 @@
 "@id": "file://amf-client/shared/src/test/resources/references/lib/lib.raml#/declarations/types/ObjectType",
 "@type": [
 "http://www.w3.org/ns/shacl#NodeShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
 "http://www.w3.org/ns/shacl#Shape",
 "http://a.ml/vocabularies/shapes#Shape",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -91,6 +92,7 @@
 "@id": "file://amf-client/shared/src/test/resources/references/lib/lib.raml#/declarations/types/ObjectType/property/objProp1/scalar/objProp1",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
 "http://www.w3.org/ns/shacl#Shape",
 "http://a.ml/vocabularies/shapes#Shape",
 "http://a.ml/vocabularies/document#DomainElement"
@@ -206,6 +208,7 @@
 "@id": "file://amf-client/shared/src/test/resources/references/lib/lib.raml#/declarations/types/ObjectType/property/objProp2/scalar/objProp2",
 "@type": [
 "http://a.ml/vocabularies/shapes#ScalarShape",
+"http://a.ml/vocabularies/shapes#AnyShape",
 "http://www.w3.org/ns/shacl#Shape",
 "http://a.ml/vocabularies/shapes#Shape",
 "http://a.ml/vocabularies/document#DomainElement"

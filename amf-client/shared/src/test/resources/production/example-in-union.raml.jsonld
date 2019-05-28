@@ -138,14 +138,17 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/x-union/union/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://a.ml/vocabularies/shapes#anyOf": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/x-union/union/schema/scalar/scalar-expression-0",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -160,6 +163,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/end-points/%2Fendpoint/get/request/parameter/x-union/union/schema/scalar/scalar-expression-2",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -552,6 +556,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/example-in-union.raml#/web-api/http%3A%2F%2Fdomain.api.domain.com%2F%7Bversion%7D%2F/parameter/version/scalar/version",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"

@@ -17,7 +17,7 @@ object FileShapeModel extends AnyShapeModel with CommonShapeFields {
     specificFields ++ commonOASFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] =
-    List(Namespace.Shapes + "FileShape", Namespace.Shacl + "Shape", Namespace.Shapes + "Shape")
+    List(Namespace.Shapes + "FileShape") ++ AnyShapeModel.`type`
 
   override def modelInstance = FileShape()
 
