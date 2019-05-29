@@ -3,14 +3,15 @@ package amf.plugins.document.webapi.validation.remote
 import amf.ProfileName
 import amf.client.plugins.ValidationMode
 import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
+import amf.plugins.features.validation.ParserSideValidations
 import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
 import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
-import org.everit.json.schema.{Schema, ValidationException, Validator}
+import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
 import org.json.{JSONException, JSONObject}
 
 class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
@@ -34,13 +35,16 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
       validationProcessor.processResults(Nil)
     } catch {
       case validationException: ValidationException =>
-        validationProcessor.processException(validationException, fragment)
+        validationProcessor.processException(validationException, fragment.map(_.encodes))
       case exception: Error =>
-        validationProcessor.processException(exception, fragment)
+        validationProcessor.processException(exception, fragment.map(_.encodes))
     }
   }
 
-  override protected def loadSchema(jsonSchema: CharSequence): Option[LoadedSchema] = {
+  override protected def loadSchema(
+      jsonSchema: CharSequence,
+      element: DomainElement,
+      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
 
     loadJson(
       jsonSchema.toString
@@ -63,12 +67,21 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
           .addFormatValidator(new URIFormatValidator())
           .addFormatValidator(new RegexFormatValidator())
           .addFormatValidator(PartialTimeFormatValidator)
-        Some(
-          schemaBuilder
-            .build()
-            .load()
-            .build())
-      case _ => None
+
+        try {
+          Right(
+            Some(
+              schemaBuilder
+                .build()
+                .load()
+                .build())
+          )
+        } catch {
+          case e: SchemaException =>
+            Left(validationProcessor.processException(e, Some(element)))
+        }
+
+      case _ => Right(None)
     }
   }
 
@@ -93,34 +106,47 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
 
 case class JvmReportValidationProcessor(override val profileName: ProfileName) extends ReportValidationProcessor {
 
-  override def processException(r: Throwable, fragment: Option[PayloadFragment]): Return = {
+  override def processException(r: Throwable, element: Option[DomainElement]): Return = {
     val results = r match {
       case validationException: ValidationException =>
-        iterateValidations(validationException, fragment)
+        iterateValidations(validationException, element)
+
+      case e: SchemaException =>
+        Seq(
+          AMFValidationResult(
+            message = e.getMessage,
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = ParserSideValidations.SchemaException.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = e
+          ))
 
       case other =>
-        super.processCommonException(other, fragment)
+        super.processCommonException(other, element)
     }
     processResults(results)
   }
 
   private def iterateValidations(validationException: ValidationException,
-                                 payload: Option[PayloadFragment]): Seq[AMFValidationResult] = {
+                                 element: Option[DomainElement]): Seq[AMFValidationResult] = {
     var resultsAcc = Seq[AMFValidationResult]()
     val results    = validationException.getCausingExceptions.iterator()
     while (results.hasNext) {
       val result = results.next()
-      resultsAcc = resultsAcc ++ iterateValidations(result, payload)
+      resultsAcc = resultsAcc ++ iterateValidations(result, element)
     }
     if (resultsAcc.isEmpty) {
       resultsAcc = resultsAcc :+ AMFValidationResult(
         message = makeValidationMessage(validationException),
         level = SeverityLevels.VIOLATION,
-        targetNode = payload.map(_.encodes.id).getOrElse(""),
+        targetNode = element.map(_.id).getOrElse(""),
         targetProperty = None,
         validationId = ExampleValidationErrorSpecification.id,
-        position = payload.flatMap(_.encodes.position()),
-        location = payload.flatMap(_.encodes.location()),
+        position = element.flatMap(_.position()),
+        location = element.flatMap(_.location()),
         source = validationException
       )
     }
