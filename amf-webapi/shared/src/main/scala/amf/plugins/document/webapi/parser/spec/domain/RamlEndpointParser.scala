@@ -146,7 +146,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     val entries = map.regex(uriParametersKey)
     val implicitExplicitPathParams = entries.collectFirst({ case e if e.value.tagType == YType.Map => e }) match {
       case None =>
-        implicitPathParamsOrdered(endpoint)
+        implicitPathParamsOrdered(endpoint, isResourceType)
 
       case Some(e) =>
         annotations = Annotations(e.value)
@@ -157,6 +157,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
             .map(_.withBinding("path"))
 
         implicitPathParamsOrdered(endpoint,
+                                  isResourceType,
                                   variable => !explicitParameters.exists(_.name.is(variable)),
                                   explicitParameters)
     }
@@ -215,6 +216,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   }
 
   private def implicitPathParamsOrdered(endpoint: EndPoint,
+                                        isResourceType: Boolean,
                                         filter: String => Boolean = _ => true,
                                         explicitParams: Seq[Parameter] = Nil): Seq[Parameter] = {
     val parentParams: Map[String, Parameter] = parent
@@ -249,7 +251,9 @@ abstract class RamlEndpointParser(entry: YMapEntry,
         }
         implicitParam
       }
-    checkParamsUsage(endpoint, pathParams, explicitParams)
+    if (!isResourceType) {
+      checkParamsUsage(endpoint, pathParams, explicitParams)
+    }
     params ++ explicitParams.filter(!params.contains(_))
 
   }
