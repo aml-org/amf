@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.validation.remote
 import amf.ProfileName
 import amf.client.plugins.ValidationMode
 import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.Shape
+import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
 
@@ -33,13 +33,16 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
     js.Dynamic.global.JSON.parse(str)
   }
 
-  override protected def loadSchema(jsonSchema: CharSequence): Option[Dictionary[js.Dynamic]] = {
+  override protected def loadSchema(
+      jsonSchema: CharSequence,
+      element: DomainElement,
+      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[Dictionary[js.Dynamic]]] = {
     var schemaNode = loadJson(jsonSchema.toString).asInstanceOf[Dictionary[js.Dynamic]]
     schemaNode -= "x-amf-fragmentType"
     schemaNode -= "example"
     schemaNode -= "examples"
     schemaNode -= "x-amf-examples"
-    Some(schemaNode)
+    Right(Some(schemaNode))
   }
 
   override protected def callValidator(schema: Dictionary[js.Dynamic],
@@ -74,7 +77,7 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
       }
     } catch {
       case e: JavaScriptException =>
-        validationProcessor.processException(e, fragment)
+        validationProcessor.processException(e, fragment.map(_.encodes))
     }
   }
 
@@ -87,21 +90,21 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
 
 case class JsReportValidationProcessor(override val profileName: ProfileName) extends ReportValidationProcessor {
 
-  override def processException(r: Throwable, fragment: Option[PayloadFragment]): Return = {
+  override def processException(r: Throwable, element: Option[DomainElement]): Return = {
     val results = r match {
       case e: scala.scalajs.js.JavaScriptException =>
         Seq(
           AMFValidationResult(
             message = s"Internal error during validation ${e.getMessage}",
             level = SeverityLevels.VIOLATION,
-            targetNode = fragment.map(_.encodes.id).getOrElse(""),
+            targetNode = element.map(_.id).getOrElse(""),
             targetProperty = None,
             validationId = ExampleValidationErrorSpecification.id,
-            position = fragment.flatMap(_.encodes.position()),
-            location = fragment.flatMap(_.encodes.location()),
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
             source = e
           ))
-      case other => processCommonException(other, fragment)
+      case other => processCommonException(other, element)
     }
     processResults(results)
   }

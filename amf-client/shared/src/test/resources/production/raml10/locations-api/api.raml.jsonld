@@ -143,6 +143,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -157,6 +158,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/linked_1",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -1794,6 +1796,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Fstr/get/200/default/scalar/default",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1813,6 +1816,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/scalar/str/linked_1",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -2120,6 +2124,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Fobj/get/200/default/body",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -2365,6 +2370,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Farr/get/200/default/array/body",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -2690,6 +2696,7 @@
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/Location",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2718,6 +2725,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/Location/property/id/scalar/id",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -2800,6 +2808,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/NewLocation/linked_1",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -2934,6 +2943,7 @@
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/NewLocation",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2962,6 +2972,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/NewLocation/property/addressType/scalar/addressType",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -3190,6 +3201,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/declarations/types/AddressData/linked_1",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -3324,6 +3336,7 @@
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/obj",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -3352,6 +3365,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/obj/property/a/scalar/a",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -3508,6 +3522,7 @@
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/scalar/str",
             "@type": [
               "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -3575,6 +3590,7 @@
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/arr",
             "@type": [
               "http://a.ml/vocabularies/shapes#ArrayShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -3584,6 +3600,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/arr/items/scalar/items",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -3694,6 +3711,7 @@
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations",
             "@type": [
               "http://a.ml/vocabularies/shapes#ArrayShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -3708,6 +3726,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/array/default-array",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -3717,6 +3736,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-datatypes/1.0.2/locations-datatypes.raml#/declarations/types/array/Locations/array/default-array/items/default-node",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -3859,6 +3879,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/declarations/types/AddressData",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -3887,6 +3908,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/declarations/types/AddressData/property/country/scalar/country",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -3990,6 +4012,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/declarations/types/AddressData/property/state/scalar/state",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -4093,6 +4116,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/declarations/types/AddressData/property/city/scalar/city",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -4196,6 +4220,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/declarations/types/AddressData/property/street_address/scalar/street_address",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -4299,6 +4324,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/commons-datatypes/1.0.0/locationTypes.raml#/declarations/types/AddressData/property/zip/scalar/zip",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"

@@ -116,6 +116,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/numeric-facets/api.raml#/web-api/end-points/%2Flevel-zero/get/request/parameter/param1/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -140,6 +141,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/numeric-facets/api.raml#/declarations/types/Person/linked_1",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -506,6 +508,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/numeric-facets/api.raml#/declarations/types/scalar/Age",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -650,6 +653,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/numeric-facets/api.raml#/declarations/types/Person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -678,6 +682,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/numeric-facets/api.raml#/declarations/types/Person/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -767,6 +772,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/numeric-facets/api.raml#/declarations/types/Person/property/age/scalar/age",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"

@@ -92,14 +92,17 @@
             "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/securitySchemes/oauth_2_0/queryString",
             "@type": [
               "http://a.ml/vocabularies/shapes#UnionShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/shapes#anyOf": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/securitySchemes/oauth_2_0/queryString_0",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -128,6 +131,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/types/paging/property/page-size/scalar/page-size",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -243,6 +247,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/types/lat-long/property/long/scalar/long",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -358,6 +363,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/types/paging/property/start/scalar/start",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -473,6 +479,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/types/lat-long/property/lat/scalar/lat",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -617,6 +624,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/securitySchemes/oauth_2_0/queryString_1",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -646,7 +654,8 @@
                         "@type": [
                           "http://a.ml/vocabularies/shapes#NilShape",
                           "http://www.w3.org/ns/shacl#Shape",
-                          "http://a.ml/vocabularies/shapes#Shape"
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://www.w3.org/ns/shacl#name": [
                           {
@@ -728,6 +737,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/types/paging/property/page-size/scalar/page-size",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -843,6 +853,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/resolution/queryString/security-with-query-string.raml#/declarations/types/paging/property/start/scalar/start",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"

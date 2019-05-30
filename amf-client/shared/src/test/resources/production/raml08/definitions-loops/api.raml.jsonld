@@ -243,6 +243,7 @@
         "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -271,6 +272,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -299,6 +301,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment",
                         "@type": [
                           "http://www.w3.org/ns/shacl#NodeShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -327,6 +330,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/auditDetails/default-node",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -421,6 +425,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/createTime/scalar/createTime",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -536,6 +541,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/formOfPayment/formOfPayment/property/lastUpdatedTime/scalar/lastUpdatedTime",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -752,6 +758,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/createTime/scalar/createTime",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -867,6 +874,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema/property/auditDetails/auditDetails/property/lastUpdatedTime/scalar/lastUpdatedTime",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -1083,6 +1091,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema/property/formOfPayments/array/formOfPayments",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -1092,6 +1101,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/api.raml#/declarations/schemas/someSchema/property/formOfPayments/array/formOfPayments/items/items",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"

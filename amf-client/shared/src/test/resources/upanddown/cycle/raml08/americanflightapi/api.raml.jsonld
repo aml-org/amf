@@ -138,6 +138,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/get/request/parameter/code/scalar/code",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -429,7 +430,8 @@
                             "@type": [
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
@@ -1862,6 +1864,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1876,6 +1879,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/inherits/schema",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -2639,7 +2643,8 @@
                             "@type": [
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
@@ -3042,7 +3047,8 @@
                             "@type": [
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
@@ -3865,7 +3871,8 @@
                             "@type": [
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
@@ -4207,6 +4214,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -4221,6 +4229,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/inherits/schema",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -4984,7 +4993,8 @@
                             "@type": [
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
@@ -5338,6 +5348,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/parameter/ID/scalar/ID",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -5495,6 +5506,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -5523,6 +5535,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/code/scalar/code",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -5667,6 +5680,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/price/scalar/price",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -5811,6 +5825,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/departureDate/scalar/departureDate",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -5955,6 +5970,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/origin/scalar/origin",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -6099,6 +6115,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/destination/scalar/destination",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -6243,6 +6260,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/emptySeats/scalar/emptySeats",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -6387,6 +6405,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -6415,6 +6434,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/type/scalar/type",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -6530,6 +6550,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/americanflightapi/api.raml#/declarations/schemas/flight/property/plane/plane/property/totalSeats/scalar/totalSeats",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"

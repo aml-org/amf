@@ -8,6 +8,7 @@ import amf.core.remote.Platform
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels, ValidationCandidate}
 import amf.internal.environment.Environment
 import amf.plugins.domain.shapes.validation.ShapesNodesValidator
+import amf.plugins.features.validation.ParserSideValidations
 
 import scala.concurrent.Future
 
@@ -37,7 +38,14 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
     val indexedResults: Map[String, List[AMFValidationResult]] = report.results.toList.sorted.groupBy { r =>
       r.targetNode
     }
-    index.aggregate(indexedResults)
+
+    val payloadResults = index.aggregate(indexedResults)
+    val schemaResults = indexedResults
+      .filter {
+        case (_, validations) => validations.exists(_.validationId == ParserSideValidations.SchemaException.id)
+      }
+      .flatMap(_._2)
+    payloadResults ++ schemaResults
   }
 
 }

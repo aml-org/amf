@@ -75,6 +75,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt",
         "@type": [
           "http://a.ml/vocabularies/shapes#ArrayShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -84,6 +85,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/array/tt/items/items",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -199,6 +201,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/abc",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -280,6 +283,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/direct",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -352,6 +356,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/unresolved-shape/api.raml#/declarations/types/cc",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"

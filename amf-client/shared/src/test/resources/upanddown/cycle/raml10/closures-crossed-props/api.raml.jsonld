@@ -75,6 +75,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType1",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -142,6 +143,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/scalar/myType2",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -209,6 +211,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -237,6 +240,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType1/scalar/myType1",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -331,6 +335,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/closures-crossed-props/api.raml#/declarations/types/crossedNames/property/myType2/scalar/myType2",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"

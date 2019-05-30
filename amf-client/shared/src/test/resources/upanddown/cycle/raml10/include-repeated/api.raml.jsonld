@@ -99,6 +99,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/include-repeated/api.raml#/declarations/types/schema/person",
         "@type": [
           "http://www.w3.org/ns/shacl#SchemaShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -159,6 +160,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/include-repeated/api.raml#/declarations/types/schema/otherPerson",
         "@type": [
           "http://www.w3.org/ns/shacl#SchemaShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"

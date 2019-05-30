@@ -149,6 +149,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/web-api/end-points/%2Fapi%2FDocumentConfigurations/get/200/text%2Fplain/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -168,6 +169,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/linked_1",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -512,6 +514,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -540,6 +543,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/success/scalar/success",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -667,6 +671,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -700,6 +705,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/message/scalar/message/property/readOnly%3F/scalar/readOnly%3F",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"
@@ -911,6 +917,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -944,6 +951,7 @@
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/type-declared-with-square-bracket/api.raml#/declarations/types/IServiceResponse%5Badasf%5D/property/warning/scalar/warning/property/readOnly%3F/scalar/readOnly%3F",
                         "@type": [
                           "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
                           "http://www.w3.org/ns/shacl#Shape",
                           "http://a.ml/vocabularies/shapes#Shape",
                           "http://a.ml/vocabularies/document#DomainElement"

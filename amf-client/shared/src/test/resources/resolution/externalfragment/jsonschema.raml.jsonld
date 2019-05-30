@@ -68,6 +68,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -96,6 +97,7 @@
                                     "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/jsonschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/property/age/scalar/age",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
                                       "http://a.ml/vocabularies/shapes#Shape",
                                       "http://a.ml/vocabularies/document#DomainElement"

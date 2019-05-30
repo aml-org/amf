@@ -66,6 +66,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/data-type-fragment/person.raml#/type",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -94,6 +95,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/data-type-fragment/person.raml#/type/property/name/scalar/name",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -276,6 +278,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/data-type-fragment/api.raml#/declarations/types/person",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"

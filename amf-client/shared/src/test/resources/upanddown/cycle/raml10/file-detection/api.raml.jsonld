@@ -83,8 +83,10 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/file-detection/api.raml#/web-api/end-points/%2Fsome/get/request/parameter/myHeader/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#FileShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://a.ml/vocabularies/shapes#fileType": [
                               {

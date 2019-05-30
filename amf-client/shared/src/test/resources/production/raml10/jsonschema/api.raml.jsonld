@@ -104,6 +104,7 @@
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonschema/api.raml#/declarations/types/jsonSchema",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -132,6 +133,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonschema/api.raml#/declarations/types/jsonSchema/property/age/scalar/age",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"

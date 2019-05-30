@@ -1,13 +1,13 @@
 package amf.plugins.document.webapi.validation.remote
 import amf.ProfileName
-import amf.core.model.document.PayloadFragment
+import amf.core.model.domain.DomainElement
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
 
 trait ValidationProcessor {
   type Return
   def processResults(r: Seq[AMFValidationResult]): Return
-  def processException(r: Throwable, fragment: Option[PayloadFragment]): Return
+  def processException(r: Throwable, element: Option[DomainElement]): Return
 }
 
 object BooleanValidationProcessor extends ValidationProcessor {
@@ -15,7 +15,7 @@ object BooleanValidationProcessor extends ValidationProcessor {
   override type Return = Boolean
   override def processResults(r: Seq[AMFValidationResult]): Return =
     !r.exists(_.level == SeverityLevels.VIOLATION)
-  override def processException(r: Throwable, fragment: Option[PayloadFragment]): Return = false
+  override def processException(r: Throwable, element: Option[DomainElement]): Return = false
 }
 
 trait ReportValidationProcessor extends ValidationProcessor {
@@ -27,18 +27,18 @@ trait ReportValidationProcessor extends ValidationProcessor {
                         profileName,
                         r)
   }
-  protected def processCommonException(r: Throwable, fragment: Option[PayloadFragment]): Seq[AMFValidationResult] = {
+  protected def processCommonException(r: Throwable, element: Option[DomainElement]): Seq[AMFValidationResult] = {
     r match {
       case e: UnknownDiscriminator =>
         Seq(
           AMFValidationResult(
             message = "Unknown discriminator value",
             level = SeverityLevels.VIOLATION,
-            targetNode = fragment.map(_.encodes.id).getOrElse(""),
+            targetNode = element.map(_.id).getOrElse(""),
             targetProperty = None,
             validationId = ExampleValidationErrorSpecification.id,
-            position = fragment.flatMap(_.encodes.position()),
-            location = fragment.flatMap(_.encodes.location()),
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
             source = e
           ))
       case e: InvalidJsonObject =>
@@ -46,11 +46,11 @@ trait ReportValidationProcessor extends ValidationProcessor {
           AMFValidationResult(
             message = "Unsupported chars in string value (probably a binary file)",
             level = SeverityLevels.VIOLATION,
-            targetNode = fragment.map(_.encodes.id).getOrElse(""),
+            targetNode = element.map(_.id).getOrElse(""),
             targetProperty = None,
             validationId = ExampleValidationErrorSpecification.id,
-            position = fragment.flatMap(_.encodes.position()),
-            location = fragment.flatMap(_.encodes.location()),
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
             source = e
           ))
       case _ => Nil

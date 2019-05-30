@@ -257,6 +257,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p1/scalar/schema",
             "@type": [
               "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -408,6 +409,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/declarations/parameters/parameter/p2/scalar/schema",
             "@type": [
               "http://a.ml/vocabularies/shapes#ScalarShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"

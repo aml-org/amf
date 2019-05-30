@@ -18,7 +18,7 @@ object SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
     DomainElementModel.fields ++
     LinkableElementModel.fields
 
-  override val `type`: List[ValueType] = List(Shacl + "SchemaShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
+  override val `type`: List[ValueType] = List(Shacl + "SchemaShape") ++ AnyShapeModel.`type`
 
   override def modelInstance = SchemaShape()
 

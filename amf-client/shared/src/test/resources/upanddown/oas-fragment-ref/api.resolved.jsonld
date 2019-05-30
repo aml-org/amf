@@ -133,6 +133,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/linked_2",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -326,6 +327,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -354,6 +356,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/schemas/a.json#/schema/property/a1/scalar/a1",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"

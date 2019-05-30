@@ -92,6 +92,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -130,6 +131,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/onlyFutureDates/scalar/onlyFutureDates",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -245,6 +247,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/CustomDate/property/noHolidays/scalar/noHolidays",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -434,6 +437,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/type-facets.json#/declarations/types/scalar/PossibleMeetingDate",
         "@type": [
           "http://a.ml/vocabularies/shapes#ScalarShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"

@@ -64,6 +64,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/http%3A%2F%2F%7Benvironment%7D-american-ws.cloudhub.io%2Fapi%2F/parameter/environment/scalar/environment",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -215,6 +216,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights/get/request/parameter/code/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -534,6 +536,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/array/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -548,6 +551,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/array/schema/array/default-array",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -557,6 +561,7 @@
                                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights/get/200/application%2Fjson/array/schema/array/default-array/items/default-node",
                                     "@type": [
                                       "http://www.w3.org/ns/shacl#NodeShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
                                       "http://a.ml/vocabularies/shapes#Shape",
                                       "http://a.ml/vocabularies/document#DomainElement"
@@ -2119,6 +2124,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights/post/request/application%2Fjson/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -2138,6 +2144,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declarations/types/AmericanFlight/linked_4",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -2966,7 +2973,8 @@
                             "@type": [
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
@@ -3421,6 +3429,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/get/200/application%2Fjson/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -3440,6 +3449,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declarations/types/AmericanFlight/linked_5",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -4381,7 +4391,8 @@
                             "@type": [
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
@@ -4776,6 +4787,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/put/request/application%2Fjson/schema",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -4795,6 +4807,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declarations/types/AmericanFlight/linked_6",
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -5623,7 +5636,8 @@
                             "@type": [
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
@@ -6025,6 +6039,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/web-api/end-points/%2Fflights%2F%7BID%7D/parameter/ID/scalar/ID",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -6202,6 +6217,7 @@
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type",
             "@type": [
               "http://www.w3.org/ns/shacl#NodeShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6230,6 +6246,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/ID/scalar/ID%3F",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -6319,6 +6336,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/code/scalar/code",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -6408,6 +6426,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/price/scalar/price",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -6497,6 +6516,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/departureDate/scalar/departureDate",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -6586,6 +6606,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/origin/scalar/origin",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -6675,6 +6696,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/destination/scalar/destination",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -6764,6 +6786,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/emptySeats/scalar/emptySeats",
                     "@type": [
                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -6853,6 +6876,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/plane/plane",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -6881,6 +6905,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/plane/plane/property/type/scalar/type",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -6970,6 +6995,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/AmericanFlight.raml#/type/property/plane/plane/property/totalSeats/scalar/totalSeats",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -7454,6 +7480,7 @@
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flights-api/api.raml#/declarations/types/AmericanFlight",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"

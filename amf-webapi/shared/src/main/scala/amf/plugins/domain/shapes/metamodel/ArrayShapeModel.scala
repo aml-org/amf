@@ -46,7 +46,7 @@ class DataArrangementShape extends AnyShapeModel {
 
 object ArrayShapeModel extends DataArrangementShape with DomainElementModel {
 
-  override val `type`: List[ValueType] = List(Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
+  override val `type`: List[ValueType] = List(Shapes + "ArrayShape") ++ AnyShapeModel.`type`
 
   override def modelInstance = ArrayShape()
 
@@ -58,9 +58,8 @@ object ArrayShapeModel extends DataArrangementShape with DomainElementModel {
 }
 
 object MatrixShapeModel extends DataArrangementShape with DomainElementModel {
-  override val `type`
-    : List[ValueType]        = List(Shapes + "MatrixShape", Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
-  override def modelInstance = MatrixShape()
+  override val `type`: List[ValueType] = List(Shapes + "MatrixShape", Shapes + "ArrayShape") ++ AnyShapeModel.`type`
+  override def modelInstance           = MatrixShape()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
@@ -77,9 +76,8 @@ object TupleShapeModel extends DataArrangementShape with DomainElementModel {
   val TupleItems = Field(SortedArray(ShapeModel),
                          Shapes + "items",
                          ModelDoc(ModelVocabularies.Shapes, "items", "Shapes contained in the Tuple Shape"))
-  override val `type`
-    : List[ValueType]        = List(Shapes + "TupleShape", Shapes + "ArrayShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
-  override def modelInstance = TupleShape()
+  override val `type`: List[ValueType] = List(Shapes + "TupleShape", Shapes + "ArrayShape") ++ AnyShapeModel.`type`
+  override def modelInstance           = TupleShape()
 
   override val fields: List[Field] = List(TupleItems,
                                           MinItems,
