@@ -3,7 +3,7 @@ package amf.resolution
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.{ErrorHandler, RuntimeErrorHandler, UnhandledErrorHandler}
+import amf.core.parser.{RuntimeErrorHandler, UnhandledErrorHandler}
 import amf.core.remote._
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.emit.AMFRenderer
@@ -285,6 +285,10 @@ class OASProductionResolutionTest extends OasResolutionTest {
 
   test("OAS multiple examples test") {
     cycle("oas-multiple-example.json", "oas-multiple-example.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("OAS XML payload test") {
+    cycle("oas20/xml-payload.json", "oas20/xml-payload.json.jsonld", OasYamlHint, Amf)
   }
 }
 
