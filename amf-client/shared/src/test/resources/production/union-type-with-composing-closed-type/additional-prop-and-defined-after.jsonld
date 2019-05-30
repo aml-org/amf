@@ -73,8 +73,10 @@
                             "@id": "#9/linked_1",
                             "@type": [
                               "raml-shapes:UnionShape",
+                              "raml-shapes:AnyShape",
                               "shacl:Shape",
-                              "raml-shapes:Shape"
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
                             ],
                             "doc:link-target": [
                               {
@@ -134,6 +136,7 @@
         "@id": "#1",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -149,7 +152,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -161,6 +165,7 @@
                 "@id": "#3",
                 "@type": [
                   "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
@@ -197,6 +202,9 @@
               }
             ],
             "smaps": {
+              "inheritance-provenance": {
+                "#2": "amf://id#1"
+              },
               "lexical": {
                 "#2": "[(10,6)-(13,0)]"
               }
@@ -229,6 +237,7 @@
         "@id": "#5",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -244,7 +253,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -256,6 +266,7 @@
                 "@id": "#7",
                 "@type": [
                   "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
@@ -292,6 +303,9 @@
               }
             ],
             "smaps": {
+              "inheritance-provenance": {
+                "#6": "amf://id#5"
+              },
               "lexical": {
                 "#6": "[(16,6)-(19,0)]"
               }
@@ -323,14 +337,17 @@
         "@id": "#9",
         "@type": [
           "raml-shapes:UnionShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
-          "raml-shapes:Shape"
+          "raml-shapes:Shape",
+          "doc:DomainElement"
         ],
         "raml-shapes:anyOf": [
           {
             "@id": "#10",
             "@type": [
               "shacl:NodeShape",
+              "raml-shapes:AnyShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
@@ -346,7 +363,8 @@
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
-                  "raml-shapes:Shape"
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
                 ],
                 "shacl:path": [
                   {
@@ -358,6 +376,7 @@
                     "@id": "#3",
                     "@type": [
                       "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
                       "shacl:Shape",
                       "raml-shapes:Shape",
                       "doc:DomainElement"
@@ -394,6 +413,9 @@
                   }
                 ],
                 "smaps": {
+                  "inheritance-provenance": {
+                    "#2": "amf://id#1"
+                  },
                   "lexical": {
                     "#2": "[(10,6)-(13,0)]"
                   }
@@ -424,6 +446,7 @@
             "@id": "#12",
             "@type": [
               "shacl:NodeShape",
+              "raml-shapes:AnyShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
@@ -439,7 +462,8 @@
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
-                  "raml-shapes:Shape"
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
                 ],
                 "shacl:path": [
                   {
@@ -451,6 +475,7 @@
                     "@id": "#7",
                     "@type": [
                       "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
                       "shacl:Shape",
                       "raml-shapes:Shape",
                       "doc:DomainElement"
@@ -487,6 +512,9 @@
                   }
                 ],
                 "smaps": {
+                  "inheritance-provenance": {
+                    "#6": "amf://id#5"
+                  },
                   "lexical": {
                     "#6": "[(16,6)-(19,0)]"
                   }

@@ -101,6 +101,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/web-api/end-points/%2Forganization/get/201/default/default",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -122,6 +123,7 @@
                                   "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/declarations/types/Org/linked_2",
                                   "@type": [
                                     "http://www.w3.org/ns/shacl#NodeShape",
+                                    "http://a.ml/vocabularies/shapes#AnyShape",
                                     "http://www.w3.org/ns/shacl#Shape",
                                     "http://a.ml/vocabularies/shapes#Shape",
                                     "http://a.ml/vocabularies/document#DomainElement"
@@ -1457,6 +1459,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/web-api/end-points/%2Forganization/get/201/default/default",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -1478,6 +1481,7 @@
                                   "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/declarations/types/Org/linked_3",
                                   "@type": [
                                     "http://www.w3.org/ns/shacl#NodeShape",
+                                    "http://a.ml/vocabularies/shapes#AnyShape",
                                     "http://www.w3.org/ns/shacl#Shape",
                                     "http://a.ml/vocabularies/shapes#Shape",
                                     "http://a.ml/vocabularies/document#DomainElement"
@@ -2985,6 +2989,7 @@
         "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/declarations/types/Org",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -3000,7 +3005,8 @@
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
@@ -3012,6 +3018,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/declarations/types/Org/property/name/scalar/name",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -3114,7 +3121,8 @@
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
@@ -3126,6 +3134,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/declarations/types/Org/property/address/scalar/address",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -3228,7 +3237,8 @@
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
@@ -3240,6 +3250,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/oas-example.json#/declarations/types/Org/property/value/scalar/value",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"

@@ -73,8 +73,10 @@
                             "@id": "#1/linked_1",
                             "@type": [
                               "raml-shapes:UnionShape",
+                              "raml-shapes:AnyShape",
                               "shacl:Shape",
-                              "raml-shapes:Shape"
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
                             ],
                             "doc:link-target": [
                               {
@@ -134,14 +136,17 @@
         "@id": "#1",
         "@type": [
           "raml-shapes:UnionShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
-          "raml-shapes:Shape"
+          "raml-shapes:Shape",
+          "doc:DomainElement"
         ],
         "raml-shapes:anyOf": [
           {
             "@id": "#2",
             "@type": [
               "shacl:NodeShape",
+              "raml-shapes:AnyShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
@@ -157,7 +162,8 @@
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
-                  "raml-shapes:Shape"
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
                 ],
                 "shacl:path": [
                   {
@@ -169,6 +175,7 @@
                     "@id": "#4",
                     "@type": [
                       "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
                       "shacl:Shape",
                       "raml-shapes:Shape",
                       "doc:DomainElement"
@@ -236,6 +243,7 @@
             "@id": "#6",
             "@type": [
               "shacl:NodeShape",
+              "raml-shapes:AnyShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
@@ -251,7 +259,8 @@
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
-                  "raml-shapes:Shape"
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
                 ],
                 "shacl:path": [
                   {
@@ -263,6 +272,7 @@
                     "@id": "#8",
                     "@type": [
                       "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
                       "shacl:Shape",
                       "raml-shapes:Shape",
                       "doc:DomainElement"
@@ -345,6 +355,7 @@
         "@id": "#11",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -360,7 +371,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -372,6 +384,7 @@
                 "@id": "#4",
                 "@type": [
                   "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
@@ -440,6 +453,7 @@
         "@id": "#12",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -455,7 +469,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -467,6 +482,7 @@
                 "@id": "#8",
                 "@type": [
                   "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"

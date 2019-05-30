@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.validation.remote
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
 import amf.core.model.document.PayloadFragment
-import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
+import amf.core.model.domain._
 import amf.core.parser.{DefaultParserSideErrorHandler, ParserContext, RuntimeErrorHandler, SyamlParsedDocument}
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
@@ -74,7 +74,10 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
 
   protected def loadJson(text: String): LoadedObj
 
-  protected def loadSchema(jsonSchema: CharSequence): Option[LoadedSchema]
+  protected def loadSchema(
+      jsonSchema: CharSequence,
+      element: DomainElement,
+      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]]
 
   protected def validateForFragment(fragment: PayloadFragment,
                                     validationProcessor: ValidationProcessor): ValidationProcessor#Return = {
@@ -82,7 +85,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     try {
       performValidation(buildCandidate(fragment), validationProcessor)
     } catch {
-      case e: InvalidJsonObject => validationProcessor.processException(e, Some(fragment))
+      case e: InvalidJsonObject => validationProcessor.processException(e, Some(fragment.encodes))
     }
   }
 
@@ -114,12 +117,14 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     }
   }
 
-  private def generateShape(fragmentShape: Shape): Option[LoadedSchema] = {
+  private def generateShape(
+      fragmentShape: Shape,
+      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
     val dataType = DataTypeFragment()
     dataType.fields
       .setWithoutId(DataTypeFragmentModel.Encodes, fragmentShape) // careful, we don't want to modify the ID
 
-    SYamlSyntaxPlugin
+    val unparsedDocOption = SYamlSyntaxPlugin
       .unparse(
         "application/json",
         SyamlParsedDocument(
@@ -127,7 +132,11 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
             JsonSchemaEmitterContext(DefaultParserSideErrorHandler(dataType)))
             .emitFragment())
       )
-      .flatMap(loadSchema) // todo for logic in serializer. Hoy to handle the root?
+
+    unparsedDocOption match {
+      case Some(charSequence) => loadSchema(charSequence, fragmentShape, validationProcessor)
+      case None               => Right(None)
+    }
   }
 
   protected def literalRepresentation(payload: PayloadFragment): Option[String] = {
@@ -154,16 +163,25 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     }
   }
 
-  private def buildObjPolymorphicShape(payload: DataNode): Option[LoadedSchema] =
-    getOrCreateObj(PolymorphicShapeExtractor(shape.asInstanceOf[AnyShape], payload)) // if is polymorphic is an any shape
+  private def buildObjPolymorphicShape(
+      payload: DataNode,
+      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] =
+    getOrCreateObj(PolymorphicShapeExtractor(shape.asInstanceOf[AnyShape], payload), validationProcessor) // if is polymorphic is an any shape
 
-  private def getOrCreateObj(s: AnyShape): Option[LoadedSchema] = {
+  private def getOrCreateObj(
+      s: AnyShape,
+      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
     schemas.get(s.id) match {
-      case Some(json) => Some(json)
+      case Some(json) => Right(Some(json))
       case _ =>
-        val maybeSchema = generateShape(s)
-        maybeSchema.foreach { schemas.put(s.id, _) }
-        maybeSchema
+        generateShape(s, validationProcessor) match {
+          case Right(maybeSchema) =>
+            maybeSchema.foreach { schemas.put(s.id, _) }
+            Right(maybeSchema)
+          case Left(result) =>
+            Left(result)
+        }
+
     }
   }
 
@@ -233,8 +251,9 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
           {
             resultOption match {
               case Some(result) if polymorphic =>
-                Right(buildObjPolymorphicShape(result.fragment.encodes)) // if is polymorphic I already parse the payload
-              case _ if shape.isInstanceOf[AnyShape] => Right(getOrCreateObj(shape.asInstanceOf[AnyShape]))
+                buildObjPolymorphicShape(result.fragment.encodes, validationProcessor) // if is polymorphic I already parse the payload
+              case _ if shape.isInstanceOf[AnyShape] =>
+                getOrCreateObj(shape.asInstanceOf[AnyShape], validationProcessor)
               case _ =>
                 Left(
                   validationProcessor.processResults(Seq(AMFValidationResult(
@@ -254,7 +273,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
             case _                   => validationProcessor.processResults(Nil)
           }
         } catch {
-          case e: UnknownDiscriminator => validationProcessor.processException(e, fragmentOption)
+          case e: UnknownDiscriminator => validationProcessor.processException(e, fragmentOption.map(_.encodes))
         }
 
       case _ => validationProcessor.processResults(Nil) // ignore

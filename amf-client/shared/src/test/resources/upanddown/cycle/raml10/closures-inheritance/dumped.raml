@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: api
+types:
+  baseType:
+    type: string
+  parent:
+    properties:
+      prop1: baseType
+  child:
+    type: parent
+    properties:
+      baseType:
+        type: number
+  grandChild:
+    type: child
+    properties:
+      prop2: baseType

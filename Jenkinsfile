@@ -17,7 +17,10 @@ pipeline {
     }
     stage('Coverage') {
       when {
-        branch 'develop'
+        anyOf {
+          branch 'master'
+          branch 'develop'
+        }
       }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {

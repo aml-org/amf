@@ -44,6 +44,7 @@
             "@id": "#2",
             "@type": [
               "shacl:NodeShape",
+              "raml-shapes:AnyShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
@@ -59,7 +60,8 @@
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
-                  "raml-shapes:Shape"
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
                 ],
                 "shacl:path": [
                   {
@@ -71,6 +73,7 @@
                     "@id": "#4",
                     "@type": [
                       "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
                       "shacl:Shape",
                       "raml-shapes:Shape",
                       "doc:DomainElement"
@@ -136,6 +139,7 @@
         "@id": "#5",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -151,7 +155,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -163,6 +168,7 @@
                 "@id": "#4",
                 "@type": [
                   "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
@@ -225,6 +231,7 @@
         "@id": "#6",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -240,7 +247,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -252,6 +260,7 @@
                 "@id": "#4",
                 "@type": [
                   "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"

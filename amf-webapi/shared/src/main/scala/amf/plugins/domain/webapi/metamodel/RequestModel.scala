@@ -11,28 +11,13 @@ import amf.plugins.domain.webapi.models.Request
 /**
   * Request metaModel.
   */
-object RequestModel extends DomainElementModel with DescriptionField {
+object RequestModel extends DomainElementModel with DescriptionField with ParametersFieldModel {
 
   val Required = Field(Bool, Http + "required", ModelDoc(ModelVocabularies.Http, "required", ""))
-
-  val QueryParameters = Field(Array(ParameterModel),
-                              Http + "parameter",
-                              ModelDoc(ModelVocabularies.Http, "parameter", "Parameters associated to the request"))
-
-  val Headers = Field(Array(ParameterModel),
-                      Http + "header",
-                      ModelDoc(ModelVocabularies.Http, "header", "Headers associated to the request"))
 
   val Payloads = Field(Array(PayloadModel),
                        Http + "payload",
                        ModelDoc(ModelVocabularies.Http, "payload", "Payload for the request"))
-
-  val QueryString = Field(ShapeModel,
-                          Http + "queryString",
-                          ModelDoc(ModelVocabularies.Http, "query string", "Query string for the request"))
-
-  val UriParameters =
-    Field(Array(ParameterModel), Http + "uriParameter", ModelDoc(ModelVocabularies.Http, "uri parameter", ""))
 
   val CookieParameters =
     Field(Array(ParameterModel), Http + "cookieParameter", ModelDoc(ModelVocabularies.Http, "cookie parameter", ""))

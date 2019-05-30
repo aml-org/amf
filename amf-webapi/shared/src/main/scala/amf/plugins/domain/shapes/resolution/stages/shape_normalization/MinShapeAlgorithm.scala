@@ -43,16 +43,16 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     }
   }
 
-  private def mergeClojures(derived: Shape, superShape: Shape): Unit = {
+  private def mergeClosures(derived: Shape, superShape: Shape): Unit = {
     superShape.closureShapes.foreach { scs =>
       derived.closureShapes += scs
-      context.cache.addClojures(Seq(scs), derived)
+      context.cache.addClosures(Seq(scs), derived)
     }
   }
   def computeMinShape(derivedShapeOrig: Shape, superShapeOri: Shape): Shape = {
     val superShape   = copy(superShapeOri)
     val derivedShape = derivedShapeOrig.cloneShape(Some(context.errorHandler)) // this is destructive, we need to clone
-    mergeClojures(derivedShape, superShape)
+    mergeClosures(derivedShape, superShape)
 //    context.cache.updateRecursiveTargets(derivedShape)
     try {
       derivedShape match {
@@ -334,7 +334,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   def inheritProp(from: Shape)(prop: PropertyShape): PropertyShape = {
-    val clonedProp = prop.cloneShape(Some(context.errorHandler))
+    val clonedProp = prop.cloneShape(Some(context.errorHandler)) // TODO this might not be working as expected
     if (clonedProp.annotations.find(classOf[InheritanceProvenance]).isEmpty)
       clonedProp.annotations += InheritanceProvenance(from.id)
     clonedProp

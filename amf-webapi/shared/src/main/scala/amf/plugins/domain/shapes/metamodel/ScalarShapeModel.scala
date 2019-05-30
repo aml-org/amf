@@ -21,7 +21,7 @@ object ScalarShapeModel extends AnyShapeModel with CommonShapeFields {
   override val fields
     : List[Field] = specificFields ++ commonOASFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = List(Shapes + "ScalarShape") ++ ShapeModel.`type` ++ DomainElementModel.`type`
+  override val `type`: List[ValueType] = List(Shapes + "ScalarShape") ++ AnyShapeModel.`type`
 
   override def modelInstance = ScalarShape()
 

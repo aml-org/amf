@@ -18,6 +18,7 @@
         "@id": "#1",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -33,7 +34,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -45,6 +47,7 @@
                 "@id": "#3",
                 "@type": [
                   "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
@@ -60,7 +63,8 @@
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
-                      "raml-shapes:Shape"
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
                     ],
                     "shacl:path": [
                       {
@@ -72,6 +76,7 @@
                         "@id": "#5",
                         "@type": [
                           "shacl:NodeShape",
+                          "raml-shapes:AnyShape",
                           "shacl:Shape",
                           "raml-shapes:Shape",
                           "doc:DomainElement"
@@ -87,7 +92,8 @@
                             "@type": [
                               "shacl:PropertyShape",
                               "shacl:Shape",
-                              "raml-shapes:Shape"
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
                             ],
                             "shacl:path": [
                               {
@@ -100,7 +106,8 @@
                                 "@type": [
                                   "raml-shapes:RecursiveShape",
                                   "shacl:Shape",
-                                  "raml-shapes:Shape"
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
                                 ],
                                 "raml-shapes:fixPoint": [
                                   {
@@ -263,6 +270,7 @@
         "@id": "#5",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -278,7 +286,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -291,7 +300,8 @@
                 "@type": [
                   "raml-shapes:RecursiveShape",
                   "shacl:Shape",
-                  "raml-shapes:Shape"
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
                 ],
                 "raml-shapes:fixPoint": [
                   {
@@ -375,6 +385,7 @@
         "@id": "#3",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -390,7 +401,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -402,6 +414,7 @@
                 "@id": "#5",
                 "@type": [
                   "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
@@ -417,7 +430,8 @@
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
-                      "raml-shapes:Shape"
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
                     ],
                     "shacl:path": [
                       {
@@ -430,7 +444,8 @@
                         "@type": [
                           "raml-shapes:RecursiveShape",
                           "shacl:Shape",
-                          "raml-shapes:Shape"
+                          "raml-shapes:Shape",
+                          "doc:DomainElement"
                         ],
                         "raml-shapes:fixPoint": [
                           {
@@ -554,7 +569,8 @@
         "@type": [
           "raml-shapes:RecursiveShape",
           "shacl:Shape",
-          "raml-shapes:Shape"
+          "raml-shapes:Shape",
+          "doc:DomainElement"
         ],
         "raml-shapes:fixPoint": [
           {
@@ -593,6 +609,7 @@
         "@id": "#14",
         "@type": [
           "raml-shapes:ArrayShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -603,7 +620,8 @@
             "@type": [
               "raml-shapes:RecursiveShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "doc:link-target": [
               {

@@ -1,0 +1,41 @@
+#%RAML 1.0 Library
+types:
+  person:
+    type: object
+    properties:
+      memberships:
+        displayName: Memberships
+        required: false
+        type: memberships
+    examples:
+      person1:
+        name:
+          first-name: John
+          last-name: Smith
+  persons:
+    type: person[]
+  account:
+    displayName: Account
+    type: organization
+  organization:
+    type: object
+    properties:
+      contact-personnel:
+        displayName: Organization Contact Personnel
+        type: persons
+  organizations:
+    type: organization[]
+  membership:
+    type: object
+    properties:
+      member-account:
+        type: account
+  memberships:
+    type: membership[]
+  contract:
+    type: object
+    properties:
+      account:
+        type: account
+  contracts:
+    type: contract[]

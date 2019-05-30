@@ -12,23 +12,26 @@ import scala.collection.mutable.ListBuffer
   */
 class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
 
-  case class ReplacerExamples(transformation: String, base: String, result: String)
+  case class ReplacerExamples(name: String, transformation: String, base: String, result: String)
 
   val examples = List(
-    ReplacerExamples("singularize", "users", "user"),
-    ReplacerExamples("pluralize", "user", "users"),
-    ReplacerExamples("uppercase", "userId", "USERID"),
-    ReplacerExamples("lowercase", "userId", "userid"),
-    ReplacerExamples("lowercamelcase", "UserId", "userId"),
-    ReplacerExamples("uppercamelcase", "userId", "UserId"),
-    ReplacerExamples("lowerunderscorecase", "userId", "user_id"),
-    ReplacerExamples("upperunderscorecase", "userId", "USER_ID"),
-    ReplacerExamples("lowerhyphencase", "userId", "user-id"),
-    ReplacerExamples("upperhyphencase", "userId", "USER-ID")
+    ReplacerExamples("singularize", "singularize", "users", "user"),
+    ReplacerExamples("pluralize", "pluralize", "user", "users"),
+    ReplacerExamples("uppercase", "uppercase", "userId", "USERID"),
+    ReplacerExamples("lowercase", "lowercase", "userId", "userid"),
+    ReplacerExamples("lowercamelcase", "lowercamelcase", "UserId", "userId"),
+    ReplacerExamples("uppercamelcase", "uppercamelcase", "userId", "UserId"),
+    ReplacerExamples("uppercamelcase hyphen", "uppercamelcase", "user-id", "UserId"),
+    ReplacerExamples("uppercamelcase underscore", "uppercamelcase", "user_id", "UserId"),
+    ReplacerExamples("uppercamelcase space", "uppercamelcase", "user id", "UserId"),
+    ReplacerExamples("lowerunderscorecase", "lowerunderscorecase", "userId", "user_id"),
+    ReplacerExamples("upperunderscorecase", "upperunderscorecase", "userId", "USER_ID"),
+    ReplacerExamples("lowerhyphencase", "lowerhyphencase", "userId", "user-id"),
+    ReplacerExamples("upperhyphencase", "upperhyphencase", "userId", "USER-ID")
   )
 
   examples.foreach { example =>
-    test(s"Test transformation : ${example.transformation} of Raml spec example") {
+    test(s"Test transformation : ${example.name} of Raml spec example") {
       VariableReplacer.variableTransformation((e: String) => fail(e))(example.base, example.transformation) should be(
         example.result)
     }

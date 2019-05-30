@@ -228,4 +228,16 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Recursion in extension 2") {
     validate("recursion-in-extension/extension.raml", Some("recursion-in-extension2.report"))
   }
+
+  test("Defining library within types") {
+    validate("invalid-references-to-library/using-types.raml", Some("include-library-using-types.report"))
+  }
+
+  test("Defining library in uses with include tag") {
+    validate("invalid-references-to-library/using-uses.raml", Some("include-library-with-includes.report"))
+  }
+
+  test("Recursive inheritance case") {
+    validate("complex-recursive-inheritance/lib.raml")
+  }
 }

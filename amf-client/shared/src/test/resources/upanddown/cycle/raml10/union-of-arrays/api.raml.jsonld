@@ -68,6 +68,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/web-api/end-points/%2Ftest/get/request/application%2Fjson/array/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ArrayShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -82,6 +83,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/array/unionType/linked_1",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#ArrayShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
                                   "http://a.ml/vocabularies/document#DomainElement"
@@ -366,6 +368,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/type1",
         "@type": [
           "http://www.w3.org/ns/shacl#NodeShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -381,7 +384,8 @@
             "@type": [
               "http://www.w3.org/ns/shacl#PropertyShape",
               "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
@@ -393,6 +397,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/type1/property/prop1/scalar/prop1",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -535,6 +540,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/array/type2",
         "@type": [
           "http://a.ml/vocabularies/shapes#ArrayShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -549,6 +555,7 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/array/type2/array/default-array",
             "@type": [
               "http://a.ml/vocabularies/shapes#ArrayShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
               "http://a.ml/vocabularies/shapes#Shape",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -558,6 +565,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/array/type2/array/default-array/items/scalar/default-scalar",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ScalarShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -686,6 +694,7 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/array/unionType",
         "@type": [
           "http://a.ml/vocabularies/shapes#ArrayShape",
+          "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
@@ -700,14 +709,17 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/array/unionType/union/default-union",
             "@type": [
               "http://a.ml/vocabularies/shapes#UnionShape",
+              "http://a.ml/vocabularies/shapes#AnyShape",
               "http://www.w3.org/ns/shacl#Shape",
-              "http://a.ml/vocabularies/shapes#Shape"
+              "http://a.ml/vocabularies/shapes#Shape",
+              "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/shapes#anyOf": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/array/unionType/union/default-union/array/array_0",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -717,6 +729,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/array/unionType/union/default-union/array/array_0/items/default-node",
                     "@type": [
                       "http://www.w3.org/ns/shacl#NodeShape",
+                      "http://a.ml/vocabularies/shapes#AnyShape",
                       "http://www.w3.org/ns/shacl#Shape",
                       "http://a.ml/vocabularies/shapes#Shape",
                       "http://a.ml/vocabularies/document#DomainElement"
@@ -743,6 +756,7 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/union-of-arrays/api.raml#/declarations/types/array/unionType/union/default-union/array/array_1",
                 "@type": [
                   "http://a.ml/vocabularies/shapes#ArrayShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
                   "http://www.w3.org/ns/shacl#Shape",
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"

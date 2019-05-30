@@ -73,8 +73,10 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/end-points/%2Ftest/post/request/application%2Fjson/union/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#UnionShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape"
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
                             ],
                             "http://www.w3.org/ns/shacl#name": [
                               {
@@ -86,14 +88,17 @@
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/end-points/%2Ftest/post/request/application%2Fjson/union/schema/union/schema",
                                 "@type": [
                                   "http://a.ml/vocabularies/shapes#UnionShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape"
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
                                 "http://a.ml/vocabularies/shapes#anyOf": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/end-points/%2Ftest/post/request/application%2Fjson/scalar/schema",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
                                       "http://a.ml/vocabularies/shapes#Shape",
                                       "http://a.ml/vocabularies/document#DomainElement"
@@ -108,6 +113,7 @@
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty_union/api.raml#/web-api/end-points/%2Ftest/post/request/application%2Fjson/scalar/schema",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
                                       "http://a.ml/vocabularies/shapes#Shape",
                                       "http://a.ml/vocabularies/document#DomainElement"

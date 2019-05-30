@@ -230,8 +230,36 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     cycle("lib.raml", "lib.jsonld", RamlYamlHint, Amf, productionPath + "lib-types/")
   }
 
-  ignore("Union of arrays") {
+  test("Union of arrays") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "union-of-arrays/")
+  }
+
+  test("Inheritance provenance annotation from declaration") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, validationsPath + "inheritance-provenance/from-declaration/")
+  }
+
+  test("Inheritance provenance annotation with recursive inheritance") {
+    cycle("api.raml",
+          "api.jsonld",
+          RamlYamlHint,
+          Amf,
+          validationsPath + "inheritance-provenance/with-recursive-inheritance/")
+  }
+
+  test("Inheritance provenance annotation with regular inheritance") {
+    cycle("api.raml",
+          "api.jsonld",
+          RamlYamlHint,
+          Amf,
+          validationsPath + "inheritance-provenance/with-regular-inheritance/")
+  }
+
+  test("Inheritance provenance annotation with library") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, validationsPath + "inheritance-provenance/with-library/")
+  }
+
+  test("Recursion in inheritance with resource type") {
+    cycle("recursion-inheritance.raml", "recursion-inheritance.jsonld", RamlYamlHint, Amf, validationsPath)
   }
 
   /*

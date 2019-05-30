@@ -68,8 +68,10 @@
                             "@id": "#9/linked_1",
                             "@type": [
                               "raml-shapes:UnionShape",
+                              "raml-shapes:AnyShape",
                               "shacl:Shape",
-                              "raml-shapes:Shape"
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
                             ],
                             "doc:link-target": [
                               {
@@ -128,6 +130,7 @@
         "@id": "#1",
         "@type": [
           "shacl:NodeShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -143,7 +146,8 @@
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
-              "raml-shapes:Shape"
+              "raml-shapes:Shape",
+              "doc:DomainElement"
             ],
             "shacl:path": [
               {
@@ -155,6 +159,7 @@
                 "@id": "#3",
                 "@type": [
                   "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
@@ -215,6 +220,7 @@
         "@id": "#5",
         "@type": [
           "raml-shapes:ArrayShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
           "raml-shapes:Shape",
           "doc:DomainElement"
@@ -224,6 +230,7 @@
             "@id": "#6",
             "@type": [
               "raml-shapes:ScalarShape",
+              "raml-shapes:AnyShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
@@ -263,14 +270,17 @@
         "@id": "#9",
         "@type": [
           "raml-shapes:UnionShape",
+          "raml-shapes:AnyShape",
           "shacl:Shape",
-          "raml-shapes:Shape"
+          "raml-shapes:Shape",
+          "doc:DomainElement"
         ],
         "raml-shapes:anyOf": [
           {
             "@id": "#10",
             "@type": [
               "raml-shapes:ArrayShape",
+              "raml-shapes:AnyShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
@@ -280,6 +290,7 @@
                 "@id": "#1",
                 "@type": [
                   "shacl:NodeShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"
@@ -295,7 +306,8 @@
                     "@type": [
                       "shacl:PropertyShape",
                       "shacl:Shape",
-                      "raml-shapes:Shape"
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
                     ],
                     "shacl:path": [
                       {
@@ -307,6 +319,7 @@
                         "@id": "#3",
                         "@type": [
                           "raml-shapes:ScalarShape",
+                          "raml-shapes:AnyShape",
                           "shacl:Shape",
                           "raml-shapes:Shape",
                           "doc:DomainElement"
@@ -388,6 +401,7 @@
             "@id": "#12",
             "@type": [
               "raml-shapes:ArrayShape",
+              "raml-shapes:AnyShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
@@ -397,6 +411,7 @@
                 "@id": "#6",
                 "@type": [
                   "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
                   "shacl:Shape",
                   "raml-shapes:Shape",
                   "doc:DomainElement"

@@ -88,6 +88,7 @@
                             "@id": "#17",
                             "@type": [
                               "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
                               "shacl:Shape",
                               "raml-shapes:Shape",
                               "doc:DomainElement"
@@ -173,7 +174,8 @@
                             "@type": [
                               "raml-shapes:AnyShape",
                               "shacl:Shape",
-                              "raml-shapes:Shape"
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
                             ],
                             "shacl:name": [
                               {

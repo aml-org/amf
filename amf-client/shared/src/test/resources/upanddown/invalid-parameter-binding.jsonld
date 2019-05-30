@@ -88,6 +88,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/parameter/MyQuery/scalar/schema",
                             "@type": [
                               "http://a.ml/vocabularies/shapes#ScalarShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -255,6 +256,7 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody",
                             "@type": [
                               "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
@@ -270,7 +272,8 @@
                                 "@type": [
                                   "http://www.w3.org/ns/shacl#PropertyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape"
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
                                 "http://www.w3.org/ns/shacl#path": [
                                   {
@@ -282,6 +285,7 @@
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/MyBody/property/p1/scalar/p1",
                                     "@type": [
                                       "http://a.ml/vocabularies/shapes#ScalarShape",
+                                      "http://a.ml/vocabularies/shapes#AnyShape",
                                       "http://www.w3.org/ns/shacl#Shape",
                                       "http://a.ml/vocabularies/shapes#Shape",
                                       "http://a.ml/vocabularies/document#DomainElement"
