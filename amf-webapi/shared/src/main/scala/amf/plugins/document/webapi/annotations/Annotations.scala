@@ -7,7 +7,7 @@ import amf.core.remote._
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 
-case class ParsedJSONSchema(rawText: String) extends SerializableAnnotation with PerpetualAnnotation {
+case class ParsedJSONSchema(rawText: String) extends EternalSerializedAnnotation {
   override val name: String  = "parsed-json-schema"
   override val value: String = rawText
 }
