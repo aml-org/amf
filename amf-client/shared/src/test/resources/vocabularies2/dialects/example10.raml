@@ -8,12 +8,12 @@ nodeMappings:
       za:
         propertyTerm: v2.a
         range: nodeA
-        mapKey: v2.t
+        mapTermKey: v2.t
       zb:
         propertyTerm: v2.a
         range: nodeA
-        mapKey: v2.t
-        mapValue: v2.q
+        mapTermKey: v2.t
+        mapTermValue: v2.q
   nodeA:
     classTerm: v2.A
     mapping:
@@ -29,6 +29,12 @@ nodeMappings:
         enum:
           - hey
           - ho
+      b:
+        propertyTerm: v2.t
+        range: string
+      c:
+        propertyTerm: v2.q
+        range: string
 documents:
   root:
     encodes: nodeA

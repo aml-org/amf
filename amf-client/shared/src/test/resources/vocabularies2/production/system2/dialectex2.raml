@@ -29,7 +29,6 @@ nodeMappings:
         range: InfoObject
         mandatory: true
       host:
-        propertyTerm: http.url
         range: string
       basePath:
         propertyTerm: http.url
@@ -57,7 +56,7 @@ nodeMappings:
           - BasicSecurityScheme
           - ApiKeySecurityScheme
           - Oauth2SecurityScheme
-        mapKey: security.name
+        mapTermKey: security.name
         allowMultiple: true
         typeDiscriminator:
           basic: BasicSecurityScheme
@@ -70,7 +69,7 @@ nodeMappings:
       paths:
         propertyTerm: http.endpoint
         range: PathItemObject
-        mapKey: http.path
+        mapKey: name
         mandatory: true
         allowMultiple: true
 
@@ -81,7 +80,7 @@ nodeMappings:
         propertyTerm: schema-org.name
         range: string
       description:
-        propertyTerm: schema-org.name
+        propertyTerm: schema-org.description
         range: string
       termsOfService:
         propertyTerm: schema-org.termsOfService
@@ -163,7 +162,6 @@ nodeMappings:
         range: string
         mandatory: true
       required:
-        propertyTerm: shacl.minCount
         range: boolean
       readOnly:
         propertyTerm: shapes.readOnly
@@ -171,7 +169,7 @@ nodeMappings:
       properties:
         propertyTerm: shacl.property
         range: SchemaObject
-        mapKey: shacl.name
+        mapKey: title
       discriminator:
         propertyTerm: shapes.discriminator
         range: string
@@ -351,6 +349,10 @@ nodeMappings:
   ResponseObject:
     classTerm: http.Response
     mapping:
+      statusCode:
+        propertyTerm: hydra.statusCode
+        range: string
+        mandatory: true
       description:
         propertyTerm: schema-org.description
         range: string
@@ -361,12 +363,12 @@ nodeMappings:
       headers:
         propertyTerm: http.header
         range: ParameterObject
-        mapKey: schema-org.name
+        mapKey: declarationName
       examples:
         propertyTerm: doc.examples
         range: ExampleObject
-        mapKey: http.mediaType
-        mapValue: shacl.raw
+        mapKey: mediaType
+        mapValue: raw
 
   PathItemObject:
     classTerm: http.EndPoint
@@ -377,25 +379,18 @@ nodeMappings:
         mandatory: true
         pattern: ^\/.*$
       get:
-        propertyTerm: hydra.supportedOperation
         range: OperationObject
       put:
-        propertyTerm: hydra.supportedOperation
         range: OperationObject
       post:
-        propertyTerm: hydra.supportedOperation
         range: OperationObject
       delete:
-        propertyTerm: hydra.supportedOperation
         range: OperationObject
       options:
-        propertyTerm: hydra.supportedOperation
         range: OperationObject
       head:
-        propertyTerm: hydra.supportedOperation
         range: OperationObject
       patch:
-        propertyTerm: hydra.supportedOperation
         range: OperationObject
       parameter:
         propertyTerm: http.parameter
@@ -436,7 +431,7 @@ nodeMappings:
       scopes:
         propertyTerm: security.scope
         range: ScopeObject
-        mapKey: security.description
+        mapKey: description
 
   ScopeObject:
     classTerm: security.Scope
@@ -453,7 +448,6 @@ nodeMappings:
     classTerm: security.ParametrizedSecurityScheme
     mapping:
       schemeName:
-        propertyTerm: security.name
         range: string
         mandatory: true
       type:
@@ -543,7 +537,7 @@ nodeMappings:
       responses:
         propertyTerm: hydra.returns
         range: ResponseObject
-        mapKey: hydra.statusCode
+        mapKey: statusCode
         mandatory: true
       schemes:
         propertyTerm: http.scheme
@@ -563,7 +557,7 @@ nodeMappings:
           - BasicSecurityScheme
           - ApiKeySecurityScheme
           - Oauth2SecurityScheme
-        mapKey: security.name
+        mapTermKey: security.name
         allowMultiple: true
         typeDiscriminator:
           basic: BasicSecurityScheme

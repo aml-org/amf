@@ -31,7 +31,6 @@ nodeMappings:
         propertyTerm: http.url
         range: string
       basePath:
-        propertyTerm: http.url
         range: string
       schemes:
         propertyTerm: http.scheme
@@ -56,7 +55,7 @@ nodeMappings:
           - BasicSecurityScheme
           - ApiKeySecurityScheme
           - Oauth2SecurityScheme
-        mapKey: security.name
+        mapKey: name
         allowMultiple: true
         typeDiscriminator:
           basic: BasicSecurityScheme
@@ -69,7 +68,7 @@ nodeMappings:
       paths:
         propertyTerm: http.endpoint
         range: PathItemObject
-        mapKey: http.path
+        mapKey: name
         mandatory: true
         allowMultiple: true
 
@@ -171,7 +170,7 @@ nodeMappings:
       properties:
         propertyTerm: shacl.property
         range: SchemaObject
-        mapKey: shacl.name
+        mapKey: title
       discriminator:
         propertyTerm: shapes.discriminator
         range: string
@@ -361,12 +360,12 @@ nodeMappings:
       headers:
         propertyTerm: http.header
         range: ParameterObject
-        mapKey: schema-org.name
+        mapKey: declarationName
       examples:
         propertyTerm: doc.examples
         range: ExampleObject
-        mapKey: http.mediaType
-        mapValue: shacl.raw
+        mapKey: mediaType
+        mapValue: raw
       statusCode:
         propertyTerm: hydra.statusCode
         range: string
@@ -440,7 +439,7 @@ nodeMappings:
       scopes:
         propertyTerm: security.scope
         range: ScopeObject
-        mapKey: security.description
+        mapKey: description
 
   ScopeObject:
     classTerm: security.Scope
@@ -547,7 +546,7 @@ nodeMappings:
       responses:
         propertyTerm: hydra.returns
         range: ResponseObject
-        mapKey: hydra.statusCode
+        mapKey: statusCode
         mandatory: true
       schemes:
         propertyTerm: http.scheme
@@ -567,7 +566,7 @@ nodeMappings:
           - BasicSecurityScheme
           - ApiKeySecurityScheme
           - Oauth2SecurityScheme
-        mapKey: security.name
+        mapKey: name
         allowMultiple: true
         typeDiscriminator:
           basic: BasicSecurityScheme

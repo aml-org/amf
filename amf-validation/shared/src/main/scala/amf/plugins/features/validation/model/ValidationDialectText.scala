@@ -102,7 +102,7 @@ object ValidationDialectText {
       |      propertyConstraints:
       |        mandatory: true
       |        propertyTerm: shacl.property
-      |        mapKey: validation.ramlPropertyId
+      |        mapKey: name
       |        range: propertyConstraintNode
       |  queryValidationNode:
       |    classTerm: validation.QueryValidation
@@ -119,7 +119,7 @@ object ValidationDialectText {
       |        allowMultiple: true
       |      propertyConstraints:
       |        propertyTerm: shacl.property
-      |        mapKey: validation.ramlPropertyId
+      |        mapKey: name
       |        range: propertyConstraintNode
       |      targetQuery:
       |        mandatory: true
@@ -141,8 +141,8 @@ object ValidationDialectText {
       |    mapping:
       |      prefixes:
       |        propertyTerm: validation.ramlPrefixes
-      |        mapKey: validation.ramlPrefixName
-      |        mapValue: validation.ramlPrefixUri
+      |        mapKey: prefix
+      |        mapValue: uri
       |        range: ramlPrefixNode
       |      profile:
       |        propertyTerm: schema-org.name
@@ -172,7 +172,7 @@ object ValidationDialectText {
       |        allowMultiple: true
       |      validations:
       |        propertyTerm: validation.validations
-      |        mapKey: schema-org.name
+      |        mapKey: name
       |        range: [ shapeValidationNode, queryValidationNode,functionValidationNode]
       |documents:
       |  fragments:
