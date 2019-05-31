@@ -262,6 +262,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     cycle("recursion-inheritance.raml", "recursion-inheritance.jsonld", RamlYamlHint, Amf, validationsPath)
   }
 
+  test("Parsing compacted jsonld using context of compact uris") {
+    cycle(
+      "no-raw-source-maps-compact-uris.jsonld",
+      "parsed-result.jsonld",
+      AmfJsonHint,
+      Amf,
+      validationsPath + "jsonld-compact-uris/"
+    )
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

@@ -1,0 +1,1402 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#22",
+        "@type": [
+          "schema-org:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "schema-org:name": [
+          {
+            "@value": "test"
+          }
+        ],
+        "raml-http:endpoint": [
+          {
+            "@id": "#23",
+            "@type": [
+              "raml-http:EndPoint",
+              "doc:DomainElement"
+            ],
+            "raml-http:path": [
+              {
+                "@value": "/endpoint1"
+              }
+            ],
+            "hydra:supportedOperation": [
+              {
+                "@id": "#24",
+                "@type": [
+                  "hydra:Operation",
+                  "doc:DomainElement"
+                ],
+                "hydra:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "hydra:expects": [
+                  {
+                    "@id": "#25",
+                    "@type": [
+                      "raml-http:Request",
+                      "doc:DomainElement"
+                    ],
+                    "raml-http:payload": [
+                      {
+                        "@id": "#14",
+                        "@type": [
+                          "raml-http:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-http:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-http:schema": [
+                          {
+                            "@id": "#1/linked_3",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#1"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "A"
+                              }
+                            ]
+                          }
+                        ],
+                        "sourcemaps:sources": [
+                          {
+                            "@id": "#14/source-map",
+                            "@type": [
+                              "sourcemaps:SourceMap"
+                            ],
+                            "sourcemaps:lexical": [
+                              {
+                                "sourcemaps:element": [
+                                  {
+                                    "@value": "amf://id#14"
+                                  }
+                                ],
+                                "sourcemaps:value": [
+                                  {
+                                    "@value": "[(15,6)-(21,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "sourcemaps:sources": [
+                      {
+                        "@id": "#25/source-map",
+                        "@type": [
+                          "sourcemaps:SourceMap"
+                        ],
+                        "sourcemaps:lexical": [
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "raml-http:payload"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(14,4)-(21,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "amf://id#25"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(14,0)-(21,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#24/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#24"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(13,2)-(21,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "@id": "#26",
+                "@type": [
+                  "hydra:Operation",
+                  "doc:DomainElement"
+                ],
+                "hydra:method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "hydra:expects": [
+                  {
+                    "@id": "#27",
+                    "@type": [
+                      "raml-http:Request",
+                      "doc:DomainElement"
+                    ],
+                    "raml-http:payload": [
+                      {
+                        "@id": "#19",
+                        "@type": [
+                          "raml-http:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "raml-http:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-http:schema": [
+                          {
+                            "@id": "#1/linked_4",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#1"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "A"
+                              }
+                            ]
+                          }
+                        ],
+                        "sourcemaps:sources": [
+                          {
+                            "@id": "#19/source-map",
+                            "@type": [
+                              "sourcemaps:SourceMap"
+                            ],
+                            "sourcemaps:lexical": [
+                              {
+                                "sourcemaps:element": [
+                                  {
+                                    "@value": "amf://id#19"
+                                  }
+                                ],
+                                "sourcemaps:value": [
+                                  {
+                                    "@value": "[(23,6)-(28,19)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "sourcemaps:sources": [
+                      {
+                        "@id": "#27/source-map",
+                        "@type": [
+                          "sourcemaps:SourceMap"
+                        ],
+                        "sourcemaps:lexical": [
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "raml-http:payload"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(22,4)-(28,19)]"
+                              }
+                            ]
+                          },
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "amf://id#27"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(22,0)-(28,19)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#26/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#26"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(21,2)-(28,19)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#23/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#23"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(12,0)-(28,19)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#22/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:source-vendor": [
+              {
+                "sourcemaps:element": [
+                  {
+                    "@value": "amf://id#22"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "RAML 1.0"
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:lexical": [
+              {
+                "sourcemaps:element": [
+                  {
+                    "@value": "schema-org:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(2,0)-(3,0)]"
+                  }
+                ]
+              },
+              {
+                "sourcemaps:element": [
+                  {
+                    "@value": "amf://id#22"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(2,0)-(28,19)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#2",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#a"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "a"
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#3/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#3"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(6,6)-(7,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "a"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#2/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#2"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(6,6)-(7,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#4",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#b"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#5",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "b"
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#5/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#5"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(7,6)-(8,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "b"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#4/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#4"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(7,6)-(8,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "A"
+          }
+        ],
+        "doc:examples": [
+          {
+            "@id": "#6",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "declared"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#7",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:a": [
+                  {
+                    "@id": "#8",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "cristian",
+                        "@type": "xsd:string"
+                      }
+                    ],
+                    "sourcemaps:sources": [
+                      {
+                        "@id": "#8/source-map",
+                        "@type": [
+                          "sourcemaps:SourceMap"
+                        ],
+                        "sourcemaps:lexical": [
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "amf://id#8"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(10,11)-(10,19)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "data:b": [
+                  {
+                    "@id": "#9",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "pavon",
+                        "@type": "xsd:string"
+                      }
+                    ],
+                    "sourcemaps:sources": [
+                      {
+                        "@id": "#9/source-map",
+                        "@type": [
+                          "sourcemaps:SourceMap"
+                        ],
+                        "sourcemaps:lexical": [
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "amf://id#9"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(11,11)-(11,16)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#7/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "data:b"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(11,11)-(11,16)]"
+                          }
+                        ]
+                      },
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#7"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(10,0)-(12,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "data:a"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(10,11)-(10,19)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "sourcemaps:data-node-properties": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#7"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "b->[(11,8)-(12,0)]#a->[(10,8)-(11,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\n        a: cristian\n        b: pavon\n"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#6/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:synthesized-field": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "doc:strict"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:raw"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(10,0)-(12,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#6"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(9,6)-(12,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "schema-org:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(9,6)-(12,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#10",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "endpoint1"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#11",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:a": [
+                  {
+                    "@id": "#12",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "roman",
+                        "@type": "xsd:string"
+                      }
+                    ],
+                    "sourcemaps:sources": [
+                      {
+                        "@id": "#12/source-map",
+                        "@type": [
+                          "sourcemaps:SourceMap"
+                        ],
+                        "sourcemaps:lexical": [
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "amf://id#12"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(19,15)-(19,20)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "data:b": [
+                  {
+                    "@id": "#13",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "riquelme",
+                        "@type": "xsd:string"
+                      }
+                    ],
+                    "sourcemaps:sources": [
+                      {
+                        "@id": "#13/source-map",
+                        "@type": [
+                          "sourcemaps:SourceMap"
+                        ],
+                        "sourcemaps:lexical": [
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "amf://id#13"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(20,15)-(20,23)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#11/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "data:b"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(20,15)-(20,23)]"
+                          }
+                        ]
+                      },
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#11"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(19,0)-(21,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "data:a"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(19,15)-(19,20)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "sourcemaps:data-node-properties": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#11"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "b->[(20,12)-(21,0)]#a->[(19,12)-(20,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\n            a: roman\n            b: riquelme\n"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#10/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:synthesized-field": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "doc:strict"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:raw"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(19,0)-(21,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#10"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(18,10)-(21,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "schema-org:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(18,10)-(21,0)]"
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:local-element": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#10"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:tracked-element": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#10"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "amf://id#14"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#15",
+            "@type": [
+              "doc:Example",
+              "doc:DomainElement"
+            ],
+            "schema-org:name": [
+              {
+                "@value": "endpointP"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#16",
+                "@type": [
+                  "data:Object",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "data:a": [
+                  {
+                    "@id": "#17",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "leonardo",
+                        "@type": "xsd:string"
+                      }
+                    ],
+                    "sourcemaps:sources": [
+                      {
+                        "@id": "#17/source-map",
+                        "@type": [
+                          "sourcemaps:SourceMap"
+                        ],
+                        "sourcemaps:lexical": [
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "amf://id#17"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(27,15)-(27,23)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "data:b": [
+                  {
+                    "@id": "#18",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "jara",
+                        "@type": "xsd:string"
+                      }
+                    ],
+                    "sourcemaps:sources": [
+                      {
+                        "@id": "#18/source-map",
+                        "@type": [
+                          "sourcemaps:SourceMap"
+                        ],
+                        "sourcemaps:lexical": [
+                          {
+                            "sourcemaps:element": [
+                              {
+                                "@value": "amf://id#18"
+                              }
+                            ],
+                            "sourcemaps:value": [
+                              {
+                                "@value": "[(28,15)-(28,19)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:sources": [
+                  {
+                    "@id": "#16/source-map",
+                    "@type": [
+                      "sourcemaps:SourceMap"
+                    ],
+                    "sourcemaps:lexical": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "data:b"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(28,15)-(28,19)]"
+                          }
+                        ]
+                      },
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#16"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(27,0)-(28,19)]"
+                          }
+                        ]
+                      },
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "data:a"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "[(27,15)-(27,23)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "sourcemaps:data-node-properties": [
+                      {
+                        "sourcemaps:element": [
+                          {
+                            "@value": "amf://id#16"
+                          }
+                        ],
+                        "sourcemaps:value": [
+                          {
+                            "@value": "b->[(28,12)-(28,19)]#a->[(27,12)-(28,0)]"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "shacl:raw": [
+              {
+                "@value": "\n            a: leonardo\n            b: jara"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#15/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:synthesized-field": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "doc:strict"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:raw"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(27,0)-(28,19)]"
+                      }
+                    ]
+                  },
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#15"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(26,10)-(28,19)]"
+                      }
+                    ]
+                  },
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "schema-org:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(26,10)-(28,19)]"
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:local-element": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#15"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": ""
+                      }
+                    ]
+                  }
+                ],
+                "sourcemaps:tracked-element": [
+                  {
+                    "sourcemaps:element": [
+                      {
+                        "@value": "amf://id#15"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "amf://id#19"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#1/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:resolved-link": [
+              {
+                "sourcemaps:element": [
+                  {
+                    "@value": "amf://id#1"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "amf://id#21"
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:lexical": [
+              {
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(4,2)-(4,3)]"
+                  }
+                ]
+              },
+              {
+                "sourcemaps:element": [
+                  {
+                    "@value": "amf://id#1"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(4,2)-(12,0)]"
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:declared-element": [
+              {
+                "sourcemaps:element": [
+                  {
+                    "@value": "amf://id#1"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "raml-http": "http://a.ml/vocabularies/http#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
+      "schema-org": "http://schema.org/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "hydra": "http://www.w3.org/ns/hydra/core#"
+    }
+  }
+]
