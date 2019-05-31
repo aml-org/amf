@@ -130,14 +130,14 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                   .parse(ref.text) match {
                   case Some(schema) => parameter.withSchema(schema)
                   case _ =>
-                    ctx.violation(UnresolvedParameter,
+                    ctx.violation(UnresolvedReference,
                                   parameter.id,
                                   s"Cannot parse type expression for unresolved parameter '${parameter.name}'",
                                   entry.value)
                     parameter
                 }
               case _ =>
-                ctx.violation(UnresolvedParameter, parameter.id, "Cannot declare unresolved parameter", entry.value)
+                ctx.violation(UnresolvedReference, parameter.id, "Cannot declare unresolved parameter", entry.value)
                 parameter
 
             }

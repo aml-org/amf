@@ -245,4 +245,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-fragments/named-example-expected.raml", Some("including-invalid-datatype.report"))
   }
 
+  test("Unresolved parameter in RAML 1.0 endpoint") {
+    validate("unresolved-parameter.raml", Some("unresolved-parameter.report"))
+  }
+
 }
