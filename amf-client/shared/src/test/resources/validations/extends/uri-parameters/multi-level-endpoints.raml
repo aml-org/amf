@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: api
+resourceTypes:
+  rt1:
+    uriParameters:
+      param1: string
+
+  rt2:
+    type: rt1
+    uriParameters:
+      param2: string
+
+  rt3:
+    type: rt2
+    uriParameters:
+      param3: string
+
+/valid:
+  /{param1}:
+    /{param2}:
+      /{param3}:
+        type: rt3
+
+/invalid:
+  /{param1}:
+    /{param2}:
+      type: rt3
