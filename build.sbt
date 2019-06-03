@@ -1,6 +1,10 @@
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
+
+import scala.language.postfixOps
+import scala.sys.process._
+
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
@@ -50,7 +54,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfAmlVersion = "4.0.44"
+val amfAmlVersion = "4.0.45"
 
 lazy val amfAmlJVMRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJVM")
 lazy val amfAmlJSRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJS")
@@ -119,10 +123,8 @@ lazy val validationJS  = validation.js.in(file("./amf-validation/js")).sourceDep
   * AMF Client
   * ********************************************* */
 lazy val client = crossProject(JSPlatform, JVMPlatform)
-  .settings(Seq(
-    name := "amf-client",
-    fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter")
-  ))
+  .settings(name := "amf-client")
+  .settings(fullRunTask(defaultProfilesGenerationTask, Compile, "amf.tasks.validations.ValidationProfileExporter"))
   .dependsOn( webapi, validation)
   .in(file("./amf-client"))
   .settings(settings)
@@ -183,7 +185,7 @@ lazy val clientJS  = client.js.in(file("./amf-client/js"))
 val buildJS = TaskKey[Unit]("buildJS", "Build npm module")
 buildJS := {
   val _ = (fullOptJS in Compile in clientJS).value
-  "./amf-client/js/build-scripts/buildjs.sh".!
+  "./amf-client/js/build-scripts/buildjs.sh" !
 }
 
 addCommandAlias(
