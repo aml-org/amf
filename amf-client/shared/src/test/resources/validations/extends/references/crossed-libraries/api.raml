@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: api
+uses:
+  Users: libs/users.raml
+
+/endpoint1:
+  get:
+    is: Users.usersT
+
+/endpoint2:
+  type: Users.usersR

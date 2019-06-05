@@ -203,6 +203,10 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
     validate("/extends/references/nestedRTsWithInexistentRT.raml", Some("references/nestedRTsWithInexistentRT.report"))
   }
 
+  test("Crossed library references") {
+    validate("/extends/references/crossed-libraries/api.raml", Some("references/crossed-libraries.report"))
+  }
+
   // Examples validation
 
   test("Optional method as parameter value with inexistent reference") {
