@@ -249,4 +249,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("unresolved-parameter.raml", Some("unresolved-parameter.report"))
   }
 
+  test("Discriminator inheritance") {
+    validate("discriminator/discriminator-inheritance.raml", Some("discriminator-inheritance.report"))
+  }
+
 }

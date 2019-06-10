@@ -1,7 +1,7 @@
 Model: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 Profile: RAML 1.0
 Conforms? false
-Number of results: 10
+Number of results: 9
 
 Level: Violation
 
@@ -37,14 +37,6 @@ Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedMinProperties
   Property: http://a.ml/vocabularies/shapes#minProperties
   Position: Some(LexicalInformation([(26,19)-(26,20)]))
-  Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
-
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
-  Message: different values for discriminator constraint
-  Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml#/declarations/types/DerivedDiscriminator
-  Property: http://a.ml/vocabularies/shapes#discriminator
-  Position: Some(LexicalInformation([(36,19)-(36,21)]))
   Location: file://amf-client/shared/src/test/resources/validations/types/inheritance-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning

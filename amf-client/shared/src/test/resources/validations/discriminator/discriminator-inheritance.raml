@@ -1,0 +1,16 @@
+#%RAML 1.0
+title: api
+types:
+  Parent:
+    discriminator: propA
+    discriminatorValue: A
+    properties:
+      propA: string
+  ChildA:
+    type: Parent
+    discriminatorValue: A
+  ChildB:
+    type: Parent
+    discriminatorValue: B
+  ChildNone:
+    type: Parent
