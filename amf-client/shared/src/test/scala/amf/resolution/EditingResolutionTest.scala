@@ -161,13 +161,22 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "tracked-from-resource-type/")
   }
 
-  test("Auto generated payload name annotation") {
+  test("Auto generated payload name annotation in raml") {
     cycle("auto-generated-schema-name.raml",
           "auto-generated-schema-name.jsonld",
           RamlYamlHint,
           Amf,
           validationsPath + "auto-generated-schema-name/")
   }
+
+  test("Auto generated payload name annotation in oas") {
+    cycle("auto-generated-schema-name-oas.yaml",
+          "auto-generated-schema-name-oas.jsonld",
+          OasYamlHint,
+          Amf,
+          validationsPath + "auto-generated-schema-name/")
+  }
+
   test("Auto generated payload name annotation with default mediaType") {
     cycle(
       "auto-generated-schema-name-with-default.raml",
