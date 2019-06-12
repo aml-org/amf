@@ -16,7 +16,9 @@ class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
 
   val examples = List(
     ReplacerExamples("singularize", "singularize", "users", "user"),
+    ReplacerExamples("singularize ending with 'ies'", "singularize", "entities", "entity"),
     ReplacerExamples("pluralize", "pluralize", "user", "users"),
+    ReplacerExamples("pluralize ending with 'y'", "pluralize", "company", "companies"),
     ReplacerExamples("uppercase", "uppercase", "userId", "USERID"),
     ReplacerExamples("lowercase", "lowercase", "userId", "userid"),
     ReplacerExamples("lowercamelcase", "lowercamelcase", "UserId", "userId"),
