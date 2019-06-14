@@ -6,7 +6,6 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Annotations
-import amf.plugins.domain.shapes.annotations.{InheritanceProvenance, InheritedShapes}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
