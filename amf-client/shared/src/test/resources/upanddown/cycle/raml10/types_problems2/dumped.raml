@@ -6,7 +6,9 @@ baseUri: http://localhost/escape
     post:
       body:
         application/json:
-          type: number[]
+          type:
+            items:
+              type: number
     get:
       body:
         application/json:

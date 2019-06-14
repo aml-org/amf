@@ -7,13 +7,16 @@ types:
         type: string
   type2:
     type:
-      - string[]
+      items:
+        type: string
   unionType:
     type:
-      - type1[] | type2
+      anyOf:
+        -
+          items: type1
+        - type2
 /test:
   get:
     body:
       application/json:
-        type:
-          - unionType
+        type: unionType

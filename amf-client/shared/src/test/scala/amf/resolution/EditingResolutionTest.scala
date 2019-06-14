@@ -114,15 +114,15 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   }
 
   test("Test double declared included type") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "/double-declare-type/")
+    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "double-declare-type/")
   }
 
   test("Test declared type from library") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "/declared-from-library/")
+    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "declared-from-library/")
   }
 
   test("Test union of declared elements") {
-    cycle("api.raml", "api.raml.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "/union-of-declarations/")
+    cycle("api.raml", "api.raml.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "union-of-declarations/")
   }
 
   test("Check for stack overflow in event api") {

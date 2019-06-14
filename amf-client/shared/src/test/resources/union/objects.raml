@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: New API
+
+types:
+  UnionType:
+    type: SomeType | OtherType
+  SomeType:
+    type: object
+    properties:
+      a: string
+      b: integer
+  OtherType:
+    type: object
+    properties:
+      c: number
+      d: boolean
+
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        type: UnionType

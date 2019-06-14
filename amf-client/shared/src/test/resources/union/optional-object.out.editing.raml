@@ -1,0 +1,44 @@
+#%RAML 1.0
+title: New API
+types:
+  SomeType:
+    type: object
+    additionalProperties: true
+    properties:
+      a:
+        type: string
+        required: true
+      b:
+        type: integer
+        required: true
+  OtherType:
+    anyOf:
+      -
+        type: object
+        additionalProperties: true
+        properties:
+          a:
+            type: string
+            required: true
+          b:
+            type: integer
+            required: true
+      -
+        type: nil
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        anyOf:
+          -
+            type: object
+            additionalProperties: true
+            properties:
+              a:
+                type: string
+                required: true
+              b:
+                type: integer
+                required: true
+          -
+            type: nil

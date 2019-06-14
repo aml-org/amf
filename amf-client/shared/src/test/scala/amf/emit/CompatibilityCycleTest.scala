@@ -24,7 +24,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
     val path = s"oas20/$file"
 
     test(s"Test $path") {
-      val c = CycleConfig(path, path, OasJsonHint, Raml, basePath, None)
+      val c = CycleConfig(path, path, OasJsonHint, Raml, basePath, None, None)
       for {
         origin   <- build(c, None, useAmfJsonldSerialisation = true)
         resolved <- successful(transform(origin, c))
@@ -45,7 +45,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
     val path = s"raml10/$file"
 
     test(s"Test $path") {
-      val c = CycleConfig(path, path, RamlYamlHint, Oas, basePath, None)
+      val c = CycleConfig(path, path, RamlYamlHint, Oas, basePath, None, None)
       for {
         origin   <- build(c, None, useAmfJsonldSerialisation = true)
         resolved <- successful(transform(origin, c))
@@ -62,7 +62,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
     Validation(platform)
       .map(_.withEnabledValidation(false))
       .flatMap { validation =>
-        val config = CycleConfig(source.path, source.path, hint, hint.vendor, "", None)
+        val config = CycleConfig(source.path, source.path, hint, hint.vendor, "", None, None)
         build(config, Some(validation), useAmfJsonldSerialisation = true).flatMap { unit =>
           hint match {
             case RamlYamlHint => validation.validate(unit, ProfileNames.RAML10)

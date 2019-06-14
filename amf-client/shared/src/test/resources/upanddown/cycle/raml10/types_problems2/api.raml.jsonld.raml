@@ -7,9 +7,9 @@ baseUri: http://localhost/escape
       body:
         application/json:
           type:
-            - number[]
+            items:
+              type: number
     get:
       body:
         application/json:
-          type:
-            - number | boolean
+          type: number | boolean

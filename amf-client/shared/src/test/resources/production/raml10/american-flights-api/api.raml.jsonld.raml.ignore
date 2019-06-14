@@ -45,7 +45,7 @@ types:
                     type: Boeing 777
                     totalSeats: 300
             type:
-              - AmericanFlight[]
+              items: AmericanFlight
   post:
     displayName: Add a flight
     body:
@@ -61,8 +61,7 @@ types:
             plane:
               type: Boeing 747
               totalSeats: 400
-        type:
-          - AmericanFlight
+        type: AmericanFlight
     responses:
       "201":
         body:
@@ -89,8 +88,7 @@ types:
                   plane:
                     type: Boeing 747
                     totalSeats: 400
-              type:
-                - AmericanFlight
+              type: AmericanFlight
     delete:
       displayName: Delete a flight
       responses:
@@ -115,8 +113,7 @@ types:
               plane:
                 type: Boeing 747
                 totalSeats: 400
-          type:
-            - AmericanFlight
+          type: AmericanFlight
       responses:
         "200":
           body:

@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: New API
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        anyOf:
+          -
+            type: string
+            description: some description
+          -
+            type: nil

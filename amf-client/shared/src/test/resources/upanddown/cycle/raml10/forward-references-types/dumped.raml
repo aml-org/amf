@@ -18,7 +18,9 @@ types:
     properties:
       area:
         type: integer
-      context: (Circle | Square)[]
+      context:
+        items:
+          type: Circle | Square
   Circle:
     type: Figure
     properties:

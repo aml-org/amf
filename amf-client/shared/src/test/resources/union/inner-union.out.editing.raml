@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: New API
+types:
+  UnionType:
+    type: string | boolean | nil | integer
+  SomeType:
+    type: string | boolean | nil
+  OtherType:
+    type: boolean | nil
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        type: string | boolean | nil | integer

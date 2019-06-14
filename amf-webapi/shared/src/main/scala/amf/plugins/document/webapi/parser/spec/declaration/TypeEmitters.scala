@@ -20,7 +20,6 @@ import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
-import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
@@ -40,11 +39,12 @@ import scala.collection.mutable.ListBuffer
 case class RamlNamedTypeEmitter(shape: AnyShape,
                                 ordering: SpecOrdering,
                                 references: Seq[BaseUnit] = Nil,
-                                typesEmitter: (AnyShape,
-                                               SpecOrdering,
-                                               Option[AnnotationsEmitter],
-                                               Seq[Field],
-                                               Seq[BaseUnit]) => RamlTypePartEmitter)(implicit spec: SpecEmitterContext)
+                                typesEmitter: (
+                                    AnyShape,
+                                    SpecOrdering,
+                                    Option[AnnotationsEmitter],
+                                    Seq[Field],
+                                    Seq[BaseUnit]) => RamlTypePartEmitter)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimizacion, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
@@ -170,8 +170,10 @@ case class RamlExternalSourceEmitter(shape: Shape with ShapeHelpers, references:
   override def position(): Position = pos(shape.annotations)
 }
 
-case class Raml10TypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext) {
+case class Raml10TypeEmitter(shape: Shape,
+                             ordering: SpecOrdering,
+                             ignored: Seq[Field] = Nil,
+                             references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
       case _
@@ -186,10 +188,10 @@ case class Raml10TypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[
               })
               .isDefined => // need to check ref to ask if resolution has run.
         Seq(RamlExternalSourceEmitter(shape.asInstanceOf[AnyShape], references))
-      case _
-          if Option(shape).isDefined && shape
-            .isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].fromTypeExpression =>
-        Seq(RamlTypeExpressionEmitter(shape.asInstanceOf[AnyShape]))
+//      case _
+//          if Option(shape).isDefined && shape
+//            .isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].fromTypeExpression =>
+//        Seq(RamlTypeExpressionEmitter(shape.asInstanceOf[AnyShape]))
       case l: Linkable if l.isLink =>
         spec.externalLink(shape, references) match {
           case Some(fragment: EncodesModel) =>
@@ -303,7 +305,6 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
         f.array.values.map(_.asInstanceOf[Shape]).collectFirst({ case r: RecursiveShape => r }) match {
           case Some(r: RecursiveShape) =>
             typeEmitted = true
-
             result ++= RamlRecursiveShapeEmitter(r, ordering, references).emitters()
           case _ =>
             typeEmitted = true
@@ -574,57 +575,39 @@ case class RamlShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refer
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
 
-    val (declaredShapes, inlineShapes) =
-      f.array.values
-        .map(_.asInstanceOf[Shape])
-        .partition(s =>
-          s.annotations.contains(classOf[DeclaredElement]) ||
-            s.annotations.contains(classOf[ParsedFromTypeExpression]) || s.isLink)
+    val values: Seq[Shape] = f.array.values.map(_.asInstanceOf[Shape])
+    val multiple           = values.size > 1
 
     b.entry(
       "type",
       b => {
-        if (inlineShapes.nonEmpty) {
-          b.obj(
-            traverse(
-              ordering.sorted(inlineShapes.flatMap {
-                case s: AnyShape => Raml10TypeEmitter(s, ordering, references = references).entries()
-                case other =>
-                  spec.eh.violation(ResolutionValidation,
-                                    other.id,
-                                    None,
-                                    "Cannot emit for type shapes without WebAPI Shape support",
-                                    other.position(),
-                                    other.location())
-                  Nil
-              }),
-              _
-            )
-          )
-        } else {
-          declaredShapes match {
-            case (head: Shape with ShapeHelpers) :: Nil =>
-              emitDeclared(head, b)
-            case _ =>
-              b.list { b =>
-                declaredShapes.foreach {
-                  case s: Shape with ShapeHelpers => emitDeclared(s, b)
-                }
-              }
-
-          }
-        }
+        // If there are many values is a multiple inheritance which needs to be emitted as a seq
+        if (multiple)
+          b.list(l => values.foreach(emitShape(_, l)))
+        else values.foreach(emitShape(_, b))
       }
     )
   }
 
-  private def emitDeclared(shape: Shape with ShapeHelpers, b: PartBuilder): Unit = shape match {
-    case shape: Shape if shape.annotations.contains(classOf[ParsedFromTypeExpression]) =>
-      RamlTypeExpressionEmitter(shape).emit(b)
-    case s: Shape =>
-      if (s.isLink) spec.localReference(s).emit(b)
-      else raw(b, s.name.value())
+  private def emitShape(value: Shape, b: PartBuilder): Unit = value match {
+    case u: UnionShape if !u.isLink =>
+      RamlInlinedUnionShapeEmitter(u, ordering, references).partEmitters().emitAll(b)
+    case d: Shape with ShapeHelpers if d.annotations.contains(classOf[DeclaredElement]) || d.isLink =>
+      emitDeclared(d, b)
+    case s: AnyShape =>
+      b.obj(r => traverse(Raml10TypeEmitter(s, ordering, references = references).entries(), r))
+    case other =>
+      spec.eh.violation(ResolutionValidation,
+                        other.id,
+                        None,
+                        "Cannot emit for type shapes without WebAPI Shape support",
+                        other.position(),
+                        other.location())
   }
+
+  private def emitDeclared(shape: Shape with ShapeHelpers, b: PartBuilder): Unit =
+    if (shape.isLink) spec.localReference(shape).emit(b)
+    else raw(b, shape.name.value())
 
   override def position(): Position = pos(f.value.annotations)
 }
@@ -919,6 +902,7 @@ case class RamlPropertyDependenciesEmitter(
 case class RamlUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
     extends RamlAnyShapeEmitter(shape, ordering, references) {
+
   override def emitters(): Seq[EntryEmitter] = {
     // If anyOf is empty and inherits is not empty, the shape is still not resolved. So, emit as a AnyShape
     val unionEmitters =
@@ -930,51 +914,106 @@ case class RamlUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, refe
   override val typeName: Option[String] = Some("union")
 }
 
+case class RamlInlinedUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends RamlAnyShapeEmitter(shape, ordering, references) {
+
+  def partEmitters(): MixedEmitters = {
+    // If anyOf is empty and inherits is not empty, the shape is still not resolved. So, emit as a AnyShape
+    val unionEmitters =
+      if (shape.anyOf.isEmpty && shape.inherits.nonEmpty) Nil
+      else Seq(RamlInlinedAnyOfShapeEmitter(shape, ordering, references = references))
+    MixedEmitters(super.emitters(), unionEmitters)
+  }
+
+  case class MixedEmitters(entries: Seq[EntryEmitter], parts: Seq[PartEmitter]) {
+    def emitAll(b: PartBuilder): Unit = {
+      parts.foreach(_.emit(b))
+      if (entries.nonEmpty) b.obj(b => entries.foreach(_.emit(b)))
+    }
+  }
+
+  override val typeName: Option[String] = Some("union")
+}
+
 case class RamlAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
     extends EntryEmitter {
+
   override def emit(b: EntryBuilder): Unit = {
-    //TODO refactor this. To can emit all union inlined I need to verify if the shape (non scalar, non link) is in declarations.
-    // If it is, print the name, if not should extract to declarations.
-    //Temporal workaround: if the anyOf is a scalar or a link, emit it inline. If not, emit expanded.
-    if (shape.anyOf.forall(
-          s =>
-            (s.isInstanceOf[ScalarShape] && s.fields.fields().size <= 2 && s.fields
-              .fields()
-              .map(_.field)
-              .forall(f => f == ScalarShapeModel.Name || f == ScalarShapeModel.DataType)) ||
-              (s.isLink && s.linkLabel.option().isDefined)))
-      emitUnionInlined(b)
-    else emitUnionExpanded(b)
+    RamlUnionEmitterHelper.inlinedEmission(shape) match {
+      case Some(e) => emitUnionInlined(e, b)
+      case None    => emitUnionExpanded(b)
+    }
   }
 
   def emitUnionExpanded(b: EntryBuilder): Unit = {
     b.entry(
       "anyOf",
       _.list { b =>
-        val emitters = shape.anyOf.map {
-          case s: Shape =>
-            Raml10TypePartEmitter(s, ordering, None, references = references)
-        }
-        ordering.sorted(emitters).foreach(_.emit(b))
+        val emitters = shape.anyOf.map(s => Raml10TypePartEmitter(s, ordering, None, references = references))
+        // TODO add lexical information to anyOf elements in TypeExpressionParser. As a WA, the emitters are sorted by the shape id.
+        traverse(ordering.sorted(emitters), b)
       }
     )
   }
 
-  def emitUnionInlined(b: EntryBuilder): Unit = {
-    val types = shape.anyOf.map {
-      case scalar: ScalarShape =>
+  def emitUnionInlined(types: String, b: EntryBuilder): Unit = b.entry("type", types)
+
+  override def position(): Position = pos(shape.fields.get(UnionShapeModel.AnyOf).annotations)
+
+}
+
+case class RamlInlinedAnyOfShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends PartEmitter {
+
+  override def emit(b: PartBuilder): Unit = {
+    RamlUnionEmitterHelper.inlinedEmission(shape) match {
+      case Some(e) => emitUnionInlined(e, b)
+      case None    => emitUnionExpanded(b)
+    }
+  }
+
+  def emitUnionExpanded(b: PartBuilder): Unit = {
+    b.obj(
+      b =>
+        b.entry(
+          "anyOf",
+          _.list { b =>
+            val emitters = shape.anyOf.map(s => Raml10TypePartEmitter(s, ordering, None, references = references))
+            // TODO add lexical information to anyOf elements in TypeExpressionParser. As a WA, the emitters are sorted by the shape id.
+            traverse(ordering.sorted(emitters), b)
+          }
+      )
+    )
+  }
+
+  def emitUnionInlined(types: String, b: PartBuilder): Unit = b += types
+
+  override def position(): Position = pos(shape.fields.get(UnionShapeModel.AnyOf).annotations)
+}
+
+object RamlUnionEmitterHelper {
+  def inlinedEmission(shape: UnionShape): Option[String] = {
+    val union: Seq[String] = shape.anyOf.map {
+      case scalar: ScalarShape if isSimpleScalar(scalar) =>
         RamlTypeDefStringValueMatcher
           .matchType(TypeDefXsdMapping.typeDef(scalar.dataType.value()), scalar.format.option())
           ._1
-      case a: AnyShape if a.isLink && a.linkLabel.option().isDefined =>
-        a.linkLabel.value()
-      case _ => // ignore
+      case s: Shape if s.isLink && s.linkLabel.option().isDefined => s.linkLabel.value()
+      case a: NilShape if a.fields.fields().isEmpty               => "nil"
+      case a: AnyShape if a.fields.fields().isEmpty               => "any"
+      case _                                                      => return None
     }
-    b.entry("type", types.mkString(" | "))
+    Some(union.mkString(" | "))
   }
 
-  override def position(): Position = pos(shape.fields.get(UnionShapeModel.AnyOf).annotations)
+  private def isSimpleScalar(scalar: ScalarShape): Boolean =
+    scalar.fields.fields().size <= 2 && scalar.fields
+      .fields()
+      .map(_.field)
+      .forall(f => f == ScalarShapeModel.Name || f == ScalarShapeModel.DataType)
 }
 
 case class RamlArrayShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -2060,8 +2099,10 @@ case class OasScalarShapeEmitter(scalar: ScalarShape,
   }
 }
 
-case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit], isHeader: Boolean)(
-    override implicit val spec: OasSpecEmitterContext)
+case class OasFileShapeEmitter(scalar: FileShape,
+                               ordering: SpecOrdering,
+                               references: Seq[BaseUnit],
+                               isHeader: Boolean)(override implicit val spec: OasSpecEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 

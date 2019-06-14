@@ -10,7 +10,8 @@ traits:
 securedBy:
   - oauth2_0
 types:
-  CustomerMemberResponse: shapes.OrganizationData | shapes.PersonData
+  CustomerMemberResponse:
+    type: shapes.OrganizationData | shapes.PersonData
 /customers:
   displayName: Customer Resource
   /corporate:
@@ -33,8 +34,7 @@ types:
         "200":
           body:
             application/json:
-              type:
-                - CustomerMemberResponse
+              type: CustomerMemberResponse
     /accounts:
       get:
         is:
@@ -46,13 +46,12 @@ types:
             body:
               application/json:
                 type:
-                  - shapes.BankAccountData[]
+                  items: shapes.BankAccountData
       post:
         description: Requests the creation of a new BankAccount
         body:
           application/json:
-            type:
-              - shapes.NewBankAccountRequestData
+            type: shapes.NewBankAccountRequestData
       /{account_id}:
         uriParameters:
           account_id:
@@ -65,8 +64,7 @@ types:
             "200":
               body:
                 application/json:
-                  type:
-                    - shapes.BankAccountData
+                  type: shapes.BankAccountData
         delete:
           description: Removes a BankAccount from the system
     /loans:
@@ -81,13 +79,12 @@ types:
             body:
               application/json:
                 type:
-                  - shapes.LoanData[]
+                  items: shapes.LoanData
       post:
         description: Requests the creation of a new Loan
         body:
           application/json:
-            type:
-              - shapes.NewLoanRequestData
+            type: shapes.NewLoanRequestData
       /{loan_id}:
         uriParameters:
           loan_id:
@@ -100,8 +97,7 @@ types:
             "200":
               body:
                 application/json:
-                  type:
-                    - shapes.LoanData
+                  type: shapes.LoanData
       /schedule:
         get:
           description: Returns the repayments schedule for a Loan
@@ -120,13 +116,12 @@ types:
               body:
                 application/json:
                   type:
-                    - shapes.DebitCardData[]
+                    items: shapes.DebitCardData
         post:
           description: Requests the creation of a new DebitCard
           body:
             application/json:
-              type:
-                - shapes.NewDebitCardRequestData
+              type: shapes.NewDebitCardRequestData
         /{card_id}:
           uriParameters:
             card_id:
@@ -139,8 +134,7 @@ types:
               "200":
                 body:
                   application/json:
-                    type:
-                      - shapes.DebitCardData
+                    type: shapes.DebitCardData
           delete:
             description: Removes a DebitCard from the system
       /credit:
@@ -155,13 +149,12 @@ types:
               body:
                 application/json:
                   type:
-                    - shapes.CreditCardData[]
+                    items: shapes.CreditCardData
         post:
           description: Requests the creation of a new CreditCard
           body:
             application/json:
-              type:
-                - shapes.NewCreditCardRequestData
+              type: shapes.NewCreditCardRequestData
         /{card_id}:
           uriParameters:
             card_id:
@@ -174,8 +167,7 @@ types:
               "200":
                 body:
                   application/json:
-                    type:
-                      - shapes.CreditCardData
+                    type: shapes.CreditCardData
           delete:
             description: Removes a CreditCard from the system
 uses:

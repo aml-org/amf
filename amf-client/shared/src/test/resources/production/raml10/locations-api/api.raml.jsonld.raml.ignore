@@ -35,16 +35,14 @@ mediaType: application/json
                 city: Berkeley
                 street_address: 2727 Milvia St
                 zip: 94703
-          type:
-            - location.Locations
+          type: location.Locations
 /str:
   get:
     description: Returns a collection of location.Locations
     responses:
       "200":
         body:
-          type:
-            - location.str
+          type: location.str
 /obj:
   get:
     description: Returns a collection of location.Locations

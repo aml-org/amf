@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  SomeType:
+    type: object
+    properties:
+      some: string
+  OtherType:
+    type: object
+    properties:
+      other: string
+  AnotherType:
+    type: object
+    properties:
+      another: boolean
+  UnionType:
+    type: [ SomeType | OtherType ,  AnotherType ]
+
+
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        type: UnionType

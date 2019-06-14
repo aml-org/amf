@@ -18,7 +18,7 @@ types:
         body:
           application/json:
             type:
-              - objectName[]
+              items: objectName
             example:
               -
                 id: "1"
@@ -62,8 +62,7 @@ types:
   post:
     body:
       application/json:
-        type:
-          - objectName
+        type: objectName
         example:
           name: Michelle Ruiz
           email: mruiz0@qq.com

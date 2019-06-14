@@ -44,7 +44,8 @@ types:
                   plane:
                     type: Boeing 777
                     totalSeats: 300
-            type: AmericanFlight[]
+            type:
+              items: AmericanFlight
   post:
     displayName: Add a flight
     body:

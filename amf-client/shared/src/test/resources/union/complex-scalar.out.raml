@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: New API
+types:
+  UnionType:
+    type: string | ScalarType
+  ScalarType:
+    type: string
+    description: some scalar with extra fields
+    example: a string
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        type: UnionType

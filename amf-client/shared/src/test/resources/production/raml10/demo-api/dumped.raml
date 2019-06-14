@@ -70,7 +70,9 @@ types:
         required: true
       targets:
         description: The possible content types to convert to.
-        type: string[]
+        type:
+          items:
+            type: string
         required: true
   Unionable:
     type: ImportFormat | Picture

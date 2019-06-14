@@ -220,7 +220,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
     val syntax     = None
     val validation = None
 
-    val config                    = CycleConfig(source, golden, hint, target, directory, syntax)
+    val config                    = CycleConfig(source, golden, hint, target, directory, syntax, None)
     val useAmfJsonldSerialization = true
 
     for {
@@ -409,7 +409,7 @@ class ProductionServiceTest extends RamlResolutionTest {
           target: Vendor,
           tFn: (BaseUnit, CycleConfig) => BaseUnit): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, basePath, None)
+    val config = CycleConfig(source, golden, hint, target, basePath, None, None)
 
     build(config, None, useAmfJsonldSerialization = true)
       .map(tFn(_, config))

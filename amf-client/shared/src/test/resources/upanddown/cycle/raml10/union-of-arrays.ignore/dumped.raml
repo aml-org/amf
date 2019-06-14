@@ -6,9 +6,15 @@ types:
       prop1:
         type: string
   type2:
-    type: string[]
+    type:
+      items:
+        type: string
   unionType:
-    type: type1[] | type2
+    type:
+      anyOf:
+        -
+          items: type1
+        - type2
 /test:
   get:
     body:

@@ -9,7 +9,8 @@ traits:
   contentCacheable: !include traits/content-cacheable.raml
 securedBy: oauth2_0
 types:
-  CustomerMemberResponse: shapes.OrganizationData | shapes.PersonData
+  CustomerMemberResponse:
+    type: shapes.OrganizationData | shapes.PersonData
 /customers:
   displayName: Customer Resource
   /corporate:
@@ -43,7 +44,8 @@ types:
           "200":
             body:
               application/json:
-                type: shapes.BankAccountData[]
+                type:
+                  items: shapes.BankAccountData
       post:
         description: Requests the creation of a new BankAccount
         body:
@@ -75,7 +77,8 @@ types:
           "200":
             body:
               application/json:
-                type: shapes.LoanData[]
+                type:
+                  items: shapes.LoanData
       post:
         description: Requests the creation of a new Loan
         body:
@@ -111,7 +114,8 @@ types:
             "200":
               body:
                 application/json:
-                  type: shapes.DebitCardData[]
+                  type:
+                    items: shapes.DebitCardData
         post:
           description: Requests the creation of a new DebitCard
           body:
@@ -143,7 +147,8 @@ types:
             "200":
               body:
                 application/json:
-                  type: shapes.CreditCardData[]
+                  type:
+                    items: shapes.CreditCardData
         post:
           description: Requests the creation of a new CreditCard
           body:

@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Test Union
+types:
+  SomeType:
+    type: object
+    properties:
+      a:
+        type: string
+      b:
+        type: integer
+  OtherType:
+    type: object
+    properties:
+      c:
+        type: number
+      d:
+        type: string
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        type: SomeType | OtherType
