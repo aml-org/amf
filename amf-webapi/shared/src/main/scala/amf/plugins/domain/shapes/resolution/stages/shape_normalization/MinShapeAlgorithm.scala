@@ -416,7 +416,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields,
+                              baseUnion,
+                              superNode,
+                              filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }
@@ -451,6 +454,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
           case any: AnyShape =>
             accExamples ++= any.examples
             any.fields.removeField(AnyShapeModel.Examples)
+            any.fields.removeField(AnyShapeModel.DefaultValueString)
+            any.fields.removeField(AnyShapeModel.Default)
           case _ => // ignore
         }
         shape

@@ -199,5 +199,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("remove-bom/remove-bom.raml")
   }
 
+  test("Default facet defined in union type") {
+    checkValid("valid-default-facet-of-union-type.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
