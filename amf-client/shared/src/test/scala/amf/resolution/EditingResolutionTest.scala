@@ -255,6 +255,10 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "inheritance-provenance/with-recursive-inheritance/")
   }
 
+  test("Resolved link annotation with types") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, validationsPath + "resolved-link-annotation/")
+  }
+
   test("Inheritance provenance annotation with regular inheritance") {
     cycle("api.raml",
           "api.jsonld",

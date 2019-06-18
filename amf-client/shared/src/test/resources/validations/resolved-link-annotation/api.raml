@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: api
+mediaType: application/json
+types:
+  typeA:
+    properties:
+      nameA: string
+  typeB:
+    properties:
+      nameB: string
+/endpoint:
+  get:
+    body:
+      type: typeA
+  post:
+    body:
+      type: typeB
