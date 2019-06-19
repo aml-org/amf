@@ -3,7 +3,7 @@ package amf.resolution
 import amf.core.emitter.RenderOptions
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.{ErrorHandler, RuntimeErrorHandler, UnhandledErrorHandler}
+import amf.core.parser.{RuntimeErrorHandler, UnhandledErrorHandler}
 import amf.core.remote._
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.emit.AMFRenderer
@@ -220,7 +220,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
     val syntax     = None
     val validation = None
 
-    val config                    = CycleConfig(source, golden, hint, target, directory, syntax)
+    val config                    = CycleConfig(source, golden, hint, target, directory, syntax, None)
     val useAmfJsonldSerialization = true
 
     for {
@@ -285,6 +285,10 @@ class OASProductionResolutionTest extends OasResolutionTest {
 
   test("OAS multiple examples test") {
     cycle("oas-multiple-example.json", "oas-multiple-example.json.jsonld", OasJsonHint, Amf)
+  }
+
+  test("OAS XML payload test") {
+    cycle("oas20/xml-payload.json", "oas20/xml-payload.json.jsonld", OasYamlHint, Amf)
   }
 }
 
@@ -405,7 +409,7 @@ class ProductionServiceTest extends RamlResolutionTest {
           target: Vendor,
           tFn: (BaseUnit, CycleConfig) => BaseUnit): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, basePath, None)
+    val config = CycleConfig(source, golden, hint, target, basePath, None, None)
 
     build(config, None, useAmfJsonldSerialization = true)
       .map(tFn(_, config))

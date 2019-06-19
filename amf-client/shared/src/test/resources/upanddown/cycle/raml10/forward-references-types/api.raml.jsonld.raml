@@ -18,16 +18,16 @@ types:
     properties:
       area:
         type: integer
-      context: (Circle | Square)[]
+      context:
+        items:
+          type: Circle | Square
   Circle:
-    type:
-      - Figure
+    type: Figure
     properties:
       radius:
         type: integer
   Square:
-    type:
-      - Figure
+    type: Figure
     properties:
       side:
         type: integer

@@ -1,0 +1,20 @@
+#%RAML 1.0 Library
+uses:
+  Base: base.raml
+
+types:
+  User:
+    properties:
+      name: string
+
+resourceTypes:
+  usersR:
+    type:
+      Base.resource:
+        typeParam: User
+
+traits:
+  usersT:
+    is:
+      Base.response:
+        typeParam: User

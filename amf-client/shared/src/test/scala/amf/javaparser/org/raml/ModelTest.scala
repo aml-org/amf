@@ -85,7 +85,7 @@ trait ModelValidationTest extends DirectoryTest {
 trait ModelResolutionTest extends ModelValidationTest {
 
   override def transform(unit: BaseUnit, d: String, vendor: Vendor): BaseUnit =
-    transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d, None))
+    transform(unit, CycleConfig("", "", hintFromTarget(vendor), vendor, d, None, None))
 
   private def profileFromVendor(vendor: Vendor): ProfileName = {
     vendor match {

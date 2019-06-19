@@ -1,0 +1,12 @@
+#%RAML 1.0
+title: New API
+
+types:
+  UnionType:
+    type: string | integer
+
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        type: UnionType

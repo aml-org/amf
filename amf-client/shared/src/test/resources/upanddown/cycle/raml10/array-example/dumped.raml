@@ -9,7 +9,8 @@ types:
       body:
         type: string
   Emails:
-    type: Email[]
+    type:
+      items: Email
     minItems: 1
     uniqueItems: true
     example:

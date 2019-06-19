@@ -9,17 +9,21 @@ import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.parser.{ErrorHandler, FieldEntry, Value}
+import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.{EmptyPayload, Inferred}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
-import amf.plugins.domain.webapi.models.{Operation, Payload, Request, Response}
+import amf.plugins.domain.webapi.models._
+import amf.plugins.features.validation.ParserSideValidations.UnusedBaseUriParameter
 import amf.plugins.features.validation.ResolutionSideValidations.{
   ResolutionValidation,
   UnequalMediaTypeDefinitionsInExtendsPayloads
 }
+
+import scala.collection.mutable
 
 /**
   * Merge 'other' element into 'main' element:
@@ -417,6 +421,8 @@ object DataNodeMerging {
   * Checks some conditions when merging some nodes
   */
 object MergingValidator {
+  val reportedMissingParameters: mutable.Map[String, Seq[Parameter]] = mutable.Map.empty
+
   def validate[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): Unit = {
     (main, other) match {
       case (m: Request, o: Request) =>
@@ -425,8 +431,47 @@ object MergingValidator {
       case (m: Response, o: Response) =>
         validatePayloads(main, errorHandler, m.payloads, o.payloads)
 
+      case (m: EndPoint, o: EndPoint) =>
+        validateEndpoints(main, errorHandler, m, o)
+
       case _ => // Nothing
     }
+  }
+
+  private def validateEndpoints[T <: DomainElement](main: T,
+                                                    errorHandler: ErrorHandler,
+                                                    m: EndPoint,
+                                                    o: EndPoint): Unit = {
+
+    val pathParams = TemplateUri.variables(m.path.value())
+    val checkParameter = (p: Parameter, isOperation: Boolean) => {
+      val maybeReported = reportedMissingParameters.get(m.id)
+
+      val reported = maybeReported match {
+        case Some(alreadyReported) => alreadyReported.exists(_.name.value() == p.name.value())
+        case _                     => false
+      }
+
+      val unused = !p.name.option().exists(n => pathParams.contains(n))
+
+      if (!reported && unused) {
+        reportedMissingParameters += m.id -> (reportedMissingParameters.getOrElse(m.id, Seq.empty) :+ p)
+        val message = if (isOperation) {
+          s"Unused operation uri parameter ${p.name.value()}"
+        } else {
+          s"Unused uri parameter ${p.name.value()}"
+        }
+        errorHandler.warning(UnusedBaseUriParameter, p.id, None, message, p.position(), p.location())
+      }
+    }
+
+    o.parameters
+      .foreach(checkParameter(_, false))
+
+    o.operations
+      .flatMap(o => Option(o.request))
+      .flatMap(_.uriParameters)
+      .foreach(checkParameter(_, true))
   }
 
   private def validatePayloads[T <: DomainElement](main: T,

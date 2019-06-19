@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: default-payload
+
+types:
+
+  Device:
+    type: Phone | Notebook
+    maxProperties: 3
+    minProperties: 1
+    properties:
+      deviceProperty: string
+
+    default:
+      phoneProperty: 12
+      deviceProperty: aa
+
+    example:
+      phoneProperty: 12
+      deviceProperty: aa
+
+  Phone:
+    type: object
+    properties:
+      phoneProperty: number
+  Notebook:
+    type: object
+    properties:
+      notebookProperty: number

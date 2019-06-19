@@ -10,9 +10,12 @@ types:
       baseProp2:
         type: string
   myArray:
-    type: baseType1[]
+    type:
+      items: baseType1
   myMatrix:
-    type: baseType1[][]
+    type:
+      items:
+        items: baseType1
   myNode:
     properties:
       baseType1: baseType1

@@ -1,12 +1,11 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{InheritanceProvenance, LexicalInformation}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
 import amf.core.parser.Annotations
-import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.AnyShape
 
@@ -272,7 +271,7 @@ private[shape_normalization] trait RestrictionComputation {
   protected def computeNarrow(field: Field, derivedValue: AmfElement, superValue: AmfElement): AmfElement = {
     field match {
 
-      case ShapeModel.Name => {
+      case ShapeModel.Name =>
         val derivedStrValue = stringValue(derivedValue)
         val superStrValue   = stringValue(superValue)
         if (superStrValue.isDefined && (derivedStrValue.isEmpty || derivedStrValue.get == "schema")) {
@@ -280,7 +279,6 @@ private[shape_normalization] trait RestrictionComputation {
         } else {
           derivedValue
         }
-      }
 
       case NodeShapeModel.MinProperties =>
         if (computeNumericComparison("<=",
@@ -479,15 +477,15 @@ private[shape_normalization] trait RestrictionComputation {
         }
 
       case NodeShapeModel.Discriminator =>
-        if (computeStringEquality(superValue,
-                                  derivedValue,
-                                  Some(NodeShapeModel.Discriminator.value.iri()),
-                                  derivedValue.location(),
-                                  derivedValue.position())) {
+        if (!computeStringEquality(superValue,
+                                   derivedValue,
+                                   Some(NodeShapeModel.Discriminator.value.iri()),
+                                   derivedValue.location(),
+                                   derivedValue.position())) {
           derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError(
-            "different values for discriminator constraint",
+            "shape has same discriminator value as parent",
             Some(NodeShapeModel.Discriminator.value.iri()),
             derivedValue.location(),
             derivedValue.position()
@@ -495,15 +493,15 @@ private[shape_normalization] trait RestrictionComputation {
         }
 
       case NodeShapeModel.DiscriminatorValue =>
-        if (computeStringEquality(superValue,
-                                  derivedValue,
-                                  Some(NodeShapeModel.DiscriminatorValue.value.iri()),
-                                  derivedValue.location(),
-                                  derivedValue.position())) {
+        if (!computeStringEquality(superValue,
+                                   derivedValue,
+                                   Some(NodeShapeModel.DiscriminatorValue.value.iri()),
+                                   derivedValue.location(),
+                                   derivedValue.position())) {
           derivedValue
         } else {
           throw new InheritanceIncompatibleShapeError(
-            "different values for discriminator value constraint",
+            "shape has same discriminator value as parent",
             Some(NodeShapeModel.DiscriminatorValue.value.iri()),
             derivedValue.location(),
             derivedValue.position()

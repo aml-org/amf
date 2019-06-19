@@ -171,6 +171,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
           }
         )
+
+        ctx.closedShape(api.id, paths, "paths")
       }
     )
 

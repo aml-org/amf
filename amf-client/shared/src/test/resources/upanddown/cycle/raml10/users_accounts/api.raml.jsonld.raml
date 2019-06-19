@@ -21,7 +21,8 @@ types:
     responses:
       "200":
         body:
-          application/json: User[]
+          application/json:
+            items: User
   /{id}:
     get:
       responses:

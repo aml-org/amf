@@ -60,7 +60,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
   }
 
   private def errorCycle(source: String, hint: Hint, errors: List[ErrorContainer], path: String) = {
-    val config = CycleConfig(source, source, hint, hint.vendor, path, Some(hint.syntax))
+    val config = CycleConfig(source, source, hint, hint.vendor, path, Some(hint.syntax), None)
     val eh     = TestErrorHandler()
 
     for {

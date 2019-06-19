@@ -16,7 +16,9 @@ class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
 
   val examples = List(
     ReplacerExamples("singularize", "singularize", "users", "user"),
+    ReplacerExamples("singularize ending with 'ies'", "singularize", "entities", "entity"),
     ReplacerExamples("pluralize", "pluralize", "user", "users"),
+    ReplacerExamples("pluralize ending with 'y'", "pluralize", "company", "companies"),
     ReplacerExamples("uppercase", "uppercase", "userId", "USERID"),
     ReplacerExamples("lowercase", "lowercase", "userId", "userid"),
     ReplacerExamples("lowercamelcase", "lowercamelcase", "UserId", "userId"),
@@ -24,6 +26,9 @@ class VariableReplacerTest extends FunSuite with Matchers with Inspectors {
     ReplacerExamples("uppercamelcase hyphen", "uppercamelcase", "user-id", "UserId"),
     ReplacerExamples("uppercamelcase underscore", "uppercamelcase", "user_id", "UserId"),
     ReplacerExamples("uppercamelcase space", "uppercamelcase", "user id", "UserId"),
+    ReplacerExamples("uppercamelcase multiple hyphen", "uppercamelcase", "user---id", "UserId"),
+    ReplacerExamples("uppercamelcase multiple underscore", "uppercamelcase", "user___id", "UserId"),
+    ReplacerExamples("uppercamelcase multiple combined", "uppercamelcase", "user _-_ id", "UserId"),
     ReplacerExamples("lowerunderscorecase", "lowerunderscorecase", "userId", "user_id"),
     ReplacerExamples("upperunderscorecase", "upperunderscorecase", "userId", "USER_ID"),
     ReplacerExamples("lowerhyphencase", "lowerhyphencase", "userId", "user-id"),

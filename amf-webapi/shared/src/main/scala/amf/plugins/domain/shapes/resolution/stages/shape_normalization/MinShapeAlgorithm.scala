@@ -1,6 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{InheritanceProvenance, LexicalInformation}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -10,7 +10,6 @@ import amf.core.parser.{Annotations, RuntimeErrorHandler, Value}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
-import amf.plugins.domain.shapes.annotations.InheritanceProvenance
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.features.validation.ResolutionSideValidations.{
@@ -455,6 +454,8 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
           case any: AnyShape =>
             accExamples ++= any.examples
             any.fields.removeField(AnyShapeModel.Examples)
+            any.fields.removeField(AnyShapeModel.DefaultValueString)
+            any.fields.removeField(AnyShapeModel.Default)
           case _ => // ignore
         }
         shape

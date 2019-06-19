@@ -85,5 +85,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("examples-mime-type/response-with-no-schema.json", Some("response-with-no-schema.report"))
   }
 
+  test("Invalid paths in paths object") {
+    validate("invalid-oas-path/invalid-oas-path.json", Some("invalid-oas-path.report"))
+  }
+
   override val hint: Hint = OasJsonHint
 }

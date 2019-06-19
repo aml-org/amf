@@ -49,9 +49,10 @@ trait BuildCycleTests extends FileAssertionTest {
                   directory: String = basePath,
                   validation: Option[Validation] = None,
                   useAmfJsonldSerialization: Boolean = true,
-                  syntax: Option[Syntax] = None): Future[Assertion] = {
+                  syntax: Option[Syntax] = None,
+                  pipeline: Option[String] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory, syntax)
+    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
     build(config, validation, useAmfJsonldSerialization)
       .map(transform(_, config))
@@ -112,9 +113,10 @@ trait BuildCycleTests extends FileAssertionTest {
                target: Vendor = Amf,
                directory: String = basePath,
                validation: Option[Validation] = None,
-               syntax: Option[Syntax] = None): Future[Assertion] = {
+               syntax: Option[Syntax] = None,
+               pipeline: Option[String] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory, syntax)
+    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
     build(config, validation, useAmfJsonldSerialisation = true)
       .map(transformRdf(_, config))
@@ -128,7 +130,8 @@ trait BuildCycleTests extends FileAssertionTest {
                          hint: Hint,
                          target: Vendor,
                          directory: String,
-                         syntax: Option[Syntax]) {
+                         syntax: Option[Syntax],
+                         pipeline: Option[String]) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
   }
@@ -139,9 +142,10 @@ trait BuildCycleTests extends FileAssertionTest {
                    target: Vendor = Amf,
                    directory: String = basePath,
                    validation: Option[Validation] = None,
-                   syntax: Option[Syntax] = None): Future[Assertion] = {
+                   syntax: Option[Syntax] = None,
+                   pipeline: Option[String] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory, syntax)
+    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
     build(config, validation, useAmfJsonldSerialisation = true)
       .map(transformThroughRdf(_, config))

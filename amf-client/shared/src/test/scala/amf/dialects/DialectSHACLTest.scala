@@ -42,9 +42,10 @@ class DialectSHACLTest extends FunSuiteCycleTests with PlatformSecrets {
                         target: Vendor = Amf,
                         directory: String = basePath,
                         validation: Option[Validation] = None,
-                        syntax: Option[Syntax] = None): Future[Assertion] = {
+                        syntax: Option[Syntax] = None,
+                        pipeline: Option[String] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory, None)
+    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
     build(config, validation, useAmfJsonldSerialisation = true)
       .map(transformRdf(_, config))

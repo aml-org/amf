@@ -3,11 +3,7 @@ title: Offices API
 baseUri: http://localhost/office
 annotationTypes:
   base:
-    anyOf:
-      -
-        type: string
-      -
-        type: nil
+    type: string | nil
   ignored:
     description: |
       This annotation allows to specify a method which will not be transformed into an operation.

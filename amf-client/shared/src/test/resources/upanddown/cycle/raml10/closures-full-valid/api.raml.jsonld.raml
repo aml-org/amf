@@ -11,14 +11,14 @@ types:
         type: string
   myArray:
     type:
-      - baseType1[]
+      items: baseType1
   myMatrix:
     type:
-      - baseType1[][]
+      items:
+        items: baseType1
   myNode:
     properties:
       baseType1: baseType1
       baseType2: baseType2
   myUnion:
-    type:
-      - baseType1 | baseType2
+    type: baseType1 | baseType2

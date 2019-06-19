@@ -39,10 +39,17 @@
     }
   ],
   "paths": {
-    "endpoint": {
-      "tags": [
-        "account"
-      ]
+    "/endpoint": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "some"
+          }
+        },
+        "tags": [
+          "account"
+        ]
+      }
     }
   }
 }

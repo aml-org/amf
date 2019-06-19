@@ -203,6 +203,10 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
     validate("/extends/references/nestedRTsWithInexistentRT.raml", Some("references/nestedRTsWithInexistentRT.report"))
   }
 
+  test("Crossed library references") {
+    validate("/extends/references/crossed-libraries/api.raml", Some("references/crossed-libraries.report"))
+  }
+
   // Examples validation
 
   test("Optional method as parameter value with inexistent reference") {
@@ -238,6 +242,18 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
     validate("/extends/optional-raml08-nodes/traits.raml", profile = Raml08Profile)
   }
 
+  test("Uri parameter in resource type") {
+    validate("/extends/uri-parameters/resource.raml", Some("uri-parameters-in-rt.report"))
+  }
+
+  test("Uri parameter in multi-level resource type") {
+    validate("/extends/uri-parameters/multi-level-rts.raml", Some("uri-parameters-in-multilevel-rt.report"))
+  }
+
+  test("Uri parameter in multi-level endpoints") {
+    validate("/extends/uri-parameters/multi-level-endpoints.raml",
+             Some("uri-parameters-in-multilevel-rt-with-multilevel-endpoints.report"))
+  }
 }
 
 class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest {

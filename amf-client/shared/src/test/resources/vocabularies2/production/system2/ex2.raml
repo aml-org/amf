@@ -1,16 +1,16 @@
 #%Container Configuration 0.2
-mapping:
-  -
-    variable: date
-    property: http://schema.org/date
-namespace: assets
 pattern:
   template: $container/anyId/$uuid
-schema: http://aml.og/schema/xyz
+mapping:
+  -
+    property: http://schema.org/date
+    variable: date
 pageSize: 10
+schema: http://aml.og/schema/xyz
+namespace: assets
 links:
   -
-    description: Linked asset metadata
+    linkRange: http://mulesoft.org/vocab/anpoint#WebAPI
     linkClass: http://mulesoft.org/vocab/anpoint#Asset
     linkProperty: http://mulesoft.org/vocab/anpoint#meta
-    linkRange: http://mulesoft.org/vocab/anpoint#WebAPI
+    description: Linked asset metadata

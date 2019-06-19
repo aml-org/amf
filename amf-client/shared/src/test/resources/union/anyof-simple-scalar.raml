@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: test title
+types:
+  UnionType:
+    anyOf:
+      -
+        type: string
+      -
+        type: integer
+
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        type: UnionType

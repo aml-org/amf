@@ -967,10 +967,20 @@
             ],
             "http://a.ml/vocabularies/meta#mapProperty": [
               {
-                "@id": "http://a.ml/vocabularies/amf-validation#ramlPrefixName"
+                "@id": "prefix"
               }
             ],
             "http://a.ml/vocabularies/meta#mapValueProperty": [
+              {
+                "@id": "uri"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#mapTermProperty": [
+              {
+                "@id": "http://a.ml/vocabularies/amf-validation#ramlPrefixName"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#mapTermValueProperty": [
               {
                 "@id": "http://a.ml/vocabularies/amf-validation#ramlPrefixUri"
               }
@@ -1369,6 +1379,11 @@
               }
             ],
             "http://a.ml/vocabularies/meta#mapProperty": [
+              {
+                "@id": "name"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#mapTermProperty": [
               {
                 "@id": "http://schema.org/name"
               }
@@ -2191,6 +2206,11 @@
             ],
             "http://a.ml/vocabularies/meta#mapProperty": [
               {
+                "@id": "name"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#mapTermProperty": [
+              {
                 "@id": "http://a.ml/vocabularies/amf-validation#ramlPropertyId"
               }
             ],
@@ -2429,6 +2449,11 @@
               }
             ],
             "http://a.ml/vocabularies/meta#mapProperty": [
+              {
+                "@id": "name"
+              }
+            ],
+            "http://a.ml/vocabularies/meta#mapTermProperty": [
               {
                 "@id": "http://a.ml/vocabularies/amf-validation#ramlPropertyId"
               }

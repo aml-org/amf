@@ -67,10 +67,10 @@ types:
       targets:
         description: The possible content types to convert to.
         type:
-          - string[]
+          items:
+            type: string
   Unionable:
-    type:
-      - ImportFormat | Picture
+    type: ImportFormat | Picture
   Arrable:
     items: Picture
 /files:

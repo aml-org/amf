@@ -21,11 +21,9 @@
         "x-amf-queryParameters": {
           "param1": {
             "description": "Some person",
-            "type": [
-              {
-                "$ref": "#/definitions/Person"
-              }
-            ]
+            "type": {
+              "$ref": "#/definitions/Person"
+            }
           }
         },
         "responses": {}

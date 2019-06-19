@@ -54,7 +54,6 @@ case class XMLSerializerParser(defaultName: String, node: YNode)(implicit ctx: W
     val serializer = XMLSerializer(node)
       .set(XMLSerializerModel.Attribute, value = false)
       .set(XMLSerializerModel.Wrapped, value = false)
-      .set(XMLSerializerModel.Name, defaultName)
 
     map.key(
       "attribute",

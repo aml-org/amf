@@ -7,13 +7,11 @@ types:
     properties:
       prop1: baseType
   child:
-    type:
-      - parent
+    type: parent
     properties:
       baseType:
         type: number
   grandChild:
-    type:
-      - child
+    type: child
     properties:
       prop2: baseType

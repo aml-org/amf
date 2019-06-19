@@ -6,57 +6,57 @@ dataShapes:
     anyOf:
       -
         type: Scalar
-        datatype: http://www.w3.org/2001/XMLSchema#integer
         name: item1
+        datatype: http://www.w3.org/2001/XMLSchema#integer
       -
         type: Scalar
-        datatype: http://www.w3.org/2001/XMLSchema#string
         name: item0
+        datatype: http://www.w3.org/2001/XMLSchema#string
     name: UnionType
   TimeOnlyType:
     type: Scalar
-    datatype: http://www.w3.org/2001/XMLSchema#time
     name: TimeOnlyType
+    datatype: http://www.w3.org/2001/XMLSchema#time
   StringType:
     type: Scalar
-    datatype: http://www.w3.org/2001/XMLSchema#string
     name: StringType
+    datatype: http://www.w3.org/2001/XMLSchema#string
   PasswordType:
     type: Scalar
-    datatype: http://a.ml/vocabularies/shapes#password
     name: PasswordType
+    datatype: http://a.ml/vocabularies/shapes#password
   NumberType:
     type: Scalar
-    datatype: http://a.ml/vocabularies/shapes#number
     name: NumberType
+    datatype: http://a.ml/vocabularies/shapes#number
   IntegerType:
     type: Scalar
-    datatype: http://www.w3.org/2001/XMLSchema#integer
     name: IntegerType
+    datatype: http://www.w3.org/2001/XMLSchema#integer
   DateTimeType:
     type: Scalar
-    datatype: http://www.w3.org/2001/XMLSchema#dateTime
     name: DateTimeType
+    datatype: http://www.w3.org/2001/XMLSchema#dateTime
   DateTimeOnlyType:
     type: Scalar
-    datatype: http://a.ml/vocabularies/shapes#dateTimeOnly
     name: DateTimeOnlyType
+    datatype: http://a.ml/vocabularies/shapes#dateTimeOnly
   DateOnlyType:
     type: Scalar
-    datatype: http://www.w3.org/2001/XMLSchema#date
     name: DateOnlyType
+    datatype: http://www.w3.org/2001/XMLSchema#date
   ByteType:
     type: Scalar
-    datatype: http://www.w3.org/2001/XMLSchema#byte
     name: ByteType
+    datatype: http://www.w3.org/2001/XMLSchema#byte
   BooleanType:
     type: Scalar
-    datatype: http://www.w3.org/2001/XMLSchema#boolean
     name: BooleanType
+    datatype: http://www.w3.org/2001/XMLSchema#boolean
   BinaryType:
     type: Scalar
-    datatype: http://www.w3.org/2001/XMLSchema#base64Binary
     name: BinaryType
+    datatype: http://www.w3.org/2001/XMLSchema#base64Binary
   NilType:
     type: Nil
     name: NilType
@@ -66,19 +66,19 @@ dataShapes:
     or:
       -
         type: Scalar
-        datatype: http://www.w3.org/2001/XMLSchema#integer
         name: item1
+        datatype: http://www.w3.org/2001/XMLSchema#integer
       -
         type: Scalar
-        datatype: http://www.w3.org/2001/XMLSchema#string
         name: item0
+        datatype: http://www.w3.org/2001/XMLSchema#string
   NotType:
     type: Any
-    name: NotType
     not:
       type: Scalar
-      datatype: http://www.w3.org/2001/XMLSchema#string
       name: not
+      datatype: http://www.w3.org/2001/XMLSchema#string
+    name: NotType
   AnyType:
     type: Any
     name: AnyType
@@ -88,16 +88,16 @@ dataShapes:
     and:
       -
         type: Scalar
-        datatype: http://www.w3.org/2001/XMLSchema#integer
         name: item1
+        datatype: http://www.w3.org/2001/XMLSchema#integer
       -
         type: Scalar
-        datatype: http://www.w3.org/2001/XMLSchema#string
         name: item0
+        datatype: http://www.w3.org/2001/XMLSchema#string
   ObjectType:
     type: Node
-    closed: false
     name: ObjectType
+    closed: false
   FileType:
     type: File
     fileType:

@@ -31,7 +31,7 @@ nodeMappings:
         propertyTerm: async.topic
         range: TopicItemObject
         mandatory: true
-        mapKey: async.topicPattern
+        mapKey: topicPattern
 
   InfoObject:
     classTerm: async.Info
@@ -102,7 +102,7 @@ nodeMappings:
       variables:
         propertyTerm: async.patternVars
         range: PatternVariableObject
-        mapKey: async.variableName
+        mapKey: name
 
   PatternVariableObject:
     classTerm: async.PatternVariable
@@ -230,11 +230,11 @@ nodeMappings:
       properties:
         propertyTerm: async.schemaProperty
         range: SchemaObject
-        mapKey: async.propertyKey
+        mapKey: propertyKey
       patternProperties:
         propertyTerm: async.schemaProperty
         range: SchemaObject
-        mapKey: async.propertyKey
+        mapKey: propertyKey
       key:
         propertyTerm: async.schemaPropertyKey
         range: string

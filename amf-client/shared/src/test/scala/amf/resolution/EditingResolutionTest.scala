@@ -114,15 +114,15 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   }
 
   test("Test double declared included type") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "/double-declare-type/")
+    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "double-declare-type/")
   }
 
   test("Test declared type from library") {
-    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "/declared-from-library/")
+    cycle("api.raml", "api.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "declared-from-library/")
   }
 
   test("Test union of declared elements") {
-    cycle("api.raml", "api.raml.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "/union-of-declarations/")
+    cycle("api.raml", "api.raml.resolved.jsonld", RamlYamlHint, Amf, resolutionPath + "union-of-declarations/")
   }
 
   test("Check for stack overflow in event api") {
@@ -161,13 +161,22 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "tracked-from-resource-type/")
   }
 
-  test("Auto generated payload name annotation") {
+  test("Auto generated payload name annotation in raml") {
     cycle("auto-generated-schema-name.raml",
           "auto-generated-schema-name.jsonld",
           RamlYamlHint,
           Amf,
           validationsPath + "auto-generated-schema-name/")
   }
+
+  test("Auto generated payload name annotation in oas") {
+    cycle("auto-generated-schema-name-oas.yaml",
+          "auto-generated-schema-name-oas.jsonld",
+          OasYamlHint,
+          Amf,
+          validationsPath + "auto-generated-schema-name/")
+  }
+
   test("Auto generated payload name annotation with default mediaType") {
     cycle(
       "auto-generated-schema-name-with-default.raml",
@@ -246,6 +255,10 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           validationsPath + "inheritance-provenance/with-recursive-inheritance/")
   }
 
+  test("Resolved link annotation with types") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, validationsPath + "resolved-link-annotation/")
+  }
+
   test("Inheritance provenance annotation with regular inheritance") {
     cycle("api.raml",
           "api.jsonld",
@@ -260,6 +273,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
 
   test("Recursion in inheritance with resource type") {
     cycle("recursion-inheritance.raml", "recursion-inheritance.jsonld", RamlYamlHint, Amf, validationsPath)
+  }
+
+  test("Parsing compacted jsonld using context of compact uris") {
+    cycle(
+      "no-raw-source-maps-compact-uris.jsonld",
+      "parsed-result.jsonld",
+      AmfJsonHint,
+      Amf,
+      validationsPath + "jsonld-compact-uris/"
+    )
   }
 
   /*

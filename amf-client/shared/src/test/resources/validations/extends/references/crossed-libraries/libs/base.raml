@@ -1,0 +1,14 @@
+#%RAML 1.0 Library
+resourceTypes:
+  resource:
+    get:
+      body:
+        application/json:
+          type: <<typeParam>>
+
+traits:
+  response:
+    body:
+      application/json:
+        type: <<typeParam>>
+

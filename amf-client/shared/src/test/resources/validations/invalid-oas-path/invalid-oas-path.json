@@ -1,0 +1,28 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "some title"
+  },
+  "paths": {
+    "some/path": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "some"
+          }
+        }
+      }
+    },
+    "/some/path": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "some"
+          }
+        }
+      }
+    },
+    "x-someExtension": "some some i said"
+  }
+}

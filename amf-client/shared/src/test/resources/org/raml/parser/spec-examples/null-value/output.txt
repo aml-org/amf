@@ -12,9 +12,5 @@ types:
         type: string
         required: true
       comment:
-        anyOf:
-          -
-            type: nil
-          -
-            type: string
+        type: nil | string
         required: true

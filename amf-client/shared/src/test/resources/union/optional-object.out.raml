@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: New API
+types:
+  SomeType:
+    type: object
+    properties:
+      a:
+        type: string
+      b:
+        type: integer
+  OtherType:
+    anyOf:
+      -
+        type: SomeType
+      -
+        type: nil
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        type: OtherType

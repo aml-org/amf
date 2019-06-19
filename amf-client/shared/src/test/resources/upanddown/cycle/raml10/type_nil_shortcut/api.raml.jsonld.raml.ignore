@@ -3,11 +3,7 @@ title: Offices API
 baseUri: http://localhost/office
 annotationTypes:
   base:
-    anyOf:
-      -
-        type: string
-      -
-        type: nil
+    type: string | nil
   ignored:
     allowedTargets:
       - Method

@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: test title
+/someEndpoint:
+  post:
+    body:
+      application/json:
+        anyOf:
+          -
+            type: string
+            description: some string
+            example: string example
+          -
+            type: integer
+            description: some number
+            example: 1

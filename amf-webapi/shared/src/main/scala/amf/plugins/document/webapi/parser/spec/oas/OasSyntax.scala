@@ -4,6 +4,7 @@ import amf.plugins.document.webapi.parser.spec.SpecSyntax
 
 object Oas3Syntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] = Map(
+    "paths" -> Set(),
     "webApi" -> Set(
       "openapi",
       "info",
@@ -181,6 +182,7 @@ object Oas3Syntax extends SpecSyntax {
 object Oas2Syntax extends SpecSyntax {
 
   override val nodes: Map[String, Set[String]] = Map(
+    "paths" -> Set(), // paths in oas ignores the ones starting with '/', 'x-' and '$ref' but everything else is invalid
     "webApi" -> Set(
       "swagger",
       "info",
