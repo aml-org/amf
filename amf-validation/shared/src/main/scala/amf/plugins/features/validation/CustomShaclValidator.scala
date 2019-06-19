@@ -6,7 +6,7 @@ import amf.core.annotations.SourceAST
 import amf.core.metamodel.DynamicObj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, Value}
 import amf.core.services.ValidationOptions
 import amf.core.utils.RegexConverter
 import amf.core.validation.core._
@@ -398,6 +398,25 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
               case _: Throwable =>
                 reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
             }
+          }
+
+      case Some("nonEmptyListOfProtocols") =>
+        val maybeValue = element.fields
+          .fields()
+          .find(_.field.value.iri().endsWith("scheme"))
+          .map(field => field.value)
+        maybeValue
+          .map(_.value)
+          .foreach {
+            case AmfArray(elements, _) if elements.isEmpty =>
+              reportFailure(
+                validationSpecification,
+                functionConstraint,
+                element.id,
+                maybeValue.map(_.annotations).getOrElse(Annotations()),
+                Some("http://a.ml/vocabularies/http#scheme")
+              )
+            case _ =>
           }
 
       case Some(other) =>
@@ -981,7 +1000,8 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
   def reportFailure(validationSpecification: ValidationSpecification,
                     functionConstraint: FunctionConstraint,
                     id: String,
-                    annotations: Annotations): Unit = {
+                    annotations: Annotations,
+                    propertyPath: Option[String] = None): Unit = {
     validationReport.registerResult(
       CustomValidationResult(
         message = options.messageStyle match {
@@ -989,7 +1009,7 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
           case OASStyle  => validationSpecification.oasMessage.orElse(Some(validationSpecification.message))
           case _         => Some(validationSpecification.message)
         },
-        path = "",
+        path = propertyPath.getOrElse(""),
         sourceConstraintComponent = validationSpecification.id,
         focusNode = id,
         severity = SeverityLevels.VIOLATION,

@@ -203,5 +203,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("valid-default-facet-of-union-type.raml")
   }
 
+  test("Protocols with case insensitive values") {
+    checkValid("protocols/valid-case-insensitive-values.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

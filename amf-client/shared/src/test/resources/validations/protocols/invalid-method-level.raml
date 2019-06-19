@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: test
+/validSingleValue:
+  post:
+    protocols: http
+    body:
+      application/json:
+    responses:
+      201:
+
+/validCaseInsensitive:
+  post:
+    protocols: [hTTp, HtTps]
+    body:
+      application/json:
+    responses:
+      201:
+
+/invalidUnkownValues:
+  post:
+    protocols: [tcp, http]
+    body:
+      application/json:
+    responses:
+      201:
+
+/invalidEmptyArray:
+  post:
+    protocols: []
+    body:
+      application/json:
+    responses:
+      201:

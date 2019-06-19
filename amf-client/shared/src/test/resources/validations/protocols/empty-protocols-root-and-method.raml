@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: test
+baseUri: api.example.com
+protocols: []
+/invalidEmptyProtocolInOperation:
+  post:
+    protocols: []
+    body:
+      application/json:
+    responses:
+      201:

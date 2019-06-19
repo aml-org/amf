@@ -253,4 +253,16 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("discriminator/discriminator-inheritance.raml", Some("discriminator-inheritance.report"))
   }
 
+  test("Invalid protocols in root level") {
+    validate("protocols/invalid-root-level-unkown-values.raml", Some("invalid-root-level-unkown-values.report"))
+  }
+
+  test("Protocols may not be defined as empty array") {
+    validate("protocols/empty-protocols-root-and-method.raml", Some("invalid-empty-array.report"))
+  }
+
+  test("Method level protocol validations") {
+    validate("protocols/invalid-method-level.raml", Some("invalid-method-level.report"))
+  }
+
 }
