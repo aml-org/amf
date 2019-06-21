@@ -1320,7 +1320,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         Annotations(node),
         reference,
         fatherMap.map(m =>
-          (resolvedKey: Option[String]) => ShapeExtensionParser(shape, m, ctx, overrideSyntax = resolvedKey)),
+          (resolvedKey: Option[String]) =>
+            ShapeExtensionParser(shape, m, ctx, isAnnotation, overrideSyntax = resolvedKey)),
         Some((k: String) =>
           if (shape.fields.exists(LinkableElementModel.TargetId)) shape.set(LinkableElementModel.TargetId, k))
       )

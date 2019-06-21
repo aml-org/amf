@@ -207,5 +207,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("protocols/valid-case-insensitive-values.raml")
   }
 
+  test("Annotation with type inheritance and allowedTargets facet") {
+    checkValid("annotations/inheritance-with-allowed-targets.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
