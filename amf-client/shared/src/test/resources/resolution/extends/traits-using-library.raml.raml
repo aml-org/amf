@@ -293,22 +293,22 @@ baseUri: aaa-bbb.com/apis
         queryParameters:
           offset?:
             type: integer
+            default: 10
             minimum: 0
             description: The `offset` parameter specifies the first entry to return from a collection.
-            default: 10
           sort?:
             type: string
             example: name,-age
           limit?:
             type: integer
+            default: 50
             minimum: 1
             description: The `limit` parameter restricts the number of entries returned.
-            default: 50
           page?:
             type: integer
+            default: 1
             minimum: 1
             description: The `page` parameter specifies the page of results to return.
-            default: 1
         responses:
           "200":
             body:
@@ -468,22 +468,22 @@ baseUri: aaa-bbb.com/apis
         queryParameters:
           offset?:
             type: integer
+            default: 10
             minimum: 0
             description: The `offset` parameter specifies the first entry to return from a collection.
-            default: 10
           sort?:
             type: string
             example: name,-age
           limit?:
             type: integer
+            default: 50
             minimum: 1
             description: The `limit` parameter restricts the number of entries returned.
-            default: 50
           page?:
             type: integer
+            default: 1
             minimum: 1
             description: The `page` parameter specifies the page of results to return.
-            default: 1
         responses:
           "200":
             body:

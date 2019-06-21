@@ -427,11 +427,9 @@ class AMFShapeValidations(root: Shape) {
             val discriminatorValue = nodeShape.discriminatorValue.option().getOrElse(nodeShape.name.value())
             currentDataNode match {
               case Some(obj: ObjectNode) =>
-                obj.properties.get(discriminatorProp) match {
-                  case Some(v: ScalarNode) => {
-                    v.value == discriminatorValue
-                  }
-                  case _ => false
+                obj.getFromKey(discriminatorProp) match {
+                  case Some(v: ScalarNode) => v.value.option().contains(discriminatorValue)
+                  case _                   => false
                 }
               case _ => false
             }

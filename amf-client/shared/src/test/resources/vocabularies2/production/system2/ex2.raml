@@ -1,4 +1,10 @@
 #%Container Configuration 0.2
+links:
+  -
+    description: Linked asset metadata
+    linkClass: http://mulesoft.org/vocab/anpoint#Asset
+    linkProperty: http://mulesoft.org/vocab/anpoint#meta
+    linkRange: http://mulesoft.org/vocab/anpoint#WebAPI
 pattern:
   template: $container/anyId/$uuid
 mapping:
@@ -8,9 +14,3 @@ mapping:
 pageSize: 10
 schema: http://aml.og/schema/xyz
 namespace: assets
-links:
-  -
-    linkRange: http://mulesoft.org/vocab/anpoint#WebAPI
-    linkClass: http://mulesoft.org/vocab/anpoint#Asset
-    linkProperty: http://mulesoft.org/vocab/anpoint#meta
-    description: Linked asset metadata

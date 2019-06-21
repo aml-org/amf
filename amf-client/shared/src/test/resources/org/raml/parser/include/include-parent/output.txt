@@ -6,7 +6,7 @@ traits:
       "400":
         body:
           application/json:
-            type: file://amf-client/shared/src/test/resources/org/raml/parser/include/include-parent/libraries/types/platformfault.raml
+            type: ../../types/platformfault.raml
 mediaType: application/json
 /blabla:
   get:

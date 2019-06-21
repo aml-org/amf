@@ -373,8 +373,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "true",
-                        "@type": "xsd:boolean"
+                        "@value": "true"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "smaps": {
@@ -384,15 +393,17 @@
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "parsed-json-example": {
                     "#7": "{\n  \"ok\" : true\n}"
                   },
-                  "data-node-properties": {
-                    "#7": "ok->[(2,2)-(2,9)]"
-                  },
                   "lexical": {
-                    "data:ok": "[(2,9)-(2,13)]",
+                    "data:ok": "[(2,2)-(2,9)]",
                     "#7": "[(1,0)-(3,1)]"
                   }
                 }
@@ -403,13 +414,19 @@
                 "@id": "#2"
               }
             ],
+            "doc:location": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/validations/dup-name-example-tracking/same-example.json"
+              }
+            ],
             "smaps": {
               "synthesized-field": {
                 "doc:strict": "true"
               },
               "lexical": {
-                "schema-org:name": "[(17,10)-(18,0)]",
-                "#6": "[(17,10)-(18,0)]"
+                "doc:structuredValue": "[(17,24)-(17,50)]",
+                "#6": "[(17,10)-(18,0)]",
+                "schema-org:name": "[(17,10)-(18,0)]"
               },
               "local-element": {
                 "#6": ""
@@ -453,8 +470,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "true",
-                        "@type": "xsd:boolean"
+                        "@value": "true"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "smaps": {
@@ -464,15 +490,17 @@
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "parsed-json-example": {
                     "#12": "{\n  \"ok\" : true\n}\n"
                   },
-                  "data-node-properties": {
-                    "#12": "ok->[(20,25)-(20,32)]"
-                  },
                   "lexical": {
-                    "data:ok": "[(20,32)-(20,36)]",
+                    "data:ok": "[(20,25)-(20,32)]",
                     "#12": "[(19,23)-(21,24)]"
                   }
                 }
@@ -489,8 +517,9 @@
               },
               "lexical": {
                 "shacl:raw": "[(18,24)-(22,0)]",
+                "schema-org:name": "[(18,10)-(22,0)]",
                 "#11": "[(18,10)-(22,0)]",
-                "schema-org:name": "[(18,10)-(22,0)]"
+                "doc:structuredValue": "[(18,23)-(22,0)]"
               },
               "local-element": {
                 "#11": ""
@@ -534,8 +563,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "true",
-                        "@type": "xsd:boolean"
+                        "@value": "true"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "smaps": {
@@ -545,15 +583,17 @@
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "parsed-json-example": {
                     "#15": "{\n  \"ok\" : true\n}"
                   },
-                  "data-node-properties": {
-                    "#15": "ok->[(30,25)-(30,32)]"
-                  },
                   "lexical": {
-                    "data:ok": "[(30,32)-(30,36)]",
+                    "data:ok": "[(30,25)-(30,32)]",
                     "#15": "[(29,23)-(31,24)]"
                   }
                 }
@@ -570,8 +610,9 @@
               },
               "lexical": {
                 "shacl:raw": "[(28,24)-(31,13)]",
+                "schema-org:name": "[(28,10)-(31,13)]",
                 "#14": "[(28,10)-(31,13)]",
-                "schema-org:name": "[(28,10)-(31,13)]"
+                "doc:structuredValue": "[(28,23)-(31,13)]"
               },
               "local-element": {
                 "#14": ""
@@ -607,7 +648,6 @@
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
   }

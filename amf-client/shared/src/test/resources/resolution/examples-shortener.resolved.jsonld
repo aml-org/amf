@@ -48,7 +48,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#2",
+            "@id": "#5",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -62,7 +62,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#3",
+                "@id": "#6",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -82,7 +82,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#3": "[(6,6)-(7,0)]"
+                    "#6": "[(6,6)-(7,0)]"
                   }
                 }
               }
@@ -99,7 +99,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#2": "[(6,6)-(7,0)]"
+                "#5": "[(6,6)-(7,0)]"
               }
             }
           }
@@ -111,7 +111,7 @@
         ],
         "doc:examples": [
           {
-            "@id": "#4",
+            "@id": "#2",
             "@type": [
               "doc:Example",
               "doc:DomainElement"
@@ -123,7 +123,7 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "#5",
+                "@id": "#3",
                 "@type": [
                   "data:Object",
                   "data:Node",
@@ -131,7 +131,7 @@
                 ],
                 "data:a": [
                   {
-                    "@id": "#6",
+                    "@id": "#4",
                     "@type": [
                       "data:Scalar",
                       "data:Node",
@@ -139,24 +139,35 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "lala",
-                        "@type": "xsd:string"
+                        "@value": "lala"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#6": "[(8,9)-(8,13)]"
+                        "#4": "[(8,9)-(8,13)]"
                       }
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "lexical": {
-                    "data:a": "[(8,9)-(8,13)]",
-                    "#5": "[(8,0)-(8,13)]"
-                  },
-                  "data-node-properties": {
-                    "#5": "a->[(8,6)-(8,13)]"
+                    "data:a": "[(8,6)-(8,13)]",
+                    "#3": "[(8,0)-(8,13)]"
                   }
                 }
               }
@@ -172,7 +183,8 @@
               },
               "lexical": {
                 "shacl:raw": "[(8,0)-(8,13)]",
-                "#4": "[(7,4)-(8,13)]"
+                "#2": "[(7,4)-(8,13)]",
+                "doc:structuredValue": "[(7,12)-(8,13)]"
               }
             }
           }
@@ -194,8 +206,7 @@
       "shacl": "http://www.w3.org/ns/shacl#",
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
-      "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#"
+      "schema-org": "http://schema.org/"
     }
   }
 ]

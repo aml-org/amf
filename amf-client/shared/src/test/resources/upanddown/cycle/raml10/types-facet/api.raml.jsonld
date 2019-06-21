@@ -115,8 +115,17 @@
             ],
             "http://a.ml/vocabularies/data#value": [
               {
-                "@value": "defaultValue",
-                "@type": "http://www.w3.org/2001/XMLSchema#string"
+                "@value": "defaultValue"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "scalar_1"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -157,8 +166,17 @@
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {
-                    "@value": "a1",
-                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    "@value": "a1"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_1"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -195,8 +213,17 @@
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {
-                    "@value": "a2",
-                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    "@value": "a2"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -775,8 +802,17 @@
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {
-                    "@value": "john doe",
-                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    "@value": "john doe"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -803,6 +839,11 @@
                 ]
               }
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "object_1"
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types-facet/api.raml#/declarations/types/ObjectTest/default/object_1/source-map",
@@ -818,7 +859,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(24,12)-(24,20)]"
+                        "@value": "[(24,6)-(25,0)]"
                       }
                     ]
                   },
@@ -831,20 +872,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(24,0)-(25,0)]"
-                      }
-                    ]
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/types-facet/api.raml#/declarations/types/ObjectTest/default/object_1"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "name->[(24,6)-(25,0)]"
                       }
                     ]
                   }

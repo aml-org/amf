@@ -114,8 +114,17 @@
                                     ],
                                     "http://a.ml/vocabularies/data#value": [
                                       {
-                                        "@value": "example[1].raml",
-                                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                                        "@value": "example[1].raml"
+                                      }
+                                    ],
+                                    "http://www.w3.org/ns/shacl#datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "http://schema.org/name": [
+                                      {
+                                        "@value": "scalar_1"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#sources": [

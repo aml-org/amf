@@ -149,7 +149,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
                     case x => main.set(otherField, adoptInner(main.id, x))
                   }
                 // This case is for default type AnyShape (in payload in an endpoint)
-                case a: AnyShape => merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
+                case _: AnyShape => merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
                 case _           => main.set(otherField, adoptInner(main.id, otherValue.value))
               }
             case _ => main.set(otherField, adoptInner(main.id, otherValue.value))
@@ -313,7 +313,11 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
     otherNodes.foreach {
       case oScalar: ScalarNode =>
-        if (mainNodes.collectFirst({ case ms: ScalarNode if ms.value.equals(oScalar.value) => ms }).isEmpty)
+        if (mainNodes
+              .collectFirst({
+                case ms: ScalarNode if ms.value.option().contains(oScalar.value.option().getOrElse("")) => ms
+              })
+              .isEmpty)
           target.add(field, oScalar)
       case other: DataNode => target.add(field, other)
     }
@@ -385,8 +389,8 @@ object DataNodeMerging {
   def merge(existing: DataNode, overlay: DataNode): Unit = {
     (existing, overlay) match {
       case (left: ScalarNode, right: ScalarNode) =>
-        left.value = right.value
-        left.dataType = right.dataType
+        left.withValue(right.value.value(), right.value.annotations())
+        left.withDataType(right.dataType.value(), right.dataType.annotations())
       case (left: ObjectNode, right: ObjectNode) =>
         mergeObjectNode(left, right)
       case (left: ArrayNode, right: ArrayNode) =>
@@ -397,10 +401,10 @@ object DataNodeMerging {
   }
 
   def mergeObjectNode(left: ObjectNode, right: ObjectNode): Unit =
-    for { (key, value) <- right.properties } {
-      left.properties.get(key) match {
-        case Some(property) => merge(property, value)
-        case None           => left.addProperty(key, adoptTree(left.id, value), right.propertyAnnotations(key))
+    for { (key, value) <- right.propertyFields().map(f => (f, right.fields[DataNode](f))) } {
+      left.fields.getValueAsOption(key) match {
+        case Some(Value(property: DataNode, _)) => merge(property, value)
+        case None                               => left.addPropertyByField(key, adoptTree(left.id, value), right.fields.getValue(key).annotations)
       }
     }
 

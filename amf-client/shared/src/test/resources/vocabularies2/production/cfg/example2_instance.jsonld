@@ -31,14 +31,24 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/cfg#gavArtifact": [
+            "http://a.ml/vocabularies/cfg#fileName": [
               {
-                "@value": "vdp-from-exchange"
+                "@value": "vdp-binary"
               }
             ],
             "http://a.ml/vocabularies/cfg#gavGroup": [
               {
                 "@value": "com.mulesoft.tokenizer"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#gavArtifact": [
+              {
+                "@value": "vdp-from-exchange"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#version": [
+              {
+                "@value": "1.0.0"
               }
             ],
             "http://a.ml/vocabularies/cfg#classifier": [
@@ -51,16 +61,6 @@
                 "@value": "vdp"
               }
             ],
-            "http://a.ml/vocabularies/cfg#version": [
-              {
-                "@value": "1.0.0"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#fileName": [
-              {
-                "@value": "vdp-binary"
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example2_instance.raml#/assets/vdp-binary/source-map",
@@ -71,48 +71,24 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
+                        "@value": "http://a.ml/vocabularies/cfg#packaging"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(11,15)-(11,18)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
                         "@value": "http://a.ml/vocabularies/cfg#version"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(9,13)-(9,18)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/cfg#classifier"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(10,16)-(10,19)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/cfg#gavArtifact"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(8,16)-(8,33)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example2_instance.raml#/assets/vdp-binary"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(6,0)-(13,0)]"
                       }
                     ]
                   },
@@ -131,12 +107,48 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/cfg#packaging"
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example2_instance.raml#/assets/vdp-binary"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(11,15)-(11,18)]"
+                        "@value": "[(6,0)-(13,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/cfg#fileName"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(5,2)-(5,12)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/cfg#gavArtifact"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(8,16)-(8,33)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/cfg#classifier"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(10,16)-(10,19)]"
                       }
                     ]
                   }
@@ -152,29 +164,9 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/cfg#secretGroup": [
+            "http://a.ml/vocabularies/cfg#fileName": [
               {
-                "@value": "xyz"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#secretId": [
-              {
-                "@value": "44e94628-54ee-11e7-b114-b2f933d5fe66"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#secretType": [
-              {
-                "@value": "sharedSecrets"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#packaging": [
-              {
-                "@value": "secret"
-              }
-            ],
-            "http://a.ml/vocabularies/cfg#version": [
-              {
-                "@value": "v1"
+                "@value": "vdp-key"
               }
             ],
             "http://a.ml/vocabularies/cfg#type": [
@@ -182,9 +174,29 @@
                 "@value": "CSM"
               }
             ],
-            "http://a.ml/vocabularies/cfg#fileName": [
+            "http://a.ml/vocabularies/cfg#version": [
               {
-                "@value": "vdp-key"
+                "@value": "v1"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#secretGroup": [
+              {
+                "@value": "xyz"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#secretType": [
+              {
+                "@value": "sharedSecrets"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#secretId": [
+              {
+                "@value": "44e94628-54ee-11e7-b114-b2f933d5fe66"
+              }
+            ],
+            "http://a.ml/vocabularies/cfg#packaging": [
+              {
+                "@value": "secret"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -197,60 +209,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/cfg#type"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(15,10)-(15,13)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
                         "@value": "http://a.ml/vocabularies/cfg#packaging"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(20,15)-(20,21)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/cfg#secretId"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(19,14)-(19,50)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example2_instance.raml#/assets/vdp-key"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(14,0)-(21,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/cfg#secretGroup"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(17,17)-(17,20)]"
                       }
                     ]
                   },
@@ -275,6 +239,66 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(16,13)-(16,15)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/cfg#fileName"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(13,2)-(13,9)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/cfg/example2_instance.raml#/assets/vdp-key"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(14,0)-(21,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/cfg#type"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(15,10)-(15,13)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/cfg#secretGroup"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(17,17)-(17,20)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/cfg#secretId"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(19,14)-(19,50)]"
                       }
                     ]
                   }

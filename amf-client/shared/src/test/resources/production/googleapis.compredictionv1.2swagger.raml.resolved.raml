@@ -30,7 +30,6 @@ description: Lets you access a cloud hosted machine learning service that makes 
 securitySchemes:
   Oauth2:
     type: OAuth 2.0
-    description: Oauth 2.0 authentication
     settings:
       authorizationUri: https://accounts.google.com/o/oauth2/auth
       accessTokenUri: ""
@@ -41,6 +40,7 @@ securitySchemes:
         - https://www.googleapis.com/auth/devstorage.read_only
         - https://www.googleapis.com/auth/devstorage.read_write
         - https://www.googleapis.com/auth/prediction
+    description: Oauth 2.0 authentication
 /training:
   displayName: training
   /{data}:
@@ -75,8 +75,8 @@ securitySchemes:
                     type: string
                     required: false
                   kind:
-                    type: string
                     default: prediction#output
+                    type: string
                     required: false
                   outputLabel:
                     type: string
@@ -107,9 +107,9 @@ securitySchemes:
           alt:
             type: string
             description: Data format for the response.
+            default: json
             enum:
               - json
-            default: json
           fields:
             type: string
             description: Selector specifying which fields to include in a partial response.
@@ -167,8 +167,8 @@ securitySchemes:
                   type: string
                   required: false
                 kind:
-                  type: string
                   default: prediction#training
+                  type: string
                   required: false
                 modelInfo:
                   type: object
@@ -199,9 +199,9 @@ securitySchemes:
         alt:
           type: string
           description: Data format for the response.
+          default: json
           enum:
             - json
-          default: json
         fields:
           type: string
           description: Selector specifying which fields to include in a partial response.
@@ -239,8 +239,8 @@ securitySchemes:
                   type: string
                   required: false
                 kind:
-                  type: string
                   default: prediction#training
+                  type: string
                   required: false
                 modelInfo:
                   type: object
@@ -271,9 +271,9 @@ securitySchemes:
         alt:
           type: string
           description: Data format for the response.
+          default: json
           enum:
             - json
-          default: json
         fields:
           type: string
           description: Selector specifying which fields to include in a partial response.
@@ -310,9 +310,9 @@ securitySchemes:
         alt:
           type: string
           description: Data format for the response.
+          default: json
           enum:
             - json
-          default: json
         fields:
           type: string
           description: Selector specifying which fields to include in a partial response.
@@ -350,8 +350,8 @@ securitySchemes:
             type: string
             required: false
           kind:
-            type: string
             default: prediction#training
+            type: string
             required: false
           modelInfo:
             type: object
@@ -385,8 +385,8 @@ securitySchemes:
                 type: string
                 required: false
               kind:
-                type: string
                 default: prediction#training
+                type: string
                 required: false
               modelInfo:
                 type: object
@@ -418,9 +418,9 @@ securitySchemes:
       alt:
         type: string
         description: Data format for the response.
+        default: json
         enum:
           - json
-        default: json
       fields:
         type: string
         description: Selector specifying which fields to include in a partial response.
@@ -481,8 +481,8 @@ securitySchemes:
                     type: string
                     required: false
                   kind:
-                    type: string
                     default: prediction#output
+                    type: string
                     required: false
                   outputLabel:
                     type: string
@@ -515,9 +515,9 @@ securitySchemes:
           alt:
             type: string
             description: Data format for the response.
+            default: json
             enum:
               - json
-            default: json
           fields:
             type: string
             description: Selector specifying which fields to include in a partial response.

@@ -170,10 +170,10 @@ private[shape_normalization] trait RestrictionComputation {
 
       derivedEnumeration match {
         case Seq(_: ScalarNode) =>
-          val superScalars = superEnumeration.collect({ case s: ScalarNode => s.value })
+          val superScalars = superEnumeration.collect({ case s: ScalarNode => s.value.value() })
           val ds           = derivedEnumeration.asInstanceOf[Seq[ScalarNode]]
           ds.foreach { e =>
-            if (!superScalars.contains(e.value)) {
+            if (!superScalars.contains(e.value.value())) {
               throw new InheritanceIncompatibleShapeError(
                 s"Values in subtype enumeration (${ds.map(_.value).mkString(",")}) not found in the supertype enumeration (${superScalars
                   .mkString(",")})",

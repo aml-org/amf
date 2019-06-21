@@ -331,8 +331,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "1",
-                        "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                        "@value": "1"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -369,8 +378,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "2",
-                        "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                        "@value": "2"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -397,6 +415,11 @@
                     ]
                   }
                 ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema/example/default-example/object_1/source-map",
@@ -417,20 +440,6 @@
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema/example/default-example/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "b->[(3,2)-(3,7)]#a->[(2,2)-(2,7)]"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
@@ -440,7 +449,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(3,7)-(3,8)]"
+                            "@value": "[(3,2)-(3,7)]"
                           }
                         ]
                       },
@@ -464,7 +473,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(2,7)-(2,8)]"
+                            "@value": "[(2,2)-(2,7)]"
                           }
                         ]
                       }
@@ -476,6 +485,11 @@
             "http://a.ml/vocabularies/document#reference-id": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonschema/example.json#/external"
+              }
+            ],
+            "http://a.ml/vocabularies/document#location": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/production/raml10/jsonschema/example.json"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [

@@ -1841,6 +1841,11 @@
             "@value": "<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n<xs:element name=\"saasTxn\">\n<xs:complexType>\n<xs:annotation>\n<xs:documentation>XML Schema for Saas Transaction</xs:documentation>\n</xs:annotation>\n<xs:sequence>\n<xs:element name=\"tenant\" minOccurs=\"1\" type=\"xs:positiveInteger\"/>\n<xs:element name=\"objectType\" minOccurs=\"1\" type=\"xs:string\"/>\n<xs:element name=\"objectKey\" minOccurs=\"1\" type=\"xs:string\"/>\n<xs:element name=\"txnType\" minOccurs=\"1\" type=\"xs:string\"/>\n</xs:sequence>\n</xs:complexType>\n</xs:element>\n</xs:schema>\n"
           }
         ],
+        "http://a.ml/vocabularies/document#location": [
+          {
+            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml"
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/schema/xmlSchema/source-map",

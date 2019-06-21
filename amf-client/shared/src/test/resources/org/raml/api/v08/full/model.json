@@ -69,10 +69,10 @@ resourceTypes:
     description: get something
     queryParameters:
       order:
+        default: asc
         maxLength: 4
         example: desc
         type: string
-        default: asc
         repeat: true
     body: {}
   post:

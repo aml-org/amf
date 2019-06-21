@@ -156,7 +156,9 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     futureText map { text =>
       payload.encodes match {
         case node: ScalarNode
-            if node.dataType.getOrElse("") == (Namespace.Xsd + "string").iri() && text.nonEmpty && text.head != '"' =>
+            if node.dataType
+              .option()
+              .contains((Namespace.Xsd + "string").iri()) && text.nonEmpty && text.head != '"' =>
           "\"" + text.stripLineEnd + "\""
         case _ => text.stripLineEnd
       }
@@ -316,13 +318,12 @@ object PolymorphicShapeExtractor {
       case nodeShape: NodeShape =>
         nodeShape.discriminator.option() match {
           case Some(discriminatorProp) =>
-            val discriminatorValue = nodeShape.discriminatorValue.option().getOrElse(nodeShape.name.value())
+            val discriminatorValue: String = nodeShape.discriminatorValue.option().getOrElse(nodeShape.name.value())
             currentDataNode match {
               case obj: ObjectNode =>
-                obj.properties.get(discriminatorProp) match {
-                  case Some(v: ScalarNode) =>
-                    v.value == discriminatorValue
-                  case _ => false
+                obj.getFromKey(discriminatorProp) match {
+                  case Some(v: ScalarNode) => v.value.option().contains(discriminatorValue)
+                  case _                   => false
                 }
               case _ => false
             }
@@ -338,8 +339,8 @@ object ScalarPayloadForParam {
     if (isString(shape) || unionWithString(shape)) {
 
       fragment.encodes match {
-        case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
-          PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
+        case s: ScalarNode if !s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri())) =>
+          PayloadFragment(ScalarNode(s.value.value(), Some((Namespace.Xsd + "string").iri()), s.annotations),
                           fragment.mediaType.value())
         case _ => fragment
       }

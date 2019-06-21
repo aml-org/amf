@@ -237,8 +237,17 @@
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {
-                    "@value": "5",
-                    "@type": "http://www.w3.org/2001/XMLSchema#integer"
+                    "@value": "5"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_1"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [

@@ -460,7 +460,7 @@
                             ],
                             "shacl:property": [
                               {
-                                "@id": "#46",
+                                "@id": "#54",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -474,7 +474,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#47",
+                                    "@id": "#55",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "raml-shapes:AnyShape",
@@ -494,11 +494,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#47": "[(113,18)-(113,24)]"
+                                        "#55": "[(113,18)-(113,24)]"
                                       },
                                       "lexical": {
                                         "shacl:datatype": "[(113,18)-(113,26)]",
-                                        "#47": "[(112,16)-(112,25)]"
+                                        "#55": "[(112,16)-(112,25)]"
                                       }
                                     }
                                   }
@@ -516,12 +516,12 @@
                                 "smaps": {
                                   "lexical": {
                                     "shacl:minCount": "[(120,16)-(120,23)]",
-                                    "#46": "[(112,16)-(112,25)]"
+                                    "#54": "[(112,16)-(112,25)]"
                                   }
                                 }
                               },
                               {
-                                "@id": "#48",
+                                "@id": "#56",
                                 "@type": [
                                   "shacl:PropertyShape",
                                   "shacl:Shape",
@@ -535,7 +535,7 @@
                                 ],
                                 "raml-shapes:range": [
                                   {
-                                    "@id": "#49",
+                                    "@id": "#57",
                                     "@type": [
                                       "raml-shapes:ScalarShape",
                                       "raml-shapes:AnyShape",
@@ -555,11 +555,11 @@
                                     ],
                                     "smaps": {
                                       "type-property-lexical-info": {
-                                        "#49": "[(116,18)-(116,24)]"
+                                        "#57": "[(116,18)-(116,24)]"
                                       },
                                       "lexical": {
                                         "shacl:datatype": "[(116,18)-(116,26)]",
-                                        "#49": "[(115,16)-(115,25)]"
+                                        "#57": "[(115,16)-(115,25)]"
                                       }
                                     }
                                   }
@@ -577,7 +577,7 @@
                                 "smaps": {
                                   "lexical": {
                                     "shacl:minCount": "[(121,16)-(121,23)]",
-                                    "#48": "[(115,16)-(115,25)]"
+                                    "#56": "[(115,16)-(115,25)]"
                                   }
                                 }
                               }
@@ -589,7 +589,7 @@
                             ],
                             "doc:examples": [
                               {
-                                "@id": "#50",
+                                "@id": "#46",
                                 "@type": [
                                   "doc:Example",
                                   "doc:DomainElement"
@@ -601,7 +601,7 @@
                                 ],
                                 "doc:structuredValue": [
                                   {
-                                    "@id": "#51",
+                                    "@id": "#47",
                                     "@type": [
                                       "data:Object",
                                       "data:Node",
@@ -609,13 +609,125 @@
                                     ],
                                     "data:one": [
                                       {
-                                        "@id": "#52",
+                                        "@id": "#48",
                                         "@type": [
                                           "data:Object",
                                           "data:Node",
                                           "doc:DomainElement"
                                         ],
                                         "data:prop1": [
+                                          {
+                                            "@id": "#49",
+                                            "@type": [
+                                              "data:Scalar",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:value": [
+                                              {
+                                                "@value": "something"
+                                              }
+                                            ],
+                                            "shacl:datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "schema-org:name": [
+                                              {
+                                                "@value": "scalar_3"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "#49": "[(102,27)-(102,38)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "data:prop2": [
+                                          {
+                                            "@id": "#50",
+                                            "@type": [
+                                              "data:Scalar",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:value": [
+                                              {
+                                                "@value": "20"
+                                              }
+                                            ],
+                                            "shacl:datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                                              }
+                                            ],
+                                            "schema-org:name": [
+                                              {
+                                                "@value": "scalar_4"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "#50": "[(103,27)-(103,29)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "schema-org:name": [
+                                          {
+                                            "@value": "object_2"
+                                          }
+                                        ],
+                                        "smaps": {
+                                          "lexical": {
+                                            "data:prop2": "[(103,18)-(103,27)]",
+                                            "#48": "[(101,23)-(104,17)]",
+                                            "data:prop1": "[(102,18)-(102,27)]"
+                                          }
+                                        }
+                                      }
+                                    ],
+                                    "data:two": [
+                                      {
+                                        "@id": "#51",
+                                        "@type": [
+                                          "data:Object",
+                                          "data:Node",
+                                          "doc:DomainElement"
+                                        ],
+                                        "data:prop1": [
+                                          {
+                                            "@id": "#52",
+                                            "@type": [
+                                              "data:Scalar",
+                                              "data:Node",
+                                              "doc:DomainElement"
+                                            ],
+                                            "data:value": [
+                                              {
+                                                "@value": "other"
+                                              }
+                                            ],
+                                            "shacl:datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                              }
+                                            ],
+                                            "schema-org:name": [
+                                              {
+                                                "@value": "scalar_6"
+                                              }
+                                            ],
+                                            "smaps": {
+                                              "lexical": {
+                                                "#52": "[(106,27)-(106,34)]"
+                                              }
+                                            }
+                                          }
+                                        ],
+                                        "data:prop2": [
                                           {
                                             "@id": "#53",
                                             "@type": [
@@ -625,122 +737,50 @@
                                             ],
                                             "data:value": [
                                               {
-                                                "@value": "something",
-                                                "@type": "xsd:string"
+                                                "@value": "21"
+                                              }
+                                            ],
+                                            "shacl:datatype": [
+                                              {
+                                                "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                                              }
+                                            ],
+                                            "schema-org:name": [
+                                              {
+                                                "@value": "scalar_7"
                                               }
                                             ],
                                             "smaps": {
                                               "lexical": {
-                                                "#53": "[(102,27)-(102,38)]"
+                                                "#53": "[(107,27)-(107,29)]"
                                               }
                                             }
                                           }
                                         ],
-                                        "data:prop2": [
+                                        "schema-org:name": [
                                           {
-                                            "@id": "#54",
-                                            "@type": [
-                                              "data:Scalar",
-                                              "data:Node",
-                                              "doc:DomainElement"
-                                            ],
-                                            "data:value": [
-                                              {
-                                                "@value": "20",
-                                                "@type": "xsd:integer"
-                                              }
-                                            ],
-                                            "smaps": {
-                                              "lexical": {
-                                                "#54": "[(103,27)-(103,29)]"
-                                              }
-                                            }
+                                            "@value": "object_5"
                                           }
                                         ],
                                         "smaps": {
-                                          "data-node-properties": {
-                                            "#52": "prop2->[(103,18)-(103,27)]#prop1->[(102,18)-(102,27)]"
-                                          },
                                           "lexical": {
-                                            "data:prop2": "[(103,27)-(103,29)]",
-                                            "#52": "[(101,23)-(104,17)]",
-                                            "data:prop1": "[(102,27)-(102,38)]"
+                                            "data:prop2": "[(107,18)-(107,27)]",
+                                            "#51": "[(105,23)-(108,17)]",
+                                            "data:prop1": "[(106,18)-(106,27)]"
                                           }
                                         }
                                       }
                                     ],
-                                    "data:two": [
+                                    "schema-org:name": [
                                       {
-                                        "@id": "#55",
-                                        "@type": [
-                                          "data:Object",
-                                          "data:Node",
-                                          "doc:DomainElement"
-                                        ],
-                                        "data:prop1": [
-                                          {
-                                            "@id": "#56",
-                                            "@type": [
-                                              "data:Scalar",
-                                              "data:Node",
-                                              "doc:DomainElement"
-                                            ],
-                                            "data:value": [
-                                              {
-                                                "@value": "other",
-                                                "@type": "xsd:string"
-                                              }
-                                            ],
-                                            "smaps": {
-                                              "lexical": {
-                                                "#56": "[(106,27)-(106,34)]"
-                                              }
-                                            }
-                                          }
-                                        ],
-                                        "data:prop2": [
-                                          {
-                                            "@id": "#57",
-                                            "@type": [
-                                              "data:Scalar",
-                                              "data:Node",
-                                              "doc:DomainElement"
-                                            ],
-                                            "data:value": [
-                                              {
-                                                "@value": "21",
-                                                "@type": "xsd:integer"
-                                              }
-                                            ],
-                                            "smaps": {
-                                              "lexical": {
-                                                "#57": "[(107,27)-(107,29)]"
-                                              }
-                                            }
-                                          }
-                                        ],
-                                        "smaps": {
-                                          "data-node-properties": {
-                                            "#55": "prop2->[(107,18)-(107,27)]#prop1->[(106,18)-(106,27)]"
-                                          },
-                                          "lexical": {
-                                            "data:prop2": "[(107,27)-(107,29)]",
-                                            "#55": "[(105,23)-(108,17)]",
-                                            "data:prop1": "[(106,27)-(106,34)]"
-                                          }
-                                        }
+                                        "@value": "object_1"
                                       }
                                     ],
                                     "smaps": {
                                       "lexical": {
-                                        "data:two": "[(105,23)-(108,17)]",
-                                        "#51": "[(100,25)-(109,15)]",
-                                        "data:one": "[(101,23)-(104,17)]"
-                                      },
-                                      "data-node-properties": {
-                                        "data:two": "prop2->[(107,18)-(107,27)]#prop1->[(106,18)-(106,27)]",
-                                        "#51": "one->[(101,16)-(101,23)]#two->[(105,16)-(105,23)]",
-                                        "data:one": "prop2->[(103,18)-(103,27)]#prop1->[(102,18)-(102,27)]"
+                                        "data:two": "[(105,16)-(105,23)]",
+                                        "#47": "[(100,25)-(109,15)]",
+                                        "data:one": "[(101,16)-(101,23)]"
                                       }
                                     }
                                   }
@@ -756,10 +796,11 @@
                                   },
                                   "lexical": {
                                     "shacl:raw": "[(100,25)-(109,15)]",
-                                    "#50": "[(100,14)-(100,25)]"
+                                    "#46": "[(100,14)-(100,25)]",
+                                    "doc:structuredValue": "[(100,25)-(109,15)]"
                                   },
                                   "tracked-element": {
-                                    "#50": "amf://id#44"
+                                    "#46": "amf://id#44"
                                   }
                                 }
                               }
@@ -1112,8 +1153,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "John Doe",
-                        "@type": "xsd:string"
+                        "@value": "John Doe"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "smaps": {
@@ -1133,8 +1183,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "1",
-                        "@type": "xsd:integer"
+                        "@value": "1"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "smaps": {
@@ -1144,14 +1203,16 @@
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "lexical": {
-                    "data:prop2": "[(12,17)-(12,18)]",
+                    "data:prop2": "[(12,8)-(12,17)]",
                     "#7": "[(10,17)-(13,7)]",
-                    "data:prop1": "[(11,17)-(11,27)]"
-                  },
-                  "data-node-properties": {
-                    "#7": "prop2->[(12,8)-(12,17)]#prop1->[(11,8)-(11,17)]"
+                    "data:prop1": "[(11,8)-(11,17)]"
                   }
                 }
               }
@@ -1167,7 +1228,8 @@
               },
               "lexical": {
                 "shacl:raw": "[(10,17)-(13,7)]",
-                "#6": "[(10,6)-(10,17)]"
+                "#6": "[(10,6)-(10,17)]",
+                "doc:structuredValue": "[(10,17)-(13,7)]"
               }
             }
           },
@@ -1210,8 +1272,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "example5",
-                        "@type": "xsd:string"
+                        "@value": "example5"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "smaps": {
@@ -1231,8 +1302,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "5",
-                        "@type": "xsd:integer"
+                        "@value": "5"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "smaps": {
@@ -1242,14 +1322,16 @@
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "lexical": {
-                    "data:prop2": "[(42,25)-(42,26)]",
+                    "data:prop2": "[(42,16)-(42,25)]",
                     "#11": "[(40,34)-(43,15)]",
-                    "data:prop1": "[(41,25)-(41,35)]"
-                  },
-                  "data-node-properties": {
-                    "#11": "prop2->[(42,16)-(42,25)]#prop1->[(41,16)-(41,25)]"
+                    "data:prop1": "[(41,16)-(41,25)]"
                   }
                 }
               }
@@ -1265,7 +1347,8 @@
               },
               "lexical": {
                 "shacl:raw": "[(40,34)-(43,15)]",
-                "#10": "[(40,14)-(40,34)]"
+                "#10": "[(40,14)-(40,34)]",
+                "doc:structuredValue": "[(40,34)-(43,15)]"
               },
               "tracked-element": {
                 "#10": "amf://id#15"
@@ -1311,8 +1394,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "resource example",
-                        "@type": "xsd:string"
+                        "@value": "resource example"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "smaps": {
@@ -1332,8 +1424,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "10",
-                        "@type": "xsd:integer"
+                        "@value": "10"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "smaps": {
@@ -1343,14 +1444,16 @@
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "lexical": {
-                    "data:prop2": "[(80,25)-(80,27)]",
+                    "data:prop2": "[(80,16)-(80,25)]",
                     "#11": "[(78,34)-(81,15)]",
-                    "data:prop1": "[(79,25)-(79,43)]"
-                  },
-                  "data-node-properties": {
-                    "#11": "prop2->[(80,16)-(80,25)]#prop1->[(79,16)-(79,25)]"
+                    "data:prop1": "[(79,16)-(79,25)]"
                   }
                 }
               }
@@ -1366,7 +1469,8 @@
               },
               "lexical": {
                 "shacl:raw": "[(78,34)-(81,15)]",
-                "#16": "[(78,14)-(78,34)]"
+                "#16": "[(78,14)-(78,34)]",
+                "doc:structuredValue": "[(78,34)-(81,15)]"
               },
               "tracked-element": {
                 "#16": "amf://id#18"
@@ -1420,8 +1524,17 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "something else",
-                            "@type": "xsd:string"
+                            "@value": "something else"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_3"
                           }
                         ],
                         "smaps": {
@@ -1441,8 +1554,17 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "30",
-                            "@type": "xsd:integer"
+                            "@value": "30"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_4"
                           }
                         ],
                         "smaps": {
@@ -1452,14 +1574,16 @@
                         }
                       }
                     ],
+                    "schema-org:name": [
+                      {
+                        "@value": "object_2"
+                      }
+                    ],
                     "smaps": {
-                      "data-node-properties": {
-                        "#20": "prop2->[(141,18)-(141,27)]#prop1->[(140,18)-(140,27)]"
-                      },
                       "lexical": {
-                        "data:prop2": "[(141,27)-(141,29)]",
+                        "data:prop2": "[(141,18)-(141,27)]",
                         "#20": "[(139,23)-(142,17)]",
-                        "data:prop1": "[(140,27)-(140,43)]"
+                        "data:prop1": "[(140,18)-(140,27)]"
                       }
                     }
                   }
@@ -1482,8 +1606,17 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "another",
-                            "@type": "xsd:string"
+                            "@value": "another"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_6"
                           }
                         ],
                         "smaps": {
@@ -1503,8 +1636,17 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "31",
-                            "@type": "xsd:integer"
+                            "@value": "31"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_7"
                           }
                         ],
                         "smaps": {
@@ -1514,28 +1656,30 @@
                         }
                       }
                     ],
+                    "schema-org:name": [
+                      {
+                        "@value": "object_5"
+                      }
+                    ],
                     "smaps": {
-                      "data-node-properties": {
-                        "#23": "prop2->[(145,18)-(145,27)]#prop1->[(144,18)-(144,27)]"
-                      },
                       "lexical": {
-                        "data:prop2": "[(145,27)-(145,29)]",
+                        "data:prop2": "[(145,18)-(145,27)]",
                         "#23": "[(143,23)-(146,17)]",
-                        "data:prop1": "[(144,27)-(144,36)]"
+                        "data:prop1": "[(144,18)-(144,27)]"
                       }
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "lexical": {
-                    "data:two": "[(143,23)-(146,17)]",
+                    "data:two": "[(143,16)-(143,23)]",
                     "#11": "[(138,34)-(147,15)]",
-                    "data:one": "[(139,23)-(142,17)]"
-                  },
-                  "data-node-properties": {
-                    "data:two": "prop2->[(145,18)-(145,27)]#prop1->[(144,18)-(144,27)]",
-                    "#11": "one->[(139,16)-(139,23)]#two->[(143,16)-(143,23)]",
-                    "data:one": "prop2->[(141,18)-(141,27)]#prop1->[(140,18)-(140,27)]"
+                    "data:one": "[(139,16)-(139,23)]"
                   }
                 }
               }
@@ -1551,7 +1695,8 @@
               },
               "lexical": {
                 "shacl:raw": "[(138,34)-(147,15)]",
-                "#19": "[(138,14)-(138,34)]"
+                "#19": "[(138,14)-(138,34)]",
+                "doc:structuredValue": "[(138,34)-(147,15)]"
               },
               "tracked-element": {
                 "#19": "amf://id#27"
@@ -1587,7 +1732,6 @@
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
   }

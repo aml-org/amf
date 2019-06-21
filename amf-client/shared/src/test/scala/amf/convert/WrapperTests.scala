@@ -348,7 +348,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       annotations should have size 1
       val annotation = annotations.head
       annotation.name.value() should be("foo")
-      annotation.extension.asInstanceOf[ScalarNode].value should be("annotated title")
+      annotation.extension.asInstanceOf[ScalarNode].value.value() should be("annotated title")
     }
   }
 
