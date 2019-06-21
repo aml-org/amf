@@ -21,11 +21,8 @@ case class ParametrizedDeclarationParser(
     declarations: (String, SearchScope.Scope) => AbstractDeclaration
 )(implicit ctx: WebApiContext) {
   def parse(): ParametrizedDeclaration = {
-    node.tagType match {
-      case YType.Map =>
-        // TODO is it always the first child?
-        val entry = node.as[YMap].entries.head
-
+    node.toOption[YMap].flatMap(_.entries.headOption) match {
+      case Some(entry) =>
         entry.value.tagType match {
           case YType.Null => fromStringNode(entry.key)
           case _ =>
@@ -46,8 +43,7 @@ case class ParametrizedDeclarationParser(
               }
             declaration.withVariables(variables)
         }
-
-      case YType.Str => fromStringNode(node)
+      case _ if node.tagType == YType.Str => fromStringNode(node)
       case _ =>
         val declaration = producer("")
         ctx.violation(InvalidAbstractDeclarationType, declaration.id, "Invalid model extension.", node)

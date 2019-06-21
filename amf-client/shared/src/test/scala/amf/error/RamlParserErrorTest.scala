@@ -585,6 +585,16 @@ class RamlParserErrorTest extends ParserErrorTest {
     )
   }
 
+  test("Test empty flow map in resource type reference") {
+    validate(
+      "error/empty-map-resource-type.raml",
+      resourceType => {
+        resourceType.level should be("Violation")
+        resourceType.message should be("Invalid model extension.")
+      }
+    )
+  }
+
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
   override protected def build(validation: Validation, file: String): Future[BaseUnit] =
