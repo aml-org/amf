@@ -50,9 +50,6 @@ trait InheritanceChain { this: AnyShape =>
     shape.addSuperType(this)
   }
 
-  def supportsInheritance: Boolean =
-    isInstanceOf[NodeShape] && asInstanceOf[NodeShape].discriminator.option().isDefined
-
   def effectiveStructuralShapes: Seq[Shape] = {
     val acc =
       if (annotations

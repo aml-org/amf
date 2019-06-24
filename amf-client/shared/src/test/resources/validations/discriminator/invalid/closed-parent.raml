@@ -1,0 +1,20 @@
+#%RAML 1.0
+title: API
+types:
+  parent:
+    discriminator: objectType
+    additionalProperties: false # this makes valid types for children invalid for parent
+    properties:
+      objectType: string
+  child:
+    type: parent
+    properties:
+      name: string
+/endpoint1:
+  get:
+    body:
+      application/json:
+        type: parent
+        example:
+          objectType: child
+          name: Jorge

@@ -249,10 +249,6 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("unresolved-parameter.raml", Some("unresolved-parameter.report"))
   }
 
-  test("Discriminator inheritance") {
-    validate("discriminator/discriminator-inheritance.raml", Some("discriminator-inheritance.report"))
-  }
-
   test("Invalid protocols in root level") {
     validate("protocols/invalid-root-level-unkown-values.raml", Some("invalid-root-level-unkown-values.report"))
   }
@@ -263,6 +259,18 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Method level protocol validations") {
     validate("protocols/invalid-method-level.raml", Some("invalid-method-level.report"))
+  }
+
+  test("Discriminator inheritance") {
+    validate("discriminator/discriminator-inheritance.raml", Some("discriminator-inheritance.report"))
+  }
+
+  test("Discriminator basic behavior") {
+    validate("discriminator/valid/basic-behavior.raml")
+  }
+
+  test("Unknown discriminator") {
+    validate("discriminator/invalid/unknown-discriminator.raml")
   }
 
 }
