@@ -271,8 +271,26 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, validationsPath + "inheritance-provenance/with-library/")
   }
 
-  test("Recursion in inheritance with resource type") {
-    cycle("recursion-inheritance.raml", "recursion-inheritance.jsonld", RamlYamlHint, Amf, validationsPath)
+  test("Recursion in inheritance with resource type - Properties") {
+    cycle("recursion-inheritance-properties.raml",
+          "recursion-inheritance-properties.jsonld",
+          RamlYamlHint,
+          Amf,
+          validationsPath)
+  }
+
+  test("Recursion in inheritance with resource type - Array") {
+    Validation(platform)
+      .flatMap { validation =>
+        cycle(
+          "recursion-inheritance-array.raml",
+          "recursion-inheritance-array.jsonld",
+          RamlYamlHint,
+          Raml08,
+          validationsPath,
+          validation = Some(validation.withEnabledValidation(true))
+        )
+      }
   }
 
   test("Generate jsonld with sourcemaps") {

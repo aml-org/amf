@@ -8,6 +8,7 @@ import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableEle
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
+import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{ErrorHandler, FieldEntry, Value}
 import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.{EmptyPayload, Inferred}
@@ -184,6 +185,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       if (ids.contains(shape.id))
         shape match {
           case _: RecursiveShape => shape
+          case p: PropertyShape  => p.withRange(RecursiveShape(p.range))
           case _                 => RecursiveShape(shape)
         } else {
         val newIds = ids ++ Seq(shape.id)
@@ -224,6 +226,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
   /**
     * Adopts recursively different kinds of AMF elements if not yet adopted
+    *
     * @param parentId id of the adopter element
     * @param target element to be adopted
     * @param adopted utility class containing already adopted elements
@@ -256,6 +259,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
   /**
     * Adopts target domain element by parent. (Makes element's ID relative to that of parent)
+    *
     * @param target adopted
     * @param parentId id of the adopter element
     * @return adopted element with newly set ID

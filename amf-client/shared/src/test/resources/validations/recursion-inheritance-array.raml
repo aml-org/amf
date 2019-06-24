@@ -1,0 +1,41 @@
+#%RAML 0.8
+
+title: myEventpaper
+version: v1
+
+schemas:
+- event: |
+    { "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "object",
+      "properties": {
+        "event_paper": {
+          "type": "array",
+          "items": {
+            "$ref": "eventPaper"
+          },
+          "required": false,
+          "description": "The generated paper for this event"
+        }
+      }
+    }
+
+- eventPaper: |
+    { "$schema": "http://json-schema.org/draft-03/schema",
+      "type": "object",
+      "properties": {
+        "event": {"$ref": "event", "required": false, "description": "The event concerned by this paper"}
+      }
+    }
+
+resourceTypes:
+- collection:
+    post:
+      body:
+        application/json:
+          schema: <<resourcePathName>>
+
+/event:
+  type: collection
+  post:
+    body:
+      application/json:
