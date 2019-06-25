@@ -211,5 +211,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("annotations/inheritance-with-allowed-targets.raml")
   }
 
+  test("Date only with fraction example") {
+    validate("fraction-date-only/fraction-date-only.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.validation.remote
 
-import java.time.format.{DateTimeFormatter, DateTimeFormatterBuilder, DateTimeParseException}
 import java.util.Optional
 
 import org.everit.json.schema.FormatValidator
@@ -29,20 +28,16 @@ object Rfc2616AttributeLowerCase extends Rfc2616Attribute {
 }
 
 object DateTimeOnlyFormatValidator extends FormatValidator {
-  private val FORMATTER: DateTimeFormatter =
-    new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd'T'HH:mm:ss").toFormatter
+  val pattern =
+    "^([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?$"
 
   override def formatName = "date-time-only"
 
   override def validate(value: String): Optional[String] =
-    try {
-      FORMATTER.parse(value)
-      Optional.empty()
-    } catch {
-      case _: DateTimeParseException =>
-        Optional.of(
-          String.format("[%s] is not a valid %s. Expected %s", value, this.formatName(), "yyyy-MM-dd'T'HH:mm:ss"))
-    }
+    if (!value.matches(pattern)) {
+      Optional.of(
+        String.format("[%s] is not a valid %s. Expected %s", value, this.formatName(), "yyyy-MM-dd'T'HH:mm:ss"))
+    } else Optional.empty()
 }
 
 object PartialTimeFormatValidator extends FormatValidator {
