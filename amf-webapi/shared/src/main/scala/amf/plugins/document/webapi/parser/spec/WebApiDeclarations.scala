@@ -99,26 +99,21 @@ class WebApiDeclarations(val alias: Option[String],
   }
 
   override def +=(element: DomainElement): WebApiDeclarations = {
+    //future declarations are used for shapes, and therefore only resolved for that case
     element match {
       case r: ResourceType =>
-        futureDeclarations.resolveRef(aliased(r.name.value()), r)
         resourceTypes = resourceTypes + (r.name.value() -> r)
       case t: Trait =>
-        futureDeclarations.resolveRef(aliased(t.name.value()), t)
         traits = traits + (t.name.value() -> t)
       case s: Shape =>
         addSchema(s)
       case p: Parameter =>
-        futureDeclarations.resolveRef(aliased(p.name.value()), p)
         parameters = parameters + (p.name.value() -> p)
       case p: Payload =>
-        futureDeclarations.resolveRef(aliased(p.name.value()), p)
         payloads = payloads + (p.name.value() -> p)
       case ss: SecurityScheme =>
-        futureDeclarations.resolveRef(aliased(ss.name.value()), ss)
         securitySchemes = securitySchemes + (ss.name.value() -> ss)
       case re: Response =>
-        futureDeclarations.resolveRef(aliased(re.name.value()), re)
         responses = responses + (re.name.value() -> re)
       case _ => super.+=(element)
     }

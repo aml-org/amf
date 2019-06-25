@@ -215,5 +215,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     validate("fraction-date-only/fraction-date-only.raml")
   }
 
+  test("Annotation type definition forward referencing data type with same name") {
+    checkValid("annotations/forward-ref-to-type.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
