@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: new discriminator behavior
+types:
+  person:
+    discriminator: objectType
+    properties:
+      objectType: string
+      name: string
+  employee:
+    type: person
+    properties:
+      employeeNumber: number
+
+/endpoint:
+  get:
+    body:
+      application/json:
+        type: person
+        example:
+          objectType: employee
+          name: Jorge
+

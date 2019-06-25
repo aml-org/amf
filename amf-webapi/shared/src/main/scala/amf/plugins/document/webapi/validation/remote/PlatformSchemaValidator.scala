@@ -56,11 +56,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
 
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
 
-  val polymorphic: Boolean = shape match {
-    case a: AnyShape => a.supportsInheritance
-    case _           => false
-  }
-
   val env = Environment()
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
@@ -165,11 +160,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     }
   }
 
-  private def buildObjPolymorphicShape(
-      payload: DataNode,
-      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] =
-    getOrCreateObj(PolymorphicShapeExtractor(shape.asInstanceOf[AnyShape], payload), validationProcessor) // if is polymorphic is an any shape
-
   private def getOrCreateObj(
       s: AnyShape,
       validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] = {
@@ -232,7 +222,8 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       new AMFValidationResult(message, SeverityLevels.VIOLATION, "", None, "", None, None, "")
   }
 
-  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+  protected def buildPayloadNode(mediaType: String,
+                                 payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
     val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, env, shape) match {
       case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
         val frag = ScalarPayloadForParam(result.fragment, shape)
@@ -252,8 +243,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
         try {
           {
             resultOption match {
-              case Some(result) if polymorphic =>
-                buildObjPolymorphicShape(result.fragment.encodes, validationProcessor) // if is polymorphic I already parse the payload
               case _ if shape.isInstanceOf[AnyShape] =>
                 getOrCreateObj(shape.asInstanceOf[AnyShape], validationProcessor)
               case _ =>
@@ -285,8 +274,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   private def buildCandidate(mediaType: String, payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) = {
     if (isFileShape) {
       (None, None)
-    } else if (polymorphic) {
-      buildPayloadNode(mediaType, payload)
     } else {
       buildPayloadObj(mediaType, payload)
     }
@@ -300,37 +287,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     }
   }
 
-}
-
-object PolymorphicShapeExtractor {
-
-  def apply(anyShape: AnyShape, payload: DataNode): AnyShape = {
-    val closure: Seq[Shape] = anyShape.effectiveStructuralShapes
-    findPolymorphicEffectiveShape(closure, payload) match {
-      case Some(shape: NodeShape) => shape
-      case _ => // TODO: structurally can be a valid type, should we fail? By default RAML expects a failure
-        throw new UnknownDiscriminator()
-    }
-  }
-
-  private def findPolymorphicEffectiveShape(polymorphicUnion: Seq[Shape], currentDataNode: DataNode): Option[Shape] = {
-    polymorphicUnion.filter(_.isInstanceOf[NodeShape]).find {
-      case nodeShape: NodeShape =>
-        nodeShape.discriminator.option() match {
-          case Some(discriminatorProp) =>
-            val discriminatorValue: String = nodeShape.discriminatorValue.option().getOrElse(nodeShape.name.value())
-            currentDataNode match {
-              case obj: ObjectNode =>
-                obj.getFromKey(discriminatorProp) match {
-                  case Some(v: ScalarNode) => v.value.option().contains(discriminatorValue)
-                  case _                   => false
-                }
-              case _ => false
-            }
-          case None => false
-        }
-    }
-  }
 }
 
 object ScalarPayloadForParam {

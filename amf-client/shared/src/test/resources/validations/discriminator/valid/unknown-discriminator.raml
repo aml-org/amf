@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: API
+types:
+  parent:
+    discriminator: objectType
+    properties:
+      objectType: string
+/endpoint1:
+  get:
+    body:
+      application/json:
+        type: parent
+        example:
+          objectType: unkown-discriminator

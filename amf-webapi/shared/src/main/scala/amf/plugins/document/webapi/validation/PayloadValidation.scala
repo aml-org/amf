@@ -74,16 +74,12 @@ case class ShaclPayloadValidation(validationCandidates: Seq[ValidationCandidate]
   }
 
   protected def profileForShape(shape: Shape, dataNode: DataNode): ValidationProfile = {
-    if (shape.isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].supportsInheritance) {
-      new AMFShapeValidations(shape).profile(dataNode)
-    } else {
-      validationsCache.get(shape.id) match {
-        case Some(profile) => profile
-        case None =>
-          val profile = new AMFShapeValidations(shape).profile(dataNode)
-          validationsCache.put(shape.id, profile)
-          profile
-      }
+    validationsCache.get(shape.id) match {
+      case Some(profile) => profile
+      case None =>
+        val profile = new AMFShapeValidations(shape).profile(dataNode)
+        validationsCache.put(shape.id, profile)
+        profile
     }
   }
 
