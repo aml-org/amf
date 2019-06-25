@@ -31,6 +31,10 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
     validate("discriminator/invalid/additional-enum-values.raml", Some("discriminator-additional-enum-values.report"))
   }
 
+  test("Discriminator in array items") {
+    validate("discriminator/discriminator-array-items.raml", Some("discriminator-array-items.report"))
+  }
+
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/multi-plat-model/"
   override val hint: Hint  = RamlYamlHint

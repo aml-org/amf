@@ -1,0 +1,42 @@
+#%RAML 1.0
+title: api
+mediaType: application/json
+types:
+  element:
+    discriminator: discProp
+    properties:
+      discProp: string
+
+  child:
+    type: element
+    properties:
+      anotherProperty: string
+
+  anotherElement:
+    discriminator: discProp
+    additionalProperties: false
+    properties:
+      discProp: string
+      anotherProp: string
+
+  anotherChild:
+    type: anotherElement
+    properties:
+      name: string
+
+/valid:
+  get:
+    body:
+      type: element[]
+      example:
+        - discProp: child # this should NOT require anotherProperty
+        - discProp: unknown-discriminator # this should NOT show unknown discriminator validation
+/invalid:
+  put:
+    body:
+      type: anotherElement[]
+      example:
+        - discProp: a # this should require anotherProp
+        - discProp: anotherChild
+          anotherProp: some string
+          name: Jorge # this property will not be accepted

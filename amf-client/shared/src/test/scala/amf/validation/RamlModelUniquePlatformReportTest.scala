@@ -270,7 +270,6 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Unknown discriminator") {
-    validate("discriminator/invalid/unknown-discriminator.raml")
+    validate("discriminator/valid/unknown-discriminator.raml")
   }
-
 }
