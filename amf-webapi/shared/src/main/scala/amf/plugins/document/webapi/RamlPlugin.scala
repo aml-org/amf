@@ -1,6 +1,8 @@
 package amf.plugins.document.webapi
 
+import amf._
 import amf.core.Root
+import amf.core.annotations.SourceAST
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.model.document._
@@ -9,6 +11,7 @@ import amf.core.parser.{EmptyFutureDeclarations, ErrorHandler, LinkReference, Pa
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
+import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
@@ -16,7 +19,7 @@ import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, R
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
 import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.{CompatibilityPipeline, RamlCompatibilityPipeline}
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{
   Raml08EditingPipeline,
   Raml08ResolutionPipeline,
@@ -24,9 +27,8 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   Raml10ResolutionPipeline
 }
 import amf.plugins.domain.webapi.models.WebApi
-import amf._
 import org.yaml.model.YNode.MutRef
-import org.yaml.model.{YDocument, YNode}
+import org.yaml.model.{YDocument, YMap, YNode}
 
 sealed trait RamlPlugin extends BaseWebApiPlugin {
 
@@ -74,8 +76,25 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
   private def inlineExternalReferences(root: Root, ctx: ParserContext): Unit = {
     root.references.foreach { ref =>
       ref.unit match {
-        case e: ExternalFragment => inlineFragment(ref.origin.refs, ref.ast, e.encodes, ref.unit.references, ctx)
-        case _                   =>
+        case e: ExternalFragment =>
+          inlineFragment(ref.origin.refs, ref.ast, e.encodes, ref.unit.references, ctx)
+        // In a RAML context vocabularies and dialects will be taken as external fragments, the same happens with unknown headers
+        case vd @ (_: Vocabulary | _: Dialect) =>
+          val content = vd.raw.getOrElse("")
+          val fragment = ExternalFragment()
+            .withLocation(vd.location().getOrElse(root.location))
+            .withId(vd.id)
+            .withEncodes(
+              ExternalDomainElement()
+                .withRaw(content)
+                .withMediaType(if (content.startsWith("#%")) "application/yaml" else "application/json"))
+          val node =
+            vd.annotations.find(classOf[SourceAST]).map(_.ast) match {
+              case Some(map: YMap) => Some(YNode(map))
+              case _               => None
+            }
+          inlineFragment(ref.origin.refs, node, fragment.encodes, ref.unit.references, ctx)
+        case _ =>
       }
     }
   }
@@ -228,10 +247,11 @@ object Raml10Plugin extends RamlPlugin {
   override def resolve(unit: BaseUnit,
                        errorHandler: ErrorHandler,
                        pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
-    case ResolutionPipeline.DEFAULT_PIPELINE       => new Raml10ResolutionPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.EDITING_PIPELINE       => new Raml10EditingPipeline(errorHandler).resolve(unit)
-    case ResolutionPipeline.COMPATIBILITY_PIPELINE => new CompatibilityPipeline(errorHandler, RamlProfile).resolve(unit)
-    case _                                         => super.resolve(unit, errorHandler, pipelineId)
+    case ResolutionPipeline.DEFAULT_PIPELINE => new Raml10ResolutionPipeline(errorHandler).resolve(unit)
+    case ResolutionPipeline.EDITING_PIPELINE => new Raml10EditingPipeline(errorHandler).resolve(unit)
+    case ResolutionPipeline.COMPATIBILITY_PIPELINE =>
+      new CompatibilityPipeline(errorHandler, RamlProfile).resolve(unit)
+    case _ => super.resolve(unit, errorHandler, pipelineId)
   }
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =

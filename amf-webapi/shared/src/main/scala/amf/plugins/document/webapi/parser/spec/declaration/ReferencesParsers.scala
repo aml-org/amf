@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.client.model.document.Dialect
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.core.parser.{ParsedReference, _}
+import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.features.validation.ParserSideValidations
 import amf.plugins.features.validation.ParserSideValidations.{ExpectedModule, InvalidModuleType}
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
@@ -27,10 +28,9 @@ case class ReferenceDeclarations(references: mutable.Map[String, BaseUnit] = mut
   def +=(alias: String, unit: BaseUnit): Unit = {
     references += (alias -> unit)
     val library = ctx.declarations.getOrCreateLibrary(alias)
-    // todo : ignore domain entities of vocabularies?
     unit match {
-      case d: DeclaresModel =>
-        d.declares.foreach(library += _)
+      case _ @(_: Vocabulary | _: Dialect) => ctx.declarations.others += (alias -> unit)
+      case d: DeclaresModel                => d.declares.foreach(library += _)
     }
   }
 
@@ -50,9 +50,10 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
     val result: ReferenceDeclarations = parseLibraries(location)
 
     references.foreach {
-      case ParsedReference(f: Fragment, origin: Reference, _) => result += (origin.url, f)
-      case ParsedReference(d: Document, origin: Reference, _) => result += (origin.url, d)
-      case _                                                  =>
+      case ParsedReference(f: Fragment, origin: Reference, _)                          => result += (origin.url, f)
+      case ParsedReference(d: Document, origin: Reference, _)                          => result += (origin.url, d)
+      case ParsedReference(other @ (_: Vocabulary | _: Dialect), origin: Reference, _) => result += (origin.url, other)
+      case _                                                                           => // Nothing
     }
 
     result

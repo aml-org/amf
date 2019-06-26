@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec
 
 import amf.core.annotations.DeclaredElement
+import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.parser.{
@@ -20,7 +21,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Parameter, Payload, Response}
-import org.yaml.model.{YMap, YNode, YPart}
+import org.yaml.model.{YNode, YPart}
 
 /**
   * Declarations object.
@@ -37,7 +38,8 @@ class WebApiDeclarations(val alias: Option[String],
                          var securitySchemes: Map[String, SecurityScheme] = Map(),
                          var responses: Map[String, Response] = Map(),
                          val errorHandler: Option[ErrorHandler],
-                         val futureDeclarations: FutureDeclarations)
+                         val futureDeclarations: FutureDeclarations,
+                         var others: Map[String, BaseUnit] = Map())
     extends Declarations(libs, frags, anns, errorHandler, futureDeclarations = futureDeclarations) {
 
   def promoteExternaltoDataTypeFragment(text: String, fullRef: String, shape: Shape): Shape = {
@@ -281,7 +283,7 @@ class WebApiDeclarations(val alias: Option[String],
   def findNamedExample(key: String, error: Option[String => Unit] = None): Option[Example] =
     fragments.get(key).map(_.encoded) match {
       case Some(e: Example) => Some(e)
-      case Some(other) =>
+      case Some(_) =>
         error.foreach(_(s"Fragment defined in $key does not conform to the expected type NamedExample"))
         None
       case _ => None

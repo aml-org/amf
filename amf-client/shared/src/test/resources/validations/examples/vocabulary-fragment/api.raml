@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: knowledge graph service
+version: v1
+
+/test:
+ get:
+    description: Retrieve a particular containerType
+    responses:
+      200:
+        body:
+          application/yaml:
+            description: Yaml for the containerType.
+            example: !include vocabulary.yaml

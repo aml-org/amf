@@ -1002,7 +1002,8 @@ object RamlUnionEmitterHelper {
           .matchType(TypeDefXsdMapping.typeDef(scalar.dataType.value()), scalar.format.option())
           ._1
       case s: Shape if s.isLink && s.linkLabel.option().isDefined => s.linkLabel.value()
-      case a: NilShape if a.fields.fields().isEmpty               => "nil"
+      case n: NilShape if n.fields.fields().isEmpty               => "nil"
+      case a: ArrayShape if a.fields.fields().isEmpty             => "array"
       case a: AnyShape if a.fields.fields().isEmpty               => "any"
       case _                                                      => return None
     }
