@@ -10,15 +10,16 @@ import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.{isOasAnnotation, isRamlAnnotation}
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Settings}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import amf.plugins.features.validation.ParserSideValidations
 import amf.plugins.features.validation.ParserSideValidations.{
+  CrossSecurityWarningSpecification,
   DuplicatedOperationStatusCodeSpecification,
-  ExclusivePropertiesSpecification,
-  CrossSecurityWarningSpecification
+  ExclusivePropertiesSpecification
 }
 import org.yaml.model._
 
@@ -96,7 +97,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
 
         map.key("settings", SecuritySchemeModel.Settings in scheme using RamlSecuritySettingsParser.parse(scheme))
 
-        AnnotationParser(scheme, map).parse()
+        AnnotationParser(scheme, map, List(VocabularyMappings.securityScheme)).parse()
 
         scheme
     }

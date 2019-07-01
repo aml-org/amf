@@ -9,6 +9,7 @@ import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContex
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
 import amf.plugins.domain.webapi.models.{Operation, Response}
@@ -127,7 +128,10 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
 
     map.key("description", (OperationModel.Description in operation).allowingAnnotations)
 
-    AnnotationParser(operation, map).parse()
+    AnnotationParser(operation,
+                     map,
+                     if (isTrait) List(VocabularyMappings.`trait`)
+                     else List(VocabularyMappings.operation)).parse()
 
     operation
   }

@@ -272,4 +272,17 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Unknown discriminator") {
     validate("discriminator/valid/unknown-discriminator.raml")
   }
+  test("Validating general cases of allowed targets in annotations") {
+    validate("annotations/allowed-targets/allowed-targets.raml", Some("allowed-target-annotations.report"))
+  }
+
+  test("Resource types and traits using annotations with allowed target") {
+    validate("annotations/allowed-targets/resource-types-and-traits.raml",
+             Some("allowed-target-resource-types-traits.report"))
+  }
+
+  test("Annotations with allowed target in extension and overlay") {
+    validate("annotations/allowed-targets/overlay.raml", Some("allowed-target-overlay-extension.report"))
+  }
+
 }

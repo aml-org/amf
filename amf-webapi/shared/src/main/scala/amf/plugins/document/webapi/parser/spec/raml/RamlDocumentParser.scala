@@ -11,7 +11,8 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.{ExtensionLikeWebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.contexts.RamlWebApiContextType.RamlWebApiContextType
+import amf.plugins.document.webapi.contexts.{ExtensionLikeWebApiContext, RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
@@ -38,6 +39,7 @@ case class ExtensionLikeParser(root: Root)(implicit override val ctx: ExtensionL
     with Raml10BaseSpecParser {
 
   def parseExtension(): Extension = {
+    ctx.contextType = RamlWebApiContextType.EXTENSION
 
     getParent match {
       case Some(parent) => collectAncestorsDeclarationsAndReferences(parent, ctx.parentDeclarations)
@@ -52,6 +54,7 @@ case class ExtensionLikeParser(root: Root)(implicit override val ctx: ExtensionL
   }
 
   def parseOverlay(): Overlay = {
+    ctx.contextType = RamlWebApiContextType.OVERLAY
 
     getParent match {
       case Some(parent) => collectAncestorsDeclarationsAndReferences(parent, ctx.parentDeclarations)
@@ -221,9 +224,16 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
       }
     )
 
-    AnnotationParser(api, map).parse()
+    AnnotationParser(api, map, obtainTarget(ctx.contextType)).parse()
 
     api
+  }
+
+  private def obtainTarget(contextType: RamlWebApiContextType): List[String] = contextType match {
+    case RamlWebApiContextType.DEFAULT   => List(VocabularyMappings.webapi)
+    case RamlWebApiContextType.OVERLAY   => List(VocabularyMappings.overlay)
+    case RamlWebApiContextType.EXTENSION => List(VocabularyMappings.extension)
+    case _                               => Nil
   }
 }
 

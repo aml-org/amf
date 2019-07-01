@@ -24,6 +24,7 @@ import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{ScalarType, _}
@@ -520,8 +521,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     // parsing annotations
     node.value match {
-      case map: YMap if result.isDefined => AnnotationParser(result.get, map).parse()
-      case _                             => // ignore
+      case map: YMap if result.isDefined =>
+        AnnotationParser(
+          result.get,
+          map,
+          if (isAnnotation) List(VocabularyMappings.customDomainProperty)
+          else Nil ++ List(VocabularyMappings.shape, VocabularyMappings.payload, VocabularyMappings.request)
+        ).parse()
+      case _ => // ignore
     }
 
     result

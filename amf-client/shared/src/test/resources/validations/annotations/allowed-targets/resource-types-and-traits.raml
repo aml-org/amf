@@ -1,0 +1,34 @@
+#%RAML 1.0
+title: Illustrating allowed targets
+mediaType: application/json
+
+annotationTypes:
+  meta-resource:
+    allowedTargets: Resource
+  meta-resource-type:
+    allowedTargets: ResourceType
+  meta-trait:
+    allowedTargets: Trait
+  meta-method:
+    allowedTargets: Method
+
+resourceTypes:
+  searchableCollection:
+    (meta-resource-type): valid in resource type
+    (meta-resource): not allowed in resource type
+    get:
+      queryParameters:
+        <<queryParamName>>:
+
+traits:
+  chargeable:
+    (meta-trait): valid in trait definition
+    (meta-method): not valid trait definition
+
+/applying-resource-type:
+  type:
+    searchableCollection:
+      queryParamName: name
+
+  post:
+    is: chargeable
