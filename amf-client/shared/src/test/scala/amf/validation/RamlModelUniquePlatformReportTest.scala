@@ -285,4 +285,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("annotations/allowed-targets/overlay.raml", Some("allowed-target-overlay-extension.report"))
   }
 
+  test("Missing discriminator property") {
+    validate("discriminator/invalid/missing-discriminator-property.raml", Some("missing-discriminator-property.report"))
+  }
+
 }

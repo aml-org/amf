@@ -289,9 +289,10 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
       case FileType =>
         Some(FileShape(ast).withName(name, Annotations()))
       case _: ScalarType =>
-        Some(ScalarShape()
-          .withName(name, Annotations())
-          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
+        Some(
+          ScalarShape()
+            .withName(name, Annotations())
+            .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
       case AnyType =>
         Some(AnyShape().withName(name, Annotations()).add(Inferred()))
       case _ =>
@@ -1400,6 +1401,19 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               properties.foreach { prop =>
                 checkSchemaInProperty(Seq(prop.range), prop.location(), Range(entry.range))
               }
+
+              shape.discriminator
+                .option()
+                .foreach(discriminator => {
+                  val containsDiscriminatorProp = properties.exists(_.name.value() == discriminator)
+                  if (!containsDiscriminatorProp) {
+                    ctx.violation(
+                      MissingDiscriminatorProperty,
+                      shape.id,
+                      s"Property '$discriminator' marked as discriminator is missing in properties facet"
+                    )
+                  }
+                })
               if (hasPatternProperties) {
                 shape.set(NodeShapeModel.Closed, value = true) // we close by default, additional properties must match one patter or fail
               }
