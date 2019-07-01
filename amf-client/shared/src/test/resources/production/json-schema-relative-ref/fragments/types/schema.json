@@ -1,0 +1,16 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"$ref": "#/definitions/SomeDefinition",
+	"definitions": {
+		"SomeDefinition": {
+			"description": "A request that is used to search for a list of Loyalty Accounts",
+			"type": "object",
+			"properties": {
+				"Surname": {
+					"$ref": "../fragment.json#/definitions/Surname"
+				}
+			},
+			"additionalProperties": false
+		}
+	}
+}

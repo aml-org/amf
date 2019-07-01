@@ -1595,6 +1595,20 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test Json relative ref with absolute path as input") {
+    val file =
+      platform.fs.syncFile("amf-client/shared/src/test/resources/production/json-schema-relative-ref/api.raml")
+    val absPath = getAbsolutePath(file.path)
+
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- new RamlParser().parseFileAsync(absPath).asFuture
+      report <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }
