@@ -272,6 +272,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Unknown discriminator") {
     validate("discriminator/valid/unknown-discriminator.raml")
   }
+
   test("Validating general cases of allowed targets in annotations") {
     validate("annotations/allowed-targets/allowed-targets.raml", Some("allowed-target-annotations.report"))
   }
@@ -289,4 +290,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("discriminator/invalid/missing-discriminator-property.raml", Some("missing-discriminator-property.report"))
   }
 
+  test("Invalid payload in RAML 08") {
+    validate("08/invalid-payload.raml", Some("invalid-payload-08.report"))
+  }
 }
