@@ -132,7 +132,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
                         ctx.factory
-                          .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, defaultType)
+                          .typeParser(entry, shape => shape.withName("default").adopted(payload.id), false, defaultType)
                           .parse()
                           .foreach { schema =>
                             val payload = res.withPayload()

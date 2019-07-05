@@ -293,4 +293,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Invalid payload in RAML 08") {
     validate("08/invalid-payload.raml", Some("invalid-payload-08.report"))
   }
+
+  test("JSON Schema false recursion") {
+    validate("json-schema/api.raml")
+  }
 }
