@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.validation
 
+import amf.core.annotations.DomainExtensionAnnotation
 import amf.core.model.document.{BaseUnit, PayloadFragment}
+import amf.core.model.domain.{AmfScalar, CompleteStrategy}
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.remote.Platform
 import amf.core.validation.ValidationCandidate
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.resolveAnnotation
-
 class AnnotationsCandidatesCollector(model: BaseUnit, platform: Platform) {
 
   def collect(): Seq[ValidationCandidate] = {
@@ -20,15 +21,21 @@ class AnnotationsCandidatesCollector(model: BaseUnit, platform: Platform) {
 
   protected def findExtensionsWithTypes(): Seq[DomainExtension] = {
     model
-      .findBy {
-        case extension: DomainExtension =>
-          Option(extension.definedBy).exists(definition => {
-            Option(definition.schema).isDefined && resolveAnnotation("(" + definition.name.value() + ")").isDefined
-          })
-        case _ => false
+      .collect(CompleteStrategy) {
+        case extension: DomainExtension if Option(extension.definedBy).exists(definition => {
+              Option(definition.schema).isDefined && resolveAnnotation(s"(${definition.name.value()})").isDefined
+            }) =>
+          Seq(extension)
+        case scalar: AmfScalar if scalar.annotations.find(classOf[DomainExtensionAnnotation]).isDefined =>
+          scalar.annotations
+            .collect[DomainExtensionAnnotation] {
+              case domainAnnotation: DomainExtensionAnnotation => domainAnnotation
+            }
+            .map(_.extension)
+
       }
-      .map(_.asInstanceOf[DomainExtension])
-  }
+      .flatten
+  }.toSeq
 
 }
 

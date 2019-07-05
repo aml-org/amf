@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.client.model.DataTypes
 import amf.core.annotations.LexicalInformation
 import amf.core.model.document.{EncodesModel, ExternalFragment}
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
@@ -62,12 +63,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
                             idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
-    val finalDataType =
-      if (dataType == "dateTimeOnly") {
-        Some((Namespace.Shapes + "dateTimeOnly").iri())
-      } else {
-        Some((Namespace.Xsd + dataType).iri())
-      }
+    val finalDataType = Some(DataTypes(dataType))
     val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
       .withName(idCounter.genId("scalar"))
     parent.foreach(p => node.adopted(p))

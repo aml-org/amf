@@ -145,14 +145,19 @@ trait SpecParserOps {
 
     private def parseScalarValued(node: YNode) = {
       val result = RamlScalarNode(node)
-      custom ++= collectDomainExtensions(null, result).map(DomainExtensionAnnotation)
+      target match {
+        case SingleTarget(element) =>
+          custom ++= collectDomainExtensions(element.id + s"/${field.value.name}", result)
+            .map(DomainExtensionAnnotation)
+        case EmptyTarget => custom ++= collectDomainExtensions(null, result).map(DomainExtensionAnnotation)
+      }
       result
     }
 
     private def collectDomainExtensions(parent: String, n: ScalarNode): Seq[DomainExtension] = {
       n match {
         case n: RamlScalarValuedNode =>
-          AnnotationParser.parseExtensions(s"$parent/annotation", n.obj)
+          AnnotationParser.parseExtensions(parent, n.obj)
         case _: DefaultScalarNode =>
           Nil
       }

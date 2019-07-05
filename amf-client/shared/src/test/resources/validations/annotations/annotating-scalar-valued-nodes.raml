@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: API
+annotationTypes:
+  stringAnnotation: string
+
+(stringAnnotation): 5
+
+/resource:
+
+  (stringAnnotation): 2
+
+  displayName:
+    value: myResource
+    (stringAnnotation): 3
+
+  description:
+    value: descriptionValue
+    (stringAnnotation): 3
+
+
+

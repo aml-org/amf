@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.validation
 import java.net.URISyntaxException
 
 import amf.PayloadProfile
+import amf.client.model.DataTypes
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
@@ -445,7 +446,7 @@ class AMFShapeValidations(root: Shape) {
           ramlPropertyId = (Namespace.Data + "value").iri(),
           name = nil.id + "_validation_range/prop",
           message = Some(msg),
-          datatype = Some((Namespace.Xsd + "nil").iri())
+          datatype = Some(DataTypes.Nil)
         )
       )
     )
