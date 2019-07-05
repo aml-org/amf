@@ -287,7 +287,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Missing discriminator property") {
-    validate("discriminator/invalid/missing-discriminator-property.raml", Some("missing-discriminator-property.report"))
+    validate("discriminator/invalid/missing-discriminator-property.raml",
+             Some("missing-discriminator-property.report"))
   }
 
   test("Invalid payload in RAML 08") {
@@ -297,4 +298,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("JSON Schema false recursion") {
     validate("json-schema/api.raml")
   }
+
+  test("Invalid value in properties facet") {
+    validate("invalid-value-properties-facet.raml", Some("invalid-value-properties-facet.report"))
+  }
+
 }

@@ -289,10 +289,9 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
       case FileType =>
         Some(FileShape(ast).withName(name, Annotations()))
       case _: ScalarType =>
-        Some(
-          ScalarShape()
-            .withName(name, Annotations())
-            .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
+        Some(ScalarShape()
+          .withName(name, Annotations())
+          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
       case AnyType =>
         Some(AnyShape().withName(name, Annotations()).add(Inferred()))
       case _ =>
@@ -1384,8 +1383,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key(
         "properties",
         entry => {
-          entry.value.toOption[YMap] match {
-            case Some(m) =>
+          entry.value.tagType match {
+            case YType.Map =>
+              val m = entry.value.as[YMap]
               val properties: Seq[PropertyShape] =
                 PropertiesParser(m, shape.withProperty).parse()
               val hasPatternProperties = properties.exists(_.patternName.nonEmpty)
@@ -1418,7 +1418,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 shape.set(NodeShapeModel.Closed, value = true) // we close by default, additional properties must match one patter or fail
               }
               shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
-            case _ => // Empty properties node.
+            case YType.Null =>
+            case _ =>
+              ctx.violation(
+                InvalidValueInPropertiesFacet,
+                shape.id,
+                s"Properties facet must be a map of key and values",
+                entry
+              )
           }
         }
       )

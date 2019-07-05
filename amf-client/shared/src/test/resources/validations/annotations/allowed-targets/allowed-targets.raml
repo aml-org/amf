@@ -56,15 +56,6 @@ types:
         #(meta-type-declaration): allowed on a string property
         #(meta-response): not allowed in type declaration
 
-resourceTypes:
-  searchableCollection:
-    (meta-resource-type): valid in resource type
-    (meta-resource): allowed in resource type
-    (meta-method): method not allowed
-    get:
-      queryParameters:
-        <<queryParamName>>:
-
 documentation:
     - title: head
       content: content
@@ -108,8 +99,3 @@ securitySchemes:
           type: User
           (meta-response-body): allowed in a response body
           (meta-type-declaration): type declaration allowed on a response body
-
-/applying-resource-type:
-  type:
-    searchableCollection:
-      queryParamName: name
