@@ -26,6 +26,7 @@ import amf.core.remote.{Aml, Oas20, Raml10}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
+import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
 
