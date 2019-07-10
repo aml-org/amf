@@ -1,8 +1,9 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.annotations.DomainExtensionAnnotation
+import amf.core.iterator.CompleteStrategy
 import amf.core.model.document.{BaseUnit, PayloadFragment}
-import amf.core.model.domain.{AmfScalar, CompleteStrategy}
+import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.remote.Platform
 import amf.core.validation.ValidationCandidate

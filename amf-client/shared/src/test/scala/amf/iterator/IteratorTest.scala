@@ -43,7 +43,6 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
         baseUnit => {
           val iterator = new CompleteIterator(baseUnit.asInstanceOf[Document])
           val elements = iterator.toList
-//        val diff = elements.diff(elements.distinct)
           assert(elements.size == 335)
         }
     )
@@ -55,7 +54,6 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
         baseUnit => {
           val iterator = new DomainElementIterator(baseUnit.asInstanceOf[Document])
           val elements = iterator.toList
-          val diff     = elements.diff(elements.distinct)
           assert(elements.size == 98)
         }
     )
