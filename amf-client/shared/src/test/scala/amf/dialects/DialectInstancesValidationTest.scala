@@ -44,7 +44,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   }
 
   test("validation dialect 3 example 1 incorrect") {
-    validate("dialect3.raml", "instance3_incorrect1.raml", 1)
+    validate("dialect3.raml", "instance3_incorrect1.raml", 2)
   }
 
   test("validation dialect 4 example 1 correct") {
@@ -206,7 +206,10 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
         if (!report.conforms)
           println(report)
         assert(report.conforms)
-      } else assert(report.results.length == numErrors)
+      } else {
+        println(report.results.map(_.message).mkString("\n"))
+        assert(report.results.length == numErrors)
+      }
     }
   }
 
