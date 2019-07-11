@@ -253,6 +253,14 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test union type anyOf name values") {
     cycle("api.raml", "api.raml.resolved", RamlYamlHint, Amf, basePath + "union-type/")
   }
+
+  test("Test complex recursions in type inheritance") {
+    cycle("healthcare_appointment_process_api.raml",
+          "healthcare_appointment_process_api.raml.resolved",
+          RamlYamlHint,
+          Amf,
+          validationPath)
+  }
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {

@@ -206,10 +206,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
         if (!report.conforms)
           println(report)
         assert(report.conforms)
-      } else {
-        println(report.results.map(_.message).mkString("\n"))
-        assert(report.results.length == numErrors)
-      }
+      } else assert(report.results.length == numErrors)
     }
   }
 

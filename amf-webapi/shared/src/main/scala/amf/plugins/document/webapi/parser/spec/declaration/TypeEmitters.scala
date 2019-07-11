@@ -1327,8 +1327,10 @@ case class OasTypeEmitter(shape: Shape,
     val nextPointerStr                           = s"#${pointer.map(p => s"/$p").mkString}"
     var updatedSchemaPath: Seq[(String, String)] = schemaPath :+ (shape.id, nextPointerStr)
     shape match {
-      case chain: InheritanceChain => updatedSchemaPath ++= chain.inheritedIds.map((_, nextPointerStr))
-      case _                       => // ignore
+      // Only will add to the list if the shape is a declaration
+      case chain: InheritanceChain if shape.annotations.contains(classOf[DeclaredElement]) =>
+        updatedSchemaPath ++= chain.inheritedIds.map((_, nextPointerStr))
+      case _ => // ignore
     }
 
     shape match {
@@ -1476,8 +1478,9 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
         findInPath(id).orElse(recursive.fixpointTarget match {
           case Some(shape) =>
             findInPath(shape.id).orElse {
+              // If the fixpoint is not in the schemaPath I will assume that it is a declaration and this declaration will be present
               recursive.fixpointTarget
-                .flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _)) // TODO FIND THE RIGHT REF FOR THIS
+                .flatMap(_.name.option().map(s"#${spec.schemasDeclarationsPath}" + _))
             }
           case None => None
         })

@@ -35,10 +35,9 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
 
   private def copy(shape: Shape) = {
     shape match {
-      case a: AnyShape => a.copyShape()
-      case r: RecursiveShape =>
-        r.copyShape()
-      case _ => shape
+      case a: AnyShape       => a.copyShape()
+      case r: RecursiveShape => r.copyShape()
+      case _                 => shape
     }
   }
 
