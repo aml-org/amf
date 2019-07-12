@@ -1,11 +1,11 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.client.model.DataTypes
 import amf.core.annotations.DefaultNode
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
 import amf.core.metamodel.{Field, Type}
+import amf.core.model.DataType
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
@@ -129,10 +129,10 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
             case _: DomainElementModel =>
               mainValue.value match {
                 // This case is for default type String (in parameters)
-                case s: ScalarShape if s.dataType.value() == DataTypes.String =>
+                case s: ScalarShape if s.dataType.value() == DataType.String =>
                   otherValue.value match {
                     // if both parts are scalar strings, then just merge the dataNodes
-                    case sc: ScalarShape if sc.dataType.value() == DataTypes.String =>
+                    case sc: ScalarShape if sc.dataType.value() == DataType.String =>
                       merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
                     // if other is an scalar with a different datatype
                     case sc: ScalarShape =>

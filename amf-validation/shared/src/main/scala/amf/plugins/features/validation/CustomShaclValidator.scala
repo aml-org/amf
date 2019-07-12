@@ -48,14 +48,10 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
   var validationReport: CustomValidationReport = new CustomValidationReport(Nil)
 
   def run: Future[ValidationReport] = {
-    model.findBy(elementToValidateSelector).foreach { found =>
+    model.iterator().collect { case e: DomainElement => e }.foreach { found =>
       validateIdentityTransformation(found)
     }
     Future(validationReport)
-  }
-
-  protected def elementToValidateSelector(element: DomainElement): Boolean = {
-    true
   }
 
   protected def validateIdentityTransformation(element: DomainElement): Unit = {

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.iterator.CompleteStrategy
+import amf.core.iterator.AmfElementStrategy
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.extensions.DomainExtension
@@ -22,7 +22,8 @@ class AnnotationsCandidatesCollector(model: BaseUnit, platform: Platform) {
 
   protected def findExtensionsWithTypes(): Seq[DomainExtension] = {
     model
-      .collect(CompleteStrategy) {
+      .iterator(strategy = AmfElementStrategy)
+      .collect {
         case extension: DomainExtension if Option(extension.definedBy).exists(definition => {
               Option(definition.schema).isDefined && resolveAnnotation(s"(${definition.name.value()})").isDefined
             }) =>
