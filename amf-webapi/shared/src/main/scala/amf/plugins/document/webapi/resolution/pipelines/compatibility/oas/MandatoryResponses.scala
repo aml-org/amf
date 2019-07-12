@@ -10,11 +10,12 @@ class MandatoryResponses()(override implicit val errorHandler: ErrorHandler) ext
 
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-      model.findByType(OperationModel.`type`.head.iri()).foreach {
+      model.iterator().foreach {
         case operation: Operation =>
           if (operation.responses.isEmpty) {
             operation.withResponses(Seq(Response().withName("200").withStatusCode("200").withDescription("")))
           }
+        case _ =>
       }
       model
     } catch {

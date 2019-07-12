@@ -27,10 +27,9 @@ class CapitalizeSchemes()(override implicit val errorHandler: ErrorHandler) exte
         val api = d.encodes.asInstanceOf[WebApi]
         capitalizeProtocols(api, api.schemes, WebApiModel.Schemes)
 
-        model.findByType(OperationModel.`type`.head.iri()).foreach {
-          case op: Operation =>
-            capitalizeProtocols(op, op.schemes, OperationModel.Schemes)
-          case _ => // ignore
+        model.iterator().foreach {
+          case op: Operation => capitalizeProtocols(op, op.schemes, OperationModel.Schemes)
+          case _             => // ignore
         }
       } catch {
         case _: Throwable => // ignore: we don't want this to break anything

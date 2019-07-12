@@ -27,7 +27,7 @@ class LowercaseSchemes()(override implicit val errorHandler: ErrorHandler) exten
         val api = d.encodes.asInstanceOf[WebApi]
         capitalizeProtocols(api, api.schemes, WebApiModel.Schemes)
 
-        model.findByType(OperationModel.`type`.head.iri()).foreach {
+        model.iterator().foreach {
           case op: Operation =>
             capitalizeProtocols(op, op.schemes, OperationModel.Schemes)
           case _ => // ignore

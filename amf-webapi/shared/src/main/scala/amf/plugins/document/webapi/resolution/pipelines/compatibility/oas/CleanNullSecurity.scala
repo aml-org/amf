@@ -14,7 +14,7 @@ class CleanNullSecurity()(override implicit val errorHandler: ErrorHandler) exte
 
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-      model.findByType(OperationModel.`type`.head.iri()).foreach {
+      model.iterator().foreach {
         case op: Operation =>
           // filte null security schemas not supported in OAS
           var isNull = false
@@ -27,14 +27,16 @@ class CleanNullSecurity()(override implicit val errorHandler: ErrorHandler) exte
           // Update and mark with an annotation if security is optional
           op.withSecurity(security)
           if (isNull) {
-            op.withCustomDomainProperty(DomainExtension().withName("optionalSecurity").withExtension(ScalarNode("true", Some((Namespace.Xsd + "boolean").iri()))))
+            op.withCustomDomainProperty(
+              DomainExtension()
+                .withName("optionalSecurity")
+                .withExtension(ScalarNode("true", Some((Namespace.Xsd + "boolean").iri()))))
           }
-
         case _ => // ignore
       }
       model
     } catch {
-      case _: Throwable => model// ignore: we don't want this to break anything
+      case _: Throwable => model // ignore: we don't want this to break anything
     }
   }
 }

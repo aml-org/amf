@@ -32,7 +32,7 @@ class PayloadsInApiCollector(model: BaseUnit) {
   protected def findCandidates(): Seq[ValidationCandidate] = {
     val results = mutable.Map[String, Seq[CollectedElement]]()
     val shapes  = mutable.Map[String, Shape]()
-    model.findByType((Namespace.Shapes + "Shape").iri()) foreach {
+    model.iterator().foreach {
       case shape: AnyShape if shape.meta == AnyShapeModel && !anyShapeRestrictions.exists(shape.fields.exists) => // ignore any shape without logical restrictions, any payload it's valid
       case shape: AnyShape if results.keys.exists(_.equals(shape.id)) =>
         val currentExamples: Seq[CollectedElement] = results(shape.id)

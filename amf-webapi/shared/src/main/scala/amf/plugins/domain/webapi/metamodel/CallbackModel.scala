@@ -25,7 +25,7 @@ object CallbackModel extends DomainElementModel with KeyField with NameFieldSche
 
   override val `type`: List[ValueType] = Http + "Callback" :: DomainElementModel.`type`
 
-  override def fields: List[Field] = Name :: Expression :: Endpoint :: DomainElementModel.fields
+  override val fields: List[Field] = Name :: Expression :: Endpoint :: DomainElementModel.fields
 
   override def modelInstance = Callback()
 

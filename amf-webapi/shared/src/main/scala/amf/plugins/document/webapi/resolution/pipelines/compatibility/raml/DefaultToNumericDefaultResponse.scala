@@ -10,7 +10,7 @@ class DefaultToNumericDefaultResponse()(override implicit val errorHandler: Erro
 
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-      model.findByType(OperationModel.`type`.head.iri()).foreach {
+      model.iterator().foreach {
         case operation: Operation =>
           checkDefaultResponse(operation)
         case _ => // ignore

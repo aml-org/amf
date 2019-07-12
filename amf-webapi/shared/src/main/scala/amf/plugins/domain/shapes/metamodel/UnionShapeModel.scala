@@ -14,7 +14,7 @@ object UnionShapeModel extends AnyShapeModel {
 
   val specificFields = List(AnyOf)
 
-  override def fields: List[Field] = specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
+  override val fields: List[Field] = specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] =
     List(Namespace.Shapes + "UnionShape") ++ AnyShapeModel.`type`

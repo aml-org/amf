@@ -16,7 +16,7 @@ object SettingsModel extends SettingsModel {
 
   override val `type`: List[ValueType] = List(Security + "Settings") ++ DomainElementModel.`type`
 
-  override def fields: List[Field] = List(AdditionalProperties) ++ DomainElementModel.fields
+  override val fields: List[Field] = List(AdditionalProperties) ++ DomainElementModel.fields
 
   override def modelInstance = Settings()
 
@@ -93,7 +93,7 @@ object ApiKeySettingsModel extends SettingsModel {
 
   override val `type`: List[ValueType] = List(Security + "ApiKeySettings") ++ SettingsModel.`type`
 
-  override def fields: List[Field] = List(Name, In) ++ SettingsModel.fields
+  override val fields: List[Field] = List(Name, In) ++ SettingsModel.fields
 
   override def modelInstance = ApiKeySettings()
 

@@ -10,7 +10,7 @@ class MakeExamplesOptional()(override implicit val errorHandler: ErrorHandler) e
 
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-      model.findByType(ExampleModel.`type`.head.iri()).foreach {
+      model.iterator().foreach {
         case example: Example =>
           makeOptional(example)
         case _ => // ignore
