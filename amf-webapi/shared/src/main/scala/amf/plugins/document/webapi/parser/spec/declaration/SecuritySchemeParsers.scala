@@ -19,7 +19,8 @@ import amf.plugins.features.validation.ParserSideValidations
 import amf.plugins.features.validation.ParserSideValidations.{
   CrossSecurityWarningSpecification,
   DuplicatedOperationStatusCodeSpecification,
-  ExclusivePropertiesSpecification
+  ExclusivePropertiesSpecification,
+  InvalidSecuritySchemeDescribedByType
 }
 import org.yaml.model._
 
@@ -58,6 +59,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
         val scheme = adopt(SecurityScheme(ast), key)
 
         val map = value.as[YMap]
+        ctx.closedShape(scheme.id, map, "securitySchema")
 
         map.key("type", (SecuritySchemeModel.Type in scheme).allowingAnnotations)
 
@@ -121,8 +123,11 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
     map.key(
       key,
       entry => {
-        entry.value.toOption[YMap] match {
-          case Some(value) =>
+        entry.value.tagType match {
+          case YType.Map =>
+            val value = entry.value.as[YMap]
+            ctx.closedShape(scheme.id, value, "describedBy")
+
             value.key(
               "headers",
               entry => {
@@ -199,10 +204,13 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                            Annotations(entry))
               }
             )
-
             AnnotationParser(scheme, value).parse()
-
-          case _ => // should add some warning or violation for secs ?
+          case YType.Null =>
+          case _ =>
+            ctx.violation(InvalidSecuritySchemeDescribedByType,
+                          scheme.id,
+                          s"Invalid 'describedBy' type, map expected",
+                          entry.value)
         }
       }
     )

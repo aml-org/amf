@@ -303,4 +303,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("invalid-value-properties-facet.raml", Some("invalid-value-properties-facet.report"))
   }
 
+  test("Invalid security scheme declarations with invalid facets") {
+    validate("securitySchemes/invalid-security-schemes-facets.raml", Some("invalid-security-schemes-facets.report"))
+  }
+
+  test("Invalid signatures in OAuth 1.0 security scheme") {
+    validate("securitySchemes/invalid-oauth1-signatures.raml", Some("invalid-oauth1-signatures.report"))
+  }
+
 }

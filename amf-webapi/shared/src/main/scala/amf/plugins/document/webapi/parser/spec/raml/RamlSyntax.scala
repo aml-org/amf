@@ -281,6 +281,12 @@ object Raml10Syntax extends RamlSyntax {
       "traits",
       "securitySchemes",
       "annotationTypes"
+    ),
+    "describedBy" -> Set(
+      "headers",
+      "queryParameters",
+      "queryString",
+      "responses"
     )
   )
 }
@@ -477,7 +483,7 @@ sealed trait RamlSyntax extends SpecSyntax {
       "type",
       "displayName",
       "description",
-      "decribedBy",
+      "describedBy",
       "settings"
     )
   )

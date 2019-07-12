@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Demo
+version: v1
+baseUri: http://api.samplehost.com
+
+securitySchemes:
+
+  oauth1-invalid-signatures:
+    type: OAuth 1.0
+    settings:
+      requestTokenUri: https://api.mysampleapi.com/1/oauth/request_token
+      authorizationUri: https://api.mysampleapi.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.mysampleapi.com/1/oauth/access_token
+      signatures: [ 'HI', 'RSA-SHA1']
+
+  oauth1-valid:
+    type: OAuth 1.0
+    settings:
+      requestTokenUri: https://api.mysampleapi.com/1/oauth/request_token
+      authorizationUri: https://api.mysampleapi.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.mysampleapi.com/1/oauth/access_token
+      signatures: ['HMAC-SHA1', 'RSA-SHA1', 'PLAINTEXT']

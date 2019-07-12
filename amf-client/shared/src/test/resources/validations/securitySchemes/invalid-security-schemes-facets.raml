@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: Demo
+version: v1
+baseUri: http://api.samplehost.com
+
+securitySchemes:
+  oauth2:
+    invalidFacet: 1 #falta validaccion
+    type: OAuth 2.0
+
+  oauth1:
+    type: OAuth 1.0
+    describedBy:
+      otherInvalidFacet: 123
+
+  custom_with_query_param:
+    type: x-custom
+    describedBy: onlyMapsAreAllowed

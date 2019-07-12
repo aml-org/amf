@@ -1813,6 +1813,19 @@ object AMFRawValidations {
       "Payload media type is mandatory",
       "",
       "Violation"
+    ),
+    AMFValidation(
+      Raml08.name,
+      "Domain",
+      "security:Settings",
+      "security:signature",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      "^HMAC-SHA1|RSA-SHA1|PLAINTEXT$",
+      "Invalid OAuth 1.0 signature. The options are: HMAC-SHA1, RSA-SHA1, or PLAINTEXT",
+      "Invalid OAuth 1.0 signature. The options are: HMAC-SHA1, RSA-SHA1, or PLAINTEXT",
+      "Violation"
     )
     /*
     ,
