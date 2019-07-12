@@ -32,9 +32,11 @@ trait JsonSchemaSerializer {
 
   protected def generateJsonSchema(element: AnyShape): String = {
     AMFSerializer.init()
+    val originalId = element.id
     val jsonSchema = RuntimeSerializer(Document().withDeclaredElement(fixNameIfNeeded(element)),
                                        "application/schema+json",
                                        JsonSchema.name)
+    element.withId(originalId)
     element.annotations.reject(_.isInstanceOf[ParsedJSONSchema])
     element.annotations.reject(_.isInstanceOf[GeneratedJSONSchema])
     element.annotations += GeneratedJSONSchema(jsonSchema)

@@ -1,6 +1,6 @@
 package amf.emit
 
-import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.document.{BaseUnit, Document, Module}
 import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote.RamlYamlHint
 import amf.facades.{AMFCompiler, Validation}
@@ -80,13 +80,38 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
     cycle("recursive.raml", "recursive.json", func, (a: AnyShape) => a.buildJsonSchema())
   }
 
+  test("Test shape id preservation") {
+    val file = "shapeIdPreservation.raml"
+    parse(file).map {
+      case u: Module =>
+        assert(
+          u.declares.forall {
+            case anyShape: AnyShape =>
+              val originalId = anyShape.id
+              anyShape.toJsonSchema
+              val newId = anyShape.id
+              originalId == newId
+          }
+        )
+    }
+  }
+
   private val basePath: String   = "file://amf-client/shared/src/test/resources/tojson/tojsonschema/source/"
   private val goldenPath: String = "amf-client/shared/src/test/resources/tojson/tojsonschema/schemas/"
 
+  private def parse(file: String): Future[BaseUnit] = {
+    for {
+      v    <- Validation(platform)
+      unit <- AMFCompiler(basePath + file, platform, RamlYamlHint, v).build()
+    } yield {
+      unit
+    }
+  }
+
   private def cycle(file: String,
                     golden: String,
-                    findShapeFunc: (BaseUnit) => Option[AnyShape],
-                    renderFn: (AnyShape) => String = (a: AnyShape) => a.toJsonSchema): Future[Assertion] = {
+                    findShapeFunc: BaseUnit => Option[AnyShape],
+                    renderFn: AnyShape => String = (a: AnyShape) => a.toJsonSchema): Future[Assertion] = {
     val jsonSchema: Future[String] = for {
       v    <- Validation(platform)
       unit <- AMFCompiler(basePath + file, platform, RamlYamlHint, v).build()
