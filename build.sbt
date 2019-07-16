@@ -4,12 +4,13 @@ import sbtcrossproject.CrossPlugin.autoImport.crossProject
 
 import scala.language.postfixOps
 import scala.sys.process._
+import Versions.versions
 
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
-version in ThisBuild := "3.3.0-SNAPSHOT"
+version in ThisBuild := versions("version")
 
 publish := {}
 
@@ -26,7 +27,7 @@ sonarProperties ++= Map(
   "sonar.login" -> sonarToken,
   "sonar.projectKey" -> "mulesoft.amf",
   "sonar.projectName" -> "AMF",
-  "sonar.projectVersion" -> "1.0.0",
+  "sonar.projectVersion" -> versions("version"),
 
   "sonar.sourceEncoding" -> "UTF-8",
   "sonar.github.repository" -> "mulesoft/amf",
@@ -54,7 +55,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfAmlVersion = "4.0.67"
+val amfAmlVersion = versions("amf-aml")
 
 lazy val amfAmlJVMRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJVM")
 lazy val amfAmlJSRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJS")

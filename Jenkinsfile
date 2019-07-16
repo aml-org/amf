@@ -6,6 +6,7 @@ pipeline {
   }
   environment {
     NEXUS = credentials('exchange-nexus')
+    NEXUSIQ = credentials('nexus-iq')
   }
   stages {
     stage('Test') {
@@ -41,6 +42,16 @@ pipeline {
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
           sh 'sbt publish'
+        }
+      }
+    }
+    stage('Nexus IQ') {
+      when {
+        branch 'develop'
+      }
+      steps {
+        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+          sh './gradlew nexusIq'
         }
       }
     }
