@@ -1,0 +1,38 @@
+#%RAML 1.0
+title: Healthcare EHR Appointments Process API
+
+types:
+
+  Element:
+    properties:
+      extension?:
+        type: Extension
+
+  Duration:
+    type: Quantity
+
+  Extension:
+    properties:
+      valueQuantity?:
+       type: Quantity
+      valueSchedule:
+        type: Element
+
+  Quantity:
+    type: Element
+
+  Appointment:
+    type: Extension
+
+/appointment:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Extension
+            example:
+              valueSchedule:
+                extension:
+                  valueSchedule:
+                    pepito: as
