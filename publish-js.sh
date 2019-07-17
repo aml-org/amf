@@ -1,20 +1,15 @@
 #!/usr/bin/env bash
 
-# NOTES:
-# - place this script on the root of your project
-# - this script will then work on the first build.sbt found anywhere on your project
-# - this script assumes your project version setting is a literal e.g.: `version in ThisBuild := "0.1-SNAPSHOT"`
+PROPERTY_FILE=versions.properties
 
-# Exit on unset variables or if any of the following commands returns non-zero
-#set -eu
+function getProperty {
+   PROP_KEY=$1
+   PROP_VALUE=`cat ${PROPERTY_FILE} | grep "version" | cut -d'=' -f2`
+   echo ${PROP_VALUE}
+}
 
-# Find the first build.sbt in the path tree of this script,
-# find the version line and extract the content within double quotes
-PROJECT_VERSION=`find '.' -name "build.sbt" |
-    head -n1 |
-    xargs grep '[ \t]*version in ThisBuild :=' |
-    head -n1 |
-    sed 's/.*"\(.*\)".*/\1/' 2> /dev/null`
+echo "Reading property version from $PROPERTY_FILE"
+PROJECT_VERSION=$(getProperty "nexus.repository.url")
 
 if [[ ${PROJECT_VERSION} == *-SNAPSHOT ]]; then
     IS_SNAPSHOT=true
@@ -22,8 +17,15 @@ else
     IS_SNAPSHOT=false
 fi
 
-echo "Build.sbt version: $PROJECT_VERSION"
+if [[ ${PROJECT_VERSION} == *-RC.* ]]; then
+    IS_RC=true
+else
+    IS_RC=false
+fi
+
+echo "versions.properties version: $PROJECT_VERSION"
 echo "Is snapshot: $IS_SNAPSHOT"
+echo "Is RC: $IS_RC"
 
 echo "Running fullOpt"
 sbt clientJS/fullOptJS
@@ -35,12 +37,12 @@ echo "Finished buildjs script"
 
 cd amf-client/js
 
-if $IS_SNAPSHOT; then
+if ${IS_SNAPSHOT}; then
     LATEST_SNAPSHOT=`npm v amf-client-js dist-tags.snapshot`
 
     echo "Repo latest snapshot: $LATEST_SNAPSHOT"
 
-    if [[ $LATEST_SNAPSHOT == ${PROJECT_VERSION}* ]]; then
+    if [[ ${LATEST_SNAPSHOT} == ${PROJECT_VERSION}* ]]; then
         echo "Just add one prerelease"
         npm version ${LATEST_SNAPSHOT} --force --no-git-tag-version
         npm version prerelease --force --no-git-tag-version
@@ -53,6 +55,8 @@ if $IS_SNAPSHOT; then
 
         echo "Publish new snapshot"
     fi
+
+    echo "NOTE: If this step fails, check that the tag must be wrong and it's trying to publish an existing snapshot!"
 
     npm publish --tag snapshot
 
@@ -67,23 +71,32 @@ if $IS_SNAPSHOT; then
 
     npm dist-tag add amf-client-js@${NEW_VERSION} beta
 else
-    LATEST_RELEASE=`npm v amf-client-js dist-tags.latest`
-    if [[ $PROJECT_VERSION != $LATEST_RELEASE ]]; then
-        echo "New release $PROJECT_VERSION"
-        npm version ${PROJECT_VERSION} --force --no-git-tag-version
+    if ${IS_RC}; then
+        echo "Publishing new RC"
+        echo "NOTE: no intelligence here, just publishes the RC version, make sure it does not exist."
 
-        echo "Publish new release"
+        npm version ${LATEST_SNAPSHOT} --force --no-git-tag-version
+        npm publish --tag rc
+
+        echo "Finished RC publish"
     else
-        echo "Latest release is already $PROJECT_VERSION"
+        LATEST_RELEASE=`npm v amf-client-js dist-tags.latest`
+        if [[ ${PROJECT_VERSION} != ${LATEST_RELEASE} ]]; then
+            echo "New release $PROJECT_VERSION"
+            npm version ${PROJECT_VERSION} --force --no-git-tag-version
+
+            echo "Publish new release"
+        else
+            echo "Latest release is already $PROJECT_VERSION"
+        fi
+
+        npm publish
+
+        echo "Finished latest publish"
+        echo "Add 'release' tag to latest"
+
+        npm dist-tag add amf-client-js@${PROJECT_VERSION} release
     fi
-
-    npm publish
-
-    echo "Finished latest publish"
-    echo "Add 'release' tag to latest"
-
-    npm dist-tag add amf-client-js@${PROJECT_VERSION} release
-
 fi
 
 # Reset package.json so that the new version is not pushed
