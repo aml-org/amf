@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: api
+types:
+  Service:
+    properties:
+      "value as % of services": number
+    example: !include example.json
+
+/endpoint:
+  get:
+    body:
+      application/json:
+        type: Service
