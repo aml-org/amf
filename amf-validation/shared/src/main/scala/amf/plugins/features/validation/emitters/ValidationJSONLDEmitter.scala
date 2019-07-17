@@ -3,6 +3,7 @@ package amf.plugins.features.validation.emitters
 import amf._
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.PartEmitter
+import amf.core.model.DataType
 import amf.core.parser.Position
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.Namespace
@@ -267,7 +268,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
                 )
                 b.entry(
                   (Namespace.Shacl + "datatype").iri(),
-                  _.obj(_.entry("@id", (Namespace.Xsd + "boolean").iri()))
+                  _.obj(_.entry("@id", DataType.Boolean))
                 )
               }
             )
@@ -355,11 +356,11 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
               _.list { l =>
                 l.obj { o =>
                   o.entry((Namespace.Shacl + constraintName).iri(),
-                          genValue(_, value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri())))
+                          genValue(_, value.toDouble.floor.toInt.toString, Some(DataType.Integer)))
                 }
                 l.obj { o =>
                   o.entry((Namespace.Shacl + constraintName).iri(),
-                          genValue(_, value.toDouble.toString, Some((Namespace.Xsd + "double").iri())))
+                          genValue(_, value.toDouble.toString, Some(DataType.Double)))
                 }
               }
             )
@@ -403,19 +404,15 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
                                                 value: String,
                                                 constraint: Option[PropertyConstraint] = None): Unit = {
     constraint.flatMap(_.datatype) match {
-      case Some(scalarType)
-          if scalarType == (Namespace.Shapes + "number").iri() || scalarType == (Namespace.Xsd + "double").iri() =>
-        b.entry((Namespace.Shacl + constraintName).iri(),
-                genValue(_, value.toDouble.toString, Some((Namespace.Xsd + "double").iri())))
+      case Some(scalarType) if scalarType == (Namespace.Shapes + "number").iri() || scalarType == DataType.Double =>
+        b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value.toDouble.toString, Some(DataType.Double)))
       case None =>
+        b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value.toDouble.toString, Some(DataType.Double)))
+      case Some(scalarType) if scalarType == DataType.Float =>
+        b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value.toDouble.toString, Some(DataType.Float)))
+      case Some(scalarType) if scalarType == DataType.Integer =>
         b.entry((Namespace.Shacl + constraintName).iri(),
-                genValue(_, value.toDouble.toString, Some((Namespace.Xsd + "double").iri())))
-      case Some(scalarType) if scalarType == (Namespace.Xsd + "float").iri() =>
-        b.entry((Namespace.Shacl + constraintName).iri(),
-                genValue(_, value.toDouble.toString, Some((Namespace.Xsd + "float").iri())))
-      case Some(scalarType) if scalarType == (Namespace.Xsd + "integer").iri() =>
-        b.entry((Namespace.Shacl + constraintName).iri(),
-                genValue(_, value.toDouble.floor.toInt.toString, Some((Namespace.Xsd + "integer").iri())))
+                genValue(_, value.toDouble.floor.toInt.toString, Some(DataType.Integer)))
 
     }
   }

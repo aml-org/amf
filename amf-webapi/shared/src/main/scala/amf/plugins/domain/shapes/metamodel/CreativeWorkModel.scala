@@ -21,7 +21,7 @@ object CreativeWorkModel extends DomainElementModel with LinkableElementModel wi
 
   override val `type`: List[ValueType] = Schema + "CreativeWork" :: DomainElementModel.`type`
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     Url :: Title :: Description :: (DomainElementModel.fields ++ LinkableElementModel.fields)
 
   override def modelInstance = CreativeWork()

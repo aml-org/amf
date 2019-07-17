@@ -1,6 +1,7 @@
 package amf.plugins.features.validation.emitters
 
 import amf._
+import amf.core.model.DataType
 import amf.core.rdf.RdfModel
 import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
 import amf.core.vocabulary.Namespace
@@ -144,7 +145,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
       constraint.node.foreach(genPropertyConstraintValue(constraintId, "node", _))
       constraint.datatype.foreach { v =>
         if (v.endsWith("#integer")) {
-          link(constraintId, (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "long").iri())
+          link(constraintId, (Namespace.Shacl + "datatype").iri(), DataType.Long)
         } else if (!v.endsWith("#float") && !v.endsWith("#number")) {
           // raml/oas 'number' are actually the union of integers and floats
           // i handle the data type integer and float inside of every constraint. Here only need to generate the simples data types for path entry
@@ -195,7 +196,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
       val parameterId = constraintId + "_param"
       link(constraintId, (Namespace.Shacl + "parameter").iri(), parameterId)
       link(parameterId, (Namespace.Shacl + "path").iri(), validatorPath)
-      link(parameterId, (Namespace.Shacl + "datatype").iri(), (Namespace.Xsd + "boolean").iri())
+      link(parameterId, (Namespace.Shacl + "datatype").iri(), DataType.Boolean)
     }
   }
 
@@ -247,13 +248,13 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         genValue(orConstraintListId + "_v",
                  (Namespace.Shacl + constraintName).iri(),
                  value.toDouble.floor.toInt.toString,
-                 Some((Namespace.Xsd + "long").iri()))
+                 Some(DataType.Long))
         link(orConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
         link(nextConstraintListId, (Namespace.Rdf + "first").iri(), nextConstraintListId + "_v")
         genValue(nextConstraintListId + "_v",
                  (Namespace.Shacl + constraintName).iri(),
                  value.toDouble.toString,
-                 Some((Namespace.Xsd + "double").iri()))
+                 Some(DataType.Double))
         link(nextConstraintListId, (Namespace.Rdf + "rest").iri(), (Namespace.Rdf + "nil").iri())
       case Some(_) =>
         genValue(constraintId, (Namespace.Shacl + constraintName).iri(), value, constraint.flatMap(_.datatype))
@@ -295,29 +296,25 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
                                                 value: String,
                                                 constraint: Option[PropertyConstraint] = None): Unit = {
     constraint.flatMap(_.datatype) match {
-      case Some(scalarType)
-          if scalarType == (Namespace.Shapes + "number").iri() || scalarType == (Namespace.Xsd + "double").iri() =>
+      case Some(scalarType) if scalarType == DataType.Number || scalarType == DataType.Double =>
         genValue(constraintId,
                  (Namespace.Shacl + constraintName).iri(),
                  value.toDouble.toString,
-                 Some((Namespace.Xsd + "double").iri()))
+                 Some(DataType.Double))
       case None =>
         genValue(constraintId,
                  (Namespace.Shacl + constraintName).iri(),
                  value.toDouble.toString,
-                 Some((Namespace.Xsd + "double").iri()))
-      case Some(scalarType) if scalarType == (Namespace.Xsd + "float").iri() =>
-        genValue(constraintId,
-                 (Namespace.Shacl + constraintName).iri(),
-                 value.toDouble.toString,
-                 Some((Namespace.Xsd + "float").iri()))
+                 Some(DataType.Double))
+      case Some(scalarType) if scalarType == DataType.Float =>
+        genValue(constraintId, (Namespace.Shacl + constraintName).iri(), value.toDouble.toString, Some(DataType.Float))
       case Some(scalarType)
-          if scalarType == (Namespace.Xsd + "integer").iri() || scalarType == (Namespace.Xsd + "long")
+          if scalarType == DataType.Integer || scalarType == (Namespace.Xsd + "long")
             .iri() => // serialize the int has integer beacuse the example it is parsed with that datatype
         genValue(constraintId,
                  (Namespace.Shacl + constraintName).iri(),
                  value.toDouble.floor.toInt.toString,
-                 Some((Namespace.Xsd + "long").iri()))
+                 Some(DataType.Long))
       case _ => // ignore
     }
   }
@@ -336,10 +333,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
     rdfModel.addTriple(listId, (Namespace.Shacl + "message").iri(), "List cannot be empty", None)
     rdfModel.addTriple(listId, (Namespace.Shacl + "property").iri(), listIdConstraint)
     rdfModel.addTriple(listIdConstraint, (Namespace.Shacl + "path").iri(), (Namespace.Rdfs + "_1").iri())
-    rdfModel.addTriple(listIdConstraint,
-                       (Namespace.Shacl + "minCount").iri(),
-                       "1",
-                       Some((Namespace.Xsd + "integer").iri()))
+    rdfModel.addTriple(listIdConstraint, (Namespace.Shacl + "minCount").iri(), "1", Some(DataType.Integer))
   }
 
   private def inGenValue(subject: String, property: String, s: String): Unit =
@@ -352,9 +346,9 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         rdfModel.addTriple(subject, property, s, Some(dt))
       case None =>
         if (s.matches("^-?[1-9]\\d*$|^0$")) { // if the number starts with 0 (and is not 0), its a string and should be quoted
-          rdfModel.addTriple(subject, property, s, Some((Namespace.Xsd + "long").iri()))
+          rdfModel.addTriple(subject, property, s, Some(DataType.Long))
         } else if (s == "true" || s == "false") {
-          rdfModel.addTriple(subject, property, s, Some((Namespace.Xsd + "boolean").iri()))
+          rdfModel.addTriple(subject, property, s, Some(DataType.Boolean))
         } else if (Namespace.expand(s).iri() == Namespace.expand("amf-parser:NonEmptyList").iri()) {
           genNonEmptyList(subject, property)
         } else if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {

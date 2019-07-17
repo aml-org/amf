@@ -65,7 +65,7 @@ class AMFShapeValidations(root: Shape) {
               parameters = Seq(
                 FunctionConstraintParameter(
                   (Namespace.Shapes + "multipleOfValidationParam").iri(),
-                  (Namespace.Xsd + "integer").iri()
+                  DataType.Integer
                 )
               )
             ))
@@ -310,7 +310,7 @@ class AMFShapeValidations(root: Shape) {
             .withRange(
               ScalarShape()
                 .withId(node.id + "_discriminator_value")
-                .withDataType((Namespace.Xsd + "string").iri())
+                .withDataType(DataType.String)
                 .withPattern("^" + discriminatorValueRegex + "$")
             )
         )
@@ -458,7 +458,7 @@ class AMFShapeValidations(root: Shape) {
                                   typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
 
     val propertyConstraints = scalar.dataType.value() match {
-      case s if s == (Namespace.Xsd + "date").iri() =>
+      case s if s == DataType.Date =>
         val rfc3339DateRegex = "([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])"
         // OAS 2.0 and RAML 1.0 date type uses notation of RFC3339. RAML 0.8 has not "date" type (the date type of RAML 0.8 is noted as dateTime in amf model)
         val msg = s"Scalar at $context must be valid RFC3339 date"
@@ -467,7 +467,7 @@ class AMFShapeValidations(root: Shape) {
         val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateRegex, scalar)
         Seq(patternConstraint, dataTypeConstraint)
 
-      case s if s == (Namespace.Xsd + "time").iri() =>
+      case s if s == DataType.Time =>
         val timeRegex = "([0-9]{2}:[0-9]{2}:[0-9]{2}){1}(\\.\\d*)?"
         val msg       = s"Scalar at $context must be valid RFC3339 time"
 
@@ -485,7 +485,7 @@ class AMFShapeValidations(root: Shape) {
         val patternConstraint  = createPatternPropertyConstraint(msg, rfc3339DateTimeOnlyRegex, scalar)
         Seq(patternConstraint, dataTypeConstraint)
 
-      case s if s == (Namespace.Xsd + "dateTime").iri() =>
+      case s if s == DataType.DateTime =>
         val rfc3339 =
           "([0-9]+)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])[Tt]([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9]|60)(\\.[0-9]+)?(([Zz])|([\\+|\\-]([01][0-9]|2[0-3]):[0-5][0-9]))"
         val rfc2616 =
@@ -505,19 +505,19 @@ class AMFShapeValidations(root: Shape) {
             Seq(patternConstraint, dataTypeConstraint)
         }
 
-      case s if s == (Namespace.Xsd + "string").iri() =>
+      case s if s == DataType.String =>
         Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getStringHierarchy))
 
-      case s if s == (Namespace.Xsd + "integer").iri() =>
+      case s if s == DataType.Integer =>
         Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getIntegerHierarchy))
 
-      case s if s == (Namespace.Shapes + "number").iri() =>
+      case s if s == DataType.Number =>
         Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getNumberHierarchy))
 
-      case s if s == (Namespace.Xsd + "float").iri() =>
+      case s if s == DataType.Float =>
         Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getFloatHierarchy))
 
-      case s if s == (Namespace.Xsd + "double").iri() =>
+      case s if s == DataType.Double =>
         Seq(createDataTypeConstraint(scalar, context, typeHierarchy.getDoubleHierarchy))
 
       case _ =>

@@ -56,7 +56,7 @@ trait ExampleModel
 
   override val key: Field = Name
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     List(Name, DisplayName, Summary, Description, ExternalValue, Strict, MediaType, StructuredValue) ++ DomainElementModel.fields ++ LinkableElementModel.fields ++ ExternalSourceElementModel.fields
 
   override val `type`: List[ValueType] = Document + "Example" :: DomainElementModel.`type`

@@ -1,16 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
+import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Strings, TemplateUri}
-import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
-import amf.plugins.features.validation.ParserSideValidations
 import amf.plugins.features.validation.ParserSideValidations._
 import org.yaml.model.{YMap, YType}
 
@@ -103,7 +102,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   private def buildParamFromVar(v: String, serverId: String) = {
     val param = Parameter().withName(v).withBinding("path").withRequired(true)
     param.adopted(serverId)
-    param.withScalarSchema(v).withDataType((Namespace.Xsd + "string").iri())
+    param.withScalarSchema(v).withDataType(DataType.String)
     param.annotations += SynthesizedField()
     param
   }

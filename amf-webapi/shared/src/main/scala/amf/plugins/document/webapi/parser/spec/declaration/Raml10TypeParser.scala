@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.annotations._
 import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.model.DataType
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
@@ -87,18 +88,12 @@ trait RamlTypeSyntax {
     ramlType match {
       case "nil" | "" | "null" => NilShape()
       case "any"               => AnyShape()
-      case "string"            => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
-      case "integer"           => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
-      case "number"            => ScalarShape().withDataType((Namespace.Shapes + "number").iri())
-      case "boolean"           => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
-      case "datetime"          => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-      case "datetime-only"     => ScalarShape().withDataType((Namespace.Shapes + "dateTimeOnly").iri())
-      case "time-only"         => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
-      case "date-only"         => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
-      case "array"             => ArrayShape()
-      case "object"            => NodeShape()
-      case "union"             => UnionShape()
-      case "file"              => FileShape()
+      case "string" | "integer" | "number" | "boolean" | "datetime" | "datetime-only" | "time-only" | "date-only" =>
+        ScalarShape().withDataType(DataType(ramlType))
+      case "array"  => ArrayShape()
+      case "object" => NodeShape()
+      case "union"  => UnionShape()
+      case "file"   => FileShape()
     }
   }
 
@@ -372,7 +367,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
               None
           }
         }
-        .getOrElse(ScalarShape(map).withDataType((Namespace.Xsd + "string").iri()).withName(name, Annotations()))
+        .getOrElse(ScalarShape(map).withDataType(DataType.String).withName(name, Annotations()))
 
       map.key("type", e => { shape.annotations += TypePropertyLexicalInfo(Range(e.key.range)) })
 
@@ -429,7 +424,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
       .asInstanceOf[ScalarShape]
       .dataType
       .option()
-      .getOrElse("") == (Namespace.Xsd + "string").iri()
+      .getOrElse("") == DataType.String
     RamlSingleExampleParser("example",
                             map,
                             shape.withExample,

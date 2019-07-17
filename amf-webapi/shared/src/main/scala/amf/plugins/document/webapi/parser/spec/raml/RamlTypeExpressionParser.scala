@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.annotations.LexicalInformation
+import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, Shape}
 import amf.core.parser.{Annotations, Range, SearchScope}
 import amf.core.utils.{SimpleCounter, Strings}
-import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
@@ -89,18 +89,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
   private def processChars() = {
     if (acc != "") {
       val shape = acc match {
-        case "nil"           => NilShape()
-        case "any"           => AnyShape()
-        case "file"          => FileShape()
-        case "object"        => NodeShape()
-        case "string"        => ScalarShape().withDataType((Namespace.Xsd + "string").iri())
-        case "integer"       => ScalarShape().withDataType((Namespace.Xsd + "integer").iri())
-        case "number"        => ScalarShape().withDataType((Namespace.Shapes + "number").iri())
-        case "boolean"       => ScalarShape().withDataType((Namespace.Xsd + "boolean").iri())
-        case "datetime"      => ScalarShape().withDataType((Namespace.Xsd + "dateTime").iri())
-        case "datetime-only" => ScalarShape().withDataType((Namespace.Shapes + "dateTimeOnly").iri())
-        case "time-only"     => ScalarShape().withDataType((Namespace.Xsd + "time").iri())
-        case "date-only"     => ScalarShape().withDataType((Namespace.Xsd + "date").iri())
+        case "nil"    => NilShape()
+        case "any"    => AnyShape()
+        case "file"   => FileShape()
+        case "object" => NodeShape()
+        case "string" | "integer" | "number" | "boolean" | "datetime" | "datetime-only" | "time-only" | "date-only" =>
+          ScalarShape().withDataType(DataType(acc))
         case other =>
           ctx.declarations
             .findType(other, SearchScope.Named) match { // i should not have a reference to fragment in a type expression.
@@ -269,6 +263,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
 }
 
 object RamlTypeExpressionParser {
-  def apply(adopt: Shape => Shape, part: Option[YPart] = None, checking: Boolean = false)(implicit ctx: WebApiContext) =
+  def apply(adopt: Shape => Shape, part: Option[YPart] = None, checking: Boolean = false)(
+      implicit ctx: WebApiContext) =
     new RamlTypeExpressionParser(adopt, 0, part, checking)
 }

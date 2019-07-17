@@ -35,7 +35,7 @@ object TemplatedLinkModel
 
   override val `type`: List[ValueType] = Hydra + "TemplatedLink" :: DomainElementModel.`type`
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     Name :: Template :: OperationId :: Mapping :: RequestBody :: Description :: Server :: (DomainElementModel.fields ++ LinkableElementModel.fields)
 
   override def modelInstance = TemplatedLink()

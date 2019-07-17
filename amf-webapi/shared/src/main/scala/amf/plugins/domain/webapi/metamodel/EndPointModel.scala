@@ -60,7 +60,7 @@ object EndPointModel extends DomainElementModel with KeyField with NameFieldSche
 
   override val `type`: List[ValueType] = Http + "EndPoint" :: DomainElementModel.`type`
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     List(Path, Name, Summary, Description, Operations, Parameters, Payloads, Servers, Security) ++ DomainElementModel.fields
 
   override def modelInstance = EndPoint()

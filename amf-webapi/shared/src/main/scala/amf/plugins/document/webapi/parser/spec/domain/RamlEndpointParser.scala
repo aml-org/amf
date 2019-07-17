@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
+import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Strings, TemplateUri}
-import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.{
   Raml08WebApiContext,
   Raml10WebApiContext,
@@ -248,7 +248,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
               case Some(p) => p
               case None =>
                 val pathParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
-                pathParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
+                pathParam.withScalarSchema(variable).withDataType(DataType.String)
                 pathParam.annotations += SynthesizedField()
                 pathParam
             }

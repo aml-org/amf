@@ -5,7 +5,6 @@ import amf.core.model.document.{EncodesModel, ExternalFragment}
 import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
-import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.features.validation.ParserSideValidations.SyamlError
 import org.mulesoft.common.time.SimpleDateTime
@@ -133,7 +132,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
   def parseIncludedAST(raw: String, node: YNode): DataNode = {
     YamlParser(raw, node.sourceName).withIncludeTag("!include").parse().find(_.isInstanceOf[YNode]) match {
       case Some(node: YNode) => DataNodeParser(node, parameters, parent, idCounter).parse()
-      case _                 => ScalarNode(raw, Some((Namespace.Xsd + "string").iri())).withId(parent.getOrElse("") + "/included")
+      case _                 => ScalarNode(raw, Some(DataType.String)).withId(parent.getOrElse("") + "/included")
     }
   }
 

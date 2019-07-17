@@ -4,10 +4,10 @@ import amf.core.annotations.{InheritanceProvenance, LexicalInformation}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.model.DataType
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.{Annotations, RuntimeErrorHandler, Value}
-import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
@@ -63,11 +63,11 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
           val s = superScalar.dataType.value()
           if (b == s) {
             computeMinScalar(baseScalar, superScalar)
-          } else if (b == (Namespace.Xsd + "integer").iri() &&
-                     (s == (Namespace.Xsd + "float").iri() ||
-                     s == (Namespace.Xsd + "double").iri() ||
-                     s == (Namespace.Shapes + "number").iri())) {
-            computeMinScalar(baseScalar, superScalar.withDataType((Namespace.Xsd + "integer").iri()))
+          } else if (b == DataType.Integer &&
+                     (s == DataType.Float ||
+                     s == DataType.Double ||
+                     s == DataType.Number)) {
+            computeMinScalar(baseScalar, superScalar.withDataType(DataType.Integer))
           } else {
             context.errorHandler.violation(
               InvalidTypeInheritanceErrorSpecification,
