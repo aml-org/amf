@@ -1,13 +1,8 @@
 declare module 'amf-client-js' {
 
+  /* amf-client-js */
   export class ResourceNotFound {
     constructor(error: String)
-  }
-
-  export class ResolutionPipeline {
-      static DEFAULT_PIPELINE : string
-      static EDITING_PIPELINE : string
-      static COMPATIBILITY_PIPELINE : string
   }
 
   export class AMF {
@@ -33,11 +28,9 @@ declare module 'amf-client-js' {
 
     static validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: MessageStyle, env?: client.environment.Environment): Promise<client.validate.ValidationReport>
 
+    static validateResolved(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: MessageStyle, env?: client.environment.Environment): Promise<client.validate.ValidationReport>
+
     static loadValidationProfile(url: string): Promise<string>
-
-    static loadValidationProfile(url: string, env: client.environment.Environment): Promise<string>
-
-    static emitShapesGraph(profileName: ProfileName): string
 
     static registerNamespace(alias: string, prefix: string): boolean
 
@@ -81,8 +74,7 @@ declare module 'amf-client-js' {
     static AMF: MessageStyle
   }
 
-  export class AmfGraphParser {
-  }
+  export class AmfGraphParser {}
 
   export class AmfGraphRenderer extends render.Renderer {
     constructor()
@@ -92,8 +84,7 @@ declare module 'amf-client-js' {
     generateToBuilder<T>(unit: model.document.BaseUnit, builder: org.yaml.builder.DocBuilder<T>): Promise<void>
   }
 
-  export class AmfGraphResolver extends resolve.Resolver {
-  }
+  export class AmfGraphResolver extends resolve.Resolver {}
 
   export class Core {
     static init(): Promise<void>
@@ -109,10 +100,6 @@ declare module 'amf-client-js' {
     static validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: MessageStyle, env: client.environment.Environment): Promise<client.validate.ValidationReport>
 
     static loadValidationProfile(url: string): Promise<string>
-
-    static loadValidationProfile(url: string, env: client.environment.Environment): Promise<string>
-
-    static emitShapesGraph(profileName: ProfileName): string
 
     static registerNamespace(alias: string, prefix: string): boolean
 
@@ -140,33 +127,27 @@ declare module 'amf-client-js' {
     constructor(env: client.environment.Environment)
   }
 
-  export class Oas20Renderer extends render.Renderer {
-  }
+  export class Oas20Renderer extends render.Renderer {}
 
-  export class Oas20Resolver extends resolve.Resolver {
-  }
+  export class Oas20Resolver extends resolve.Resolver {}
 
   export class Raml08Parser extends parse.Parser {
     constructor()
     constructor(env: client.environment.Environment)
   }
 
-  export class Raml08Renderer extends render.Renderer {
-  }
+  export class Raml08Renderer extends render.Renderer {}
 
-  export class Raml08Resolver extends resolve.Resolver {
-  }
+  export class Raml08Resolver extends resolve.Resolver {}
 
   export class Raml10Parser extends parse.Parser {
     constructor()
     constructor(env: client.environment.Environment)
   }
 
-  export class Raml10Renderer extends render.Renderer {
-  }
+  export class Raml10Renderer extends render.Renderer {}
 
-  export class Raml10Resolver extends resolve.Resolver {
-  }
+  export class Raml10Resolver extends resolve.Resolver {}
 
   export class RamlParser extends parse.Parser {
     constructor()
@@ -195,16 +176,7 @@ declare module 'amf-client-js' {
     abstract fetch(resource: string): Promise<client.remote.Content>
   }
 
-  export abstract class BaseFileResourceLoader implements resource.ResourceLoader {
-      accepts(resource: string): boolean
-      abstract fetch(resource: string): Promise<client.remote.Content>
-  }
-
   export class JsBrowserHttpResourceLoader extends BaseHttpResourceLoader {
-    fetch(resource: string): Promise<client.remote.Content>
-  }
-
-  export class JsServerFileResourceLoader extends BaseFileResourceLoader {
     fetch(resource: string): Promise<client.remote.Content>
   }
 
@@ -225,8 +197,7 @@ declare module 'amf-client-js' {
             toString(): string
           }
 
-          class LimitReachedException {
-          }
+          class LimitReachedException {}
         }
       }
     }
@@ -268,9 +239,7 @@ declare module 'amf-client-js' {
 
   namespace client {
 
-    export class DefaultEnvironment {
-      static apply(): environment.Environment
-    }
+    export class DefaultEnvironment {static apply(): environment.Environment}
 
     namespace environment {
       export class Environment {
@@ -386,8 +355,7 @@ declare module 'amf-client-js' {
     }
 
     /* Not exported */
-    interface BaseField extends Annotable {
-    }
+    interface BaseField extends Annotable {}
 
     /* Not exported */
     class Annotations {
@@ -547,41 +515,29 @@ declare module 'amf-client-js' {
       }
 
       /* Not exported */
-      class Fragment extends BaseUnitWithEncodesModel {
-      }
+      class Fragment extends BaseUnitWithEncodesModel {}
 
-      export class ExternalFragment extends Fragment {
-      }
+      export class ExternalFragment extends Fragment {}
 
-      export class Module extends BaseUnitWithDeclaresModel {
-      }
+      export class Module extends BaseUnitWithDeclaresModel {}
 
-      export class Extension extends Fragment {
-      }
+      export class Extension extends Fragment {}
 
-      export class Overlay extends Fragment {
-      }
+      export class Overlay extends Fragment {}
 
-      export class DocumentationItem extends Fragment {
-      }
+      export class DocumentationItem extends Fragment {}
 
-      export class DataType extends Fragment {
-      }
+      export class DataType extends Fragment {}
 
-      export class NamedExample extends Fragment {
-      }
+      export class NamedExample extends Fragment {}
 
-      export class ResourceTypeFragment extends Fragment {
-      }
+      export class ResourceTypeFragment extends Fragment {}
 
-      export class TraitFragment extends Fragment {
-      }
+      export class TraitFragment extends Fragment {}
 
-      export class AnnotationTypeDeclaration extends Fragment {
-      }
+      export class AnnotationTypeDeclaration extends Fragment {}
 
-      export class SecuritySchemeFragment extends Fragment {
-      }
+      export class SecuritySchemeFragment extends Fragment {}
 
       export class Vocabulary extends BaseUnit {
         name: StrField
@@ -696,11 +652,9 @@ declare module 'amf-client-js' {
         withRange(range: string): this
       }
 
-      export class ObjectPropertyTerm extends PropertyTerm {
-      }
+      export class ObjectPropertyTerm extends PropertyTerm {}
 
-      export class DatatypePropertyTerm extends PropertyTerm {
-      }
+      export class DatatypePropertyTerm extends PropertyTerm {}
 
       export class CustomDomainProperty extends DomainElement implements Linkable {
         name: StrField
@@ -778,7 +732,7 @@ declare module 'amf-client-js' {
         defaultValue: DataNode
         defaultValueStr: StrField
 
-        values: StrField[]
+        values: ScalarNode[]
         location: string
         inherits: Shape[]
         or: Shape[]
@@ -794,7 +748,7 @@ declare module 'amf-client-js' {
 
         withDefaultValue(default_: DataNode): this
 
-        withValues(values: string[]): this
+        withValues(values: DataNode[]): this
 
         withInherits(inherits: Shape[]): this
 
@@ -868,9 +822,6 @@ declare module 'amf-client-js' {
 
         toJsonSchema: string
 
-        /** RAML Data Type representation. */
-        toRamlDatatype: string
-
         validate(payload: string): Promise<client.validate.ValidationReport>
 
         validate(fragment: model.domain.PayloadFragment): Promise<client.validate.ValidationReport>
@@ -937,7 +888,7 @@ declare module 'amf-client-js' {
       }
 
       export class RecursiveShape extends Shape {
-        fixPoint: StrField
+        fixpoint: StrField
 
         withFixPoint(shapeId: string): this
       }
@@ -990,11 +941,9 @@ declare module 'amf-client-js' {
         link(): AbstractDeclaration
       }
 
-      export class Trait extends AbstractDeclaration {
-      }
+      export class Trait extends AbstractDeclaration {}
 
-      export class ResourceType extends AbstractDeclaration {
-      }
+      export class ResourceType extends AbstractDeclaration {}
 
       export class ParametrizedDeclaration extends DomainElement {
         name: StrField
@@ -1160,11 +1109,9 @@ declare module 'amf-client-js' {
         link(): SecurityScheme
       }
 
-      export class ParametrizedResourceType extends ParametrizedDeclaration {
-      }
+      export class ParametrizedResourceType extends ParametrizedDeclaration {}
 
-      export class ParametrizedTrait extends ParametrizedDeclaration {
-      }
+      export class ParametrizedTrait extends ParametrizedDeclaration {}
 
       export class Parameter extends DomainElement {
         name: StrField
@@ -1296,8 +1243,7 @@ declare module 'amf-client-js' {
         withName(name: string): this
       }
 
-      export class NilShape extends AnyShape {
-      }
+      export class NilShape extends AnyShape {}
 
       export class NodeShape extends AnyShape {
         minProperties: IntField
@@ -1481,7 +1427,7 @@ declare module 'amf-client-js' {
         contentType: StrField[]
         request: Request
         responses: Response[]
-        security: DomainElement[]
+        security: ParametrizedSecurityScheme[]
         callbacks: Callback[]
         servers: Server[]
 
@@ -1507,7 +1453,7 @@ declare module 'amf-client-js' {
 
         withResponses(responses: Response[]): this
 
-        withSecurity(security: DomainElement[]): this
+        withSecurity(security: ParametrizedSecurityScheme[]): this
 
         withCallbacks(callbacks: Callback[]): this
 
@@ -1956,6 +1902,18 @@ declare module 'amf-client-js' {
         static readonly WARNING: 'Warning'
         static readonly INFO: 'Info'
         static readonly VIOLATION: 'Violation'
+      }
+    }
+
+    namespace resolution {
+
+      namespace pipelines {
+
+        export class ResolutionPipeline {
+          static readonly DEFAULT_PIPELINE: 'default'
+          static readonly EDITING_PIPELINE: 'editing'
+          static readonly COMPATIBILITY_PIPELINE: 'compatibility'
+        }
       }
     }
   }

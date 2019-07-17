@@ -197,7 +197,7 @@
             ],
             "shacl:property": [
               {
-                "@id": "#3",
+                "@id": "#6",
                 "@type": [
                   "shacl:PropertyShape",
                   "shacl:Shape",
@@ -211,7 +211,7 @@
                 ],
                 "raml-shapes:range": [
                   {
-                    "@id": "#4",
+                    "@id": "#7",
                     "@type": [
                       "raml-shapes:ScalarShape",
                       "raml-shapes:AnyShape",
@@ -231,7 +231,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#4": "[(4,2)-(5,0)]"
+                        "#7": "[(4,2)-(5,0)]"
                       }
                     }
                   }
@@ -248,7 +248,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#3": "[(4,2)-(5,0)]"
+                    "#6": "[(4,2)-(5,0)]"
                   }
                 }
               }
@@ -260,7 +260,7 @@
             ],
             "doc:examples": [
               {
-                "@id": "#5",
+                "@id": "#3",
                 "@type": [
                   "doc:Example",
                   "doc:DomainElement"
@@ -272,7 +272,7 @@
                 ],
                 "doc:structuredValue": [
                   {
-                    "@id": "#6",
+                    "@id": "#4",
                     "@type": [
                       "data:Object",
                       "data:Node",
@@ -280,7 +280,7 @@
                     ],
                     "data:a": [
                       {
-                        "@id": "#7",
+                        "@id": "#5",
                         "@type": [
                           "data:Scalar",
                           "data:Node",
@@ -288,24 +288,35 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "wadus",
-                            "@type": "xsd:string"
+                            "@value": "wadus"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_2"
                           }
                         ],
                         "smaps": {
                           "lexical": {
-                            "#7": "[(6,5)-(6,10)]"
+                            "#5": "[(6,5)-(6,10)]"
                           }
                         }
                       }
                     ],
+                    "schema-org:name": [
+                      {
+                        "@value": "object_1"
+                      }
+                    ],
                     "smaps": {
                       "lexical": {
-                        "data:a": "[(6,5)-(6,10)]",
-                        "#6": "[(6,0)-(6,10)]"
-                      },
-                      "data-node-properties": {
-                        "#6": "a->[(6,2)-(6,10)]"
+                        "data:a": "[(6,2)-(6,10)]",
+                        "#4": "[(6,0)-(6,10)]"
                       }
                     }
                   }
@@ -321,7 +332,8 @@
                   },
                   "lexical": {
                     "shacl:raw": "[(6,0)-(6,10)]",
-                    "#5": "[(5,0)-(6,10)]"
+                    "#3": "[(5,0)-(6,10)]",
+                    "doc:structuredValue": "[(5,8)-(6,10)]"
                   }
                 }
               }
@@ -363,7 +375,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#3",
+            "@id": "#6",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -377,7 +389,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#4",
+                "@id": "#7",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -397,7 +409,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#4": "[(4,2)-(5,0)]"
+                    "#7": "[(4,2)-(5,0)]"
                   }
                 }
               }
@@ -414,7 +426,7 @@
             ],
             "smaps": {
               "lexical": {
-                "#3": "[(4,2)-(5,0)]"
+                "#6": "[(4,2)-(5,0)]"
               }
             }
           }
@@ -426,7 +438,7 @@
         ],
         "doc:examples": [
           {
-            "@id": "#5",
+            "@id": "#3",
             "@type": [
               "doc:Example",
               "doc:DomainElement"
@@ -438,7 +450,7 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "#6",
+                "@id": "#4",
                 "@type": [
                   "data:Object",
                   "data:Node",
@@ -446,7 +458,7 @@
                 ],
                 "data:a": [
                   {
-                    "@id": "#7",
+                    "@id": "#5",
                     "@type": [
                       "data:Scalar",
                       "data:Node",
@@ -454,24 +466,35 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "wadus",
-                        "@type": "xsd:string"
+                        "@value": "wadus"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#7": "[(6,5)-(6,10)]"
+                        "#5": "[(6,5)-(6,10)]"
                       }
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "lexical": {
-                    "data:a": "[(6,5)-(6,10)]",
-                    "#6": "[(6,0)-(6,10)]"
-                  },
-                  "data-node-properties": {
-                    "#6": "a->[(6,2)-(6,10)]"
+                    "data:a": "[(6,2)-(6,10)]",
+                    "#4": "[(6,0)-(6,10)]"
                   }
                 }
               }
@@ -487,7 +510,8 @@
               },
               "lexical": {
                 "shacl:raw": "[(6,0)-(6,10)]",
-                "#5": "[(5,0)-(6,10)]"
+                "#3": "[(5,0)-(6,10)]",
+                "doc:structuredValue": "[(5,8)-(6,10)]"
               }
             }
           }
@@ -522,7 +546,6 @@
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
   }

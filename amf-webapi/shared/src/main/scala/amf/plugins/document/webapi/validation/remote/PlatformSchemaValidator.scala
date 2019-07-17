@@ -56,11 +56,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
 
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
 
-  val polymorphic: Boolean = shape match {
-    case a: AnyShape => a.supportsInheritance
-    case _           => false
-  }
-
   val env = Environment()
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
@@ -156,17 +151,14 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     futureText map { text =>
       payload.encodes match {
         case node: ScalarNode
-            if node.dataType.getOrElse("") == (Namespace.Xsd + "string").iri() && text.nonEmpty && text.head != '"' =>
+            if node.dataType
+              .option()
+              .contains((Namespace.Xsd + "string").iri()) && text.nonEmpty && text.head != '"' =>
           "\"" + text.stripLineEnd + "\""
         case _ => text.stripLineEnd
       }
     }
   }
-
-  private def buildObjPolymorphicShape(
-      payload: DataNode,
-      validationProcessor: ValidationProcessor): Either[validationProcessor.Return, Option[LoadedSchema]] =
-    getOrCreateObj(PolymorphicShapeExtractor(shape.asInstanceOf[AnyShape], payload), validationProcessor) // if is polymorphic is an any shape
 
   private def getOrCreateObj(
       s: AnyShape,
@@ -250,8 +242,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
         try {
           {
             resultOption match {
-              case Some(result) if polymorphic =>
-                buildObjPolymorphicShape(result.fragment.encodes, validationProcessor) // if is polymorphic I already parse the payload
               case _ if shape.isInstanceOf[AnyShape] =>
                 getOrCreateObj(shape.asInstanceOf[AnyShape], validationProcessor)
               case _ =>
@@ -283,8 +273,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   private def buildCandidate(mediaType: String, payload: String): (Option[LoadedObj], Option[PayloadParsingResult]) = {
     if (isFileShape) {
       (None, None)
-    } else if (polymorphic) {
-      buildPayloadNode(mediaType, payload)
     } else {
       buildPayloadObj(mediaType, payload)
     }
@@ -300,46 +288,14 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
 
 }
 
-object PolymorphicShapeExtractor {
-
-  def apply(anyShape: AnyShape, payload: DataNode): AnyShape = {
-    val closure: Seq[Shape] = anyShape.effectiveStructuralShapes
-    findPolymorphicEffectiveShape(closure, payload) match {
-      case Some(shape: NodeShape) => shape
-      case _ => // TODO: structurally can be a valid type, should we fail? By default RAML expects a failure
-        throw new UnknownDiscriminator()
-    }
-  }
-
-  private def findPolymorphicEffectiveShape(polymorphicUnion: Seq[Shape], currentDataNode: DataNode): Option[Shape] = {
-    polymorphicUnion.filter(_.isInstanceOf[NodeShape]).find {
-      case nodeShape: NodeShape =>
-        nodeShape.discriminator.option() match {
-          case Some(discriminatorProp) =>
-            val discriminatorValue = nodeShape.discriminatorValue.option().getOrElse(nodeShape.name.value())
-            currentDataNode match {
-              case obj: ObjectNode =>
-                obj.properties.get(discriminatorProp) match {
-                  case Some(v: ScalarNode) =>
-                    v.value == discriminatorValue
-                  case _ => false
-                }
-              case _ => false
-            }
-          case None => false
-        }
-    }
-  }
-}
-
 object ScalarPayloadForParam {
 
   def apply(fragment: PayloadFragment, shape: Shape): PayloadFragment = {
     if (isString(shape) || unionWithString(shape)) {
 
       fragment.encodes match {
-        case s: ScalarNode if !s.dataType.getOrElse("").equals((Namespace.Xsd + "string").iri()) =>
-          PayloadFragment(ScalarNode(s.value, Some((Namespace.Xsd + "string").iri()), s.annotations),
+        case s: ScalarNode if !s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri())) =>
+          PayloadFragment(ScalarNode(s.value.value(), Some((Namespace.Xsd + "string").iri()), s.annotations),
                           fragment.mediaType.value())
         case _ => fragment
       }

@@ -1,0 +1,11 @@
+#%RAML 1.0 Overlay
+usage: test allowed target in root of overlay
+extends: extension.raml
+
+annotationTypes:
+  meta-overlay:
+    allowedTargets: Overlay
+
+
+(meta-overlay): valid overlay target
+(meta-api): invalid api target

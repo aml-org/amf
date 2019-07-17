@@ -4,8 +4,8 @@ import java.net.URISyntaxException
 
 import amf.PayloadProfile
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain._
+import amf.core.model.domain.extensions.PropertyShape
 import amf.core.rdf.RdfModel
 import amf.core.utils.Strings
 import amf.core.validation.core._
@@ -14,7 +14,7 @@ import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel, Sca
 import amf.plugins.domain.shapes.models.TypeDef.NumberType
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
-import amf.plugins.features.validation.{ParserSideValidations, Validations}
+import amf.plugins.features.validation.Validations
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
@@ -75,25 +75,20 @@ class AMFShapeValidations(root: Shape) {
     acc
   }
 
-  def polymorphic(obj: NodeShape) = {
-    obj.supportsInheritance && !polymorphicExpanded.getOrElse(obj.id, false)
-  }
-
   protected def emitShapeValidations(
       context: String,
       shape: Shape,
       dataNodeTypeHierarchy: DataNodeTypeHierarchy = DataNodeTypeHierarchyStandard): List[ValidationSpecification] = {
     shape match {
-      case union: UnionShape                   => unionConstraints(context, union, dataNodeTypeHierarchy)
-      case scalar: ScalarShape                 => scalarConstraints(context, scalar, dataNodeTypeHierarchy)
-      case tuple: TupleShape                   => tupleConstraints(context, tuple, dataNodeTypeHierarchy)
-      case array: ArrayShape                   => arrayConstraints(context, array, dataNodeTypeHierarchy)
-      case obj: NodeShape if !polymorphic(obj) => nodeConstraints(context, obj, dataNodeTypeHierarchy)
-      case obj: NodeShape if polymorphic(obj)  => polymorphicNodeConstraints(context, obj, dataNodeTypeHierarchy)
-      case nil: NilShape                       => nilConstraints(context, nil, dataNodeTypeHierarchy)
-      case recur: RecursiveShape               => recursiveShapeConstraints(context, recur, dataNodeTypeHierarchy)
-      case any: AnyShape                       => anyConstraints(context, any, dataNodeTypeHierarchy)
-      case _                                   => List.empty
+      case union: UnionShape     => unionConstraints(context, union, dataNodeTypeHierarchy)
+      case scalar: ScalarShape   => scalarConstraints(context, scalar, dataNodeTypeHierarchy)
+      case tuple: TupleShape     => tupleConstraints(context, tuple, dataNodeTypeHierarchy)
+      case array: ArrayShape     => arrayConstraints(context, array, dataNodeTypeHierarchy)
+      case obj: NodeShape        => nodeConstraints(context, obj, dataNodeTypeHierarchy)
+      case nil: NilShape         => nilConstraints(context, nil, dataNodeTypeHierarchy)
+      case recur: RecursiveShape => recursiveShapeConstraints(context, recur, dataNodeTypeHierarchy)
+      case any: AnyShape         => anyConstraints(context, any, dataNodeTypeHierarchy)
+      case _                     => List.empty
     }
   }
 
@@ -188,21 +183,11 @@ class AMFShapeValidations(root: Shape) {
     checkLogicalConstraints(context, any, validation, Nil)
   }
 
-  def isPolymorphicUnion(union: UnionShape): Boolean = {
-    union.anyOf.foldLeft(true) {
-      case (acc, shape) =>
-        acc && shape.isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].supportsInheritance
-    }
-  }
-
   protected def unionConstraints(context: String,
                                  union: UnionShape,
                                  typeHierarchy: DataNodeTypeHierarchy): List[ValidationSpecification] = {
-    val msg = if (union.isPolymorphicUnion) {
-      s"Data at $context must be a valid polymorphic type: ${union.anyOf.map(_.name.option().getOrElse("type").urlDecoded).distinct.mkString(", ")}"
-    } else {
+    val msg =
       s"Data at $context must be one of the valid union types: ${union.anyOf.map(_.name.option().getOrElse("type").urlDecoded).distinct.mkString(", ")}"
-    }
     var nestedConstraints: List[ValidationSpecification] = List.empty
     var count                                            = 0
     union.anyOf.foreach { shape =>
@@ -427,11 +412,9 @@ class AMFShapeValidations(root: Shape) {
             val discriminatorValue = nodeShape.discriminatorValue.option().getOrElse(nodeShape.name.value())
             currentDataNode match {
               case Some(obj: ObjectNode) =>
-                obj.properties.get(discriminatorProp) match {
-                  case Some(v: ScalarNode) => {
-                    v.value == discriminatorValue
-                  }
-                  case _ => false
+                obj.getFromKey(discriminatorProp) match {
+                  case Some(v: ScalarNode) => v.value.option().contains(discriminatorValue)
+                  case _                   => false
                 }
               case _ => false
             }

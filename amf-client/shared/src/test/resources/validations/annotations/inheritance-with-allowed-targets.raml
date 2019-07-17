@@ -1,0 +1,14 @@
+#%RAML 1.0
+title: MyApi
+types:
+  MyType:
+    properties:
+      propFromDeclaredType: number
+
+annotationTypes:
+   MyAnnotation:
+     type: MyType
+     allowedTargets: API
+
+(MyAnnotation):
+  propFromDeclaredType: 11

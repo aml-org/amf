@@ -508,5 +508,5 @@ abstract class WebApiContext(val loc: String,
 
 object RamlWebApiContextType extends Enumeration {
   type RamlWebApiContextType = Value
-  val DEFAULT, RESOURCE_TYPE, TRAIT = Value
+  val DEFAULT, RESOURCE_TYPE, TRAIT, EXTENSION, OVERLAY = Value
 }

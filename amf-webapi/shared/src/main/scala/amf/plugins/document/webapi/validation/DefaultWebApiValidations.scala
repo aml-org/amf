@@ -319,6 +319,13 @@ object JsCustomValidations {
         |  }
         |}
       """.stripMargin, // TODO
+    "nonEmptyListOfProtocols" ->
+      """
+        |function(shape) {
+        |  var protocolsArray = shape["http:scheme"];
+        |  return !Array.isArray(protocolsArray) || protocolsArray.length > 0;
+        |}
+      """.stripMargin,
 
   )
 

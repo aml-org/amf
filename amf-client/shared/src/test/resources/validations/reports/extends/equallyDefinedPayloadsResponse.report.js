@@ -16,7 +16,7 @@ Level: Violation
 - Source: http://a.ml/vocabularies/amf/parser#example-validation-error
   Message: should be number
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml#/web-api/end-points/%2Fe-no-mediaType/get/200/any/default/example/default-example
+  Target: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml#/web-api/end-points/%2Fe-no-mediaType/get/200/default/any/default/example/default-example
   Property: 
   Position: Some(LexicalInformation([(32,19)-(32,20)]))
   Location: file://amf-client/shared/src/test/resources/validations/extends/merging-payloads/media-type-single-response/equallyDefined.raml

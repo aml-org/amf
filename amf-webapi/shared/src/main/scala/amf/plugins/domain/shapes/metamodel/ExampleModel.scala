@@ -12,7 +12,7 @@ import amf.core.vocabulary.{Namespace, ValueType}
 /**
   *
   */
-object ExampleModel
+trait ExampleModel
     extends DomainElementModel
     with LinkableElementModel
     with KeyField
@@ -69,3 +69,5 @@ object ExampleModel
     "Example value for a schema inside an API"
   )
 }
+
+object ExampleModel extends ExampleModel

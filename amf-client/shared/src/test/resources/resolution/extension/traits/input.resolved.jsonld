@@ -98,8 +98,17 @@
                                 ],
                                 "data:value": [
                                   {
-                                    "@value": "Slave description",
-                                    "@type": "xsd:string"
+                                    "@value": "Slave description"
+                                  }
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "schema-org:name": [
+                                  {
+                                    "@value": "scalar_2"
                                   }
                                 ],
                                 "smaps": {
@@ -109,12 +118,14 @@
                                 }
                               }
                             ],
+                            "schema-org:name": [
+                              {
+                                "@value": "object_1"
+                              }
+                            ],
                             "smaps": {
-                              "data-node-properties": {
-                                "#6": "description->[(8,4)-(10,0)]"
-                              },
                               "lexical": {
-                                "data:description": "[(8,17)-(8,34)]",
+                                "data:description": "[(8,4)-(10,0)]",
                                 "#6": "[(8,4)-(10,0)]"
                               }
                             }
@@ -195,8 +206,17 @@
                             ],
                             "data:value": [
                               {
-                                "@value": "Master description",
-                                "@type": "xsd:string"
+                                "@value": "Master description"
+                              }
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "schema-org:name": [
+                              {
+                                "@value": "scalar_2"
                               }
                             ],
                             "smaps": {
@@ -206,12 +226,14 @@
                             }
                           }
                         ],
+                        "schema-org:name": [
+                          {
+                            "@value": "object_1"
+                          }
+                        ],
                         "smaps": {
-                          "data-node-properties": {
-                            "#2": "description->[(6,4)-(8,0)]"
-                          },
                           "lexical": {
-                            "data:description": "[(6,17)-(6,35)]",
+                            "data:description": "[(6,4)-(8,0)]",
                             "#2": "[(6,4)-(8,0)]"
                           }
                         }
@@ -288,8 +310,17 @@
                 ],
                 "data:value": [
                   {
-                    "@value": "Master description",
-                    "@type": "xsd:string"
+                    "@value": "Master description"
+                  }
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "scalar_2"
                   }
                 ],
                 "smaps": {
@@ -299,12 +330,14 @@
                 }
               }
             ],
+            "schema-org:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
             "smaps": {
-              "data-node-properties": {
-                "#2": "description->[(6,4)-(8,0)]"
-              },
               "lexical": {
-                "data:description": "[(6,17)-(6,35)]",
+                "data:description": "[(6,4)-(8,0)]",
                 "#2": "[(6,4)-(8,0)]"
               }
             }
@@ -352,8 +385,17 @@
                 ],
                 "data:value": [
                   {
-                    "@value": "Slave description",
-                    "@type": "xsd:string"
+                    "@value": "Slave description"
+                  }
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "scalar_2"
                   }
                 ],
                 "smaps": {
@@ -363,12 +405,14 @@
                 }
               }
             ],
+            "schema-org:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
             "smaps": {
-              "data-node-properties": {
-                "#6": "description->[(8,4)-(10,0)]"
-              },
               "lexical": {
-                "data:description": "[(8,17)-(8,34)]",
+                "data:description": "[(8,4)-(10,0)]",
                 "#6": "[(8,4)-(10,0)]"
               }
             }
@@ -393,10 +437,10 @@
     "@context": {
       "@base": "amf://id",
       "raml-http": "http://a.ml/vocabularies/http#",
+      "shacl": "http://www.w3.org/ns/shacl#",
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
   }

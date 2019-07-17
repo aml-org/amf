@@ -12,6 +12,7 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
+import amf.plugins.features.validation.ParserSideValidations.InvalidPayload
 import org.yaml.model._
 
 /**
@@ -78,7 +79,7 @@ case class Raml08PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
         anyShape.annotations += SynthesizedField()
         payload.withSchema(anyShape)
 
-      case _ =>
+      case YType.Map =>
         if (List("application/x-www-form-urlencoded", "multipart/form-data").contains(mediaType)) {
           Raml08WebFormParser(entry.value.as[YMap], payload.id).parse().foreach(payload.withSchema)
         } else {
@@ -86,6 +87,13 @@ case class Raml08PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
             .parse()
             .foreach(s => payload.withSchema(tracking(s, payload.id)))
         }
+
+      case _ =>
+        ctx.violation(
+          InvalidPayload,
+          payload.id,
+          "Invalid payload. Payload must be a map or null"
+        )
     }
 
     payload

@@ -1,0 +1,16 @@
+#%RAML 0.8
+title: Emarsys Developer Hub
+version: v2
+baseUri: 'https://api.emarsys.net/api'
+mediaType: application/json
+
+/v2:
+  get:
+    description: 'Looks up a specific contact in a segment. If the segment includes the contact, returns `true`, otherwise returns `false`.'
+    responses:
+      '200':
+        body:
+          application/json: |-
+            {
+              "schema": "{\n    \"type\": \"object\",\n    \"description\": \"See the example or [Response Codes](#docTextSection:2EWxuT8iX8Rm7yfhZ) for details.\",\n    \"additionalProperties\": false,\n    \"properties\": {\n        \"replyCode\": {\n            \"type\": \"integer\",\n            \"description\": \"The Emarsys [response code](#docTextSection:2EWxuT8iX8Rm7yfhZ).\"\n        },\n        \"replyText\": {\n            \"type\": \"string\",\n            \"description\": \"The summary of the [response](#docTextSection:2EWxuT8iX8Rm7yfhZ).\"\n        },\n        \"data\": {\n            \"type\": \"boolean\",\n            \"description\": \"Returns `true` if the contact is included in the specified segment. Otherwise returns `false`.\"\n        }\n    }\n}"
+            }

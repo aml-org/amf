@@ -21,13 +21,6 @@ case class UnionShape(override val fields: Fields, override val annotations: Ann
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/union/" + name.option().getOrElse("default-union").urlComponentEncoded
 
-  def isPolymorphicUnion: Boolean = {
-    anyOf.foldLeft(true) {
-      case (acc, shape) =>
-        acc && shape.isInstanceOf[AnyShape] && shape.asInstanceOf[AnyShape].supportsInheritance
-    }
-  }
-
   override def ramlSyntaxKey: String = "unionShape"
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */

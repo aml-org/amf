@@ -1,0 +1,101 @@
+#%RAML 1.0
+title: Illustrating allowed targets
+mediaType: application/json
+
+annotationTypes:
+  meta-no-allowed:
+  meta-api:
+    allowedTargets: API
+  meta-doc-item:
+    allowedTargets: DocumentationItem
+  meta-security-scheme:
+    allowedTargets: SecurityScheme
+  meta-security-scheme-settings:
+    allowedTargets: SecuritySchemeSettings
+  meta-resource:
+    allowedTargets: Resource
+  meta-method:
+    allowedTargets: Method
+  meta-response:
+    allowedTargets: Response
+  meta-annotation-type:
+    allowedTargets: AnnotationType
+  meta-example:
+    allowedTargets: Example
+  meta-resource-type:
+    allowedTargets: ResourceType
+  multiple:
+    allowedTargets: [ResourceType, Method]
+  meta-request-body:
+    allowedTargets: RequestBody
+  meta-response-body:
+    allowedTargets: ResponseBody
+  meta-type-declaration:
+     allowedTargets: TypeDeclaration
+
+  #meta-library:
+  #  allowedTargets: Library
+
+  testing-annotation-declaration:
+    #(meta-type-declaration): not allowed in annotation declaration
+    (meta-annotation-type): allowed in annotation declaration
+
+(meta-no-allowed): allowed
+(meta-api): allowed in api
+(meta-doc-item): not allowed in api
+(multiple): not allowed
+
+types:
+  User:
+    type: object
+    #(meta-type-declaration): allowed on an object
+    #(meta-method): not allowed in type declaration
+    properties:
+      name:
+        type: string
+        #(meta-type-declaration): allowed on a string property
+        #(meta-response): not allowed in type declaration
+
+documentation:
+    - title: head
+      content: content
+      (meta-doc-item): allowed in doc item
+      (meta-api): not allowed in doc item
+      (meta-no-allowed): allowed
+
+securitySchemes:
+  oauth_1_0:
+    description: OAuth 1.0 continues to be supported
+    type: OAuth 1.0
+    (meta-security-scheme): allowed in security scheme
+    (meta-security-scheme-settings): not allowed in security scheme
+    settings:
+      requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+      authorizationUri: https://www.dropbox.com/1/oauth/authorize
+      tokenCredentialsUri: https://api.dropbox.com/1/oauth/access_token
+      signatures: [ 'HMAC-SHA1', 'PLAINTEXT' ]
+      (meta-security-scheme-settings): allowed in security scheme settings
+      (meta-security-scheme): not allowed in security scheme settings
+
+/user:
+  (meta-resource): allowed in resource
+  (meta-method): not allowed in resource
+  post:
+    (meta-resource): not allowed in method
+    (meta-method): allowed in method
+    body:
+      type: User
+      (meta-request-body): allowed in a request body
+      (meta-type-declaration): type declaration allowed on a request body
+      example:
+        (meta-example): allowed in example
+        (meta-response): response not allowed in example
+        value: { "name": "jorge" }
+    responses:
+      200:
+        (meta-response): allowed in response
+        (meta-method): not allowed in response
+        body:
+          type: User
+          (meta-response-body): allowed in a response body
+          (meta-type-declaration): type declaration allowed on a response body

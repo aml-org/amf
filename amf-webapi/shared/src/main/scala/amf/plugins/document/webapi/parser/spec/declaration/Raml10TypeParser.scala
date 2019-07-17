@@ -24,6 +24,7 @@ import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{ScalarType, _}
@@ -520,8 +521,14 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     // parsing annotations
     node.value match {
-      case map: YMap if result.isDefined => AnnotationParser(result.get, map).parse()
-      case _                             => // ignore
+      case map: YMap if result.isDefined =>
+        AnnotationParser(
+          result.get,
+          map,
+          if (isAnnotation) List(VocabularyMappings.customDomainProperty)
+          else Nil ++ List(VocabularyMappings.shape, VocabularyMappings.payload, VocabularyMappings.request)
+        ).parse()
+      case _ => // ignore
     }
 
     result
@@ -1320,7 +1327,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         Annotations(node),
         reference,
         fatherMap.map(m =>
-          (resolvedKey: Option[String]) => ShapeExtensionParser(shape, m, ctx, overrideSyntax = resolvedKey)),
+          (resolvedKey: Option[String]) =>
+            ShapeExtensionParser(shape, m, ctx, isAnnotation, overrideSyntax = resolvedKey)),
         Some((k: String) =>
           if (shape.fields.exists(LinkableElementModel.TargetId)) shape.set(LinkableElementModel.TargetId, k))
       )
@@ -1375,8 +1383,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key(
         "properties",
         entry => {
-          entry.value.toOption[YMap] match {
-            case Some(m) =>
+          entry.value.tagType match {
+            case YType.Map =>
+              val m = entry.value.as[YMap]
               val properties: Seq[PropertyShape] =
                 PropertiesParser(m, shape.withProperty).parse()
               val hasPatternProperties = properties.exists(_.patternName.nonEmpty)
@@ -1392,11 +1401,31 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               properties.foreach { prop =>
                 checkSchemaInProperty(Seq(prop.range), prop.location(), Range(entry.range))
               }
+
+              shape.discriminator
+                .option()
+                .foreach(discriminator => {
+                  val containsDiscriminatorProp = properties.exists(_.name.value() == discriminator)
+                  if (!containsDiscriminatorProp) {
+                    ctx.violation(
+                      MissingDiscriminatorProperty,
+                      shape.id,
+                      s"Property '$discriminator' marked as discriminator is missing in properties facet"
+                    )
+                  }
+                })
               if (hasPatternProperties) {
                 shape.set(NodeShapeModel.Closed, value = true) // we close by default, additional properties must match one patter or fail
               }
               shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
-            case _ => // Empty properties node.
+            case YType.Null =>
+            case _ =>
+              ctx.violation(
+                InvalidValueInPropertiesFacet,
+                shape.id,
+                s"Properties facet must be a map of key and values",
+                entry
+              )
           }
         }
       )

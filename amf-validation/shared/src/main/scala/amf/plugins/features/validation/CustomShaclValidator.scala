@@ -3,10 +3,9 @@ package amf.plugins.features.validation
 import java.util.regex.Pattern
 
 import amf.core.annotations.SourceAST
-import amf.core.metamodel.DynamicObj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, Value}
 import amf.core.services.ValidationOptions
 import amf.core.utils.RegexConverter
 import amf.core.validation.core._
@@ -14,7 +13,6 @@ import amf.core.validation.{EffectiveValidations, SeverityLevels}
 import amf.core.vocabulary.Namespace
 import amf.{OASStyle, RAMLStyle}
 import org.yaml.model.YScalar
-import amf.plugins.domain._
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -101,38 +99,19 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
     validationSpecification.targetInstance.contains(element.id)
 
   def findFieldTarget(element: DomainElement, property: String): Option[(Annotations, Seq[AmfElement])] = {
-    if (element.meta.isInstanceOf[DynamicObj] && element.isInstanceOf[DynamicDomainElement]) {
-      val dynamicElement = element.asInstanceOf[DynamicDomainElement]
-      dynamicElement.meta.fields.find(_.value.iri() == property) match {
-        case Some(field) =>
-          dynamicElement.valueForField(field) match {
-            case Some(value) =>
-              value.value match {
-                case elems: AmfArray   => Some((value.annotations, elems.values))
-                case scalar: AmfScalar => Some((value.annotations, Seq(scalar)))
-                case obj: AmfObject    => Some((value.annotations, Seq(obj)))
-                case _                 => Some((value.annotations, Nil))
-              }
-            case _ => None
-          }
-        case _ => None
-      }
-
-    } else {
-      element.meta.fields.find(_.value.iri() == property) match {
-        case Some(field) =>
-          Option(element.fields.getValue(field)) match {
-            case Some(value) =>
-              value.value match {
-                case elems: AmfArray   => Some((value.annotations, elems.values))
-                case scalar: AmfScalar => Some((value.annotations, Seq(scalar)))
-                case obj: AmfObject    => Some((value.annotations, Seq(obj)))
-                case _                 => Some((value.annotations, Nil))
-              }
-            case _ => None
-          }
-        case _ => None
-      }
+    element.meta.fields.find(_.value.iri() == property) match {
+      case Some(field) =>
+        Option(element.fields.getValue(field)) match {
+          case Some(value) =>
+            value.value match {
+              case elems: AmfArray   => Some((value.annotations, elems.values))
+              case scalar: AmfScalar => Some((value.annotations, Seq(scalar)))
+              case obj: AmfObject    => Some((value.annotations, Seq(obj)))
+              case _                 => Some((value.annotations, Nil))
+            }
+          case _ => None
+        }
+      case _ => None
     }
   }
 
@@ -143,37 +122,19 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
 
   def extractPredicateValue(predicate: String,
                             element: DomainElement): Option[(Annotations, AmfElement, Option[Any])] = {
-    if (element.meta.isInstanceOf[DynamicObj] && element.isInstanceOf[DynamicDomainElement]) {
-      val dynamicDomainElement = element.asInstanceOf[DynamicDomainElement]
-      dynamicDomainElement.meta.fields.find { f =>
-        f.value.iri() == predicate
-      } match {
-        case None =>
-          None
-        case Some(f) =>
-          dynamicDomainElement.valueForField(f) match {
-            case Some(value) if value.value.isInstanceOf[AmfScalar] =>
-              Some((value.annotations, value.value, Some(amfScalarToScala(value.value.asInstanceOf[AmfScalar]))))
-            case Some(value) =>
-              Some((value.annotations, value.value, None))
-            case _ => None
-          }
-      }
-    } else {
-      element.meta.fields.find { f =>
-        f.value.iri() == predicate
-      } match {
-        case Some(f) =>
-          Option(element.fields.getValue(f)) match {
-            case Some(value) if value.value.isInstanceOf[AmfScalar] =>
-              Some((value.annotations, value.value, Some(amfScalarToScala(value.value.asInstanceOf[AmfScalar]))))
-            case Some(value) =>
-              Some((value.annotations, value.value, None))
-            case _ =>
-              None
-          }
-        case _ => None
-      }
+    element.meta.fields.find { f =>
+      f.value.iri() == predicate
+    } match {
+      case Some(f) =>
+        Option(element.fields.getValue(f)) match {
+          case Some(value) if value.value.isInstanceOf[AmfScalar] =>
+            Some((value.annotations, value.value, Some(amfScalarToScala(value.value.asInstanceOf[AmfScalar]))))
+          case Some(value) =>
+            Some((value.annotations, value.value, None))
+          case _ =>
+            None
+        }
+      case _ => None
     }
   }
 
@@ -398,6 +359,25 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
               case _: Throwable =>
                 reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
             }
+          }
+
+      case Some("nonEmptyListOfProtocols") =>
+        val maybeValue = element.fields
+          .fields()
+          .find(_.field.value.iri().endsWith("scheme"))
+          .map(field => field.value)
+        maybeValue
+          .map(_.value)
+          .foreach {
+            case AmfArray(elements, _) if elements.isEmpty =>
+              reportFailure(
+                validationSpecification,
+                functionConstraint,
+                element.id,
+                maybeValue.map(_.annotations).getOrElse(Annotations()),
+                Some("http://a.ml/vocabularies/http#scheme")
+              )
+            case _ =>
           }
 
       case Some(other) =>
@@ -981,7 +961,8 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
   def reportFailure(validationSpecification: ValidationSpecification,
                     functionConstraint: FunctionConstraint,
                     id: String,
-                    annotations: Annotations): Unit = {
+                    annotations: Annotations,
+                    propertyPath: Option[String] = None): Unit = {
     validationReport.registerResult(
       CustomValidationResult(
         message = options.messageStyle match {
@@ -989,7 +970,7 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
           case OASStyle  => validationSpecification.oasMessage.orElse(Some(validationSpecification.message))
           case _         => Some(validationSpecification.message)
         },
-        path = "",
+        path = propertyPath.getOrElse(""),
         sourceConstraintComponent = validationSpecification.id,
         focusNode = id,
         severity = SeverityLevels.VIOLATION,

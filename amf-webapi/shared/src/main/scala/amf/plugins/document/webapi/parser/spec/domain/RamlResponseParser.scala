@@ -8,6 +8,7 @@ import amf.plugins.document.webapi.annotations.EmptyPayload
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType}
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import amf.plugins.features.validation.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
@@ -24,7 +25,7 @@ case class Raml10ResponseParser(entry: YMapEntry, adopt: Response => Unit, parse
     extends RamlResponseParser(entry, adopt, parseOptional) {
 
   override def parseMap(response: Response, map: YMap): Unit = {
-    AnnotationParser(response, map).parse()
+    AnnotationParser(response, map, List(VocabularyMappings.response)).parse()
 
   }
 
@@ -131,7 +132,10 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
                     if (others.entries.nonEmpty) {
                       if (payloads.isEmpty) {
                         ctx.factory
-                          .typeParser(entry, shape => shape.withName("default").adopted(res.id), false, defaultType)
+                          .typeParser(entry,
+                                      shape => shape.withName("default").adopted(payload.id),
+                                      false,
+                                      defaultType)
                           .parse()
                           .foreach { schema =>
                             val payload = res.withPayload()

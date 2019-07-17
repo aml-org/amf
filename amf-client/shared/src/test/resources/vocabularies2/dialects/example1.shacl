@@ -97,6 +97,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-and-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-and-type> <http://www.w3.org/ns/shacl#message> "And should be a sequence" .
 <http://a.ml/vocabularies/amf/parser#invalid-and-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-annotation-target> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-annotation-target> <http://www.w3.org/ns/shacl#message> "Annotation not allowed in used target" .
+<http://a.ml/vocabularies/amf/parser#invalid-annotation-target> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-annotation-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-annotation-type> <http://www.w3.org/ns/shacl#message> "Invalid annotation type" .
 <http://a.ml/vocabularies/amf/parser#invalid-annotation-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -169,6 +172,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-parameter-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-parameter-type> <http://www.w3.org/ns/shacl#message> "Invalid parameter type" .
 <http://a.ml/vocabularies/amf/parser#invalid-parameter-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-payload> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-payload> <http://www.w3.org/ns/shacl#message> "Invalid payload" .
+<http://a.ml/vocabularies/amf/parser#invalid-payload> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-property-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-property-type> <http://www.w3.org/ns/shacl#message> "Invalid property key type. Should be string" .
 <http://a.ml/vocabularies/amf/parser#invalid-property-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -184,6 +190,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-secured-by-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-secured-by-type> <http://www.w3.org/ns/shacl#message> "Invalid 'securedBy' type" .
 <http://a.ml/vocabularies/amf/parser#invalid-secured-by-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-security-scheme-described-by-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-security-scheme-described-by-type> <http://www.w3.org/ns/shacl#message> "Invalid 'describedBy' type, map expected" .
+<http://a.ml/vocabularies/amf/parser#invalid-security-scheme-described-by-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-server-path> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-server-path> <http://www.w3.org/ns/shacl#message> "Invalid server path" .
 <http://a.ml/vocabularies/amf/parser#invalid-server-path> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -205,6 +214,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-union-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-union-type> <http://www.w3.org/ns/shacl#message> "Union should be a sequence" .
 <http://a.ml/vocabularies/amf/parser#invalid-union-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-value-in-properties-facet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-value-in-properties-facet> <http://www.w3.org/ns/shacl#message> "Properties facet must be a map of key and values" .
+<http://a.ml/vocabularies/amf/parser#invalid-value-in-properties-facet> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-xml-schema-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-xml-schema-type> <http://www.w3.org/ns/shacl#message> "Invalid xml schema type" .
 <http://a.ml/vocabularies/amf/parser#invalid-xml-schema-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -223,6 +235,9 @@
 <http://a.ml/vocabularies/amf/parser#missing-dialect-fragment> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#missing-dialect-fragment> <http://www.w3.org/ns/shacl#message> "Missing dialect fragment" .
 <http://a.ml/vocabularies/amf/parser#missing-dialect-fragment> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#missing-discriminator-property> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#missing-discriminator-property> <http://www.w3.org/ns/shacl#message> "Type is missing property marked as discriminator" .
+<http://a.ml/vocabularies/amf/parser#missing-discriminator-property> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#missing-id-in-node> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#missing-id-in-node> <http://www.w3.org/ns/shacl#message> "Missing @id in json-ld node" .
 <http://a.ml/vocabularies/amf/parser#missing-id-in-node> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

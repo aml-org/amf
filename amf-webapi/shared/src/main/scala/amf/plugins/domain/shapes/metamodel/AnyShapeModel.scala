@@ -15,7 +15,7 @@ trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with Exam
     ModelDoc(ModelVocabularies.Shapes, "XML serialization", "information about how to serialize"))
 
   override def fields: List[Field] =
-    ShapeModel.fields ++ ExternalSourceElementModel.fields ++ List(Documentation, XMLSerialization, Examples)
+    ShapeModel.fields ++ List(Documentation, XMLSerialization, Examples) ++ ExternalSourceElementModel.fields
 
   override val `type`: List[ValueType] =
     List(Shapes + "AnyShape") ++ ShapeModel.`type`

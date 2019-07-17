@@ -7,6 +7,7 @@ import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common._
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.ParserSideValidations.{
@@ -94,7 +95,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
       case _             => dynamicSettings(scheme.withDefaultSettings())
     }
 
-    AnnotationParser(result, map)(ctx).parse()
+    AnnotationParser(result, map, List(VocabularyMappings.securitySettings))(ctx).parse()
 
     result.add(Annotations(map))
   }

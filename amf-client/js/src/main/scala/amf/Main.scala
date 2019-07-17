@@ -10,7 +10,6 @@ import scala.language.postfixOps
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
-import scala.scalajs.js.Promise
 import scala.concurrent.ExecutionContext.Implicits.global
 
 /**
@@ -20,14 +19,9 @@ import scala.concurrent.ExecutionContext.Implicits.global
 @JSExportAll
 object Main extends PlatformSecrets {
 
-  def enableTracing(cfg: ParserConfig) = {
-    if (cfg.trace) {
-      println("Enabling tracing!")
-      ExecutionLog.start()
-    } else {
-      println("NOT TRACING")
-      println(cfg)
-    }
+  private def enableTracing(cfg: ParserConfig) = if (cfg.trace) {
+    println("Enabling tracing!")
+    ExecutionLog.start()
   }
 
   def main(rawArgs: js.Array[String]): js.Promise[Any] = {

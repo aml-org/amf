@@ -52,12 +52,11 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
     ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true,
                                                                                     0,
                                                                                     PayloadProfile),
-    ("payloads.raml", "CustomerData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("payloads.raml", "CustomerData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a_valid.json")       -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a_invalid.json")     -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a2_valid.json")      -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a2_invalid.json")    -> ExpectedReport(conforms = false, 1, PayloadProfile)
+    ("payloads.raml", "CustomerData", "person_valid.yaml") -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a_valid.json")     -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a_invalid.json")   -> ExpectedReport(conforms = false, 1, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a2_valid.json")    -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a2_invalid.json")  -> ExpectedReport(conforms = false, 1, PayloadProfile)
   )
 
   for {

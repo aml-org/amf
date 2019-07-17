@@ -240,5 +240,13 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/union-type-array.raml")
   }
 
+  test("Test example with complex recursion in types 1") {
+    checkValid("/healthcare_reduced_v1.raml")
+  }
+
+  test("Test example with complex recursion in types 2") {
+    checkValid("/healthcare_reduced_v2.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

@@ -26,6 +26,7 @@ import amf.core.remote.{Aml, Oas20, Raml10}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
+import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
 
@@ -348,7 +349,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       annotations should have size 1
       val annotation = annotations.head
       annotation.name.value() should be("foo")
-      annotation.extension.asInstanceOf[ScalarNode].value should be("annotated title")
+      annotation.extension.asInstanceOf[ScalarNode].value.value() should be("annotated title")
     }
   }
 
@@ -1592,6 +1593,20 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         .asSeq(1)
         .isInstanceOf[ObjectNode] shouldBe true
 
+    }
+  }
+
+  test("Test Json relative ref with absolute path as input") {
+    val file =
+      platform.fs.syncFile("amf-client/shared/src/test/resources/production/json-schema-relative-ref/api.raml")
+    val absPath = getAbsolutePath(file.path)
+
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- new RamlParser().parseFileAsync(absPath).asFuture
+      report <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
+    } yield {
+      assert(report.conforms)
     }
   }
 

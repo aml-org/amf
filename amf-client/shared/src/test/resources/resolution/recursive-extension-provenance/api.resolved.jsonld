@@ -186,8 +186,17 @@
                                         ],
                                         "data:value": [
                                           {
-                                            "@value": "<<resourcePathName>>",
-                                            "@type": "xsd:string"
+                                            "@value": "<<resourcePathName>>"
+                                          }
+                                        ],
+                                        "shacl:datatype": [
+                                          {
+                                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                          }
+                                        ],
+                                        "schema-org:name": [
+                                          {
+                                            "@value": "scalar_5"
                                           }
                                         ],
                                         "smaps": {
@@ -197,48 +206,53 @@
                                         }
                                       }
                                     ],
+                                    "schema-org:name": [
+                                      {
+                                        "@value": "object_4"
+                                      }
+                                    ],
                                     "smaps": {
-                                      "data-node-properties": {
-                                        "#23": "type->[(25,10)-(27,0)]"
-                                      },
                                       "lexical": {
-                                        "data:type": "[(25,16)-(25,36)]",
+                                        "data:type": "[(25,10)-(27,0)]",
                                         "#23": "[(25,0)-(27,0)]"
                                       }
                                     }
                                   }
                                 ],
+                                "schema-org:name": [
+                                  {
+                                    "@value": "object_3"
+                                  }
+                                ],
                                 "smaps": {
-                                  "data-node-properties": {
-                                    "data:application%2Fjson": "type->[(25,10)-(27,0)]",
-                                    "#22": "application%2Fjson->[(24,8)-(27,0)]"
-                                  },
                                   "lexical": {
-                                    "data:application%2Fjson": "[(25,0)-(27,0)]",
+                                    "data:application%2Fjson": "[(24,8)-(27,0)]",
                                     "#22": "[(24,0)-(27,0)]"
                                   }
                                 }
                               }
                             ],
+                            "schema-org:name": [
+                              {
+                                "@value": "object_2"
+                              }
+                            ],
                             "smaps": {
-                              "data-node-properties": {
-                                "data:body": "application%2Fjson->[(24,8)-(27,0)]",
-                                "#21": "body->[(23,6)-(27,0)]"
-                              },
                               "lexical": {
-                                "data:body": "[(24,0)-(27,0)]",
+                                "data:body": "[(23,6)-(27,0)]",
                                 "#21": "[(23,0)-(27,0)]"
                               }
                             }
                           }
                         ],
+                        "schema-org:name": [
+                          {
+                            "@value": "object_1"
+                          }
+                        ],
                         "smaps": {
-                          "data-node-properties": {
-                            "data:post": "body->[(23,6)-(27,0)]",
-                            "#20": "post->[(22,4)-(27,0)]"
-                          },
                           "lexical": {
-                            "data:post": "[(23,0)-(27,0)]",
+                            "data:post": "[(22,4)-(27,0)]",
                             "#20": "[(22,4)-(27,0)]"
                           }
                         }
@@ -994,8 +1008,17 @@
                             ],
                             "data:value": [
                               {
-                                "@value": "<<resourcePathName>>",
-                                "@type": "xsd:string"
+                                "@value": "<<resourcePathName>>"
+                              }
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "schema-org:name": [
+                              {
+                                "@value": "scalar_5"
                               }
                             ],
                             "smaps": {
@@ -1005,48 +1028,53 @@
                             }
                           }
                         ],
+                        "schema-org:name": [
+                          {
+                            "@value": "object_4"
+                          }
+                        ],
                         "smaps": {
-                          "data-node-properties": {
-                            "#23": "type->[(25,10)-(27,0)]"
-                          },
                           "lexical": {
-                            "data:type": "[(25,16)-(25,36)]",
+                            "data:type": "[(25,10)-(27,0)]",
                             "#23": "[(25,0)-(27,0)]"
                           }
                         }
                       }
                     ],
+                    "schema-org:name": [
+                      {
+                        "@value": "object_3"
+                      }
+                    ],
                     "smaps": {
-                      "data-node-properties": {
-                        "data:application%2Fjson": "type->[(25,10)-(27,0)]",
-                        "#22": "application%2Fjson->[(24,8)-(27,0)]"
-                      },
                       "lexical": {
-                        "data:application%2Fjson": "[(25,0)-(27,0)]",
+                        "data:application%2Fjson": "[(24,8)-(27,0)]",
                         "#22": "[(24,0)-(27,0)]"
                       }
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_2"
+                  }
+                ],
                 "smaps": {
-                  "data-node-properties": {
-                    "data:body": "application%2Fjson->[(24,8)-(27,0)]",
-                    "#21": "body->[(23,6)-(27,0)]"
-                  },
                   "lexical": {
-                    "data:body": "[(24,0)-(27,0)]",
+                    "data:body": "[(23,6)-(27,0)]",
                     "#21": "[(23,0)-(27,0)]"
                   }
                 }
               }
             ],
+            "schema-org:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
             "smaps": {
-              "data-node-properties": {
-                "data:post": "body->[(23,6)-(27,0)]",
-                "#20": "post->[(22,4)-(27,0)]"
-              },
               "lexical": {
-                "data:post": "[(23,0)-(27,0)]",
+                "data:post": "[(22,4)-(27,0)]",
                 "#20": "[(22,4)-(27,0)]"
               }
             }
@@ -1078,7 +1106,6 @@
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
   }

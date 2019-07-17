@@ -1,0 +1,12 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"definitions": {
+		"Surname": {
+			"title": "Surname",
+			"description": "This represents the Surname (last name) of the Loyalty Member",
+			"type": "string",
+			"minLength": 0,
+			"maxLength": 30
+		}
+	}
+}

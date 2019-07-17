@@ -1,0 +1,10 @@
+#%RAML 1.0 Extension
+usage: Test allowed target in root of extension
+extends: base-api.raml
+
+annotationTypes:
+  meta-library:
+    allowedTargets: Extension
+
+(meta-library): valid library target
+(meta-api): invalid api target

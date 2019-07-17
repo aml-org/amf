@@ -510,8 +510,17 @@
                   ],
                   "http://a.ml/vocabularies/data#value": [
                     {
-                      "@value": "foo",
-                      "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      "@value": "foo"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://schema.org/name": [
+                    {
+                      "@value": "scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -551,8 +560,17 @@
                   ],
                   "http://a.ml/vocabularies/data#value": [
                     {
-                      "@value": "bar",
-                      "@type": "http://www.w3.org/2001/XMLSchema#string"
+                      "@value": "bar"
+                    }
+                  ],
+                  "http://www.w3.org/ns/shacl#datatype": [
+                    {
+                      "@id": "http://www.w3.org/2001/XMLSchema#string"
+                    }
+                  ],
+                  "http://schema.org/name": [
+                    {
+                      "@value": "scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1079,8 +1097,17 @@
                     ],
                     "http://a.ml/vocabularies/data#value": [
                       {
-                        "@value": "test b",
-                        "@type": "http://www.w3.org/2001/XMLSchema#string"
+                        "@value": "test b"
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "http://schema.org/name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1107,25 +1134,16 @@
                     ]
                   }
                 ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                      {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType/object_1"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "description->[(3,0)-(3,21)]"
-                          }
-                        ]
-                      }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
@@ -1136,7 +1154,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(3,13)-(3,21)]"
+                            "@value": "[(3,0)-(3,21)]"
                           }
                         ]
                       },
@@ -2426,8 +2444,17 @@
                 ],
                 "http://a.ml/vocabularies/data#value": [
                   {
-                    "@value": "test",
-                    "@type": "http://www.w3.org/2001/XMLSchema#string"
+                    "@value": "test"
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "http://schema.org/name": [
+                  {
+                    "@value": "scalar_2"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -2454,25 +2481,16 @@
                 ]
               }
             ],
+            "http://schema.org/name": [
+              {
+                "@value": "object_1"
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/declarations/resourceTypes/ta/object_1/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#data-node-properties": [
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/declarations/resourceTypes/ta/object_1"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "description->[(18,4)-(19,0)]"
-                      }
-                    ]
-                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -2483,7 +2501,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(18,17)-(18,21)]"
+                        "@value": "[(18,4)-(19,0)]"
                       }
                     ]
                   },

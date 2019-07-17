@@ -230,9 +230,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   }
 
   private def addClosure(closure: Shape, s: Shape): Shape = {
-    s.closureShapes.retain { c =>
-      c.name.value() != closure.name.value() && c.id == closure.id
-    }
+    s.closureShapes.retain(_.name.value() != closure.name.value())
     s.closureShapes += closure
     context.cache.cacheClosure(closure.id, s)
     s

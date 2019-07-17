@@ -162,14 +162,18 @@ case class DataNodeEmitter(
   }
 
   def objectEmitters(objectNode: ObjectNode): Seq[EntryEmitter] = {
-    objectNode.properties.keys.map { property =>
-      DataPropertyEmitter(property,
-                          objectNode,
-                          ordering,
-                          resolvedLinks,
-                          referencesCollector,
-                          objectNode.propertyAnnotations.getOrElse(property, Annotations()))
-    }.toSeq
+    objectNode
+      .propertyFields()
+      .map { f =>
+        val value = objectNode.fields.getValue(f)
+        DataPropertyEmitter(f.value.name.urlComponentDecoded,
+                            value.value.asInstanceOf[DataNode],
+                            ordering,
+                            resolvedLinks,
+                            referencesCollector,
+                            value.annotations)
+      }
+      .toSeq
   }
 
   def emitObject(objectNode: ObjectNode, b: PartBuilder): Unit = {
@@ -197,39 +201,37 @@ case class DataNodeEmitter(
     linkEmitters(link).foreach(_.emit(b))
 
   def linkEmitters(link: LinkNode): Seq[PartEmitter] = {
-    link.linkedDomainElement.foreach(elem => referencesCollector.update(link.alias, elem))
+    link.linkedDomainElement.foreach(elem => referencesCollector.update(link.alias.value(), elem))
     if (resolvedLinks) {
-      Seq(LinkScalaEmitter(link.alias, link.annotations))
+      Seq(LinkScalaEmitter(link.alias.value(), link.annotations))
     } else {
-      Seq(LinkScalaEmitter(link.value, link.annotations))
+      Seq(LinkScalaEmitter(link.alias.value(), link.annotations))
     }
   }
 
   def scalarEmitter(scalar: ScalarNode): PartEmitter = {
-    scalar.dataType match {
-      case Some(t) if t == xsdString => TextScalarEmitter(scalar.value, scalar.annotations, YType.Str)
+    scalar.dataType.option() match {
+      case Some(t) if t == xsdString => TextScalarEmitter(scalar.value.value(), scalar.annotations, YType.Str)
       case Some(t) if t == xsdInteger =>
-        TextScalarEmitter(scalar.value, scalar.annotations, YType.Int)
+        TextScalarEmitter(scalar.value.value(), scalar.annotations, YType.Int)
       case Some(t) if t == xsdDouble | t == amlNumber =>
-        TextScalarEmitter(scalar.value, scalar.annotations, YType.Float)
-      case Some(t) if t == xsdBoolean => TextScalarEmitter(scalar.value, scalar.annotations, YType.Bool)
+        TextScalarEmitter(scalar.value.value(), scalar.annotations, YType.Float)
+      case Some(t) if t == xsdBoolean => TextScalarEmitter(scalar.value.value(), scalar.annotations, YType.Bool)
       case Some(t) if t == xsdNil     => NullEmitter(scalar.annotations)
-      case _                          => TextScalarEmitter(scalar.value, Annotations(), YType.Str)
+      case _                          => TextScalarEmitter(scalar.value.value(), Annotations(), YType.Str)
     }
   }
 
   override def position(): Position = pos(dataNode.annotations)
 }
 
-case class DataPropertyEmitter(property: String,
-                               dataNode: ObjectNode,
+case class DataPropertyEmitter(key: String,
+                               value: DataNode,
                                ordering: SpecOrdering,
                                resolvedLinks: Boolean = false,
                                referencesCollector: mutable.Map[String, DomainElement] = mutable.Map(),
                                propertyAnnotations: Annotations)(implicit eh: ErrorHandler)
     extends EntryEmitter {
-  val annotations: Annotations = dataNode.propertyAnnotations(property)
-  val propertyValue: DataNode  = dataNode.properties(property)
 
   override def emit(b: EntryBuilder): Unit = {
 
@@ -239,15 +241,15 @@ case class DataPropertyEmitter(property: String,
       .collectFirst({ case e: YMapEntry => Annotations(e.key) })
       .getOrElse(propertyAnnotations)
     b.entry(
-      YNode(yscalarWithRange(property.urlComponentDecoded, YType.Str, keyAnnotations), YType.Str),
+      YNode(yscalarWithRange(key.urlComponentDecoded, YType.Str, keyAnnotations), YType.Str),
       b => {
         // In the current implementation ther can only be one value, we are NOT flattening arrays
-        DataNodeEmitter(propertyValue, ordering, resolvedLinks, referencesCollector)(eh).emit(b)
+        DataNodeEmitter(value, ordering, resolvedLinks, referencesCollector)(eh).emit(b)
       }
     )
   }
 
-  override def position(): Position = pos(annotations)
+  override def position(): Position = pos(value.annotations)
 }
 
 case class RamlAnnotationTypeEmitter(property: CustomDomainProperty, ordering: SpecOrdering)(

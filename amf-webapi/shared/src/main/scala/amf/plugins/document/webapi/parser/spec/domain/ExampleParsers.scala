@@ -9,6 +9,7 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContextType.DEFAULT
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
 import amf.plugins.features.validation.ParserSideValidations.{
@@ -178,7 +179,7 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
               RamlExampleValueAsString(entry.value, example, options).populate()
             }
 
-          AnnotationParser(example, map).parse()
+          AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
           if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
         } else RamlExampleValueAsString(entry.value, example, options).populate()

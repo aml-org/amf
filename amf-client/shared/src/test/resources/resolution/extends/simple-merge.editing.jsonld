@@ -123,6 +123,7 @@
                             "hydra:required": "id->amf://id#10"
                           },
                           "lexical": {
+                            "raml-http:schema": "[(8,8)-(8,15)]",
                             "#16": "[(8,8)-(8,15)]"
                           }
                         }
@@ -268,8 +269,17 @@
                                 ],
                                 "data:value": [
                                   {
-                                    "@value": "a list",
-                                    "@type": "xsd:string"
+                                    "@value": "a list"
+                                  }
+                                ],
+                                "shacl:datatype": [
+                                  {
+                                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                  }
+                                ],
+                                "schema-org:name": [
+                                  {
+                                    "@value": "scalar_3"
                                   }
                                 ],
                                 "smaps": {
@@ -297,8 +307,17 @@
                                     ],
                                     "data:value": [
                                       {
-                                        "@value": "",
-                                        "@type": "xsd:nil"
+                                        "@value": ""
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                                      }
+                                    ],
+                                    "schema-org:name": [
+                                      {
+                                        "@value": "scalar_5"
                                       }
                                     ],
                                     "smaps": {
@@ -308,37 +327,41 @@
                                     }
                                   }
                                 ],
+                                "schema-org:name": [
+                                  {
+                                    "@value": "object_4"
+                                  }
+                                ],
                                 "smaps": {
-                                  "data-node-properties": {
-                                    "#5": "APIKey->[(8,8)-(9,0)]"
-                                  },
                                   "lexical": {
-                                    "data:APIKey": "[(8,15)-(8,15)]",
+                                    "data:APIKey": "[(8,8)-(9,0)]",
                                     "#5": "[(8,0)-(9,0)]"
                                   }
                                 }
                               }
                             ],
+                            "schema-org:name": [
+                              {
+                                "@value": "object_2"
+                              }
+                            ],
                             "smaps": {
-                              "data-node-properties": {
-                                "data:headers": "APIKey->[(8,8)-(9,0)]",
-                                "#3": "description->[(6,6)-(7,0)]#headers->[(7,6)-(9,0)]"
-                              },
                               "lexical": {
-                                "data:headers": "[(8,0)-(9,0)]",
+                                "data:headers": "[(7,6)-(9,0)]",
                                 "#3": "[(6,0)-(9,0)]",
-                                "data:description": "[(6,19)-(6,25)]"
+                                "data:description": "[(6,6)-(7,0)]"
                               }
                             }
                           }
                         ],
+                        "schema-org:name": [
+                          {
+                            "@value": "object_1"
+                          }
+                        ],
                         "smaps": {
-                          "data-node-properties": {
-                            "data:get": "description->[(6,6)-(7,0)]#headers->[(7,6)-(9,0)]",
-                            "#2": "get->[(5,4)-(9,0)]"
-                          },
                           "lexical": {
-                            "data:get": "[(6,0)-(9,0)]",
+                            "data:get": "[(5,4)-(9,0)]",
                             "#2": "[(5,4)-(9,0)]"
                           }
                         }
@@ -422,8 +445,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "a list",
-                        "@type": "xsd:string"
+                        "@value": "a list"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "smaps": {
@@ -451,8 +483,17 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "",
-                            "@type": "xsd:nil"
+                            "@value": ""
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#nil"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_5"
                           }
                         ],
                         "smaps": {
@@ -462,37 +503,41 @@
                         }
                       }
                     ],
+                    "schema-org:name": [
+                      {
+                        "@value": "object_4"
+                      }
+                    ],
                     "smaps": {
-                      "data-node-properties": {
-                        "#5": "APIKey->[(8,8)-(9,0)]"
-                      },
                       "lexical": {
-                        "data:APIKey": "[(8,15)-(8,15)]",
+                        "data:APIKey": "[(8,8)-(9,0)]",
                         "#5": "[(8,0)-(9,0)]"
                       }
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_2"
+                  }
+                ],
                 "smaps": {
-                  "data-node-properties": {
-                    "data:headers": "APIKey->[(8,8)-(9,0)]",
-                    "#3": "description->[(6,6)-(7,0)]#headers->[(7,6)-(9,0)]"
-                  },
                   "lexical": {
-                    "data:headers": "[(8,0)-(9,0)]",
+                    "data:headers": "[(7,6)-(9,0)]",
                     "#3": "[(6,0)-(9,0)]",
-                    "data:description": "[(6,19)-(6,25)]"
+                    "data:description": "[(6,6)-(7,0)]"
                   }
                 }
               }
             ],
+            "schema-org:name": [
+              {
+                "@value": "object_1"
+              }
+            ],
             "smaps": {
-              "data-node-properties": {
-                "data:get": "description->[(6,6)-(7,0)]#headers->[(7,6)-(9,0)]",
-                "#2": "get->[(5,4)-(9,0)]"
-              },
               "lexical": {
-                "data:get": "[(6,0)-(9,0)]",
+                "data:get": "[(5,4)-(9,0)]",
                 "#2": "[(5,4)-(9,0)]"
               }
             }
@@ -519,7 +564,6 @@
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
   }

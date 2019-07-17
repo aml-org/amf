@@ -44,7 +44,7 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   }
 
   test("validation dialect 3 example 1 incorrect") {
-    validate("dialect3.raml", "instance3_incorrect1.raml", 1)
+    validate("dialect3.raml", "instance3_incorrect1.raml", 2)
   }
 
   test("validation dialect 4 example 1 correct") {
@@ -167,6 +167,10 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
 
   test("Can validate oas 2.0 dialect instances") {
     validate("oas20_dialect1.yaml", "oas20_instance1.yaml", numErrors = 0, productionPath)
+  }
+
+  test("Can validate multiple property values with mapTermKey property") {
+    validate("map-term-key.yaml", "map-term-key-instance.yaml", numErrors = 0)
   }
 
   protected def validate(dialect: String, instance: String, numErrors: Int, path: String = basePath) = {

@@ -761,8 +761,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "1",
-                        "@type": "xsd:integer"
+                        "@value": "1"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_2"
                       }
                     ],
                     "smaps": {
@@ -782,8 +791,17 @@
                     ],
                     "data:value": [
                       {
-                        "@value": "Jhon",
-                        "@type": "xsd:string"
+                        "@value": "Jhon"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "schema-org:name": [
+                      {
+                        "@value": "scalar_3"
                       }
                     ],
                     "smaps": {
@@ -793,14 +811,16 @@
                     }
                   }
                 ],
+                "schema-org:name": [
+                  {
+                    "@value": "object_1"
+                  }
+                ],
                 "smaps": {
                   "lexical": {
-                    "data:name": "[(4,8)-(4,14)]",
+                    "data:name": "[(4,2)-(4,14)]",
                     "#13": "[(3,0)-(4,14)]",
-                    "data:id": "[(3,6)-(3,7)]"
-                  },
-                  "data-node-properties": {
-                    "#13": "name->[(4,2)-(4,14)]#id->[(3,2)-(4,0)]"
+                    "data:id": "[(3,2)-(4,0)]"
                   }
                 }
               }
@@ -816,8 +836,9 @@
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(4,14)]",
+                "schema-org:name": "[(2,0)-(4,14)]",
                 "#12": "[(2,0)-(4,14)]",
-                "schema-org:name": "[(2,0)-(4,14)]"
+                "doc:structuredValue": "[(2,9)-(4,14)]"
               },
               "local-element": {
                 "#12": ""
@@ -929,8 +950,17 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "1",
-                            "@type": "xsd:integer"
+                            "@value": "1"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_3"
                           }
                         ],
                         "smaps": {
@@ -950,8 +980,17 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "Jhon",
-                            "@type": "xsd:string"
+                            "@value": "Jhon"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_4"
                           }
                         ],
                         "smaps": {
@@ -961,14 +1000,16 @@
                         }
                       }
                     ],
+                    "schema-org:name": [
+                      {
+                        "@value": "object_2"
+                      }
+                    ],
                     "smaps": {
-                      "data-node-properties": {
-                        "#27": "name->[(5,4)-(6,0)]#id->[(4,4)-(5,0)]"
-                      },
                       "lexical": {
-                        "data:name": "[(5,10)-(5,14)]",
+                        "data:name": "[(5,4)-(6,0)]",
                         "#27": "[(4,0)-(6,0)]",
-                        "data:id": "[(4,8)-(4,9)]"
+                        "data:id": "[(4,4)-(5,0)]"
                       }
                     }
                   },
@@ -989,8 +1030,17 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "2",
-                            "@type": "xsd:integer"
+                            "@value": "2"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_6"
                           }
                         ],
                         "smaps": {
@@ -1010,8 +1060,17 @@
                         ],
                         "data:value": [
                           {
-                            "@value": "Sam",
-                            "@type": "xsd:string"
+                            "@value": "Sam"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "schema-org:name": [
+                          {
+                            "@value": "scalar_7"
                           }
                         ],
                         "smaps": {
@@ -1021,26 +1080,23 @@
                         }
                       }
                     ],
+                    "schema-org:name": [
+                      {
+                        "@value": "object_5"
+                      }
+                    ],
                     "smaps": {
-                      "data-node-properties": {
-                        "#30": "name->[(8,4)-(8,13)]#id->[(7,4)-(8,0)]"
-                      },
                       "lexical": {
-                        "data:name": "[(8,10)-(8,13)]",
+                        "data:name": "[(8,4)-(8,13)]",
                         "#30": "[(7,0)-(8,13)]",
-                        "data:id": "[(7,8)-(7,9)]"
+                        "data:id": "[(7,4)-(8,0)]"
                       }
                     }
                   }
                 ],
-                "data:pos0": [
+                "schema-org:name": [
                   {
-                    "@id": "#27"
-                  }
-                ],
-                "data:pos1": [
-                  {
-                    "@id": "#30"
+                    "@value": "array_1"
                   }
                 ],
                 "smaps": {
@@ -1061,8 +1117,9 @@
               },
               "lexical": {
                 "shacl:raw": "[(3,0)-(8,13)]",
+                "schema-org:name": "[(2,0)-(8,13)]",
                 "#25": "[(2,0)-(8,13)]",
-                "schema-org:name": "[(2,0)-(8,13)]"
+                "doc:structuredValue": "[(2,10)-(8,13)]"
               },
               "local-element": {
                 "#25": ""
@@ -1092,7 +1149,6 @@
       "doc": "http://a.ml/vocabularies/document#",
       "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
       "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
   }

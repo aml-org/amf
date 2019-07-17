@@ -121,8 +121,17 @@
                                     ],
                                     "data:value": [
                                       {
-                                        "@value": "tracked",
-                                        "@type": "xsd:string"
+                                        "@value": "tracked"
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "schema-org:name": [
+                                      {
+                                        "@value": "scalar_1"
                                       }
                                     ],
                                     "smaps": {
@@ -143,7 +152,8 @@
                                   },
                                   "lexical": {
                                     "shacl:raw": "[(17,15)-(17,22)]",
-                                    "#13": "[(17,15)-(17,22)]"
+                                    "#13": "[(17,15)-(17,22)]",
+                                    "doc:structuredValue": "[(17,15)-(17,22)]"
                                   },
                                   "tracked-element": {
                                     "#13": "amf://id#11,amf://id#15"
@@ -227,8 +237,17 @@
                                     ],
                                     "data:value": [
                                       {
-                                        "@value": "tracked",
-                                        "@type": "xsd:string"
+                                        "@value": "tracked"
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "schema-org:name": [
+                                      {
+                                        "@value": "scalar_1"
                                       }
                                     ],
                                     "smaps": {
@@ -249,7 +268,8 @@
                                   },
                                   "lexical": {
                                     "shacl:raw": "[(17,15)-(17,22)]",
-                                    "#13": "[(17,15)-(17,22)]"
+                                    "#13": "[(17,15)-(17,22)]",
+                                    "doc:structuredValue": "[(17,15)-(17,22)]"
                                   },
                                   "tracked-element": {
                                     "#13": "amf://id#11,amf://id#15"
@@ -362,8 +382,17 @@
                 ],
                 "data:value": [
                   {
-                    "@value": "somesome",
-                    "@type": "xsd:string"
+                    "@value": "somesome"
+                  }
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "scalar_1"
                   }
                 ],
                 "smaps": {
@@ -384,8 +413,9 @@
               },
               "lexical": {
                 "shacl:raw": "[(10,11)-(10,19)]",
+                "schema-org:name": "[(10,6)-(11,0)]",
                 "#2": "[(10,6)-(11,0)]",
-                "schema-org:name": "[(10,6)-(11,0)]"
+                "doc:structuredValue": "[(10,11)-(10,19)]"
               }
             }
           },
@@ -415,8 +445,17 @@
                 ],
                 "data:value": [
                   {
-                    "@value": "somesomesome",
-                    "@type": "xsd:string"
+                    "@value": "somesomesome"
+                  }
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "schema-org:name": [
+                  {
+                    "@value": "scalar_1"
                   }
                 ],
                 "smaps": {
@@ -437,8 +476,9 @@
               },
               "lexical": {
                 "shacl:raw": "[(11,11)-(11,23)]",
+                "schema-org:name": "[(11,6)-(13,0)]",
                 "#4": "[(11,6)-(13,0)]",
-                "schema-org:name": "[(11,6)-(13,0)]"
+                "doc:structuredValue": "[(11,11)-(11,23)]"
               }
             }
           }
@@ -472,7 +512,6 @@
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
       "schema-org": "http://schema.org/",
-      "xsd": "http://www.w3.org/2001/XMLSchema#",
       "hydra": "http://www.w3.org/ns/hydra/core#"
     }
   }

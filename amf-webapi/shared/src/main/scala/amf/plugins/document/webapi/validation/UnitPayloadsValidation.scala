@@ -129,10 +129,10 @@ sealed case class DataNodeIndex(private val dataNodes: Seq[DataNode]) {
 
   private def indexSons(dataNode: DataNode): Seq[String] = {
     dataNode match {
-      case obj: ObjectNode => obj.properties.values.flatMap(p => p.id +: indexSons(p)).toSeq
+      case obj: ObjectNode => obj.allProperties().flatMap(p => p.id +: indexSons(p)).toSeq
       case arr: ArrayNode =>
         arr.members.flatMap(m => { m.id +: indexSons(m) })
-      case other => Nil // if other type, dont have childrens, and the root id is indexed at data node entry level.
+      case _ => Nil // if other type, dont have childrens, and the root id is indexed at data node entry level.
     }
   }
 

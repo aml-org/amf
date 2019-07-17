@@ -203,5 +203,21 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("valid-default-facet-of-union-type.raml")
   }
 
+  test("Protocols with case insensitive values") {
+    checkValid("protocols/valid-case-insensitive-values.raml")
+  }
+
+  test("Annotation with type inheritance and allowedTargets facet") {
+    checkValid("annotations/inheritance-with-allowed-targets.raml")
+  }
+
+  test("Date only with fraction example") {
+    validate("fraction-date-only/fraction-date-only.raml")
+  }
+
+  test("Annotation type definition forward referencing data type with same name") {
+    checkValid("annotations/forward-ref-to-type.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

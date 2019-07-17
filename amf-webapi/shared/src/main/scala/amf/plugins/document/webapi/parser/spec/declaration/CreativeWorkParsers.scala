@@ -8,6 +8,7 @@ import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.{YMap, YNode}
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.features.validation.ParserSideValidations.UnexpectedVendor
 
 object OasCreativeWorkParser {
@@ -52,7 +53,7 @@ case class RamlCreativeWorkParser(node: YNode)(implicit val ctx: WebApiContext) 
 
     map.key(url, CreativeWorkModel.Url in documentation)
 
-    AnnotationParser(documentation, map).parse()
+    AnnotationParser(documentation, map, List(VocabularyMappings.documentationItem)).parse()
 
     documentation
   }

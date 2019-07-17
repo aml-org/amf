@@ -82,7 +82,7 @@ private[shape_normalization] case class NormalizationCache() {
   def updateRecursiveTargets(newShape: Shape): NormalizationCache = {
     fixPointCache.values.flatten
       .filter(_.fixpointTarget.exists(_.id == newShape.id))
-      .foreach(_.fixpointTarget = Some(newShape))
+      .foreach(_.withFixpointTarget(newShape))
     this
   }
 

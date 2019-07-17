@@ -7,12 +7,15 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser.parseExtensions
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.resolveAnnotation
+import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
+import amf.plugins.features.validation.ParserSideValidations.InvalidAnnotationTarget
 import org.yaml.model._
 
-case class AnnotationParser(element: DomainElement, map: YMap)(implicit val ctx: WebApiContext) {
+case class AnnotationParser(element: DomainElement, map: YMap, target: List[String] = Nil)(
+    implicit val ctx: WebApiContext) {
   def parse(): Unit = {
-    val extensions    = parseExtensions(element.id, map)
+    val extensions    = parseExtensions(element.id, map, target)
     val oldExtensions = Option(element.customDomainProperties).getOrElse(Nil)
     if (extensions.nonEmpty) element.withCustomDomainProperties(oldExtensions ++ extensions)
   }
@@ -32,14 +35,15 @@ case class AnnotationParser(element: DomainElement, map: YMap)(implicit val ctx:
 }
 
 object AnnotationParser {
-  def parseExtensions(parent: String, map: YMap)(implicit ctx: WebApiContext): Seq[DomainExtension] =
+  def parseExtensions(parent: String, map: YMap, target: List[String] = Nil)(
+      implicit ctx: WebApiContext): Seq[DomainExtension] =
     map.entries.flatMap { entry =>
       val key = entry.key.asOption[YScalar].map(_.text).getOrElse(entry.key.toString)
-      resolveAnnotation(key).map(ExtensionParser(_, parent, entry).parse().add(Annotations(entry)))
+      resolveAnnotation(key).map(ExtensionParser(_, parent, entry, target).parse().add(Annotations(entry)))
     }
 }
 
-private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry)(
+private case class ExtensionParser(annotation: String, parent: String, entry: YMapEntry, target: List[String] = Nil)(
     implicit val ctx: WebApiContext) {
   def parse(): DomainExtension = {
     val id              = s"$parent/extension/$annotation"
@@ -48,8 +52,10 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
     val dataNode        = DataNodeParser(entry.value, parent = Some(propertyId)).parse()
     // TODO
     // throw a parser-side warning validation error if no annotation can be found
-    val customDomainProperty = ctx.declarations.findAnnotation(annotation, SearchScope.All)
+    val customDomainProperty = ctx.declarations
+      .findAnnotation(annotation, SearchScope.All)
       .getOrElse(CustomDomainProperty(Annotations(entry)).withId(propertyId).withName(annotation))
+    validateAllowedTargets(customDomainProperty)
     domainExtension.adopted(parent)
     domainExtension
       .withExtension(dataNode)
@@ -57,4 +63,23 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
     domainExtension.fields.setWithoutId(DomainExtensionModel.DefinedBy, customDomainProperty)
     domainExtension
   }
+
+  private def validateAllowedTargets(customDomainProperty: CustomDomainProperty): Unit = {
+    (Option(customDomainProperty.domain), target) match {
+      case (Some(allowedTargets), _) if allowedTargets.nonEmpty && target.nonEmpty =>
+        if (allowedTargets.map(_.value()).intersect(target).isEmpty) {
+          val ramlTarget         = VocabularyMappings.uriToRaml.get(target.head)
+          val ramlAllowedTargets = allowedTargets.flatMap(uri => VocabularyMappings.uriToRaml.get(uri.value()))
+          ctx.violation(
+            InvalidAnnotationTarget,
+            parent,
+            s"Annotation $annotation not allowed in target ${ramlTarget
+              .getOrElse("")}, allowed targets: ${ramlAllowedTargets.mkString(", ")}",
+            entry
+          )
+        }
+      case _ =>
+    }
+  }
+
 }

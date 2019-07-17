@@ -249,8 +249,69 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("unresolved-parameter.raml", Some("unresolved-parameter.report"))
   }
 
+  test("Invalid protocols in root level") {
+    validate("protocols/invalid-root-level-unkown-values.raml", Some("invalid-root-level-unkown-values.report"))
+  }
+
+  test("Protocols may not be defined as empty array") {
+    validate("protocols/empty-protocols-root-and-method.raml", Some("invalid-empty-array.report"))
+  }
+
+  test("Method level protocol validations") {
+    validate("protocols/invalid-method-level.raml", Some("invalid-method-level.report"))
+  }
+
   test("Discriminator inheritance") {
     validate("discriminator/discriminator-inheritance.raml", Some("discriminator-inheritance.report"))
   }
 
+  test("Discriminator basic behavior") {
+    validate("discriminator/valid/basic-behavior.raml")
+  }
+
+  test("Unknown discriminator") {
+    validate("discriminator/valid/unknown-discriminator.raml")
+  }
+
+  test("Validating general cases of allowed targets in annotations") {
+    validate("annotations/allowed-targets/allowed-targets.raml", Some("allowed-target-annotations.report"))
+  }
+
+  test("Resource types and traits using annotations with allowed target") {
+    validate("annotations/allowed-targets/resource-types-and-traits.raml",
+             Some("allowed-target-resource-types-traits.report"))
+  }
+
+  test("Annotations with allowed target in extension and overlay") {
+    validate("annotations/allowed-targets/overlay.raml", Some("allowed-target-overlay-extension.report"))
+  }
+
+  test("Missing discriminator property") {
+    validate("discriminator/invalid/missing-discriminator-property.raml",
+             Some("missing-discriminator-property.report"))
+  }
+
+  test("Invalid payload in RAML 08") {
+    validate("08/invalid-payload.raml", Some("invalid-payload-08.report"))
+  }
+
+  test("JSON Schema false recursion") {
+    validate("json-schema/api.raml")
+  }
+
+  test("Invalid value in properties facet") {
+    validate("invalid-value-properties-facet.raml", Some("invalid-value-properties-facet.report"))
+  }
+
+  test("Invalid security scheme declarations with invalid facets") {
+    validate("securitySchemes/invalid-security-schemes-facets.raml", Some("invalid-security-schemes-facets.report"))
+  }
+
+  test("Invalid signatures in OAuth 1.0 security scheme") {
+    validate("securitySchemes/invalid-oauth1-signatures.raml", Some("invalid-oauth1-signatures.report"))
+  }
+
+  test("JSON examples with string keys") {
+    validate("examples/json-example-with-string-keys/api.raml")
+  }
 }

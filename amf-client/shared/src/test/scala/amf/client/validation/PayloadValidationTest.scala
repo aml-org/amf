@@ -42,5 +42,6 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps {
         .map(r => assert(r.conforms))
     }
   }
+
   override implicit def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 }
