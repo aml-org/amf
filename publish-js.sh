@@ -75,7 +75,7 @@ else
         echo "Publishing new RC"
         echo "NOTE: no intelligence here, just publishes the RC version, make sure it does not exist."
 
-        npm version ${LATEST_SNAPSHOT} --force --no-git-tag-version
+        npm version ${PROJECT_VERSION} --force --no-git-tag-version
         npm publish --tag rc
 
         echo "Finished RC publish"
