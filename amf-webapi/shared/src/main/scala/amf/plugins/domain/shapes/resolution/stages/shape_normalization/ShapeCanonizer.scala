@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, FieldEntry}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
@@ -113,7 +113,6 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
   protected def canonicalInheritance(shape: Shape): Shape = {
     if (endpointSimpleInheritance(shape)) {
-
       val referencedShape = shape.inherits.head
       aggregateExamples(shape, referencedShape)
       if (!referencedShape
@@ -136,7 +135,8 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
 
         // we save this information to connect the references once we have computed the minShape
         if (hasDiscriminator(canonicalSuperNode))
-          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(canonicalSuperNode.asInstanceOf[NodeShape])
+          superShapeswithDiscriminator = superShapeswithDiscriminator ++ Seq(
+            canonicalSuperNode.asInstanceOf[NodeShape])
 
         canonicalSuperNode match {
           case chain: InheritanceChain => inheritedIds ++= (Seq(canonicalSuperNode.id) ++ chain.inheritedIds)
@@ -235,33 +235,26 @@ sealed case class ShapeCanonizer()(implicit val context: NormalizationContext) e
     }
   }
 
-  def endpointSimpleInheritance(shape: Shape): Boolean = {
-    shape match {
-      case any: AnyShape if any.annotations.contains(classOf[DeclaredElement]) => false
-      case any: AnyShape =>
-        val singleInheritance = any.inherits.size == 1
-        val effectiveFields = shape.fields.fields().filter { f =>
-          f.field != ShapeModel.Inherits &&
-          f.field != AnyShapeModel.Examples &&
-          f.field != AnyShapeModel.Name
-        //          f.field != AnyShapeModel.Name &&
-//          f.field != ScalarShapeModel.DataType // ignore default datatype value
-        }
-        if (singleInheritance) {
-          val superType = any.inherits.head
-          effectiveFields.foldLeft(true) {
-            case (acc, f) =>
-              superType.fields.entry(f.field) match {
-                case Some(e) if f.field == NodeShapeModel.Closed =>
-                  acc && e.value.value.asInstanceOf[AmfScalar].toBool == f.value.value.asInstanceOf[AmfScalar].toBool
-                case _ => f.field == NodeShapeModel.Closed && !superType.isInstanceOf[NodeShape]
-              }
-          }
-        } else {
-          false
-        }
-      case _ => false
-    }
+  def endpointSimpleInheritance(shape: Shape): Boolean = shape match {
+    case any: AnyShape if any.annotations.contains(classOf[DeclaredElement]) => false
+    case any: AnyShape if any.inherits.size == 1 =>
+      val superType       = any.inherits.head
+      val ignoredFields   = Seq(ShapeModel.Inherits, AnyShapeModel.Examples, AnyShapeModel.Name)
+      val effectiveFields = shape.fields.fields().filterNot(f => ignoredFields.contains(f.field))
+      validFields(effectiveFields, superType)
+    case _ => false
+  }
+
+  // To be a simple inheritance, all the effective fields of the shape must be the same in the superType
+  private def validFields(entries: Iterable[FieldEntry], superType: Shape): Boolean = {
+    entries.foreach(e => {
+      superType.fields.entry(e.field) match {
+        case Some(s) if s.value.value.equals(e.value.value)                              => // Valid
+        case _ if e.field == NodeShapeModel.Closed && !superType.isInstanceOf[NodeShape] => // Valid
+        case _                                                                           => return false
+      }
+    })
+    true
   }
 
   protected def hasDiscriminator(shape: Shape): Boolean = {

@@ -9,6 +9,6 @@ Level: Violation
   Message: should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/08/date-query-parameter.raml#/web-api/end-points/%2Ftickets/get/request/parameter/createdAfter/scalar/createdAfter/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/08/date-query-parameter.raml#/web-api/end-points/%2Ftickets/get/request/parameter/createdAfter/scalar/createdAfter/example/default-example
   Position: Some(LexicalInformation([(16,17)-(16,36)]))
   Location: file://amf-client/shared/src/test/resources/validations/08/date-query-parameter.raml

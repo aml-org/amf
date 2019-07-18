@@ -9,6 +9,6 @@ Level: Violation
   Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml#/declarations/types/scalar/tigerName/example/new
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml#/declarations/types/scalar/tigerName/example/new
   Position: Some(LexicalInformation([(14,10)-(14,11)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/multiple-examples-simple-types/input.raml

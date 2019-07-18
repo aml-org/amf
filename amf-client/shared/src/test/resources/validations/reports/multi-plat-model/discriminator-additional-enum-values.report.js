@@ -9,6 +9,6 @@ Level: Violation
   Message: enumProp should be equal to one of the allowed values
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/discriminator/invalid/additional-enum-values.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson/schema/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/discriminator/invalid/additional-enum-values.raml#/web-api/end-points/%2Fendpoint1/get/request/application%2Fjson/schema/example/default-example
   Position: Some(LexicalInformation([(26,0)-(28,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/discriminator/invalid/additional-enum-values.raml

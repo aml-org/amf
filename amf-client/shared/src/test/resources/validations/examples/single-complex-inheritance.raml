@@ -1,0 +1,36 @@
+#%RAML 1.0
+title: inline-union-type-not-validated
+types:
+  Phone:
+    type: object
+    properties:
+      manufacturer:
+        type: string
+      numberOfSIMCards:
+        type: number
+      kind: string
+  Notebook:
+    type: object
+    properties:
+      manufacturer:
+        type: string
+      numberOfUSBPorts:
+        type: number
+      kind: string
+
+
+/test:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Phone | Notebook
+            properties:
+              prop1: string
+            maxProperties: 3
+            example:
+              manufacturer: asd
+              numberOfSIMCards: 12
+              prop1: aa
+              kind: asd

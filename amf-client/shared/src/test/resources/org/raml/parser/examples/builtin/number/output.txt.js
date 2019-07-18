@@ -9,6 +9,6 @@ Level: Violation
   Message: age should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml#/declarations/types/User/example/bad-int
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml#/declarations/types/User/example/bad-int
   Position: Some(LexicalInformation([(20,0)-(22,21)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/builtin/number/input.raml

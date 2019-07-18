@@ -9,7 +9,7 @@ Level: Violation
   Message: should have required property 'alive'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad0/user/object_1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad0/user/object_1
   Position: Some(LexicalInformation([(22,0)-(23,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml
 
@@ -17,6 +17,6 @@ Level: Violation
   Message: alive should be boolean
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad1/user/object_1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad1/user/object_1
   Position: Some(LexicalInformation([(25,0)-(26,15)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml

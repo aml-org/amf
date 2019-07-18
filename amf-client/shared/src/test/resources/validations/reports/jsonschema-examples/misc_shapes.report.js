@@ -9,6 +9,6 @@ Level: Violation
   Message: should have required property 'emailAddresses'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/misc_shapes.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/misc_shapes.raml#/web-api/end-points/%2Fep1/get/200/application%2Fjson/schema/example/default-example
   Position: Some(LexicalInformation([(40,20)-(44,21)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/misc_shapes.raml

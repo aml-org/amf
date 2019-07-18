@@ -9,6 +9,6 @@ Level: Violation
   Message: should match pattern "^[^0-9]*$"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/08/pattern.raml#/web-api/end-points/%2Fresources/get/request/parameter/param/scalar/param/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/08/pattern.raml#/web-api/end-points/%2Fresources/get/request/parameter/param/scalar/param/example/default-example
   Position: Some(LexicalInformation([(11,21)-(11,24)]))
   Location: file://amf-client/shared/src/test/resources/validations/08/pattern.raml

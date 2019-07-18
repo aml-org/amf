@@ -9,7 +9,7 @@ Level: Violation
   Message: should match exactly one schema in oneOf
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example
   Position: Some(LexicalInformation([(51,0)-(54,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/oneOf/api3.raml
 

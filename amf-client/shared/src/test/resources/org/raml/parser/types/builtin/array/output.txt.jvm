@@ -20,7 +20,7 @@ Level: Violation
   Message: expected minimum item count: 2, found: 1
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-min
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-min
   Position: Some(LexicalInformation([(49,15)-(49,21)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
 
@@ -28,7 +28,7 @@ Level: Violation
   Message: expected maximum item count: 3, found: 4
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-max
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-max
   Position: Some(LexicalInformation([(50,15)-(50,39)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
 
@@ -36,7 +36,7 @@ Level: Violation
   Message: expected type: JSONArray, found: String
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type
   Position: Some(LexicalInformation([(51,16)-(51,20)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml
 
@@ -44,6 +44,6 @@ Level: Violation
   Message: expected type: JSONArray, found: JSONObject
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type2
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml#/declarations/types/array/Colors/example/bad-type2
   Position: Some(LexicalInformation([(53,0)-(54,19)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/array/input.raml

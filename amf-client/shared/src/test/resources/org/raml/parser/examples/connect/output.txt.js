@@ -9,6 +9,6 @@ Level: Violation
   Message: orders[1].items[0].quantity should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/connect/input.raml#/web-api/end-points/%2Forders/get/200/application%2Fjson/schema/example/multiple-orders
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/examples/connect/input.raml#/web-api/end-points/%2Forders/get/200/application%2Fjson/schema/example/multiple-orders
   Position: Some(LexicalInformation([(42,0)-(59,37)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/connect/input.raml

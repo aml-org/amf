@@ -19,7 +19,7 @@ Level: Violation
   Message: family[1] should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/badExample
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/badExample
   Position: Some(LexicalInformation([(26,0)-(31,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
@@ -58,6 +58,6 @@ users[2].age should be integer
   Message: authors[1] should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/two
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/two
   Position: Some(LexicalInformation([(73,0)-(84,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml

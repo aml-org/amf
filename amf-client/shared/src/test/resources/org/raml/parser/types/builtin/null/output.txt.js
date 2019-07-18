@@ -19,6 +19,6 @@ middlename should be null
   Message: should have required property 'middlename'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/missing-field
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml#/declarations/types/User/example/missing-field
   Position: Some(LexicalInformation([(19,0)-(21,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/null/input.raml

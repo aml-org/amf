@@ -9,6 +9,6 @@ Level: Violation
   Message: prop2 should be number
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/inline-type-invalid/input.raml#/web-api/end-points/%2Fteams/get/request/application%2Fxml/schema/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/inline-type-invalid/input.raml#/web-api/end-points/%2Fteams/get/request/application%2Fxml/schema/example/default-example
   Position: Some(LexicalInformation([(14,0)-(15,21)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/inline-type-invalid/input.raml

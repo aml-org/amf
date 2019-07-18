@@ -9,7 +9,7 @@ Level: Violation
   Message: should be object
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml#/declarations/types/Person/example/name
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml#/declarations/types/Person/example/name
   Position: Some(LexicalInformation([(2,6)-(2,10)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/named-examples-facet-no-key/example.raml
 
@@ -17,6 +17,6 @@ Level: Violation
   Message: should be object
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml#/declarations/types/Person/example/age
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/named-examples-facet-no-key/api.raml#/declarations/types/Person/example/age
   Position: Some(LexicalInformation([(3,5)-(3,7)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/named-examples-facet-no-key/example.raml

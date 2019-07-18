@@ -9,7 +9,7 @@ Level: Violation
   Message: should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/from/scalar/from/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/from/scalar/from/example/default-example
   Position: Some(LexicalInformation([(33,17)-(33,36)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml
 
@@ -17,7 +17,7 @@ Level: Violation
   Message: should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/from/scalar/from/scalar_1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/from/scalar/from/scalar_1
   Position: Some(LexicalInformation([(34,17)-(34,42)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml
 
@@ -25,7 +25,7 @@ Level: Violation
   Message: should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/to/scalar/to/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/to/scalar/to/example/default-example
   Position: Some(LexicalInformation([(39,17)-(39,36)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml
 
@@ -33,6 +33,6 @@ Level: Violation
   Message: should match format "RFC2616"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/to/scalar/to/scalar_1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml#/web-api/end-points/%2Fstores%2Fcount/get/request/parameter/to/scalar/to/scalar_1
   Position: Some(LexicalInformation([(40,17)-(40,29)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/raml-dates/lockUnlockStats.raml

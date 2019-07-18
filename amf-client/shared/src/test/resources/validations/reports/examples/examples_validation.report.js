@@ -9,7 +9,7 @@ Level: Violation
   Message: b should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/A/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/A/example/default-example
   Position: Some(LexicalInformation([(13,0)-(16,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
@@ -17,7 +17,7 @@ Level: Violation
   Message: should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/scalar/D/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/scalar/D/example/default-example
   Position: Some(LexicalInformation([(33,13)-(33,17)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 
@@ -25,7 +25,7 @@ Level: Violation
   Message: should have required property 'g'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml#/declarations/types/H/example/default-example
   Position: Some(LexicalInformation([(52,12)-(55,13)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples_validation.raml
 

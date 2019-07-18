@@ -9,6 +9,6 @@ Level: Violation
   Message: should be <= 30
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api3.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api3.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
   Position: Some(LexicalInformation([(29,21)-(29,23)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api3.raml

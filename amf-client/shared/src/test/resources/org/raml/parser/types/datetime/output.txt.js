@@ -9,6 +9,6 @@ Level: Violation
   Message: should match format "date-time"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml#/declarations/types/scalar/when/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml#/declarations/types/scalar/when/example/default-example
   Position: Some(LexicalInformation([(6,17)-(6,24)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/datetime/input.raml

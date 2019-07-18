@@ -9,6 +9,6 @@ Level: Violation
   Message: name should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/types/Person/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/types/Person/example/default-example
   Position: Some(LexicalInformation([(8,0)-(8,18)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml

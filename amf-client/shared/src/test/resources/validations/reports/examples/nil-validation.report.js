@@ -9,6 +9,6 @@ Level: Violation
   Message: middlename should be null
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml#/declarations/types/User/example/wrong-type
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml#/declarations/types/User/example/wrong-type
   Position: Some(LexicalInformation([(15,0)-(17,31)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/nil_validation.raml

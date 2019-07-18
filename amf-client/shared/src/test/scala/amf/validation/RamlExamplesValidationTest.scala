@@ -292,5 +292,9 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/named-examples-seq-invalid/api.raml", Some("named-examples-seq-invalid.report"))
   }
 
+  test("Shape with single inheritance but no simple") {
+    validate("/examples/single-complex-inheritance.raml", Some("single-complex-inheritance.report"))
+  }
+
   override val hint: Hint = RamlYamlHint
 }

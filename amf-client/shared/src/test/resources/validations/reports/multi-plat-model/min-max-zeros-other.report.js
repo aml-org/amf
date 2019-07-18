@@ -9,6 +9,6 @@ Level: Violation
   Message: should be <= 33
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/facets/min-max-zeros-other.raml#/shape/property/SSN%3F/scalar/SSN%3F/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/facets/min-max-zeros-other.raml#/shape/property/SSN%3F/scalar/SSN%3F/example/default-example
   Position: Some(LexicalInformation([(7,13)-(7,19)]))
   Location: file://amf-client/shared/src/test/resources/validations/facets/min-max-zeros-other.raml

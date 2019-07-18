@@ -9,7 +9,7 @@ Level: Violation
   Message: should be multiple of 3
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml#/declarations/types/scalar/MyCustomType/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml#/declarations/types/scalar/MyCustomType/example/default-example
   Position: Some(LexicalInformation([(10,15)-(10,20)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml
 
@@ -17,7 +17,7 @@ Level: Violation
   Message: should be >= 2.5
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml#/declarations/types/scalar/OtherCustomType/example/bad1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml#/declarations/types/scalar/OtherCustomType/example/bad1
   Position: Some(LexicalInformation([(18,14)-(18,17)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml
 
@@ -25,6 +25,6 @@ Level: Violation
   Message: should be <= 5.3
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml#/declarations/types/scalar/OtherCustomType/example/bad2
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml#/declarations/types/scalar/OtherCustomType/example/bad2
   Position: Some(LexicalInformation([(19,14)-(19,17)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/builtin/number-float-wrong-example/input.raml

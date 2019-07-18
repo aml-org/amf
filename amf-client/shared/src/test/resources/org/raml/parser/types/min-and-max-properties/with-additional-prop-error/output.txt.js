@@ -9,6 +9,6 @@ Level: Violation
   Message: should NOT have less than 4 properties
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/with-additional-prop-error/input.raml#/declarations/types/Initial_comments/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/with-additional-prop-error/input.raml#/declarations/types/Initial_comments/example/default-example
   Position: Some(LexicalInformation([(11,0)-(14,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/types/min-and-max-properties/with-additional-prop-error/input.raml

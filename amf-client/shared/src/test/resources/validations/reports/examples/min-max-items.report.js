@@ -9,7 +9,7 @@ Level: Violation
   Message: should NOT have less than 2 items
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/min-max-items.raml#/declarations/types/array/Colors/example/bad-min
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/min-max-items.raml#/declarations/types/array/Colors/example/bad-min
   Position: Some(LexicalInformation([(10,15)-(10,21)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/min-max-items.raml
 
@@ -17,6 +17,6 @@ Level: Violation
   Message: should NOT have more than 3 items
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/min-max-items.raml#/declarations/types/array/Colors/example/bad-max
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/min-max-items.raml#/declarations/types/array/Colors/example/bad-max
   Position: Some(LexicalInformation([(11,15)-(11,39)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/min-max-items.raml

@@ -9,6 +9,6 @@ Level: Violation
   Message: a.a.b should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/recursives/props1.raml#/declarations/types/A/example/invalid
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/recursives/props1.raml#/declarations/types/A/example/invalid
   Position: Some(LexicalInformation([(16,0)-(21,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/recursives/props1.raml

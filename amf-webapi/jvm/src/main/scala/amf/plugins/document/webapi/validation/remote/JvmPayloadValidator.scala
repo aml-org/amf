@@ -143,7 +143,7 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName) e
         message = makeValidationMessage(validationException),
         level = SeverityLevels.VIOLATION,
         targetNode = element.map(_.id).getOrElse(""),
-        targetProperty = None,
+        targetProperty = element.map(_.id),
         validationId = ExampleValidationErrorSpecification.id,
         position = element.flatMap(_.position()),
         location = element.flatMap(_.location()),

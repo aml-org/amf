@@ -9,7 +9,7 @@ Level: Violation
   Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/stringAnnotation/scalar_1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/stringAnnotation/scalar_1
   Position: Some(LexicalInformation([(6,20)-(6,21)]))
   Location: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml
 
@@ -17,7 +17,7 @@ Level: Violation
   Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/end-points/%2Fresource/stringAnnotation/scalar_1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/end-points/%2Fresource/stringAnnotation/scalar_1
   Position: Some(LexicalInformation([(10,22)-(10,23)]))
   Location: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml
 
@@ -25,7 +25,7 @@ Level: Violation
   Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/end-points/%2Fresource/name/stringAnnotation/scalar_1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/end-points/%2Fresource/name/stringAnnotation/scalar_1
   Position: Some(LexicalInformation([(14,24)-(14,25)]))
   Location: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml
 
@@ -33,6 +33,6 @@ Level: Violation
   Message: should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/end-points/%2Fresource/description/stringAnnotation/scalar_1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml#/web-api/end-points/%2Fresource/description/stringAnnotation/scalar_1
   Position: Some(LexicalInformation([(18,24)-(18,25)]))
   Location: file://amf-client/shared/src/test/resources/validations/annotations/annotating-scalar-valued-nodes.raml

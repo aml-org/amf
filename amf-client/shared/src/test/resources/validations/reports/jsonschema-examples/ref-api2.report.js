@@ -9,6 +9,6 @@ Level: Violation
   Message: bar should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example
   Position: Some(LexicalInformation([(31,0)-(31,23)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api2.raml
