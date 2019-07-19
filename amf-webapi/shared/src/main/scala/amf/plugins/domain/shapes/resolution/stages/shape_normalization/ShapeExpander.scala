@@ -6,6 +6,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Annotations
+import amf.core.traversal.ModelTraversalRegistry
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.resolution.stages.RecursionErrorRegister
@@ -22,8 +23,8 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
   def normalize(): Shape = normalize(root)
 
-  protected val traversed: IdsTraversionCheck =
-    IdsTraversionCheck().withAllowedCyclesInstances(Seq(classOf[UnresolvedShape]))
+  protected val traversal: ModelTraversalRegistry =
+    ModelTraversalRegistry().withAllowedCyclesInstances(Seq(classOf[UnresolvedShape]))
 
   protected def ensureHasId(shape: Shape): Unit = {
     if (Option(shape.id).isEmpty) {
@@ -36,19 +37,19 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     }
   }
 
-  private def recursiveNormalization(shape: Shape): Shape = traversed.runPushed(_ => normalize(shape))
+  private def recursiveNormalization(shape: Shape): Shape = traversal.runNested(_ => normalize(shape))
 
   override def normalizeAction(shape: Shape): Shape = {
     shape match {
-      case l: Linkable if l.isLink => recursionRegister.recursionAndError(root, Some(root.id), shape, traversed)
+      case l: Linkable if l.isLink => recursionRegister.recursionAndError(root, Some(root.id), shape, traversal)
 
-      case _ if traversed.has(shape) && !shape.isInstanceOf[RecursiveShape] =>
-        recursionRegister.recursionAndError(root, None, shape, traversed)
+      case _ if traversal.shouldFailIfRecursive(shape) && !shape.isInstanceOf[RecursiveShape] =>
+        recursionRegister.recursionAndError(root, None, shape, traversal)
 
       case _ =>
         ensureHasId(shape)
-        traversed + shape.id
-        traversed.runPushed(_ => {
+        traversal + shape.id
+        traversal.runNested(_ => {
           shape match {
             case union: UnionShape       => expandUnion(union)
             case scalar: ScalarShape     => expandAny(scalar)
@@ -60,7 +61,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
             case nil: NilShape           => nil
             case node: NodeShape         => expandNode(node)
             case recursive: RecursiveShape =>
-              recursionRegister.recursionError(recursive, recursive, traversed)
+              recursionRegister.recursionError(recursive, recursive, traversal)
             case any: AnyShape => expandAny(any)
           }
         })
@@ -74,7 +75,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       val newInherits = shape.inherits.map {
         case r: RecursiveShape if r.fixpoint.option().exists(_.equals(shape.id)) =>
           r.fixpointTarget.foreach(target => addClosure(target, shape))
-          recursionRegister.recursionError(shape, r, traversed) // direct recursion
+          recursionRegister.recursionError(shape, r, traversal) // direct recursion
         case r: RecursiveShape =>
           r.fixpointTarget.foreach(target => addClosure(target, shape))
           r
@@ -167,7 +168,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     if (mandatory)
       array.inherits.collect({ case arr: ArrayShape if arr.items.isInstanceOf[RecursiveShape] => arr }).foreach { f =>
         val r = f.items.asInstanceOf[RecursiveShape]
-        recursionRegister.recursionError(array, r, traversed, Some(array.id))
+        recursionRegister.recursionError(array, r, traversal, Some(array.id))
         r.fixpointTarget.foreach(target => addClosure(target, array))
       }
     if (Option(oldItems).isDefined) {
@@ -303,11 +304,11 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
 
   private def traverseOptionalShapeFacet(shape: Shape) = {
     shape.linkTarget match {
-      case Some(t) => traversed.runWithIgnoredIds(() => normalize(shape), Set(root.id, t.id))
+      case Some(t) => traversal.runWithIgnoredIds(() => normalize(shape), Set(root.id, t.id))
       case None if shape.inherits.nonEmpty =>
-        traversed.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
+        traversal.runWithIgnoredIds(() => normalize(shape), shape.inherits.map(_.id).toSet + root.id)
       case _ if shape.isInstanceOf[RecursiveShape] => shape
-      case _                                       => traversed.runWithIgnoredIds(() => normalize(shape), Set(root.id))
+      case _                                       => traversal.runWithIgnoredIds(() => normalize(shape), Set(root.id))
     }
   }
 
@@ -316,7 +317,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
     val oldAnyOf = union.fields.getValue(UnionShapeModel.AnyOf)
     if (Option(oldAnyOf).isDefined) {
       val newAnyOf = union.anyOf.map { u =>
-        val unionMember = traversed.recursionAllowed(() => recursiveNormalization(u), u.id)
+        val unionMember = traversal.recursionAllowed(() => recursiveNormalization(u), u.id)
         unionMember match {
           case rec: RecursiveShape =>
             rec.fixpointTarget.foreach(target => addClosure(target, union))

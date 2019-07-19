@@ -2,7 +2,7 @@ package amf.iterator
 
 import amf.compiler.CompilerTestBuilder
 import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.iterator.{AmfElementStrategy, DomainElementStrategy}
+import amf.core.traversal.iterator.{AmfElementStrategy, DomainElementStrategy}
 import amf.core.metamodel.domain.common.DescriptionField
 import amf.core.model.document.Document
 import amf.core.model.document.FieldsFilter.Local

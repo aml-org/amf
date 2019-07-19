@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.validation
 
 import amf.core.annotations.DomainExtensionAnnotation
-import amf.core.iterator.AmfElementStrategy
+import amf.core.traversal.iterator.AmfElementStrategy
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.extensions.DomainExtension

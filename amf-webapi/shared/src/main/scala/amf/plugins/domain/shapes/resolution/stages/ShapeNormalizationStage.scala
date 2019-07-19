@@ -6,6 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
+import amf.core.traversal.ModelTraversalRegistry
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization._
 import amf.plugins.features.validation.ResolutionSideValidations.RecursiveShapeSpecification
@@ -58,21 +59,21 @@ private[stages] case class RecursionErrorRegister() {
     r
   }
 
-  def recursionAndError(root: Shape, base: Option[String], s: Shape, traversed: IdsTraversionCheck)(
+  def recursionAndError(root: Shape, base: Option[String], s: Shape, traversal: ModelTraversalRegistry)(
       implicit context: NormalizationContext): RecursiveShape = {
     val recursion = buildRecursion(base, s)
-    recursionError(root, recursion, traversed: IdsTraversionCheck, Some(root.id))
+    recursionError(root, recursion, traversal: ModelTraversalRegistry, Some(root.id))
   }
 
   def recursionError(original: Shape,
                      r: RecursiveShape,
-                     traversed: IdsTraversionCheck,
+                     traversal: ModelTraversalRegistry,
                      checkId: Option[String] = None)(implicit context: NormalizationContext): RecursiveShape = {
 
     val canRegister = !avoidRegister.contains(r.id)
     if (!r.supportsRecursion
           .option()
-          .getOrElse(false) && !traversed.avoidError(r, checkId) && canRegister) {
+          .getOrElse(false) && !traversal.avoidError(r, checkId) && canRegister) {
       context.errorHandler.violation(
         RecursiveShapeSpecification,
         original.id,
@@ -82,7 +83,7 @@ private[stages] case class RecursionErrorRegister() {
         original.location()
       )
       avoidRegister += r.id
-    } else if (traversed.avoidError(r, checkId)) {
+    } else if (traversal.avoidError(r, checkId)) {
       r.withSupportsRecursion(true)
     }
     r
