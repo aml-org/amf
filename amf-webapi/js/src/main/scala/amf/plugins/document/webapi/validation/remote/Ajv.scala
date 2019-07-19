@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.validation.remote
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSGlobal, JSImport}
+import scala.scalajs.js.annotation.JSGlobal
 
 object Draft4MetaSchema {
   val text =
@@ -30,11 +30,11 @@ class Ajv(options: js.Object) extends js.Object {
 object AjvValidator {
   private lazy val options = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": [\"int32\", \"int64\", \"int16\", \"float\", \"double\", \"byte\", \"binary\"], \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6}")
+      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": true, \"validateSchema\": false, \"multipleOfPrecision\": 6}")
     .asInstanceOf[js.Object]
   private lazy val fastOptions = js.JSON
     .parse(
-      "{\"schemaId\":\"auto\", \"unknownFormats\": [\"int32\", \"int64\", \"int16\", \"float\", \"double\", \"byte\", \"binary\"], \"allErrors\": false, \"validateSchema\": false, \"multipleOfPrecision\": 6}")
+      "{\"schemaId\":\"auto\", \"unknownFormats\": \"ignore\", \"allErrors\": false, \"validateSchema\": false, \"multipleOfPrecision\": 6}")
     .asInstanceOf[js.Object]
 
   def apply(): Ajv = {
