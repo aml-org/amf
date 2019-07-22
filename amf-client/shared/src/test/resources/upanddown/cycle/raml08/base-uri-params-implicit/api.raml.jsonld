@@ -27,7 +27,7 @@
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/apiContract#url": [
+            "http://a.ml/vocabularies/core#urlTemplate": [
               {
                 "@value": "https://app.zencoder.com/api/{version}/{year}"
               }
@@ -59,7 +59,7 @@
                     "@value": "path"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/version/scalar/version",
                     "@type": [
@@ -190,7 +190,7 @@
                     "@value": "path"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/https%3A%2F%2Fapp.zencoder.com%2Fapi%2F%7Bversion%7D%2F%7Byear%7D/parameter/year/scalar/year",
                     "@type": [
@@ -258,7 +258,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#url"
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -349,7 +349,7 @@
                             "@value": "header"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml08/base-uri-params-implicit/api.raml#/web-api/end-points/%2Frequired/post/request/parameter/Zencoder-Api-Key/scalar/Zencoder-Api-Key",
                             "@type": [

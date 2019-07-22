@@ -58,12 +58,12 @@
                           "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "apiContract:mediaType": [
+                        "core:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#26/linked_1",
                             "@type": [
@@ -175,12 +175,12 @@
                           "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "apiContract:mediaType": [
+                        "core:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#1/linked_1",
                             "@type": [
@@ -555,7 +555,7 @@
                 }
               }
             ],
-            "shacl:raw": [
+            "doc:raw": [
               {
                 "@value": "\n    name: Pepe\n"
               }
@@ -565,7 +565,7 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "shacl:raw": "[(12,0)-(13,0)]",
+                "doc:raw": "[(12,0)-(13,0)]",
                 "#2": "[(11,2)-(13,0)]",
                 "doc:structuredValue": "[(11,10)-(13,0)]"
               }
@@ -638,7 +638,7 @@
                 }
               }
             ],
-            "shacl:raw": [
+            "doc:raw": [
               {
                 "@value": "\n    age: 45\n"
               }
@@ -648,7 +648,7 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "shacl:raw": "[(19,0)-(20,0)]",
+                "doc:raw": "[(19,0)-(20,0)]",
                 "#5": "[(18,2)-(20,0)]",
                 "doc:structuredValue": "[(18,10)-(20,0)]"
               }
@@ -814,7 +814,7 @@
                 }
               }
             ],
-            "shacl:raw": [
+            "doc:raw": [
               {
                 "@value": "\n    name: Pepe\n"
               }
@@ -824,7 +824,7 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "shacl:raw": "[(12,0)-(13,0)]",
+                "doc:raw": "[(12,0)-(13,0)]",
                 "#2": "[(11,2)-(13,0)]",
                 "doc:structuredValue": "[(11,10)-(13,0)]"
               }
@@ -999,7 +999,7 @@
                 }
               }
             ],
-            "shacl:raw": [
+            "doc:raw": [
               {
                 "@value": "\n    age: 45\n"
               }
@@ -1009,7 +1009,7 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "shacl:raw": "[(19,0)-(20,0)]",
+                "doc:raw": "[(19,0)-(20,0)]",
                 "#5": "[(18,2)-(20,0)]",
                 "doc:structuredValue": "[(18,10)-(20,0)]"
               }

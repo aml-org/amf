@@ -58,22 +58,22 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/externalfragment/xmlschema.raml#/web-api/end-points/%2Fendpoint/get/request/application%2Fjson/schema/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#SchemaShape",
+                              "http://a.ml/vocabularies/shapes#SchemaShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://www.w3.org/ns/shacl#mediaType": [
+                            "http://a.ml/vocabularies/core#mediaType": [
                               {
                                 "@value": "application/xml"
                               }
@@ -83,7 +83,7 @@
                                 "@value": "schema"
                               }
                             ],
-                            "http://www.w3.org/ns/shacl#raw": [
+                            "http://a.ml/vocabularies/document#raw": [
                               {
                                 "@value": "<?xml version=\"1.0\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\">\n    <xs:element name=\"User\" type=\"UserType\"/>\n    <xs:complexType name=\"UserType\">\n        <xs:sequence>\n            <xs:element type=\"xs:string\" name=\"name\"/>\n            <xs:element type=\"xs:string\" name=\"lastName\"/>\n        </xs:sequence>\n    </xs:complexType>\n</xs:schema>"
                               }

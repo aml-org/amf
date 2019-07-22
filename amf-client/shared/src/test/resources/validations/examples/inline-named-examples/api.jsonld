@@ -58,12 +58,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations/put/request/application%2Fjson/array/schema",
                             "@type": [
@@ -347,12 +347,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations/get/200/application%2Fjson/array/schema",
                             "@type": [
@@ -708,12 +708,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200/application%2Fjson/schema",
                             "@type": [
@@ -1011,7 +1011,7 @@
                     "@value": "path"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/parameter/organization_id/scalar/schema",
                     "@type": [
@@ -1107,7 +1107,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#schema"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1249,7 +1249,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-individual-response.raml#/",
         "@type": [
-          "http://a.ml/vocabularies/document#NamedExample",
+          "http://a.ml/vocabularies/apiContract#NamedExampleFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -1502,7 +1502,7 @@
                 ]
               }
             ],
-            "http://www.w3.org/ns/shacl#raw": [
+            "http://a.ml/vocabularies/document#raw": [
               {
                 "@value": "\n    alternate_id: 1\n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n   \n"
               }
@@ -1531,7 +1531,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://www.w3.org/ns/shacl#raw"
+                        "@value": "http://a.ml/vocabularies/document#raw"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1621,7 +1621,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/data-types/organization-data-type.raml",
         "@type": [
-          "http://a.ml/vocabularies/document#DataType",
+          "http://a.ml/vocabularies/shapes#DataTypeFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -2452,7 +2452,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/validations/examples/inline-named-examples/examples/organization/organization-array-response.raml#/",
         "@type": [
-          "http://a.ml/vocabularies/document#NamedExample",
+          "http://a.ml/vocabularies/apiContract#NamedExampleFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -2904,7 +2904,7 @@
                 ]
               }
             ],
-            "http://www.w3.org/ns/shacl#raw": [
+            "http://a.ml/vocabularies/document#raw": [
               {
                 "@value": "\n  -\n   \n    category: \n      id: 39691\n      name: Religious and Spiritual\n    created_at: 2013-01-02T22:21:34Z\n    \n  -\n    category: \n      id: 61111   \n      name: Service\n    created_at: 2016-02-01T16:37:02Z\n   "
               }
@@ -2933,7 +2933,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://www.w3.org/ns/shacl#raw"
+                        "@value": "http://a.ml/vocabularies/document#raw"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

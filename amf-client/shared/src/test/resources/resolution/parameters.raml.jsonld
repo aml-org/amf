@@ -27,7 +27,7 @@
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/apiContract#url": [
+            "http://a.ml/vocabularies/core#urlTemplate": [
               {
                 "@value": "http://{env}.localhost:4567"
               }
@@ -42,7 +42,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#url"
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -133,7 +133,7 @@
                             "@value": "query"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/parameters.raml#/web-api/end-points/%2Fa%2F%7Ba%7D/get/request/parameter/b/scalar/schema",
                             "@type": [
@@ -206,7 +206,7 @@
                             "@value": "path"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/parameters.raml#/web-api/http%3A%2F%2F%7Benv%7D.localhost%3A4567/parameter/env/scalar/schema",
                             "@type": [
@@ -277,7 +277,7 @@
                             "@value": "path"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/parameters.raml#/web-api/end-points/%2Fa%2F%7Ba%7D/parameter/a/scalar/schema",
                             "@type": [

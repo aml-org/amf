@@ -240,7 +240,7 @@ object JsCustomValidations {
     "fileParameterMustBeInFormData" ->
       """|function(parameter) {
          |  var binding = parameter["apiContract:binding"];
-         |  var schema = parameter["apiContract:schema"];
+         |  var schema = parameter["raml-shapes:schema"];
          |  var typeList = schema[0]["@type"];
          |  if(Array.isArray(typeList) && typeList.indexOf("raml-shapes:FileShape") != -1){
          |    return binding == 'formData';

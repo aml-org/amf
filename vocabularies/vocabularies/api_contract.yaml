@@ -6,32 +6,12 @@ uses:
   core: core.yaml
   shacl: external/shacl.yaml
 classTerms:
-
-  # document model
-  UserDocumentationFragment:
-    extends: doc.Fragment
-  DataTypeFragment:
-    extends: doc.Fragment
-  NamedExampleFragment:
-    extends: doc.Fragment
-  ResourceTypeFragment:
-    extends: doc.Fragment
-  TraitFragment:
-    extends: doc.Fragment
   AnnotationTypeDeclarationFragment:
-    extends: doc.Fragment
-  SecuritySchemeFragment:
-    extends: doc.Fragment
-  WebAPIDocument:
-    extends: doc.Document
-  ExtensionDocument:
-    extends: doc.Document
-  OverlayDocument:
-    extends: doc.Document
-  LibraryModule:
-    extends: doc.Module
-
-  # domain model
+    displayName: Annotation Type Fragment
+    description: Fragment encoding a RAML annotation type
+    extends:
+      - doc.Fragment
+      - doc.Unit
   Callback:
     displayName: Callback
     description: Model defining the information for a HTTP callback/ webhook
@@ -50,24 +30,68 @@ classTerms:
   Example:
     displayName: Example
     description: Example value for a schema inside an API
-    extends: doc.ExternalSource
+  Extension:
+    displayName: Extension
+    description: API spec information designed to be applied and compelement the information of a base specification. RAML extensions and overlays are examples of extensions.
+    extends:
+      - doc.Document
+      - doc.Fragment
+      - doc.Module
+      - doc.Unit
+      - doc.DocumentExtension
   IriTemplateMapping:
     displayName: Iri Template
-  NamedExamples:
-    displayName: Examples
-    description: Wrapper for a list of examples
+  NamedExampleFragment:
+    displayName: Named Example Fragment
+    description: Fragment encoding a RAML named example
+    extends:
+      - doc.Fragment
+      - doc.Unit
   Operation:
     displayName: Operation
     description: Action that can be executed using a particular HTTP invocation
+  Overlay:
+    displayName: Overlay Model
+    description: Model defining a RAML overlay
+    extends:
+      - doc.Document
+      - doc.Fragment
+      - doc.Module
+      - doc.Unit
+      - doc.DocumentExtension
   Parameter:
     displayName: Parameter
     description: Piece of data required or returned by an Operation
+  ParametrizedResourceType:
+    displayName: Parametrized Resource Type
+    description: RAML resource type that can accept parameters
+    extends: doc.ParametrizedDeclaration
+  ParametrizedTrait:
+    displayName: Parametrized Trait
+    description: RAML trait with declared parameters
+    extends: doc.ParametrizedDeclaration
   Payload:
     displayName: Payload
     description: Encoded payload using certain media-type
+  PayloadFragment:
+    displayName: Payload Fragment
+    description: Fragment encoding HTTP payload information
+    extends:
+      - doc.Fragment
+      - doc.Unit
   Request:
     displayName: Request
     description: Request information for an operation
+  ResourceType:
+    displayName: Resource Type
+    description: Type of document base unit encoding a RAML resource type
+    extends: doc.AbstractDeclaration
+  ResourceTypeFragment:
+    displayName: Resource Type Fragment
+    description: Fragment encoding a RAML resource type
+    extends:
+      - doc.Fragment
+      - doc.Unit
   Response:
     displayName: Response
     description: Response information for an operation
@@ -83,6 +107,22 @@ classTerms:
   TemplatedLink:
     displayName: Templated Link
     description: Templated link containing URL template and variables mapping
+  Trait:
+    displayName: Trait
+    description: Type of document base unit encoding a RAML trait
+    extends: doc.AbstractDeclaration
+  TraitFragment:
+    displayName: Trait Fragment
+    description: Fragment encoding a RAML trait
+    extends:
+      - doc.Fragment
+      - doc.Unit
+  UserDocumentationFragment:
+    displayName: Documentation Item Fragment
+    description: Fragment encoding a RAML documentation item
+    extends:
+      - doc.Fragment
+      - doc.Unit
   WebAPI:
     displayName: Web API
     description: Top level element describing a HTTP API
@@ -122,7 +162,7 @@ propertyTerms:
   examples:
     displayName: examples
     description: Examples for a particular domain element
-    range: NamedExamples
+    range: Example
   expects:
     displayName: expects
     description: Request information required by the operation
@@ -154,10 +194,6 @@ propertyTerms:
     displayName: mapping
     description: Variable mapping for the URL template
     range: IriTemplateMapping
-  mediaType:
-    displayName: media type
-    description: Media types supported in the payload
-    range: string
   method:
     displayName: method
     description: HTTP method required to invoke the operation
@@ -188,7 +224,7 @@ propertyTerms:
     range: string
   queryString:
     displayName: query string
-    description: Query string associated to this security scheme
+    description: Query string for the communication model
     range: shacl.Shape
   requestBody:
     displayName: request body
@@ -243,43 +279,7 @@ propertyTerms:
     displayName: uriTemplate
     description: URI template that will be used to generate the URI of the parsed nodeds in the graph
     range: string
-  url:
-    displayName: url
-    description: URL (potentially a template) for the server
-    range: string
   variable:
     displayName: variable
     description: Variable defined inside an URL tempplate
     range: string
-
-  # new document model properties
-  location:
-    displayName: location
-    description: URL where contract can be accessed
-    range: uri
-  reference:
-    displayName: reference
-    description: reference between documents containing fragments of API contract
-    range: doc.Unit
-  internalReference:
-    extends: reference
-    displayName: internal reference
-    description: reference to a different document in this spec not exposed as publicly
-    range: doc.Unit
-  externalReference:
-    extends: reference
-    displayName: external reference
-    description: reference to a document exposed as a public spec
-    range: doc.Unit
-  extends:
-    displayName: extends
-    description: Structural extension relationship between domain elements in the contract
-    range: doc.DomainElement
-  link-label:
-    displayName: link label
-    description: human readable name for a composition relationship between domain elements in the contract
-    range: string
-  link-target:
-    displayName: link target
-    description: composition relationship between two domain elements in a contract
-    range: doc.DomainElement

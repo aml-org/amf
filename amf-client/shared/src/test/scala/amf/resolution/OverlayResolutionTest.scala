@@ -49,7 +49,7 @@ class OverlayResolutionTest extends ResolutionTest {
     cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "types/")
   }
 
-  test("HERE_HERE Overlay with complex types to Raml") {
+  test("Overlay with complex types to Raml") {
     cycle("input.raml", "output.raml", RamlYamlHint, Raml, basePath + "types-add/")
   }
 

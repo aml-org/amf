@@ -27,7 +27,7 @@
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/apiContract#url": [
+            "http://a.ml/vocabularies/core#urlTemplate": [
               {
                 "@value": "test.com/accounts"
               }
@@ -42,7 +42,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#url"
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -123,12 +123,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/users_accounts/api.raml#/web-api/end-points/%2Fusers/get/200/application%2Fjson/array/schema",
                             "@type": [
@@ -383,12 +383,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/users_accounts/api.raml#/web-api/end-points/%2Fusers%2F%7Bid%7D/get/200/application%2Fjson/application%2Fjson",
                             "@type": [
@@ -574,7 +574,7 @@
                     "@value": "path"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/users_accounts/api.raml#/web-api/end-points/%2Fusers%2F%7Bid%7D/parameter/id/scalar/id",
                     "@type": [
@@ -704,12 +704,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/users_accounts/api.raml#/web-api/end-points/%2Fusers%2F%7Bid%7D%2Faccount/get/200/application%2Fjson/application%2Fjson",
                             "@type": [
@@ -895,7 +895,7 @@
                     "@value": "path"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/users_accounts/api.raml#/web-api/end-points/%2Fusers%2F%7Bid%7D%2Faccount/parameter/id/scalar/id",
                     "@type": [

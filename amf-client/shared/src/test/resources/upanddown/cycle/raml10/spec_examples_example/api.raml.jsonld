@@ -83,7 +83,7 @@
                             "@value": "header"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/spec_examples_example/api.raml#/web-api/end-points/%2Forganization/post/request/parameter/UserID/scalar/schema",
                             "@type": [
@@ -167,7 +167,7 @@
                                     ]
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#raw": [
+                                "http://a.ml/vocabularies/document#raw": [
                                   {
                                     "@value": "SWED-123"
                                   }
@@ -196,7 +196,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#raw"
+                                            "@value": "http://a.ml/vocabularies/document#raw"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -320,7 +320,7 @@
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/apiContract#schema"
+                                    "@value": "http://a.ml/vocabularies/shapes#schema"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -365,12 +365,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/spec_examples_example/api.raml#/web-api/end-points/%2Forganization/post/request/application%2Fjson/schema",
                             "@type": [
@@ -620,7 +620,7 @@
                                     ]
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#raw": [
+                                "http://a.ml/vocabularies/document#raw": [
                                   {
                                     "@value": " # needs to be declared since instance contains a 'value' property\n            name: Doe Enterprise\n            value: Silver\n"
                                   }
@@ -649,7 +649,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#raw"
+                                            "@value": "http://a.ml/vocabularies/document#raw"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -900,12 +900,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/spec_examples_example/api.raml#/web-api/end-points/%2Forganization/get/201/application%2Fjson/schema",
                             "@type": [
@@ -1101,7 +1101,7 @@
                                     ]
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#raw": [
+                                "http://a.ml/vocabularies/document#raw": [
                                   {
                                     "@value": "\n                name: Acme\n"
                                   }
@@ -1130,7 +1130,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#raw"
+                                            "@value": "http://a.ml/vocabularies/document#raw"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1423,7 +1423,7 @@
                                     ]
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#raw": [
+                                "http://a.ml/vocabularies/document#raw": [
                                   {
                                     "@value": " # validate against the available facets for the map value of an example\n                  name: Software Corp\n                  address: 35 Central Street\n                  value: Gold # validate against an instance of the `value` property"
                                   }
@@ -1452,7 +1452,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#raw"
+                                            "@value": "http://a.ml/vocabularies/document#raw"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2122,7 +2122,7 @@
                 ]
               }
             ],
-            "http://www.w3.org/ns/shacl#raw": [
+            "http://a.ml/vocabularies/document#raw": [
               {
                 "@value": "\n      name: Bob\n      lastname: Marley\n"
               }
@@ -2151,7 +2151,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://www.w3.org/ns/shacl#raw"
+                        "@value": "http://a.ml/vocabularies/document#raw"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

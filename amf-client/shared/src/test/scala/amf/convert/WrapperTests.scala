@@ -51,8 +51,29 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
   private val aml_doc = "file://vocabularies/vocabularies/aml_doc.yaml"
+  private val aml_meta = "file://vocabularies/vocabularies/aml_meta.yaml"
+  private val api_contract = "file://vocabularies/vocabularies/api_contract.yaml"
+  private val core = "file://vocabularies/vocabularies/core.yaml"
+  private val data_model = "file://vocabularies/vocabularies/data_model.yaml"
+  private val data_shapes = "file://vocabularies/vocabularies/data_shapes.yaml"
+  private val security_model = "file://vocabularies/vocabularies/security.yaml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
+
+  def testVocabulary(file: String, numClasses: Int, numProperties: Int) = {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- amf.Core.parser(Aml.name, "application/yaml").parseFileAsync(file).asFuture
+    } yield {
+      val declarations = unit.asInstanceOf[Vocabulary].declares.asSeq
+
+      val classes    = declarations.collect { case term: ClassTerm    => term }
+      val properties = declarations.collect { case prop: PropertyTerm => prop }
+
+      assert(classes.size == numClasses)
+      assert(properties.size == numProperties)
+    }
+  }
 
   test("Parsing raml 1.0 test (detect)") {
     for {
@@ -460,18 +481,31 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
    */
 
   test("Vocabularies parsing aml_doc") {
-    for {
-      _    <- AMF.init().asFuture
-      unit <- amf.Core.parser(Aml.name, "application/yaml").parseFileAsync(aml_doc).asFuture
-    } yield {
-      val declarations = unit.asInstanceOf[Vocabulary].declares.asSeq
+    testVocabulary(aml_doc, 14, 25)
+  }
 
-      val classes    = declarations.collect { case term: ClassTerm    => term }
-      val properties = declarations.collect { case prop: PropertyTerm => prop }
+  test("Vocabularies parsing aml_meta") {
+    testVocabulary(aml_meta, 17, 26)
+  }
 
-      assert(classes.size == 19)
-      assert(properties.size == 24)
-    }
+  test("Vocabularies parsing api_contract") {
+    testVocabulary(api_contract, 28, 41)
+  }
+
+  test("Vocabularies parsing core") {
+    testVocabulary(core, 3, 15)
+  }
+
+  test("Vocabularies parsing data_model") {
+    testVocabulary(data_model, 5, 1)
+  }
+
+  test("Vocabularies parsing data_shapes") {
+    testVocabulary(data_shapes, 14, 28)
+  }
+
+  test("Vocabularies parsing security_model") {
+    testVocabulary(security_model, 10, 17)
   }
 
   test("Parsing text document with base url") {

@@ -4,11 +4,15 @@ usage: |-
   Vocabulary defining a default set of classes to map data structures composed of recursive records of fields,
   like the ones used in JSON or YAML into a RDF graph.
   They can be validated using data shapes.
+uses:
+  rdf: external/rdf.yaml
 classTerms:
   Array:
     displayName: Array Node
     description: Node that represents a dynamic array data structure
-    extends: Node
+    extends:
+      - rdf.Seq
+      - Node
   Link:
     displayName: Link Node
     description: Node that represents a dynamic link in a data structure

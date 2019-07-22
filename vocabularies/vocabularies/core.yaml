@@ -46,7 +46,7 @@ propertyTerms:
     range: string
   provider:
     displayName: provider
-    description: The API provider
+    description: Organization providing some kind of asset or service
     range: Organization
   summary:
     displayName: summary
@@ -64,6 +64,10 @@ propertyTerms:
     displayName: url
     description: URL identifying the organization
     range: uri
+  urlTemplate:
+    displayName: urlTemplate
+    description: URL (potentially a template) for the server
+    range: string
   version:
     displayName: version
     description: Version of the API

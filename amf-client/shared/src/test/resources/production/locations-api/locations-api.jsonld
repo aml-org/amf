@@ -138,7 +138,7 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default",
                             "@type": [
@@ -452,7 +452,7 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml#/web-api/end-points/%2Fstr/get/200/default/scalar/default",
                             "@type": [
@@ -764,7 +764,7 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml#/web-api/end-points/%2Fobj/get/200/default/body",
                             "@type": [
@@ -973,7 +973,7 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/locations-api/locations-api.raml#/web-api/end-points/%2Farr/get/200/default/array/body",
                             "@type": [
@@ -3127,7 +3127,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/locations-api/exchange_modules/a6d4cdc7-ecb0-4315-a6a6-216c71ba0b54/locations-examples/1.0.8/locations-collection-examples.raml#/",
         "@type": [
-          "http://a.ml/vocabularies/document#NamedExample",
+          "http://a.ml/vocabularies/apiContract#NamedExampleFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -4078,7 +4078,7 @@
                 ]
               }
             ],
-            "http://www.w3.org/ns/shacl#raw": [
+            "http://a.ml/vocabularies/document#raw": [
               {
                 "@value": "\n  - id: 8624\n    addressType: STORE\n    country: USA\n    state: CA\n    city: San Francisco\n    street_address: 610 Old Mason Street\n    zip: 94129\n  - id: 8625\n    addressType: STORE\n    country: USA\n    state: CA\n    city: San Francisco\n    street_address:  1590 Bryant St\n    zip: 94103\n  - id: 8626\n    addressType: STORE\n    country: USA\n    state: CA\n    city: Berkeley\n    street_address:  2727 Milvia St\n    zip: 94703"
               }
@@ -4107,7 +4107,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://www.w3.org/ns/shacl#raw"
+                        "@value": "http://a.ml/vocabularies/document#raw"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

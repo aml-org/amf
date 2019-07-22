@@ -27,14 +27,14 @@
               "apiContract:Server",
               "doc:DomainElement"
             ],
-            "apiContract:url": [
+            "core:urlTemplate": [
               {
                 "@value": "aa-bbb.com/apis"
               }
             ],
             "smaps": {
               "lexical": {
-                "apiContract:url": "[(4,0)-(6,0)]"
+                "core:urlTemplate": "[(4,0)-(6,0)]"
               },
               "synthesized-field": {
                 "#25": "true"
@@ -113,12 +113,12 @@
                           "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "apiContract:mediaType": [
+                        "core:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#22",
                             "@type": [
@@ -1111,8 +1111,8 @@
     ],
     "@context": {
       "@base": "amf://id",
-      "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "doc": "http://a.ml/vocabularies/document#",
       "apiContract": "http://a.ml/vocabularies/apiContract#",
       "core": "http://a.ml/vocabularies/core#"

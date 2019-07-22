@@ -131,13 +131,21 @@ propertyTerms:
     description: Mappig of module base unit for a particular dialect
     range: DocumentMapping
   mapProperty:
-    displayName: map property
-    description: Marks the mapping as a 'map' mapping syntax
+    displayName: map label property
+    description: Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty
+    range: string
+  mapTermProperty:
+    displayName: map term property uri
+    description: "Marks the mapping as a 'map' mapping syntax. "
     range: uri
-  mapValueProperty:
-    displayName: map value property
+  mapTermValueProperty:
+    displayName: map term value property
     description: Marks the mapping as a 'map value' mapping syntax
     range: uri
+  mapValueProperty:
+    displayName: map label value property
+    description: Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty
+    range: string
   mappedNode:
     displayName: mapped node
     description: Node in the dialect definition associated to this mapping
@@ -149,6 +157,9 @@ propertyTerms:
   properties:
     displayName: properties
     description: Properties that have the ClassTerm in the domain
+    range: uri
+  resolvedExtends:
+    displayName: resolvedExtends
     range: uri
   rootDocument:
     displayName: root document

@@ -27,7 +27,7 @@
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/apiContract#url": [
+            "http://a.ml/vocabularies/core#urlTemplate": [
               {
                 "@value": "https://mocksvc.mulesoft.com/mocks/e5686b9d-885a-4be9-b95f-f3cf607eb467"
               }
@@ -42,7 +42,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#url"
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -138,7 +138,7 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Flocations/get/200/default/array/default",
                             "@type": [
@@ -1617,7 +1617,7 @@
                                     ]
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#raw": [
+                                "http://a.ml/vocabularies/document#raw": [
                                   {
                                     "@value": "\n  - id: 8624\n    addressType: STORE\n    country: USA\n    state: CA\n    city: San Francisco\n    street_address: 610 Old Mason Street\n    zip: 94129\n  - id: 8625\n    addressType: STORE\n    country: USA\n    state: CA\n    city: San Francisco\n    street_address:  1590 Bryant St\n    zip: 94103\n  - id: 8626\n    addressType: STORE\n    country: USA\n    state: CA\n    city: Berkeley\n    street_address:  2727 Milvia St\n    zip: 94703"
                                   }
@@ -1646,7 +1646,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#raw"
+                                            "@value": "http://a.ml/vocabularies/document#raw"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1943,7 +1943,7 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Fstr/get/200/default/scalar/default",
                             "@type": [
@@ -2271,7 +2271,7 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Fobj/get/200/default/body",
                             "@type": [
@@ -2517,7 +2517,7 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/production/raml10/locations-api/api.raml#/web-api/end-points/%2Farr/get/200/default/array/body",
                             "@type": [

@@ -77,7 +77,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "custom_auth"
           }
@@ -234,7 +234,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/security#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -277,7 +277,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "basic_auth"
           }
@@ -335,7 +335,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/security#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -354,7 +354,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "oauth_2_0"
           }
@@ -396,7 +396,7 @@
                 "@value": "header"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#schema": [
+            "http://a.ml/vocabularies/shapes#schema": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                 "@type": [
@@ -492,7 +492,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#schema"
+                        "@value": "http://a.ml/vocabularies/shapes#schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -562,7 +562,7 @@
                 "@value": "query"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#schema": [
+            "http://a.ml/vocabularies/shapes#schema": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-security-schemes.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema",
                 "@type": [
@@ -658,7 +658,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#schema"
+                        "@value": "http://a.ml/vocabularies/shapes#schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -968,7 +968,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/security#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1011,7 +1011,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "api_key"
           }
@@ -1029,7 +1029,7 @@
               "http://a.ml/vocabularies/security#Settings",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/security#name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "HeaderName"
               }
@@ -1073,7 +1073,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/security#name"
+                        "@value": "http://a.ml/vocabularies/core#name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1123,7 +1123,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/security#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1166,7 +1166,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "digest_auth"
           }
@@ -1224,7 +1224,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/security#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1243,7 +1243,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "oauth_1_0"
           }
@@ -1401,7 +1401,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/security#name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

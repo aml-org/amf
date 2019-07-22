@@ -27,7 +27,7 @@
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/apiContract#url": [
+            "http://a.ml/vocabularies/core#urlTemplate": [
               {
                 "@value": "https://{basic}.amazon.{withPattern}.com/{object}"
               }
@@ -59,7 +59,7 @@
                     "@value": true
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/complex-servers.json#/web-api/https%3A%2F%2F%7Bbasic%7D.amazon.%7BwithPattern%7D.com%2F%7Bobject%7D/parameter/basic/scalar/schema",
                     "@type": [
@@ -130,7 +130,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#schema"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -193,7 +193,7 @@
                     "@value": true
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/complex-servers.json#/web-api/https%3A%2F%2F%7Bbasic%7D.amazon.%7BwithPattern%7D.com%2F%7Bobject%7D/parameter/withPattern/scalar/schema",
                     "@type": [
@@ -281,7 +281,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#schema"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -339,7 +339,7 @@
                     "@value": true
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/complex-servers.json#/web-api/https%3A%2F%2F%7Bbasic%7D.amazon.%7BwithPattern%7D.com%2F%7Bobject%7D/parameter/object/schema",
                     "@type": [
@@ -639,7 +639,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#schema"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -687,7 +687,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#url"
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

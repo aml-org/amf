@@ -78,7 +78,7 @@
                             "@value": "query"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#14",
                             "@type": [
@@ -118,7 +118,7 @@
                             "apiContract:required": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                           },
                           "lexical": {
-                            "apiContract:schema": "[(6,8)-(6,12)]",
+                            "raml-shapes:schema": "[(6,8)-(6,12)]",
                             "#13": "[(6,8)-(6,12)]"
                           }
                         }
@@ -150,7 +150,7 @@
               {
                 "@id": "#10",
                 "@type": [
-                  "doc:ParametrizedResourceType",
+                  "apiContract:ParametrizedResourceType",
                   "doc:ParametrizedDeclaration",
                   "doc:DomainElement"
                 ],
@@ -163,7 +163,7 @@
                   {
                     "@id": "#2",
                     "@type": [
-                      "doc:ResourceType",
+                      "apiContract:ResourceType",
                       "doc:AbstractDeclaration",
                       "doc:DomainElement"
                     ],
@@ -320,7 +320,7 @@
           {
             "@id": "#2",
             "@type": [
-              "doc:ResourceType",
+              "apiContract:ResourceType",
               "doc:AbstractDeclaration",
               "doc:DomainElement"
             ],

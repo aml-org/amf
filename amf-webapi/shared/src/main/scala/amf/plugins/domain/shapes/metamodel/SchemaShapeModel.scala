@@ -3,14 +3,14 @@ package amf.plugins.domain.shapes.metamodel
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
 import amf.core.metamodel.domain._
-import amf.core.vocabulary.Namespace.Shacl
+import amf.core.vocabulary.Namespace.{Shapes, Core}
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.models.SchemaShape
 
 trait SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
   val MediaType = Field(Str,
-                        Shacl + "mediaType",
-                        ModelDoc(ExternalModelVocabularies.Shacl, "media type", "Media type associated to a shape"))
+                        Core + "mediaType",
+                        ModelDoc(ModelVocabularies.Core, "media type", "Media type associated to a shape"))
 
   val specificFields = List(MediaType)
   override val fields: List[Field] = specificFields ++
@@ -18,7 +18,7 @@ trait SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
     DomainElementModel.fields ++
     LinkableElementModel.fields
 
-  override val `type`: List[ValueType] = List(Shacl + "SchemaShape") ++ AnyShapeModel.`type`
+  override val `type`: List[ValueType] = List(Shapes + "SchemaShape") ++ AnyShapeModel.`type`
 
   override def modelInstance = SchemaShape()
 

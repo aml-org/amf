@@ -105,7 +105,7 @@
                                 "@value": "header"
                               }
                             ],
-                            "http://a.ml/vocabularies/apiContract#schema": [
+                            "http://a.ml/vocabularies/shapes#schema": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                                 "@type": [
@@ -202,7 +202,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/apiContract#schema"
+                                        "@value": "http://a.ml/vocabularies/shapes#schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -272,7 +272,7 @@
                                 "@value": "query"
                               }
                             ],
-                            "http://a.ml/vocabularies/apiContract#schema": [
+                            "http://a.ml/vocabularies/shapes#schema": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema",
                                 "@type": [
@@ -343,7 +343,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/apiContract#schema"
+                                        "@value": "http://a.ml/vocabularies/shapes#schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -410,12 +410,12 @@
                                   "http://a.ml/vocabularies/apiContract#Payload",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/apiContract#mediaType": [
+                                "http://a.ml/vocabularies/core#mediaType": [
                                   {
                                     "@value": "application/json"
                                   }
                                 ],
-                                "http://a.ml/vocabularies/apiContract#schema": [
+                                "http://a.ml/vocabularies/shapes#schema": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401/application%2Fjson/schema",
                                     "@type": [
@@ -710,7 +710,7 @@
                                   "http://a.ml/vocabularies/security#Scope",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/security#name": [
+                                "http://a.ml/vocabularies/core#name": [
                                   {
                                     "@value": "profile"
                                   }
@@ -722,7 +722,7 @@
                                   "http://a.ml/vocabularies/security#Scope",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/security#name": [
+                                "http://a.ml/vocabularies/core#name": [
                                   {
                                     "@value": "history"
                                   }
@@ -734,7 +734,7 @@
                                   "http://a.ml/vocabularies/security#Scope",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/security#name": [
+                                "http://a.ml/vocabularies/core#name": [
                                   {
                                     "@value": "ADMINISTRATOR"
                                   }
@@ -1296,7 +1296,7 @@
                             "@value": "path"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/web-api/end-points/%2Fusers%2F%7Buserid%7D%2Fgists/parameter/userid/scalar/userid",
                             "@type": [
@@ -1453,7 +1453,7 @@
                                 "@value": "header"
                               }
                             ],
-                            "http://a.ml/vocabularies/apiContract#schema": [
+                            "http://a.ml/vocabularies/shapes#schema": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                                 "@type": [
@@ -1550,7 +1550,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/apiContract#schema"
+                                        "@value": "http://a.ml/vocabularies/shapes#schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1620,7 +1620,7 @@
                                 "@value": "query"
                               }
                             ],
-                            "http://a.ml/vocabularies/apiContract#schema": [
+                            "http://a.ml/vocabularies/shapes#schema": [
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema",
                                 "@type": [
@@ -1691,7 +1691,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/apiContract#schema"
+                                        "@value": "http://a.ml/vocabularies/shapes#schema"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1758,12 +1758,12 @@
                                   "http://a.ml/vocabularies/apiContract#Payload",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/apiContract#mediaType": [
+                                "http://a.ml/vocabularies/core#mediaType": [
                                   {
                                     "@value": "application/json"
                                   }
                                 ],
-                                "http://a.ml/vocabularies/apiContract#schema": [
+                                "http://a.ml/vocabularies/shapes#schema": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401/application%2Fjson/schema",
                                     "@type": [
@@ -2058,7 +2058,7 @@
                                   "http://a.ml/vocabularies/security#Scope",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/security#name": [
+                                "http://a.ml/vocabularies/core#name": [
                                   {
                                     "@value": "profile"
                                   }
@@ -2070,7 +2070,7 @@
                                   "http://a.ml/vocabularies/security#Scope",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/security#name": [
+                                "http://a.ml/vocabularies/core#name": [
                                   {
                                     "@value": "history"
                                   }
@@ -2082,7 +2082,7 @@
                                   "http://a.ml/vocabularies/security#Scope",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/security#name": [
+                                "http://a.ml/vocabularies/core#name": [
                                   {
                                     "@value": "ADMINISTRATOR"
                                   }
@@ -2286,7 +2286,7 @@
                               "http://a.ml/vocabularies/security#Scope",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/security#name": [
+                            "http://a.ml/vocabularies/core#name": [
                               {
                                 "@value": "ADMINISTRATOR"
                               }
@@ -2505,7 +2505,7 @@
                 "@value": "header"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#schema": [
+            "http://a.ml/vocabularies/shapes#schema": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/Authorization/scalar/schema",
                 "@type": [
@@ -2602,7 +2602,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#schema"
+                        "@value": "http://a.ml/vocabularies/shapes#schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2672,7 +2672,7 @@
                 "@value": "query"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#schema": [
+            "http://a.ml/vocabularies/shapes#schema": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/parameter/access_token/scalar/schema",
                 "@type": [
@@ -2743,7 +2743,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#schema"
+                        "@value": "http://a.ml/vocabularies/shapes#schema"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2810,12 +2810,12 @@
                   "http://a.ml/vocabularies/apiContract#Payload",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/apiContract#mediaType": [
+                "http://a.ml/vocabularies/core#mediaType": [
                   {
                     "@value": "application/json"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/resolution/security/security.raml#/declarations/securitySchemes/oauth_2_0/401/application%2Fjson/schema",
                     "@type": [
@@ -3110,7 +3110,7 @@
                   "http://a.ml/vocabularies/security#Scope",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/security#name": [
+                "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "profile"
                   }
@@ -3122,7 +3122,7 @@
                   "http://a.ml/vocabularies/security#Scope",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/security#name": [
+                "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "history"
                   }
@@ -3134,7 +3134,7 @@
                   "http://a.ml/vocabularies/security#Scope",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/security#name": [
+                "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "ADMINISTRATOR"
                   }

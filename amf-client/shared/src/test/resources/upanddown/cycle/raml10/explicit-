@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: API
+/levelzero:
+  displayName: One display name
+  description: and this description!
+  get:
+    displayName: Some title
+    queryParameters:
+      param1:
+        description: Some descr
+      param2?: {}

@@ -5,7 +5,7 @@ import amf.core.metamodel.document._
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.plugins.document.webapi.model._
-import amf.core.vocabulary.Namespace.Document
+import amf.core.vocabulary.Namespace.{ApiContract, Security, Shapes}
 import amf.core.vocabulary.ValueType
 
 object FragmentsTypesModels {
@@ -14,7 +14,7 @@ object FragmentsTypesModels {
 
     override val fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "UserDocumentation") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(ApiContract + "UserDocumentationFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = DocumentationItemFragment()
 
@@ -29,12 +29,12 @@ object FragmentsTypesModels {
 
     override val fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "DataType") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(Shapes + "DataTypeFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = DataTypeFragment()
 
     override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.ApiContract,
+      ModelVocabularies.Shapes,
       "Data Type Fragment",
       "Fragment encoding a RAML data type"
     )
@@ -44,7 +44,7 @@ object FragmentsTypesModels {
 
     override val fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "NamedExample") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(ApiContract + "NamedExampleFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = NamedExampleFragment()
 
@@ -59,7 +59,7 @@ object FragmentsTypesModels {
 
     override val fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "ResourceTypeFragment") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(ApiContract + "ResourceTypeFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = ResourceTypeFragment()
 
@@ -74,7 +74,7 @@ object FragmentsTypesModels {
 
     override val fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "TraitFragment") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(ApiContract + "TraitFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = TraitFragment()
 
@@ -89,7 +89,7 @@ object FragmentsTypesModels {
 
     override val fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "AnnotationTypeDeclarationFragment") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(ApiContract + "AnnotationTypeDeclarationFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = AnnotationTypeDeclarationFragment()
 
@@ -103,12 +103,12 @@ object FragmentsTypesModels {
   object SecuritySchemeFragmentModel extends FragmentModel {
     override val fields: List[Field] = FragmentModel.fields
 
-    override val `type`: List[ValueType] = List(Document + "SecuritySchemeFragment") ++ FragmentModel.`type`
+    override val `type`: List[ValueType] = List(Security + "SecuritySchemeFragment") ++ FragmentModel.`type`
 
     override def modelInstance: AmfObject = SecuritySchemeFragment()
 
     override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.ApiContract,
+      ModelVocabularies.Security,
       "Security Scheme Fragment",
       "Fragment encoding a RAML security scheme"
     )

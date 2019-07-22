@@ -32,7 +32,7 @@
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/apiContract#url": [
+            "http://a.ml/vocabularies/core#urlTemplate": [
               {
                 "@value": "api.example.com/path"
               }
@@ -47,7 +47,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#url"
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -357,7 +357,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/web-api/end-points/%2Ftop/get/secured",
                     "@type": [
-                      "http://a.ml/vocabularies/document#ParametrizedTrait",
+                      "http://a.ml/vocabularies/apiContract#ParametrizedTrait",
                       "http://a.ml/vocabularies/document#ParametrizedDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -370,7 +370,7 @@
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/web-api/end-points/%2Ftop/get/secured/default-abstract",
                         "@type": [
-                          "http://a.ml/vocabularies/document#Trait",
+                          "http://a.ml/vocabularies/apiContract#Trait",
                           "http://a.ml/vocabularies/document#AbstractDeclaration",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
@@ -496,7 +496,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/web-api/end-points/%2Ftop/post/parameterized",
                     "@type": [
-                      "http://a.ml/vocabularies/document#ParametrizedTrait",
+                      "http://a.ml/vocabularies/apiContract#ParametrizedTrait",
                       "http://a.ml/vocabularies/document#ParametrizedDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -509,7 +509,7 @@
                       {
                         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/declarations/traits/parameterized",
                         "@type": [
-                          "http://a.ml/vocabularies/document#Trait",
+                          "http://a.ml/vocabularies/apiContract#Trait",
                           "http://a.ml/vocabularies/document#AbstractDeclaration",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
@@ -1144,7 +1144,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/web-api/end-points/%2Ftop/descr",
                 "@type": [
-                  "http://a.ml/vocabularies/document#ParametrizedTrait",
+                  "http://a.ml/vocabularies/apiContract#ParametrizedTrait",
                   "http://a.ml/vocabularies/document#ParametrizedDeclaration",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
@@ -1157,7 +1157,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/web-api/end-points/%2Ftop/descr/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#Trait",
+                      "http://a.ml/vocabularies/apiContract#Trait",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -1211,7 +1211,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/web-api/end-points/%2Ftop/searchableCollection",
                 "@type": [
-                  "http://a.ml/vocabularies/document#ParametrizedResourceType",
+                  "http://a.ml/vocabularies/apiContract#ParametrizedResourceType",
                   "http://a.ml/vocabularies/document#ParametrizedDeclaration",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
@@ -1224,7 +1224,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/declarations/resourceTypes/searchableCollection",
                     "@type": [
-                      "http://a.ml/vocabularies/document#ResourceType",
+                      "http://a.ml/vocabularies/apiContract#ResourceType",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -1770,7 +1770,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/declarations/resourceTypes/searchableCollection",
         "@type": [
-          "http://a.ml/vocabularies/document#ResourceType",
+          "http://a.ml/vocabularies/apiContract#ResourceType",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -2056,7 +2056,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/declarations/traits/secured",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#Trait",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -2187,7 +2187,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/declarations/traits/parameterized",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#Trait",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -2421,7 +2421,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/single-array-value/api.raml#/declarations/traits/descr",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#Trait",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],

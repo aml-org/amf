@@ -5,9 +5,9 @@ import amf.core.metamodel.Type.{Array, Bool, Str}
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.vocabulary.Namespace.{ApiContract, Document}
+import amf.core.vocabulary.Namespace.{ApiContract, Document, Shapes}
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.domain.shapes.metamodel.common.ExampleField
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.webapi.models.Parameter
 
 /**
@@ -19,7 +19,7 @@ object ParameterModel
     with KeyField
     with NameFieldSchema
     with OptionalField
-    with ExampleField
+    with ExamplesField
     with DescriptionField {
 
   val ParameterName = Field(
@@ -56,8 +56,8 @@ object ParameterModel
   )
 
   val Schema = Field(ShapeModel,
-                     ApiContract + "schema",
-                     ModelDoc(ModelVocabularies.ApiContract, "schema", "Schema the parameter value must validate"))
+                     Shapes + "schema",
+                     ModelDoc(ModelVocabularies.Shapes, "schema", "Schema the parameter value must validate"))
 
   val Payloads = Field(Array(PayloadModel), ApiContract + "payload", ModelDoc(ModelVocabularies.ApiContract, "payload", ""))
 

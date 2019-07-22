@@ -1,11 +1,16 @@
 #%Vocabulary 1.0
 base: http://www.w3.org/ns/shacl#
 usage: SHACL vocabulary
+uses:
+  shapes: data_shapes.yaml
+  data: data_model.yaml
 classTerms:
   NodeShape:
     displayName: Node Shape
     description: Shape that validates a record of fields, like a JS object
-    extends: Shape
+    extends:
+      - shapes.AnyShape
+      - Shape
   PropertyShape:
     displayName: Property Shape
     description: Constraint over a property in a data shape.
@@ -26,13 +31,13 @@ propertyTerms:
     description: Additional properties in the input node accepted constraint
     range: boolean
   datatype:
-    displayName: datatype
-    description: Scalar range constraining this scalar shape
+    displayName: dataType
+    description: Data type of value for an scalar dynamic node
     range: uri
   defaultValue:
     displayName: default value
     description: Default value parsed for a data shape property
-    range: uri
+    range: data.Node
   defaultValueStr:
     displayName: default value String
     description: Textual representation of the parsed default value for the shape property
@@ -40,7 +45,7 @@ propertyTerms:
   in:
     displayName: in
     description: Enumeration of possible values for a data shape property
-    range: uri
+    range: data.Node
   maxCount:
     displayName: max. count
     description: Maximum count property constraint
@@ -57,10 +62,6 @@ propertyTerms:
     displayName: max. length
     description: Maximum length constraint
     range: integer
-  mediaType:
-    displayName: media type
-    description: Media type associated to a shape
-    range: string
   minCount:
     displayName: min. count
     description: Minimum count property constraint
@@ -105,10 +106,6 @@ propertyTerms:
     displayName: property
     description: Properties associated to this node
     range: PropertyShape
-  raw:
-    displayName: raw
-    description: Raw textual information that cannot be processed for the current model semantics.
-    range: string
   targetClass:
     displayName: target class
     description: Target class whose instances will need to match the constraint described for the node

@@ -1,8 +1,8 @@
 #%RAML 1.0
-title: Sample API
 types:
   accountKey:
     type: "{\r\n\t\"$schema\": \"http://json-schema.org/draft-04/schema#\",\r\n\t\"title\": \"Account\",\r\n\t\"description\": \"Account object\",\r\n\t\"type\": \"object\",\r\n\t\"properties\": {\r\n\t\t\"accountId\": {\r\n\t\t\t\"description\": \"The unique identifier for the account.\",\r\n\t\t\t\"type\": \"string\"\r\n\t\t},\r\n\t\t\"accountStatus\": {\r\n\t\t\t\"$ref\": \"code.json#\"\r\n\t\t}\r\n\t},\r\n\t\"additionalProperties\": false\r\n}"
+title: Sample API
 /testRefIssue:
   post:
     body:

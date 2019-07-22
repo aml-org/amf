@@ -2,7 +2,7 @@
   {
     "@id": "file://amf-client/shared/src/test/resources/upanddown/example-fragment.raml#/",
     "@type": [
-      "http://a.ml/vocabularies/document#NamedExample",
+      "http://a.ml/vocabularies/apiContract#NamedExampleFragment",
       "http://a.ml/vocabularies/document#Fragment",
       "http://a.ml/vocabularies/document#Unit"
     ],
@@ -886,7 +886,7 @@
             ]
           }
         ],
-        "http://www.w3.org/ns/shacl#raw": [
+        "http://a.ml/vocabularies/document#raw": [
           {
             "@value": "\n  -\n    ID: 1\n    code: ER38sd\n    price: 400\n    departureDate: 2017/07/26\n    origin: CLE\n    destination: SFO\n    emptySeats: 0\n    plane:\n      type: Boeing 737\n      totalSeats: 150\n  -\n    ID: 2\n    code: ER45if\n    price: 540.99\n    departureDate: 2017/07/27\n    origin: SFO\n    destination: ORD\n    emptySeats: 54\n    plane:\n      type: Boeing 777\n      totalSeats: 300"
           }
@@ -915,7 +915,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#raw"
+                    "@value": "http://a.ml/vocabularies/document#raw"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.metamodel
 import amf.core.metamodel.document.{DocumentModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.plugins.document.webapi.model.Overlay
-import amf.core.vocabulary.Namespace.Document
+import amf.core.vocabulary.Namespace.ApiContract
 import amf.core.vocabulary.ValueType
 
 /**
@@ -14,7 +14,7 @@ import amf.core.vocabulary.ValueType
   * or implementation or verification information for use in automated tools. These nodes can be changed by applying an overlay.
   */
 object OverlayModel extends ExtensionLikeModel {
-  override val `type`: List[ValueType] = List(Document + "Overlay") ++ DocumentModel.`type`
+  override val `type`: List[ValueType] = List(ApiContract + "Overlay") ++ DocumentModel.`type`
 
   override def modelInstance = Overlay()
 

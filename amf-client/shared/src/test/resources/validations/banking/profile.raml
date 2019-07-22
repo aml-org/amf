@@ -85,14 +85,14 @@ validations:
     message: JSON should be used to format content passed in and out of an API in the message body
     targetClass: apiContract.Payload
     propertyConstraints:
-      apiContract.mediaType:
+      core.mediaType:
         in: ["application/json"]
 
   allowed-payloads:
     message: JSON should be used to format content passed in and out of an API in the message body
     targetClass: apiContract.Payload
     propertyConstraints:
-      apiContract.mediaType:
+      core.mediaType:
         in: ["application/json", "application/xml"]
 
   json-properties:

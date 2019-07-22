@@ -2,7 +2,7 @@
   {
     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml",
     "@type": [
-      "http://a.ml/vocabularies/document#DataType",
+      "http://a.ml/vocabularies/shapes#DataTypeFragment",
       "http://a.ml/vocabularies/document#Fragment",
       "http://a.ml/vocabularies/document#Unit"
     ],
@@ -933,7 +933,7 @@
                 ]
               }
             ],
-            "http://www.w3.org/ns/shacl#raw": [
+            "http://a.ml/vocabularies/document#raw": [
               {
                 "@value": "\n  name: Never Ending Story\n  chapters:\n    -\n      name: introduction\n      content: introduction\n    -\n      name: main\n      content: main\n    -\n      name: ending\n      content: ending\n    -\n      name: 1\n      content: 2"
               }
@@ -962,7 +962,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://www.w3.org/ns/shacl#raw"
+                        "@value": "http://a.ml/vocabularies/document#raw"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

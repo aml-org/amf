@@ -2,7 +2,7 @@
 base: http://a.ml/vocabularies/security#
 usage: Vocabulary for HTTP security information
 uses:
-  core: core.yaml
+  doc: aml_doc.yaml
   data: data_model.yaml
 classTerms:
   ApiKeySettings:
@@ -32,6 +32,12 @@ classTerms:
   SecurityScheme:
     displayName: Security Scheme
     description: Authentication and access control mechanism defined in an API
+  SecuritySchemeFragment:
+    displayName: Security Scheme Fragment
+    description: Fragment encoding a RAML security scheme
+    extends:
+      - doc.Fragment
+      - doc.Unit
   Settings:
     displayName: Settings
     description: Settings for a security scheme
@@ -51,19 +57,11 @@ propertyTerms:
   bearerFormat:
     displayName: bearer format
     range: string
-  description:
-    displayName: description
-    description: Human readable description for the scope
-    extends: core.description
-    range: string
   flow:
     displayName: flow
     range: string
   in:
     displayName: in
-    range: string
-  name:
-    displayName: name
     range: string
   openIdConnectUrl:
     displayName: OpenID connect URL

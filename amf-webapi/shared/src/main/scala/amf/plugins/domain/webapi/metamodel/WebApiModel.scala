@@ -39,7 +39,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
 
   val Provider = Field(OrganizationModel,
                        Core + "provider",
-                       ModelDoc(ModelVocabularies.Core, "provider", "The API provider"))
+                       ModelDoc(ModelVocabularies.Core, "provider", "Organization providing some kind of asset or service"))
 
   val License = Field(LicenseModel,
                       Core + "license",

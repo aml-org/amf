@@ -95,7 +95,7 @@
                             "@value": "path"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#47",
                             "@type": [
@@ -150,12 +150,12 @@
                           "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "apiContract:mediaType": [
+                        "core:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#1/linked_4",
                             "@type": [
@@ -179,7 +179,7 @@
                         ],
                         "smaps": {
                           "extension-provenance": {
-                            "apiContract:mediaType": "id->amf://id#2",
+                            "core:mediaType": "id->amf://id#2",
                             "#40": "id->amf://id#2"
                           },
                           "lexical": {
@@ -224,12 +224,12 @@
                           "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "apiContract:mediaType": [
+                        "core:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#1/linked_5",
                             "@type": [
@@ -253,7 +253,7 @@
                         ],
                         "smaps": {
                           "extension-provenance": {
-                            "apiContract:mediaType": "id->amf://id#2",
+                            "core:mediaType": "id->amf://id#2",
                             "#42": "id->amf://id#2"
                           },
                           "lexical": {
@@ -298,12 +298,12 @@
                           "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "apiContract:mediaType": [
+                        "core:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#1/linked_6",
                             "@type": [
@@ -327,7 +327,7 @@
                         ],
                         "smaps": {
                           "extension-provenance": {
-                            "apiContract:mediaType": "id->amf://id#2",
+                            "core:mediaType": "id->amf://id#2",
                             "#44": "id->amf://id#2"
                           },
                           "lexical": {
@@ -367,7 +367,7 @@
               {
                 "@id": "#2",
                 "@type": [
-                  "doc:ParametrizedResourceType",
+                  "apiContract:ParametrizedResourceType",
                   "doc:ParametrizedDeclaration",
                   "doc:DomainElement"
                 ],
@@ -380,7 +380,7 @@
                   {
                     "@id": "#18",
                     "@type": [
-                      "doc:ResourceType",
+                      "apiContract:ResourceType",
                       "doc:AbstractDeclaration",
                       "doc:DomainElement"
                     ],
@@ -1192,7 +1192,7 @@
       {
         "@id": "#18",
         "@type": [
-          "doc:ResourceType",
+          "apiContract:ResourceType",
           "doc:AbstractDeclaration",
           "doc:DomainElement"
         ],

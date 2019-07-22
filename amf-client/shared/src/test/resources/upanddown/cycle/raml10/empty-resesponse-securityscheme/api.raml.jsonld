@@ -2,7 +2,7 @@
   {
     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml",
     "@type": [
-      "http://a.ml/vocabularies/document#SecuritySchemeFragment",
+      "http://a.ml/vocabularies/security#SecuritySchemeFragment",
       "http://a.ml/vocabularies/document#Fragment",
       "http://a.ml/vocabularies/document#Unit"
     ],
@@ -50,7 +50,7 @@
                 "@value": "header"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#schema": [
+            "http://a.ml/vocabularies/shapes#schema": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/h1/scalar/schema",
                 "@type": [
@@ -123,7 +123,7 @@
                 "@value": "query"
               }
             ],
-            "http://a.ml/vocabularies/apiContract#schema": [
+            "http://a.ml/vocabularies/shapes#schema": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/empty-resesponse-securityscheme/api.raml#/fragment/parameter/q1/scalar/schema",
                 "@type": [

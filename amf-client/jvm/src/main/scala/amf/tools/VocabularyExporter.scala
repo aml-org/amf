@@ -81,6 +81,7 @@ object VocabularyExporter {
   val reflectionsCoreDoc      = new Reflections("amf.core.metamodel.document", new SubTypesScanner(false))
   val reflectionsCoreDomain   = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
   val reflectionsWebApi       = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
+  val reflectionsWebApiDoc    = new Reflections("amf.plugins.document.webapi.metamodel", new SubTypesScanner(false))
   val reflectionsTemplates    = new Reflections("amf.plugins.domain.webapi.metamodel.templates", new SubTypesScanner(false))
   val reflectionsShapes       = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
   val reflectionsVocabularies = new Reflections("amf.plugins.document.vocabularies.metamodel.domain", new SubTypesScanner(false))
@@ -499,10 +500,10 @@ object VocabularyExporter {
           }
         } catch {
           case _: ClassNotFoundException =>
-            //println(s"NOT FOUND '${singletonKlassName}'")
+            //println(s"NOT FOUND '${klassName}'")
             None
           case _: NoSuchFieldException =>
-            //println(s"NOT FIELD '${singletonKlassName}'")
+            //println(s"NOT FIELD '${klassName}'")
             None
         }
     }
@@ -520,6 +521,7 @@ object VocabularyExporter {
     metaObjects(reflectionsCoreDoc, parseMetaObject)
     metaObjects(reflectionsCoreDomain, parseMetaObject)
     metaObjects(reflectionsWebApi, parseMetaObject)
+    metaObjects(reflectionsWebApiDoc, parseMetaObject)
     metaObjects(reflectionsShapes, parseMetaObject)
     metaObjects(reflectionsTemplates, parseMetaObject)
     metaObjects(reflectionsVocabularies, parseMetaObject)
@@ -536,7 +538,7 @@ object VocabularyExporter {
          ModelVocabularies.ApiContract,
          ModelVocabularies.Core,
          ModelVocabularies.Data,
-         ModelVocabularies.Shapes,
+      ModelVocabularies.Shapes,
          ModelVocabularies.Security,
          ModelVocabularies.Meta) ++
       ExternalModelVocabularies.all).foreach { vocab =>

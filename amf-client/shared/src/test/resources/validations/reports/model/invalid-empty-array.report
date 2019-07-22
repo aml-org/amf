@@ -9,14 +9,14 @@ Level: Violation
   Message: Protocols must be a non-empty array of case-insensitive strings with values 'http' and/or 'https'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/protocols/empty-protocols-root-and-method.raml#/web-api
-  Property: http://a.ml/vocabularies/http#scheme
-  Position: Some(LexicalInformation([(2,0)-(11,10)]))
+  Property: http://a.ml/vocabularies/apiContract#scheme
+  Position: Some(LexicalInformation([(4,0)-(5,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/protocols/empty-protocols-root-and-method.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#raml-operation-schemes-non-empty-array
   Message: Protocols must be a non-empty array of case-insensitive strings with values 'http' and/or 'https'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/protocols/empty-protocols-root-and-method.raml#/web-api/end-points/%2FinvalidEmptyProtocolInOperation/post
-  Property: http://a.ml/vocabularies/http#scheme
-  Position: Some(LexicalInformation([(6,2)-(11,10)]))
+  Property: http://a.ml/vocabularies/apiContract#scheme
+  Position: Some(LexicalInformation([(7,4)-(8,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/protocols/empty-protocols-root-and-method.raml

@@ -58,12 +58,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/resource-type-multi-transformation/api.raml#/web-api/end-points/%2Fmedia/post/request/application%2Fjson/schema",
                             "@type": [
@@ -191,7 +191,7 @@
                                     ]
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#raw": [
+                                "http://a.ml/vocabularies/document#raw": [
                                   {
                                     "@value": "\n          name: Something\n"
                                   }
@@ -220,7 +220,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#raw"
+                                            "@value": "http://a.ml/vocabularies/document#raw"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -426,7 +426,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/resource-type-multi-transformation/api.raml#/web-api/end-points/%2Fmedia/collection",
                 "@type": [
-                  "http://a.ml/vocabularies/document#ParametrizedResourceType",
+                  "http://a.ml/vocabularies/apiContract#ParametrizedResourceType",
                   "http://a.ml/vocabularies/document#ParametrizedDeclaration",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
@@ -439,7 +439,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/resource-type-multi-transformation/api.raml#/web-api/end-points/%2Fmedia/collection/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#ResourceType",
+                      "http://a.ml/vocabularies/apiContract#ResourceType",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -786,7 +786,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/resource-type-multi-transformation/api.raml#/declarations/resourceTypes/collection",
         "@type": [
-          "http://a.ml/vocabularies/document#ResourceType",
+          "http://a.ml/vocabularies/apiContract#ResourceType",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],

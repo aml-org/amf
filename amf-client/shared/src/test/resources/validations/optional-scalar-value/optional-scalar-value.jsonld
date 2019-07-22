@@ -11,41 +11,41 @@
       {
         "@id": "#3",
         "@type": [
-          "schema-org:WebAPI",
+          "apiContract:WebAPI",
           "doc:RootDomainElement",
           "doc:DomainElement"
         ],
-        "schema-org:name": [
+        "core:name": [
           {
             "@value": "API"
           }
         ],
-        "raml-http:endpoint": [
+        "apiContract:endpoint": [
           {
             "@id": "#4",
             "@type": [
-              "raml-http:EndPoint",
+              "apiContract:EndPoint",
               "doc:DomainElement"
             ],
-            "raml-http:path": [
+            "apiContract:path": [
               {
                 "@value": "/resource"
               }
             ],
-            "schema-org:description": [
+            "core:description": [
               {
                 "@value": ""
               }
             ],
             "amf://id#4/scalar-valued/1/a": {
-              "doc:name": [
+              "core:name": [
                 {
                   "@value": "a"
                 }
               ],
               "doc:element": [
                 {
-                  "@value": "http://schema.org/description"
+                  "@value": "http://a.ml/vocabularies/core#description"
                 }
               ],
               "@id": "#4/scalar-valued/1/a/scalar_1",
@@ -64,7 +64,7 @@
                   "@id": "http://www.w3.org/2001/XMLSchema#string"
                 }
               ],
-              "schema-org:name": [
+              "core:name": [
                 {
                   "@value": "scalar_1"
                 }
@@ -82,7 +82,7 @@
             ],
             "smaps": {
               "lexical": {
-                "schema-org:description": "[(8,2)-(9,13)]",
+                "core:description": "[(8,2)-(9,13)]",
                 "#4": "[(7,0)-(9,13)]"
               }
             }
@@ -93,7 +93,7 @@
             "#3": "RAML 1.0"
           },
           "lexical": {
-            "schema-org:name": "[(2,0)-(4,0)]",
+            "core:name": "[(2,0)-(4,0)]",
             "#3": "[(2,0)-(9,13)]"
           }
         }
@@ -139,7 +139,7 @@
             }
           }
         ],
-        "doc:name": [
+        "core:name": [
           {
             "@value": "a"
           }
@@ -149,7 +149,7 @@
             "#1": ""
           },
           "lexical": {
-            "doc:name": "[(5,2)-(5,3)]",
+            "core:name": "[(5,2)-(5,3)]",
             "#1": "[(5,2)-(7,0)]"
           }
         }
@@ -157,13 +157,13 @@
     ],
     "@context": {
       "@base": "amf://id",
-      "raml-http": "http://a.ml/vocabularies/http#",
       "raml-shapes": "http://a.ml/vocabularies/shapes#",
       "shacl": "http://www.w3.org/ns/shacl#",
       "data": "http://a.ml/vocabularies/data#",
       "doc": "http://a.ml/vocabularies/document#",
-      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-      "schema-org": "http://schema.org/"
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     }
   }
 ]

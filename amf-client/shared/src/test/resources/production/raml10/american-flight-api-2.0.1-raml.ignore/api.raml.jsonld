@@ -119,7 +119,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/web-api/end-points/%2Fflights/hasMalformedRequest/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#Trait",
+                      "http://a.ml/vocabularies/apiContract#TraitFragment",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -174,7 +174,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/web-api/end-points/%2Fflights/hasNotFound/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#Trait",
+                      "http://a.ml/vocabularies/apiContract#TraitFragment",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -229,7 +229,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/web-api/end-points/%2Fflights/isNotAcceptable/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#Trait",
+                      "http://a.ml/vocabularies/apiContract#TraitFragment",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -284,7 +284,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/web-api/end-points/%2Fflights/hasUnsupportedMedia/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#Trait",
+                      "http://a.ml/vocabularies/apiContract#TraitFragment",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -339,7 +339,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/web-api/end-points/%2Fflights/hasTooManyRequests/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#Trait",
+                      "http://a.ml/vocabularies/apiContract#TraitFragment",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -394,7 +394,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/web-api/end-points/%2Fflights/isUnavailable/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#Trait",
+                      "http://a.ml/vocabularies/apiContract#TraitFragment",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -532,7 +532,7 @@
               "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/security#name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "null"
               }
@@ -566,7 +566,7 @@
               "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/security#name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "basicAuth"
               }
@@ -578,7 +578,7 @@
                   "http://a.ml/vocabularies/security#SecurityScheme",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/security#name": [
+                "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "basicAuth"
                   }
@@ -660,7 +660,7 @@
               "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/security#name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "oAuth_2_0"
               }
@@ -672,7 +672,7 @@
                   "http://a.ml/vocabularies/security#SecurityScheme",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/security#name": [
+                "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "oAuth_2_0"
                   }
@@ -901,7 +901,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/isUnauthorized.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#TraitFragment",
+          "http://a.ml/vocabularies/apiContract#TraitFragmentFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -909,7 +909,7 @@
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/isUnauthorized.raml#/trait",
             "@type": [
-              "http://a.ml/vocabularies/document#Trait",
+              "http://a.ml/vocabularies/apiContract#TraitFragment",
               "http://a.ml/vocabularies/document#AbstractDeclaration",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -1291,7 +1291,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/resourceTypes/collection.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#ResourceTypeFragment",
+          "http://a.ml/vocabularies/apiContract#ResourceTypeFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -2722,7 +2722,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/types/flight.raml",
                 "@type": [
-                  "http://a.ml/vocabularies/document#DataType",
+                  "http://a.ml/vocabularies/shapes#DataTypeFragment",
                   "http://a.ml/vocabularies/document#Fragment",
                   "http://a.ml/vocabularies/document#Unit"
                 ],
@@ -4602,7 +4602,7 @@
                     "@value": "[\n  {\n    \"ID\": \"1\",\n    \"code\": \"ER38sd\",\n    \"price\": 400,\n    \"departureDate\": \"2017-07-20\",\n    \"origin\": \"DEN\",\n    \"destination\": \"SFO\",\n    \"emptySeats\": 0,\n    \"plane\": {\n        \"type\": \"Boeing 737\",\n        \"totalSeats\": 150\n    }\n  },\n  {\n    \"ID\": \"2\",\n    \"code\": \"SF35ma\",\n    \"price\": 272,\n    \"departureDate\": \"2017-07-06\",\n    \"origin\": \"SFO\",\n    \"destination\": \"LAX\",\n    \"emptySeats\": 4,\n    \"plane\": {\n      \"type\": \"Boeing 737\",\n      \"totalSeats\": 150\n    }\n  }\n]"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#mediaType": [
+                "http://a.ml/vocabularies/core#mediaType": [
                   {
                     "@value": "application/json"
                   }
@@ -4629,7 +4629,7 @@
                     "@value": "{\n  \"message\": \"Flight added (but not really)\"\n}"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#mediaType": [
+                "http://a.ml/vocabularies/core#mediaType": [
                   {
                     "@value": "application/json"
                   }
@@ -4695,7 +4695,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/securitySchemes/Oauth_2_0.raml",
         "@type": [
-          "http://a.ml/vocabularies/document#SecuritySchemeFragment",
+          "http://a.ml/vocabularies/security#SecuritySchemeFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -4748,7 +4748,7 @@
                     "@value": "header"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/securitySchemes/Oauth_2_0.raml#/fragment/parameter/Authorization/scalar/schema",
                     "@type": [
@@ -4844,7 +4844,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#schema"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4914,7 +4914,7 @@
                     "@value": "query"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/securitySchemes/Oauth_2_0.raml#/fragment/parameter/access_token/scalar/schema",
                     "@type": [
@@ -5010,7 +5010,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#schema"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5078,7 +5078,7 @@
                       "http://a.ml/vocabularies/security#Scope",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/security#name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "READ"
                       }
@@ -5281,7 +5281,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/hasUnsupportedMedia.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#TraitFragment",
+          "http://a.ml/vocabularies/apiContract#TraitFragmentFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -5289,7 +5289,7 @@
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/hasUnsupportedMedia.raml#/trait",
             "@type": [
-              "http://a.ml/vocabularies/document#Trait",
+              "http://a.ml/vocabularies/apiContract#TraitFragment",
               "http://a.ml/vocabularies/document#AbstractDeclaration",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -5671,7 +5671,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/resourceTypes/item.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#ResourceTypeFragment",
+          "http://a.ml/vocabularies/apiContract#ResourceTypeFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -7156,7 +7156,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/types/flight.raml",
                 "@type": [
-                  "http://a.ml/vocabularies/document#DataType",
+                  "http://a.ml/vocabularies/shapes#DataTypeFragment",
                   "http://a.ml/vocabularies/document#Fragment",
                   "http://a.ml/vocabularies/document#Unit"
                 ],
@@ -9036,7 +9036,7 @@
                     "@value": "{\n  \"ID\": \"1\",\n  \"code\": \"ER38sd\",\n  \"price\": 400,\n  \"departureDate\": \"2017-07-20\",\n  \"origin\": \"DEN\",\n  \"destination\": \"SFO\",\n  \"emptySeats\": 2,\n  \"plane\": {\n    \"type\": \"Boeing 737\",\n    \"totalSeats\": 150\n  }\n}"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#mediaType": [
+                "http://a.ml/vocabularies/core#mediaType": [
                   {
                     "@value": "application/json"
                   }
@@ -9063,7 +9063,7 @@
                     "@value": "{\n  \"message\": \"Flight deleted (but not really)\"\n}"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#mediaType": [
+                "http://a.ml/vocabularies/core#mediaType": [
                   {
                     "@value": "application/json"
                   }
@@ -9090,7 +9090,7 @@
                     "@value": "{\n  \"message\": \"Flight updated (but not really)\"\n}"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#mediaType": [
+                "http://a.ml/vocabularies/core#mediaType": [
                   {
                     "@value": "application/json"
                   }
@@ -9156,7 +9156,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/hasTooManyRequests.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#TraitFragment",
+          "http://a.ml/vocabularies/apiContract#TraitFragmentFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -9164,7 +9164,7 @@
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/hasTooManyRequests.raml#/trait",
             "@type": [
-              "http://a.ml/vocabularies/document#Trait",
+              "http://a.ml/vocabularies/apiContract#TraitFragment",
               "http://a.ml/vocabularies/document#AbstractDeclaration",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -9546,7 +9546,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/hasMalformedRequest.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#TraitFragment",
+          "http://a.ml/vocabularies/apiContract#TraitFragmentFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -9554,7 +9554,7 @@
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/hasMalformedRequest.raml#/trait",
             "@type": [
-              "http://a.ml/vocabularies/document#Trait",
+              "http://a.ml/vocabularies/apiContract#TraitFragment",
               "http://a.ml/vocabularies/document#AbstractDeclaration",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -9936,7 +9936,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/isNotAcceptable.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#TraitFragment",
+          "http://a.ml/vocabularies/apiContract#TraitFragmentFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -9944,7 +9944,7 @@
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/isNotAcceptable.raml#/trait",
             "@type": [
-              "http://a.ml/vocabularies/document#Trait",
+              "http://a.ml/vocabularies/apiContract#TraitFragment",
               "http://a.ml/vocabularies/document#AbstractDeclaration",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -10326,7 +10326,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/securitySchemes/basicAuth.raml",
         "@type": [
-          "http://a.ml/vocabularies/document#SecuritySchemeFragment",
+          "http://a.ml/vocabularies/security#SecuritySchemeFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -10379,7 +10379,7 @@
                     "@value": "header"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/securitySchemes/basicAuth.raml#/fragment/parameter/Authorization/scalar/schema",
                     "@type": [
@@ -10475,7 +10475,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#schema"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -10542,12 +10542,12 @@
                       "http://a.ml/vocabularies/apiContract#Payload",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/apiContract#mediaType": [
+                    "http://a.ml/vocabularies/core#mediaType": [
                       {
                         "@value": "application/json"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#schema": [
+                    "http://a.ml/vocabularies/shapes#schema": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/securitySchemes/basicAuth.raml#/fragment/401/application%2Fjson/any/schema",
                         "@type": [
@@ -10688,7 +10688,7 @@
                                 ]
                               }
                             ],
-                            "http://www.w3.org/ns/shacl#raw": [
+                            "http://a.ml/vocabularies/document#raw": [
                               {
                                 "@value": "{\n  \"message\": \"Either the provided credentials are invalid, or the user is not allowed to access the content provided by the requested URL\",\n  \"code\": \"1001 <example code. Replace with your own error code>\"\n}"
                               }
@@ -10717,7 +10717,7 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://www.w3.org/ns/shacl#raw"
+                                        "@value": "http://a.ml/vocabularies/document#raw"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -10991,7 +10991,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/hasNotFound.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#TraitFragment",
+          "http://a.ml/vocabularies/apiContract#TraitFragmentFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -10999,7 +10999,7 @@
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/hasNotFound.raml#/trait",
             "@type": [
-              "http://a.ml/vocabularies/document#Trait",
+              "http://a.ml/vocabularies/apiContract#TraitFragment",
               "http://a.ml/vocabularies/document#AbstractDeclaration",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -11381,7 +11381,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/isUnavailable.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#TraitFragment",
+          "http://a.ml/vocabularies/apiContract#TraitFragmentFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -11389,7 +11389,7 @@
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/traits/errorResponseTraits/isUnavailable.raml#/trait",
             "@type": [
-              "http://a.ml/vocabularies/document#Trait",
+              "http://a.ml/vocabularies/apiContract#TraitFragment",
               "http://a.ml/vocabularies/document#AbstractDeclaration",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -11863,7 +11863,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/declarations/traits/isUnauthorized",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#TraitFragment",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -11908,7 +11908,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/declarations/traits/hasMalformedRequest",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#TraitFragment",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -11953,7 +11953,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/declarations/traits/hasNotFound",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#TraitFragment",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -11998,7 +11998,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/declarations/traits/isUnavailable",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#TraitFragment",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -12043,7 +12043,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/declarations/traits/hasTooManyRequests",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#TraitFragment",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -12088,7 +12088,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/declarations/traits/isNotAcceptable",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#TraitFragment",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -12133,7 +12133,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/american-flight-api-2.0.1-raml/api.raml#/declarations/traits/hasUnsupportedMedia",
         "@type": [
-          "http://a.ml/vocabularies/document#Trait",
+          "http://a.ml/vocabularies/apiContract#TraitFragment",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -12181,7 +12181,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "basicAuth"
           }
@@ -12239,7 +12239,7 @@
           "http://a.ml/vocabularies/security#SecurityScheme",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/security#name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "oAuth_2_0"
           }

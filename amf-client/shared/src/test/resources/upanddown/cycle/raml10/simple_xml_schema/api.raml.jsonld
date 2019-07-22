@@ -135,13 +135,13 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/simple_xml_schema/api.raml#/declarations/types/schema/XmlSchema",
         "@type": [
-          "http://www.w3.org/ns/shacl#SchemaShape",
+          "http://a.ml/vocabularies/shapes#SchemaShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://www.w3.org/ns/shacl#mediaType": [
+        "http://a.ml/vocabularies/core#mediaType": [
           {
             "@value": "application/xml"
           }

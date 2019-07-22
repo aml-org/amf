@@ -97,7 +97,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |              "http://a.ml/vocabularies/apiContract#Server",
         |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://a.ml/vocabularies/apiContract#url": [
+        |            "http://a.ml/vocabularies/core#urlTemplate": [
         |              {
         |                "@value": "localhost.com/api"
         |              }
@@ -181,7 +181,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |              "http://a.ml/vocabularies/apiContract#Server",
         |              "http://a.ml/vocabularies/document#DomainElement"
         |            ],
-        |            "http://a.ml/vocabularies/apiContract#url": [
+        |            "http://a.ml/vocabularies/core#urlTemplate": [
         |              {
         |                "@value": "localhost.com/api"
         |              }

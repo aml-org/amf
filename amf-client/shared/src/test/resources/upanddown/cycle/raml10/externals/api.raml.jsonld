@@ -68,22 +68,22 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "text/xml"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/externals/api.raml#/web-api/end-points/%2Fgroups/post/request/text%2Fxml/schema/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#SchemaShape",
+                              "http://a.ml/vocabularies/shapes#SchemaShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://www.w3.org/ns/shacl#mediaType": [
+                            "http://a.ml/vocabularies/core#mediaType": [
                               {
                                 "@value": "application/xml"
                               }
@@ -93,7 +93,7 @@
                                 "@value": "schema"
                               }
                             ],
-                            "http://www.w3.org/ns/shacl#raw": [
+                            "http://a.ml/vocabularies/document#raw": [
                               {
                                 "@value": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
                               }
@@ -170,12 +170,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/externals/api.raml#/web-api/end-points/%2Fgroups/post/request/application%2Fjson/schema",
                             "@type": [
@@ -549,22 +549,22 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "text/xml"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/externals/api.raml#/web-api/end-points/%2Fgroups%2F2/post/request/text%2Fxml/schema/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#SchemaShape",
+                              "http://a.ml/vocabularies/shapes#SchemaShape",
                               "http://a.ml/vocabularies/shapes#AnyShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://www.w3.org/ns/shacl#mediaType": [
+                            "http://a.ml/vocabularies/core#mediaType": [
                               {
                                 "@value": "application/xml"
                               }
@@ -574,7 +574,7 @@
                                 "@value": "schema"
                               }
                             ],
-                            "http://www.w3.org/ns/shacl#raw": [
+                            "http://a.ml/vocabularies/document#raw": [
                               {
                                 "@value": "<xs:schema xmlns:xs='http://www.w3.org/2001/XMLSchema' targetNamespace='http://tempuri.org/po.xsd'></xs:schema>"
                               }
@@ -651,12 +651,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/externals/api.raml#/web-api/end-points/%2Fgroups%2F2/post/request/application%2Fjson/schema",
                             "@type": [

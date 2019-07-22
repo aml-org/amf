@@ -27,7 +27,7 @@
               "http://a.ml/vocabularies/apiContract#Server",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/apiContract#url": [
+            "http://a.ml/vocabularies/core#urlTemplate": [
               {
                 "@value": "http://localhost:8081/api"
               }
@@ -42,7 +42,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/apiContract#url"
+                        "@value": "http://a.ml/vocabularies/core#urlTemplate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -203,12 +203,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/request/application%2Fjson/schema",
                             "@type": [
@@ -370,12 +370,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "text/xml"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/request/text%2Fxml/any/schema",
                             "@type": [
@@ -393,7 +393,7 @@
                               {
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/schema/xmlSchema/linked_1",
                                 "@type": [
-                                  "http://www.w3.org/ns/shacl#SchemaShape",
+                                  "http://a.ml/vocabularies/shapes#SchemaShape",
                                   "http://a.ml/vocabularies/shapes#AnyShape",
                                   "http://www.w3.org/ns/shacl#Shape",
                                   "http://a.ml/vocabularies/shapes#Shape",
@@ -474,7 +474,7 @@
                                     "@value": true
                                   }
                                 ],
-                                "http://www.w3.org/ns/shacl#raw": [
+                                "http://a.ml/vocabularies/document#raw": [
                                   {
                                     "@value": "<saasTxn>\n<tenant>100</tenant>\n<objectType>Business Partner</objectType>\n<objectKey>12345</objectKey>\n<txnType>Update</txnType>\n</saasTxn>\n"
                                   }
@@ -503,7 +503,7 @@
                                       {
                                         "http://a.ml/vocabularies/document-source-maps#element": [
                                           {
-                                            "@value": "http://www.w3.org/ns/shacl#raw"
+                                            "@value": "http://a.ml/vocabularies/document#raw"
                                           }
                                         ],
                                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -682,7 +682,7 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/201/default/any/default",
                             "@type": [
@@ -1802,13 +1802,13 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/declarations/types/schema/xmlSchema",
         "@type": [
-          "http://www.w3.org/ns/shacl#SchemaShape",
+          "http://a.ml/vocabularies/shapes#SchemaShape",
           "http://a.ml/vocabularies/shapes#AnyShape",
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/shapes#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://www.w3.org/ns/shacl#mediaType": [
+        "http://a.ml/vocabularies/core#mediaType": [
           {
             "@value": "application/xml"
           }
@@ -1818,7 +1818,7 @@
             "@value": "xmlSchema"
           }
         ],
-        "http://www.w3.org/ns/shacl#raw": [
+        "http://a.ml/vocabularies/document#raw": [
           {
             "@value": "<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\">\n<xs:element name=\"saasTxn\">\n<xs:complexType>\n<xs:annotation>\n<xs:documentation>XML Schema for Saas Transaction</xs:documentation>\n</xs:annotation>\n<xs:sequence>\n<xs:element name=\"tenant\" minOccurs=\"1\" type=\"xs:positiveInteger\"/>\n<xs:element name=\"objectType\" minOccurs=\"1\" type=\"xs:string\"/>\n<xs:element name=\"objectKey\" minOccurs=\"1\" type=\"xs:string\"/>\n<xs:element name=\"txnType\" minOccurs=\"1\" type=\"xs:string\"/>\n</xs:sequence>\n</xs:complexType>\n</xs:element>\n</xs:schema>\n"
           }

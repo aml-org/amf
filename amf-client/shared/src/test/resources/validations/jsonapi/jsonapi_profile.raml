@@ -36,7 +36,7 @@ validations:
     message: JSON API documents used the 'application/vnd.api+json' media type. Media type of Payloads must match.
     targetClass: apiContract.Payload
     propertyConstraints:
-      apiContract.mediaType:
+      core.mediaType:
         in: [ "application/vnd.api+json" ]
 
   # Content Negotiation
@@ -113,8 +113,8 @@ validations:
     functionConstraint:
       code: |
         function(payload)  {
-          if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
-            var schema = path(payload, 'apiContract:schema')[0]
+          if (value(payload, 'core:mediaType', 'application/vnd.api+json')) {
+            var schema = path(payload, 'raml-shapes:schema')[0]
             return isModelType(schema, 'shacl:NodeShape');
           } else {
             return true;
@@ -132,10 +132,10 @@ validations:
     functionConstraint:
       code: |
         function(payload) {
-          if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
-            var hasData = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'data');
-            var hasErrors = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'errors');
-            var hasMeta = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'meta');
+          if (value(payload, 'core:mediaType', 'application/vnd.api+json')) {
+            var hasData = value(payload, 'raml-shapes:schema / shacl:property / shacl:name', 'data');
+            var hasErrors = value(payload, 'raml-shapes:schema / shacl:property / shacl:name', 'errors');
+            var hasMeta = value(payload, 'raml-shapes:schema / shacl:property / shacl:name', 'meta');
             return (hasData || hasErrors || hasMeta);
           } else {
             return true;
@@ -149,9 +149,9 @@ validations:
     functionConstraint:
       code: |
         function(payload) {
-          if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
-            var hasData = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'data');
-            var hasErrors = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'errors');
+          if (value(payload, 'core:mediaType', 'application/vnd.api+json')) {
+            var hasData = value(payload, 'raml-shapes:schema / shacl:property / shacl:name', 'data');
+            var hasErrors = value(payload, 'raml-shapes:schema / shacl:property / shacl:name', 'errors');
             return !(hasData && hasErrors)
           } else {
             return true;
@@ -165,9 +165,9 @@ validations:
     functionConstraint:
       code: |
         function(payload) {
-          if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
-            var hasData = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'data');
-            var hasLinks = value(payload, 'apiContract:schema / shacl:property / shacl:name', 'links');
+          if (value(payload, 'core:mediaType', 'application/vnd.api+json')) {
+            var hasData = value(payload, 'raml-shapes:schema / shacl:property / shacl:name', 'data');
+            var hasLinks = value(payload, 'raml-shapes:schema / shacl:property / shacl:name', 'links');
             if (!hasData) {
               return !hasLinks
             } else {
@@ -188,8 +188,8 @@ validations:
     functionConstraint:
       code: |
         function(payload) {
-            if (value(payload, 'apiContract:mediaType', 'application/vnd.api+json')) {
-              var schemas = path(payload, 'apiContract:schema');
+            if (value(payload, 'core:mediaType', 'application/vnd.api+json')) {
+              var schemas = path(payload, 'raml-shapes:schema');
               var dataSchema = filterByPropertyValue(schemas, 'shacl:property / shacl:name', 'data')[0];
               if (dataSchema != null) {
                 var properties = path(dataSchema, 'shacl:property');

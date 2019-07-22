@@ -3,6 +3,7 @@ base: http://a.ml/vocabularies/shapes#
 usage: Vocabulary defining data shapes, used as an extension to SHACL
 uses:
   shacl: external/shacl.yaml
+  doc: aml_doc.yaml
 classTerms:
   AnyShape:
     displayName: Any Shape
@@ -11,6 +12,13 @@ classTerms:
   ArrayShape:
     displayName: Array Shape
     description: Shape that contains a nested collection of data shapes
+    extends: AnyShape
+  DataTypeFragment:
+    displayName: Data Type Fragment
+    description: Fragment encoding a RAML data type
+    extends:
+      - doc.Fragment
+      - doc.Unit
   FileShape:
     displayName: File Shape
     description: Shape describing data uploaded in an API request
@@ -18,7 +26,9 @@ classTerms:
   MatrixShape:
     displayName: Matrix Shape
     description: Data shape containing nested multi-dimensional collection shapes
-    extends: ArrayShape
+    extends:
+      - ArrayShape
+      - AnyShape
   NilShape:
     displayName: Nil Shape
     description: Data shape representing the null/nil value in the input schema
@@ -47,7 +57,9 @@ classTerms:
   TupleShape:
     displayName: Tuple Shape
     description: Data shape containing a multi-valued collection of shapes
-    extends: ArrayShape
+    extends:
+      - ArrayShape
+      - AnyShape
   UnionShape:
     displayName: Union Shape
     description: Shape representing the union of many alternative data shapes

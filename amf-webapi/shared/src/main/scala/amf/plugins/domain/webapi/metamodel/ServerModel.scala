@@ -12,7 +12,7 @@ import amf.plugins.domain.webapi.models.Server
   * Server meta model
   */
 object ServerModel extends DomainElementModel with DescriptionField {
-  val Url = Field(Str, ApiContract + "url", ModelDoc(ModelVocabularies.ApiContract, "url", "URL (potentially a template) for the server"))
+  val Url = Field(Str, Core + "urlTemplate", ModelDoc(ModelVocabularies.Core, "urlTemplate", "URL (potentially a template) for the server"))
 
   val Variables = Field(Array(ParameterModel),
                         ApiContract + "variable",

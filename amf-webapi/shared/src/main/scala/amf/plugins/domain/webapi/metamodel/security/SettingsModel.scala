@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.plugins.domain.webapi.models.security.{ApiKeySettings, OAuth1Settings, OAuth2Settings, Settings}
-import amf.core.vocabulary.Namespace.Security
+import amf.core.vocabulary.Namespace.{Core, Security}
 import amf.core.vocabulary.ValueType
 
 trait SettingsModel extends DomainElementModel
@@ -87,7 +87,7 @@ object OAuth2SettingsModel extends SettingsModel {
 
 object ApiKeySettingsModel extends SettingsModel {
 
-  val Name = Field(Str, Security + "name", ModelDoc(ModelVocabularies.Security, "name", ""))
+  val Name = Field(Str, Core + "name", ModelDoc(ModelVocabularies.Security, "name", ""))
 
   val In = Field(Str, Security + "in", ModelDoc(ModelVocabularies.Security, "in", ""))
 

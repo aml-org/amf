@@ -74,12 +74,12 @@
                           "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "apiContract:mediaType": [
+                        "core:mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#1/linked_2",
                             "@type": [
@@ -113,12 +113,12 @@
                           "apiContract:Payload",
                           "doc:DomainElement"
                         ],
-                        "apiContract:mediaType": [
+                        "core:mediaType": [
                           {
                             "@value": "application/xml"
                           }
                         ],
-                        "apiContract:schema": [
+                        "raml-shapes:schema": [
                           {
                             "@id": "#1/linked_3",
                             "@type": [
@@ -253,7 +253,7 @@
                 }
               }
             ],
-            "shacl:raw": [
+            "doc:raw": [
               {
                 "@value": "somesome"
               }
@@ -263,7 +263,7 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "shacl:raw": "[(10,11)-(10,19)]",
+                "doc:raw": "[(10,11)-(10,19)]",
                 "core:name": "[(10,6)-(11,0)]",
                 "#2": "[(10,6)-(11,0)]",
                 "doc:structuredValue": "[(10,11)-(10,19)]"
@@ -316,7 +316,7 @@
                 }
               }
             ],
-            "shacl:raw": [
+            "doc:raw": [
               {
                 "@value": "somesomesome"
               }
@@ -326,7 +326,7 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "shacl:raw": "[(11,11)-(11,23)]",
+                "doc:raw": "[(11,11)-(11,23)]",
                 "core:name": "[(11,6)-(13,0)]",
                 "#4": "[(11,6)-(13,0)]",
                 "doc:structuredValue": "[(11,11)-(11,23)]"
@@ -379,7 +379,7 @@
                 }
               }
             ],
-            "shacl:raw": [
+            "doc:raw": [
               {
                 "@value": "tracked"
               }
@@ -389,7 +389,7 @@
                 "doc:strict": "true"
               },
               "lexical": {
-                "shacl:raw": "[(17,15)-(17,22)]",
+                "doc:raw": "[(17,15)-(17,22)]",
                 "#6": "[(17,15)-(17,22)]",
                 "doc:structuredValue": "[(17,15)-(17,22)]"
               },

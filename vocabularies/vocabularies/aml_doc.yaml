@@ -70,28 +70,6 @@ classTerms:
   ParametrizedDeclaration:
     displayName: Parametrized Declaration
     description: Generic graph template supporting variables that can be transformed into a domain element
-  ParametrizedResourceType:
-    displayName: Parametrized Resource Type
-    description: RAML resource type that can accept parameters
-    extends: ParametrizedDeclaration
-  ParametrizedTrait:
-    displayName: Parametrized Trait
-    description: RAML trait with declared parameters
-    extends: ParametrizedDeclaration
-  PayloadFragment:
-    displayName: Payload Fragment
-    description: Fragment encoding HTTP payload information
-    extends:
-      - Fragment
-      - Unit
-  ResourceType:
-    displayName: Resource Type
-    description: Type of document base unit encoding a RAML resource type
-    extends: AbstractDeclaration
-  Trait:
-    displayName: Trait
-    description: Type of document base unit encoding a RAML trait
-    extends: AbstractDeclaration
   Unit:
     displayName: Base Unit
     description: Base class for every single document model unit. After parsing a document the parser generate parsing Units. Units encode the domain elements and can reference other units to re-use descriptions.
@@ -99,8 +77,8 @@ classTerms:
     displayName: Variable Value
     description: Value for a variable in a graph template
 propertyTerms:
-  Reference:
-    displayName: Reference
+  alias:
+    displayName: alias
     range: string
   dataNode:
     displayName: data node
@@ -152,7 +130,7 @@ propertyTerms:
     range: uri
   location:
     displayName: location
-    description: location of the metadata document that generated this base unit
+    description: Location of an inlined fragment
     range: string
   raw:
     displayName: raw
@@ -162,6 +140,9 @@ propertyTerms:
     displayName: supports recursion
     description: Indication taht this kind of linkable element can support recursive links
     range: boolean
+  reference:
+    displayName: reference
+    range: string
   reference-id:
     displayName: reference id
     description: Internal identifier for an inlined fragment

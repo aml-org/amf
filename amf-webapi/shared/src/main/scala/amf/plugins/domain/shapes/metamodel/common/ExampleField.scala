@@ -9,19 +9,11 @@ import amf.plugins.domain.shapes.metamodel.ExampleModel
 /**
   * Example field.
   */
-trait ExampleField {
-  val Examples = Field(Array(ExampleModel),
-    ApiContract + "example",
-    ModelDoc(ModelVocabularies.ApiContract, "example", "Single example for a particular domain element"))
-}
-
 trait ExamplesField {
   val Examples = Field(Array(ExampleModel),
     ApiContract + "examples",
     ModelDoc(ModelVocabularies.ApiContract, "examples", "Examples for a particular domain element"))
 }
-
-object ExampleField extends ExampleField
 
 //object ExampleFieldDocument extends ExampleFieldDocument
 

@@ -128,21 +128,21 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/xml"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/basic_with_xsd.raml#/web-api/end-points/%2Ftest/get/request/application%2Fxml/schema/schema",
                             "@type": [
-                              "http://www.w3.org/ns/shacl#SchemaShape",
+                              "http://a.ml/vocabularies/shapes#SchemaShape",
                               "http://www.w3.org/ns/shacl#Shape",
                               "http://a.ml/vocabularies/shapes#Shape",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://www.w3.org/ns/shacl#mediaType": [
+                            "http://a.ml/vocabularies/core#mediaType": [
                               {
                                 "@value": "application/xml"
                               }

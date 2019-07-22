@@ -73,12 +73,12 @@
                           "http://a.ml/vocabularies/apiContract#Payload",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiContract#mediaType": [
+                        "http://a.ml/vocabularies/core#mediaType": [
                           {
                             "@value": "application/json"
                           }
                         ],
-                        "http://a.ml/vocabularies/apiContract#schema": [
+                        "http://a.ml/vocabularies/shapes#schema": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema",
                             "@type": [
@@ -690,7 +690,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/web-api/end-points/%2Ftest2/ta",
                 "@type": [
-                  "http://a.ml/vocabularies/document#ParametrizedResourceType",
+                  "http://a.ml/vocabularies/apiContract#ParametrizedResourceType",
                   "http://a.ml/vocabularies/document#ParametrizedDeclaration",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
@@ -703,7 +703,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/web-api/end-points/%2Ftest2/ta/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#ResourceType",
+                      "http://a.ml/vocabularies/apiContract#ResourceType",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -793,7 +793,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/web-api/end-points/%2Ftest3/tb",
                 "@type": [
-                  "http://a.ml/vocabularies/document#ParametrizedResourceType",
+                  "http://a.ml/vocabularies/apiContract#ParametrizedResourceType",
                   "http://a.ml/vocabularies/document#ParametrizedDeclaration",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
@@ -806,7 +806,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/web-api/end-points/%2Ftest3/tb/default-abstract",
                     "@type": [
-                      "http://a.ml/vocabularies/document#ResourceType",
+                      "http://a.ml/vocabularies/apiContract#ResourceType",
                       "http://a.ml/vocabularies/document#AbstractDeclaration",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
@@ -953,7 +953,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml",
         "@type": [
-          "http://a.ml/vocabularies/document#DataType",
+          "http://a.ml/vocabularies/shapes#DataTypeFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -1072,7 +1072,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#",
         "@type": [
-          "http://a.ml/vocabularies/document#ResourceTypeFragment",
+          "http://a.ml/vocabularies/apiContract#ResourceTypeFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -1080,7 +1080,7 @@
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_resource_type.raml#/resourceType",
             "@type": [
-              "http://a.ml/vocabularies/document#ResourceType",
+              "http://a.ml/vocabularies/apiContract#ResourceType",
               "http://a.ml/vocabularies/document#AbstractDeclaration",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -1254,7 +1254,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml",
         "@type": [
-          "http://a.ml/vocabularies/document#SecuritySchemeFragment",
+          "http://a.ml/vocabularies/security#SecuritySchemeFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -1302,7 +1302,7 @@
                     "@value": "header"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/Authorization/scalar/schema",
                     "@type": [
@@ -1399,7 +1399,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#schema"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1469,7 +1469,7 @@
                     "@value": "query"
                   }
                 ],
-                "http://a.ml/vocabularies/apiContract#schema": [
+                "http://a.ml/vocabularies/shapes#schema": [
                   {
                     "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/parameter/access_token/scalar/schema",
                     "@type": [
@@ -1554,7 +1554,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/apiContract#schema"
+                            "@value": "http://a.ml/vocabularies/shapes#schema"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1683,7 +1683,7 @@
                       "http://a.ml/vocabularies/security#Scope",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/security#name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "profile"
                       }
@@ -1695,7 +1695,7 @@
                       "http://a.ml/vocabularies/security#Scope",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/security#name": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "history"
                       }
@@ -1903,7 +1903,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred_annotation.raml",
         "@type": [
-          "http://a.ml/vocabularies/document#AnnotationTypeDeclarationFragment",
+          "http://a.ml/vocabularies/apiContract#AnnotationTypeDeclarationFragment",
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Unit"
         ],
@@ -2442,7 +2442,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/declarations/resourceTypes/ta",
         "@type": [
-          "http://a.ml/vocabularies/document#ResourceType",
+          "http://a.ml/vocabularies/apiContract#ResourceType",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -2573,7 +2573,7 @@
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/api.raml#/declarations/resourceTypes/tb",
         "@type": [
-          "http://a.ml/vocabularies/document#ResourceType",
+          "http://a.ml/vocabularies/apiContract#ResourceType",
           "http://a.ml/vocabularies/document#AbstractDeclaration",
           "http://a.ml/vocabularies/document#DomainElement"
         ],

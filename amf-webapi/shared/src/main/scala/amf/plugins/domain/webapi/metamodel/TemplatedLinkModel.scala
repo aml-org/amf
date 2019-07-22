@@ -26,8 +26,8 @@ object TemplatedLinkModel
                           ModelDoc(ModelVocabularies.ApiContract, "operation ID", "Identifier of the target operation"))
 
   val OperationRef = Field(Str,
-    Http + "operationRef",
-    ModelDoc(ModelVocabularies.Http, "operation Ref", "Reference of the target operation"))
+    ApiContract + "operationRef",
+    ModelDoc(ModelVocabularies.ApiContract, "operation Ref", "Reference of the target operation"))
 
   val Mapping = Field(Array(IriTemplateMappingModel),
                       ApiContract + "mapping",

@@ -1,8 +1,4 @@
 #%RAML 0.8
-title: test
-version: "0.2"
-baseUri: https://domain.test.com/
-mediaType: application/json
 schemas:
   someSchema: |-
     {
@@ -21,6 +17,10 @@ schemas:
         }
       }
     }
+title: test
+version: "0.2"
+baseUri: https://domain.test.com/
+mediaType: application/json
 /test:
   get:
     responses:

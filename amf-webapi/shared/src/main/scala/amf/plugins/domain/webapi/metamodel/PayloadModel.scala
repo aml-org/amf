@@ -5,9 +5,9 @@ import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain._
-import amf.core.vocabulary.Namespace.ApiContract
+import amf.core.vocabulary.Namespace.{ApiContract, Core, Shapes}
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.shapes.metamodel.common.ExampleField
+import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.webapi.models.Payload
 
 /**
@@ -19,14 +19,14 @@ object PayloadModel
     with OptionalField
     with NameFieldSchema
     with LinkableElementModel
-    with ExampleField {
+    with ExamplesField {
 
   val MediaType = Field(Str,
-                        ApiContract + "mediaType",
-                        ModelDoc(ModelVocabularies.ApiContract, "media type", "Media types supported in the payload"))
+                        Core + "mediaType",
+                        ModelDoc(ModelVocabularies.Core, "media type", "Media types supported in the payload"))
 
   val Schema =
-    Field(ShapeModel, ApiContract + "schema", ModelDoc(ModelVocabularies.ApiContract, "schema", "Schema associated to this payload"))
+    Field(ShapeModel, Shapes + "schema", ModelDoc(ModelVocabularies.Shapes, "schema", "Schema associated to this payload"))
 
   val Encoding = Field(Array(EncodingModel), ApiContract + "encoding", ModelDoc(ModelVocabularies.ApiContract, "encoding", ""))
 

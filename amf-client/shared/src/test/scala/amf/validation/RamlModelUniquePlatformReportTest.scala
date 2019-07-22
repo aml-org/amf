@@ -336,7 +336,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("facets/negative-max-min-length.raml", Some("negative-max-min-length.report"))
   }
 
-  test("Yaml undefined anchor validation") {
+  ignore("Yaml undefined anchor validation") {
     validate("yaml-alias.raml", Some("yaml-alias.report"))
   }
 
