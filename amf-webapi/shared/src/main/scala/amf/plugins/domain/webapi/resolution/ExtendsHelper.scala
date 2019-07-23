@@ -94,7 +94,9 @@ object ExtendsHelper {
                                       context: Option[RamlWebApiContext] = None): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
-    declarations(ctx, unit)
+    val definingUnit = getDefiningBaseUnitOrFragmentForSource(unit, entry.value.sourceName)
+
+    declarations(ctx, definingUnit)
     referencesCollector.foreach {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
@@ -173,6 +175,20 @@ object ExtendsHelper {
                     context)
   }
 
+  // Get the defining base unit or fragment for a sourceName
+  def getDefiningBaseUnitOrFragmentForSource(root: BaseUnit, sourceName: String): BaseUnit = {
+    val maybeFragment = root.references.find {
+      case f: Fragment =>
+        f.annotations
+          .find(classOf[SourceLocation])
+          .map(_.location)
+          .contains(sourceName)
+      case _ => false
+    }
+
+    maybeFragment.getOrElse(root)
+  }
+
   def entryAsEndpoint[T <: BaseUnit](profile: ProfileName,
                                      unit: T,
                                      node: DataNode,
@@ -189,7 +205,9 @@ object ExtendsHelper {
     val ctx       = context.getOrElse(custom(profile))
     val collector = ListBuffer[EndPoint]()
 
-    declarations(ctx, unit)
+    val definingUnit = getDefiningBaseUnitOrFragmentForSource(unit, entry.sourceName)
+
+    declarations(ctx, definingUnit)
     referencesCollector.foreach {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
@@ -232,7 +250,9 @@ object ExtendsHelper {
     })
   }
 
-  private def annotateExtensionId(point: DomainElement, extensionId: String, extensionLocation: Option[String]): Unit = {
+  private def annotateExtensionId(point: DomainElement,
+                                  extensionId: String,
+                                  extensionLocation: Option[String]): Unit = {
     val annotation = ExtensionProvenance(extensionId, extensionLocation)
     if (!point.fields
           .fields()

@@ -287,8 +287,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Missing discriminator property") {
-    validate("discriminator/invalid/missing-discriminator-property.raml",
-             Some("missing-discriminator-property.report"))
+    validate("discriminator/invalid/missing-discriminator-property.raml", Some("missing-discriminator-property.report"))
   }
 
   test("Invalid payload in RAML 08") {
@@ -299,19 +298,38 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("json-schema/api.raml")
   }
 
-  test("Invalid value in properties facet") {
-    validate("invalid-value-properties-facet.raml", Some("invalid-value-properties-facet.report"))
+  // References in fragments within extension
+
+  test("Reference in resource type fragment within extension") {
+    validate("references-in-fragments-within-extension/rt-fragment/extension.raml")
   }
 
-  test("Invalid security scheme declarations with invalid facets") {
-    validate("securitySchemes/invalid-security-schemes-facets.raml", Some("invalid-security-schemes-facets.report"))
+  test("Inexistent reference in resource type fragment within extension") {
+    validate(
+      "references-in-fragments-within-extension/rt-fragment-non-existent/extension.raml",
+      Some("inexistent-reference-in-resource-type-within-extension.report")
+    )
   }
 
-  test("Invalid signatures in OAuth 1.0 security scheme") {
-    validate("securitySchemes/invalid-oauth1-signatures.raml", Some("invalid-oauth1-signatures.report"))
+  test("Reference in trait fragment within extension") {
+    validate("references-in-fragments-within-extension/trait-fragment/extension.raml")
   }
 
-  test("JSON examples with string keys") {
-    validate("examples/json-example-with-string-keys/api.raml")
+  test("Inexistent reference in trait fragment within extension") {
+    validate(
+      "references-in-fragments-within-extension/trait-fragment-non-existent/extension.raml",
+      Some("inexistent-reference-in-trait-within-extension.report")
+    )
+  }
+
+  test("Reference in data type fragment within extension") {
+    validate("references-in-fragments-within-extension/datatype-fragment/extension.raml")
+  }
+
+  test("Inexistent reference in data type fragment within extension") {
+    validate(
+      "references-in-fragments-within-extension/datatype-fragment-non-existent/extension.raml",
+      Some("inexistent-reference-in-data-type-within-extension.report")
+    )
   }
 }

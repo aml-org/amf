@@ -101,9 +101,13 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                       extensionId: String,
                       extensionLocation: Option[String]): Unit = {
     val existing = document.references.map(_.id) ++ Seq(document.id, extension.id)
-    val libs     = extension.references.collect { case m: Module => m }
 
-    val refs = document.references ++ libs.filter(unit => !existing.contains(unit.id)).map { unit =>
+    val extensionReferences = extension.references.collect {
+      case m: Module   => m
+      case f: Fragment => f
+    }
+
+    val refs = document.references ++ extensionReferences.filter(unit => !existing.contains(unit.id)).map { unit =>
       unit.annotations += ExtensionProvenance(extensionId, extensionLocation)
       unit
     }
