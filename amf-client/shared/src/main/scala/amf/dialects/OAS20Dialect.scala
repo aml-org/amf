@@ -1,4 +1,5 @@
 package amf.dialects
+
 import amf.core.annotations.Aliases
 import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
