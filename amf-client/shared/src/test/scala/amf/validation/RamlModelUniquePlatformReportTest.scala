@@ -332,4 +332,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
       Some("inexistent-reference-in-data-type-within-extension.report")
     )
   }
+
+  test("Reference in fragment to extension declaration") {
+    validate("references-in-fragments-within-extension/rt-fragment-extension-declaration/extension.raml")
+  }
 }

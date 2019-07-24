@@ -94,9 +94,7 @@ object ExtendsHelper {
                                       context: Option[RamlWebApiContext] = None): Operation = {
     val ctx = context.getOrElse(custom(profile))
 
-    val definingUnit = getDefiningBaseUnitOrFragmentForSource(unit, entry.value.sourceName)
-
-    declarations(ctx, definingUnit)
+    addDeclarations(ctx, unit, entry.value.sourceName)
     referencesCollector.foreach {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
@@ -175,20 +173,6 @@ object ExtendsHelper {
                     context)
   }
 
-  // Get the defining base unit or fragment for a sourceName
-  def getDefiningBaseUnitOrFragmentForSource(root: BaseUnit, sourceName: String): BaseUnit = {
-    val maybeFragment = root.references.find {
-      case f: Fragment =>
-        f.annotations
-          .find(classOf[SourceLocation])
-          .map(_.location)
-          .contains(sourceName)
-      case _ => false
-    }
-
-    maybeFragment.getOrElse(root)
-  }
-
   def entryAsEndpoint[T <: BaseUnit](profile: ProfileName,
                                      unit: T,
                                      node: DataNode,
@@ -205,9 +189,7 @@ object ExtendsHelper {
     val ctx       = context.getOrElse(custom(profile))
     val collector = ListBuffer[EndPoint]()
 
-    val definingUnit = getDefiningBaseUnitOrFragmentForSource(unit, entry.sourceName)
-
-    declarations(ctx, definingUnit)
+    addDeclarations(ctx, unit, entry.sourceName)
     referencesCollector.foreach {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
@@ -276,23 +258,46 @@ object ExtendsHelper {
     }
   }
 
-  private def declarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
-    model match {
-      case d: DeclaresModel =>
-        d.declares.foreach { declaration =>
-          ctx.declarations += declaration
-          processDeclaration(declaration, ctx, model)
-        }
-      case _ =>
+  private def getDeclaringUnit(root: BaseUnit, sourceName: String): BaseUnit = {
+    val maybeFragment = root.references.find {
+      case f: Fragment =>
+        f.annotations
+          .find(classOf[SourceLocation])
+          .map(_.location)
+          .contains(sourceName)
+      case _ => false
     }
-    nestedDeclarations(ctx, model)
+
+    maybeFragment.getOrElse(root)
   }
 
-  private def nestedDeclarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
+  private def extractFilteredDeclarations(unit: BaseUnit,
+                                          filterCondition: DomainElement => Boolean): Seq[DomainElement] = {
+    unit match {
+      case d: DeclaresModel => d.declares.filter(filterCondition)
+      case _                => Nil
+    }
+  }
+
+  private def addDeclarations(ctx: RamlWebApiContext, root: BaseUnit, sourceName: String): Unit = {
+    val declaringUnit     = getDeclaringUnit(root, sourceName)
+    val libraries         = extractFilteredDeclarations(declaringUnit, _.isInstanceOf[Module]).map((_, declaringUnit))
+    val otherDeclarations = extractFilteredDeclarations(root, !_.isInstanceOf[Module]).map((_, root))
+
+    libraries ++ otherDeclarations foreach {
+      case (declaration, unit) =>
+        ctx.declarations += declaration
+        processDeclaration(declaration, ctx, unit)
+    }
+
+    addNestedDeclarations(ctx, declaringUnit)
+  }
+
+  private def addNestedDeclarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
     model.references.foreach {
       case f: Fragment =>
         ctx.declarations += (f.location().getOrElse(f.id), f)
-        nestedDeclarations(ctx, f)
+        addNestedDeclarations(ctx, f)
       case m: DeclaresModel =>
         model.annotations.find(classOf[Aliases]).getOrElse(Aliases(Set())).aliases.foreach {
           case (alias, (fullUrl, _)) =>
@@ -305,7 +310,7 @@ object ExtendsHelper {
               ctx.declarations.libraries += (alias -> nestedCtx.declarations)
             }
         }
-        nestedDeclarations(ctx, m)
+        addNestedDeclarations(ctx, m)
       case other =>
         ctx.violation(
           ResolutionValidation,
