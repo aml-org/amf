@@ -638,7 +638,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     if (isFileType) {
       val shape = node.tagType match {
         case YType.Str =>
-          FileShape()
+          adopt(FileShape())
         case YType.Map =>
           FileShapeParser(node, adopt).parse()
       }
