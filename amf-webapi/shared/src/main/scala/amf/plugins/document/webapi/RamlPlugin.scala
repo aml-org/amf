@@ -88,12 +88,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
               ExternalDomainElement()
                 .withRaw(content)
                 .withMediaType(if (content.startsWith("#%")) "application/yaml" else "application/json"))
-          val node =
-            vd.annotations.find(classOf[SourceAST]).map(_.ast) match {
-              case Some(map: YMap) => Some(YNode(map))
-              case _               => None
-            }
-          inlineFragment(ref.origin.refs, node, fragment.encodes, ref.unit.references, ctx)
+          inlineFragment(ref.origin.refs, None, fragment.encodes, ref.unit.references, ctx)
         case _ =>
       }
     }
