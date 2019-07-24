@@ -248,5 +248,9 @@ class ValidApiExamplesValidationTest extends ValidModelTest {
     checkValid("/healthcare_reduced_v2.raml")
   }
 
+  test("Test example from library with multiple types recursions (reduced calfa)") {
+    checkValid("/complex-multiple-recursions-calfa.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

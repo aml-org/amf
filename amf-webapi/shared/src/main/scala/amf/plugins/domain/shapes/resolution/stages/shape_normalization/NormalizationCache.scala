@@ -63,19 +63,35 @@ private[shape_normalization] case class NormalizationCache() {
     this
   }
 
-  def updateFixPointsAndClosures(canonical: Shape): Unit = {
-    updateRecursiveTargets(canonical)
-    cacheWithClosures.get(canonical.id) match {
-      case Some(seq) =>
-        seq.foreach { s =>
-          s.closureShapes.find(clo => clo.id == canonical.id && clo != canonical) match {
-            case Some(clo) =>
-              s.closureShapes.remove(clo)
-              s.closureShapes += canonical
-            case _ => // ignore
+  def updateFixPointsAndClosures(canonical: Shape, withoutCaching: Boolean): Unit = {
+    // First check if the shape has itself as closure or fixpoint target (because of it still not in the cache)
+    canonical.closureShapes.find(_.id == canonical.id) match {
+      case Some(x) =>
+        canonical.closureShapes.remove(x)
+        canonical.closureShapes.add(canonical)
+      case _ => // Nothing to do
+    }
+    canonical match {
+      case r: RecursiveShape if r.fixpointTarget.isDefined && r.fixpointTarget.get.id == canonical.id =>
+        r.withFixpointTarget(canonical)
+      case _ => // Ignore
+    }
+
+    // Then if the flag of caching is enabled, check and update other shapes
+    if (!withoutCaching) {
+      updateRecursiveTargets(canonical)
+      cacheWithClosures.get(canonical.id) match {
+        case Some(seq) =>
+          seq.foreach { s =>
+            s.closureShapes.find(clo => clo.id == canonical.id && clo != canonical) match {
+              case Some(clo) =>
+                s.closureShapes.remove(clo)
+                s.closureShapes += canonical
+              case _ => // ignore
+            }
           }
-        }
-      case _ => // ignore
+        case _ => // ignore
+      }
     }
   }
 

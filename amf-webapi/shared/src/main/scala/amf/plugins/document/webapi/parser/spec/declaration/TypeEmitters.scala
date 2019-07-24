@@ -1327,6 +1327,7 @@ case class OasTypeEmitter(shape: Shape,
     // Adjusting JSON Schema  pointer
     val nextPointerStr                           = s"#${pointer.map(p => s"/$p").mkString}"
     var updatedSchemaPath: Seq[(String, String)] = schemaPath :+ (shape.id, nextPointerStr)
+
     shape match {
       // Only will add to the list if the shape is a declaration
       case chain: InheritanceChain if shape.annotations.contains(classOf[DeclaredElement]) =>
