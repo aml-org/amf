@@ -1004,6 +1004,7 @@ object RamlUnionEmitterHelper {
       case s: Shape if s.isLink && s.linkLabel.option().isDefined => s.linkLabel.value()
       case n: NilShape if n.fields.fields().isEmpty               => "nil"
       case a: ArrayShape if a.fields.fields().isEmpty             => "array"
+      case a: NodeShape if a.fields.fields().isEmpty              => "object"
       case a: AnyShape if a.fields.fields().isEmpty               => "any"
       case _                                                      => return None
     }
