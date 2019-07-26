@@ -28,13 +28,11 @@ class AnnotationsCandidatesCollector(model: BaseUnit, platform: Platform) {
               Option(definition.schema).isDefined && resolveAnnotation(s"(${definition.name.value()})").isDefined
             }) =>
           Seq(extension)
-        case scalar: AmfScalar if scalar.annotations.find(classOf[DomainExtensionAnnotation]).isDefined =>
+        case scalar: AmfScalar if scalar.annotations.contains(classOf[DomainExtensionAnnotation]) =>
           scalar.annotations
-            .collect[DomainExtensionAnnotation] {
-              case domainAnnotation: DomainExtensionAnnotation => domainAnnotation
+            .collect[DomainExtension] {
+              case domainAnnotation: DomainExtensionAnnotation => domainAnnotation.extension
             }
-            .map(_.extension)
-
       }
       .flatten
   }.toSeq
