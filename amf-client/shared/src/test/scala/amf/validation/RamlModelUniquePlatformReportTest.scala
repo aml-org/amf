@@ -287,7 +287,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Missing discriminator property") {
-    validate("discriminator/invalid/missing-discriminator-property.raml", Some("missing-discriminator-property.report"))
+    validate("discriminator/invalid/missing-discriminator-property.raml",
+             Some("missing-discriminator-property.report"))
   }
 
   test("Invalid payload in RAML 08") {
@@ -336,4 +337,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Reference in fragment to extension declaration") {
     validate("references-in-fragments-within-extension/rt-fragment-extension-declaration/extension.raml")
   }
+
+  test("maxLength and minLength negative values") {
+    validate("facets/negative-max-min-length.raml", Some("negative-max-min-length.report"))
+  }
+
 }
