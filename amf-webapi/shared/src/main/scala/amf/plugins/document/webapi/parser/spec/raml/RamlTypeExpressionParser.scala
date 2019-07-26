@@ -93,6 +93,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
         case "any"    => AnyShape()
         case "file"   => FileShape()
         case "object" => NodeShape()
+        case "array"  => ArrayShape()
         case "string" | "integer" | "number" | "boolean" | "datetime" | "datetime-only" | "time-only" | "date-only" =>
           ScalarShape().withDataType(DataType(acc))
         case other =>
