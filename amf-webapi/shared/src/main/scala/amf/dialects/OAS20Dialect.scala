@@ -463,13 +463,6 @@ object OAS20Dialect {
       .withPropertiesMapping(Seq(
 
         PropertyMapping()
-          .withId(DialectLocation + "#/declarations/BodyParameterObject/name")
-          .withName("declarationName")
-          .withMinCount(1)
-          .withNodePropertyMapping(ParameterModel.Name.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
           .withId(DialectLocation + "#/declarations/BodyParameterObject/description")
           .withName("description")
           .withNodePropertyMapping(ParameterModel.Description.value.iri())
