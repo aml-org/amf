@@ -164,11 +164,11 @@ object WebApiRegister {
       case s: webapi.models.IriTemplateMapping => IriTemplateMapping(s)
     }
 
-//    platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
-//    platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
-//    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
-//    platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
-//    platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
+    platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
+    platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
+    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
+    platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
+    platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
 
     amf.Core.registerPlugin(WebAPIDomainPlugin)
   }
