@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: a.a.b should be string
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/recursives/props1.raml#/declarations/types/A/example/invalid

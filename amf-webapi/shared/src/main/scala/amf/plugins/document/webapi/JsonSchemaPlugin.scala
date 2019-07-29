@@ -30,7 +30,7 @@ import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax, _}
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
-import amf.plugins.features.validation.ParserSideValidations.UnableToParseJsonSchema
+import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 

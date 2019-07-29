@@ -8,7 +8,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, FieldEntry}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

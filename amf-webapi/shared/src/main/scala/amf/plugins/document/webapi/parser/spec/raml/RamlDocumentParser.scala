@@ -25,7 +25,8 @@ import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations._
+import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
+import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -399,7 +400,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
 
     schemas.foreach(
       s =>
-        ctx.warning(SchemaDeprecated,
+        ctx.warning(SchemasDeprecated,
                     "",
                     "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead",
                     s.key))

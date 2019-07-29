@@ -9,7 +9,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.core.traversal.ModelTraversalRegistry
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization._
-import amf.plugins.features.validation.ResolutionSideValidations.RecursiveShapeSpecification
+import amf.plugins.features.validation.CoreValidations.RecursiveShapeSpecification
 
 import scala.collection.mutable.ListBuffer
 

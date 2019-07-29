@@ -5,7 +5,7 @@ Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should have required property 'alive'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad0/user/object_1
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(22,0)-(23,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: alive should be boolean
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/annotation/object/input.raml#/web-api/end-points/%2Fbad1/user/object_1

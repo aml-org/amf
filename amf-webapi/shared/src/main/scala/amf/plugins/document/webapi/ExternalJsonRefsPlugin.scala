@@ -18,7 +18,7 @@ import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.client.ParsingOptions
 import amf.core.remote.Platform
 import amf.core.utils._
-import amf.plugins.features.validation.ParserSideValidations.UnresolvedReference
+import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import org.yaml.model._
 
 import scala.concurrent.Future

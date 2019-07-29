@@ -31,8 +31,8 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models.{ScalarType, _}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.features.validation.ParserSideValidations
-import amf.plugins.features.validation.ParserSideValidations._
+import amf.validation.DialectValidations.InvalidUnionType
+import amf.validations.ParserSideValidations._
 import org.mulesoft.lexer.InputRange
 import org.yaml.model.{YPart, _}
 import org.yaml.render.YamlRender

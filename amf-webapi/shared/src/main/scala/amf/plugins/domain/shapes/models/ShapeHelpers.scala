@@ -6,7 +6,7 @@ import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
 import amf.core.traversal.ModelTraversalRegistry
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
-import amf.plugins.features.validation.ResolutionSideValidations.{RecursiveShapeSpecification, ResolutionValidation}
+import amf.plugins.features.validation.CoreValidations.{RecursiveShapeSpecification, ResolutionValidation}
 
 trait ShapeHelpers { this: Shape =>
 

@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: chapters[0].name should NOT be longer than 10 characters
 chapters[3].content should be string
 chapters[3].name should be string

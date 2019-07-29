@@ -13,7 +13,7 @@ Level: Warning
   Position: Some(LexicalInformation([(8,8)-(8,14)]))
   Location: file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unsupported-example-media-type-warning
+- Source: http://a.ml/vocabularies/amf/validation#unsupported-example-media-type-warning
   Message: Unsupported validation for mediatype: application/xml and shape file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml#/declarations/types/schema/Office
   Level: Warning
   Target: file://amf-client/shared/src/test/resources/validations/xmlexample/offices_xml_type.raml#/declarations/types/schema/Office/example/default-example

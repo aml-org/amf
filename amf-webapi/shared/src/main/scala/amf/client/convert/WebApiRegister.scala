@@ -9,6 +9,8 @@ import amf.plugins.document.webapi.model
 import amf.plugins.domain.{shapes, webapi}
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
 import amf.plugins.domain.webapi.metamodel.{IriTemplateMappingModel, TemplatedLinkModel, templates}
+import amf.plugins.features.validation.CoreValidations
+import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
 
 /** Shared WebApi registrations. */
 object WebApiRegister {
@@ -161,6 +163,12 @@ object WebApiRegister {
     platform.registerWrapper(IriTemplateMappingModel) {
       case s: webapi.models.IriTemplateMapping => IriTemplateMapping(s)
     }
+
+//    platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
+//    platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
+//    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
+//    platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
+//    platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
 
     amf.Core.registerPlugin(WebAPIDomainPlugin)
   }

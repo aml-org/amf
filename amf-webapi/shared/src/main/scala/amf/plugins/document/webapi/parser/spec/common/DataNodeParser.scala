@@ -6,7 +6,7 @@ import amf.core.model.domain.{DataNode, LinkNode, ScalarNode, ArrayNode => DataA
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.features.validation.ParserSideValidations.SyamlError
+import amf.plugins.features.validation.CoreValidations.SyamlError
 import org.mulesoft.common.time.SimpleDateTime
 import org.mulesoft.lexer.InputRange
 import org.yaml.model._

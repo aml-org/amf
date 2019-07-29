@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.toJsonSchema
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
-import amf.plugins.features.validation.ParserSideValidations._
+import amf.validations.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser

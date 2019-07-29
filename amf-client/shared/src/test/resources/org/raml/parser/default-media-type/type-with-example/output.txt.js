@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be object
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/default-media-type/type-with-example/input.raml#/web-api/end-points/%2Fok0/post/request/default/example/default-example

@@ -14,9 +14,10 @@ import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.features.validation.AMFValidatorPlugin
+import amf.plugins.features.validation.{AMFValidatorPlugin, CoreValidations}
 import amf.plugins.features.validation.model.ValidationDialectText
 import amf.plugins.syntax.SYamlSyntaxPlugin
+import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -24,6 +25,12 @@ import scala.concurrent.Future
 class Validation(platform: Platform) {
 
   def init(): Future[Unit] = {
+    platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
+    platform.registerValidations(ParserSideValidations.validations, ParserSideValidations.levels)
+    platform.registerValidations(PayloadValidations.validations, PayloadValidations.levels)
+    platform.registerValidations(RenderSideValidations.validations, RenderSideValidations.levels)
+    platform.registerValidations(ResolutionSideValidations.validations, ResolutionSideValidations.levels)
+
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     amf.core.AMF.registerPlugin(PayloadValidatorPlugin)
     amf.core.AMF.init().map { _ =>

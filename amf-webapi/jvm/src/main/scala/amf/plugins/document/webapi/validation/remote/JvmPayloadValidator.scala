@@ -6,8 +6,10 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
-import amf.plugins.features.validation.ParserSideValidations
-import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
+import amf.validations.PayloadValidations.{
+  ExampleValidationErrorSpecification,
+  SchemaException => InternalSchemaException
+}
 import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidator, URIFormatValidator}
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
@@ -118,7 +120,7 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName) e
             level = SeverityLevels.VIOLATION,
             targetNode = element.map(_.id).getOrElse(""),
             targetProperty = None,
-            validationId = ParserSideValidations.SchemaException.id,
+            validationId = InternalSchemaException.id,
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),
             source = e

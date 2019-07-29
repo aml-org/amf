@@ -1,22 +1,21 @@
 package amf.javaparser.org.raml
 
+import _root_.org.mulesoft.common.io.{Fs, SyncFile}
+import _root_.org.scalatest.compatible.Assertion
 import amf._
 import amf.core.annotations.SourceVendor
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
+import amf.core.parser.DefaultParserSideErrorHandler
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline.EDITING_PIPELINE
 import amf.core.validation.AMFValidationReport
+import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
+import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 import amf.resolution.ResolutionTest
-import _root_.org.mulesoft.common.io.{Fs, SyncFile}
-import _root_.org.scalatest.compatible.Assertion
-import amf.core.parser.{DefaultParserSideErrorHandler, UnhandledErrorHandler}
-import amf.core.vocabulary.Namespace
-import amf.emit.AMFRenderer
-import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
 
 import scala.concurrent.Future
 

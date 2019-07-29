@@ -8,11 +8,8 @@ import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfResolutionPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
-import amf.plugins.features.validation.ParserSideValidations.{
-  DeclarationNotFound,
-  UnknownSecuritySchemeErrorSpecification
-}
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
+import amf.validations.ParserSideValidations.UnknownSecuritySchemeErrorSpecification
 import org.scalatest.Assertion
 import org.scalatest.Matchers._
 

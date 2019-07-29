@@ -12,7 +12,7 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
-import amf.plugins.features.validation.ParserSideValidations.InvalidPayload
+import amf.validations.ParserSideValidations.InvalidPayload
 import org.yaml.model._
 
 /**
@@ -147,8 +147,9 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
   }
 }
 
-abstract class RamlPayloadParser(entry: YMapEntry, producer: Option[String] => Payload, parseOptional: Boolean = false)(
-    implicit ctx: RamlWebApiContext) {
+abstract class RamlPayloadParser(entry: YMapEntry,
+                                 producer: Option[String] => Payload,
+                                 parseOptional: Boolean = false)(implicit ctx: RamlWebApiContext) {
 
   def parse(): Payload = producer(Some(entry.key)).add(Annotations(entry))
 }

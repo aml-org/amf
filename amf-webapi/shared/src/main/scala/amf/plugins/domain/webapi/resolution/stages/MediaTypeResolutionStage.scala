@@ -9,7 +9,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.{ExampleTracking, FileShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.{Payload, Request, WebApi}
-import amf.plugins.features.validation.ParserSideValidations.InvalidConsumesWithFileParameter
+import amf.validations.ResolutionSideValidations.InvalidConsumesWithFileParameter
 import amf.{Oas20Profile, OasProfile, ProfileName}
 
 /** Apply root and operation mime types to payloads.

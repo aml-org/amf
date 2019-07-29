@@ -5,7 +5,7 @@ Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should NOT be valid
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/any/schema/example/default-example
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(26,21)-(26,22)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/not/api2.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should NOT be valid
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/not/api2.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/any/schema/example/default-example

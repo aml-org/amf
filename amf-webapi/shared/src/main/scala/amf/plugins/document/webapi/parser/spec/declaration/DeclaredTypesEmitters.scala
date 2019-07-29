@@ -8,7 +8,7 @@ import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.features.validation.RenderSideValidations.RenderValidation
+import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RamlDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit], ordering: SpecOrdering)(

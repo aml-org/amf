@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
 import amf.plugins.domain.webapi.models.{Operation, Response}
-import amf.plugins.features.validation.ParserSideValidations._
+import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
 import scala.collection.mutable

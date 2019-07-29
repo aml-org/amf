@@ -19,7 +19,8 @@ import amf.plugins.document.webapi.contexts.{
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
-import amf.plugins.features.validation.ResolutionSideValidations.{ParseResourceTypeFail, ResolutionValidation}
+import amf.plugins.features.validation.CoreValidations
+import amf.validations.ResolutionSideValidations.ParseResourceTypeFail
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
@@ -232,9 +233,7 @@ object ExtendsHelper {
     })
   }
 
-  private def annotateExtensionId(point: DomainElement,
-                                  extensionId: String,
-                                  extensionLocation: Option[String]): Unit = {
+  private def annotateExtensionId(point: DomainElement, extensionId: String, extensionLocation: Option[String]): Unit = {
     val annotation = ExtensionProvenance(extensionId, extensionLocation)
     if (!point.fields
           .fields()
@@ -313,7 +312,7 @@ object ExtendsHelper {
         addNestedDeclarations(ctx, m)
       case other =>
         ctx.violation(
-          ResolutionValidation,
+          CoreValidations.ResolutionValidation,
           other,
           None,
           "Error resolving nested declaration, found something that is not a library or a fragment"

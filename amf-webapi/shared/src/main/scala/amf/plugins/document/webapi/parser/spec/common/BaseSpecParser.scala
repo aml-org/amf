@@ -8,7 +8,7 @@ import amf.core.model.domain.{ArrayNode => _, ScalarNode => _, _}
 import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
-import amf.plugins.features.validation.ParserSideValidations.{
+import amf.validations.ParserSideValidations.{
   DuplicatedPropertySpecification,
   PathTemplateUnbalancedParameters,
   UnexpectedRamlScalarKey

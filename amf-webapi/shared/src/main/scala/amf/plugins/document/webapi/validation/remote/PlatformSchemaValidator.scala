@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._
-import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
+import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.{ProfileName, ProfileNames}
 import org.yaml.builder.YDocumentBuilder

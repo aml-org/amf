@@ -1,12 +1,15 @@
 package amf
+import amf.client.AMF
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
-import amf.plugins.document.webapi.validation.{AMFRawValidations, DefaultAMFValidations, ImportUtils}
-import amf.plugins.features.validation.{ParserSideValidations, Validations}
+import amf.plugins.document.webapi.validation.{AMFRawValidations, ImportUtils}
+import amf.plugins.features.validation.Validations
 
 object ValidationsExporter extends ImportUtils {
 
   def main(args: Array[String]): Unit = {
+
+    AMF.init() // Needed to load all the validations in the platform
 
     val parserSideVals = Validations.allLevels.foldLeft(Map[String, Map[String, String]]()) {
       case (accMap, (id, levels)) =>

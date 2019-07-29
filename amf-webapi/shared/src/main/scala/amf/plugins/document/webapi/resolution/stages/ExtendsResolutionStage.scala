@@ -20,7 +20,7 @@ import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, Par
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 

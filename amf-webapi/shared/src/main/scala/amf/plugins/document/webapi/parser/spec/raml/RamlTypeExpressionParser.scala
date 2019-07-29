@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models._
-import amf.plugins.features.validation.ParserSideValidations.InvalidTypeExpression
+import amf.validations.ParserSideValidations.InvalidTypeExpression
 import org.yaml.model.{YMapEntry, YNode, YPart, YScalar}
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 

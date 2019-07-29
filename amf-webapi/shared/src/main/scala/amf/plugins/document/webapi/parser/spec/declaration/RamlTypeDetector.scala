@@ -12,8 +12,8 @@ import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefString
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
-import amf.plugins.features.validation.ParserSideValidations._
-import amf.plugins.features.validation.ResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
+import amf.validations.ParserSideValidations._
+import amf.validations.ResolutionSideValidations.InvalidTypeInheritanceErrorSpecification
 import org.yaml.model._
 
 /**

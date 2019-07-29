@@ -18,11 +18,9 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models._
-import amf.plugins.features.validation.ParserSideValidations.UnusedBaseUriParameter
-import amf.plugins.features.validation.ResolutionSideValidations.{
-  ResolutionValidation,
-  UnequalMediaTypeDefinitionsInExtendsPayloads
-}
+import amf.plugins.features.validation.CoreValidations
+import amf.validations.ParserSideValidations.UnusedBaseUriParameter
+import amf.validations.ResolutionSideValidations.UnequalMediaTypeDefinitionsInExtendsPayloads
 
 import scala.collection.mutable
 
@@ -171,7 +169,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         case _: DomainElementModel =>
           merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
         case _ =>
-          errorHandler.violation(ResolutionValidation,
+          errorHandler.violation(CoreValidations.ResolutionValidation,
                                  main.id,
                                  s"Cannot merge '${otherField.`type`}':not a (Scalar|Array|Object)",
                                  main.annotations)
@@ -302,7 +300,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       case key: KeyField  => mergeByKeyValue(target, field, element, key, m, o, errorHandler)
       case DataNodeModel  => mergeDataNodes(target, field, m, o)
       case _ =>
-        errorHandler.violation(ResolutionValidation,
+        errorHandler.violation(CoreValidations.ResolutionValidation,
                                target.id,
                                s"Cannot merge '$element': not a KeyField nor a Scalar",
                                target.annotations)

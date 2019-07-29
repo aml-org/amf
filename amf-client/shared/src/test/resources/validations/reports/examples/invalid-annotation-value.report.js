@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be number
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-annotation-value.raml#/web-api/end-points/%2Fusers/intAnnotation/scalar_1

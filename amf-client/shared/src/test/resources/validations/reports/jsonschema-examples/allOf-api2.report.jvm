@@ -5,7 +5,7 @@ Number of results: 4
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: required key [bar] not found
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep2/get/200/application%2Fjson/schema/example/default-example
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(45,0)-(49,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: required key [foo] not found
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep3/get/200/application%2Fjson/schema/example/default-example
@@ -21,7 +21,7 @@ Level: Violation
   Position: Some(LexicalInformation([(57,0)-(61,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: required key [baz] not found
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml#/web-api/end-points/%2Fep4/get/200/application%2Fjson/schema/example/default-example
@@ -29,7 +29,7 @@ Level: Violation
   Position: Some(LexicalInformation([(69,0)-(72,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/allOf/api2.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: required key [baz] not found
 required key [foo] not found
 

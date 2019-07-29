@@ -5,7 +5,7 @@ Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: b should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/production/null-keys/api.raml#/web-api/end-points/%2FUsuario/delete/request/application%2Fjson/schema/example/default-example

@@ -20,11 +20,9 @@ import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.features.validation.ParserSideValidations.{
-  ClosedShapeSpecification,
-  DeclarationNotFound,
-  InvalidJsonSchemaVersion
-}
+import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
+import amf.validation.DialectValidations.ClosedShapeSpecification
+import amf.validations.ParserSideValidations.InvalidJsonSchemaVersion
 import org.yaml.model._
 
 import scala.collection.mutable

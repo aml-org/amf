@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNod
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
-import amf.plugins.features.validation.ParserSideValidations.{
+import amf.validations.ParserSideValidations.{
   ExamplesMustBeAMap,
   ExclusivePropertiesSpecification,
   InvalidFragmentType

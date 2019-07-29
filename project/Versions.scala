@@ -10,7 +10,8 @@ object Versions {
     val props        = new Properties()
     val absolutePath = Path("").asFile.getAbsolutePath
     val versionsFile =
-      if (absolutePath.endsWith("als")) Path("../amf/versions.properties").asFile
+      if (absolutePath.endsWith("als") || absolutePath.endsWith("amf-runner"))
+        Path("../amf/versions.properties").asFile
       else Path("versions.properties").asFile
     props.load(new FileInputStream(versionsFile))
     props.entrySet().asScala.map(e => e.getKey.toString -> e.getValue.toString).toMap

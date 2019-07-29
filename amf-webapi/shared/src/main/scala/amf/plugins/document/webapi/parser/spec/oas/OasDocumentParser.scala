@@ -27,7 +27,8 @@ import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations._
+import amf.validations.ParserSideValidations._
+import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import org.yaml.model.{YNode, _}
 
 import scala.collection.mutable

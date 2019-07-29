@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.parser.spec.common.AnnotationParser.parseExte
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.resolveAnnotation
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
-import amf.plugins.features.validation.ParserSideValidations.InvalidAnnotationTarget
+import amf.validations.ParserSideValidations.InvalidAnnotationTarget
 import org.yaml.model._
 
 case class AnnotationParser(element: DomainElement, map: YMap, target: List[String] = Nil)(

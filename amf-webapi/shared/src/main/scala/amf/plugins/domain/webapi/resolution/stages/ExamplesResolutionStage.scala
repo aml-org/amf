@@ -7,7 +7,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.models.{Payload, WebApi}
-import amf.plugins.features.validation.ParserSideValidations.{ExamplesWithInvalidMimeType, ExamplesWithNoSchemaDefined}
+import amf.validations.ResolutionSideValidations.{ExamplesWithInvalidMimeType, ExamplesWithNoSchemaDefined}
 
 /** Apply response examples to payloads schemas matching by media type
   *

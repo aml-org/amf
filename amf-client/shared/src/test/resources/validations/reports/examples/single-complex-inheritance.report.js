@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should NOT have more than 3 properties
 should have required property 'numberOfUSBPorts'
 should match some schema in anyOf

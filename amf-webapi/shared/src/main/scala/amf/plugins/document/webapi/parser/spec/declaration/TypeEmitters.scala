@@ -25,7 +25,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
 

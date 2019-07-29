@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AbstractVariables, DataNodeParser}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations.{InvalidAbstractDeclarationType, NullAbstractDeclaration}
+import amf.validations.ParserSideValidations.{InvalidAbstractDeclarationType, NullAbstractDeclaration}
 import org.yaml.model._
 
 /**

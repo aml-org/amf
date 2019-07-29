@@ -9,11 +9,12 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.parser.spec.domain.Parameters
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, ServerModel}
 import amf.plugins.domain.webapi.models.{Operation, Parameter, WebApi}
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations
 
 /**
   * Place parameter models in the right locations according to the RAML/OpenAPI specs and our own
   * criterium for AMF
+  *
   * @param profile target profile
   */
 class ParametersNormalizationStage(profile: ProfileName)(override implicit val errorHandler: ErrorHandler)
@@ -25,7 +26,12 @@ class ParametersNormalizationStage(profile: ProfileName)(override implicit val e
       case OasProfile | Raml08Profile => parametersOpenApi(model).asInstanceOf[T]
       case AmfProfile                 => parametersAmf(model).asInstanceOf[T]
       case _ =>
-        errorHandler.violation(ResolutionValidation, model.id, None, s"Unknown profile ${profile.profile}", None, None)
+        errorHandler.violation(CoreValidations.ResolutionValidation,
+                               model.id,
+                               None,
+                               s"Unknown profile ${profile.profile}",
+                               None,
+                               None)
         model
     }
   }
@@ -114,6 +120,7 @@ class ParametersNormalizationStage(profile: ProfileName)(override implicit val e
     * - endpoint for the path parameters
     * - operation for the  query, path and header parameters
     * Since parameters can be at any level due to the source of the model being an OpenAPI document
+    *
     * @param unit BaseUnit in
     * @return unit BaseUnit out
     */

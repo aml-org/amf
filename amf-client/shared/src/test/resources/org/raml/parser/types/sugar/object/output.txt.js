@@ -5,7 +5,7 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: name should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/types/sugar/object/input.raml#/declarations/types/Person/example/default-example

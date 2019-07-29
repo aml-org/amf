@@ -7,7 +7,7 @@ import amf.core.parser._
 import amf.core.remote.{Oas, Raml}
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.features.validation.ParserSideValidations.UnableToParseShapeExtensions
+import amf.validations.ParserSideValidations.UnableToParseShapeExtensions
 import org.yaml.model.YMap
 
 case class ShapeExtensionParser(shape: Shape,

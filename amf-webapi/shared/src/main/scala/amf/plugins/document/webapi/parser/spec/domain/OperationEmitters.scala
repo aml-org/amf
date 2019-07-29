@@ -13,7 +13,7 @@ import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
 import amf.plugins.domain.webapi.models.Operation
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.Strings
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

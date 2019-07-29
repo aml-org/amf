@@ -27,7 +27,8 @@ import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
-import amf.plugins.features.validation.ResolutionSideValidations.{MissingExtensionInReferences, ResolutionValidation}
+import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import amf.validations.ResolutionSideValidations.MissingExtensionInReferences
 import amf.{ProfileName, Raml08Profile}
 
 import scala.collection.mutable
