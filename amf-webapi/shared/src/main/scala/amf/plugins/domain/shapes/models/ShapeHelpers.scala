@@ -1,7 +1,6 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.annotations.ExplicitField
-import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
 import amf.core.traversal.ModelTraversalRegistry
@@ -51,17 +50,11 @@ trait ShapeHelpers { this: Shape =>
       val cloned: Shape = this match {
         case _: Linkable if this.isLink =>
           buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler)
-        case r: RecursiveShape =>
-          r.fixpointTarget match {
-            case Some(target) => r.withFixpointTarget(target)
-            case _            => r
-          }
         case _: UnionShape                                       => UnionShape(annotations)
         case _: ScalarShape                                      => ScalarShape(annotations)
         case _: ArrayShape                                       => ArrayShape(annotations)
         case _: MatrixShape                                      => MatrixShape(annotations)
         case _: TupleShape                                       => TupleShape(annotations)
-        case _: PropertyShape                                    => PropertyShape(annotations)
         case _: FileShape                                        => FileShape(annotations)
         case _: NilShape                                         => NilShape(annotations)
         case _: NodeShape                                        => NodeShape(annotations)

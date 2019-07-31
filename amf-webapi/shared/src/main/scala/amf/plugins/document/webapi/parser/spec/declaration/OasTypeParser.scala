@@ -1000,8 +1000,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key(
         "default",
         node => {
-          val str = YamlRender.render(node.value)
-          shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(node))
+          shape.setDefaultStrValue(node)
           NodeDataNodeParser(node.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
             shape.set(ShapeModel.Default, dn, Annotations(node))
           }

@@ -23,6 +23,7 @@ import amf.core.model.domain.{
 }
 import amf.core.parser.Range
 import amf.core.remote.{Aml, Oas20, Raml10}
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
@@ -1607,6 +1608,17 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       report <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
     } yield {
       assert(report.conforms)
+    }
+  }
+
+  test("Test quoted default value") {
+    val file = "file://amf-client/shared/src/test/resources/validations/default-with-quotes.raml"
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseFileAsync(file).asFuture
+    } yield {
+      assert(
+        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 

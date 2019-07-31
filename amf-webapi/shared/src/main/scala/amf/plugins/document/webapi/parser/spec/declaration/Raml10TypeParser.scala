@@ -441,8 +441,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
             NodeDataNodeParser(entry.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
               shape.set(ShapeModel.Default, dn, Annotations(entry))
             }
-            val str = YamlRender.render(entry.value)
-            shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
+            shape.setDefaultStrValue(entry)
         }
       }
     )
@@ -1563,8 +1562,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             case YType.Null =>
             case _ =>
               val dataNodeResult = NodeDataNodeParser(entry.value, shape.id + "/default", quiet = false).parse()
-              val str            = YamlRender.render(entry.value)
-              shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
+              shape.setDefaultStrValue(entry)
               dataNodeResult.dataNode.foreach { dataNode =>
                 shape.set(ShapeModel.Default, dataNode, Annotations(entry))
               }

@@ -94,8 +94,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         "default",
         entry => {
           val dataNodeResult = NodeDataNodeParser(entry.value, parsed.id, quiet = false).parse()
-          val str            = YamlRender.render(entry.value)
-          parsed.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
+          parsed.setDefaultStrValue(entry)
           dataNodeResult.dataNode.foreach { dataNode =>
             parsed.set(ShapeModel.Default, dataNode, Annotations(entry))
           }
@@ -280,8 +279,7 @@ case class RamlXmlSchemaExpression(key: YNode,
           "default",
           entry => {
             val dataNodeResult = NodeDataNodeParser(entry.value, parsedSchema.id, quiet = false).parse()
-            val str            = YamlRender.render(entry.value)
-            parsedSchema.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(entry))
+            parsedSchema.setDefaultStrValue(entry)
             dataNodeResult.dataNode.foreach { dataNode =>
               parsedSchema.set(ShapeModel.Default, dataNode, Annotations(entry))
             }
