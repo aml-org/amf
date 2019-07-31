@@ -1409,9 +1409,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                     )
                   }
                 })
-              if (hasPatternProperties) {
-                shape.set(NodeShapeModel.Closed, value = true) // we close by default, additional properties must match one patter or fail
-              }
               shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
             case YType.Null =>
             case _ =>
