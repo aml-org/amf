@@ -346,4 +346,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("yaml-alias.raml", Some("yaml-alias.report"))
   }
 
+  test("Severity levels order in the report") {
+    validate("severity-report-order/severity-report-order.raml", Some("severity-report-order.report"))
+  }
+
 }
