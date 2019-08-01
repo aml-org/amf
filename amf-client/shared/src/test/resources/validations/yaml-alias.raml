@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: yaml alias and anchor
+mediaType: application/json
+types:
+
+  type1:
+    properties:
+      get: number
+      post: string
+    example: &type-1-example
+      get: 5
+      post: "a string"
+
+  type2:
+    properties:
+      get: string | number
+      post: string
+    example: *type-1-example
+
+  type3: *other
+
