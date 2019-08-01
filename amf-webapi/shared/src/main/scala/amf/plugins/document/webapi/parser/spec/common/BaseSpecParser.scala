@@ -183,8 +183,7 @@ trait SpecParserOps {
 }
 
 /** Scalar valued raml node (based on obj node). */
-private case class RamlScalarValuedNode(obj: YMap, scalar: Option[ScalarNode])(implicit iv: WebApiContext)
-    extends ScalarNode {
+private case class RamlScalarValuedNode(obj: YMap, scalar: ScalarNode)(implicit iv: WebApiContext) extends ScalarNode {
 
   override def string(): AmfScalar  = as(_.string())
   override def text(): AmfScalar    = as(_.text())
@@ -193,7 +192,7 @@ private case class RamlScalarValuedNode(obj: YMap, scalar: Option[ScalarNode])(i
   override def boolean(): AmfScalar = as(_.boolean())
   override def negated(): AmfScalar = as(_.negated())
 
-  private def as(fn: ScalarNode => AmfScalar) = scalar.map(fn).getOrElse(AmfScalar(null))
+  private def as(fn: ScalarNode => AmfScalar) = fn(scalar)
 }
 
 private case class RamlSingleArrayNode(node: YNode)(implicit iv: WebApiContext) extends ArrayNode {
@@ -259,7 +258,9 @@ object RamlScalarNode {
       values.tail.foreach(d => iv.violation(DuplicatedPropertySpecification, "", s"Duplicated key 'value'.", d))
     }
 
-    RamlScalarValuedNode(obj, values.headOption.map(entry => ScalarNode(entry.value)))
+    // When an annotated scalar node has no value, the default is an empty node (null).
+    RamlScalarValuedNode(obj,
+                         values.headOption.map(entry => ScalarNode(entry.value)).getOrElse(ScalarNode(YNode.Empty)))
   }
 
   private def unexpected(key: YNode)(implicit iv: WebApiContext): Unit =
