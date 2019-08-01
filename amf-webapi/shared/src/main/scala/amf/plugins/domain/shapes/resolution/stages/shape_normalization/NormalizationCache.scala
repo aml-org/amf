@@ -167,10 +167,7 @@ private[shape_normalization] case class NormalizationCache() {
     this
   }
 
-  def get(id: String): Option[Shape] = cache.get(id) match {
-    case Some(x) => Some(x)
-    case None    => cache.get(id + "/recursive")
-  }
+  def get(id: String): Option[Shape] = cache.get(id)
 
   def exists(id: String): Boolean = cache.contains(id)
 }
