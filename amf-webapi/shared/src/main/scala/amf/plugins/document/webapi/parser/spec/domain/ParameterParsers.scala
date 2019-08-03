@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfScalar, DomainElement, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.Strings
+import amf.core.utils.{IdCounter, Strings}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.{
   FormBodyParameter,
@@ -211,8 +211,10 @@ abstract class RamlParameterParser(entry: YMapEntry, adopted: Parameter => Unit)
   def parse(): Parameter
 }
 
-case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: String, nameNode: Option[YNode])(
-    implicit ctx: WebApiContext)
+case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode],
+                              parentId: String,
+                              nameNode: Option[YNode],
+                              nameGenerator: IdCounter)(implicit ctx: WebApiContext)
     extends SpecParserOps {
 
   private val map = entryOrNode match {
@@ -268,7 +270,8 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode], parentId: S
   }
 
   private def validateEntryName(element: DomainElement with NamedDomainElement): Unit = {
-    if (element.name.option().isEmpty) element.withName("default")
+    // if is invalid need a aut generated name different from default to avoid collision with uri parameters
+    if (element.name.option().isEmpty) element.withName(nameGenerator.genId("parameter"))
     element.adopted(parentId)
     if (map.key("name").isEmpty) {
       ctx.violation(
@@ -496,8 +499,9 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
   private case class ParameterInformation(oasParam: OasParameter, name: String, binding: String)
 
   def parse(inRequest: Boolean = false): Parameters = {
+    val nameGenerator = new IdCounter()
     val oasParameters = values
-      .map(value => OasParameterParser(Right(value), parentId, None).parse())
+      .map(value => OasParameterParser(Right(value), parentId, None, nameGenerator).parse())
 
     val formData = oasParameters.flatMap(_.formData)
     val body     = oasParameters.filter(_.isBody)

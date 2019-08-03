@@ -416,11 +416,14 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
           .as[YMap]
           .entries
           .foreach(e => {
-            val typeName = e.key
+            val typeName      = e.key
+            val nameGenerator = new IdCounter()
             val oasParameter: domain.OasParameter = e.value.to[YMap] match {
-              case Right(_) => OasParameterParser(Left(e), parentPath, Some(typeName))(toOas(ctx)).parse()
+              case Right(_) =>
+                OasParameterParser(Left(e), parentPath, Some(typeName), nameGenerator)(toOas(ctx)).parse()
               case _ =>
-                val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName))(toOas(ctx)).parse() // todo: links??
+                val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator)(
+                  toOas(ctx)).parse() // todo: links??
 
                 ctx.violation(InvalidParameterType,
                               parameter.domainElement.id,
