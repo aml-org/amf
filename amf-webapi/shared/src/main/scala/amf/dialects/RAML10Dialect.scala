@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.XsdTypes._
 import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
-import amf.plugins.document.vocabularies.model.domain.{External, NodeMapping, PropertyMapping}
+import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.templates.{ResourceTypeModel, TraitModel}
@@ -700,9 +700,24 @@ object RAML10Dialect {
       .withLocation(DialectLocation)
       .withId(DialectLocation)
       .withDeclares(Seq(
+        DialectNodes.XmlNode,
+        DialectNodes.ExampleNode,
+        DialectNodes.DataTypeNode,
+        DialectNodes.DocumentationNode,
+        DialectNodes.PayloadNode,
+        DialectNodes.ResourceTypeNode,
+        DialectNodes.TraitNode,
+        DialectNodes.ResponseNode,
+        DialectNodes.MethodNode,
+        DialectNodes.ResourceNode,
+        DialectNodes.RootNode
 
-
-      ))
+      )).withDocuments(DocumentsModel()
+      .withId(DialectLocation + "#/documents")
+      .withRoot(
+        DocumentMapping()
+          .withId(DialectLocation + "#/documents/root")
+          .withEncoded(DialectNodes.RootNode.id)))
 
     d.withExternals(Seq(
 
