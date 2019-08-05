@@ -1029,7 +1029,7 @@ object OAS20Dialect {
   val dialect = {
     val d = Dialect()
       .withId(DialectLocation)
-      .withName("OAS")
+      .withName("swagger")
       .withVersion("2.0")
       .withLocation(DialectLocation)
       .withId(DialectLocation)
@@ -1056,6 +1056,7 @@ object OAS20Dialect {
       .withDocuments(
         DocumentsModel()
           .withId(DialectLocation + "#/documents")
+          .withKeyProperty(true)
           .withRoot(
             DocumentMapping()
               .withId(DialectLocation + "#/documents/root")
