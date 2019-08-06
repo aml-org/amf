@@ -512,6 +512,18 @@ object RAML10Dialect {
             "HTTPS"
           ))
           .withLiteralRange(xsdString.iri()),
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/MethodNode/trait")
+          .withName("is")
+          .withNodePropertyMapping(OperationModel.Extends.value.iri())
+          .withAllowMultiple(true)
+          .withObjectRange(Seq(OperationModel.Extends.value.iri())), // todo: replace for trait def in dialect
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/ResourceNode/securedBy")
+          .withName("securedBy")
+          .withNodePropertyMapping(EndPointModel.Security.value.iri())
+          .withAllowMultiple(true)
+          .withLiteralRange(xsdString.iri()) // object range to secured by?
       ))
 
     val ResourceNode = NodeMapping()
