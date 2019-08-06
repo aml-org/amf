@@ -18,6 +18,7 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def discriminator: StrField                        = _internal.discriminator
   def discriminatorValue: StrField                   = _internal.discriminatorValue
   def properties: ClientList[PropertyShape]          = _internal.properties.asClient
+  def additionalPropertiesSchema: Shape              = _internal.additionalPropertiesSchema
   def dependencies: ClientList[PropertyDependencies] = _internal.dependencies.asClient
 
   def withMinProperties(min: Int): this.type = {
