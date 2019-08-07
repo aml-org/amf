@@ -1594,7 +1594,19 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       // Custom shape property definitions, not instances, those are parsed at the end of the parsing process
       map.key(
         "facets",
-        entry => PropertiesParser(entry.value.as[YMap], shape.withCustomShapePropertyDefinition).parse()
+        entry =>
+          PropertiesParser(
+            entry.value.as[YMap],
+            (name) => {
+              val propertyShape = shape.withCustomShapePropertyDefinition(name)
+              if (name.startsWith("("))
+                ctx.violation(InvalidFragmentType,
+                              propertyShape.id,
+                              s"User defined facet name '$name' must not begin with open parenthesis",
+                              entry)
+              propertyShape
+            }
+          ).parse()
       )
 
       // Explicit annotation for the type property

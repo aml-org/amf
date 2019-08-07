@@ -253,6 +253,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-types-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-types-type> <http://www.w3.org/ns/shacl#message> "Invalid types type" .
 <http://a.ml/vocabularies/amf/parser#invalid-types-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-user-defined-facet-name> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-user-defined-facet-name> <http://www.w3.org/ns/shacl#message> "User defined facets must not begin with open parenthesis" .
+<http://a.ml/vocabularies/amf/parser#invalid-user-defined-facet-name> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-value-in-properties-facet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-value-in-properties-facet> <http://www.w3.org/ns/shacl#message> "Properties facet must be a map of key and values" .
 <http://a.ml/vocabularies/amf/parser#invalid-value-in-properties-facet> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -274,6 +277,9 @@
 <http://a.ml/vocabularies/amf/parser#missing-security-scheme-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#missing-security-scheme-type> <http://www.w3.org/ns/shacl#message> "Missing security scheme type" .
 <http://a.ml/vocabularies/amf/parser#missing-security-scheme-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#missing-user-defined-facet> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#missing-user-defined-facet> <http://www.w3.org/ns/shacl#message> "Type is missing required user defined facet" .
+<http://a.ml/vocabularies/amf/parser#missing-user-defined-facet> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#module-not-found> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#module-not-found> <http://www.w3.org/ns/shacl#message> "Module not found" .
 <http://a.ml/vocabularies/amf/parser#module-not-found> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

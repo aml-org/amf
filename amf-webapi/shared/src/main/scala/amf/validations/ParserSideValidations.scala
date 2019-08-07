@@ -434,6 +434,26 @@ object ParserSideValidations extends Validations {
     "Properties facet must be a map of key and values"
   )
 
+  val InvalidUserDefinedFacetName = validation(
+    "invalid-user-defined-facet-name",
+    "User defined facets must not begin with open parenthesis"
+  )
+
+  val MissingRequiredUserDefinedFacet = validation(
+    "missing-user-defined-facet",
+    "Type is missing required user defined facet"
+  )
+
+  val UserDefinedFacetMatchesBuiltInFacets = validation(
+    "user-defined-facets-matches-built-in",
+    "User defined facet name matches built in facet of type"
+  )
+
+  val UserDefinedFacetMatchesAncestorsTypeFacets = validation(
+    "user-defined-facets-matches-ancestor",
+    "User defined facet name matches ancestor type facet"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     OasBodyAndFormDataParameterSpecification.id -> Map(
       OasProfile   -> VIOLATION,
@@ -559,6 +579,8 @@ object ParserSideValidations extends Validations {
     ReadOnlyPropertyMarkedRequired,
     MissingDiscriminatorProperty,
     InvalidPayload,
-    InvalidValueInPropertiesFacet
+    InvalidValueInPropertiesFacet,
+    InvalidUserDefinedFacetName,
+    MissingRequiredUserDefinedFacet
   )
 }

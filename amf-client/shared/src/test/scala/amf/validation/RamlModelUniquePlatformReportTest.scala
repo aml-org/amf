@@ -350,4 +350,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("severity-report-order/severity-report-order.raml", Some("severity-report-order.report"))
   }
 
+  test("Invalid user defined facet names, and missing required facets") {
+    validate("facets/invalid-custom-facets.raml", Some("invalid-custom-facets.report"))
+  }
+
 }

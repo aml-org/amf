@@ -6,6 +6,7 @@ import amf.core.remote.RamlYamlHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.domain.shapes.models.{ScalarShape, UnresolvedShape}
 import amf.validation.DialectValidations.ClosedShapeSpecification
+import amf.validations.ParserSideValidations.MissingRequiredUserDefinedFacet
 
 import scala.concurrent.Future
 
@@ -40,6 +41,12 @@ class RamlParserErrorTest extends ParserErrorTest {
   test("Custom facets work correctly with the closed node detection mechanism") {
     validate(
       "error/custom-facets.raml",
+      erroneousTypeShape => {
+        erroneousTypeShape.level should be("Violation")
+        erroneousTypeShape.targetNode should be(
+          "file://amf-client/shared/src/test/resources/parser-results/raml/error/custom-facets.raml#/declarations/types/scalar/ErroneousType")
+        erroneousTypeShape.validationId should be(MissingRequiredUserDefinedFacet.id)
+      },
       erroneousTypeShape => {
         erroneousTypeShape.level should be("Violation")
         erroneousTypeShape.targetNode should be(

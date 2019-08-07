@@ -7,7 +7,12 @@ import amf.core.parser._
 import amf.core.remote.{Oas, Raml}
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.validations.ParserSideValidations.UnableToParseShapeExtensions
+import amf.validations.ParserSideValidations.{
+  UnableToParseShapeExtensions,
+  MissingRequiredUserDefinedFacet,
+  UserDefinedFacetMatchesAncestorsTypeFacets,
+  UserDefinedFacetMatchesBuiltInFacets
+}
 import org.yaml.model.YMap
 
 case class ShapeExtensionParser(shape: Shape,
@@ -29,17 +34,19 @@ case class ShapeExtensionParser(shape: Shape,
                         map)
           shapeExtensionDefinition.name.value()
       }
-      map.key(
-        extensionKey,
-        entry => {
+      map.key(extensionKey) match {
+        case Some(entry) =>
           val dataNode =
             DataNodeParser(entry.value, parent = Some(shape.id + s"/extension/$extensionKey"))(ctx).parse()
           val extension = ShapeExtension(entry)
             .withDefinedBy(shapeExtensionDefinition)
             .withExtension(dataNode)
           shape.add(ShapeModel.CustomShapeProperties, extension)
-        }
-      )
+        case None =>
+          if (shapeExtensionDefinition.minCount.option().exists(_ > 0)) {
+            ctx.violation(MissingRequiredUserDefinedFacet, shape.id, s"Missing required facet '$extensionKey'", map)
+          }
+      }
     }
     if (!shape.inherits.exists(s => s.isUnresolved)) { // only validate shapes when the father its resolved, to avoid close shape over custom annotations
       val syntax = overrideSyntax match {
@@ -51,8 +58,35 @@ case class ShapeExtensionParser(shape: Shape,
       val extensionsNames = properties.flatMap(_.name.option())
       val m               = YMap(map.entries.filter(e => !extensionsNames.contains(e.key.value.toString)), "")
       ctx.closedRamlTypeShape(shape, m, syntax, isAnnotation)
+      validateCustomFacetDefinitions(syntax)
     }
 
     // todo: filter map.entries by extension key and call close shape by instance of for the rest?
   }
+
+  def validateCustomFacetDefinitions(syntax: String): Unit = {
+    ctx.syntax.nodes
+      .get(syntax)
+      .foreach(builtInFacets => {
+        val definedCustomFacets   = shape.customShapePropertyDefinitions.flatMap(_.name.option())
+        val inheritedCustomFacets = shape.collectCustomShapePropertyDefinitions(onlyInherited = true).flatten.map(_._1)
+        definedCustomFacets.toSet
+          .intersect(builtInFacets)
+          .foreach(
+            name =>
+              ctx.violation(UserDefinedFacetMatchesBuiltInFacets,
+                            shape.id,
+                            s"Custom defined facet '$name' matches built-in type facets",
+                            map))
+        definedCustomFacets
+          .intersect(inheritedCustomFacets)
+          .foreach(
+            name =>
+              ctx.violation(UserDefinedFacetMatchesAncestorsTypeFacets,
+                            shape.id,
+                            s"Custom defined facet '$name' matches custom facet from inherited type",
+                            map))
+      })
+  }
+
 }

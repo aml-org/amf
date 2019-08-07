@@ -18,7 +18,7 @@ case class UnitPayloadsValidation(baseUnit: BaseUnit, platform: Platform) {
 
   val candidates: Seq[ValidationCandidate] = PayloadsInApiCollector(baseUnit) ++
     ShapeFacetsCandidatesCollector(baseUnit, platform) ++
-    AnnotationsCandidatesCollector(baseUnit, platform)
+    ExtensionsCandidatesCollector(baseUnit, platform)
 
   val index: DataNodeIndex = {
     val nodes = candidates

@@ -1,9 +1,17 @@
 Model: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml
 Profile: RAML 1.0
 Conforms? false
-Number of results: 4
+Number of results: 5
 
 Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#missing-user-defined-facet
+  Message: Missing required facet 'noHolidays'
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml#/declarations/types/scalar/ErroneousType
+  Property: 
+  Position: Some(LexicalInformation([(13,0)-(15,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/facets/custom-facets.raml
 
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
   Message: Property 'thisIsWrong' not supported in a RAML 1.0 shape node
