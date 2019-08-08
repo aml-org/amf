@@ -35,11 +35,13 @@ case class ParametrizedDeclarationParser(
             val variables = entry.value
               .as[YMap]
               .entries
-              .map { variableEntry =>
-                val node = DataNodeParser(variableEntry.value, parent = Some(declaration.id)).parse()
-                VariableValue(variableEntry)
-                  .withName(variableEntry.key.as[YScalar].text)
-                  .withValue(node)
+              .zipWithIndex
+              .map {
+                case (variableEntry, index) =>
+                  val node = DataNodeParser(variableEntry.value, parent = Some(s"${declaration.id}_$index")).parse()
+                  VariableValue(variableEntry)
+                    .withName(variableEntry.key.as[YScalar].text)
+                    .withValue(node)
               }
             declaration.withVariables(variables)
         }
