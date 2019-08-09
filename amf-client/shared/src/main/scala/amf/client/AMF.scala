@@ -9,10 +9,6 @@ import amf.client.plugins.{AMFPlugin, ClientAMFPayloadValidationPlugin}
 import amf.client.render._
 import amf.client.resolve._
 import amf.client.validate.ValidationReport
-import amf.core.remote.{Oas20, Raml10}
-import amf.dialects.{OAS20Dialect, RAML10Dialect}
-import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.model.document.DialectInstanceTrait
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.{Vocabularies, WebApi}
 import amf.plugins.features.AMFValidation
