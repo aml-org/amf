@@ -523,7 +523,8 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
               adopt(copied.withName(key))
               copied
             case _ =>
-              Raml10TypeParser(ast, shape => shape.adopted(domainProp.id), isAnnotation = true).parse() match {
+              Raml10TypeParser(ast, shape => shape.adopted(domainProp.id), TypeInfo(isAnnotation = true))
+                .parse() match {
                 case Some(schema) =>
                   tracking(schema, domainProp.id)
                   domainProp.withSchema(schema)
@@ -555,7 +556,9 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
       maybeAnnotationType match {
         case Some(annotationType) =>
-          Raml10TypeParser(annotationType, shape => shape.withName("schema").adopted(custom.id), isAnnotation = true)
+          Raml10TypeParser(annotationType,
+                           shape => shape.withName("schema").adopted(custom.id),
+                           TypeInfo(isAnnotation = true))
             .parse()
             .foreach({ shape =>
               tracking(shape, custom.id)

@@ -7,9 +7,10 @@ import amf.core.parser._
 import amf.core.remote.{Oas, Raml}
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
 import amf.validations.ParserSideValidations.{
-  UnableToParseShapeExtensions,
   MissingRequiredUserDefinedFacet,
+  UnableToParseShapeExtensions,
   UserDefinedFacetMatchesAncestorsTypeFacets,
   UserDefinedFacetMatchesBuiltInFacets
 }
@@ -18,7 +19,7 @@ import org.yaml.model.YMap
 case class ShapeExtensionParser(shape: Shape,
                                 map: YMap,
                                 ctx: RamlWebApiContext,
-                                isAnnotation: Boolean = false,
+                                typeInfo: TypeInfo,
                                 overrideSyntax: Option[String] = None) {
   def parse(): Unit = {
     val shapeExtensionDefinitions = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
@@ -57,7 +58,7 @@ case class ShapeExtensionParser(shape: Shape,
 
       val extensionsNames = properties.flatMap(_.name.option())
       val m               = YMap(map.entries.filter(e => !extensionsNames.contains(e.key.value.toString)), "")
-      ctx.closedRamlTypeShape(shape, m, syntax, isAnnotation)
+      ctx.closedRamlTypeShape(shape, m, syntax, typeInfo)
       validateCustomFacetDefinitions(syntax)
     }
 

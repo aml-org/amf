@@ -354,4 +354,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("facets/invalid-custom-facets.raml", Some("invalid-custom-facets.report"))
   }
 
+  test("Facet 'required' in type declarations") {
+    validate("invalid-required-type-declaration.raml", Some("invalid-required-type-declaration.report"))
+  }
+
 }

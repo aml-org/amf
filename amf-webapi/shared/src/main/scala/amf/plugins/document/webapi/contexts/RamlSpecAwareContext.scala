@@ -6,7 +6,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   DefaultType,
   Raml08TypeParser,
   Raml10TypeParser,
-  RamlTypeParser
+  RamlTypeParser,
+  TypeInfo
 }
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08DocumentParser, Raml10DocumentParser, RamlDocumentParser}
@@ -57,7 +58,8 @@ class Raml10VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpec
 
   override def documentParser: (Root) => RamlDocumentParser = Raml10DocumentParser.apply
 
-  override def typeParser: (YMapEntry, Shape => Shape, Boolean, DefaultType) => RamlTypeParser = Raml10TypeParser.apply
+  override def typeParser: (YMapEntry, Shape => Shape, Boolean, DefaultType) => RamlTypeParser =
+    (entry, f, isAnnotation, default) => Raml10TypeParser(entry, f, TypeInfo(isAnnotation = isAnnotation), default)
 
   override def payloadParser: (YMapEntry, Option[String] => Payload, Boolean) => RamlPayloadParser =
     Raml10PayloadParser.apply

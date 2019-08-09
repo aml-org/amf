@@ -3,6 +3,20 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 
 object Raml10Syntax extends RamlSyntax {
+
+  private val shapeFacets = Set(
+    "type",
+    "default",
+    "schema",
+    "example",
+    "examples",
+    "displayName",
+    "description",
+    "facets",
+    "xml",
+    "enum"
+  )
+
   override val nodes: Map[String, Set[String]] = commonNodes ++ Map(
     "webApi" -> Set(
       "title",
@@ -24,32 +38,8 @@ object Raml10Syntax extends RamlSyntax {
       "extends",
       "uses"
     ),
-    "shape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "xml",
-      "enum",
-      "required"
-    ),
-    "anyShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "displayName",
-      "description",
-      "facets",
-      "xml",
-      "enum",
-      "required",
-      "example",
-      "examples"
-    ),
+    "shape" -> shapeFacets,
+    "anyShape" -> shapeFacets,
     "schemaShape" -> Set(
       "type",
       "default",
@@ -58,121 +48,40 @@ object Raml10Syntax extends RamlSyntax {
       "examples",
       "displayName",
       "description",
-      "required",
+      "required"
     ),
-    "unionShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "xml",
-      "enum",
-      "required",
-      "anyOf"
-    ),
-    "nodeShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "xml",
-      "enum",
+    "unionShape" -> (shapeFacets + "anyOf"),
+    "nodeShape" -> (shapeFacets ++ Set(
       "properties",
       "minProperties",
       "maxProperties",
       "discriminator",
       "discriminatorValue",
-      "required",
       "additionalProperties"
-    ),
-    "arrayShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "xml",
-      "enum",
+    )),
+    "arrayShape" -> (shapeFacets ++ Set(
       "uniqueItems",
       "items",
       "minItems",
-      "maxItems",
-      "required"
-    ),
-    "stringScalarShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "xml",
-      "enum",
+      "maxItems"
+    )),
+    "stringScalarShape" -> (shapeFacets ++ Set(
       "pattern",
       "minLength",
-      "maxLength",
-      "required"
-    ),
-    "numberScalarShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "xml",
-      "enum",
+      "maxLength"
+    )),
+    "numberScalarShape" -> (shapeFacets ++ Set(
       "minimum",
       "maximum",
       "format",
-      "multipleOf",
-      "required"
-    ),
-    "dateScalarShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "xml",
-      "enum",
-      "required",
-      "format"
-    ),
-    "fileShape" -> Set(
-      "type",
-      "default",
-      "schema",
-      "example",
-      "examples",
-      "displayName",
-      "description",
-      "facets",
-      "xml",
-      "enum",
+      "multipleOf"
+    )),
+    "dateScalarShape" -> (shapeFacets + "format"),
+    "fileShape" -> (shapeFacets ++ Set(
       "fileTypes",
       "minLength",
-      "maxLength",
-      "required"
-    ),
+      "maxLength"
+    )),
     "example" -> Set(
       "displayName",
       "description",
@@ -271,6 +180,9 @@ object Raml10Syntax extends RamlSyntax {
       "description",
       "allowedTargets"
     ),
+    "property" -> Set(
+      "required"
+    ),
     "module" -> Set(
       "uses",
       "usage",
@@ -330,7 +242,6 @@ object Raml08Syntax extends RamlSyntax {
       "description",
       "facets",
       "enum",
-      "required",
       "repeat",
       "pattern",
       "minLength",

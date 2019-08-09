@@ -1,0 +1,46 @@
+#%RAML 1.0
+title: A
+
+types:
+  invalid-facet-in-type-declaration:
+    type: string
+    pattern: "dentro de type definition"
+    required: false #invalid
+
+  valid-facet-in-properties:
+    type: object
+    properties:
+      name:
+        type: string
+        pattern: "dentro de property"
+        required: true
+
+  fails-when-inferring:
+    properties:
+      accounts:
+        required: false
+        type: valid-facet-in-properties
+
+  Input:
+    properties:
+      input:
+        type: object
+        properties:
+          csvInstance:
+            type: array
+            required: false
+        required: false
+
+/path/{customer_id}:
+  uriParameters:
+    customer_id:
+      required: true
+  post:
+    headers:
+      Zencoder-Api-Key:
+        displayName: ZEncoder API Key
+        required: true
+    queryParameters:
+      spaces:
+        type: string
+        required: false

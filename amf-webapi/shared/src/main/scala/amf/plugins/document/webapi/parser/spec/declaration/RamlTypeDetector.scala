@@ -245,7 +245,7 @@ case class RamlTypeDetector(parent: String,
     }
 
     private def findEventualShapes(map: YMap): Seq[String] = {
-      val shapesNodes = ctx.syntax.nodes.filterKeys(k => k.endsWith("Shape"))
+      val shapesNodes = ctx.syntax.nodes.filterKeys(k => k.endsWith("Shape") && k != "schemaShape")
 
       var possibles: Seq[String] = Seq()
       map.entries.foreach { entry =>

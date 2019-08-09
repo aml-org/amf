@@ -81,7 +81,9 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
         map.key("description", (ParameterModel.Description in parameter).allowingAnnotations)
         map.key("binding".asRamlAnnotation, (ParameterModel.Binding in parameter).explicit)
 
-        Raml10TypeParser(entry, shape => shape.withName("schema").adopted(parameter.id))
+        Raml10TypeParser(entry,
+                         shape => shape.withName("schema").adopted(parameter.id),
+                         TypeInfo(isPropertyOrParameter = true))
           .parse()
           .foreach(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
 
