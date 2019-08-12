@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.core.annotations.Aliases
-import amf.core.metamodel.domain.ModelVocabularies
+import amf.core.metamodel.domain.{ModelVocabularies, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.XsdTypes._
@@ -104,7 +104,7 @@ object RAML10Dialect {
         .withId(DialectLocation + s"#/declarations/$nodeId/DataType/examples")
         .withName("examples")
         .withNodePropertyMapping(AnyShapeModel.Examples.value.iri())
-        .withMapKeyProperty(ExampleModel.Name.value.iri())
+        .withMapTermKeyProperty(ExampleModel.Name.value.iri())
         .withObjectRange(Seq(
           ExampleNode.id
         )),
@@ -148,7 +148,7 @@ object RAML10Dialect {
         .withId(DialectLocation + s"#/declarations/$nodeId/ObjectTypeNode/properties")
         .withName("properties")
         .withNodePropertyMapping(NodeShapeModel.Properties.value.iri())
-        .withMapKeyProperty(PropertyShapeModel.Name.value.iri())
+        .withMapTermKeyProperty(PropertyShapeModel.Name.value.iri())
         .withObjectRange(Seq(
           DataTypeNodeId
         )),
@@ -414,6 +414,12 @@ object RAML10Dialect {
       .withPropertiesMapping(Seq(
 
         PropertyMapping()
+          .withId(DialectLocation + s"#/declarations/ResponseNode/statusCode")
+          .withName("statusCode")
+          .withNodePropertyMapping(ResponseModel.StatusCode.value.iri())
+          .withLiteralRange(xsdString.iri()),
+
+        PropertyMapping()
           .withId(DialectLocation + s"#/declarations/ResponseNode/description")
           .withName("description")
           .withNodePropertyMapping(ResponseModel.Description.value.iri())
@@ -423,7 +429,7 @@ object RAML10Dialect {
           .withId(DialectLocation + "#/declarations/ResponseNode/headers")
           .withName("headers")
           .withNodePropertyMapping(ResponseModel.Headers.value.iri())
-          .withMapKeyProperty(ParameterModel.Name.value.iri())
+          .withMapTermKeyProperty(ParameterModel.Name.value.iri())
           .withObjectRange(Seq(
             DataTypeNodeId
           )),
@@ -432,7 +438,7 @@ object RAML10Dialect {
           .withId(DialectLocation + "#/declarations/ResponseNode/body")
           .withName("body")
           .withNodePropertyMapping(ResponseModel.Payloads.value.iri())
-          .withMapKeyProperty(PayloadModel.MediaType.value.iri())
+          .withMapTermKeyProperty(PayloadModel.MediaType.value.iri())
           .withObjectRange(Seq(
             PayloadNode.id
           ))
@@ -460,7 +466,7 @@ object RAML10Dialect {
           .withId(DialectLocation + "#/declarations/MethodNode/Request/parameters")
           .withName("queryParameters")
           .withNodePropertyMapping(RequestModel.QueryParameters.value.iri())
-          .withMapKeyProperty(ParameterModel.Name.value.iri())
+          .withMapTermKeyProperty(ParameterModel.Name.value.iri())
           .withObjectRange(Seq(
             DataTypeNodeId
           )),
@@ -469,7 +475,7 @@ object RAML10Dialect {
           .withId(DialectLocation + "#/declarations/MethodNode/Request/headers")
           .withName("headers")
           .withNodePropertyMapping(RequestModel.Headers.value.iri())
-          .withMapKeyProperty(ParameterModel.Name.value.iri())
+          .withMapTermKeyProperty(ParameterModel.Name.value.iri())
           .withObjectRange(Seq(
             DataTypeNodeId
           )),
@@ -477,26 +483,26 @@ object RAML10Dialect {
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/MethodNode/Request/queryString")
           .withName("queryString")
-          .withNodePropertyMapping(RequestModel.Headers.value.iri())
-          .withMapKeyProperty(ResponseModel.StatusCode.value.iri())
+          .withNodePropertyMapping(PropertyShapeModel.`type`.head.iri())
+          .withMapTermKeyProperty(ShapeModel.Name.value.iri())
           .withObjectRange(Seq(
-            ResponseNode.id
+            DataTypeNodeId
           )),
 
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/MethodNode/responses")
           .withName("responses")
-          .withNodePropertyMapping(OperationModel.Request.value.iri())
-          .withMapKeyProperty(ParameterModel.Name.value.iri())
+          .withNodePropertyMapping(OperationModel.Responses.value.iri())
+          .withMapTermKeyProperty(ResponseModel.StatusCode.value.iri())
           .withObjectRange(Seq(
-            DataTypeNodeId
+            ResponseNode.id
           )),
 
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/MethodNode/Request/body")
           .withName("body")
           .withNodePropertyMapping(RequestModel.Payloads.value.iri())
-          .withMapKeyProperty(PayloadModel.MediaType.value.iri())
+          .withMapTermKeyProperty(PayloadModel.MediaType.value.iri())
           .withObjectRange(Seq(
             PayloadNode.id
           )),
@@ -609,7 +615,7 @@ object RAML10Dialect {
           .withId(DialectLocation + "#/declarations/ResourceNode/uriParameters")
           .withName("uriParameters")
           .withNodePropertyMapping(EndPointModel.Parameters.value.iri())
-          .withMapKeyProperty(ParameterModel.Name.value.iri())
+          .withMapTermKeyProperty(ParameterModel.Name.value.iri())
           .withObjectRange(Seq(
             DataTypeNodeId
           ))
@@ -651,7 +657,7 @@ object RAML10Dialect {
           .withId(DialectLocation + "#/declarations/RootNode/baseUriParameters")
           .withName("baseUriParameters")
           .withNodePropertyMapping(ServerModel.Variables.value.iri())
-          .withMapKeyProperty(ParameterModel.Name.value.iri())
+          .withMapTermKeyProperty(ParameterModel.Name.value.iri())
           .withObjectRange(Seq(
             DataTypeNodeId
           )),
@@ -688,17 +694,7 @@ object RAML10Dialect {
           .withName("securedBy")
           .withAllowMultiple(true)
           .withNodePropertyMapping(WebApiModel.Security.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        // TODO: THIS FIELD DOES NOT EXIST IN THE AST!
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/RootNode/resources")
-          .withName("resources")
-          .withMapKeyProperty(EndPointModel.Path.value.iri())
-          .withNodePropertyMapping(WebApiModel.EndPoints.value.iri())
-          .withObjectRange(Seq(
-            ResourceNode.id
-          ))
+          .withLiteralRange(xsdString.iri())
 
       ))
   }
@@ -729,7 +725,8 @@ object RAML10Dialect {
       .withRoot(
         DocumentMapping()
           .withId(DialectLocation + "#/documents/root")
-          .withEncoded(DialectNodes.RootNode.id)))
+          .withEncoded(DialectNodes.RootNode.id)
+      ))
 
     d.withExternals(Seq(
 
