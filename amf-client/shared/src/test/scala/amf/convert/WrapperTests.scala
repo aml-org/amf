@@ -23,11 +23,9 @@ import amf.core.model.domain.{
 }
 import amf.core.parser.Range
 import amf.core.remote.{Aml, Oas20, Raml10}
-import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
-import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
 

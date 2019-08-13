@@ -162,8 +162,8 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
   )
 
-lazy val clientJVM = client.jvm.in(file("./amf-client/jvm"))
-lazy val clientJS  = client.js.in(file("./amf-client/js"))
+lazy val clientJVM = client.jvm.in(file("./amf-client/jvm")).sourceDependency(amfAmlJVMRef, amfAmlLibJVM)
+lazy val clientJS  = client.js.in(file("./amf-client/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS)
 
 /** **********************************************
   * AMF Tools

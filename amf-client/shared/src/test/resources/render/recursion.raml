@@ -1,0 +1,21 @@
+#%RAML 1.0
+
+title: some types
+
+types:
+  A:
+    type: object
+    properties:
+      a1?: B
+      a2: boolean
+  B:
+    type: object
+    properties:
+      b1?: A
+      b2: date-only
+
+/SomeEndpoint:
+  get:
+    body:
+      application/json:
+        type: B
