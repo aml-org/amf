@@ -140,7 +140,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       case _ =>
         val y = new YDocumentBuilder
         if (PayloadPlugin.emit(payload, y)) {
-          SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(y.document)) match {
+          SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(y.document.asInstanceOf[YDocument])) match {
             case Some(serialized) => Some(serialized.toString)
             case _                => None
           }
