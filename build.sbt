@@ -81,8 +81,7 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"         % "3.5.4",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.9.2",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar",
-    mappings in (Compile, packageBin) += file("versions.properties") -> "versions.properties"
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
@@ -140,7 +139,6 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
-    mappings in (Compile, packageBin) += file("versions.properties") -> "versions.properties",
     aggregate in assembly := true,
     test in assembly := {},
     mainClass in assembly := Some("amf.Main"),
