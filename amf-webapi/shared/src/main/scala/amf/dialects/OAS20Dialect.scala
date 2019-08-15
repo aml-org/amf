@@ -6,6 +6,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.domain.{ModelVocabularies, ShapeModel}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.XsdTypes._
+import amf.plugins.document.vocabularies.ReferenceStyles
 import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.domain.shapes.metamodel._
@@ -1057,6 +1058,7 @@ object OAS20Dialect {
         DocumentsModel()
           .withId(DialectLocation + "#/documents")
           .withKeyProperty(true)
+          .withReferenceStyle(ReferenceStyles.JSONSCHEMA)
           .withRoot(
             DocumentMapping()
               .withId(DialectLocation + "#/documents/root")
