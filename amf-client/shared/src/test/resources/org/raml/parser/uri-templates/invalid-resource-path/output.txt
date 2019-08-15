@@ -5,11 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/core#syaml-error
-  Message: Syntax error in the following text: '/root/{id:
-'
+- Source: http://a.ml/vocabularies/amf/parser#invalid-endpoint-path
+  Message: '/root/{id' is not a valid template uri.
   Level: Violation
-  Target: 
+  Target: file://amf-client/shared/src/test/resources/org/raml/parser/uri-templates/invalid-resource-path/input.raml#/web-api/end-points/%2Froot%2F%7Bid
   Property: 
-  Position: Some(LexicalInformation([(4,0)-(5,0)]))
+  Position: Some(LexicalInformation([(4,10)-(4,10)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/uri-templates/invalid-resource-path/input.raml
