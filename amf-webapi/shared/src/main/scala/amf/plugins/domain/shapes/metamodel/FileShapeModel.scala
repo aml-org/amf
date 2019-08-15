@@ -13,7 +13,7 @@ object FileShapeModel extends AnyShapeModel with CommonShapeFields {
                         ModelDoc(ModelVocabularies.Shapes, "file type", "Type of file described by this shape"))
 
   val specificFields = List(FileTypes)
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     specificFields ++ commonOASFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] =

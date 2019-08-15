@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.validation.remote
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
 import amf.core.parser.{DefaultParserSideErrorHandler, ParserContext, RuntimeErrorHandler, SyamlParsedDocument}
 import amf.core.validation._
-import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
 import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, PayloadContext}
@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._
-import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
+import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.{ProfileName, ProfileNames}
 import org.yaml.builder.YDocumentBuilder
@@ -140,7 +140,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       case _ =>
         val y = new YDocumentBuilder
         if (PayloadPlugin.emit(payload, y)) {
-          SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(y.document)) match {
+          SYamlSyntaxPlugin.unparse("application/json", SyamlParsedDocument(y.document.asInstanceOf[YDocument])) match {
             case Some(serialized) => Some(serialized.toString)
             case _                => None
           }
@@ -153,7 +153,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
         case node: ScalarNode
             if node.dataType
               .option()
-              .contains((Namespace.Xsd + "string").iri()) && text.nonEmpty && text.head != '"' =>
+              .contains(DataType.String) && text.nonEmpty && text.head != '"' =>
           "\"" + text.stripLineEnd + "\""
         case _ => text.stripLineEnd
       }
@@ -294,8 +294,8 @@ object ScalarPayloadForParam {
     if (isString(shape) || unionWithString(shape)) {
 
       fragment.encodes match {
-        case s: ScalarNode if !s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri())) =>
-          PayloadFragment(ScalarNode(s.value.value(), Some((Namespace.Xsd + "string").iri()), s.annotations),
+        case s: ScalarNode if !s.dataType.option().exists(_.equals(DataType.String)) =>
+          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations),
                           fragment.mediaType.value())
         case _ => fragment
       }
@@ -303,7 +303,7 @@ object ScalarPayloadForParam {
   }
 
   private def isString(shape: Shape): Boolean = shape match {
-    case s: ScalarShape => s.dataType.option().exists(_.equals((Namespace.Xsd + "string").iri()))
+    case s: ScalarShape => s.dataType.option().exists(_.equals(DataType.String))
     case _              => false
   }
 

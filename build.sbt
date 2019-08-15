@@ -4,12 +4,13 @@ import sbtcrossproject.CrossPlugin.autoImport.crossProject
 
 import scala.language.postfixOps
 import scala.sys.process._
+import Versions.versions
 
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf"
 
-version in ThisBuild := "3.3.0"
+version in ThisBuild := versions("version")
 
 publish := {}
 
@@ -26,7 +27,7 @@ sonarProperties ++= Map(
   "sonar.login" -> sonarToken,
   "sonar.projectKey" -> "mulesoft.amf",
   "sonar.projectName" -> "AMF",
-  "sonar.projectVersion" -> "1.0.0",
+  "sonar.projectVersion" -> versions("version"),
 
   "sonar.sourceEncoding" -> "UTF-8",
   "sonar.github.repository" -> "mulesoft/amf",
@@ -54,7 +55,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfAmlVersion = "4.0.69"
+val amfAmlVersion = versions("amf-aml")
 
 lazy val amfAmlJVMRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJVM")
 lazy val amfAmlJSRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJS")
@@ -80,7 +81,8 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"         % "3.5.4",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.9.2",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar"
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar",
+    mappings in (Compile, packageBin) += file("versions.properties") -> "versions.properties"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
@@ -138,6 +140,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
+    mappings in (Compile, packageBin) += file("versions.properties") -> "versions.properties",
     aggregate in assembly := true,
     test in assembly := {},
     mainClass in assembly := Some("amf.Main"),
@@ -159,8 +162,8 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
   )
 
-lazy val clientJVM = client.jvm.in(file("./amf-client/jvm"))
-lazy val clientJS  = client.js.in(file("./amf-client/js"))
+lazy val clientJVM = client.jvm.in(file("./amf-client/jvm")).sourceDependency(amfAmlJVMRef, amfAmlLibJVM)
+lazy val clientJS  = client.js.in(file("./amf-client/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS)
 
 /** **********************************************
   * AMF Tools

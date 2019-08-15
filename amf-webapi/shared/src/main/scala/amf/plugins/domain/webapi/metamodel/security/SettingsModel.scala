@@ -16,7 +16,7 @@ object SettingsModel extends SettingsModel {
 
   override val `type`: List[ValueType] = List(Security + "Settings") ++ DomainElementModel.`type`
 
-  override def fields: List[Field] = List(AdditionalProperties) ++ DomainElementModel.fields
+  override val fields: List[Field] = List(AdditionalProperties) ++ DomainElementModel.fields
 
   override def modelInstance = Settings()
 
@@ -73,7 +73,7 @@ object OAuth2SettingsModel extends SettingsModel {
 
   override val `type`: List[ValueType] = List(Security + "OAuth2Settings") ++ SettingsModel.`type`
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     List(AuthorizationUri, AccessTokenUri, AuthorizationGrants, Flow, RefreshUri, Scopes) ++ SettingsModel.fields
 
   override def modelInstance = OAuth2Settings()
@@ -93,7 +93,7 @@ object ApiKeySettingsModel extends SettingsModel {
 
   override val `type`: List[ValueType] = List(Security + "ApiKeySettings") ++ SettingsModel.`type`
 
-  override def fields: List[Field] = List(Name, In) ++ SettingsModel.fields
+  override val fields: List[Field] = List(Name, In) ++ SettingsModel.fields
 
   override def modelInstance = ApiKeySettings()
 
@@ -112,7 +112,7 @@ object HttpSettingsModel extends SettingsModel {
 
   override val `type`: List[ValueType] = List(Security + "HttpSettings") ++ SettingsModel.`type`
 
-  override def fields: List[Field] = List(Scheme, BearerFormat) ++ SettingsModel.fields
+  override val fields: List[Field] = List(Scheme, BearerFormat) ++ SettingsModel.fields
 
   override def modelInstance = ApiKeySettings()
 

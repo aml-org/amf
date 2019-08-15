@@ -1,15 +1,13 @@
 package amf.plugins.domain.shapes.models
 
-import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.model.domain.extensions.PropertyShape
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel}
-import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
-import org.yaml.model.YPart
 import amf.core.utils.Strings
-
-import scala.collection.mutable
+import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel}
+import org.yaml.model.YPart
 
 /**
   * Node shape.
@@ -24,6 +22,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def discriminatorValue: StrField            = fields.field(DiscriminatorValue)
   def properties: Seq[PropertyShape]          = fields.field(Properties)
   def dependencies: Seq[PropertyDependencies] = fields.field(Dependencies)
+  def additionalPropertiesSchema: Shape       = fields.field(AdditionalPropertiesSchema)
 
   def withMinProperties(min: Int): this.type                               = set(MinProperties, min)
   def withMaxProperties(max: Int): this.type                               = set(MaxProperties, max)
@@ -66,6 +65,9 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
     if (!isCycle) {
       val newCycle: Seq[String] = cycle :+ id
       properties.foreach(_.adopted(id, newCycle))
+      Option(additionalPropertiesSchema).foreach { shape =>
+        shape.adopted(id, newCycle)
+      }
     }
     this
   }

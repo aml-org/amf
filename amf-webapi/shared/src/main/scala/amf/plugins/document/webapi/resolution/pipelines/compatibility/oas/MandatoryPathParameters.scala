@@ -10,11 +10,10 @@ class MandatoryPathParameters()(override implicit val errorHandler: ErrorHandler
 
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-      model.findByType(ParameterModel.`type`.head.iri()).foreach {
+      model.iterator().foreach {
         case param: Parameter if param.isPath =>
           param.withRequired(true)
-        case other =>
-          other
+        case _ =>
       }
       model
     } catch {

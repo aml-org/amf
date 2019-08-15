@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: validate json schema unknown format correctly
+/warehouses:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include unknown.json
+            example: !include unknown-example.json

@@ -8,7 +8,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, Inferred, JSONSchemaId}
+import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -20,8 +20,9 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.features.validation.ParserSideValidations._
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations
+import amf.validation.DialectValidations.InvalidUnionType
+import amf.validations.ParserSideValidations._
 import org.yaml.model._
 import org.yaml.render.YamlRender
 
@@ -31,7 +32,7 @@ abstract class JSONSchemaVersion(val name: String)
 class OASSchemaVersion(override val name: String, val position: String)(implicit eh: ErrorHandler)
     extends JSONSchemaVersion(name) {
   if (position != "schema" && position != "parameter")
-    eh.violation(ResolutionValidation,
+    eh.violation(CoreValidations.ResolutionValidation,
                  "",
                  s"Invalid schema position '$position', only 'schema' and 'parameter' are valid")
 }
@@ -999,8 +1000,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key(
         "default",
         node => {
-          val str = YamlRender.render(node.value)
-          shape.set(ShapeModel.DefaultValueString, AmfScalar(str), Annotations(node))
+          shape.setDefaultStrValue(node)
           NodeDataNodeParser(node.value, shape.id, quiet = false).parse().dataNode.foreach { dn =>
             shape.set(ShapeModel.Default, dn, Annotations(node))
           }

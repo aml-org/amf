@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility
 
+import amf._
 import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
-import amf._
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
 class CompatibilityPipeline(override val eh: ErrorHandler, targetProfile: ProfileName = RamlProfile)
     extends ResolutionPipeline(eh) {

@@ -25,7 +25,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
 
@@ -1004,6 +1004,7 @@ object RamlUnionEmitterHelper {
       case s: Shape if s.isLink && s.linkLabel.option().isDefined => s.linkLabel.value()
       case n: NilShape if n.fields.fields().isEmpty               => "nil"
       case a: ArrayShape if a.fields.fields().isEmpty             => "array"
+      case a: NodeShape if a.fields.fields().isEmpty              => "object"
       case a: AnyShape if a.fields.fields().isEmpty               => "any"
       case _                                                      => return None
     }
@@ -1326,6 +1327,7 @@ case class OasTypeEmitter(shape: Shape,
     // Adjusting JSON Schema  pointer
     val nextPointerStr                           = s"#${pointer.map(p => s"/$p").mkString}"
     var updatedSchemaPath: Seq[(String, String)] = schemaPath :+ (shape.id, nextPointerStr)
+
     shape match {
       // Only will add to the list if the shape is a declaration
       case chain: InheritanceChain if shape.annotations.contains(classOf[DeclaredElement]) =>

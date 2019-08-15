@@ -5,10 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should match pattern "^[a-z]*$"
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/invalid-default.raml#/declarations/types/scalar/name/default/scalar_1
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/invalid-default.raml#/declarations/types/scalar/name/default/scalar_1
   Position: Some(LexicalInformation([(7,13)-(7,20)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/invalid-default.raml

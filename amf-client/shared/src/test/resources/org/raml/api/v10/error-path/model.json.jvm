@@ -5,7 +5,7 @@ Number of results: 6
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /0/1 expected type: Number, found: String
 /1/1 expected type: Number, found: String
 
@@ -15,15 +15,15 @@ Level: Violation
   Position: Some(LexicalInformation([(6,13)-(6,39)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /family/1 expected type: String, found: Integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/badExample
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/User/example/badExample
   Position: Some(LexicalInformation([(26,0)-(31,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: required key [age] not found
 required key [family] not found
 
@@ -33,7 +33,7 @@ required key [family] not found
   Position: Some(LexicalInformation([(32,0)-(33,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /age expected type: Number, found: String
 /name expected type: String, found: Integer
 
@@ -43,7 +43,7 @@ required key [family] not found
   Position: Some(LexicalInformation([(34,0)-(39,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /users/1/family/1 expected type: String, found: Integer
 /users/1/family/2 expected type: String, found: Integer
 /users/2/age expected type: Number, found: String
@@ -54,10 +54,10 @@ required key [family] not found
   Position: Some(LexicalInformation([(51,0)-(72,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: /authors/1 expected type: String, found: Integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/two
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml#/declarations/types/Book/example/two
   Position: Some(LexicalInformation([(73,0)-(84,0)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/api/v10/error-path/input.raml

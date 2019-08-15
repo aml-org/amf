@@ -21,6 +21,7 @@ import amf.core.parser.{
 import amf.core.remote.{JsonSchema, Platform, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
+import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
@@ -30,7 +31,7 @@ import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax, _}
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
-import amf.plugins.features.validation.ParserSideValidations.UnableToParseJsonSchema
+import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
@@ -245,7 +246,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
         val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
 
-        Some(OasParameterParser(Right(rootAst), parentId, None)(ctx).parse())
+        Some(OasParameterParser(Right(rootAst), parentId, None, new IdCounter())(ctx).parse())
 
       case _ => None
     }

@@ -219,5 +219,13 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("annotations/forward-ref-to-type.raml")
   }
 
+  test("Using unknown format in json schema should not fail") {
+    checkValid("date-format/api.raml")
+  }
+
+  test("Union with generic array") {
+    checkValid("union-generic-array.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.metamodel
 
+import amf.core.metamodel.Field
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.vocabulary.Namespace._
 import amf.core.vocabulary.ValueType
@@ -9,6 +10,8 @@ object NilShapeModel extends AnyShapeModel {
 
   override val `type`: List[ValueType] =
     List(Shapes + "NilShape") ++ ShapeModel.`type`
+
+  override val fields: List[Field] = AnyShapeModel.fields
 
   override def modelInstance = NilShape()
 

@@ -3,6 +3,7 @@ package amf.plugins.features.validation
 import java.util.regex.Pattern
 
 import amf.core.annotations.SourceAST
+import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.parser.{Annotations, Value}
@@ -48,14 +49,10 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
   var validationReport: CustomValidationReport = new CustomValidationReport(Nil)
 
   def run: Future[ValidationReport] = {
-    model.findBy(elementToValidateSelector).foreach { found =>
+    model.iterator().collect { case e: DomainElement => e }.foreach { found =>
       validateIdentityTransformation(found)
     }
     Future(validationReport)
-  }
-
-  protected def elementToValidateSelector(element: DomainElement): Boolean = {
-    true
   }
 
   protected def validateIdentityTransformation(element: DomainElement): Unit = {
@@ -838,10 +835,10 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
   def validateDataType(validationSpecification: ValidationSpecification,
                        propertyConstraint: PropertyConstraint,
                        parentElement: DomainElement): Unit = {
-    val xsdString  = (Namespace.Xsd + "string").iri()
-    val xsdBoolean = (Namespace.Xsd + "boolean").iri()
-    val xsdInteger = (Namespace.Xsd + "integer").iri()
-    val xsdDouble  = (Namespace.Xsd + "double").iri()
+    val xsdString  = DataType.String
+    val xsdBoolean = DataType.Boolean
+    val xsdInteger = DataType.Integer
+    val xsdDouble  = DataType.Double
     extractPropertyValue(propertyConstraint, parentElement) match {
       case Some((_, element, _)) =>
         val elements = element match {

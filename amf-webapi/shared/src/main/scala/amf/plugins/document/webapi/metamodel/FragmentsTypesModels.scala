@@ -27,7 +27,7 @@ object FragmentsTypesModels {
 
   object DataTypeFragmentModel extends FragmentModel {
 
-    override def fields: List[Field] = FragmentModel.fields
+    override val fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "DataType") ++ FragmentModel.`type`
 
@@ -42,7 +42,7 @@ object FragmentsTypesModels {
 
   object NamedExampleFragmentModel extends FragmentModel {
 
-    override def fields: List[Field] = FragmentModel.fields
+    override val fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "NamedExample") ++ FragmentModel.`type`
 
@@ -57,7 +57,7 @@ object FragmentsTypesModels {
 
   object ResourceTypeFragmentModel extends FragmentModel {
 
-    override def fields: List[Field] = FragmentModel.fields
+    override val fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "ResourceTypeFragment") ++ FragmentModel.`type`
 
@@ -72,7 +72,7 @@ object FragmentsTypesModels {
 
   object TraitFragmentModel extends FragmentModel {
 
-    override def fields: List[Field] = FragmentModel.fields
+    override val fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "TraitFragment") ++ FragmentModel.`type`
 
@@ -87,7 +87,7 @@ object FragmentsTypesModels {
 
   object AnnotationTypeDeclarationFragmentModel extends FragmentModel {
 
-    override def fields: List[Field] = FragmentModel.fields
+    override val fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "AnnotationTypeDeclarationFragment") ++ FragmentModel.`type`
 
@@ -101,7 +101,7 @@ object FragmentsTypesModels {
   }
 
   object SecuritySchemeFragmentModel extends FragmentModel {
-    override def fields: List[Field] = FragmentModel.fields
+    override val fields: List[Field] = FragmentModel.fields
 
     override val `type`: List[ValueType] = List(Document + "SecuritySchemeFragment") ++ FragmentModel.`type`
 

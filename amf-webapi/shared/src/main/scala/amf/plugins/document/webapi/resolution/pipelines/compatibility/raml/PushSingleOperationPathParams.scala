@@ -23,7 +23,7 @@ class PushSingleOperationPathParams()(override implicit val errorHandler: ErrorH
 
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-      model.findByType(EndPointModel.`type`.head.iri()).foreach {
+      model.iterator().foreach {
         case endpoint: EndPoint =>
           checkUriParams(endpoint)
         case _ => // ignore

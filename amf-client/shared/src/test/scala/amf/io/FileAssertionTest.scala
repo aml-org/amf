@@ -3,7 +3,7 @@ package amf.io
 import amf.common.Tests.checkDiff
 import amf.core.unsafe.PlatformSecrets
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
-import org.scalatest.{Assertion, AsyncFunSuite, AsyncTestSuite}
+import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 

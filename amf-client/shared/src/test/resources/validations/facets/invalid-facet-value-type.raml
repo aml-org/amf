@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: A
+
+types:
+
+  defining-incorrect-facet-type:
+    type: custom-string
+    camel-case: "not a boolean"
+    object-facet:
+      name: "a name"
+      age: "not a integer"
+
+  defining-correct-facet-type:
+    type: custom-string
+    camel-case: true
+    object-facet:
+      name: "a name"
+      age: 5
+    optional-facet: true
+
+  custom-string:
+    type: string
+    facets:
+      camel-case: boolean
+      object-facet:
+        type: object
+        properties:
+          name: string
+          age: integer
+      optional-facet?: boolean

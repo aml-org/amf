@@ -15,13 +15,8 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Settings}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
-import amf.plugins.features.validation.ParserSideValidations
-import amf.plugins.features.validation.ParserSideValidations.{
-  CrossSecurityWarningSpecification,
-  DuplicatedOperationStatusCodeSpecification,
-  ExclusivePropertiesSpecification,
-  InvalidSecuritySchemeDescribedByType
-}
+import amf.validations.ParserSideValidations
+import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -36,10 +31,7 @@ object SecuritySchemeParser {
       case _: Raml => RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx))
       case _: Oas  => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
       case other =>
-        ctx.violation(ParserSideValidations.UnexpectedVendor,
-                      "",
-                      s"Unsupported vendor $other in security scheme parsers",
-                      entry)
+        ctx.violation(UnexpectedVendor, "", s"Unsupported vendor $other in security scheme parsers", entry)
         RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx)) // use raml as default?
     }
 }
@@ -81,7 +73,7 @@ case class RamlSecuritySchemeParser(ast: YPart,
             // we need to check this because of the problem parsing nulls like empty strings of value null
             if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
               ctx.violation(
-                ParserSideValidations.MissingSecuritySchemeErrorSpecification,
+                MissingSecuritySchemeErrorSpecification,
                 scheme.id,
                 Some(SecuritySchemeModel.Type.value.iri()),
                 "Security Scheme must have a mandatory value from 'OAuth 1.0', 'OAuth 2.0', 'Basic Authentication', 'Digest Authentication', 'Pass Through', x-<other>'",
@@ -263,7 +255,7 @@ case class OasSecuritySchemeParser(ast: YPart,
             // we need to check this because of the problem parsing nulls like empty strings of value null
             if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
               ctx.violation(
-                ParserSideValidations.MissingSecuritySchemeErrorSpecification,
+                MissingSecuritySchemeErrorSpecification,
                 scheme.id,
                 Some(SecuritySchemeModel.Type.value.iri()),
                 "Security Scheme must have a mandatory value from 'oauth2', 'basic' or 'apiKey'",

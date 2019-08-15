@@ -27,7 +27,8 @@ import amf.plugins.domain.webapi.metamodel.templates.ParametrizedTraitModel
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DataNodeMerging
-import amf.plugins.features.validation.ResolutionSideValidations.{MissingExtensionInReferences, ResolutionValidation}
+import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import amf.validations.ResolutionSideValidations.MissingExtensionInReferences
 import amf.{ProfileName, Raml08Profile}
 
 import scala.collection.mutable
@@ -101,9 +102,13 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                       extensionId: String,
                       extensionLocation: Option[String]): Unit = {
     val existing = document.references.map(_.id) ++ Seq(document.id, extension.id)
-    val libs     = extension.references.collect { case m: Module => m }
 
-    val refs = document.references ++ libs.filter(unit => !existing.contains(unit.id)).map { unit =>
+    val extensionReferences = extension.references.collect {
+      case m: Module   => m
+      case f: Fragment => f
+    }
+
+    val refs = document.references ++ extensionReferences.filter(unit => !existing.contains(unit.id)).map { unit =>
       unit.annotations += ExtensionProvenance(extensionId, extensionLocation)
       unit
     }

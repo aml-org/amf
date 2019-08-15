@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations.InvalidFragmentType
+import amf.validations.ParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YScalar}
 
 /**

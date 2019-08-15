@@ -5,7 +5,7 @@ Number of results: 9
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#closed-shape
+- Source: http://a.ml/vocabularies/amf/aml#closed-shape
   Message: Property 'iAmNotAMethod' not supported in a RAML 1.0 resourceType node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/end-points/%2Fclosed-shape/rt1/applied
@@ -13,7 +13,7 @@ Level: Violation
   Position: Some(LexicalInformation([(3,0)-(3,11)]))
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentExplicitType'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/end-points/%2Fclosed-shape/get/request/application%2Fjson/any/schema/unresolved
@@ -21,7 +21,7 @@ Level: Violation
   Position: Some(LexicalInformation([(7,12)-(7,34)]))
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentExplicitType'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/end-points/%2Finexistent-reference-from-parameter/get/request/application%2Fjson/any/schema/unresolved
@@ -29,7 +29,7 @@ Level: Violation
   Position: Some(LexicalInformation([(7,12)-(7,34)]))
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentExplicitType'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/end-points/%2Fmerged-inexistent-optional-explicit-reference/get/request/application%2Fjson/any/schema/unresolved
@@ -37,7 +37,7 @@ Level: Violation
   Position: Some(LexicalInformation([(7,12)-(7,34)]))
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentExplicitType'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/end-points/%2Fmerged-inexistent-optional-reference-from-parameter/get/request/application%2Fjson/any/schema/unresolved
@@ -45,7 +45,7 @@ Level: Violation
   Position: Some(LexicalInformation([(7,12)-(7,34)]))
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentExplicitType'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/end-points/%2Fnon-merged-inexistent-optional-reference-from-parameter/get/request/application%2Fjson/any/schema/unresolved
@@ -53,7 +53,7 @@ Level: Violation
   Position: Some(LexicalInformation([(7,12)-(7,34)]))
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentTypeParameter'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/end-points/%2Finexistent-reference-from-parameter/post/request/application%2Fjson/any/schema/unresolved
@@ -61,7 +61,7 @@ Level: Violation
   Position: Some(LexicalInformation([(11,12)-(11,29)]))
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentExplicitTypeInOptional'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/end-points/%2Fmerged-inexistent-optional-explicit-reference/put/request/application%2Fjson/any/schema/unresolved
@@ -69,7 +69,7 @@ Level: Violation
   Position: Some(LexicalInformation([(15,12)-(15,44)]))
   Location: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/resource-type.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#unresolved-reference
+- Source: http://a.ml/vocabularies/amf/core#unresolved-reference
   Message: Unresolved reference 'inexistentTypeParameterOptional'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/extends/typed-fragments/resource-types/api.raml#/web-api/end-points/%2Fmerged-inexistent-optional-reference-from-parameter/delete/request/application%2Fjson/any/schema/unresolved

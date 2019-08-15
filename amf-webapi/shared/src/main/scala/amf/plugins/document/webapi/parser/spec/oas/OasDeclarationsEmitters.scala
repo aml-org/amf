@@ -20,7 +20,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 }
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations._
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable.ListBuffer

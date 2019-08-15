@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   _
 }
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations.{
+import amf.validations.ParserSideValidations.{
   InvalidAbstractDeclarationType,
   InvalidSecuredByType,
   InvalidTypeDefinition,

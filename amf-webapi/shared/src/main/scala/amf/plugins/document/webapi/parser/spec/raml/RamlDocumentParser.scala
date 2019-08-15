@@ -25,7 +25,8 @@ import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations._
+import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
+import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -399,7 +400,7 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
 
     schemas.foreach(
       s =>
-        ctx.warning(SchemaDeprecated,
+        ctx.warning(SchemasDeprecated,
                     "",
                     "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead",
                     s.key))
@@ -415,11 +416,14 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
           .as[YMap]
           .entries
           .foreach(e => {
-            val typeName = e.key
+            val typeName      = e.key
+            val nameGenerator = new IdCounter()
             val oasParameter: domain.OasParameter = e.value.to[YMap] match {
-              case Right(_) => OasParameterParser(Left(e), parentPath, Some(typeName))(toOas(ctx)).parse()
+              case Right(_) =>
+                OasParameterParser(Left(e), parentPath, Some(typeName), nameGenerator)(toOas(ctx)).parse()
               case _ =>
-                val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName))(toOas(ctx)).parse() // todo: links??
+                val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator)(
+                  toOas(ctx)).parse() // todo: links??
 
                 ctx.violation(InvalidParameterType,
                               parameter.domainElement.id,
@@ -519,7 +523,8 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
               adopt(copied.withName(key))
               copied
             case _ =>
-              Raml10TypeParser(ast, shape => shape.adopted(domainProp.id), isAnnotation = true).parse() match {
+              Raml10TypeParser(ast, shape => shape.adopted(domainProp.id), TypeInfo(isAnnotation = true))
+                .parse() match {
                 case Some(schema) =>
                   tracking(schema, domainProp.id)
                   domainProp.withSchema(schema)
@@ -551,7 +556,9 @@ abstract class RamlSpecParser(implicit ctx: RamlWebApiContext) extends WebApiBas
 
       maybeAnnotationType match {
         case Some(annotationType) =>
-          Raml10TypeParser(annotationType, shape => shape.withName("schema").adopted(custom.id), isAnnotation = true)
+          Raml10TypeParser(annotationType,
+                           shape => shape.withName("schema").adopted(custom.id),
+                           TypeInfo(isAnnotation = true))
             .parse()
             .foreach({ shape =>
               tracking(shape, custom.id)

@@ -1,0 +1,34 @@
+#%RAML 1.0
+title: Healthcare EHR Appointments Process API
+
+types:
+  A:
+    type: object
+    properties:
+      a1: string
+      a2: integer
+  B:
+    type: object
+    properties:
+      b1: string
+      b2: boolean
+
+resourceTypes:
+  rt:
+    get:
+      body:
+        application/json:
+          type: <<request-type>>
+      responses:
+        "200":
+          body:
+            application/json:
+              type: <<response-type>>
+
+
+
+/appointment:
+  type:
+    rt:
+      request-type: A
+      response-type: B

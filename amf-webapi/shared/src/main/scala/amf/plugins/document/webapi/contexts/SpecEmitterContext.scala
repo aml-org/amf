@@ -30,7 +30,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, UnionShape}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
-import amf.plugins.features.validation.RenderSideValidations.RenderValidation
+import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
 

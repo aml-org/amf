@@ -1,11 +1,11 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.client.model.DataTypes
 import amf.core.annotations.DefaultNode
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
 import amf.core.metamodel.{Field, Type}
+import amf.core.model.DataType
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
@@ -18,11 +18,9 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models._
-import amf.plugins.features.validation.ParserSideValidations.UnusedBaseUriParameter
-import amf.plugins.features.validation.ResolutionSideValidations.{
-  ResolutionValidation,
-  UnequalMediaTypeDefinitionsInExtendsPayloads
-}
+import amf.plugins.features.validation.CoreValidations
+import amf.validations.ParserSideValidations.UnusedBaseUriParameter
+import amf.validations.ResolutionSideValidations.UnequalMediaTypeDefinitionsInExtendsPayloads
 
 import scala.collection.mutable
 
@@ -129,10 +127,10 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
             case _: DomainElementModel =>
               mainValue.value match {
                 // This case is for default type String (in parameters)
-                case s: ScalarShape if s.dataType.value() == DataTypes.String =>
+                case s: ScalarShape if s.dataType.value() == DataType.String =>
                   otherValue.value match {
                     // if both parts are scalar strings, then just merge the dataNodes
-                    case sc: ScalarShape if sc.dataType.value() == DataTypes.String =>
+                    case sc: ScalarShape if sc.dataType.value() == DataType.String =>
                       merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
                     // if other is an scalar with a different datatype
                     case sc: ScalarShape =>
@@ -171,7 +169,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         case _: DomainElementModel =>
           merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
         case _ =>
-          errorHandler.violation(ResolutionValidation,
+          errorHandler.violation(CoreValidations.ResolutionValidation,
                                  main.id,
                                  s"Cannot merge '${otherField.`type`}':not a (Scalar|Array|Object)",
                                  main.annotations)
@@ -302,7 +300,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
       case key: KeyField  => mergeByKeyValue(target, field, element, key, m, o, errorHandler)
       case DataNodeModel  => mergeDataNodes(target, field, m, o)
       case _ =>
-        errorHandler.violation(ResolutionValidation,
+        errorHandler.violation(CoreValidations.ResolutionValidation,
                                target.id,
                                s"Cannot merge '$element': not a KeyField nor a Scalar",
                                target.annotations)

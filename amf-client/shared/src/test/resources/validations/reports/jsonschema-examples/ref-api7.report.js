@@ -5,7 +5,7 @@ Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should NOT have additional properties
 should have required property 'wadus'
 
@@ -15,7 +15,7 @@ should have required property 'wadus'
   Position: Some(LexicalInformation([(21,0)-(23,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/jsonschema/ref/api7.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: left should NOT have additional properties
 left should have required property 'wadus'
 

@@ -34,7 +34,7 @@ object PayloadModel
 
   override val `type`: List[ValueType] = Http + "Payload" :: DomainElementModel.`type`
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     Name :: MediaType :: Schema :: Examples :: Encoding :: (DomainElementModel.fields ++ LinkableElementModel.fields)
 
   override def modelInstance = Payload()

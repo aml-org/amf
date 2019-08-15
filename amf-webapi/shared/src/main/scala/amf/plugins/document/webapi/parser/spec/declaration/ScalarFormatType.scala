@@ -8,8 +8,7 @@ import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef.{DoubleType, FloatType, IntType, LongType}
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
-import amf.plugins.features.validation.ParserSideValidations
-import amf.plugins.features.validation.ParserSideValidations.InvalidShapeFormat
+import amf.validations.ParserSideValidations.InvalidShapeFormat
 import org.yaml.model.{YMap, YScalar}
 
 object FormatValidator {

@@ -10,7 +10,7 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{Lazy, Strings, TemplateUri}
+import amf.core.utils.{IdCounter, Lazy, Strings, TemplateUri}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
@@ -27,7 +27,8 @@ import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.features.validation.ParserSideValidations._
+import amf.validations.ParserSideValidations._
+import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import org.yaml.model.{YNode, _}
 
 import scala.collection.mutable
@@ -646,11 +647,13 @@ abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseS
           .as[YMap]
           .entries
           .foreach(e => {
-            val typeName = e.key
+            val typeName      = e.key
+            val nameGenerator = new IdCounter()
             val oasParameter: domain.OasParameter = e.value.to[YMap] match {
-              case Right(_) => OasParameterParser(Left(e), parentPath, Some(typeName)).parse()
+              case Right(_) => OasParameterParser(Left(e), parentPath, Some(typeName), nameGenerator).parse()
               case _ =>
-                val parameter = OasParameterParser(Right(YMap.empty), parentPath, Some(typeName)).parse()
+                val parameter =
+                  OasParameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator).parse()
                 ctx.violation(InvalidParameterType,
                               parameter.domainElement.id,
                               "Map needed to parse a parameter declaration",

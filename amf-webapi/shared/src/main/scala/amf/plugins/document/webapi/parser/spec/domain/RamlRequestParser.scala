@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Defa
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Request}
-import amf.plugins.features.validation.ParserSideValidations.{
+import amf.validations.ParserSideValidations.{
   ExclusivePropertiesSpecification,
   UnsupportedExampleMediaTypeErrorSpecification
 }

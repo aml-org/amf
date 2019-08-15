@@ -39,7 +39,7 @@ object SecuritySchemeModel
 
   override val `type`: List[ValueType] = Security + "SecurityScheme" :: DomainElementModel.`type`
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     List(Name, Type, DisplayName, Description, Headers, QueryParameters, Responses, Settings, QueryString) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = SecurityScheme()

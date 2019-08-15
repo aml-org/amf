@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmit
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
 

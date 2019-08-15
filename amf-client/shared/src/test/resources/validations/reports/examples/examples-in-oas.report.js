@@ -5,7 +5,7 @@ Number of results: 2
 
 Level: Warning
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: dateOfBirth should match format "date-time"
 phoneNo should be integer
 
@@ -15,7 +15,7 @@ phoneNo should be integer
   Position: Some(LexicalInformation([(256,18)-(283,7)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/examples-in-oas.json
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: application.user.dateOfBirth should match format "date-time"
 application.user.monthsAtCurrAdd should be integer
 user.dateOfBirth should match format "date-time"

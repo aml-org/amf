@@ -1,11 +1,11 @@
 package amf.plugins.domain.shapes.models
 
 import amf.core.annotations.ExplicitField
-import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{IdsTraversionCheck, Linkable, RecursiveShape, Shape}
+import amf.core.model.domain.{Linkable, RecursiveShape, Shape}
 import amf.core.parser.ErrorHandler
+import amf.core.traversal.ModelTraversalRegistry
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
-import amf.plugins.features.validation.ResolutionSideValidations.{RecursiveShapeSpecification, ResolutionValidation}
+import amf.plugins.features.validation.CoreValidations.{RecursiveShapeSpecification, ResolutionValidation}
 
 trait ShapeHelpers { this: Shape =>
 
@@ -42,25 +42,19 @@ trait ShapeHelpers { this: Shape =>
 
   def cloneShape(recursionErrorHandler: Option[ErrorHandler],
                  withRecursionBase: Option[String] = None,
-                 traversed: IdsTraversionCheck = IdsTraversionCheck(),
+                 traversal: ModelTraversalRegistry = ModelTraversalRegistry(),
                  cloneExamples: Boolean = false): this.type = {
-    if (traversed.hasId(this.id)) {
+    if (traversal.isInCurrentPath(this.id)) {
       buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler).asInstanceOf[this.type]
     } else {
       val cloned: Shape = this match {
         case _: Linkable if this.isLink =>
           buildFixPoint(withRecursionBase, this.name.value(), this, recursionErrorHandler)
-        case r: RecursiveShape =>
-          r.fixpointTarget match {
-            case Some(target) => r.withFixpointTarget(target)
-            case _            => r
-          }
         case _: UnionShape                                       => UnionShape(annotations)
         case _: ScalarShape                                      => ScalarShape(annotations)
         case _: ArrayShape                                       => ArrayShape(annotations)
         case _: MatrixShape                                      => MatrixShape(annotations)
         case _: TupleShape                                       => TupleShape(annotations)
-        case _: PropertyShape                                    => PropertyShape(annotations)
         case _: FileShape                                        => FileShape(annotations)
         case _: NilShape                                         => NilShape(annotations)
         case _: NodeShape                                        => NodeShape(annotations)
@@ -69,7 +63,7 @@ trait ShapeHelpers { this: Shape =>
         case _: AnyShape                                         => AnyShape(annotations)
       }
       cloned.id = this.id
-      copyFields(recursionErrorHandler, cloned, withRecursionBase, traversed + this.id)
+      copyFields(recursionErrorHandler, cloned, withRecursionBase, traversal + this.id)
       if (cloned.isInstanceOf[NodeShape]) {
         cloned.add(ExplicitField())
       }

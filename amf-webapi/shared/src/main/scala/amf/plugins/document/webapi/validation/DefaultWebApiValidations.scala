@@ -1,12 +1,11 @@
 package amf.plugins.document.webapi.validation
 
 import amf._
-import amf.core.remote.{Oas, Raml}
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core._
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.webapi.validation.AMFRawValidations.AMFValidation
-import amf.plugins.features.validation.{ParserSideValidations, Validations}
+import amf.plugins.features.validation.Validations
 
 /**
   * Created by antoniogarrote on 17/07/2017.
@@ -100,12 +99,6 @@ trait ImportUtils {
 object DefaultAMFValidations extends ImportUtils {
 
   private def validations(): Map[ProfileName, Seq[AMFValidation]] = AMFRawValidations.map
-
-  private def specificsProfile(p: String): Seq[ProfileName] = p match {
-    case Oas.name  => Seq(Oas20Profile, Oas30Profile)
-    case Raml.name => Seq(Raml10Profile, Raml08Profile)
-    case _         => Seq(ProfileName(p))
-  }
 
   def profiles(): List[ValidationProfile] = {
     val list = validations().map {

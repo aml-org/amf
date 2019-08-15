@@ -14,17 +14,16 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft3SchemaVersion,
   JSONSchemaDraft4SchemaVersion,
   JSONSchemaUnspecifiedVersion,
-  JSONSchemaVersion
+  JSONSchemaVersion,
+  TypeInfo
 }
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.parser.spec.raml.{Raml08Syntax, Raml10Syntax}
 import amf.plugins.domain.shapes.models.AnyShape
-import amf.plugins.features.validation.ParserSideValidations.{
-  ClosedShapeSpecification,
-  DeclarationNotFound,
-  InvalidJsonSchemaVersion
-}
+import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
+import amf.validation.DialectValidations.ClosedShapeSpecification
+import amf.validations.ParserSideValidations.InvalidJsonSchemaVersion
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -185,18 +184,16 @@ abstract class RamlWebApiContext(override val loc: String,
     * need to first, compute them, and then, add them as additional valid properties to the set of properties that
     * can be defined in the AST node
     */
-  def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, annotation: Boolean = false): Unit = {
+  def closedRamlTypeShape(shape: Shape, ast: YMap, shapeType: String, typeInfo: TypeInfo): Unit = {
     val node       = shape.id
     val facets     = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
     val shapeLabel = RamlShapeTypeBeautifier.beautify(shapeType)
 
     syntax.nodes.get(shapeType) match {
       case Some(props) =>
-        val initialProperties = if (annotation) {
-          props ++ syntax.nodes("annotation")
-        } else {
-          props
-        }
+        var initialProperties = props
+        if (typeInfo.isAnnotation) initialProperties ++= syntax.nodes("annotation")
+        if (typeInfo.isPropertyOrParameter) initialProperties ++= syntax.nodes("property")
         val allResults: Seq[Seq[YMapEntry]] = facets.map { propertiesMap =>
           val totalProperties     = initialProperties ++ propertiesMap.keys.toSet
           val acc: Seq[YMapEntry] = Seq.empty

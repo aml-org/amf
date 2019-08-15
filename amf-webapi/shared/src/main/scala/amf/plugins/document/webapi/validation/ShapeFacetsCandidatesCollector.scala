@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.validation
 
 import amf.core.model.document.{BaseUnit, DeclaresModel, PayloadFragment}
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DataNode, ObjectNode, Shape}
+import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
 import amf.core.remote.Platform
 import amf.core.validation.ValidationCandidate
 import amf.core.vocabulary.Namespace
@@ -38,9 +38,11 @@ class ShapeFacetsCandidatesCollector(model: BaseUnit, platform: Platform) {
       SecuritySchemeModel.`type`.head.iri(),
       (Namespace.Document + "DomainProperty").iri()
     )
-    val encodedShapes = model.findBy { element =>
-      element.graph.types().exists(typesWithShapes.contains(_))
-    }
+    val encodedShapes =
+      model
+        .iterator()
+        .collect { case e: DomainElement if e.graph.types().exists(typesWithShapes.contains(_)) => e }
+        .toSeq
 
     val declaredShapes: Seq[Shape] = model match {
       case withDeclarations: DeclaresModel =>

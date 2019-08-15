@@ -5,7 +5,7 @@ Number of results: 2
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: lastName should be string
 name should be string
 
@@ -15,7 +15,7 @@ name should be string
   Position: Some(LexicalInformation([(16,0)-(18,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/declared-type-ref-add-example.raml
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: lastName should be string
 name should be string
 

@@ -12,7 +12,7 @@ import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
 class ShapeFormatAdjuster()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-      model.findByType(ScalarShapeModel.`type`.head.iri()).foreach {
+      model.iterator().foreach {
         case shape: ScalarShape if shape.format.nonEmpty =>
           val typeDef = TypeDefXsdMapping.typeDef(shape.dataType.value())
           if (typeDef != DateTimeOnlyType && typeDef != TimeOnlyType && typeDef != DateOnlyType) {

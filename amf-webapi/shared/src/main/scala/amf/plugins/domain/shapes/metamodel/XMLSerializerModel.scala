@@ -25,7 +25,7 @@ object XMLSerializerModel extends DomainElementModel {
 
   val Prefix = Field(Str, Shapes + "xmlPrefix", ModelDoc(ModelVocabularies.Shapes, "xml prefix", "XML prefix mapping"))
 
-  override def fields: List[Field] = List(Attribute, Wrapped, Name, Namespace, Prefix) ++ DomainElementModel.fields
+  override val fields: List[Field] = List(Attribute, Wrapped, Name, Namespace, Prefix) ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shapes + "XMLSerializer") ++ DomainElementModel.`type`
 

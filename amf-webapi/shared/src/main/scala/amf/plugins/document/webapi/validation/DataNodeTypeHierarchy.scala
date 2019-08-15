@@ -1,42 +1,42 @@
 package amf.plugins.document.webapi.validation
 
-import amf.core.vocabulary.Namespace
+import amf.core.model.DataType
 
 trait DataNodeTypeHierarchy {
 
   def getTimeHierarchy: Set[String] = Set(
-    (Namespace.Xsd + "string").iri().trim,
-    (Namespace.Xsd + "time").iri().trim
+    DataType.String.trim,
+    DataType.Time.trim
   )
 
   def getDateOnlyHierarchy: Set[String] = Set(
-    (Namespace.Xsd + "string").iri().trim,
-    (Namespace.Xsd + "date").iri().trim
+    DataType.String.trim,
+    DataType.Date.trim
   )
 
   def getDateTimeOnlyHierarchy: Set[String] = Set(
-    (Namespace.Xsd + "string").iri().trim,
-    (Namespace.Shapes + "dateTimeOnly").iri().trim
+    DataType.String.trim,
+    DataType.DateTimeOnly.trim
   )
 
   def getDateTimeHierarchy: Set[String] = Set(
-    (Namespace.Xsd + "string").iri().trim,
-    (Namespace.Xsd + "dateTime").iri().trim
+    DataType.String.trim,
+    DataType.DateTime.trim
   )
 
   def getBooleanHierarchy: Set[String] = Set(
-    (Namespace.Xsd + "boolean").iri().trim
+    DataType.Boolean.trim
   )
 
   def getIntegerHierarchy: Set[String] = Set(
-    (Namespace.Xsd + "integer").iri().trim
+    DataType.Integer.trim
   )
 
   def getNumberHierarchy: Set[String] =
     Set(
-      (Namespace.Xsd + "double").iri().trim,
-      (Namespace.Xsd + "float").iri().trim,
-      (Namespace.Xsd + "long").iri().trim
+      DataType.Double.trim,
+      DataType.Float.trim,
+      DataType.Long.trim
     ) ++ getIntegerHierarchy
 
   def getDoubleHierarchy: Set[String] = getNumberHierarchy
@@ -50,7 +50,7 @@ object DataNodeTypeHierarchyLogicalConstraint extends DataNodeTypeHierarchy {
 
   override def getStringHierarchy: Set[String] =
     Set(
-      (Namespace.Xsd + "string").iri().trim
+      DataType.String.trim
     ) ++ getTimeHierarchy ++ getDateOnlyHierarchy ++ getDateTimeOnlyHierarchy ++ getDateTimeHierarchy
 
 }
@@ -59,7 +59,7 @@ object DataNodeTypeHierarchyStandard extends DataNodeTypeHierarchy {
 
   override def getStringHierarchy: Set[String] =
     Set(
-      (Namespace.Xsd + "string").iri().trim
+      DataType.String.trim
     ) ++ getTimeHierarchy ++ getDateOnlyHierarchy ++ getDateTimeOnlyHierarchy ++ getDateTimeHierarchy ++
       getBooleanHierarchy ++ getNumberHierarchy
 

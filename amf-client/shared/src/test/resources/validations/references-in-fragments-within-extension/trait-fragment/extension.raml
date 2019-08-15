@@ -1,0 +1,10 @@
+#%RAML 1.0 Extension
+extends: api.raml
+title: OpenId Connect No Resource Template (Override Me)
+
+traits:
+  openid-configuration: !include trait.raml
+
+/.well-known/openid-configuration:
+  get:
+    is: [openid-configuration]

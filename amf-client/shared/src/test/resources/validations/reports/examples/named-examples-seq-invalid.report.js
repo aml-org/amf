@@ -5,10 +5,10 @@ Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/parser#example-validation-error
+- Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: [1].age should be integer
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/examples/named-examples-seq-invalid/api.raml#/declarations/types/array/People/example/default-example
-  Property: 
+  Property: file://amf-client/shared/src/test/resources/validations/examples/named-examples-seq-invalid/api.raml#/declarations/types/array/People/example/default-example
   Position: Some(LexicalInformation([(2,0)-(5,11)]))
   Location: file://amf-client/shared/src/test/resources/validations/examples/named-examples-seq-invalid/example.raml

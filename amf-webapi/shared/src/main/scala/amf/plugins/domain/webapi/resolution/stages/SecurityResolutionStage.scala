@@ -9,7 +9,7 @@ import amf.plugins.domain.webapi.metamodel.security.OAuth2SettingsModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme, Settings}
-import amf.plugins.features.validation.ResolutionSideValidations.ResolutionValidation
+import amf.plugins.features.validation.CoreValidations
 
 class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
@@ -24,7 +24,7 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
         }
         if (scopes.nonEmpty)
           errorHandler.violation(
-            ResolutionValidation,
+            CoreValidations.ResolutionValidation,
             settings.id,
             Some(OAuth2SettingsModel.Scopes.value.toString),
             "Follow scopes are not defined in root: " + scopes.toString(),

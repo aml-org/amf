@@ -1,0 +1,161 @@
+#%RAML 1.0
+
+title: CALFA super library
+
+types:
+  account:
+    displayName: Account
+    type: organization
+    additionalProperties: false
+    properties:
+      some_property:
+        type: string
+      sub-accounts:
+        required: false
+        type: accounts
+      servicing-producers:
+        required: false
+        type: producers
+      approvers:
+        required: false
+        type: persons
+      member:
+        required: false
+        type: insured
+      contract:
+        required: false
+        type: contract
+    examples:
+      account-example:
+        some_property: asdasd
+
+  accounts: 
+    type: account[]
+
+  claim:
+    type: object
+    additionalProperties: false
+    properties:
+      examiner:
+        required: false
+        type: person
+      approver:
+        displayName: some_strange_name
+        required: false
+        type: person
+      claimant:
+        required: false
+        type: insured
+      insurance-agreements:
+        required: false
+        type: insurance-agreement
+
+  claims:
+    displayName: Claims
+    description: A collection of claims
+    type: claim[]
+
+  contract:
+    type: object
+    additionalProperties: false
+    properties:
+      account:
+        required: false
+        type: account
+
+  contracts:
+    type: contract[]
+
+  financial-account:
+    type: object
+    additionalProperties: false
+    properties:
+      person-owners:
+        required: false
+        type: persons
+      organization-owners:
+        required: false
+        type: organization
+
+  insurance-agreement:
+    type: object
+    additionalProperties: false
+    properties:
+      account:
+        required: false
+        type: account
+      beneficiaries:
+        required: false
+        type: party
+      claims:
+        required: false
+        type: claims
+
+  insured:
+    type: person
+    additionalProperties: false
+    properties:
+      insurance-agreements:
+        required: false
+        type: insurance-agreement
+      object-mode:
+        required: false
+        type: string
+
+  organization:
+    type: object
+    additionalProperties: false
+    properties:
+      organization-name:
+        required: false
+        type: string
+      contact-personnel:
+        displayName: other_display_name
+        required: false
+        type: persons
+      organization-financial-accounts:
+        required: false
+        type: financial-account
+
+  party:
+    type: object
+    additionalProperties: false
+    properties:
+      roles:
+        required: false
+        type: roles
+
+  person:
+    type: object
+    additionalProperties: false
+    properties:
+      person-financial-accounts:
+        required: false
+        type: financial-account
+
+  persons:
+    type: person[]
+
+  producer:
+    type: [person, organization]
+    additionalProperties: false
+    properties:
+      accounts:
+        required: false
+        type: accounts
+
+  producers:
+    type: producer[]
+
+
+  role:
+    type: object
+    additionalProperties: false
+    properties:
+      role-object:
+        displayName: Role Object
+        required: false
+        type: producer | account | insured | person | organization
+
+  roles:
+    type: role[]

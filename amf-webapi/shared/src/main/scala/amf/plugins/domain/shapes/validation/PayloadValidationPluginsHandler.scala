@@ -9,7 +9,7 @@ import amf.core.utils._
 import amf.core.validation._
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
-import amf.plugins.features.validation.ParserSideValidations
+import amf.validations.{ParserSideValidations, PayloadValidations}
 
 import scala.collection.mutable
 import scala.concurrent.Future
@@ -118,7 +118,7 @@ object PayloadValidationPluginsHandler {
         Some((Namespace.Document + "value").iri()),
         if (defaultSeverity == SeverityLevels.VIOLATION)
           ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id
-        else ParserSideValidations.UnsupportedExampleMediaTypeWarningSpecification.id,
+        else PayloadValidations.UnsupportedExampleMediaTypeWarningSpecification.id,
         None,
         None,
         null
@@ -134,7 +134,7 @@ object PayloadValidationPluginsHandler {
         Some((Namespace.Document + "value").iri()),
         if (defaultSeverity == SeverityLevels.VIOLATION)
           ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification.id
-        else ParserSideValidations.UnsupportedExampleMediaTypeWarningSpecification.id,
+        else PayloadValidations.UnsupportedExampleMediaTypeWarningSpecification.id,
         payloadFragment.encodes.position(),
         payloadFragment.encodes.location(),
         null

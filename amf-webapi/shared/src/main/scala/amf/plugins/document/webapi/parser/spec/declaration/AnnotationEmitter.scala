@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmit
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
-import amf.plugins.features.validation.RenderSideValidations.RenderValidation
+import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model._
 

@@ -6,8 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
-import amf.plugins.features.validation.RenderSideValidations.RenderValidation
-import amf.plugins.features.validation.{ParserSideValidations, RenderSideValidations}
+import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 

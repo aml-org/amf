@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
+import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Strings, TemplateUri}
-import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.{
   Raml08WebApiContext,
   Raml10WebApiContext,
@@ -18,12 +18,8 @@ import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
-import amf.plugins.features.validation.ParserSideValidations.{
-  DuplicatedEndpointPath,
-  InvalidEndpointPath,
-  UnusedBaseUriParameter
-}
-import amf.plugins.features.validation.ResolutionSideValidations.NestedEndpoint
+import amf.validations.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, UnusedBaseUriParameter}
+import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -248,7 +244,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
               case Some(p) => p
               case None =>
                 val pathParam = endpoint.withParameter(variable).withBinding("path").withRequired(true)
-                pathParam.withScalarSchema(variable).withDataType((Namespace.Xsd + "string").iri())
+                pathParam.withScalarSchema(variable).withDataType(DataType.String)
                 pathParam.annotations += SynthesizedField()
                 pathParam
             }

@@ -41,7 +41,7 @@ object ResponseModel
 
   override val `type`: List[ValueType] = Http + "Response" :: DomainElementModel.`type`
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     LinkableElementModel.fields ++
       List(Name, Description, StatusCode, Headers, Payloads, Links, Examples) ++ DomainElementModel.fields
 

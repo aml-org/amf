@@ -313,6 +313,21 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Annotated scalar node with no value should default to an empty node") {
+    cycle(
+      "optional-scalar-value.raml",
+      "optional-scalar-value.jsonld",
+      RamlYamlHint,
+      Amf,
+      validationsPath + "optional-scalar-value/"
+    )
+  }
+
+  // This test hangs diff
+  ignore("Emission of API with JSON Schema's schema as references") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")
+  }
+
   /*
   test("Exchange experience API resolution to Amf") {
     cycle("api.v1.raml", "api.v1.resolved.jsonld", RamlYamlHint, Amf, productionPath + "exchange-experience-api-1.0.1-raml/")

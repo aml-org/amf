@@ -299,19 +299,63 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("json-schema/api.raml")
   }
 
-  test("Invalid value in properties facet") {
-    validate("invalid-value-properties-facet.raml", Some("invalid-value-properties-facet.report"))
+  // References in fragments within extension
+
+  test("Reference in resource type fragment within extension") {
+    validate("references-in-fragments-within-extension/rt-fragment/extension.raml")
   }
 
-  test("Invalid security scheme declarations with invalid facets") {
-    validate("securitySchemes/invalid-security-schemes-facets.raml", Some("invalid-security-schemes-facets.report"))
+  test("Inexistent reference in resource type fragment within extension") {
+    validate(
+      "references-in-fragments-within-extension/rt-fragment-non-existent/extension.raml",
+      Some("inexistent-reference-in-resource-type-within-extension.report")
+    )
   }
 
-  test("Invalid signatures in OAuth 1.0 security scheme") {
-    validate("securitySchemes/invalid-oauth1-signatures.raml", Some("invalid-oauth1-signatures.report"))
+  test("Reference in trait fragment within extension") {
+    validate("references-in-fragments-within-extension/trait-fragment/extension.raml")
   }
 
-  test("JSON examples with string keys") {
-    validate("examples/json-example-with-string-keys/api.raml")
+  test("Inexistent reference in trait fragment within extension") {
+    validate(
+      "references-in-fragments-within-extension/trait-fragment-non-existent/extension.raml",
+      Some("inexistent-reference-in-trait-within-extension.report")
+    )
   }
+
+  test("Reference in data type fragment within extension") {
+    validate("references-in-fragments-within-extension/datatype-fragment/extension.raml")
+  }
+
+  test("Inexistent reference in data type fragment within extension") {
+    validate(
+      "references-in-fragments-within-extension/datatype-fragment-non-existent/extension.raml",
+      Some("inexistent-reference-in-data-type-within-extension.report")
+    )
+  }
+
+  test("Reference in fragment to extension declaration") {
+    validate("references-in-fragments-within-extension/rt-fragment-extension-declaration/extension.raml")
+  }
+
+  test("maxLength and minLength negative values") {
+    validate("facets/negative-max-min-length.raml", Some("negative-max-min-length.report"))
+  }
+
+  test("Yaml undefined anchor validation") {
+    validate("yaml-alias.raml", Some("yaml-alias.report"))
+  }
+
+  test("Severity levels order in the report") {
+    validate("severity-report-order/severity-report-order.raml", Some("severity-report-order.report"))
+  }
+
+  test("Invalid user defined facet names, and missing required facets") {
+    validate("facets/invalid-custom-facets.raml", Some("invalid-custom-facets.report"))
+  }
+
+  test("Facet 'required' in type declarations") {
+    validate("invalid-required-type-declaration.raml", Some("invalid-required-type-declaration.report"))
+  }
+
 }

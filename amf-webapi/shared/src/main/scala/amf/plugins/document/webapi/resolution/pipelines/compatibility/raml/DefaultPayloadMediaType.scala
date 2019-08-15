@@ -9,7 +9,7 @@ import amf.plugins.domain.webapi.models.Payload
 class DefaultPayloadMediaType()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-      model.findByType(PayloadModel.`type`.head.iri()).foreach {
+      model.iterator().foreach {
         case payload: Payload if payload.mediaType.isNullOrEmpty =>
           payload.withMediaType("*/*")
         case _ => // ignore

@@ -1,0 +1,22 @@
+#%RAML 0.8
+title: API
+
+traits:
+  - http:
+
+/endpoint0:
+  post:
+    body:
+      application/json:
+        schema: !include schema0.json
+  get:
+    body:
+      application/json:
+        schema: !include schema1.json
+
+/endpoint1:
+  get:
+    is: [ http ]
+    body:
+      application/json:
+        schema: !include schema1.json

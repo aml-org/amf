@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.parser
 
+import amf.core.model.DataType
 import amf.core.vocabulary.Namespace.{Shapes, Xsd}
 import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._
@@ -11,33 +12,33 @@ import org.yaml.model.YType
 object XsdTypeDefMapping {
 
   def xsd(typeDef: TypeDef): String =
-    (typeDef match {
-      case StrType          => Xsd + "string"
-      case IntType          => Xsd + "integer"
-      case LongType         => Xsd + "long"
-      case FloatType        => Xsd + "float"
-      case DoubleType       => Xsd + "double"
-      case NumberType       => Shapes + "number"
-      case BoolType         => Xsd + "boolean"
-      case DateTimeType     => Xsd + "dateTime"
-      case DateTimeOnlyType => Shapes + "dateTimeOnly" // custom scalar type
-      case TimeOnlyType     => Xsd + "time"
-      case DateOnlyType     => Xsd + "date"
-      case ByteType         => Xsd + "byte"
-      case BinaryType       => Xsd + "base64Binary"
-      case PasswordType     => Shapes + "password" // custom scalar type
+    typeDef match {
+      case StrType          => DataType.String
+      case IntType          => DataType.Integer
+      case LongType         => DataType.Long
+      case FloatType        => DataType.Float
+      case DoubleType       => DataType.Double
+      case NumberType       => DataType.Number
+      case BoolType         => DataType.Boolean
+      case DateTimeType     => DataType.DateTime
+      case DateTimeOnlyType => DataType.DateTimeOnly // custom scalar type
+      case TimeOnlyType     => DataType.Time
+      case DateOnlyType     => DataType.Date
+      case ByteType         => DataType.Byte
+      case BinaryType       => DataType.Binary
+      case PasswordType     => DataType.Password // custom scalar type
       case _                => throw new RuntimeException("Unknown mapping")
-    }).iri()
+    }
 
   /** for 0.8 */
   def xsdFromString(text: String): (Option[String], Option[String]) =
     text match {
-      case "string"                      => (Some((Xsd + "string").iri()), Some(""))
-      case "number" | "float" | "double" => (Some((Shapes + "number").iri()), Some(""))
-      case "integer"                     => (Some((Xsd + "integer").iri()), Some(""))
-      case "date"                        => (Some((Xsd + "dateTime").iri()), Some("RFC2616"))
-      case "boolean"                     => (Some((Xsd + "boolean").iri()), Some(""))
-      case "file"                        => (Some((Shapes + "file").iri()), Some(""))
+      case "string"                      => (Some(DataType.String), Some(""))
+      case "number" | "float" | "double" => (Some(DataType.Number), Some(""))
+      case "integer"                     => (Some(DataType.Integer), Some(""))
+      case "date"                        => (Some(DataType.DateTime), Some("RFC2616"))
+      case "boolean"                     => (Some(DataType.Boolean), Some(""))
+      case "file"                        => (Some(DataType.File), Some(""))
       case _                             => (None, None)
 
     }
@@ -57,46 +58,46 @@ object TypeDefXsdMapping {
 
   def typeDef08(iri: String): String =
     iri match {
-      case s if s == (Xsd + "string").iri()    => "string"
-      case s if s == (Xsd + "integer").iri()   => "integer"
-      case s if s == (Shapes + "number").iri() => "number"
-      case s if s == (Xsd + "float").iri()     => "number"
-      case s if s == (Xsd + "double").iri()    => "number"
-      case s if s == (Xsd + "boolean").iri()   => "boolean"
-      case s if s == (Xsd + "dateTime").iri()  => "date"
-      case s if s == (Shapes + "file").iri()   => "file"
-      case s                                   => throw new RuntimeException(s"Unknown mapping: $s")
+      case s if s == DataType.String   => "string"
+      case s if s == DataType.Integer  => "integer"
+      case s if s == DataType.Number   => "number"
+      case s if s == DataType.Float    => "number"
+      case s if s == DataType.Double   => "number"
+      case s if s == DataType.Boolean  => "boolean"
+      case s if s == DataType.DateTime => "date"
+      case s if s == DataType.File     => "file"
+      case s                           => throw new RuntimeException(s"Unknown mapping: $s")
     }
 
   def type08Def(iri: String): TypeDef =
     iri match {
-      case s if s == (Xsd + "string").iri()    => StrType
-      case s if s == (Xsd + "integer").iri()   => IntType
-      case s if s == (Xsd + "float").iri()     => FloatType
-      case s if s == (Shapes + "number").iri() => NumberType
-      case s if s == (Xsd + "boolean").iri()   => BoolType
-      case s if s == (Xsd + "dateTime").iri()  => DateTimeType
-      case s if s == (Shapes + "file").iri()   => FileType
-      case s                                   => throw new RuntimeException(s"Unknown mapping: $s")
+      case s if s == DataType.String   => StrType
+      case s if s == DataType.Integer  => IntType
+      case s if s == DataType.Float    => FloatType
+      case s if s == DataType.Number   => NumberType
+      case s if s == DataType.Boolean  => BoolType
+      case s if s == DataType.DateTime => DateTimeType
+      case s if s == DataType.File     => FileType
+      case s                           => throw new RuntimeException(s"Unknown mapping: $s")
     }
 
   def typeDef(iri: String): TypeDef =
     iri match {
-      case s if s == (Xsd + "string").iri()          => StrType
-      case s if s == (Xsd + "integer").iri()         => IntType
-      case s if s == (Xsd + "long").iri()            => LongType
-      case s if s == (Xsd + "float").iri()           => FloatType
-      case s if s == (Xsd + "double").iri()          => DoubleType
-      case s if s == (Shapes + "number").iri()       => NumberType
-      case s if s == (Xsd + "boolean").iri()         => BoolType
-      case s if s == (Xsd + "dateTime").iri()        => DateTimeType
-      case s if s == (Shapes + "dateTimeOnly").iri() => DateTimeOnlyType
-      case s if s == (Xsd + "time").iri()            => TimeOnlyType
-      case s if s == (Xsd + "date").iri()            => DateOnlyType
-      case s if s == (Xsd + "byte").iri()            => ByteType
-      case s if s == (Xsd + "base64Binary").iri()    => BinaryType
-      case s if s == (Shapes + "password").iri()     => PasswordType
-      case _                                         => UndefinedType
+      case s if s == DataType.String       => StrType
+      case s if s == DataType.Integer      => IntType
+      case s if s == DataType.Long         => LongType
+      case s if s == DataType.Float        => FloatType
+      case s if s == DataType.Double       => DoubleType
+      case s if s == DataType.Number       => NumberType
+      case s if s == DataType.Boolean      => BoolType
+      case s if s == DataType.DateTime     => DateTimeType
+      case s if s == DataType.DateTimeOnly => DateTimeOnlyType
+      case s if s == DataType.Time         => TimeOnlyType
+      case s if s == DataType.Date         => DateOnlyType
+      case s if s == DataType.Byte         => ByteType
+      case s if s == DataType.Binary       => BinaryType
+      case s if s == DataType.Password     => PasswordType
+      case _                               => UndefinedType
     }
 
   def typeDef(iri: String, format: String): TypeDef = typeDef(iri) match {

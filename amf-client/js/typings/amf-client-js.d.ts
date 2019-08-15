@@ -1252,6 +1252,7 @@ declare module 'amf-client-js' {
         discriminator: StrField
         discriminatorValue: StrField
         properties: PropertyShape[]
+        additionalPropertiesSchema: Shape
         dependencies: PropertyDependencies[]
 
         withMinProperties(min: number): this

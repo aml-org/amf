@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, Defa
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
-import amf.plugins.features.validation.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
+import amf.validations.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 

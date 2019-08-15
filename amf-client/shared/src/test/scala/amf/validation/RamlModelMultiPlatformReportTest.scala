@@ -35,6 +35,14 @@ class RamlModelMultiPlatformReportTest extends MultiPlatformReportGenTest {
     validate("discriminator/discriminator-array-items.raml", Some("discriminator-array-items.report"))
   }
 
+  test("Annotations are validated when contained in scalar valued nodes") {
+    validate("annotations/annotating-scalar-valued-nodes.raml", Some("annotating-scalar-valued-nodes.report"))
+  }
+
+  test("Invalid values in user defined facets") {
+    validate("facets/invalid-facet-value-type.raml", Some("invalid-facet-value-type.report"))
+  }
+
   override val basePath    = "file://amf-client/shared/src/test/resources/validations/"
   override val reportsPath = "amf-client/shared/src/test/resources/validations/reports/multi-plat-model/"
   override val hint: Hint  = RamlYamlHint

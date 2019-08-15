@@ -17,19 +17,21 @@ import scala.collection.mutable
 class UnionsAsTypeExpressions()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
   override def resolve[T <: BaseUnit](model: T): T = {
     try {
-      var document = model.asInstanceOf[DeclaresModel]
+      var document                                          = model.asInstanceOf[DeclaresModel]
       var collectedDecls: mutable.ListBuffer[DomainElement] = mutable.ListBuffer()
-      document.declares.foreach { decl => collectedDecls += decl }
+      document.declares.foreach { decl =>
+        collectedDecls += decl
+      }
 
       var counter = 1
 
-      model.findByType(UnionShapeModel.`type`.head.iri()).foreach {
+      model.iterator().foreach {
         case union: UnionShape =>
           val names = union.anyOf.map { shape =>
             collectedDecls.find(_.id == shape.id) match {
               case Some(declared: Shape) if declared.name.option().isDefined =>
                 declared.name.value()
-              case _                                               =>
+              case _ =>
                 if (shape.name.option().isEmpty) {
                   val namedShape = s"GenShape${counter}"
                   counter += 1

@@ -7,7 +7,8 @@ import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
 import amf.core.parser.{ParsedReference, _}
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.features.validation.ParserSideValidations.{ExpectedModule, InvalidModuleType}
+import amf.validation.DialectValidations.InvalidModuleType
+import amf.plugins.features.validation.CoreValidations.ExpectedModule
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 import scala.collection.mutable

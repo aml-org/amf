@@ -4,7 +4,7 @@ import amf.client.plugins.ValidationMode
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
-import amf.plugins.features.validation.ParserSideValidations.ExampleValidationErrorSpecification
+import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 
 import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JavaScriptException, SyntaxError}
@@ -64,7 +64,7 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
               message = makeValidationMessage(result),
               level = SeverityLevels.VIOLATION,
               targetNode = fragment.map(_.encodes.id).getOrElse(""),
-              targetProperty = None,
+              targetProperty = fragment.map(_.encodes.id),
               validationId = ExampleValidationErrorSpecification.id,
               position = fragment.flatMap(_.encodes.position()),
               location = fragment.flatMap(_.encodes.location()),
@@ -98,7 +98,7 @@ case class JsReportValidationProcessor(override val profileName: ProfileName) ex
             message = s"Internal error during validation ${e.getMessage}",
             level = SeverityLevels.VIOLATION,
             targetNode = element.map(_.id).getOrElse(""),
-            targetProperty = None,
+            targetProperty = element.map(_.id),
             validationId = ExampleValidationErrorSpecification.id,
             position = element.flatMap(_.position()),
             location = element.flatMap(_.location()),

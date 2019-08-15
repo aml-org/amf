@@ -261,6 +261,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test complex recursions in type inheritance 2") {
     cycle("healthcare_reduced_v2.raml", "healthcare_reduced_v2.raml.resolved", RamlYamlHint, Amf, validationPath)
   }
+
+  test("Test resource type parameters ids") {
+    cycle("rt-parameters.raml", "rt-parameters.raml.resolved", RamlYamlHint, Amf, validationPath)
+  }
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {

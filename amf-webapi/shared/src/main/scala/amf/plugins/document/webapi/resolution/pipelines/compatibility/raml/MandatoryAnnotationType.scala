@@ -15,7 +15,7 @@ class MandatoryAnnotationType()(override implicit val errorHandler: ErrorHandler
     try {
       model match {
         case doc: Document =>
-          doc.findByType(DomainExtensionModel.`type`.head.iri()).foreach {
+          model.iterator().foreach {
             case domainExtension: DomainExtension =>
               val customDomainPropertyWithSchema = Option(domainExtension.definedBy) match {
                 case Some(customDomainProperty) =>

@@ -1,0 +1,68 @@
+#%RAML 1.0
+title: A
+
+types:
+  facet-name-must-not-begin-with-open-parenthesis:
+    type: string
+    facets:
+      (format: string
+
+  missing-required-facet:
+    type: custom-string
+    camel-case: true
+
+  declaring-built-in-facet-from-inherit:
+    type: normal-string
+    facets:
+      maxLength: number
+
+  declaring-custom-facet-defined-from-inherits:
+    type: custom-string
+    facets:
+      camel-case: string
+    camel-case: true
+    object-facet:
+      name: "hola"
+      age: 3
+
+  custom-string:
+    type: string
+    facets:
+      camel-case: boolean
+      object-facet:
+        type: object
+        properties:
+          name: string
+          age: integer
+      optional-facet?: boolean
+
+  normal-string: string
+
+
+  # validation of built-in facets
+
+  number-type:
+    type: number
+    facets:
+      format: string #invalido
+      maxLength: integer #valido
+
+  string-type:
+    type: string
+    facets:
+      pattern: string #invalido
+      maxLength: integer #invalido
+      minimum: integer #valido
+
+  boolean-type:
+    type: boolean
+    facets:
+      format: string #valido
+      pattern: string #valido
+
+  file-type:
+    type: file
+    facets:
+      fileTypes: string[] #invalidp
+      minLength: integer #invalido
+

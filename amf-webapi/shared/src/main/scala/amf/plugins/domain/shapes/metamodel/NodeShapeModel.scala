@@ -66,7 +66,7 @@ object NodeShapeModel extends AnyShapeModel {
                             Properties,
                             Dependencies)
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shacl + "NodeShape") ++ AnyShapeModel.`type`
