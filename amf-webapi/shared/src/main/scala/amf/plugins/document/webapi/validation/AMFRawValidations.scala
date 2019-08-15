@@ -1884,6 +1884,24 @@ object AMFRawValidations {
    */
   )
 
+  private val RAML10 = Seq(
+    AMFValidation(
+      "amf-parser:datetime-format-value",
+      "Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
+      Raml.name,
+      "Domain",
+      "raml-shapes:ScalarShape",
+      "raml-shapes:format",
+      "PropertyShape",
+      "sh:path",
+      "raml-shapes:datetimeFormatValue",
+      "0",
+      "Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
+      "Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
+      "Violation"
+    )
+  )
+
   private val RAML08 = Seq(
     AMFValidation(
       Raml08.name,
@@ -2125,7 +2143,7 @@ object AMFRawValidations {
 
   def forProfile(p: ProfileName): Seq[AMFValidation] = {
     p match {
-      case Raml10Profile | RamlProfile              => RAML ++ AMF
+      case Raml10Profile | RamlProfile              => RAML ++ RAML10 ++ AMF
       case Raml08Profile                            => RAML ++ RAML08 ++ AMF
       case Oas30Profile | OasProfile | Oas20Profile => OAS ++ AMF
       case AmfProfile                               => AMF

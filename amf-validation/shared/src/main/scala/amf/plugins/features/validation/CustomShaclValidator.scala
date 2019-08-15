@@ -377,6 +377,28 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
             case _ =>
           }
 
+      case Some("datetimeFormatValue") =>
+        val typeValue = element.fields
+          .fields()
+          .find { f =>
+            f.field.value.iri().endsWith("datatype")
+          }
+          .map(field => field.value.value)
+          .collect { case AmfScalar(value, _) => value.toString }
+
+        val formatValue = element.fields
+          .fields()
+          .find { f =>
+            f.field.value.iri().endsWith("format")
+          }
+          .map(field => field.value.value)
+          .collect { case AmfScalar(value, _) => value.toString }
+
+        if (typeValue.exists(_.endsWith("dateTime"))) {
+          if (formatValue.isDefined && !formatValue.exists(format => format == "rfc3339" || format == "rfc2616")) {
+            reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+          }
+        }
       case Some(other) =>
         throw new Exception(s"Custom function validations not supported in customm SHACL validator: $other")
       case _ =>
