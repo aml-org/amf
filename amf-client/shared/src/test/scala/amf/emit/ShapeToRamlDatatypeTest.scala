@@ -38,8 +38,10 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
   }
 
   test("Test parsed from json expression forced to build new") {
-    cycle("json-expression.json", "json-expression-new.raml",
-          generalFindShapeFunc, (a: AnyShape) => a.buildRamlDatatype())
+    cycle("json-expression.json",
+          "json-expression-new.raml",
+          generalFindShapeFunc,
+          (a: AnyShape) => a.buildRamlDatatype())
   }
 
   // https://github.com/aml-org/amf/issues/441

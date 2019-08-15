@@ -23,19 +23,19 @@ case class DialectPropertyMapping(name: String, propertyTerm: String, range: Str
 object CanonicalWebAPIDialectExporter {
 
   val DIALECT_FILE = "canonical_webapi.yaml"
-  val WELL_KNOWN_VOCABULARIES = Map[String,String](
+  val WELL_KNOWN_VOCABULARIES = Map[String, String](
     "http://a.ml/vocabularies/document#" -> "../vocabularies/aml_doc.yaml",
-    "http://a.ml/vocabularies/data#" -> "../vocabularies/data_model.yaml",
-    "http://a.ml/vocabularies/http#" -> "../vocabularies/http.yaml",
-    "http://a.ml/vocabularies/meta#" -> "../vocabularies/meta.yaml",
+    "http://a.ml/vocabularies/data#"     -> "../vocabularies/data_model.yaml",
+    "http://a.ml/vocabularies/http#"     -> "../vocabularies/http.yaml",
+    "http://a.ml/vocabularies/meta#"     -> "../vocabularies/meta.yaml",
     "http://a.ml/vocabularies/security#" -> "../vocabularies/security.yaml",
-    "http://a.ml/vocabularies/shapes#" -> "../vocabularies/shapes.yaml"
+    "http://a.ml/vocabularies/shapes#"   -> "../vocabularies/shapes.yaml"
   )
 
-  val reflectionsWebApi     = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
-  val reflectionsShapes     = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
-  val reflectionsCore       = new Reflections("amf.core.metamodel.domain.extensions", new SubTypesScanner(false))
-  val reflectionsTemplates  = new Reflections("amf.core.metamodel.domain.templates", new SubTypesScanner(false))
+  val reflectionsWebApi    = new Reflections("amf.plugins.domain.webapi.metamodel", new SubTypesScanner(false))
+  val reflectionsShapes    = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
+  val reflectionsCore      = new Reflections("amf.core.metamodel.domain.extensions", new SubTypesScanner(false))
+  val reflectionsTemplates = new Reflections("amf.core.metamodel.domain.templates", new SubTypesScanner(false))
   //val reflectionsDataNode   = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
 
   var nodeMappings: Map[String, DialectNodeMapping] = Map()
@@ -53,7 +53,7 @@ object CanonicalWebAPIDialectExporter {
   def metaTypeToDialectRange(metaType: Type): (String, Boolean) = {
     metaType match {
       // objects
-      case metaModel:Obj                               => (toCamelCase(metaModel.doc.displayName), false)
+      case metaModel: Obj => (toCamelCase(metaModel.doc.displayName), false)
       // scalars
       case scalar: Scalar if scalar == Type.Str        => ("string", false)
       case scalar: Scalar if scalar == Type.RegExp     => ("string", false)
@@ -67,14 +67,14 @@ object CanonicalWebAPIDialectExporter {
       case scalar: Scalar if scalar == Type.EncodedIri => ("uri", false)
       case scalar: Scalar if scalar == Type.Bool       => ("boolean", false)
       // collections
-      case Type.Array(t)                               => (metaTypeToDialectRange(t)._1, true)
-      case Type.SortedArray(t)                         => (metaTypeToDialectRange(t)._1, true)
+      case Type.Array(t)       => (metaTypeToDialectRange(t)._1, true)
+      case Type.SortedArray(t) => (metaTypeToDialectRange(t)._1, true)
     }
   }
 
   def buildPropertyMapping(field: Field): DialectPropertyMapping = {
-    val propertyTerm          = field.value.iri()
-    val name = toCamelCase(field.doc.displayName).replace("\\.", "")
+    val propertyTerm           = field.value.iri()
+    val name                   = toCamelCase(field.doc.displayName).replace("\\.", "")
     val (range, allowMultiple) = metaTypeToDialectRange(field.`type`)
 
     DialectPropertyMapping(name, propertyTerm, range, allowMultiple)
@@ -88,11 +88,11 @@ object CanonicalWebAPIDialectExporter {
     val description = doc.description
     val vocab       = doc.vocabulary.filename
 
-
     // index fields
     val propertyTerms = modelObject.fields.map(buildPropertyMapping)
 
-    val nodeMapping = DialectNodeMapping(name = toCamelCase(displayName), classTerm = id, propertyMappings = propertyTerms)
+    val nodeMapping =
+      DialectNodeMapping(name = toCamelCase(displayName), classTerm = id, propertyMappings = propertyTerms)
 
     nodeMapping
   }
@@ -100,7 +100,7 @@ object CanonicalWebAPIDialectExporter {
   def parseMetaObject(klassName: String): Option[DialectNodeMapping] = {
     nodeMappings.get(klassName) match {
       case cached @ Some(_) => cached
-      case _                =>
+      case _ =>
         try {
           val singleton = Class.forName(klassName)
           singleton.getField("MODULE$").get(singleton) match {
@@ -169,7 +169,6 @@ object CanonicalWebAPIDialectExporter {
       |      - AnyShape
     """.stripMargin
 
-
   val settingsUnionDeclaration = "SecuritySettingsUnion"
 
   val settingsTypeDiscriminator =
@@ -196,14 +195,14 @@ object CanonicalWebAPIDialectExporter {
     """.stripMargin
 
   val declarations =
-  s"""    declares:
+    s"""    declares:
     |      dataShapes: $shapeUnionDeclaration
     |      resourceTypes: ResourceType
     |      traits: Trait
   """.stripMargin
 
   val endPointExtends =
-  """      extends:
+    """      extends:
     |        propertyTerm: doc.extends
     |        typeDiscriminatorName: type
     |        typeDiscriminator:
@@ -227,11 +226,11 @@ object CanonicalWebAPIDialectExporter {
     """.stripMargin
 
   def renderDialect(): String = {
-    val stringBuilder = new StringBuilder()
-    val externals: mutable.HashMap[String,String] = mutable.HashMap()
+    val stringBuilder                              = new StringBuilder()
+    val externals: mutable.HashMap[String, String] = mutable.HashMap()
     val header = "#%Dialect 1.0\n\n" ++
-                 "dialect: WebAPI\n" ++
-                 "version: 1.0\n\n"
+      "dialect: WebAPI\n" ++
+      "version: 1.0\n\n"
 
     // Shapes union
     stringBuilder.append(s"  $shapeUnionDeclaration:\n")
@@ -245,62 +244,62 @@ object CanonicalWebAPIDialectExporter {
     stringBuilder.append("    union:\n")
     stringBuilder.append(settingsUnionRange + "\n")
 
-
     nodeMappings.foreach {
       case (_, dialectNodeMapping: DialectNodeMapping) =>
-      if (!blacklistedMappings.contains(dialectNodeMapping.name)) {
-        stringBuilder.append(s"  ${dialectNodeMapping.name}:\n")
-        var (compacted, prefix, base) = compact(dialectNodeMapping.classTerm)
-        aggregateExternals(externals, prefix, base)
-        stringBuilder.append(s"    classTerm: $compacted\n")
+        if (!blacklistedMappings.contains(dialectNodeMapping.name)) {
+          stringBuilder.append(s"  ${dialectNodeMapping.name}:\n")
+          var (compacted, prefix, base) = compact(dialectNodeMapping.classTerm)
+          aggregateExternals(externals, prefix, base)
+          stringBuilder.append(s"    classTerm: $compacted\n")
 
-        stringBuilder.append(s"    mapping:\n")
+          stringBuilder.append(s"    mapping:\n")
 
-        if (dialectNodeMapping.classTerm == (Namespace.Http + "EndPoint").iri()) {
-          stringBuilder.append(endPointExtends + "\n")
-        } else if (dialectNodeMapping.classTerm == (Namespace.Hydra + "Operation").iri()) {
-          stringBuilder.append(operationExtends + "\n")
-        }
+          if (dialectNodeMapping.classTerm == (Namespace.Http + "EndPoint").iri()) {
+            stringBuilder.append(endPointExtends + "\n")
+          } else if (dialectNodeMapping.classTerm == (Namespace.Hydra + "Operation").iri()) {
+            stringBuilder.append(operationExtends + "\n")
+          }
 
-        var propertyCounters: mutable.Map[String, Int] = mutable.Map()
-        dialectNodeMapping.propertyMappings.foreach { propertyMapping =>
-          // dynamic and linking information only relevant for design will not be dumped in the dialect
-          if (!blacklistedProperties.contains(propertyMapping.propertyTerm) && !blacklistedRanges.contains(propertyMapping.range)) {
-            // property names can be duplicated in the WebAPI meta-model, we make sure
-            // we generate unique property mapping alias
-            val name = propertyMapping.name
-            val nextPropertyName = propertyCounters.get(name) match {
-              case None =>
-                propertyCounters.update(name, 1)
-                name
-              case Some(counter) =>
-                propertyCounters.update(name, counter + 1)
-                s"$name$counter"
-            }
-            // render the property mapping here
-            stringBuilder.append(s"      ${nextPropertyName}:\n")
-            var (compacted, prefix, base) = compact(propertyMapping.propertyTerm)
-            aggregateExternals(externals, prefix, base)
-            stringBuilder.append(s"        propertyTerm: ${compacted}\n")
-            if (propertyMapping.range == "Shape") {
-              stringBuilder.append(s"        range: $shapeUnionDeclaration\n")
-            } else if (propertyMapping.range == "Settings") {
-              stringBuilder.append(s"        range: $settingsUnionDeclaration\n")
-            } else if (propertyMapping.range == "AbstractDeclaration") {
-              stringBuilder.append(s"        range:\n")
-              stringBuilder.append(abstractDeclarationsRange ++ "\n")
-            } else if (propertyMapping.range == "uri") {
-              stringBuilder.append(s"        range: link\n")
-            } else {
-              stringBuilder.append(s"        range: ${propertyMapping.range}\n")
-            }
-            if (propertyMapping.allowMultiple) {
-              stringBuilder.append(s"        allowMultiple: ${propertyMapping.allowMultiple}\n")
+          var propertyCounters: mutable.Map[String, Int] = mutable.Map()
+          dialectNodeMapping.propertyMappings.foreach { propertyMapping =>
+            // dynamic and linking information only relevant for design will not be dumped in the dialect
+            if (!blacklistedProperties.contains(propertyMapping.propertyTerm) && !blacklistedRanges.contains(
+                  propertyMapping.range)) {
+              // property names can be duplicated in the WebAPI meta-model, we make sure
+              // we generate unique property mapping alias
+              val name = propertyMapping.name
+              val nextPropertyName = propertyCounters.get(name) match {
+                case None =>
+                  propertyCounters.update(name, 1)
+                  name
+                case Some(counter) =>
+                  propertyCounters.update(name, counter + 1)
+                  s"$name$counter"
+              }
+              // render the property mapping here
+              stringBuilder.append(s"      ${nextPropertyName}:\n")
+              var (compacted, prefix, base) = compact(propertyMapping.propertyTerm)
+              aggregateExternals(externals, prefix, base)
+              stringBuilder.append(s"        propertyTerm: ${compacted}\n")
+              if (propertyMapping.range == "Shape") {
+                stringBuilder.append(s"        range: $shapeUnionDeclaration\n")
+              } else if (propertyMapping.range == "Settings") {
+                stringBuilder.append(s"        range: $settingsUnionDeclaration\n")
+              } else if (propertyMapping.range == "AbstractDeclaration") {
+                stringBuilder.append(s"        range:\n")
+                stringBuilder.append(abstractDeclarationsRange ++ "\n")
+              } else if (propertyMapping.range == "uri") {
+                stringBuilder.append(s"        range: link\n")
+              } else {
+                stringBuilder.append(s"        range: ${propertyMapping.range}\n")
+              }
+              if (propertyMapping.allowMultiple) {
+                stringBuilder.append(s"        allowMultiple: ${propertyMapping.allowMultiple}\n")
+              }
             }
           }
+          stringBuilder.append("\n\n")
         }
-        stringBuilder.append("\n\n")
-      }
     }
 
     stringBuilder.append("\n\n")
@@ -310,17 +309,20 @@ object CanonicalWebAPIDialectExporter {
     // TODO: union of declarations
     stringBuilder.append(declarations)
 
-    val effectiveExternals = externals.filter { case (p, b) =>
-      !WELL_KNOWN_VOCABULARIES.contains(b)
+    val effectiveExternals = externals.filter {
+      case (p, b) =>
+        !WELL_KNOWN_VOCABULARIES.contains(b)
     }
-    val effectiveVocabularies = externals.filter { case (p, b) =>
-      WELL_KNOWN_VOCABULARIES.contains(b)
-    } map { case (p, b) =>
-      p -> WELL_KNOWN_VOCABULARIES(b)
+    val effectiveVocabularies = externals.filter {
+      case (p, b) =>
+        WELL_KNOWN_VOCABULARIES.contains(b)
+    } map {
+      case (p, b) =>
+        p -> WELL_KNOWN_VOCABULARIES(b)
     }
 
-    val vocabularyDepedencies = "uses:\n" ++ effectiveVocabularies.map { case (p, b) => s"  $p: $b\n" }.mkString ++ "\n"
-    val externalDependencies = "external:\n" ++ effectiveExternals.map { case (p, b) => s"  $p: $b\n" }.mkString ++ "\n"
+    val vocabularyDepedencies = "uses:\n" ++ effectiveVocabularies.map { case (p, b)  => s"  $p: $b\n" }.mkString ++ "\n"
+    val externalDependencies  = "external:\n" ++ effectiveExternals.map { case (p, b) => s"  $p: $b\n" }.mkString ++ "\n"
 
     header ++ vocabularyDepedencies ++ externalDependencies ++ "nodeMappings:\n\n" ++ stringBuilder.mkString
   }
@@ -333,8 +335,8 @@ object CanonicalWebAPIDialectExporter {
 
   def compact(url: String): (String, String, String) = {
     val compacted = Namespace.compact(url).replace(":", ".")
-    val prefix = compacted.split("\\.").head
-    val base = Namespace.ns(prefix).base
+    val prefix    = compacted.split("\\.").head
+    val base      = Namespace.ns(prefix).base
     (compacted, prefix, base)
   }
 

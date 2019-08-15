@@ -124,7 +124,10 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
         case r: Response if r.linkTarget.isDefined => (r.id, r.annotations)
       }) match {
         case Some((id, annotations)) =>
-          assertRangeElement(id, annotations, PositionRange((19, 8), (20, 37)), Some(PositionRange((19, 16), (20, 37))))
+          assertRangeElement(id,
+                             annotations,
+                             PositionRange((19, 8), (20, 37)),
+                             Some(PositionRange((19, 16), (20, 37))))
         case None => fail("Any response with target found")
       }
       succeed
@@ -167,7 +170,10 @@ class SourceNodeAnnotationTest extends AsyncFunSuite with CompilerTestBuilder wi
           (serialization.id, serialization.annotations)
       }) match {
         case Some((id, annotations)) =>
-          assertRangeElement(id, annotations, PositionRange((12, 0), (13, 21)), Some(PositionRange((10, 12), (13, 21))))
+          assertRangeElement(id,
+                             annotations,
+                             PositionRange((12, 0), (13, 21)),
+                             Some(PositionRange((10, 12), (13, 21))))
         case None => fail("Any response declared found")
       }
       succeed

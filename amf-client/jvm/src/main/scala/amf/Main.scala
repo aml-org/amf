@@ -33,7 +33,7 @@ object Main extends PlatformSecrets {
           case Some(ParserConfig.REPL)      => runRepl()
           case Some(ParserConfig.TRANSLATE) => Await.result(runTranslate(cfg), 1 day)
           case Some(ParserConfig.VALIDATE)  => Await.result(runValidate(cfg), 1 day)
-          case Some(ParserConfig.PARSE)     => {
+          case Some(ParserConfig.PARSE) => {
 
             val f = runParse(cfg)
             val ff = f.transform { r =>
@@ -45,8 +45,8 @@ object Main extends PlatformSecrets {
             }
             Await.ready(ff, 1 day)
           }
-          case Some(ParserConfig.PATCH)     => Await.ready(runPatch(cfg), 1 day)
-          case _                            => failCommand()
+          case Some(ParserConfig.PATCH) => Await.ready(runPatch(cfg), 1 day)
+          case _                        => failCommand()
         }
       case _ => System.exit(ExitCodes.WrongInvocation)
     }

@@ -110,7 +110,7 @@ object CmdLineParser {
           }
       }
 
-   cmd("translate")
+    cmd("translate")
       .text("Translates the input file into a different format")
       .action((_, c) => c.copy(mode = Some(ParserConfig.TRANSLATE)))
       .children {
@@ -150,14 +150,14 @@ object CmdLineParser {
       }
 
     cmd("patch")
-        .text("Apply a AML patch")
-        .action((_,c) => c.copy(mode = Some(ParserConfig.PATCH)))
-        .children {
-          opt[String]("patch-target")
-            .abbr("tg")
-            .text("Location of the file being patched")
-            .action((f,c) => c.copy(patchTarget = Some(f)))
-        }
+      .text("Apply a AML patch")
+      .action((_, c) => c.copy(mode = Some(ParserConfig.PATCH)))
+      .children {
+        opt[String]("patch-target")
+          .abbr("tg")
+          .text("Location of the file being patched")
+          .action((f, c) => c.copy(patchTarget = Some(f)))
+      }
 
     cmd("validate")
       .text("Validates the spec and generates the validation report")

@@ -28,9 +28,8 @@ trait RamlDatatypeSerializer {
   /** Generates a new RAML Data Type included in RAML 1.0 Library. */
   protected def generateRamlDatatype(element: AnyShape): String = {
     AMFSerializer.init()
-    val ramlDatatype = RuntimeSerializer(Module().withDeclaredElement(fixNameIfNeeded(element)),
-                                         "application/raml",
-                                         Raml10.name)
+    val ramlDatatype =
+      RuntimeSerializer(Module().withDeclaredElement(fixNameIfNeeded(element)), "application/raml", Raml10.name)
     element.annotations.reject(_.isInstanceOf[ParsedRamlDatatype])
     element.annotations.reject(_.isInstanceOf[GeneratedRamlDatatype])
     element.annotations += GeneratedRamlDatatype(ramlDatatype)

@@ -50,10 +50,11 @@ object CanonicalWebAPITransformer extends PlatformSecrets {
     findWebAPIDialect match {
       case Some(webApiDialect) =>
         val nodeMappings = webApiDialect.declares.collect { case mapping: NodeMapping => mapping }
-        nodeMappings.foldLeft(Map[String,String]()) { case (acc, mapping) =>
-          acc + (mapping.nodetypeMapping.value() -> mapping.id)
+        nodeMappings.foldLeft(Map[String, String]()) {
+          case (acc, mapping) =>
+            acc + (mapping.nodetypeMapping.value() -> mapping.id)
         }
-      case None                =>
+      case None =>
         throw new Exception("Cannot find WebAPI 1.0 Dialect in Dialect registry")
     }
   }
@@ -66,15 +67,18 @@ object CanonicalWebAPITransformer extends PlatformSecrets {
     * @return Equivalent Canonical WebAPI AML dialect instance
     */
   protected def cleanAMFModel(unit: BaseUnit): BaseUnit = {
-    val mapping = buildCanonicalClassMapping
-    val model = unit.toNativeRdfModel()
+    val mapping     = buildCanonicalClassMapping
+    val model       = unit.toNativeRdfModel()
     val nativeModel = model.native().asInstanceOf[Model]
 
     // First update document to DialectInstance document
-    val doc = nativeModel.listSubjectsWithProperty(
-      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-      nativeModel.createResource((Namespace.Document + "Document").iri())
-    ).next().getURI
+    val doc = nativeModel
+      .listSubjectsWithProperty(
+        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+        nativeModel.createResource((Namespace.Document + "Document").iri())
+      )
+      .next()
+      .getURI
     nativeModel.add(
       nativeModel.createResource(doc),
       nativeModel.createProperty((Namespace.Rdf + "type").iri()),
@@ -87,7 +91,7 @@ object CanonicalWebAPITransformer extends PlatformSecrets {
           nativeModel.createProperty((Namespace.Meta + "definedBy").iri()),
           nativeModel.createResource(dialect.id)
         )
-      case None          => //ignore
+      case None => //ignore
     }
 
     // Find all domain elements
@@ -127,17 +131,18 @@ object CanonicalWebAPITransformer extends PlatformSecrets {
     }
 
     // Add the dialect domain element and right mapped node mapping type in the model
-    domainElementsMapping.foreach { case (domainElement, nodeMapping) =>
-      nativeModel.add(
-        nativeModel.createResource(domainElement),
-        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-        nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
-      )
-      nativeModel.add(
-        nativeModel.createResource(domainElement),
-        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-        nativeModel.createResource(nodeMapping)
-      )
+    domainElementsMapping.foreach {
+      case (domainElement, nodeMapping) =>
+        nativeModel.add(
+          nativeModel.createResource(domainElement),
+          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+          nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
+        )
+        nativeModel.add(
+          nativeModel.createResource(domainElement),
+          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+          nativeModel.createResource(nodeMapping)
+        )
     }
 
     new RdfModelParser(platform)(ParserContext()).parse(model, unit.id)

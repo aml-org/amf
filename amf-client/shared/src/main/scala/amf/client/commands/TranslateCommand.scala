@@ -48,7 +48,7 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
             AMLPlugin.registry.dialectFor(dialectInstance) match {
               case Some(dialect) =>
                 ProfileName(dialect.nameAndVersion())
-              case _             =>
+              case _ =>
                 config.profile
             }
           case _ =>
