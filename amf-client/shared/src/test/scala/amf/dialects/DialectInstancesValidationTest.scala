@@ -99,13 +99,15 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
     validate("dialect10.raml", "instance10_correct1.raml", 0)
   }
 
-  test("validation dialect 10 example 1 incorrect - Dialect ID in comment (instead of key)") {
+  // TODO: un-ignore when AML re-implements the validation
+  ignore("validation dialect 10 example 1 incorrect - Dialect ID in comment (instead of key)") {
     recoverToSucceededIf[Exception] { // Unknown type of dialect header
       validate("dialect10.raml", "instance10_incorrect1.raml", 0)
     }
   }
 
-  test("validation dialect 10 example 2 incorrect - Dialect ID in both key and comment") {
+  // TODO: un-ignore when AML re-implements the validation
+  ignore("validation dialect 10 example 2 incorrect - Dialect ID in both key and comment") {
     validate("dialect9.raml", "instance9_correct1.raml", 0).flatMap(_ =>
       validate("dialect10.raml", "instance10_incorrect2.raml", 2))
     // 1st error -> Dialect 9 defined in Header and Dialect 10 as key (validation and parse Dialect 9 as fallback)
