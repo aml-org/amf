@@ -6,6 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
 import amf.core.traversal.ModelTraversalRegistry
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization._
@@ -21,7 +22,8 @@ import scala.collection.mutable.ListBuffer
 class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean)(
     override implicit val errorHandler: ErrorHandler)
     extends ResolutionStage()
-    with MetaModelTypeMapping {
+    with MetaModelTypeMapping
+    with ElementResolutionStage[Shape] {
 
   protected var m: Option[BaseUnit] = None
   protected val context             = new NormalizationContext(errorHandler, keepEditingInfo, profile)
@@ -41,13 +43,12 @@ class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean
 
   protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
     element match {
-      case shape: Shape => Some(ShapeCanonizer(ShapeExpander(shape, context, recursionRegister), context))
+      case shape: Shape => transformer.transform(shape)
       case other        => Some(other)
     }
   }
 
-  private val recursionRegister = RecursionErrorRegister()
-
+  override def transformer: ElementStageTransformer[Shape] = new ShapeTransformer(context)
 }
 
 private[stages] case class RecursionErrorRegister() {
