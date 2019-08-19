@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.core.annotations.Aliases
+import amf.core.metamodel.document.BaseUnitModel
 import amf.core.metamodel.domain.{ModelVocabularies, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.vocabulary.Namespace
@@ -105,7 +106,6 @@ object RAML10Dialect {
         .withId(DialectLocation + s"#/declarations/$nodeId/DataType/examples")
         .withName("examples")
         .withNodePropertyMapping(AnyShapeModel.Examples.value.iri())
-        .withMapTermKeyProperty(ExampleModel.Name.value.iri())
         .withObjectRange(Seq(
           ExampleNode.id
         )),
@@ -319,7 +319,6 @@ object RAML10Dialect {
       .withName("ExampleNode")
       .withNodeTypeMapping(ExampleModel.`type`.head.iri())
       .withPropertiesMapping(Seq(
-
         PropertyMapping()
           .withId(DialectLocation + s"#/declarations/ExampleNode/displayName")
           .withName("displayName")
@@ -328,7 +327,7 @@ object RAML10Dialect {
 
         PropertyMapping()
           .withId(DialectLocation + s"#/declarations/ExampleNode/description")
-          .withName("displayName")
+          .withName("description")
           .withNodePropertyMapping(ExampleModel.Description.value.iri())
           .withLiteralRange(xsdString.iri()),
 
@@ -397,7 +396,11 @@ object RAML10Dialect {
       .withName("ResourceTypeNode")
       .withNodeTypeMapping(ResourceTypeModel.`type`.head.iri())
       .withPropertiesMapping(Seq(
-
+        PropertyMapping()
+          .withId(DialectLocation + s"#/declarations/ResourceTypeNode/usage")
+          .withName("usage")
+          .withNodePropertyMapping(BaseUnitModel.Usage.value.iri())
+          .withLiteralRange(xsdString.iri())
       ))
 
     val TraitNode = NodeMapping()
@@ -674,7 +677,7 @@ object RAML10Dialect {
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/RootNode/mediaType")
           .withName("mediaType")
-          .withNodePropertyMapping(WebApiModel.ContentType.value.iri())
+          .withNodePropertyMapping(WebApiModel.Accepts.value.iri())
           .withLiteralRange(xsdString.iri()),
 
         PropertyMapping()
