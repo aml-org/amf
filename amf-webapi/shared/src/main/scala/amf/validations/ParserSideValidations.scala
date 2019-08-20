@@ -454,6 +454,11 @@ object ParserSideValidations extends Validations {
     "User defined facet name matches ancestor type facet"
   )
 
+  val SlashInUriParameterValues = validation(
+    "slash-in-uri-parameter-value",
+    "Values of uri parameter must not contain '/' character"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     OasBodyAndFormDataParameterSpecification.id -> Map(
       OasProfile   -> VIOLATION,
@@ -581,6 +586,7 @@ object ParserSideValidations extends Validations {
     InvalidPayload,
     InvalidValueInPropertiesFacet,
     InvalidUserDefinedFacetName,
-    MissingRequiredUserDefinedFacet
+    MissingRequiredUserDefinedFacet,
+    SlashInUriParameterValues
   )
 }

@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Strings, TemplateUri}
 import amf.plugins.document.webapi.contexts.{
@@ -14,13 +14,20 @@ import amf.plugins.document.webapi.contexts.{
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
+import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
-import amf.plugins.domain.webapi.metamodel.EndPointModel
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
-import amf.validations.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, UnusedBaseUriParameter}
+import amf.validations.ParserSideValidations.{
+  DuplicatedEndpointPath,
+  InvalidEndpointPath,
+  SlashInUriParameterValues,
+  UnusedBaseUriParameter
+}
 import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
+import amf.core.model.domain.{AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 
 import scala.collection.mutable
 
@@ -148,10 +155,17 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       case Some(e) =>
         annotations = Annotations(e.value)
 
-        val explicitParameters =
-          RamlParametersParser(e.value.as[YMap], (p: Parameter) => p.adopted(endpoint.id))
-            .parse()
-            .map(_.withBinding("path"))
+        val explicitParameters = e.value
+          .as[YMap]
+          .entries
+          .map(entry => {
+            val param = ctx.factory
+              .parameterParser(entry, (p: Parameter) => p.adopted(endpoint.id), false)
+              .parse()
+              .withBinding("path")
+            param.fields ? [Shape] ParameterModel.Schema foreach (schema => validateSlashsInSchema(schema, entry))
+            param
+          })
 
         implicitPathParamsOrdered(endpoint,
                                   isResourceType,
@@ -213,6 +227,28 @@ abstract class RamlEndpointParser(entry: YMapEntry,
         }
       }
     )
+  }
+
+  private def validateSlashsInSchema(shape: Shape, entry: YMapEntry): Unit = {
+    //default values
+    Option(shape.default).foreach(validateSlashInDataNode(_, entry))
+    //enum values
+    shape.values.foreach(value => validateSlashInDataNode(value, entry))
+    //example values
+    shape match {
+      case scalar: ScalarShape =>
+        scalar.examples.foreach(example => Option(example.structuredValue).foreach(validateSlashInDataNode(_, entry)))
+      case _ =>
+    }
+  }
+
+  private def validateSlashInDataNode(node: DataNode, entry: YMapEntry): Unit = node match {
+    case scalar: ScalarDataNode if scalar.value.option().exists(_.contains('/')) =>
+      ctx.violation(SlashInUriParameterValues,
+                    node.id,
+                    s"Value '${scalar.value.value()}' of uri parameter must not contain '/' character",
+                    entry.value)
+    case _ =>
   }
 
   private def implicitPathParamsOrdered(endpoint: EndPoint,

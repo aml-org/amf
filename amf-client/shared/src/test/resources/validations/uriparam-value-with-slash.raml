@@ -1,0 +1,45 @@
+#%RAML 1.0
+title: validating uri parameter values
+
+/default/invalid/{userId}:
+   uriParameters:
+     userId:
+       default: "invalid/value-default"
+
+/in-enum/invalid/{userId}:
+   uriParameters:
+     userId:
+       enum: ["a3-34-3", "invalid/value-enums"]
+
+/in-example/invalid/{userId}:
+   uriParameters:
+     userId:
+       example: "invalid/value-example"
+
+/in-examples/invalid/{userId}:
+   uriParameters:
+     userId:
+       examples:
+         whatever: "invalid/value-examples"
+
+
+/default/valid/{userId}:
+   uriParameters:
+     userId:
+       default: "value"
+
+/in-enum/valid/{userId}:
+   uriParameters:
+     userId:
+       enum: ["a3-34-3", "sfddf3"]
+
+/in-example/valid/{userId}:
+   uriParameters:
+     userId:
+       example: "value"
+
+/in-examples/valid/{userId}:
+   uriParameters:
+     userId:
+       examples:
+         whatever: "value"
