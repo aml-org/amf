@@ -1,7 +1,6 @@
 package amf.dialects
 
 import amf.core.annotations.Aliases
-import amf.core.metamodel.document.DocumentModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.metamodel.domain.{ModelVocabularies, ShapeModel}
 import amf.core.vocabulary.Namespace
@@ -11,7 +10,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.metamodel.security.{ApiKeySettingsModel, OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
+import amf.plugins.domain.webapi.metamodel.security._
 
 object OAS20Dialect {
 
@@ -26,6 +25,22 @@ object OAS20Dialect {
 
   // Recursive, we need this to be able to refer to ourselves
   val SchemaObjectId = "#/declarations/SchemaObject"
+
+  val shapesPropertyMapping: PropertyMapping = PropertyMapping()
+    .withId(DialectLocation + "#/declarations/ParameterObject/Shape/type")
+    .withName("type")
+    .withMinCount(1)
+    .withEnum(Seq(
+      "string",
+      "number",
+      "integer",
+      "boolean",
+      "array",
+      "object",
+      "file"
+    ))
+    .withNodePropertyMapping(ImplicitField)
+    .withLiteralRange(xsdString.iri())
 
   // Nodes
   object DialectNodes {
@@ -293,20 +308,7 @@ object OAS20Dialect {
           .withNodePropertyMapping(ParameterModel.Binding.value.iri())
           .withLiteralRange(xsdString.iri()),
 
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/ParameterObject/Shape/type")
-          .withName("type")
-          .withMinCount(1)
-          .withEnum(Seq(
-            "string",
-            "number",
-            "integer",
-            "boolean",
-            "array",
-            "file"
-          ))
-          .withNodePropertyMapping(ImplicitField)
-          .withLiteralRange(xsdString.iri()),
+        shapesPropertyMapping,
 
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/ParameterObject/format")
@@ -367,7 +369,6 @@ object OAS20Dialect {
           .withObjectRange(Seq(
             ExampleObject.id
           ))
-
       ))
 
     val SchemaObject = NodeMapping()
@@ -524,31 +525,36 @@ object OAS20Dialect {
 
       ))
 
+    val commonSecuritySchemeProperties = Seq(
+      PropertyMapping()
+        .withId(DialectLocation + "#/declarations/securityScheme/type")
+        .withName("type")
+        .withMinCount(1)
+        .withNodePropertyMapping(SecuritySchemeModel.Type.value.iri())
+        .withEnum(Seq(
+          "basic",
+          "apiKey",
+          "oauth2"
+        ))
+        .withLiteralRange(xsdString.iri()),
+      PropertyMapping()
+        .withId(DialectLocation + "#/declarations/securityScheme/description")
+        .withName("description")
+        .withNodePropertyMapping(SecuritySchemeModel.Description.value.iri())
+        .withLiteralRange(xsdString.iri())
+    )
+    val SecuritySchemeNode = NodeMapping()
+      .withId("#/declarations/Security")
+      .withName("SecuritySchemeNode")
+      .withNodeTypeMapping(SecuritySchemeModel.`type`.head.iri())
+      .withPropertiesMapping(commonSecuritySchemeProperties)
+
     val ApiKeySecuritySchemeObject = NodeMapping()
       .withId("#/declarations/ApiKeySecurityScheme")
       .withName("ApiKeySecurityScheme")
-      .withNodeTypeMapping(ParametrizedSecuritySchemeModel.`type`.head.iri())
-      .withPropertiesMapping(Seq(
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/ApiKeySecurityScheme/name")
-          .withName("schemeName")
-          .withMinCount(1)
-          .withNodePropertyMapping(ParametrizedSecuritySchemeModel.Name.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/ApiKeySecurityScheme/type")
-          .withName("type")
-          .withMinCount(1)
-          .withNodePropertyMapping(ParametrizedSecuritySchemeModel.Scheme.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/ApiKeySecurityScheme/description")
-          .withName("description")
-          .withNodePropertyMapping(ParametrizedSecuritySchemeModel.Description.value.iri())
-          .withLiteralRange(xsdString.iri()),
+      .withNodeTypeMapping(ApiKeySettingsModel.`type`.head.iri())
+      .withPropertiesMapping(
+        commonSecuritySchemeProperties ++ Seq(
 
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/ApiKeySecurityScheme/Settings/Name")
@@ -573,41 +579,22 @@ object OAS20Dialect {
     val Oauth2SecuritySchemeObject = NodeMapping()
       .withId("#/declarations/Oauth2SecurityScheme")
       .withName("Oauth2SecurityScheme")
-      .withNodeTypeMapping(ParametrizedSecuritySchemeModel.`type`.head.iri())
-      .withPropertiesMapping(Seq(
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/name")
-          .withName("name")
-          .withMinCount(1)
-          .withNodePropertyMapping(ParametrizedSecuritySchemeModel.Name.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/description")
-          .withName("description")
-          .withNodePropertyMapping(ParametrizedSecuritySchemeModel.Description.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/Oauth2Securit/type")
-          .withName("type")
-          .withMinCount(1)
-          .withNodePropertyMapping(ParametrizedSecuritySchemeModel.Scheme.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/flow")
-          .withName("flow")
-          .withMinCount(1)
-          .withNodePropertyMapping(OAuth2SettingsModel.Flow.value.iri())
-          .withEnum(Seq(
-            "implicit",
-            "password",
-            "application",
-            "accessCode"
-          ))
-          .withLiteralRange(xsdString.iri()),
+      .withNodeTypeMapping(OAuth2SettingsModel.`type`.head.iri())
+      .withPropertiesMapping(
+        commonSecuritySchemeProperties ++
+        Seq(
+          PropertyMapping()
+            .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/flow")
+            .withName("flow")
+            .withMinCount(1)
+            .withNodePropertyMapping(OAuth2SettingsModel.Flow.value.iri())
+            .withEnum(Seq(
+              "implicit",
+              "password",
+              "application",
+              "accessCode"
+            ))
+            .withLiteralRange(xsdString.iri()),
 
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/authorizationUrl")
@@ -625,37 +612,9 @@ object OAS20Dialect {
           .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/scopes")
           .withName("scopes")
           .withNodePropertyMapping(OAuth2SettingsModel.Scopes.value.iri())
-          .withMapKeyProperty(ScopeModel.Name.value.iri())
-          .withMapKeyProperty(ScopeModel.Description.value.iri())
+          .withMapTermKeyProperty(ScopeModel.Name.value.iri())
+          .withMapTermValueProperty(ScopeModel.Description.value.iri())
           .withObjectRange(Seq(ScopeObject.id))
-
-      ))
-
-    val BasicSecuritySchemeObject = NodeMapping()
-      .withId("#/declarations/BasicSecurityScheme")
-      .withName("BasicSecurityScheme")
-      .withNodeTypeMapping(ParametrizedSecuritySchemeModel.`type`.head.iri())
-      .withPropertiesMapping(Seq(
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/BasicSecurityScheme/name")
-          .withName("schemeName")
-          .withMinCount(1)
-          .withNodePropertyMapping(ParametrizedSecuritySchemeModel.Name.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/BasicSecurityScheme/type")
-          .withName("type")
-          .withMinCount(1)
-          .withNodePropertyMapping(ParametrizedSecuritySchemeModel.Scheme.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/BasicSecurityScheme/description")
-          .withName("description")
-          .withNodePropertyMapping(ParametrizedSecuritySchemeModel.Description.value.iri())
-          .withLiteralRange(xsdString.iri())
 
       ))
 
@@ -728,7 +687,7 @@ object OAS20Dialect {
           .withName("responses")
           .withNodePropertyMapping(OperationModel.Responses.value.iri())
           .withMinCount(1)
-          .withMapKeyProperty(ResponseModel.StatusCode.value.iri())
+          .withMapTermKeyProperty(ResponseModel.StatusCode.value.iri())
           .withObjectRange(Seq(
             ResponseObject.id
           )),
@@ -752,15 +711,8 @@ object OAS20Dialect {
           .withName("security")
           .withNodePropertyMapping(OperationModel.Security.value.iri())
           .withAllowMultiple(true)
-          .withMapKeyProperty(ParametrizedSecuritySchemeModel.Name.value.iri())
-          .withTypeDiscriminatorName("type")
-          .withTypeDiscriminator(Map(
-            BasicSecuritySchemeObject.id -> "basic",
-            ApiKeySecuritySchemeObject.id -> "apiKey",
-            Oauth2SecuritySchemeObject.id -> "oauth2"
-          ))
           .withObjectRange(Seq(
-            BasicSecuritySchemeObject.id,
+            SecuritySchemeNode.id,
             ApiKeySecuritySchemeObject.id,
             Oauth2SecuritySchemeObject.id
           ))
@@ -987,28 +939,11 @@ object OAS20Dialect {
           .withLiteralRange(xsdString.iri()),
 
         PropertyMapping()
-          .withId(DialectLocation + "#/declarations/InfoObject/securityDefinitions")
-          .withName("securityDefinitions")
-          .withNodePropertyMapping(DocumentModel.Declares.value.iri())
-          .withAllowMultiple(true)
-          .withMapKeyProperty(ParametrizedSecuritySchemeModel.Name.value.iri())
-          .withTypeDiscriminatorName("type")
-          .withTypeDiscriminator(Map(
-            BasicSecuritySchemeObject.id -> "basic",
-            ApiKeySecuritySchemeObject.id -> "apiKey",
-            Oauth2SecuritySchemeObject.id -> "oauth2"
-          ))
-          .withObjectRange(Seq(
-            BasicSecuritySchemeObject.id,
-            ApiKeySecuritySchemeObject.id,
-            Oauth2SecuritySchemeObject.id
-          )),
-
-        PropertyMapping()
           .withId(DialectLocation + "#/declarations/security")
           .withName("security")
           .withNodePropertyMapping(WebApiModel.Security.value.iri())
-          .withLiteralRange(amlAnyNode.iri()),
+          .withAllowMultiple(true)
+          .withLiteralRange(xsdString.iri()),
 
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/WebAPIObject/paths")
@@ -1019,6 +954,14 @@ object OAS20Dialect {
           .withAllowMultiple(true)
           .withObjectRange(Seq(
             PathItemObject.id
+          )),
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/WebAPIObject/tags")
+          .withName("tags")
+          .withNodePropertyMapping(WebApiModel.Tags.value.iri())
+          .withAllowMultiple(true)
+          .withObjectRange(Seq(
+            TagObject.id
           ))
 
       ))
@@ -1038,7 +981,7 @@ object OAS20Dialect {
         DialectNodes.WebAPIObject,
         DialectNodes.InfoObject,
         DialectNodes.BodyParameterObject,
-        DialectNodes.BasicSecuritySchemeObject,
+        DialectNodes.SecuritySchemeNode,
         DialectNodes.LicenseObject,
         DialectNodes.SchemaObject,
         DialectNodes.ParameterObject,
@@ -1075,7 +1018,11 @@ object OAS20Dialect {
                 PublicNodeMapping()
                   .withId(DialectLocation + "#/documents/responses")
                   .withName("responses")
-                  .withMappedNode(DialectNodes.ResponseObject.id)
+                  .withMappedNode(DialectNodes.ResponseObject.id),
+                PublicNodeMapping()
+                  .withId(DialectLocation + "#/documents/securityDefinitions")
+                  .withName("securityDefinitions")
+                  .withMappedNode("#/declarations/BasicSecurityScheme")
               ))
           )
       )
