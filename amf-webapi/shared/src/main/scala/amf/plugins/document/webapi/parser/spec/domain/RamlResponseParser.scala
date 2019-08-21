@@ -160,8 +160,13 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
           }
         )
 
-        val examples = OasResponseExamplesParser("examples".asRamlAnnotation, map).parse()
-        if (examples.nonEmpty) res.set(ResponseModel.Examples, AmfArray(examples))
+        map.key(
+          "examples".asRamlAnnotation,
+          entry => {
+            val examples = OasResponseExamplesParser(entry).parse()
+            res.set(ResponseModel.Examples, AmfArray(examples, Annotations(entry.value)), Annotations(entry))
+          }
+        )
 
         ctx.closedShape(res.id, map, "response")
 

@@ -27,17 +27,13 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-case class OasResponseExamplesParser(key: String, map: YMap)(implicit ctx: WebApiContext) {
+case class OasResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiContext) {
   def parse(): Seq[Example] = {
     val results = ListBuffer[Example]()
-    map
-      .key(key)
-      .foreach(entry => {
-        entry.value
-          .as[YMap]
-          .regex(".*/.*")
-          .map(e => results += OasResponseExampleParser(e).parse())
-      })
+    entry.value
+      .as[YMap]
+      .regex(".*/.*")
+      .map(e => results += OasResponseExampleParser(e).parse())
 
     results
   }

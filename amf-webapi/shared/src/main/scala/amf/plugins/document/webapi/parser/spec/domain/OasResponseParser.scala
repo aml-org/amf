@@ -63,9 +63,16 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
         if (payloads.nonEmpty)
           res.set(ResponseModel.Payloads, AmfArray(payloads))
 
-        val examples = OasResponseExamplesParser("examples", map).parse()
-        if (examples.nonEmpty) res.set(ResponseModel.Examples, AmfArray(examples))
-        examples.foreach(_.annotations += TrackedElement(res.id))
+        map.key(
+          "examples",
+          entry => {
+            val examples = OasResponseExamplesParser(entry).parse()
+            if (examples.nonEmpty) {
+              examples.foreach(_.annotations += TrackedElement(res.id))
+            }
+            res.set(ResponseModel.Examples, AmfArray(examples, Annotations(entry.value)), Annotations(entry))
+          }
+        )
 
         AnnotationParser(res, map).parse()
 

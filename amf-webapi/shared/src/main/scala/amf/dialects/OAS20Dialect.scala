@@ -45,7 +45,7 @@ object OAS20Dialect {
   // Nodes
   object DialectNodes {
 
-    def commonDataShapesProperties(nodeId: String) = {
+    def commonDataShapesProperties(nodeId: String): Seq[PropertyMapping] = {
       Seq(
         PropertyMapping()
           .withId(DialectLocation +s"#/declarations/${nodeId}/format")
@@ -262,24 +262,49 @@ object OAS20Dialect {
 
       ))
 
+    val commonParamProps :Seq[PropertyMapping] = commonDataShapesProperties("#/declarations/ParameterObject/") ++ Seq(
+      PropertyMapping()
+        .withId(DialectLocation + "#/declarations/ParameterObject/name")
+        .withName("name")
+        .withMinCount(1)
+        .withNodePropertyMapping(ParameterModel.Name.value.iri())
+        .withLiteralRange(xsdString.iri()),
+      PropertyMapping()
+        .withId(DialectLocation + "#/declarations/ParameterObject/description")
+        .withName("description")
+        .withMinCount(1)
+        .withNodePropertyMapping(ParameterModel.Description.value.iri())
+        .withLiteralRange(xsdString.iri()))
+
+
+    val HeaderObject = NodeMapping()
+      .withId("#/declarations/HeaderObject")
+      .withName("HeaderObject")
+      .withNodeTypeMapping("http://HeaderObject/#mapping")
+      .withPropertiesMapping(commonParamProps ++ Seq(
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/ParameterObject/type")
+          .withName("type")
+          .withMinCount(1)
+          .withNodePropertyMapping(DialectLocation + "#/declarations/ParameterObject/type")
+          .withEnum(Seq(
+            "string",
+            "number",
+            "integer",
+            "boolean",
+            "array",
+            "file",
+          ))
+          .withLiteralRange(xsdString.iri())
+      ))
+
+
     val ParameterObject = NodeMapping()
       .withId("#/declarations/ParameterObject")
       .withName("ParameterObject")
       .withNodeTypeMapping(ParameterModel.`type`.head.iri())
-      .withPropertiesMapping(Seq(
+      .withPropertiesMapping(commonParamProps++Seq(
 
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/ParameterObject/name")
-          .withName("declarationName")
-          .withMinCount(1)
-          .withNodePropertyMapping(ParameterModel.Name.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/ParameterObject/description")
-          .withName("description")
-          .withNodePropertyMapping(ParameterModel.Description.value.iri())
-          .withLiteralRange(xsdString.iri()),
 
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/ParameterObject/required")
@@ -289,13 +314,6 @@ object OAS20Dialect {
           .withLiteralRange(xsdBoolean.iri()),
 
         PropertyMapping()
-          .withId(DialectLocation + "#/declarations/ParameterObject/parameterName")
-          .withName("name")
-          .withMinCount(1)
-          .withNodePropertyMapping(ParameterModel.ParameterName.value.iri())
-          .withLiteralRange(xsdString.iri()),
-
-        PropertyMapping()
           .withId(DialectLocation + "#/declarations/ParameterObject/binding")
           .withName("in")
           .withMinCount(1)
@@ -303,25 +321,15 @@ object OAS20Dialect {
             "query",
             "header",
             "path",
-            "formData"
+            "formData",
+            "body"
           ))
           .withNodePropertyMapping(ParameterModel.Binding.value.iri())
           .withLiteralRange(xsdString.iri()),
 
-        shapesPropertyMapping,
+      ))
 
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/ParameterObject/format")
-          .withName("format")
-          .withNodePropertyMapping(ScalarShapeModel.Format.value.iri())
-          .withLiteralRange(xsdString.iri()),
 
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/ParameterObject/allowEmptyValue")
-          .withName("allowEmptyValue")
-          .withNodePropertyMapping(ParameterModel.AllowEmptyValue.value.iri())
-          .withLiteralRange(xsdBoolean.iri())
-      ) ++ commonDataShapesProperties("ParameterObject"))
 
     val ResponseObject = NodeMapping()
       .withId("#/declarations/ResponseObject")
@@ -995,7 +1003,8 @@ object OAS20Dialect {
         DialectNodes.ExternalDocumentationObject,
         DialectNodes.OperationObject,
         DialectNodes.TagObject,
-        DialectNodes.XMLObject
+        DialectNodes.XMLObject,
+        DialectNodes.HeaderObject
       ))
       .withDocuments(
         DocumentsModel()

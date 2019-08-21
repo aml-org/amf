@@ -27,7 +27,8 @@ case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: Spec
 
   override def emit(b: EntryBuilder): Unit = {
     val examples = f.array.values.collect({ case e: Example => e })
-    b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering)(spec))), _)))
+    if (examples.nonEmpty)
+      b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering)(spec))), _)))
   }
 
   override def position(): Position = f.array.values.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
