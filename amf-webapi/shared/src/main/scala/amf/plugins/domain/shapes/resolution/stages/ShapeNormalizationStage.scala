@@ -1,14 +1,14 @@
 package amf.plugins.domain.shapes.resolution.stages
 
 import amf.ProfileName
-import amf.core.metamodel.{MetaModelTypeMapping, Obj}
+import amf.core.metamodel.MetaModelTypeMapping
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.resolution.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
+import amf.core.resolution.stages.selectors.ShapeSelector
 import amf.core.traversal.ModelTraversalRegistry
-import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.resolution.stages.shape_normalization._
 import amf.plugins.features.validation.CoreValidations.RecursiveShapeSpecification
 
@@ -30,15 +30,7 @@ class ShapeNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean
 
   override def resolve[T <: BaseUnit](model: T): T = {
     m = Some(model)
-    model.transform(findShapesPredicate, transform).asInstanceOf[T]
-  }
-
-  def findShapesPredicate(element: DomainElement): Boolean = {
-    val metaModelFound: Obj = metaModel(element)
-    val targetIri           = (Namespace.Shapes + "Shape").iri()
-    metaModelFound.`type`.exists { t: ValueType =>
-      t.iri() == targetIri
-    }
+    model.transform(ShapeSelector, transform).asInstanceOf[T]
   }
 
   protected def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
