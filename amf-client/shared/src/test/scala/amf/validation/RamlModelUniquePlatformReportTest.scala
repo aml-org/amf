@@ -362,4 +362,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("uriparam-value-with-slash.raml", Some("uriparam-value-with-slash.report"))
   }
 
+  test("Type datetime format with restricted values") {
+    validate("datetime-format-value/datetime-format-values.raml", Some("datetime-format-values.report"))
+  }
+
 }
