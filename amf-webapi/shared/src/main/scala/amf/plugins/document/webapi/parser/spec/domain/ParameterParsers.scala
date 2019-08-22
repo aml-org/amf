@@ -457,7 +457,7 @@ case class OasParameterParser(entryOrNode: Either[YMapEntry, YNode],
             ctx.parseRemoteOasParameter(fullRef, parentId)(toJsonSchema(ctx)) match {
               case Some(oasParameter) => oasParameter
               case _ =>
-                val parameter = Parameter()
+                val parameter = Parameter(ref)
                 setName(parameter)
                 parameter.adopted(parentId)
                 ctx.violation(UnresolvedParameter,
