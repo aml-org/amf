@@ -20,7 +20,7 @@ pipeline {
       when {
         anyOf {
           branch 'master'
-          branch 'develop'
+//          branch 'develop'
         }
       }
       steps {
