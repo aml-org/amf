@@ -423,7 +423,8 @@ private[shape_normalization] trait RestrictionComputation {
             "Resolution error: sub type has a weaker constraint for minItems than base type for minItems",
             Some(ArrayShapeModel.MinItems.value.iri()),
             derivedValue.location(),
-            derivedValue.position()
+            derivedValue.position(),
+            isViolation = true
           )
         }
 

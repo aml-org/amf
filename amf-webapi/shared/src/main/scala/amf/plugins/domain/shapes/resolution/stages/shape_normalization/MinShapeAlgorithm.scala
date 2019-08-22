@@ -23,7 +23,8 @@ import scala.collection.mutable
 class InheritanceIncompatibleShapeError(val message: String,
                                         val property: Option[String] = None,
                                         val location: Option[String] = None,
-                                        val position: Option[LexicalInformation] = None)
+                                        val position: Option[LexicalInformation] = None,
+                                        val isViolation: Boolean = false)
     extends Exception(message)
 
 private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationContext) extends RestrictionComputation {
@@ -153,14 +154,25 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
       }
     } catch {
       case e: InheritanceIncompatibleShapeError =>
-        context.errorHandler.warning(
-          InvalidTypeInheritanceWarningSpecification,
-          derivedShape.id,
-          e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
-          e.getMessage,
-          e.position.orElse(derivedShape.position()),
-          e.location.orElse(derivedShape.location())
-        )
+        if (e.isViolation) {
+          context.errorHandler.violation(
+            InvalidTypeInheritanceErrorSpecification,
+            derivedShape.id,
+            e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
+            e.getMessage,
+            e.position.orElse(derivedShape.position()),
+            e.location.orElse(derivedShape.location())
+          )
+        } else {
+          context.errorHandler.warning(
+            InvalidTypeInheritanceWarningSpecification,
+            derivedShape.id,
+            e.property.orElse(Some(ShapeModel.Inherits.value.iri())),
+            e.getMessage,
+            e.position.orElse(derivedShape.position()),
+            e.location.orElse(derivedShape.location())
+          )
+        }
         derivedShape
     }
   }

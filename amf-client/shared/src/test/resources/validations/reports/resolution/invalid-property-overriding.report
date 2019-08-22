@@ -1,14 +1,22 @@
 Model: file://amf-client/shared/src/test/resources/validations/types/invalid-property-overriding.raml
 Profile: RAML 1.0
-Conforms? true
-Number of results: 1
+Conforms? false
+Number of results: 2
 
-Level: Warning
+Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance-warning
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
   Message: Resolution error: sub type has a weaker constraint for minItems than base type for minItems
-  Level: Warning
+  Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/types/invalid-property-overriding.raml#/declarations/types/Type2/property/p2
   Property: http://www.w3.org/ns/shacl#minCount
-  Position: Some(LexicalInformation([(13,6)-(13,17)]))
+  Position: Some(LexicalInformation([(13,6)-(15,0)]))
+  Location: file://amf-client/shared/src/test/resources/validations/types/invalid-property-overriding.raml
+
+- Source: http://a.ml/vocabularies/amf/resolution#invalid-type-inheritance
+  Message: Resolution error: sub type has a weaker constraint for minItems than base type for minItems
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/types/invalid-property-overriding.raml#/declarations/types/son/property/testProperty
+  Property: http://www.w3.org/ns/shacl#minCount
+  Position: Some(LexicalInformation([(18,8)-(22,0)]))
   Location: file://amf-client/shared/src/test/resources/validations/types/invalid-property-overriding.raml

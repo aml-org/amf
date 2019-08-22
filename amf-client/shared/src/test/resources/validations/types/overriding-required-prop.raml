@@ -1,0 +1,22 @@
+#%RAML 1.0
+title: Test API
+types:
+
+  Type1:
+    properties:
+      testProperty: string
+  Type2:
+    type: Type1
+    properties:
+      testProperty:
+        type: string
+        required: false
+
+  son:
+    type: father
+    properties:
+      name?: string
+
+  father:
+    properties:
+      name: string
