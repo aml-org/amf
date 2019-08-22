@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: json schema datetime
+
+types:
+  A: !include json-schema.json
+  B: |
+      {
+         "type": "string",
+         "format": "date-time"
+      }

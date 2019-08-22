@@ -10,6 +10,7 @@ import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.validation._
 import amf.core.validation.core.ValidationResult
 import amf.internal.environment.Environment
+import amf.validations.CustomShaclFunctions
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -72,7 +73,10 @@ case class ModelValidationStep(override val validationContext: ValidationContext
     }
     ExecutionLog.log("WebApiValidations#validationRequestsForBaseUnit: validating now WebAPI")
     RuntimeValidator
-      .shaclValidation(validationContext.baseUnit, validationContext.validations, options)
+      .shaclValidation(validationContext.baseUnit,
+                       validationContext.validations,
+                       CustomShaclFunctions.functions,
+                       options)
       .map { report =>
         report.results.flatMap { buildValidationResult }
       }

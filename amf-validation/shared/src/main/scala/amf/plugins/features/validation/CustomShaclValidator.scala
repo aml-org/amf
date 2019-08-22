@@ -1,14 +1,12 @@
 package amf.plugins.features.validation
 
-import java.util.regex.Pattern
-
 import amf.core.annotations.SourceAST
 import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, Value}
+import amf.core.parser.Annotations
+import amf.core.services.RuntimeValidator.{CustomShaclFunction, CustomShaclFunctions, PropertyInfo}
 import amf.core.services.ValidationOptions
-import amf.core.utils.RegexConverter
 import amf.core.validation.core._
 import amf.core.validation.{EffectiveValidations, SeverityLevels}
 import amf.core.vocabulary.Namespace
@@ -44,24 +42,29 @@ class CustomValidationReport(var rs: List[ValidationResult] = Nil) extends Valid
   }
 }
 
-class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, options: ValidationOptions) {
+class CustomShaclValidator(model: BaseUnit,
+                           validations: EffectiveValidations,
+                           customFunctions: CustomShaclFunctions,
+                           options: ValidationOptions) {
 
   var validationReport: CustomValidationReport = new CustomValidationReport(Nil)
 
   def run: Future[ValidationReport] = {
-    model.iterator().collect { case e: DomainElement => e }.foreach { found =>
-      validateIdentityTransformation(found)
+    model.iterator().foreach {
+      case e: DomainElement => validateIdentityTransformation(e)
+      case _                =>
     }
     Future(validationReport)
   }
 
   protected def validateIdentityTransformation(element: DomainElement): Unit = {
     validations.effective.foreach {
-      case (_, validationSpecification) =>
-        if (selectedNode(validationSpecification, element)) {
-          validate(validationSpecification, element)
+      case (_, specification) =>
+        val classes = element.meta.`type`.map(_.iri())
+        if (matchingClass(specification, classes) || matchingInstance(specification, element)) {
+          validate(specification, element)
         }
-        validateObjectsOf(validationSpecification, element)
+        validateObjectsOf(specification, element)
     }
   }
 
@@ -82,18 +85,12 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
     }
   }
 
-  protected def selectedNode(validationSpecification: ValidationSpecification, element: DomainElement): Boolean =
-    matchingClass(validationSpecification, element) || matchingInstance(validationSpecification, element)
-
-  protected def matchingClass(validationSpecification: ValidationSpecification, element: DomainElement): Boolean = {
-    val classes = element.meta.`type`.map(_.iri())
-    validationSpecification.targetClass.exists { cls =>
-      classes.contains(cls)
-    }
+  protected def matchingClass(specification: ValidationSpecification, classes: Seq[String]): Boolean = {
+    specification.targetClass.exists(classes.contains)
   }
 
-  protected def matchingInstance(validationSpecification: ValidationSpecification, element: DomainElement): Boolean =
-    validationSpecification.targetInstance.contains(element.id)
+  protected def matchingInstance(specification: ValidationSpecification, element: DomainElement): Boolean =
+    specification.targetInstance.contains(element.id)
 
   def findFieldTarget(element: DomainElement, property: String): Option[(Annotations, Seq[AmfElement])] = {
     element.meta.fields.find(_.value.iri() == property) match {
@@ -165,246 +162,23 @@ class CustomShaclValidator(model: BaseUnit, validations: EffectiveValidations, o
 
   def validateFunctionConstraint(validationSpecification: ValidationSpecification, element: DomainElement): Unit = {
     val functionConstraint = validationSpecification.functionConstraint.get
-    functionConstraint.internalFunction match {
-      case Some("minimumMaximumValidation") =>
-        val maybeMinInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("minInclusive")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
+    functionConstraint.internalFunction.foreach(name => {
+      val validationFunction = getFunctionForName(name)
+      // depending if propertyInfo is provided, violation is thrown at a given property, or by default on element
+      val onViolation = (propertyInfo: Option[PropertyInfo]) =>
+        propertyInfo match {
+          case Some((annot, field)) =>
+            reportFailure(validationSpecification, functionConstraint, element.id, annot, Some(field.toString))
+          case _ => reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
+      }
+      validationFunction(element, onViolation)
+    })
+  }
 
-        val maybeMaxInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("maxInclusive")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
-
-        if (maybeMaxInclusive.nonEmpty && maybeMinInclusive.nonEmpty) {
-          val minInclusive = maybeMinInclusive.get.value.toString.toDouble
-          val maxInclusive = maybeMaxInclusive.get.value.toString.toDouble
-          if (minInclusive > maxInclusive) {
-            reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-          }
-        }
-
-      case Some("pathParameterRequiredProperty") =>
-        val optBindingValue = element.fields
-          .fields()
-          .find { f =>
-            f.field.value.iri().endsWith("binding")
-          }
-          .map(field => field.value.value)
-          .collect { case AmfScalar(value, _) => value }
-
-        val optRequiredValue = element.fields
-          .fields()
-          .find { f =>
-            f.field.value.iri().endsWith("required")
-          }
-          .map(field => field.value.value)
-          .collect { case AmfScalar(value, _) => value }
-
-        (optBindingValue, optRequiredValue) match {
-          case (Some("path"), Some(false)) | (Some("path"), None) =>
-            reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-          case _ =>
-        }
-
-      case Some("fileParameterMustBeInFormData") =>
-        val optBindingValue = element.fields
-          .fields()
-          .find { f =>
-            f.field.value.iri().endsWith("binding")
-          }
-          .map(field => field.value.value)
-          .collect { case AmfScalar(value, _) => value }
-
-        val optSchemaValueIsFile = element.fields
-          .fields()
-          .find { f =>
-            f.field.value.iri().endsWith("schema")
-          }
-          .flatMap(field =>
-            field.value.value match {
-              case shape: Shape => Some(shape.ramlSyntaxKey == "fileShape")
-              case _            => None
-          })
-
-        optSchemaValueIsFile.foreach(
-          isFile =>
-            if (isFile && (optBindingValue.isEmpty || optBindingValue.get != "formData"))
-              reportFailure(validationSpecification, functionConstraint, element.id, element.annotations))
-
-      case Some("minMaxItemsValidation") =>
-        val maybeMinInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("minCount")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
-
-        val maybeMaxInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("maxCount")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
-
-        if (maybeMaxInclusive.nonEmpty && maybeMinInclusive.nonEmpty) {
-          val minInclusive = maybeMinInclusive.get.value.toString.toDouble
-          val maxInclusive = maybeMaxInclusive.get.value.toString.toDouble
-          if (minInclusive > maxInclusive) {
-            reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-          }
-        }
-      case Some("minMaxPropertiesValidation") =>
-        val maybeMinInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("minProperties")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
-
-        val maybeMaxInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("maxProperties")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
-
-        if (maybeMaxInclusive.nonEmpty && maybeMinInclusive.nonEmpty) {
-          val minInclusive = maybeMinInclusive.get.toString.toDouble
-          val maxInclusive = maybeMaxInclusive.get.toString.toDouble
-          if (minInclusive > maxInclusive) {
-            reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-          }
-        }
-
-      case Some("minMaxLengthValidation") =>
-        val maybeMinInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("minLength")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
-
-        val maybeMaxInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("maxLength")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
-
-        if (maybeMaxInclusive.nonEmpty && maybeMinInclusive.nonEmpty) {
-          val minInclusive = maybeMinInclusive.get.value.toString.toDouble
-          val maxInclusive = maybeMaxInclusive.get.value.toString.toDouble
-          if (minInclusive > maxInclusive) {
-            reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-          }
-        }
-
-      case Some("xmlWrappedScalar") =>
-        val isScalar = element.meta.`type`.exists(_.name == "ScalarShape")
-        if (isScalar) {
-          element.fields.fields().find { f =>
-            f.field.value.iri().endsWith("xmlSerialization")
-          } match {
-            case Some(f) =>
-              val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
-              xmlSerialization.fields
-                .fields()
-                .find(f => f.field.value.iri().endsWith("xmlWrapped"))
-                .foreach { isWrappedEntry =>
-                  val isWrapped = isWrappedEntry.scalar.toBool
-                  if (isWrapped) {
-                    reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-                  }
-                }
-            case None => // Nothing
-          }
-        }
-
-      case Some("xmlNonScalarAttribute") =>
-        element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("xmlSerialization")
-        } match {
-          case Some(f) =>
-            val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
-            xmlSerialization.fields
-              .fields()
-              .find(f => f.field.value.iri().endsWith("xmlAttribute"))
-              .foreach { isAttributeEntry =>
-                val isAttribute = isAttributeEntry.scalar.toBool
-                val isNonScalar = !element.meta.`type`.exists(_.name == "ScalarShape")
-                if (isAttribute && isNonScalar) {
-                  reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-                }
-              }
-          case None => // Nothing
-        }
-
-      case Some("patternValidation") =>
-        element.fields
-          .fields()
-          .find(_.field.value.iri().endsWith("pattern"))
-          .map(_.value.value.asInstanceOf[AmfScalar].toString)
-          .foreach { pattern =>
-            try Pattern.compile(pattern.convertRegex)
-            catch {
-              case _: Throwable =>
-                reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-            }
-          }
-
-      case Some("nonEmptyListOfProtocols") =>
-        val maybeValue = element.fields
-          .fields()
-          .find(_.field.value.iri().endsWith("scheme"))
-          .map(field => field.value)
-        maybeValue
-          .map(_.value)
-          .foreach {
-            case AmfArray(elements, _) if elements.isEmpty =>
-              reportFailure(
-                validationSpecification,
-                functionConstraint,
-                element.id,
-                maybeValue.map(_.annotations).getOrElse(Annotations()),
-                Some("http://a.ml/vocabularies/http#scheme")
-              )
-            case _ =>
-          }
-
-      case Some("datetimeFormatValue") =>
-        val typeValue = element.fields
-          .fields()
-          .find { f =>
-            f.field.value.iri().endsWith("datatype")
-          }
-          .map(field => field.value.value)
-          .collect { case AmfScalar(value, _) => value.toString }
-
-        val formatValue = element.fields
-          .fields()
-          .find { f =>
-            f.field.value.iri().endsWith("format")
-          }
-          .map(field => field.value.value)
-          .collect { case AmfScalar(value, _) => value.toString }
-
-        if (typeValue.exists(_.endsWith("dateTime"))) {
-          if (formatValue.isDefined && !formatValue.exists(format => format == "rfc3339" || format == "rfc2616")) {
-            reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
-          }
-        }
-      case Some(other) =>
-        throw new Exception(s"Custom function validations not supported in customm SHACL validator: $other")
-      case _ =>
-        throw new Exception(
-          s"Custom function validations not supported in customm SHACL validator: ${validationSpecification.id}")
-    }
+  def getFunctionForName(name: String): CustomShaclFunction = customFunctions.get(name) match {
+    case Some(validationFunction) => validationFunction
+    case None =>
+      throw new Exception(s"Custom function validations not supported in customm SHACL validator: $name")
   }
 
   def validateNodeConstraint(validationSpecification: ValidationSpecification,

@@ -8,6 +8,7 @@ import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
+import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.services.{RuntimeCompiler, RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
@@ -20,8 +21,6 @@ import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import org.yaml.model.YDocument.PartBuilder
-import org.yaml.model.YType
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -129,14 +128,16 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
 
   override def shaclValidation(model: BaseUnit,
                                validations: EffectiveValidations,
+                               customFunctions: CustomShaclFunctions,
                                options: ValidationOptions): Future[ValidationReport] =
-    if (options.isPartialValidation()) partialShaclValidation(model, validations, options)
+    if (options.isPartialValidation()) partialShaclValidation(model, validations, customFunctions, options)
     else fullShaclValidation(model, validations, options)
 
   def partialShaclValidation(model: BaseUnit,
                              validations: EffectiveValidations,
+                             customFunctions: CustomShaclFunctions,
                              options: ValidationOptions): Future[ValidationReport] =
-    new CustomShaclValidator(model, validations, options).run
+    new CustomShaclValidator(model, validations, customFunctions, options).run
 
   def fullShaclValidation(model: BaseUnit,
                           validations: EffectiveValidations,

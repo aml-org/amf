@@ -136,5 +136,9 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
     validate("/json-schema-space other/api.raml")
   }
 
+  test("JSON Schema with valid datetime format") {
+    validate("/date-time-format/api.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

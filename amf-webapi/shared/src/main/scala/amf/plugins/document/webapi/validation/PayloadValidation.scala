@@ -14,6 +14,7 @@ import amf.internal.environment.Environment
 import amf.plugins.document.webapi.contexts.PayloadContext
 import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
+import amf.validations.CustomShaclFunctions
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -42,7 +43,10 @@ case class ShaclPayloadValidation(validationCandidates: Seq[ValidationCandidate]
     }
 
     ExecutionLog.log(s"PayloadValidation#validate: Validating payload for ${validationCandidates.size} candidates")
-    RuntimeValidator.shaclValidation(bu, finalValidations, DefaultValidationOptions) map { report =>
+    RuntimeValidator.shaclValidation(bu,
+                                     finalValidations,
+                                     CustomShaclFunctions.functions,
+                                     options = DefaultValidationOptions) map { report =>
       val results = report.results
         .map(r => buildPayloadValidationResult(bu, r, finalValidations))
         .filter(_.isDefined)
