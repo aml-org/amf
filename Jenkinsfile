@@ -20,13 +20,13 @@ pipeline {
       when {
         anyOf {
           branch 'master'
-//          branch 'develop'
+          branch 'develop'
         }
       }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'sonarqube-official', passwordVariable: 'SONAR_SERVER_TOKEN', usernameVariable: 'SONAR_SERVER_URL']]) {
-            sh 'sbt sonar'
+            sh 'sbt -Dsonar.host.url=${SONAR_SERVER_URL} sonarScan'
           }
         }
       }

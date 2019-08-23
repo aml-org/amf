@@ -1,6 +1,7 @@
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
+import sbtsonar.SonarPlugin.autoImport.sonarProperties
 
 import scala.language.postfixOps
 import scala.sys.process._
@@ -20,10 +21,7 @@ lazy val sonarUrl = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
 lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")
 lazy val branch = sys.env.getOrElse("BRANCH_NAME", "develop")
 
-enablePlugins(SonarRunnerPlugin)
-
 sonarProperties ++= Map(
-  "sonar.host.url" -> sonarUrl,
   "sonar.login" -> sonarToken,
   "sonar.projectKey" -> "mulesoft.amf",
   "sonar.projectName" -> "AMF",
@@ -33,7 +31,7 @@ sonarProperties ++= Map(
   "sonar.github.repository" -> "mulesoft/amf",
   "sonar.branch.name" -> branch,
 
-  "sonar.scala.coverage.reportPaths" -> "amf-client/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-webapi/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-validation/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
+  "sonar.scala.scoverage.reportPath" -> "amf-client/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-webapi/jvm/target/scala-2.12/scoverage-report/scoverage.xml,amf-validation/jvm/target/scala-2.12/scoverage-report/scoverage.xml",
   "sonar.sources" -> "amf-client/shared/src/main/scala,amf-webapi/shared/src/main/scala,amf-validation/shared/src/main/scala"
 )
 
@@ -88,10 +86,10 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js"
-  )
+  ).disablePlugins(SonarPlugin)
 
 lazy val webapiJVM = webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(amfAmlJVMRef, amfAmlLibJVM)
-lazy val webapiJS  = webapi.js.in(file("./amf-webapi/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS)
+lazy val webapiJS  = webapi.js.in(file("./amf-webapi/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS).disablePlugins(SonarPlugin)
 
 /** **********************************************
   * AMF-Validation
@@ -116,10 +114,10 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
-  )
+  ).disablePlugins(SonarPlugin)
 
 lazy val validationJVM = validation.jvm.in(file("./amf-validation/jvm")).sourceDependency(amfAmlJVMRef, amfAmlLibJVM)
-lazy val validationJS  = validation.js.in(file("./amf-validation/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS)
+lazy val validationJS  = validation.js.in(file("./amf-validation/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS).disablePlugins(SonarPlugin)
 
 /** **********************************************
   * AMF Client
@@ -160,10 +158,10 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-client-module.js"
-  )
+  ).disablePlugins(SonarPlugin)
 
 lazy val clientJVM = client.jvm.in(file("./amf-client/jvm")).sourceDependency(amfAmlJVMRef, amfAmlLibJVM)
-lazy val clientJS  = client.js.in(file("./amf-client/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS)
+lazy val clientJS  = client.js.in(file("./amf-client/js")).sourceDependency(amfAmlJSRef, amfAmlLibJS).disablePlugins(SonarPlugin)
 
 /** **********************************************
   * AMF Tools
@@ -204,3 +202,4 @@ lazy val amfRunner = project
   .in(file("./amf-runner"))
   .dependsOn(clientJVM)
   .settings(settings)
+  .disablePlugins(SonarPlugin)
