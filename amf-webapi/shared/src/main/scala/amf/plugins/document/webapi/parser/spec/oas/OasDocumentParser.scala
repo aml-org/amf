@@ -497,8 +497,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             .as[Seq[YNode]]
             .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity).parse())
             .collect { case Some(s) => s }
-          if (securedBy.nonEmpty)
-            operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+
+          operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
         }
       )
 

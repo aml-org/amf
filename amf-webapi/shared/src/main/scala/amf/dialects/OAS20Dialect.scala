@@ -469,7 +469,7 @@ object OAS20Dialect {
     val BodyParameterObject = NodeMapping()
       .withId("#/declarations/BodyParameterObject")
       .withName("BodyParameterObject")
-      .withNodeTypeMapping(ParameterModel.`type`.head.iri())
+      .withNodeTypeMapping(PayloadModel.`type`.head.iri())
       .withPropertiesMapping(Seq(
 
         PropertyMapping()
@@ -784,7 +784,7 @@ object OAS20Dialect {
 
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/PathItem/parameters")
-          .withName("parameter")
+          .withName("parameters")
           .withNodePropertyMapping(EndPointModel.Parameters.value.iri())
           .withAllowMultiple(true)
           .withObjectRange(Seq(
@@ -958,7 +958,7 @@ object OAS20Dialect {
           .withName("paths")
           .withMinCount(1)
           .withNodePropertyMapping(WebApiModel.EndPoints.value.iri())
-          .withMapKeyProperty(EndPointModel.Path.value.iri())
+          .withMapTermKeyProperty(EndPointModel.Path.value.iri())
           .withAllowMultiple(true)
           .withObjectRange(Seq(
             PathItemObject.id
