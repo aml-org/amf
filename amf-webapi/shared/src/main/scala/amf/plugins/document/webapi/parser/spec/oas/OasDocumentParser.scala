@@ -123,21 +123,30 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "tags",
       entry => {
-        val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
-        api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+        entry.value.tagType match {
+          case YType.Seq =>
+            val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
+            api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+          case _ => // ignore
+        }
+
       }
     )
 
     map.key(
       "security",
       entry => {
-        val securedBy =
-          entry.value
-            .as[Seq[YNode]]
-            .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity).parse())
-            .collect { case Some(s) => s }
-        if (securedBy.nonEmpty)
-          api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+        entry.value.tagType match {
+          case YType.Seq =>
+            val securedBy =
+              entry.value
+                .as[Seq[YNode]]
+                .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity).parse())
+                .collect { case Some(s) => s }
+
+            api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+          case _ => // ignore
+        }
       }
     )
 
