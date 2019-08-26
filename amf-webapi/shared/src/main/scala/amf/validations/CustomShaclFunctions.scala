@@ -2,57 +2,27 @@ package amf.validations
 
 import java.util.regex.Pattern
 
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement, Shape}
+import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.utils.RegexConverter
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
-import amf.plugins.domain.shapes.models.ScalarShape
-import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.shapes.metamodel.{
+  AnyShapeModel,
+  ArrayShapeModel,
+  NodeShapeModel,
+  ScalarShapeModel,
+  XMLSerializerModel
+}
+import amf.plugins.domain.shapes.models.{FileShape, ScalarShape}
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, WebApiModel}
+
 object CustomShaclFunctions {
 
   val functions: CustomShaclFunctions = Map(
-    "minimumMaximumValidation" ->
-      ((element, violation) => {
-        val maybeMinInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("minInclusive")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
-
-        val maybeMaxInclusive = element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("maxInclusive")
-        } match {
-          case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-          case _                                                => None
-        }
-
-        if (maybeMaxInclusive.nonEmpty && maybeMinInclusive.nonEmpty) {
-          val minInclusive = maybeMinInclusive.get.value.toString.toDouble
-          val maxInclusive = maybeMaxInclusive.get.value.toString.toDouble
-          if (minInclusive > maxInclusive) {
-            violation(None)
-          }
-        }
-      }),
     "pathParameterRequiredProperty" -> ((element, violation) => {
-      val optBindingValue = element.fields
-        .fields()
-        .find { f =>
-          f.field.value.iri().endsWith("binding")
-        }
-        .map(field => field.value.value)
-        .collect { case AmfScalar(value, _) => value }
-
-      val optRequiredValue = element.fields
-        .fields()
-        .find { f =>
-          f.field.value.iri().endsWith("required")
-        }
-        .map(field => field.value.value)
-        .collect { case AmfScalar(value, _) => value }
-
+      val optBindingValue  = element.fields.?[AmfScalar](ParameterModel.Binding).map(_.value)
+      val optRequiredValue = element.fields.?[AmfScalar](ParameterModel.Required).map(_.value)
       (optBindingValue, optRequiredValue) match {
         case (Some("path"), Some(false)) | (Some("path"), None) =>
           violation(None)
@@ -60,158 +30,114 @@ object CustomShaclFunctions {
       }
     }),
     "fileParameterMustBeInFormData" -> ((element, violation) => {
-      val optBindingValue = element.fields
-        .fields()
-        .find { f =>
-          f.field.value.iri().endsWith("binding")
-        }
-        .map(field => field.value.value)
-        .collect { case AmfScalar(value, _) => value }
-
-      val optSchemaValueIsFile = element.fields
-        .fields()
-        .find { f =>
-          f.field.value.iri().endsWith("schema")
-        }
-        .flatMap(field =>
-          field.value.value match {
-            case shape: Shape => Some(shape.ramlSyntaxKey == "fileShape")
-            case _            => None
+      element.fields
+        .getValueAsOption(ParameterModel.Schema)
+        .foreach(field =>
+          field.value match {
+            case _: FileShape =>
+              val optBindingValue = element.fields.?[AmfScalar](ParameterModel.Binding).map(_.value)
+              if (optBindingValue.isEmpty || optBindingValue.get != "formData")
+                violation(None)
+            case _ => None
         })
-
-      optSchemaValueIsFile.foreach(
-        isFile =>
-          if (isFile && (optBindingValue.isEmpty || optBindingValue.get != "formData"))
-            violation(None)
-      )
     }),
+    "minimumMaximumValidation" ->
+      ((element, violation) => {
+        for {
+          minInclusive <- element.fields.?[AmfScalar](ScalarShapeModel.Minimum)
+          maxInclusive <- element.fields.?[AmfScalar](ScalarShapeModel.Maximum)
+        } yield {
+          val minValue = minInclusive.toString.toDouble
+          val maxValue = maxInclusive.toString.toDouble
+          if (minValue > maxValue) {
+            violation(None)
+          }
+        }
+      }),
     "minMaxItemsValidation" -> ((element, violation) => {
-      val maybeMinInclusive = element.fields.fields().find { f =>
-        f.field.value.iri().endsWith("minCount")
-      } match {
-        case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-        case _                                                => None
-      }
-
-      val maybeMaxInclusive = element.fields.fields().find { f =>
-        f.field.value.iri().endsWith("maxCount")
-      } match {
-        case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-        case _                                                => None
-      }
-
-      if (maybeMaxInclusive.nonEmpty && maybeMinInclusive.nonEmpty) {
-        val minInclusive = maybeMinInclusive.get.value.toString.toDouble
-        val maxInclusive = maybeMaxInclusive.get.value.toString.toDouble
-        if (minInclusive > maxInclusive) {
+      for {
+        minInclusive <- element.fields.?[AmfScalar](ArrayShapeModel.MinItems)
+        maxInclusive <- element.fields.?[AmfScalar](ArrayShapeModel.MaxItems)
+      } yield {
+        val minValue = minInclusive.toString.toDouble
+        val maxValue = maxInclusive.toString.toDouble
+        if (minValue > maxValue) {
           violation(None)
         }
       }
     }),
     "minMaxPropertiesValidation" -> ((element, violation) => {
-      val maybeMinInclusive = element.fields.fields().find { f =>
-        f.field.value.iri().endsWith("minProperties")
-      } match {
-        case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-        case _                                                => None
-      }
-
-      val maybeMaxInclusive = element.fields.fields().find { f =>
-        f.field.value.iri().endsWith("maxProperties")
-      } match {
-        case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-        case _                                                => None
-      }
-
-      if (maybeMaxInclusive.nonEmpty && maybeMinInclusive.nonEmpty) {
-        val minInclusive = maybeMinInclusive.get.toString.toDouble
-        val maxInclusive = maybeMaxInclusive.get.toString.toDouble
-        if (minInclusive > maxInclusive) {
+      for {
+        minInclusive <- element.fields.?[AmfScalar](NodeShapeModel.MinProperties)
+        maxInclusive <- element.fields.?[AmfScalar](NodeShapeModel.MaxProperties)
+      } yield {
+        val minValue = minInclusive.toString.toDouble
+        val maxValue = maxInclusive.toString.toDouble
+        if (minValue > maxValue) {
           violation(None)
         }
       }
     }),
     "minMaxLengthValidation" -> ((element, violation) => {
-      val maybeMinInclusive = element.fields.fields().find { f =>
-        f.field.value.iri().endsWith("minLength")
-      } match {
-        case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-        case _                                                => None
-      }
-
-      val maybeMaxInclusive = element.fields.fields().find { f =>
-        f.field.value.iri().endsWith("maxLength")
-      } match {
-        case Some(f) if f.value.value.isInstanceOf[AmfScalar] => Some(f.value.value.asInstanceOf[AmfScalar])
-        case _                                                => None
-      }
-
-      if (maybeMaxInclusive.nonEmpty && maybeMinInclusive.nonEmpty) {
-        val minInclusive = maybeMinInclusive.get.value.toString.toDouble
-        val maxInclusive = maybeMaxInclusive.get.value.toString.toDouble
-        if (minInclusive > maxInclusive) {
+      for {
+        minInclusive <- element.fields.?[AmfScalar](ScalarShapeModel.MinLength)
+        maxInclusive <- element.fields.?[AmfScalar](ScalarShapeModel.MaxLength)
+      } yield {
+        val minValue = minInclusive.value.toString.toDouble
+        val maxValue = maxInclusive.value.toString.toDouble
+        if (minValue > maxValue) {
           violation(None)
         }
       }
     }),
     "xmlWrappedScalar" -> ((element, violation) => {
-      val isScalar = element.meta.`type`.exists(_.name == "ScalarShape")
-      if (isScalar) {
-        element.fields.fields().find { f =>
-          f.field.value.iri().endsWith("xmlSerialization")
-        } match {
-          case Some(f) =>
-            val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
-            xmlSerialization.fields
-              .fields()
-              .find(f => f.field.value.iri().endsWith("xmlWrapped"))
-              .foreach { isWrappedEntry =>
-                val isWrapped = isWrappedEntry.scalar.toBool
-                if (isWrapped) {
-                  violation(None)
+      element match {
+        case scalar: ScalarShape =>
+          scalar.fields.?[DomainElement](AnyShapeModel.XMLSerialization) match {
+            case Some(xmlSerialization) =>
+              xmlSerialization.fields
+                .fields()
+                .find(f => f.field.value.iri().endsWith("xmlWrapped"))
+                .foreach { isWrappedEntry =>
+                  val isWrapped = isWrappedEntry.scalar.toBool
+                  if (isWrapped) {
+                    violation(None)
+                  }
                 }
-              }
-          case None => // Nothing
-        }
+            case _ =>
+          }
+        case _ =>
       }
     }),
     "xmlNonScalarAttribute" -> ((element, violation) => {
-      element.fields.fields().find { f =>
-        f.field.value.iri().endsWith("xmlSerialization")
-      } match {
-        case Some(f) =>
-          val xmlSerialization = f.value.value.asInstanceOf[DomainElement]
-          xmlSerialization.fields
-            .fields()
-            .find(f => f.field.value.iri().endsWith("xmlAttribute"))
-            .foreach { isAttributeEntry =>
-              val isAttribute = isAttributeEntry.scalar.toBool
-              val isNonScalar = !element.meta.`type`.exists(_.name == "ScalarShape")
-              if (isAttribute && isNonScalar) {
-                violation(None)
-              }
-            }
+      element.fields.getValueAsOption(AnyShapeModel.XMLSerialization) match {
+        case Some(xmlSerialization) =>
+          xmlSerialization.value match {
+            case xmlElement: DomainElement =>
+              val xmlAttribute = xmlElement.fields.?[AmfScalar](XMLSerializerModel.Attribute)
+              xmlAttribute
+                .foreach { attributeScalar =>
+                  val isAttribute = attributeScalar.toBool
+                  val isNonScalar = !element.meta.`type`.exists(_.name == "ScalarShape")
+                  if (isAttribute && isNonScalar)
+                    violation(None)
+                }
+            case _ =>
+          }
         case None => // Nothing
       }
     }),
     "patternValidation" -> ((element, violation) => {
-      element.fields
-        .fields()
-        .find(_.field.value.iri().endsWith("pattern"))
-        .map(_.value.value.asInstanceOf[AmfScalar].toString)
-        .foreach { pattern =>
-          try Pattern.compile(pattern.convertRegex)
-          catch {
-            case _: Throwable =>
-              violation(None)
-          }
+      element.fields.?[AmfScalar](ScalarShapeModel.Pattern).foreach { pattern =>
+        try Pattern.compile(pattern.toString.convertRegex)
+        catch {
+          case _: Throwable =>
+            violation(None)
         }
+      }
     }),
     "nonEmptyListOfProtocols" -> ((element, violation) => {
-      val maybeValue = element.fields
-        .fields()
-        .find(_.field.value.iri().endsWith("scheme"))
-        .map(field => field.value)
+      val maybeValue = element.fields.getValueAsOption(WebApiModel.Schemes)
       maybeValue
         .map(_.value)
         .foreach {
