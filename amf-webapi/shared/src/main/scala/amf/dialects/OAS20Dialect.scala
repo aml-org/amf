@@ -911,6 +911,12 @@ object OAS20Dialect {
           .withObjectRange(Seq(
             InfoObject.id
           )),
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/WebAPIObject/externalDocs")
+          .withName("externalDocs")
+          .withObjectRange(Seq(
+            ExternalDocumentationObject.id
+          )),
 
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/WebAPIObject/Servers/url_host")
