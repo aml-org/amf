@@ -482,6 +482,21 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     testParseStringWithBaseUrl(baseUrl)
   }
 
+  test("Parsing text document with base url (without trailing slash and include)") {
+    val baseUrl = "file://amf-client/shared/src/test/resources"
+    testParseStringWithBaseUrlAndInclude(baseUrl)
+  }
+
+  test("Parsing text document with base url (with trailing slash and include)") {
+    val baseUrl = "file://amf-client/shared/src/test/resources/"
+    testParseStringWithBaseUrlAndInclude(baseUrl)
+  }
+
+  test("Parsing text document with base url (with file name and include)") {
+    val baseUrl = "file://amf-client/shared/src/test/resources/api.raml"
+    testParseStringWithBaseUrlAndInclude(baseUrl)
+  }
+
   test("Environment test") {
     val include = "amf://types/Person.raml"
 
@@ -1117,7 +1132,27 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       assert(encodes.id.startsWith(baseUrl))
       assert(encodes.asInstanceOf[WebApi].name.is("Some title"))
     }
+  }
 
+  private def testParseStringWithBaseUrlAndInclude(baseUrl: String) = {
+    val spec =
+      """#%RAML 1.0
+        |title: Some title
+        |
+        |/test:
+        |  get:
+        |    body:
+        |      application/json:
+        |        type: !include includes/include1.json""".stripMargin
+
+    for {
+      _    <- AMF.init().asFuture
+      unit <- amf.Core.parser(Raml10.name, "application/yaml").parseStringAsync(baseUrl, spec).asFuture
+      gen  <- amf.Core.generator(Raml10.name, "application/yaml").generateString(unit).asFuture
+    } yield {
+      gen should not include ("!include")
+      gen should include ("type: string")
+    }
   }
 
   private def assertBaseUnit(baseUnit: BaseUnit, expectedLocation: String): Assertion = {
