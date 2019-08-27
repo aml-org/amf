@@ -27,6 +27,8 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
   def servers: ClientList[Server]                      = _internal.servers.asClient
   def security: ClientList[ParametrizedSecurityScheme] = _internal.security.asClient
 
+  def parent: ClientOption[EndPoint] = _internal.parent.asClient
+
   /** Get the part of the path property that was defined by this EndPoint. */
   def relativePath: String = _internal.relativePath
 
