@@ -70,6 +70,11 @@
         ]
       }
     ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "1.0.0"
+      }
+    ],
     "http://a.ml/vocabularies/document#references": [
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/person.xsd",
@@ -90,6 +95,11 @@
                 "@value": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xs:schema xmlns:xs=\"http://www.w3.org/2001/XMLSchema\"\n           targetNamespace=\"https://www.w3schools.com\"\n           xmlns=\"https://www.w3schools.com\"\n           elementFormDefault=\"qualified\">\n\n    <xs:element name=\"person\">\n        <xs:complexType>\n            <xs:sequence>\n                <xs:element name=\"name\" type=\"xs:string\"\n                            maxOccurs=\"unbounded\"/>\n            </xs:sequence>\n        </xs:complexType>\n    </xs:element>\n\n</xs:schema>"
               }
             ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#version": [
+          {
+            "@value": "1.0.0"
           }
         ]
       },
@@ -112,6 +122,11 @@
                 "@value": "<person>\n    <name>A Person</name>\n</person>"
               }
             ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#version": [
+          {
+            "@value": "1.0.0"
           }
         ]
       }

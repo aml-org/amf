@@ -431,6 +431,11 @@
         ]
       }
     ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "1.0.0"
+      }
+    ],
     "http://a.ml/vocabularies/document#references": [
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/a.json",
@@ -458,6 +463,11 @@
             ]
           }
         ],
+        "http://a.ml/vocabularies/document#version": [
+          {
+            "@value": "1.0.0"
+          }
+        ],
         "http://a.ml/vocabularies/document#references": [
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/b.json",
@@ -483,6 +493,11 @@
                     "@value": "application/json"
                   }
                 ]
+              }
+            ],
+            "http://a.ml/vocabularies/document#version": [
+              {
+                "@value": "1.0.0"
               }
             ]
           }
