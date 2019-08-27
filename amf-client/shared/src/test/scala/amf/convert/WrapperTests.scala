@@ -482,17 +482,17 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     testParseStringWithBaseUrl(baseUrl)
   }
 
-  test("Parsing text document with base url (without trailing slash and include)") {
+  test("Parsing text document with base url (with include, without trailing slash)") {
     val baseUrl = "file://amf-client/shared/src/test/resources/includes"
     testParseStringWithBaseUrlAndInclude(baseUrl)
   }
 
-  test("Parsing text document with base url (with trailing slash and include)") {
+  test("Parsing text document with base url (with include and trailing slash)") {
     val baseUrl = "file://amf-client/shared/src/test/resources/includes/"
     testParseStringWithBaseUrlAndInclude(baseUrl)
   }
 
-  test("Parsing text document with base url (with file name and include)") {
+  test("Parsing text document with base url (with include and file name)") {
     val baseUrl = "file://amf-client/shared/src/test/resources/includes/api.raml"
     testParseStringWithBaseUrlAndInclude(baseUrl)
   }
