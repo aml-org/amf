@@ -101,7 +101,13 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
     }
   }
 
-  override protected def loadJson(text: String): Object = new JSONTokenerHack(text).nextValue()
+  override protected def loadJson(text: String): Object = {
+    try new JSONTokenerHack(text).nextValue()
+    catch {
+      case e: JSONException => throw new InvalidJsonObject(e)
+    }
+  }
+
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
     JvmReportValidationProcessor(profileName)
 }

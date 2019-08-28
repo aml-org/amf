@@ -133,6 +133,11 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |          }
         |        ]
         |      }
+        |    ],
+        |    "http://a.ml/vocabularies/document#version": [
+        |      {
+        |        "@value": "1.0.0"
+        |      }
         |    ]
         |  }
         |]""".stripMargin
@@ -406,6 +411,11 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |            ]
         |          }
         |        ]
+        |      }
+        |    ],
+        |    "http://a.ml/vocabularies/document#version": [
+        |      {
+        |        "@value": "1.0.0"
         |      }
         |    ]
         |  }

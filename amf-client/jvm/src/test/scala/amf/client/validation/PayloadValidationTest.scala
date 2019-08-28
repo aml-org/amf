@@ -32,9 +32,9 @@ class PayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFr
         .validate("application/json", payload)
         .asFuture
 
-      ScalaFutures.whenReady(f.failed) { e =>
-        e shouldBe a[JSONException]
-        e.getMessage shouldBe "Unquoted string value at 39 [character 36 line 3]"
+      ScalaFutures.whenReady(f) { report =>
+        report.conforms shouldBe false
+        report.results.size() shouldBe 1
       }
     }
   }

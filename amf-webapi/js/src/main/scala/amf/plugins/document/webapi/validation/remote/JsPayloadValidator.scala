@@ -30,7 +30,10 @@ class JsPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
   }
 
   override protected def loadJson(str: String): js.Dynamic = {
-    js.Dynamic.global.JSON.parse(str)
+    try js.Dynamic.global.JSON.parse(str)
+    catch {
+      case e: JavaScriptException if e.exception.isInstanceOf[SyntaxError] => throw new InvalidJsonObject(e)
+    }
   }
 
   override protected def loadSchema(
