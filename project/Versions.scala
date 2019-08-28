@@ -10,7 +10,7 @@ object Versions {
     val props        = new Properties()
     val absolutePath = Path("").asFile.getAbsolutePath
     val versionsFile =
-      if (absolutePath.endsWith("als") || absolutePath.endsWith("amf-runner") || absolutePath.endsWith("tckutor"))
+      if (absolutePath.endsWith("als") || absolutePath.endsWith("amf-runner") || absolutePath.endsWith("amf-TCKkutor"))
         Path("../amf/versions.properties").asFile
       else Path("versions.properties").asFile
     props.load(new FileInputStream(versionsFile))
