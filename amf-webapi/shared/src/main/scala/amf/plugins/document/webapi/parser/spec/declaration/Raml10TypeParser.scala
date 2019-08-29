@@ -280,7 +280,7 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
   def parse(): Option[AnyShape] = {
     val product: Option[AnyShape] = defaultType match {
       case NilType =>
-        Some(NilShape().withName(name, Annotations()).add(Inferred()))
+        Some(NilShape(ast).withName(name, Annotations()).add(Inferred()))
       case FileType =>
         Some(FileShape(ast).withName(name, Annotations()))
       case _: ScalarType =>
@@ -288,7 +288,7 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
           .withName(name, Annotations())
           .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
       case AnyType =>
-        Some(AnyShape().withName(name, Annotations()).add(Inferred()))
+        Some(AnyShape(ast).withName(name, Annotations()).add(Inferred()))
       case _ =>
         // TODO get parent id
         ctx.violation(UnableToSetDefaultType, "", s"Cannot set default type $defaultType in raml 08", ast)
