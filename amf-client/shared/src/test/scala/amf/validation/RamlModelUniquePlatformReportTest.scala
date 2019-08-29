@@ -366,4 +366,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("datetime-format-value/datetime-format-values.raml", Some("datetime-format-values.report"))
   }
 
+  test("Type recursion with inheritance") {
+    validate("recursives/simple-inherits.raml", Some("inheritance-type-recursion.report"))
+  }
+
 }
