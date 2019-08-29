@@ -1,0 +1,12 @@
+#%RAML 1.0
+
+title: test baseunit cache of a library
+
+uses:
+  lib: library.raml
+
+/someEndpoint:
+  get:
+    body:
+      application/json:
+        type: lib.A

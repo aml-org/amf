@@ -1,0 +1,35 @@
+#%RAML 1.0 Library
+
+types:
+  A:
+    type: object
+    properties:
+      a1: B
+      a2: number
+  B:
+    type: object
+    properties:
+      b1: boolean
+      b2: C
+
+  C:
+    type: object
+    properties:
+      c1?: A
+
+  D:
+    type: E
+    properties:
+      d1: string
+      d2: F
+
+  E:
+    type: object
+    properties:
+      e1: string
+      e2: number
+
+  F:
+    type: object
+    properties:
+      f1: string
