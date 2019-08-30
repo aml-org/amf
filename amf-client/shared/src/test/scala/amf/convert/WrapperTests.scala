@@ -23,6 +23,7 @@ import amf.core.model.domain.{
 }
 import amf.core.parser.Range
 import amf.core.remote.{Aml, Oas20, Raml10}
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
@@ -1617,6 +1618,57 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     } yield {
       assert(
         unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+    }
+  }
+
+  test("Test emission of json schema of a shape with file type") {
+    val api = """#%RAML 1.0
+                |
+                |title: test
+                |
+                |types:
+                |  SomeType:
+                |    type: object
+                |    properties:
+                |      a: integer
+                |      b:
+                |        type: file
+                |        fileTypes: ['image/jpeg', 'image/png']
+                |        example: I'm a file""".stripMargin
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
+      json <- Future(
+        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+    } yield {
+      val golden = """{
+                     |  "$schema": "http://json-schema.org/draft-04/schema#",
+                     |  "$ref": "#/definitions/SomeType",
+                     |  "definitions": {
+                     |    "SomeType": {
+                     |      "type": "object",
+                     |      "additionalProperties": true,
+                     |      "required": [
+                     |        "a",
+                     |        "b"
+                     |      ],
+                     |      "properties": {
+                     |        "a": {
+                     |          "type": "integer"
+                     |        },
+                     |        "b": {
+                     |          "type": "string",
+                     |          "example": "I'm a file"
+                     |        }
+                     |      }
+                     |    }
+                     |  }
+                     |}
+                     |""".stripMargin
+      assert(report.conforms)
+      assert(json == golden)
     }
   }
 

@@ -7,6 +7,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Bool
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
@@ -1362,8 +1363,18 @@ case class OasTypeEmitter(shape: Shape,
         val copiedNil = nil.copy(fields = nil.fields.filter(f => !ignored.contains(f._1)))
         Seq(OasNilShapeEmitter(copiedNil, ordering))
       case file: FileShape =>
-        val copiedScalar = file.copy(fields = file.fields.filter(f => !ignored.contains(f._1)))
-        OasFileShapeEmitter(copiedScalar, ordering, references, isHeader).emitters()
+        spec match {
+          // In JSON-SCHEMA the datatype file is not valid, so we 'convert it' in a string scalar
+          case _: JsonSchemaEmitterContext =>
+            val scalar = ScalarShape
+              .apply(file.fields, file.annotations)
+              .withDataType(DataType.String)
+              .copy(fields = file.fields.filter(f => !ignored.contains(f._1)))
+            OasScalarShapeEmitter(scalar, ordering, references, isHeader).emitters()
+          case _ =>
+            val copiedScalar = file.copy(fields = file.fields.filter(f => !ignored.contains(f._1)))
+            OasFileShapeEmitter(copiedScalar, ordering, references, isHeader).emitters()
+        }
       case scalar: ScalarShape =>
         val copiedScalar = scalar.copy(fields = scalar.fields.filter(f => !ignored.contains(f._1)))
         OasScalarShapeEmitter(copiedScalar, ordering, references, isHeader).emitters()
