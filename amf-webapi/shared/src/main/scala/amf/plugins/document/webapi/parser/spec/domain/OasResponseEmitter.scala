@@ -7,7 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.plugins.document.webapi.annotations.{DefaultPayload, EndPointBodyParameter}
-import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.{Oas2SpecEmitterFactory, Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasSchemaEmitter}
 import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
@@ -41,23 +41,35 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
                 fs.entry(RequestModel.Headers)
                   .map(f => result += RamlParametersEmitter("headers", f, ordering, references)(spec))
 
-                val payloads = OasPayloads(response.payloads)
+                // OAS 3.0.0
+                if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+                  response.fields.fields().find(_.field == ResponseModel.Payloads) foreach  { f: FieldEntry =>
+                    val payloads: Seq[Payload] = f.arrayValues
+                    val annotations = f.value.annotations
+                    result += EntryPartEmitter("content", OasContentPayloadsEmitter(payloads, ordering, references, annotations))
+                  }
+                }
 
-                payloads.default.foreach(payload => {
-                  payload.fields
-                    .entry(PayloadModel.MediaType)
-                    .map(f => result += ValueEmitter("mediaType".asOasExtension, f))
-                  payload.fields
-                    .entry(PayloadModel.Schema)
-                    .map { f =>
-                      if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
-                        result += OasSchemaEmitter(f, ordering, references)
+                // OAS 2.0
+                if (spec.factory.isInstanceOf[Oas2SpecEmitterFactory]) {
+                  val payloads = OasPayloads(response.payloads)
+
+                  payloads.default.foreach(payload => {
+                    payload.fields
+                      .entry(PayloadModel.MediaType)
+                      .map(f => result += ValueEmitter("mediaType".asOasExtension, f))
+                    payload.fields
+                      .entry(PayloadModel.Schema)
+                      .map { f =>
+                        if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
+                          result += OasSchemaEmitter(f, ordering, references)
+                        }
                       }
-                    }
-                })
+                  })
 
-                if (payloads.other.nonEmpty)
-                  result += OasPayloadsEmitter("responsePayloads".asOasExtension, payloads.other, ordering, references)
+                  if (payloads.other.nonEmpty)
+                    result += OasPayloadsEmitter("responsePayloads".asOasExtension, payloads.other, ordering, references)
+                }
 
                 fs.entry(ResponseModel.Examples)
                   .map(f => result += OasResponseExamplesEmitter("examples", f, ordering))

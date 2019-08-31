@@ -99,12 +99,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -115,6 +109,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   Request:
@@ -443,12 +446,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -459,6 +456,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   PropertyShape:
@@ -601,12 +607,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -617,6 +617,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   VariableValue:
@@ -665,12 +674,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -681,6 +684,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   XMLSerializer:
@@ -826,12 +838,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -842,6 +848,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   SecurityScheme:
@@ -935,12 +950,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -951,6 +960,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   CustomDomainProperty:
@@ -1043,12 +1061,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -1059,6 +1071,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   TemplatedLink:
@@ -1255,12 +1276,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -1271,6 +1286,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   License:
@@ -1358,6 +1382,9 @@ nodeMappings:
       referenceId:
         propertyTerm: doc.reference-id
         range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   Payload:
@@ -1460,12 +1487,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -1476,6 +1497,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
   Trait:
@@ -1570,12 +1600,6 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
       documentation:
         propertyTerm: schema-org.documentation
         range: CreativeWork
@@ -1586,6 +1610,15 @@ nodeMappings:
         propertyTerm: doc.examples
         range: Example
         allowMultiple: true
+      raw:
+        propertyTerm: shacl.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
 
 
 

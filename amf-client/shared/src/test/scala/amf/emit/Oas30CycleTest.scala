@@ -31,7 +31,8 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   val cyclesOas3 = Seq(
     FixtureData("Basic servers", "basic-servers.json", "basic-servers.json"),
-    FixtureData("Complex servers", "complex-servers.json", "complex-servers.json")
+    FixtureData("Complex servers", "complex-servers.json", "complex-servers.json"),
+    FixtureData("basic content", "basic-content.json", "basic-content.json")
   )
 
   cyclesOas3.foreach { f =>

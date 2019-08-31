@@ -27,8 +27,8 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with
                                           shouldTranform: Boolean): Future[Assertion] = {
     val golden = basePath + canonicalTarget
     for {
-      _    <- AMF.init()
       _    <- Future(amf.Core.registerPlugin(AMLPlugin))
+      _    <- AMF.init()
       v    <- Validation(platform).map(_.withEnabledValidation(true))
       _    <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, v).build()
       unit <- AMFCompiler(amfWebApi, platform, AmfJsonHint, v).build()

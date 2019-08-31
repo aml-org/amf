@@ -58,13 +58,13 @@ object Oas3Syntax extends SpecSyntax {
       "description",
       "externalDocs",
       "operationId",
-      "consumes",
-      "produces",
       "parameters",
+      "requestBody",
       "responses",
-      "schemes",
+      "callbacks",
       "deprecated",
-      "security"
+      "security",
+      "servers"
     ),
     "externalDoc" -> Set(
       "url"
@@ -105,9 +105,15 @@ object Oas3Syntax extends SpecSyntax {
     ),
     "response" -> Set(
       "description",
-      "schema",
+      "content",
       "headers",
-      "examples"
+      "links"
+    ),
+    "content" -> Set(
+      "schema",
+      "example",
+      "examples",
+      "encoding"
     ),
     "headerParameter" -> Set(
       "description",

@@ -47,6 +47,26 @@ case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiCo
   }
 }
 
+case class Oas3ResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiContext) {
+  def parse(): Seq[Example] = {
+    val results = ListBuffer[Example]()
+    entry.value
+      .as[YMap]
+      .entries
+      .map(e => results += Oas3ResponseExampleParser(e).parse())
+
+    results
+  }
+}
+
+case class Oas3ResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiContext) {
+  def parse(): Example = {
+    val name = yMapEntry.key.as[YScalar].text
+    val example = Example(yMapEntry).withName(name)
+    RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true)).populate()
+  }
+}
+
 case class RamlExamplesParser(map: YMap,
                               singleExampleKey: String,
                               multipleExamplesKey: String,

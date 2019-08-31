@@ -469,21 +469,35 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       val operation = producer(ScalarNode(entry.key).string().value.toString).add(Annotations(entry))
       val map       = entry.value.as[YMap]
 
+      // oas 3.0.0 / oas 2.0
       map.key("operationId").foreach { entry =>
         val operationId = entry.value.toString()
         if (!ctx.registerOperationId(operationId))
           ctx.violation(DuplicatedOperationId, operation.id, s"Duplicated operation id '$operationId'", entry.value)
       }
 
+      // oas 3.0.0 / oas 2.0
       map.key("operationId", OperationModel.Name in operation)
+      // oas 3.0.0 / oas 2.0
       map.key("description", OperationModel.Description in operation)
+      // oas 3.0.0 / oas 2.0
       map.key("deprecated", OperationModel.Deprecated in operation)
+      // oas 3.0.0 / oas 2.0
       map.key("summary", OperationModel.Summary in operation)
+      // oas 3.0.0 / oas 2.0
       map.key("externalDocs", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
-      map.key("schemes", OperationModel.Schemes in operation)
-      map.key("consumes", OperationModel.Accepts in operation)
-      map.key("produces", OperationModel.ContentType in operation)
+      // oas 2.0
+      if (ctx.syntax == Oas2Syntax) {
+        map.key("schemes", OperationModel.Schemes in operation)
+        map.key("consumes", OperationModel.Accepts in operation)
+        map.key("produces", OperationModel.ContentType in operation)
+      }
+      // oas 3.0.0 / oas 2.0
       map.key("tags", OperationModel.Tags in operation)
+      // oas 3.0.0
+      if (ctx.syntax == Oas3Syntax) {
+        //map.key("requestBody", OperationModel.Request in operation)
+      }
 
       map.key(
         "is".asOasExtension,
@@ -498,6 +512,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         }
       )
 
+      // oas 3.0.0 / oas 2.0
       map.key(
         "security",
         entry => {
@@ -515,6 +530,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         .parse()
         .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
 
+      // oas 3.0.0 / oas 2.0
       map.key(
         "responses",
         entry => {

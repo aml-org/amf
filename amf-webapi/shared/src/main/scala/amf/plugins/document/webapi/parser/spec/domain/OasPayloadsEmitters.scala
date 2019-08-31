@@ -7,7 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.annotations.ParameterNameForPayload
-import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.{Oas2SpecEmitterFactory, Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasSchemaEmitter}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
@@ -25,16 +25,26 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         val fs     = payload.fields
         val result = mutable.ListBuffer[EntryEmitter]()
 
-        fs.entry(PayloadModel.Name)
-          .map(f => {
-            f.value.annotations.find(classOf[ParameterNameForPayload]) match {
-              case Some(ann) =>
-                result += MapEntryEmitter("name", ann.paramName, position = ann.range.start)
-              case _ =>
-                result += ValueEmitter("name", f)
-            }
-          })
-        fs.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType", f))
+        // OAS 3.0.0
+        if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+          fs.entry(PayloadModel.Examples)
+            .map(f => result += OasResponseExamplesEmitter("examples", f, ordering))
+        }
+
+        // OAS 2.0
+        if (spec.factory.isInstanceOf[Oas2SpecEmitterFactory]) {
+          fs.entry(PayloadModel.Name)
+            .map(f => {
+              f.value.annotations.find(classOf[ParameterNameForPayload]) match {
+                case Some(ann) =>
+                  result += MapEntryEmitter("name", ann.paramName, position = ann.range.start)
+                case _ =>
+                  result += ValueEmitter("name", f)
+              }
+            })
+          fs.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType", f))
+        }
+
         fs.entry(PayloadModel.Schema).map { f =>
           if (!f.value.value.annotations.contains(classOf[SynthesizedField])) {
             result += OasSchemaEmitter(f, ordering, references)

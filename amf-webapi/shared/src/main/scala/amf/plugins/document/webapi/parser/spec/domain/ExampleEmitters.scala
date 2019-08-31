@@ -6,7 +6,7 @@ import amf.core.emitter._
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{Oas3SpecEmitterFactory, RamlScalarEmitter, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
@@ -40,10 +40,20 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(i
     example.fields
       .entry(ExampleModel.StructuredValue)
       .fold({
-        example.raw.option().foreach(s => b.entry(example.mediaType.value(), StringToAstEmitter(s).emit(_)))
+        example.raw.option().foreach { s =>
+          b.entry(keyName(example), StringToAstEmitter(s).emit(_))
+        }
       })(_ => {
-        b.entry(example.mediaType.value(), DataNodeEmitter(example.structuredValue, ordering)(spec.eh).emit(_))
+        b.entry(keyName(example), DataNodeEmitter(example.structuredValue, ordering)(spec.eh).emit(_))
       })
+  }
+
+  protected def keyName(example: Example) = {
+    if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+      example.name.value()
+    } else {
+      example.mediaType.value()
+    }
   }
 
   override def position(): Position = pos(example.annotations)
