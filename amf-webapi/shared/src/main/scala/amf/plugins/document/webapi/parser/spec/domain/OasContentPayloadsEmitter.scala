@@ -1,15 +1,13 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.emitter.{PartEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{Annotations, Position}
 import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
-
-import scala.collection.mutable
 
 case class OasContentPayloadsEmitter(payloads: Seq[Payload], ordering: SpecOrdering, references: Seq[BaseUnit], annotations: Annotations)(
   implicit spec: OasSpecEmitterContext)

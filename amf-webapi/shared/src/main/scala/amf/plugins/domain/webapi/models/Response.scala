@@ -44,6 +44,13 @@ class Response(override val fields: Fields, override val annotations: Annotation
     result
   }
 
+  def withLink(name: String): TemplatedLink = {
+    val result = TemplatedLink()
+    result.withName(name)
+    add(Links, result)
+    result
+  }
+
   def withExample(mediaType: String): Example = {
     val example = Example().withMediaType(mediaType)
     add(Examples, example)

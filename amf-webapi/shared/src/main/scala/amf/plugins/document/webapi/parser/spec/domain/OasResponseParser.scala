@@ -87,11 +87,23 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
             entry =>
               entry.value
                 .as[YMap]
-                .entries.
-                foreach { entry =>
+                .entries
+                .foreach { entry =>
                   val mediaType = ScalarNode(entry.key).text().value.toString
                   payloads += OasContentParser(entry.value, mediaType, res.withPayload).parse()
               }
+          )
+
+          map.key(
+            "links",
+            entry =>
+              entry.value
+                .as[YMap]
+                .entries
+                .foreach { entry =>
+                  val linkName = ScalarNode(entry.key).text().value.toString
+                  OasLinkParser(entry.value, linkName, res.withLink).parse()
+                }
           )
         }
 

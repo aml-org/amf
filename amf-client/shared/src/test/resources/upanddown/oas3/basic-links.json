@@ -1,0 +1,64 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic links",
+    "version": "0.1"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "summary": "this is a test",
+        "operationId": "test",
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "c": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            },
+            "links": {
+              "a": {
+                "operationId": "test",
+                "parameters": {
+                  "paramA": "$request.path.id"
+                },
+                "requestBody": "$request.body",
+                "description": "a link",
+                "server": {
+                  "url": "http://test.com/servera",
+                  "description": "a description"
+                }
+              },
+              "b": {
+                "operationRef": "#/paths/test",
+                "parameters": {
+                  "paramA": "$request.path.id"
+                },
+                "requestBody": "$request.body",
+                "description": "another link",
+                "server": {
+                  "url": "http://test.com/serverb",
+                  "description": "b description"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://test.com/",
+      "description": "The production API server"
+    }
+  ]
+}

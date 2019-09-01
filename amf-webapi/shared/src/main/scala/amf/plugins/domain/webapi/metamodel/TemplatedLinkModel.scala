@@ -25,6 +25,10 @@ object TemplatedLinkModel
                           Http + "operationId",
                           ModelDoc(ModelVocabularies.Http, "operation ID", "Identifier of the target operation"))
 
+  val OperationRef = Field(Str,
+    Http + "operationRef",
+    ModelDoc(ModelVocabularies.Http, "operation Ref", "Reference of the target operation"))
+
   val Mapping = Field(Array(IriTemplateMappingModel),
                       Hydra + "mapping",
                       ModelDoc(ExternalModelVocabularies.Hydra, "mapping", "Variable mapping for the URL template"))

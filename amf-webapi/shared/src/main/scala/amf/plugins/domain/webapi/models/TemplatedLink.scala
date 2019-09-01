@@ -13,6 +13,7 @@ case class TemplatedLink(fields: Fields, annotations: Annotations) extends Named
   def description: StrField            = fields.field(Description)
   def template: StrField               = fields.field(Template)
   def operationId: StrField            = fields.field(OperationId)
+  def operationRef: StrField           = fields.field(OperationRef)
   def mapping: Seq[IriTemplateMapping] = fields.field(Mapping)
   def requestBody: StrField            = fields.field(RequestBody)
   def server: Server                   = fields.field(TemplatedLinkModel.Server)
@@ -20,12 +21,20 @@ case class TemplatedLink(fields: Fields, annotations: Annotations) extends Named
   def withDescription(description: String): this.type          = set(Description, description)
   def withTemplate(template: String): this.type                = set(Template, template)
   def withOperationId(operationId: String): this.type          = set(OperationId, operationId)
+  def withOperationRef(operationRef: String): this.type        = set(OperationRef, operationRef)
   def withMapping(mapping: Seq[IriTemplateMapping]): this.type = setArray(Mapping, mapping)
   def withRequestBody(requestBody: String): this.type          = set(RequestBody, requestBody)
   def withServer(server: Server): this.type                    = set(TemplatedLinkModel.Server, server)
 
   override def meta: Obj            = TemplatedLinkModel
   override def linkCopy(): Linkable = TemplatedLink().withId(id)
+
+  def withIriMapping(variable: String, annotations: Option[Annotations] = None): IriTemplateMapping = {
+    val result = annotations.map(a => IriTemplateMapping(a)).getOrElse(IriTemplateMapping())
+    result.withTemplateVariable(variable)
+    add(Mapping, result)
+    result
+  }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String =

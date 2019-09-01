@@ -66,6 +66,14 @@ object Oas3Syntax extends SpecSyntax {
       "security",
       "servers"
     ),
+    "link" -> Set(
+      "operationRef",
+      "operationId",
+      "description",
+      "server",
+      "parameters",
+      "requestBody"
+    ),
     "externalDoc" -> Set(
       "url"
     ),

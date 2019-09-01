@@ -13,6 +13,11 @@ object ParserSideValidations extends Validations {
   override val specification: String = PARSER_SIDE_VALIDATION
   override val namespace: Namespace  = AmfParser
 
+  val ExclusiveLinkTargetError = validation(
+    id = "exclusive-link-target-error",
+    message = "operationRef and operationId are mutually exclusive in a OAS 3.0.0 Link Object"
+  )
+
   val InvalidJsonSchemaType = validation(
     "invalid-json-schema-type",
     "Invalid json schema definition type"
@@ -465,6 +470,9 @@ object ParserSideValidations extends Validations {
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
+
+    ExclusiveLinkTargetError.id -> all(VIOLATION),
+
     OasBodyAndFormDataParameterSpecification.id -> Map(
       OasProfile   -> VIOLATION,
       Oas20Profile -> VIOLATION

@@ -18,6 +18,7 @@ case class TemplatedLink(override private[amf] val _internal: InternalTemplatedL
   def description: StrField                   = _internal.description
   def template: StrField                      = _internal.operationId
   def operationId: StrField                   = _internal.operationId
+  def operationRef: StrField                  = _internal.operationRef
   def mapping: ClientList[IriTemplateMapping] = _internal.mapping.asClient
   def requestBody: StrField                   = _internal.requestBody
   def server: Server                          = _internal.server
@@ -39,6 +40,11 @@ case class TemplatedLink(override private[amf] val _internal: InternalTemplatedL
 
   def withOperationId(operationId: String): this.type = {
     _internal.withOperationId(operationId)
+    this
+  }
+
+  def withOperationRef(operationRef: String): this.type = {
+    _internal.withOperationRef(operationRef)
     this
   }
 

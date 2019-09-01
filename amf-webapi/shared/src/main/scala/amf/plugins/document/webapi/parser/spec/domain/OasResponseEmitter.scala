@@ -11,7 +11,7 @@ import amf.plugins.document.webapi.contexts.{Oas2SpecEmitterFactory, Oas3SpecEmi
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasSchemaEmitter}
 import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
-import amf.plugins.domain.webapi.models.{Payload, Response}
+import amf.plugins.domain.webapi.models.{Payload, Response, TemplatedLink}
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.Strings
 
@@ -47,6 +47,12 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
                     val payloads: Seq[Payload] = f.arrayValues
                     val annotations = f.value.annotations
                     result += EntryPartEmitter("content", OasContentPayloadsEmitter(payloads, ordering, references, annotations))
+                  }
+
+                  response.fields.fields().find(_.field == ResponseModel.Links) foreach  { f: FieldEntry =>
+                    val links: Seq[TemplatedLink] = f.arrayValues
+                    val annotations = f.value.annotations
+                    result += EntryPartEmitter("links", OasLinksEmitter(links, ordering, references, annotations))
                   }
                 }
 
