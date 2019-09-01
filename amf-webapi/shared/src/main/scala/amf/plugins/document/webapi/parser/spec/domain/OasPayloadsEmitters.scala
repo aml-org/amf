@@ -29,6 +29,10 @@ case class OasPayloadEmitter(payload: Payload, ordering: SpecOrdering, reference
         if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
           fs.entry(PayloadModel.Examples)
             .map(f => result += OasResponseExamplesEmitter("examples", f, ordering))
+
+          fs.entry(PayloadModel.Encoding)
+            .map(f =>
+              result += OasEncodingsEmitter("encoding", f, ordering, references))
         }
 
         // OAS 2.0

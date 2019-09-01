@@ -47,7 +47,14 @@ case class OasContentParser(node: YNode, mediaType: String, producer: Option[Str
       }
     )
 
-    // encoding TODO
+    // encoding
+    map.key(
+      "encoding",
+      entry => {
+        val encodings = OasEncodingParser(entry.value.as[YMap], payload.withEncoding).parse()
+        payload.setArray(PayloadModel.Encoding, encodings, Annotations(entry))
+      }
+    )
 
 
     AnnotationParser(payload, map).parse()

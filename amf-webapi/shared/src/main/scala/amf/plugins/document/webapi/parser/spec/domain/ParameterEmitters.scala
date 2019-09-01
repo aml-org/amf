@@ -314,9 +314,16 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         val result = mutable.ListBuffer[EntryEmitter]()
         val fs     = parameter.fields
 
-        fs.entry(ParameterModel.ParameterName)
-          .orElse(fs.entry(ParameterModel.Name))
-          .map(f => result += ValueEmitter("name", f))
+        val isOas3Header = (parameter.binding.option().map(_ == "header").getOrElse(false) &&
+          spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
+
+        if (!isOas3Header) {
+          fs.entry(ParameterModel.ParameterName)
+            .orElse(fs.entry(ParameterModel.Name))
+            .map { f =>
+              result += ValueEmitter("name", f)
+            }
+        }
 
         fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
 
@@ -324,12 +331,16 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
           .filter(_.value.annotations.contains(classOf[ExplicitField]) || parameter.required.value())
           .map(f => result += ValueEmitter("required", f))
 
-        fs.entry(ParameterModel.Binding)
-          .map(f => result += RawValueEmitter("in", ParameterModel.Binding, binding(f), f.value.annotations))
+        if (!isOas3Header) {
+          fs.entry(ParameterModel.Binding)
+            .map { f =>
+              result += RawValueEmitter("in", ParameterModel.Binding, binding(f), f.value.annotations)
+            }
+        }
 
         fs.entry(ParameterModel.Schema)
           .foreach { f =>
-            if (parameter.isBody) {
+            if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory] || parameter.isBody) {
               result += OasSchemaEmitter(f, ordering, references)
               result ++= AnnotationsEmitter(parameter, ordering).emitters
             } else {
@@ -362,7 +373,19 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
   protected def emitParameter(b: EntryBuilder): Unit = {
     b.entry(
       parameter.name.option().get,
-      _.obj { b =>
+      b => {
+        if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+          ParameterEmitter(parameter, ordering, references).emit(b)
+        } else {
+          emitOas2Header(b)
+        }
+      }
+    )
+
+  }
+
+  protected def emitOas2Header(b: PartBuilder): Unit = {
+    b.obj { b: EntryBuilder =>
         val result = mutable.ListBuffer[EntryEmitter]()
         val fs     = parameter.fields
         if (Option(parameter.schema).isDefined && Option(parameter.schema.description).isEmpty)
@@ -372,10 +395,11 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
           .filter(_.value.annotations.contains(classOf[ExplicitField]))
           .map(f => result += RamlScalarEmitter("x-amf-required", f))
 
-        result ++= OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references).entries()
+        fs.entry(ParameterModel.Schema)
+          .map( _ => result ++= OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references).entries())
+
         traverse(ordering.sorted(result), b)
-      }
-    )
+    }
   }
 
   override def emit(b: EntryBuilder): Unit = {

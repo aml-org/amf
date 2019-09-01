@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic content",
+    "version": "0.1"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "summary": "this is a test",
+        "operationId": "test",
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "a": {
+                      "type": "number"
+                    },
+                    "b": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "encoding": {
+                  "a": {
+                    "contentType": "application/xml, charset=utf-8"
+                  },
+                  "b": {
+                    "contentType": "image/png, image/jpeg",
+                    "headers": {
+                      "X-Rate-Limit-Limit": {
+                        "description": "The number of allowed requests in the current period",
+                        "schema": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "style": "simple",
+                    "explode": false,
+                    "allowReserved": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://test.com/",
+      "description": "The production API server"
+    }
+  ]
+}

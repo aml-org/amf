@@ -96,6 +96,31 @@ object Oas3Syntax extends SpecSyntax {
       "items",
       "example"
     ),
+    "header" -> Set(
+      "description",
+      "required",
+      "schema",
+      "format",
+      "allowEmptyValue",
+      "items",
+      "collectionFormat",
+      "default",
+      "maximum",
+      "exclusiveMaximum",
+      "minimum",
+      "exclusiveMinimum",
+      "maxLength",
+      "minLength",
+      "pattern",
+      "maxItems",
+      "minItems",
+      "multipleOf",
+      "uniqueItems",
+      "enum",
+      "multipleOf",
+      "items",
+      "example"
+    ),
     "bodyParameter" -> Set(
       "name",
       "in",
@@ -114,6 +139,13 @@ object Oas3Syntax extends SpecSyntax {
       "example",
       "examples",
       "encoding"
+    ),
+    "encoding" -> Set(
+      "contentType",
+      "headers",
+      "style",
+      "explode",
+      "allowReserved"
     ),
     "headerParameter" -> Set(
       "description",

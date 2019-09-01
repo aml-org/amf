@@ -15,15 +15,15 @@ import org.yaml.model.YPart
   */
 case class Payload(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 
-  def mediaType: StrField     = fields.field(MediaType)
-  def schema: Shape           = fields.field(Schema)
-  def examples: Seq[Example]  = fields.field(Examples)
-  def encoding: Seq[Encoding] = fields.field(EncodingModel)
+  def mediaType: StrField      = fields.field(MediaType)
+  def schema: Shape            = fields.field(Schema)
+  def examples: Seq[Example]   = fields.field(Examples)
+  def encodings: Seq[Encoding] = fields.field(EncodingModel)
 
-  def withMediaType(mediaType: String): this.type      = set(MediaType, mediaType)
-  def withSchema(schema: Shape): this.type             = set(Schema, schema)
-  def withExamples(examples: Seq[Example]): this.type  = setArray(Examples, examples)
-  def withEncoding(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
+  def withMediaType(mediaType: String): this.type       = set(MediaType, mediaType)
+  def withSchema(schema: Shape): this.type              = set(Schema, schema)
+  def withExamples(examples: Seq[Example]): this.type   = setArray(Examples, examples)
+  def withEncodings(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
 
   def withObjectSchema(name: String): NodeShape = {
     val node = NodeShape().withName(name)
