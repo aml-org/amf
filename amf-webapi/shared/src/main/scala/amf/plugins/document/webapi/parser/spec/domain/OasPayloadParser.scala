@@ -4,7 +4,6 @@ import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
-import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload

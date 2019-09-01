@@ -365,6 +365,49 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
   case class RequestParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
+      if (ctx.syntax == Oas3Syntax) {
+        Oas3RequestParser(map, producer).parse()
+      } else {
+        Oas2RequestParser(map, producer).parse()
+      }
+    }
+  }
+
+  case class Oas3RequestParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
+    def parse(): Option[Request] = {
+      val request = producer()
+      var entries = ListBuffer[YMapEntry]()
+
+      map.key("description", RequestModel.Description in request)
+      map.key("required", RequestModel.Required in request)
+
+
+      val payloads = mutable.ListBuffer[Payload]()
+
+      map.key(
+        "content",
+        entry =>
+          entry.value
+            .as[YMap]
+            .entries.
+            foreach { entry =>
+              val mediaType = ScalarNode(entry.key).text().value.toString
+              payloads += OasContentParser(entry.value, mediaType, request.withPayload).parse()
+            }
+      )
+
+      request.set(ResponseModel.Payloads, AmfArray(payloads))
+
+      AnnotationParser(request, map).parse()
+
+      ctx.closedShape(request.id, map, "request")
+
+      Some(request)
+    }
+  }
+
+  case class Oas2RequestParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
+    def parse(): Option[Request] = {
       val request    = new Lazy[Request](producer)
       var parameters = Parameters()
       var entries    = ListBuffer[YMapEntry]()
@@ -496,7 +539,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key("tags", OperationModel.Tags in operation)
       // oas 3.0.0
       if (ctx.syntax == Oas3Syntax) {
-        //map.key("requestBody", OperationModel.Request in operation)
+        map.key(
+          "requestBody",
+          entry => {
+            Oas3RequestParser(entry.value.as[YMap], operation.withRequest).parse()
+          }
+        )
       }
 
       map.key(
@@ -526,9 +574,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         }
       )
 
-      RequestParser(map, () => operation.withRequest())
-        .parse()
-        .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
+      // oas 2.0
+      if (ctx.syntax == Oas2Syntax) {
+        RequestParser(map, () => operation.withRequest())
+          .parse()
+          .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
+      }
 
       // oas 3.0.0 / oas 2.0
       map.key(

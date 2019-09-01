@@ -121,6 +121,11 @@ object Oas3Syntax extends SpecSyntax {
       "items",
       "example"
     ),
+    "request" -> Set(
+      "description",
+      "content",
+      "required"
+    ),
     "bodyParameter" -> Set(
       "name",
       "in",

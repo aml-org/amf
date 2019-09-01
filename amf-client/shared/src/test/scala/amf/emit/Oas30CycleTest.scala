@@ -33,7 +33,8 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     FixtureData("Basic servers", "basic-servers.json", "basic-servers.json"),
     FixtureData("Complex servers", "complex-servers.json", "complex-servers.json"),
     FixtureData("Basic content", "basic-content.json", "basic-content.json"),
-    FixtureData("Basic encoding", "basic-encoding.json", "basic-encoding.json")
+    FixtureData("Basic encoding", "basic-encoding.json", "basic-encoding.json"),
+    FixtureData("Basic request body", "basic-request-body.json", "basic-request-body.json")
   )
 
   cyclesOas3.foreach { f =>

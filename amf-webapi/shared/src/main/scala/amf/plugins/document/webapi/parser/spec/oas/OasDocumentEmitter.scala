@@ -13,12 +13,7 @@ import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
 import amf.core.utils.{IdCounter, Strings}
 import amf.plugins.document.webapi.annotations.FormBodyParameter
-import amf.plugins.document.webapi.contexts.{
-  BaseSpecEmitter,
-  OasSpecEmitterContext,
-  Raml10SpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, Oas3SpecEmitterFactory, OasSpecEmitterContext, Raml10SpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -290,41 +285,51 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
 
     def requestEmitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
 
-      val result = mutable.ListBuffer[EntryEmitter]()
 
-      val parameters       = request.queryParameters ++ request.uriParameters ++ request.headers
-      val (body, formData) = request.payloads.partition(p => !p.annotations.contains(classOf[FormBodyParameter]))
+      val result           = mutable.ListBuffer[EntryEmitter]()
 
-      val payloads = OasPayloads(body)
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
 
-      if (parameters.nonEmpty || payloads.default.isDefined || formData.nonEmpty)
-        result ++= OasParametersEmitter("parameters",
-                                        parameters,
-                                        ordering,
-                                        payloads.default.toSeq ++ formData,
-                                        references)
-          .emitters()
+        // OAS 3.0.0
+        result ++= Seq(Oas3RequestBodyEmitter(request, ordering, references))
 
-      if (payloads.other.nonEmpty)
-        result += OasPayloadsEmitter("requestPayloads".asOasExtension, payloads.other, ordering, references)
 
-      val fs = request.fields
+      } else {
 
-      fs.entry(RequestModel.QueryString)
-        .foreach { f =>
-          Option(f.value.value) match {
-            case Some(shape: AnyShape) =>
-              result += RamlNamedTypeEmitter(shape, ordering, Nil, ramlTypesEmitter)
-            case Some(other) =>
-              spec.eh.violation(ResolutionValidation,
-                                request.id,
-                                None,
-                                "Cannot emit a non WebApi Shape",
-                                other.position(),
-                                other.location())
-            case None => // ignore
+        // OAS 2.0
+        val fs               = request.fields
+        val parameters       = request.queryParameters ++ request.uriParameters ++ request.headers
+        val (body, formData) = request.payloads.partition(p => !p.annotations.contains(classOf[FormBodyParameter]))
+
+        val payloads = OasPayloads(body)
+
+        if (parameters.nonEmpty || payloads.default.isDefined || formData.nonEmpty)
+          result ++= OasParametersEmitter("parameters",
+            parameters,
+            ordering,
+            payloads.default.toSeq ++ formData,
+            references)
+            .emitters()
+
+        if (payloads.other.nonEmpty)
+          result += OasPayloadsEmitter("requestPayloads".asOasExtension, payloads.other, ordering, references)
+
+        fs.entry(RequestModel.QueryString)
+          .foreach { f =>
+            Option(f.value.value) match {
+              case Some(shape: AnyShape) =>
+                result += RamlNamedTypeEmitter(shape, ordering, Nil, ramlTypesEmitter)
+              case Some(other) =>
+                spec.eh.violation(ResolutionValidation,
+                  request.id,
+                  None,
+                  "Cannot emit a non WebApi Shape",
+                  other.position(),
+                  other.location())
+              case None => // ignore
+            }
           }
-        }
+      }
 
       result ++= AnnotationsEmitter(request, ordering).emitters
 
@@ -447,6 +452,28 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
     override def position(): Position = pos(f.value.annotations)
   }
 }
+
+case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+  extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    val fs = request.fields
+    val result = mutable.ListBuffer[EntryEmitter]()
+
+    fs.entry(RequestModel.Description).map(f => result += ValueEmitter("description", f))
+    fs.entry(RequestModel.Required).map(f => result += ValueEmitter("required", f))
+    request.fields.fields().find(_.field == RequestModel.Payloads) foreach  { f: FieldEntry =>
+      val payloads: Seq[Payload] = f.arrayValues
+      val annotations = f.value.annotations
+      result += EntryPartEmitter("content", OasContentPayloadsEmitter(payloads, ordering, references, annotations))
+    }
+
+    b.entry("requestBody", _.obj(traverse(ordering.sorted(result), _)))
+  }
+
+  override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)
+}
+
 
 class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecEmitter {
 
