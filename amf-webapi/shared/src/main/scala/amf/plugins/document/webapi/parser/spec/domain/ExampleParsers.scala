@@ -9,14 +9,11 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContextType.DEFAULT
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
-import amf.validations.ParserSideValidations.{
-  ExamplesMustBeAMap,
-  ExclusivePropertiesSpecification,
-  InvalidFragmentType
-}
+import amf.validations.ParserSideValidations.{ExamplesMustBeAMap, ExclusivePropertiesSpecification, InvalidFragmentType}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
@@ -63,7 +60,11 @@ case class Oas3ResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiC
   def parse(): Example = {
     val name = yMapEntry.key.as[YScalar].text
     val example = Example(yMapEntry).withName(name)
-    RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true)).populate()
+    if (ctx.syntax == Oas3Syntax) {
+      Oas3SingleExampleValueParser(yMapEntry, {() => example}, ExampleOptions(strictDefault = false, quiet = true)).parse()
+    } else {
+      RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true)).populate()
+    }
   }
 }
 
@@ -188,6 +189,42 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
           map.key("displayName", (ExampleModel.DisplayName in example).allowingAnnotations)
           map.key("description", (ExampleModel.Description in example).allowingAnnotations)
           map.key("strict", (ExampleModel.Strict in example).allowingAnnotations)
+
+          map
+            .key("value")
+            .foreach { entry =>
+              RamlExampleValueAsString(entry.value, example, options).populate()
+            }
+
+          AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
+
+          if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
+        } else RamlExampleValueAsString(entry.value, example, options).populate()
+      case YType.Null => // ignore
+      case _          => RamlExampleValueAsString(entry.value, example, options).populate()
+    }
+
+    example
+  }
+}
+
+case class Oas3SingleExampleValueParser(entry: YMapEntry, producer: () => Example, options: ExampleOptions)(
+  implicit ctx: WebApiContext)
+  extends SpecParserOps {
+  def parse(): Example = {
+    val example = producer().add(Annotations(entry))
+
+    entry.value.tagType match {
+      case YType.Map =>
+        val map = entry.value.as[YMap]
+
+        if (map.key("value").nonEmpty) {
+          map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
+          map.key("description", (ExampleModel.Description in example).allowingAnnotations)
+          map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
+
+          // OAS examples are not strict
+          example.withStrict(false)
 
           map
             .key("value")

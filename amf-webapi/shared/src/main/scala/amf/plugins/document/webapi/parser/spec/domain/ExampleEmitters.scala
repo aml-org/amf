@@ -27,15 +27,51 @@ case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: Spec
 
   override def emit(b: EntryBuilder): Unit = {
     val examples = f.array.values.collect({ case e: Example => e })
-    if (examples.nonEmpty)
-      b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering)(spec))), _)))
+    if (examples.nonEmpty) {
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+        b.entry(key, _.obj(traverse(ordering.sorted(examples.map(Oas3ExampleValuesEmitter(_, ordering)(spec))), _)))
+      } else {
+        b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering)(spec))), _)))
+      }
+    }
   }
 
   override def position(): Position = f.array.values.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
 }
 
+case class Oas3ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+  extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(keyName(example), _.obj(traverse(ordering.sorted(emitters), _)))
+  }
+
+  val emitters: Seq[EntryEmitter] = {
+    val results = ListBuffer[EntryEmitter]()
+
+    val fs = example.fields
+
+    fs.entry(ExampleModel.Summary).foreach(f => results += RamlScalarEmitter("summary", f))
+    fs.entry(ExampleModel.Description).foreach(f => results += RamlScalarEmitter("description", f))
+    fs.entry(ExampleModel.ExternalValue).foreach(f => results += RamlScalarEmitter("externalValue", f))
+    fs.entry(ExampleModel.StructuredValue).foreach(f => {
+      results += EntryPartEmitter("value",
+        DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
+        position = pos(f.value.annotations))
+    })
+    results ++= AnnotationsEmitter(example, ordering).emitters
+
+    results
+  }
+
+  protected def keyName(example: Example) = {
+    example.name.value()
+  }
+
+  override def position(): Position = pos(example.annotations)
+}
+
 case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
-    extends EntryEmitter {
+  extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     example.fields
       .entry(ExampleModel.StructuredValue)
@@ -58,6 +94,7 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(i
 
   override def position(): Position = pos(example.annotations)
 }
+
 
 case class MultipleExampleEmitter(key: String,
                                   examples: Seq[Example],
