@@ -10,3 +10,9 @@ schemes:
 definitions:
   underChannel2:
     $ref: '#/definitions/underChannel2'
+
+  recursiveObject:
+    properties:
+      required-prop:
+        $ref: '#/definitions/recursiveObject'
+    required: [required-prop]

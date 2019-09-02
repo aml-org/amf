@@ -1,0 +1,20 @@
+#%RAML 1.0
+
+title: test baseunit cache of multiple references
+
+types:
+  C: !include datatypeC.raml
+  D: !include datatypeD.raml
+
+uses:
+  lib: library.raml
+
+/someEndpoint:
+  get:
+    body:
+      application/json:
+        type: lib.A
+  post:
+    body:
+      application/json:
+        type: C

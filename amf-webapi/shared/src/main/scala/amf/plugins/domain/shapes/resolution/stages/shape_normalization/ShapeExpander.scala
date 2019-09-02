@@ -73,14 +73,10 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   protected def expandInherits(shape: Shape): Unit = {
     val oldInherits = shape.fields.getValue(ShapeModel.Inherits)
     if (Option(oldInherits).isDefined) {
-      // in this case i use the father shape id and position, because the inheritance could be a recursive shape already
       val newInherits = shape.inherits.map {
-        case r: RecursiveShape if r.fixpoint.option().exists(_.equals(shape.id)) =>
-          r.fixpointTarget.foreach(target => addClosure(target, shape))
-          recursionRegister.recursionError(shape, r, traversal) // direct recursion
         case r: RecursiveShape =>
           r.fixpointTarget.foreach(target => addClosure(target, shape))
-          r
+          recursiveNormalization(r)
         case other =>
           recursiveNormalization(other) match {
             case rec: RecursiveShape =>

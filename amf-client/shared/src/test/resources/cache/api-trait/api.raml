@@ -1,0 +1,21 @@
+#%RAML 1.0
+
+title: test baseunit cache of a trait
+
+types:
+  A:
+    type: object
+    properties:
+      a1: string
+      a2: number
+
+traits:
+  t: !include trait.raml
+
+/someEndpoint:
+  get:
+    body:
+      application/json:
+        type: string
+  post:
+    is: t

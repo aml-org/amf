@@ -1,0 +1,20 @@
+#%RAML 1.0
+
+title: test baseunit cache of a resourceType
+
+types:
+  A:
+    type: object
+    properties:
+      a1: string
+      a2: number
+
+resourceTypes:
+  rt: !include rt.raml
+
+/someEndpoint:
+  type: rt
+  get:
+    body:
+      application/json:
+        type: string

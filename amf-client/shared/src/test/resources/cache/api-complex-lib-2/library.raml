@@ -1,0 +1,25 @@
+#%RAML 1.0 Library
+
+types:
+  A:
+    type: object
+    properties:
+      a1: B
+      a2: number
+  B:
+    type: object
+    properties:
+      b1: boolean
+      b2: C
+
+  C:
+    type: object
+    properties:
+      c1: string
+
+resourceTypes:
+  rt1:
+    post:
+      body:
+        application/json:
+          type: A
