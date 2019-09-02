@@ -376,7 +376,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   case class Oas3RequestParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
       val request = producer()
-      var entries = ListBuffer[YMapEntry]()
 
       map.key("description", RequestModel.Description in request)
       map.key("required", RequestModel.Required in request)
@@ -545,7 +544,27 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             Oas3RequestParser(entry.value.as[YMap], operation.withRequest).parse()
           }
         )
+
+        map.key(
+          "callbacks",
+          entry => {
+            entry.value.as[YMap]
+              .entries
+              .map { callbackEntry =>
+                val name = callbackEntry.key.as[YScalar].text
+                val callback = operation.withCallback(name)
+                val callbackOperations = callbackEntry.value.as[YMap].entries
+                if (callbackOperations.size != 1) {
+                  // TODO throw violation here
+                } else {
+                  EndpointParser(callbackOperations.head, callback.withEndpoint, mutable.ListBuffer.empty).parse()
+                }
+              }
+          }
+        )
       }
+
+      // oas 3.0.0 / oas 2.0
 
       map.key(
         "is".asOasExtension,
@@ -560,7 +579,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         }
       )
 
-      // oas 3.0.0 / oas 2.0
       map.key(
         "security",
         entry => {

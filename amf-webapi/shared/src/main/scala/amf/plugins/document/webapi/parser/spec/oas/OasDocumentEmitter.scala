@@ -28,11 +28,215 @@ import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
 
+trait AccessibleOasDocumentEmitters {
+
+  case class EndPointEmitter(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit val spec: OasSpecEmitterContext)
+    extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      val fs = endpoint.fields
+      sourceOr(
+        endpoint.annotations,
+        b.complexEntry(
+          ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit(_),
+          _.obj { b =>
+            val result = mutable.ListBuffer[EntryEmitter]()
+
+            fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName".asOasExtension, f))
+            fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description".asOasExtension, f))
+            fs.entry(DomainElementModel.Extends)
+              .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true)(spec.eh).emitters())
+
+            val parameters =
+              Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads)
+
+            if (parameters.nonEmpty)
+              result ++= OasParametersEmitter("parameters",
+                parameters.query ++ parameters.path ++ parameters.header,
+                ordering,
+                parameters.body,
+                references)
+                .oasEndpointEmitters()
+
+            fs.entry(EndPointModel.Operations)
+              .map(f => result ++= operations(f, ordering, parameters.body.nonEmpty, references))
+
+            fs.entry(EndPointModel.Security)
+              .map(f => result += ParametrizedSecuritiesSchemeEmitter("security".asOasExtension, f, ordering))
+
+            result ++= AnnotationsEmitter(endpoint, ordering).emitters
+
+            traverse(ordering.sorted(result), b)
+          }
+        )
+      )
+    }
+
+    private def operations(f: FieldEntry,
+                           ordering: SpecOrdering,
+                           endpointPayloadEmitted: Boolean,
+                           references: Seq[BaseUnit]): Seq[EntryEmitter] =
+      f.array.values
+        .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering, endpointPayloadEmitted, references))
+
+    override def position(): Position = pos(endpoint.annotations)
+  }
+
+  case class OperationEmitter(operation: Operation,
+                              ordering: SpecOrdering,
+                              endpointPayloadEmitted: Boolean,
+                              references: Seq[BaseUnit])(implicit val spec: OasSpecEmitterContext)
+    extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      val fs = operation.fields
+
+      sourceOr(
+        operation.annotations,
+        b.complexEntry(
+          ScalarEmitter(fs.entry(OperationModel.Method).get.scalar).emit(_),
+          _.obj { b =>
+            val result = mutable.ListBuffer[EntryEmitter]()
+
+            fs.entry(OperationModel.Name).map(f => result += ValueEmitter("operationId", f))
+            fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
+            fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
+            fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
+            fs.entry(OperationModel.Tags).map(f => result += ArrayEmitter("tags", f, ordering))
+            fs.entry(OperationModel.Documentation)
+              .map(
+                f =>
+                  result += OasEntryCreativeWorkEmitter("externalDocs",
+                    f.value.value.asInstanceOf[CreativeWork],
+                    ordering))
+            fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
+            fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes", f, ordering))
+            fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces", f, ordering))
+            fs.entry(DomainElementModel.Extends)
+              .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true)(spec.eh).emitters())
+            Option(operation.request).foreach(req => result ++= requestEmitters(req, ordering, references))
+            // Annotations collected from the "responses" element that has no direct representation in any model element
+            // They will be passed to the ResponsesEmitter
+            val orphanAnnotations =
+            operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+            fs.entry(OperationModel.Responses)
+              .fold(result += EntryPartEmitter("responses", EmptyMapEmitter()))(f =>
+                result += ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
+
+            fs.entry(OperationModel.Security)
+              .map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
+
+            if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+              operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach  { f: FieldEntry =>
+                val callbacks: Seq[Callback] = f.arrayValues
+                val annotations = f.value.annotations
+                result += EntryPartEmitter("callbacks", OasCallbacksEmitter(callbacks, ordering, references, annotations)(spec))
+              }
+            }
+            result ++= AnnotationsEmitter(operation, ordering).emitters
+
+            traverse(ordering.sorted(result), b)
+          }
+        )
+      )
+    }
+
+    override def position(): Position = pos(operation.annotations)
+
+    def requestEmitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
+
+
+      val result           = mutable.ListBuffer[EntryEmitter]()
+
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+
+        // OAS 3.0.0
+        result ++= Seq(Oas3RequestBodyEmitter(request, ordering, references))
+
+
+      } else {
+
+        // OAS 2.0
+        val fs               = request.fields
+        val parameters       = request.queryParameters ++ request.uriParameters ++ request.headers
+        val (body, formData) = request.payloads.partition(p => !p.annotations.contains(classOf[FormBodyParameter]))
+
+        val payloads = OasPayloads(body)
+
+        if (parameters.nonEmpty || payloads.default.isDefined || formData.nonEmpty)
+          result ++= OasParametersEmitter("parameters",
+            parameters,
+            ordering,
+            payloads.default.toSeq ++ formData,
+            references)
+            .emitters()
+
+        if (payloads.other.nonEmpty)
+          result += OasPayloadsEmitter("requestPayloads".asOasExtension, payloads.other, ordering, references)
+
+        fs.entry(RequestModel.QueryString)
+          .foreach { f =>
+            Option(f.value.value) match {
+              case Some(shape: AnyShape) =>
+                result += RamlNamedTypeEmitter(shape, ordering, Nil, ramlTypesEmitter)
+              case Some(other) =>
+                spec.eh.violation(ResolutionValidation,
+                  request.id,
+                  None,
+                  "Cannot emit a non WebApi Shape",
+                  other.position(),
+                  other.location())
+              case None => // ignore
+            }
+          }
+      }
+
+      result ++= AnnotationsEmitter(request, ordering).emitters
+
+      result
+    }
+
+    def ramlTypesEmitter(s: AnyShape,
+                         o: SpecOrdering,
+                         a: Option[AnnotationsEmitter],
+                         fs: Seq[Field],
+                         us: Seq[BaseUnit]): RamlTypePartEmitter = {
+      Raml10TypePartEmitter(s, o, a, fs, us)(new Raml10SpecEmitterContext(spec.eh))
+    }
+
+  }
+
+  case class ResponsesEmitter(key: String,
+                              f: FieldEntry,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit],
+                              orphanAnnotations: Seq[DomainExtension])(implicit val spec: OasSpecEmitterContext)
+    extends EntryEmitter {
+    override def emit(b: EntryBuilder): Unit = {
+      val emitters = responses(f, ordering) ++ responsesElementsAnnotations()
+      sourceOr(
+        f.value.annotations,
+        b.entry(
+          key,
+          _.obj(traverse(emitters, _))
+        )
+      )
+    }
+
+    private def responses(f: FieldEntry, ordering: SpecOrdering): Seq[EntryEmitter] = {
+      ordering.sorted(f.array.values.map(e => OasResponseEmitter(e.asInstanceOf[Response], ordering, references)))
+    }
+
+    private def responsesElementsAnnotations(): Seq[EntryEmitter] = {
+      OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
+    }
+
+    override def position(): Position = pos(f.value.annotations)
+  }
+}
 /**
   * OpenAPI Spec Emitter.
   */
 abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: OasSpecEmitterContext)
-    extends OasSpecEmitter {
+    extends OasSpecEmitter with AccessibleOasDocumentEmitters {
 
   private def retrieveWebApi(): WebApi = document match {
     case document: Document => document.encodes.asInstanceOf[WebApi]
@@ -177,201 +381,6 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
       }
     }
 
-  }
-
-  case class EndPointEmitter(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])
-      extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      val fs = endpoint.fields
-      sourceOr(
-        endpoint.annotations,
-        b.complexEntry(
-          ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit(_),
-          _.obj { b =>
-            val result = mutable.ListBuffer[EntryEmitter]()
-
-            fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName".asOasExtension, f))
-            fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description".asOasExtension, f))
-            fs.entry(DomainElementModel.Extends)
-              .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true)(spec.eh).emitters())
-
-            val parameters =
-              Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads)
-
-            if (parameters.nonEmpty)
-              result ++= OasParametersEmitter("parameters",
-                                              parameters.query ++ parameters.path ++ parameters.header,
-                                              ordering,
-                                              parameters.body,
-                                              references)
-                .oasEndpointEmitters()
-
-            fs.entry(EndPointModel.Operations)
-              .map(f => result ++= operations(f, ordering, parameters.body.nonEmpty, references))
-
-            fs.entry(EndPointModel.Security)
-              .map(f => result += ParametrizedSecuritiesSchemeEmitter("security".asOasExtension, f, ordering))
-
-            result ++= AnnotationsEmitter(endpoint, ordering).emitters
-
-            traverse(ordering.sorted(result), b)
-          }
-        )
-      )
-    }
-
-    private def operations(f: FieldEntry,
-                           ordering: SpecOrdering,
-                           endpointPayloadEmitted: Boolean,
-                           references: Seq[BaseUnit]): Seq[EntryEmitter] =
-      f.array.values
-        .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering, endpointPayloadEmitted, references))
-
-    override def position(): Position = pos(endpoint.annotations)
-  }
-
-  case class OperationEmitter(operation: Operation,
-                              ordering: SpecOrdering,
-                              endpointPayloadEmitted: Boolean,
-                              references: Seq[BaseUnit])
-      extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      val fs = operation.fields
-
-      sourceOr(
-        operation.annotations,
-        b.complexEntry(
-          ScalarEmitter(fs.entry(OperationModel.Method).get.scalar).emit(_),
-          _.obj { b =>
-            val result = mutable.ListBuffer[EntryEmitter]()
-
-            fs.entry(OperationModel.Name).map(f => result += ValueEmitter("operationId", f))
-            fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
-            fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
-            fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
-            fs.entry(OperationModel.Tags).map(f => result += ArrayEmitter("tags", f, ordering))
-            fs.entry(OperationModel.Documentation)
-              .map(
-                f =>
-                  result += OasEntryCreativeWorkEmitter("externalDocs",
-                                                        f.value.value.asInstanceOf[CreativeWork],
-                                                        ordering))
-            fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
-            fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes", f, ordering))
-            fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces", f, ordering))
-            fs.entry(DomainElementModel.Extends)
-              .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true)(spec.eh).emitters())
-            Option(operation.request).foreach(req => result ++= requestEmitters(req, ordering, references))
-            // Annotations collected from the "responses" element that has no direct representation in any model element
-            // They will be passed to the ResponsesEmitter
-            val orphanAnnotations =
-              operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
-            fs.entry(OperationModel.Responses)
-              .fold(result += EntryPartEmitter("responses", EmptyMapEmitter()))(f =>
-                result += ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
-
-            fs.entry(OperationModel.Security)
-              .map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
-
-            result ++= AnnotationsEmitter(operation, ordering).emitters
-
-            traverse(ordering.sorted(result), b)
-          }
-        )
-      )
-    }
-
-    override def position(): Position = pos(operation.annotations)
-
-    def requestEmitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
-
-
-      val result           = mutable.ListBuffer[EntryEmitter]()
-
-      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
-
-        // OAS 3.0.0
-        result ++= Seq(Oas3RequestBodyEmitter(request, ordering, references))
-
-
-      } else {
-
-        // OAS 2.0
-        val fs               = request.fields
-        val parameters       = request.queryParameters ++ request.uriParameters ++ request.headers
-        val (body, formData) = request.payloads.partition(p => !p.annotations.contains(classOf[FormBodyParameter]))
-
-        val payloads = OasPayloads(body)
-
-        if (parameters.nonEmpty || payloads.default.isDefined || formData.nonEmpty)
-          result ++= OasParametersEmitter("parameters",
-            parameters,
-            ordering,
-            payloads.default.toSeq ++ formData,
-            references)
-            .emitters()
-
-        if (payloads.other.nonEmpty)
-          result += OasPayloadsEmitter("requestPayloads".asOasExtension, payloads.other, ordering, references)
-
-        fs.entry(RequestModel.QueryString)
-          .foreach { f =>
-            Option(f.value.value) match {
-              case Some(shape: AnyShape) =>
-                result += RamlNamedTypeEmitter(shape, ordering, Nil, ramlTypesEmitter)
-              case Some(other) =>
-                spec.eh.violation(ResolutionValidation,
-                  request.id,
-                  None,
-                  "Cannot emit a non WebApi Shape",
-                  other.position(),
-                  other.location())
-              case None => // ignore
-            }
-          }
-      }
-
-      result ++= AnnotationsEmitter(request, ordering).emitters
-
-      result
-    }
-
-    def ramlTypesEmitter(s: AnyShape,
-                         o: SpecOrdering,
-                         a: Option[AnnotationsEmitter],
-                         fs: Seq[Field],
-                         us: Seq[BaseUnit]): RamlTypePartEmitter = {
-      Raml10TypePartEmitter(s, o, a, fs, us)(new Raml10SpecEmitterContext(spec.eh))
-    }
-
-  }
-
-  case class ResponsesEmitter(key: String,
-                              f: FieldEntry,
-                              ordering: SpecOrdering,
-                              references: Seq[BaseUnit],
-                              orphanAnnotations: Seq[DomainExtension])
-      extends EntryEmitter {
-    override def emit(b: EntryBuilder): Unit = {
-      val emitters = responses(f, ordering) ++ responsesElementsAnnotations()
-      sourceOr(
-        f.value.annotations,
-        b.entry(
-          key,
-          _.obj(traverse(emitters, _))
-        )
-      )
-    }
-
-    private def responses(f: FieldEntry, ordering: SpecOrdering): Seq[EntryEmitter] = {
-      ordering.sorted(f.array.values.map(e => OasResponseEmitter(e.asInstanceOf[Response], ordering, references)))
-    }
-
-    private def responsesElementsAnnotations(): Seq[EntryEmitter] = {
-      OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
-    }
-
-    override def position(): Position = pos(f.value.annotations)
   }
 
   case class EndpointsEmitter(key: String,
@@ -565,5 +574,11 @@ case class TagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(impl
         traverse(ordering.sorted(result), b)
       }
     }
+  }
+}
+
+object OasDocumentEmitter extends  AccessibleOasDocumentEmitters {
+  def endpointEmitter(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit], spec: OasSpecEmitterContext) = {
+    EndPointEmitter(endpoint, ordering, references)(spec)
   }
 }

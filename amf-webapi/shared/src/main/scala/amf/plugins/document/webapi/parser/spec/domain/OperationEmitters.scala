@@ -2,18 +2,21 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{Fields, Position}
-import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
+import amf.plugins.document.webapi.contexts.{Oas3SpecEmitterFactory, OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
-import amf.plugins.domain.webapi.models.Operation
-import org.yaml.model.YDocument.EntryBuilder
+import amf.plugins.domain.webapi.models.{Callback, Operation}
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.parser.spec.oas.OasDocumentEmitter
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import org.yaml.model.YType
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -135,6 +138,12 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
     fs.entry(OperationModel.Security)
       .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))
 
+    operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach  { f: FieldEntry =>
+      val callbacks: Seq[Callback] = f.arrayValues
+      val annotations = f.value.annotations
+      result += EntryPartEmitter("callbacks".asRamlAnnotation, OasCallbacksEmitter(callbacks, ordering, references, annotations)(toOas(spec)))
+
+    }
     result
   }
 
@@ -152,4 +161,34 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
   }
 
   override def position(): Position = pos(operation.annotations)
+}
+
+case class OasCallbacksEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, references: Seq[BaseUnit], annotations: Annotations)(
+  implicit spec: OasSpecEmitterContext)
+  extends PartEmitter {
+  override def emit(b: PartBuilder): Unit = {
+    sourceOr(
+      annotations,
+      b.obj { b =>
+        val emitters = callbacks.map(callback => EntryPartEmitter(callback.name.value(), OasCallbackEmitter(callback, ordering, references), YType.Str, pos(callback.annotations)))
+        traverse(ordering.sorted(emitters), b)
+      }
+    )
+  }
+
+  override def position(): Position = pos(annotations)
+}
+
+case class OasCallbackEmitter(callback: Callback, ordering: SpecOrdering, references: Seq[BaseUnit])(
+  implicit spec: OasSpecEmitterContext)
+  extends PartEmitter {
+
+  override def emit(p: PartBuilder): Unit = {
+    p.obj(
+      traverse(Seq(OasDocumentEmitter.endpointEmitter(callback.endpoint, ordering, references, spec)), _)
+    )
+  }
+
+  override def position(): Position = pos(callback.annotations)
+
 }

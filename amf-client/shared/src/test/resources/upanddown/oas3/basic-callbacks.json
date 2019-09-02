@@ -1,0 +1,77 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "summary": "this is a test",
+        "operationId": "test",
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "callbacks": {
+          "myWebhook": {
+            "http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body}": {
+              "post": {
+                "requestBody": {
+                  "description": "Callback payload",
+                  "content":  {
+                    "application/json": {
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "webhook successfully processed and no retries will be performed"
+                  }
+                }
+              }
+            }
+          },
+          "myWebhook2": {
+            "http://notificationServer2.com?transactionId={$request.body#/id}&email={$request.body}": {
+              "post": {
+                "requestBody": {
+                  "description": "Callback payload 2",
+                  "content":  {
+                    "application/json": {
+                      "schema": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "webhook 2 successfully processed and no retries will be performed"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://test.com/",
+      "description": "The production API server"
+    }
+  ]
+}

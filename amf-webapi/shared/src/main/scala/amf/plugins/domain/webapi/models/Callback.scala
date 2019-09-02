@@ -20,8 +20,8 @@ case class Callback(fields: Fields, annotations: Annotations) extends NamedDomai
   def withExpression(expression: String): this.type = set(Expression, expression)
   def withEndpoint(endpoint: EndPoint): this.type   = set(Endpoint, endpoint)
 
-  def withEndpoint(): EndPoint = {
-    val result = EndPoint()
+  def withEndpoint(path: String): EndPoint = {
+    val result = EndPoint().withPath(path)
     set(Endpoint, result)
     result
   }
