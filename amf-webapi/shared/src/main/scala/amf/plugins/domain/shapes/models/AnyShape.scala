@@ -162,7 +162,7 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
       fields.filter(fe => fe._1 != AnyShapeModel.Examples).nonEmpty &&
       annotations.find(classOf[TypePropertyLexicalInfo]).isEmpty
 
-  protected def inlined: Boolean = annotations.find(classOf[InlineDefinition]).isDefined
+  def inlined: Boolean = annotations.find(classOf[InlineDefinition]).isDefined
 
   override def ramlSyntaxKey: String = "anyShape"
 

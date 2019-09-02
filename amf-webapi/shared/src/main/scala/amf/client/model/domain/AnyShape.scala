@@ -103,4 +103,7 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     *         that track information annotated.
     */
   def trackedExample(trackId: String): ClientOption[Example] = _internal.trackedExample(trackId).asClient
+
+  // Aux method to know if the shape has the annotation of [[InlineDefinition]]
+  def inlined(): Boolean = _internal.inlined
 }
