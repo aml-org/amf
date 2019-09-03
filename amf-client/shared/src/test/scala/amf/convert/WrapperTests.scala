@@ -1680,48 +1680,42 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
     } yield {
       val golden    = """{
-                     |  "$schema": "http://json-schema.org/draft-04/schema#",
-                     |  "$ref": "#/definitions/C",
-                     |  "definitions": {
-                     |    "A": {
-                     |      "type": "object",
-                     |      "additionalProperties": true,
-                     |      "properties": {
-                     |        "a1": {
-                     |          "type": "object",
-                     |          "example": {
-                     |            "c1": []
-                     |          },
-                     |          "additionalProperties": true,
-                     |          "properties": {
-                     |            "c1": {
-                     |              "type": "array",
-                     |              "items": {
-                     |                "$ref": "#/definitions/A"
-                     |              }
-                     |            }
-                     |          }
-                     |        }
-                     |      }
-                     |    },
-                     |    "C": {
-                     |      "type": "object",
-                     |      "example": {
-                     |        "c1": []
-                     |      },
-                     |      "additionalProperties": true,
-                     |      "properties": {
-                     |        "c1": {
-                     |          "type": "array",
-                     |          "items": {
-                     |            "$ref": "#/definitions/A"
-                     |          }
-                     |        }
-                     |      }
-                     |    }
-                     |  }
-                     |}
-                     |""".stripMargin
+                        |  "$schema": "http://json-schema.org/draft-04/schema#",
+                        |  "$ref": "#/definitions/C",
+                        |  "definitions": {
+                        |    "A": {
+                        |      "type": "object",
+                        |      "additionalProperties": true,
+                        |      "properties": {
+                        |        "a1": {
+                        |          "type": "object",
+                        |          "additionalProperties": true,
+                        |          "properties": {
+                        |            "c1": {
+                        |              "type": "array",
+                        |              "items": {
+                        |                "$ref": "#/definitions/A"
+                        |              }
+                        |            }
+                        |          }
+                        |        }
+                        |      }
+                        |    },
+                        |    "C": {
+                        |      "type": "object",
+                        |      "additionalProperties": true,
+                        |      "properties": {
+                        |        "c1": {
+                        |          "type": "array",
+                        |          "items": {
+                        |            "$ref": "#/definitions/A"
+                        |          }
+                        |        }
+                        |      }
+                        |    }
+                        |  }
+                        |}
+                        |""".stripMargin
       val generated = resolved.asInstanceOf[Document].declares.asSeq(2).asInstanceOf[NodeShape].buildJsonSchema()
       assert(generated == golden)
     }
