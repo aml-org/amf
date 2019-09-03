@@ -1,0 +1,76 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "summary": "this is a test",
+        "operationId": "test",
+        "tags": [
+          "tag-a",
+          "tag-b"
+        ],
+        "requestBody": {
+          "description": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "callbacks": {
+          "myWebhook": {
+            "http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body}": {
+              "post": {
+                "requestBody": {
+                  "description": "Callback payload",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "responses": {
+                  "200": {
+                    "description": "webhook successfully processed and no retries will be performed"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "servers": [
+          {
+            "url": "https://test.com/operation",
+            "description": "The production API server for the operation"
+          }
+        ]
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://test.com/",
+      "description": "The production API server"
+    }
+  ]
+}

@@ -5,20 +5,15 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{ErrorHandler, FieldEntry, Position, Value}
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.plugins.document.webapi.contexts.{Oas3SpecEmitterFactory, OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter, EnumValuesEmitter}
 import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, toRaml}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
-import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
+import amf.plugins.domain.webapi.models.{Operation, Parameter, Server, WebApi}
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.Strings
@@ -59,7 +54,7 @@ case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references:
     if (servers.nonEmpty) result += ServersEmitters("servers".asRamlAnnotation, servers, ordering)
 }
 
-abstract class OasServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+abstract class OasServersEmitter(elem: DomainElement, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[EntryEmitter]
 
@@ -76,6 +71,21 @@ case class Oas3ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering
 
     asExtension("servers", f.arrayValues(classOf[Server]), result)
 
+    result
+  }
+}
+
+case class Oas3OperationServersEmitter(operation: Operation, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+  implicit spec: OasSpecEmitterContext)
+  extends OasServersEmitter(operation, f, ordering, references) {
+
+  def emitters(): Seq[EntryEmitter] = {
+    val result = ListBuffer[EntryEmitter]()
+
+    if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
+      val servers: Seq[Server] = operation.servers
+      if (servers.nonEmpty) result += ServersEmitters("servers", servers, ordering)
+    }
     result
   }
 }

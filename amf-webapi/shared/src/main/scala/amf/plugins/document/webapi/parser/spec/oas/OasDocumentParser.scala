@@ -562,6 +562,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
               }
           }
         )
+        ctx.factory.serversParser(map, operation).parse()
       }
 
       // oas 3.0.0 / oas 2.0

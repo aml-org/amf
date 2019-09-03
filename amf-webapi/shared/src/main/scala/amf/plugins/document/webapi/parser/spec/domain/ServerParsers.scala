@@ -1,12 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
+import amf.core.metamodel.Field
 import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{Strings, TemplateUri}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
@@ -108,25 +110,25 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   }
 }
 
-abstract class OasServersParser(map: YMap, api: WebApi)(implicit val ctx: OasWebApiContext) extends SpecParserOps {
+abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(implicit val ctx: OasWebApiContext) extends SpecParserOps {
   def parse(): Unit
 
   protected def parseServers(key: String): Unit =
     map.key(key).foreach { entry =>
-      entry.value.as[Seq[YMap]].map(OasServerParser(api.id, _).parse()).foreach { server =>
-        api.add(WebApiModel.Servers, server)
+      entry.value.as[Seq[YMap]].map(OasServerParser(elem.id, _).parse()).foreach { server =>
+        elem.add(field, server)
       }
     }
 }
 
-case class Oas3ServersParser(map: YMap, api: WebApi)(implicit override val ctx: OasWebApiContext)
-    extends OasServersParser(map, api) {
+case class Oas3ServersParser(map: YMap, elem: DomainElement, field: Field)(implicit override val ctx: OasWebApiContext)
+    extends OasServersParser(map, elem, field) {
 
-  override def parse(): Unit = parseServers("servers")
+  override def parse(): Unit = if (ctx.syntax == Oas3Syntax) parseServers("servers")
 }
 
 case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: OasWebApiContext)
-    extends OasServersParser(map, api) {
+    extends OasServersParser(map, api, WebApiModel.Servers) {
   override def parse(): Unit = {
     if (baseUriExists(map)) {
       var host     = ""

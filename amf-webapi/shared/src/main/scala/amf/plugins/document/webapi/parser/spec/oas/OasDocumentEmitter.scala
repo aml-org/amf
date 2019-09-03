@@ -130,6 +130,10 @@ trait AccessibleOasDocumentEmitters {
                 val annotations = f.value.annotations
                 result += EntryPartEmitter("callbacks", OasCallbacksEmitter(callbacks, ordering, references, annotations)(spec))
               }
+
+              fs.entry(OperationModel.Servers)
+                .map(f => result ++= spec.factory.serversEmitter(operation, f, ordering, references).emitters())
+
             }
             result ++= AnnotationsEmitter(operation, ordering).emitters
 
