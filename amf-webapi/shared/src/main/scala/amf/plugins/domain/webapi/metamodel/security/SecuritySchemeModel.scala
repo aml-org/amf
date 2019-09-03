@@ -2,13 +2,13 @@ package amf.plugins.domain.webapi.metamodel.security
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.common.{DescriptionField, DisplayNameField}
+import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.templates.KeyField
-import amf.core.vocabulary.Namespace.{Hydra, Security}
-import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.domain.webapi.metamodel.{ParametersFieldModel, ResponseModel}
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, ParametersFieldModel, ResponseModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
+import amf.core.vocabulary.Namespace.{Http, Hydra, Schema, Security}
+import amf.core.vocabulary.{Namespace, ValueType}
 
 object SecuritySchemeModel
     extends DomainElementModel

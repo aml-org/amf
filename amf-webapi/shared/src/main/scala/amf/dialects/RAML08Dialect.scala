@@ -81,6 +81,14 @@ object RAML08Dialect {
             ExampleNode.id
           )),
       PropertyMapping()
+        .withId(DialectLocation + s"#/declarations/$nodeId/DataType/examples")
+        .withName("examples")
+        .withNodePropertyMapping(AnyShapeModel.Examples.value.iri())
+        .withObjectRange(
+          Seq(
+            ExampleNode.id
+          )),
+      PropertyMapping()
         .withId(DialectLocation + s"#/declarations/$nodeId/DataType/displayName")
         .withName("examples")
         .withNodePropertyMapping(AnyShapeModel.DisplayName.value.iri())
@@ -91,10 +99,18 @@ object RAML08Dialect {
         .withNodePropertyMapping(AnyShapeModel.Description.value.iri())
         .withLiteralRange(xsdString.iri()),
       PropertyMapping()
-        .withId(DialectLocation + s"#/declarations/$nodeId/DataTypeNode/repeat")
-        .withName("repeat")
-        .withNodePropertyMapping(PropertyShapeModel.MaxCount.value.iri())
-        .withLiteralRange(xsdBoolean.iri()),
+        .withId(DialectLocation + s"#/declarations/$nodeId/DataType/facets")
+        .withName("facets")
+        .withNodePropertyMapping(AnyShapeModel.CustomShapePropertyDefinitions.value.iri())
+        .withLiteralRange(amlAnyNode.iri()),
+      PropertyMapping()
+        .withId(DialectLocation + s"#/declarations/$nodeId/DataType/xml")
+        .withName("xml")
+        .withNodePropertyMapping(AnyShapeModel.XMLSerialization.value.iri())
+        .withObjectRange(
+          Seq(
+            XmlNode.id
+          )),
       PropertyMapping()
         .withId(DialectLocation + s"#/declarations/$nodeId/DataType/enum")
         .withName("enum")
@@ -135,6 +151,15 @@ object RAML08Dialect {
         .withName("discriminatorValue")
         .withNodePropertyMapping(NodeShapeModel.DiscriminatorValue.value.iri())
         .withLiteralRange(xsdString.iri()),
+      // Array type
+      PropertyMapping()
+        .withId(DialectLocation + s"#/declarations/$nodeId/ArrayTypeNode/items")
+        .withName("items")
+        .withNodePropertyMapping(ArrayShapeModel.Items.value.iri())
+        .withAllowMultiple(true)
+        .withObjectRange(Seq(
+          DataTypeNodeId
+        )),
       PropertyMapping()
         .withId(DialectLocation + s"#/declarations/$nodeId/ArrayTypeNode/minItems")
         .withName("minItems")
@@ -204,6 +229,38 @@ object RAML08Dialect {
         .withNodePropertyMapping(FileShapeModel.FileTypes.value.iri())
         .withLiteralRange(amlNumber.iri()),
     )
+
+    val XmlNode = NodeMapping()
+      .withId(DialectLocation + "#/declarations/XmlNode")
+      .withName("XmlNode")
+      .withNodeTypeMapping(XMLSerializerModel.`type`.head.iri())
+      .withPropertiesMapping(Seq(
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/XmlNode/name")
+          .withNodePropertyMapping(XMLSerializerModel.Name.value.iri())
+          .withName("name")
+          .withLiteralRange(xsdString.iri()),
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/XmlNode/namespace")
+          .withNodePropertyMapping(XMLSerializerModel.Namespace.value.iri())
+          .withName("namespace")
+          .withLiteralRange(amlLink.iri()),
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/XmlNode/prefix")
+          .withNodePropertyMapping(XMLSerializerModel.Prefix.value.iri())
+          .withName("prefix")
+          .withLiteralRange(xsdString.iri()),
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/XmlNode/attribute")
+          .withNodePropertyMapping(XMLSerializerModel.Attribute.value.iri())
+          .withName("attribute")
+          .withLiteralRange(xsdBoolean.iri()),
+        PropertyMapping()
+          .withId(DialectLocation + "#/declarations/XmlNode/wrapped")
+          .withNodePropertyMapping(XMLSerializerModel.Wrapped.value.iri())
+          .withName("wrapped")
+          .withLiteralRange(xsdBoolean.iri())
+      ))
 
     val ExampleNode = NodeMapping()
       .withId(DialectLocation + "#/declarations/ExampleNode")
@@ -551,6 +608,7 @@ object RAML08Dialect {
       .withLocation(DialectLocation)
       .withId(DialectLocation)
       .withDeclares(Seq(
+        DialectNodes.XmlNode,
         DialectNodes.ExampleNode,
         DialectNodes.DataTypeNode,
         DialectNodes.DocumentationNode,

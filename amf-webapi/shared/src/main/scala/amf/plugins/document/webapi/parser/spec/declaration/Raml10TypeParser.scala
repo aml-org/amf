@@ -284,7 +284,7 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
       case FileType =>
         Some(FileShape(ast).withName(name, Annotations()))
       case _: ScalarType =>
-        Some(ScalarShape(ast)
+        Some(ScalarShape()
           .withName(name, Annotations())
           .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
       case AnyType =>
