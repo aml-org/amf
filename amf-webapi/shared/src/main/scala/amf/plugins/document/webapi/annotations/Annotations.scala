@@ -45,6 +45,9 @@ case class GeneratedJSONSchema(rawText: String) extends Annotation
 /** Represents generated RAML Data Type. */
 case class GeneratedRamlDatatype(rawText: String) extends Annotation
 
+/** Mark the declaration as the root of the JSON schema. */
+case class JSONSchemaRoot() extends Annotation
+
 case class JSONSchemaId(id: String) extends SerializableAnnotation with PerpetualAnnotation {
   override val name: String  = "json-schema-id"
   override val value: String = id

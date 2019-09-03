@@ -22,6 +22,7 @@ import amf.core.remote.{JsonSchema, Platform, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.IdCounter
+import amf.plugins.document.webapi.annotations.JSONSchemaRoot
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
@@ -264,7 +265,17 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   }
 
   override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
-    firstAnyShape(unit) map (JsonSchemaEmitter(_, eh = renderOptions.errorHandler).emitDocument())
+    unit match {
+      case d: DeclaresModel =>
+        // The root element of the JSON Schema must be identified with the annotation [[JSONSchemaRoot]]
+        val root = d.declares.find(d => d.annotations.contains(classOf[JSONSchemaRoot]) && d.isInstanceOf[AnyShape])
+        root match {
+          case Some(r: AnyShape) =>
+            Some(JsonSchemaEmitter(r, d.declares, eh = renderOptions.errorHandler).emitDocument())
+          case _ => None
+        }
+      case _ => None
+    }
 
   /**
     * Decides if this plugin can parse the provided document instance.

@@ -4,10 +4,11 @@ import amf.core.AMFSerializer
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.Document
+import amf.core.model.domain.DomainElement
 import amf.core.parser.{ErrorHandler, Position}
 import amf.core.remote.JsonSchema
 import amf.core.services.RuntimeSerializer
-import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, ParsedJSONSchema}
+import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasDeclarationsEmitter
@@ -33,17 +34,18 @@ trait JsonSchemaSerializer {
   protected def generateJsonSchema(element: AnyShape): String = {
     AMFSerializer.init()
     val originalId = element.id
-    val jsonSchema = RuntimeSerializer(Document().withDeclaredElement(fixNameIfNeeded(element)),
-                                       "application/schema+json",
-                                       JsonSchema.name)
+    val document   = Document().withDeclares(Seq(fixNameIfNeeded(element)) ++ element.closureShapes)
+    val jsonSchema = RuntimeSerializer(document, "application/schema+json", JsonSchema.name)
     element.withId(originalId)
-    element.annotations.reject(_.isInstanceOf[ParsedJSONSchema])
-    element.annotations.reject(_.isInstanceOf[GeneratedJSONSchema])
+    element.annotations.reject(a =>
+      a.isInstanceOf[ParsedJSONSchema] || a.isInstanceOf[GeneratedJSONSchema] || a.isInstanceOf[JSONSchemaRoot])
     element.annotations += GeneratedJSONSchema(jsonSchema)
     jsonSchema
   }
 
   private def fixNameIfNeeded(element: AnyShape): AnyShape = {
+    // Adding an annotation to identify the root shape of the JSON Schema
+    element.annotations += JSONSchemaRoot()
     if (element.name.option().isEmpty)
       element.copyShape().withName("root")
     else {
@@ -59,7 +61,10 @@ object JsonSchemaEntry extends EntryEmitter {
   override def position(): Position = Position.ZERO
 }
 
-case class JsonSchemaEmitter(shape: AnyShape, ordering: SpecOrdering = SpecOrdering.Lexical, eh: ErrorHandler) {
+case class JsonSchemaEmitter(root: AnyShape,
+                             declarations: Seq[DomainElement],
+                             ordering: SpecOrdering = SpecOrdering.Lexical,
+                             eh: ErrorHandler) {
   def emitDocument(): YDocument = {
     YDocument(b => {
       b.obj { b =>
@@ -70,14 +75,14 @@ case class JsonSchemaEmitter(shape: AnyShape, ordering: SpecOrdering = SpecOrder
 
   private val jsonSchemaRefEntry = new EntryEmitter {
     override def emit(b: EntryBuilder): Unit =
-      b.entry("$ref", OasDefinitions.appendDefinitionsPrefix(shape.name.value()))
+      b.entry("$ref", OasDefinitions.appendDefinitionsPrefix(root.name.value()))
 
     override def position(): Position = Position.ZERO
   }
 
   private def sortedTypeEntries =
     ordering.sorted(
-      OasDeclarationsEmitter(Seq(shape), SpecOrdering.Lexical, Seq())(JsonSchemaEmitterContext(eh)).emitters) // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
+      OasDeclarationsEmitter(declarations, SpecOrdering.Lexical, Seq())(JsonSchemaEmitterContext(eh)).emitters) // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
 
   private val emitters = Seq(JsonSchemaEntry, jsonSchemaRefEntry) ++ sortedTypeEntries
 }
