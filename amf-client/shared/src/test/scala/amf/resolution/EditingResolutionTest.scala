@@ -323,6 +323,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Union type containing array type") {
+    cycle(
+      "union-type-containg-array.raml",
+      "union-type-containg-array.jsonld",
+      RamlYamlHint,
+      Amf,
+      validationsPath + "union-type-containg-array/"
+    )
+  }
+
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")

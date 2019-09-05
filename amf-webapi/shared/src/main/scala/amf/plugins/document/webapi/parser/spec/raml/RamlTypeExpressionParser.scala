@@ -165,8 +165,9 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
       case None => // ignore
       case Some(array: ArrayShape) if isEmptyArray(array) =>
         parsedShape match {
-          case None    => parsedShape = Some(array)
-          case Some(_) => parsedShape = Some(fillEmptyArray(array))
+          case None                    => parsedShape = Some(array)
+          case Some(union: UnionShape) => union.withAnyOf(union.anyOf :+ array)
+          case Some(_)                 => parsedShape = Some(fillEmptyArray(array))
         }
       case Some(shape) =>
         parsedShape match {
