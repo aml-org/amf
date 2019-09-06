@@ -107,7 +107,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
     libraryDependencies += "org.topbraid"           % "shacl"                   % "1.2.0-INTERNAL",
     libraryDependencies += "org.slf4j"              % "slf4j-simple"            % "1.7.12",
-    libraryDependencies += "org.apache.commons" % "commons-compress" % "1.18",
+    libraryDependencies += "org.apache.commons" % "commons-compress" % "1.19",
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
