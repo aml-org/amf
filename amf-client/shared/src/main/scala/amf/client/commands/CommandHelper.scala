@@ -1,5 +1,6 @@
 package amf.client.commands
 
+import amf.client.convert.WebApiRegister
 import amf.core.client.ParserConfig
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
@@ -20,6 +21,7 @@ trait CommandHelper {
   val platform: Platform
 
   def AMFInit(): Future[Unit] = {
+    WebApiRegister.register(platform)
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(Raml10Plugin)
     amf.core.AMF.registerPlugin(Raml08Plugin)

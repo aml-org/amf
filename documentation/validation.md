@@ -6,23 +6,23 @@ AMF includes a powerful validation framework that can be used to define constrai
 
 AMF validation has the following design goals:
 
-- Validation is explicit
+- **Validation is explicit**
 
 Constraints over the parsed model are explicit. We want to avoid ambiguity about what is valid and invalid for a particular model. All the constraints defined have explicit identifiers and clients can access the full list of validations and their definitions.
 
-- The validation mechanism is formal
+- **The validation mechanism is formal**
 
 AMF uses a W3C recommendation [SHACL](https://www.w3.org/TR/shacl/), to implement validation. SHACL provide powerful and clearly defined closed world semantics to validate information models, beyond what can be achieved through more limited validation schema languages like JSON-Schema. Thanks to SHACL sound logical foundation, we can explain easily why a model is invalid.
 
-- Validations can be customised
+- **Validations can be customised**
 
 AMF introduces the notion of a validation profile. Profiles group validations into sets of related constraints following certain semantics or standard requirements. RAML 1.0,RAML 0.8, OAS 2.0 are valid profiles that will ensure compatibility between the parsed model and these specifications. Furthermore, clients can create a custom validation profile, selecting the validations that are important for their use case, setting the right severity level for each validation or modifying one of the standard profiles, turning on and off individual validations in that profile.
 
-- Validations can be extended
+- **Validations can be extended**
 
 AMF validation profiles can be extended with custom validations defined by clients. A declarative approach using AMF validation profile dialect can be used to define new validations or a programmatic mechanism based on JavaScript functions can be followed. Advanced users can always define standard SHACL constraints to have complete control over the validation mechanism.
 
-- Validations are data
+- **Validations are data**
 
 AMF can parse the validation profile for an API and generate a model in the same way it parses the API definition itself. API model and validation profile model can be linked, stored, and queried as a single unified data graph.
 
@@ -113,7 +113,7 @@ This report can be serialised as a JSON-LD document that can be processed by mac
 
 ## Validation Profile syntax
 
-Validation profile documents are defined as a [RAML Dialect extension](https://github.com/mulesoft/amf/blob/master/vocabularies/dialects/validation.raml) (see the documentation about RAML Vocabulary and Dialect to know how to work with RAML extensions).
+Validation profile documents are defined as a [AML Dialect extension](https://github.com/mulesoft/amf/blob/master/vocabularies/dialects/validation.raml) (see the documentation about RAML Vocabulary and Dialect to know how to work with RAML extensions).
 
 ### Header and dialect document type
 
@@ -300,7 +300,12 @@ In order to traverse the model, prefixes for all the namespaces in the model hav
   "schema":     "http://schema.org/",
   "http":       "http://raml.org/vocabularies/http#",
   "sh":         "http://www.w3.org/ns/shacl#",
-  "hydra":      "http://www.w3.org/ns/hydra/core#"
+  "hydra":      "http://www.w3.org/ns/hydra/core#",
+  "amf-parser": "http://a.ml/vocabularies/amf/parser#,
+  "amf-core":   "http://a.ml/vocabularies/amf/core#",
+  "amf-resolution": "http://a.ml/vocabularies/amf/resolution#",
+  "amf-validation": "http://a.ml/vocabularies/amf/validation#",
+  "amf-render": "http://a.ml/vocabularies/amf/render#"
 }
 ```
 

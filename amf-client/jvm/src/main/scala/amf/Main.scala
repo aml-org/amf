@@ -17,11 +17,8 @@ object Main extends PlatformSecrets {
 
   def enableTracing(cfg: ParserConfig) = {
     if (cfg.trace) {
-      println("Enabling tracing!")
+      System.err.println("Tracing enabled")
       ExecutionLog.start()
-    } else {
-      println("NOT TRACING")
-      println(cfg)
     }
   }
 
@@ -30,7 +27,6 @@ object Main extends PlatformSecrets {
       case Some(cfg) =>
         enableTracing(cfg)
         cfg.mode match {
-          case Some(ParserConfig.REPL)      => runRepl()
           case Some(ParserConfig.TRANSLATE) => Await.result(runTranslate(cfg), 1 day)
           case Some(ParserConfig.VALIDATE)  => Await.result(runValidate(cfg), 1 day)
           case Some(ParserConfig.PARSE) => {
@@ -57,7 +53,6 @@ object Main extends PlatformSecrets {
     System.err.println("Wrong command")
     System.exit(ExitCodes.WrongInvocation)
   }
-  def runRepl()                                       = Repl(System.in, System.out)
   def runTranslate(config: ParserConfig): Future[Any] = TranslateCommand(platform).run(config)
   def runValidate(config: ParserConfig): Future[Any]  = ValidateCommand(platform).run(config)
   def runParse(config: ParserConfig): Future[Any]     = ParseCommand(platform).run(config)

@@ -20,7 +20,7 @@ object CmdLineParser {
   }
 
   val parser: OptionParser[ParserConfig] = new scopt.OptionParser[ParserConfig]("amf") {
-    head("Anything Modeling Framework", "1.0")
+    head("Anything Modeling Framework", "3.X")
 
     arg[String]("<file_in> [<file_out>]")
       .unbounded()
@@ -71,10 +71,6 @@ object CmdLineParser {
       .abbr("cp")
       .text("Custom validation profile location")
       .action((f, c) => c.copy(customProfile = Some(f)))
-
-    cmd("repl")
-      .text("Run in interactive mode")
-      .action((_, c) => c.copy(mode = Some(ParserConfig.REPL)))
 
     cmd("parse")
       .text("Parse the input file and generates the JSON-LD AMF model")
