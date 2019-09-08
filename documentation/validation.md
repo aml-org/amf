@@ -301,7 +301,7 @@ In order to traverse the model, prefixes for all the namespaces in the model hav
   "http":       "http://raml.org/vocabularies/http#",
   "sh":         "http://www.w3.org/ns/shacl#",
   "hydra":      "http://www.w3.org/ns/hydra/core#",
-  "amf-parser": "http://a.ml/vocabularies/amf/parser#,
+  "amf-parser": "http://a.ml/vocabularies/amf/parser#",
   "amf-core":   "http://a.ml/vocabularies/amf/core#",
   "amf-resolution": "http://a.ml/vocabularies/amf/resolution#",
   "amf-validation": "http://a.ml/vocabularies/amf/validation#",
