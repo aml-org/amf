@@ -153,7 +153,8 @@ object CustomShaclFunctions {
             dataType <- Option(scalar.dataType).flatMap(_.option())
             format   <- Option(scalar.format).flatMap(_.option())
           } yield {
-            if (dataType.endsWith("dateTime") && !(format == "rfc3339" || format == "rfc2616")) {
+            val validFormats = Set("rfc3339", "rfc2616", "date", "time", "date-time")
+            if (dataType.endsWith("dateTime") && !validFormats.contains(format)) {
               if (!element.annotations.contains(classOf[ParsedJSONSchema])) violation(None)
             }
           }
