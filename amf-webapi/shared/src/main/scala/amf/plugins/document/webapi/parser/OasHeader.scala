@@ -24,7 +24,7 @@ object OasHeader {
 
   object Oas20Header extends OasHeader(swagger, "2.0")
 
-  object Oas30Header extends OasHeader(openapi, "3.0.0")
+  object Oas30Header extends OasHeader(openapi, "3\\.0\\.[0-9]+")
 
   object Oas20DocumentationItem extends OasHeader(extensionName, "2.0 DocumentationItem")
 
@@ -60,18 +60,21 @@ object OasHeader {
       case _ => None
     }
 
-  def apply(text: String): Option[OasHeader] = text match {
-    case Oas20Header.value                    => Some(Oas20Header)
-    case Oas30Header.value                    => Some(Oas30Header)
-    case Oas20DocumentationItem.value         => Some(Oas20DocumentationItem)
-    case Oas20DataType.value                  => Some(Oas20DataType)
-    case Oas20NamedExample.value              => Some(Oas20NamedExample)
-    case Oas20ResourceType.value              => Some(Oas20ResourceType)
-    case Oas20Trait.value                     => Some(Oas20Trait)
-    case Oas20AnnotationTypeDeclaration.value => Some(Oas20AnnotationTypeDeclaration)
-    case Oas20SecurityScheme.value            => Some(Oas20SecurityScheme)
-    case Oas20Extension.value                 => Some(Oas20Extension)
-    case Oas20Overlay.value                   => Some(Oas20Overlay)
-    case _                                    => None
+  def apply(text: String): Option[OasHeader] = {
+    val oas30 = Oas30Header.value.r
+    text match {
+      case Oas20Header.value                    => Some(Oas20Header)
+      case oas30()                              => Some(Oas30Header)
+      case Oas20DocumentationItem.value         => Some(Oas20DocumentationItem)
+      case Oas20DataType.value                  => Some(Oas20DataType)
+      case Oas20NamedExample.value              => Some(Oas20NamedExample)
+      case Oas20ResourceType.value              => Some(Oas20ResourceType)
+      case Oas20Trait.value                     => Some(Oas20Trait)
+      case Oas20AnnotationTypeDeclaration.value => Some(Oas20AnnotationTypeDeclaration)
+      case Oas20SecurityScheme.value            => Some(Oas20SecurityScheme)
+      case Oas20Extension.value                 => Some(Oas20Extension)
+      case Oas20Overlay.value                   => Some(Oas20Overlay)
+      case _                                    => None
+    }
   }
 }
