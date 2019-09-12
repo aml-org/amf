@@ -6,14 +6,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.utils.RegexConverter
-import amf.plugins.document.webapi.annotations.ParsedJSONSchema
-import amf.plugins.domain.shapes.metamodel.{
-  AnyShapeModel,
-  ArrayShapeModel,
-  NodeShapeModel,
-  ScalarShapeModel,
-  XMLSerializerModel
-}
+import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.{FileShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, WebApiModel}
 
@@ -145,21 +138,6 @@ object CustomShaclFunctions {
             violation(Some(maybeValue.map(_.annotations).getOrElse(Annotations()), WebApiModel.Schemes))
           case _ =>
         }
-    }),
-    "datetimeFormatValue" -> ((element, violation) => {
-      element match {
-        case scalar: ScalarShape =>
-          for {
-            dataType <- Option(scalar.dataType).flatMap(_.option())
-            format   <- Option(scalar.format).flatMap(_.option())
-          } yield {
-            val validFormats = Set("rfc3339", "rfc2616", "date", "time", "date-time")
-            if (dataType.endsWith("dateTime") && !validFormats.contains(format)) {
-              if (!element.annotations.contains(classOf[ParsedJSONSchema])) violation(None)
-            }
-          }
-        case _ =>
-      }
     })
   )
 

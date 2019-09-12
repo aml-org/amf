@@ -23,6 +23,11 @@ object ParserSideValidations extends Validations {
     "Invalid shape format"
   )
 
+  val InvalidDatetimeFormat = validation(
+    "invalid-datetime-format",
+    "Invalid format value for datetime"
+  )
+
   val InvalidBasePath = validation(
     "invalid-base-path",
     "Invalid base path"
@@ -587,6 +592,7 @@ object ParserSideValidations extends Validations {
     InvalidValueInPropertiesFacet,
     InvalidUserDefinedFacetName,
     MissingRequiredUserDefinedFacet,
-    SlashInUriParameterValues
+    SlashInUriParameterValues,
+    InvalidDatetimeFormat
   )
 }

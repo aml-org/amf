@@ -363,7 +363,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Type datetime format with restricted values") {
-    validate("datetime-format-value/datetime-format-values.raml", Some("datetime-format-values.report"))
+    validate("datetime-format-values.raml", Some("datetime-format-values.report"))
   }
 
 }

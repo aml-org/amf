@@ -1885,22 +1885,7 @@ object AMFRawValidations {
   )
 
   private val RAML10 = Seq(
-    AMFValidation(
-      "amf-parser:datetime-format-value",
-      "Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
-      Raml.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
-      "raml-shapes:format",
-      "PropertyShape",
-      "sh:path",
-      "raml-shapes:datetimeFormatValue",
-      "0",
-      "Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
-      "Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
-      "Violation"
     )
-  )
 
   private val RAML08 = Seq(
     AMFValidation(

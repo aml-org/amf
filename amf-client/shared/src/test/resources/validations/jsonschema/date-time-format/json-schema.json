@@ -3,6 +3,11 @@
   "title": "Notification",
   "description": "The schema representing a Notificaiton",
 
-  "type": "string",
-  "format": "date-time"
+  "type": "object",
+  "properties": {
+    "dateProperty": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
 }

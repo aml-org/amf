@@ -318,19 +318,6 @@ object JsCustomValidations {
         |  var protocolsArray = shape["http:scheme"];
         |  return !Array.isArray(protocolsArray) || protocolsArray.length > 0;
         |}
-      """.stripMargin,
-    "datetimeFormatValue" ->
-      """
-        |function(shape) {
-        |  var type = shape["shacl:datatype"];
-        |  var format = shape["raml-shapes:format"];
-        |  if(Array.isArray(type) && type.length > 0 && (type[0]["@id"] == "xsd:dateTime" || type[0]["@id"] == "xsd:date" )){
-        |    return !(Array.isArray(format) && format.indexOf("rfc3339") == -1 && format.indexOf("rfc2616") == -1 && format.indexOf("date-time") == -1 && format.indexOf("date") == -1 && format.indexOf("time") == -1);
-        |  }
-        |  else {
-        |    return true; //no violation
-        |  }
-        |}
       """.stripMargin
   )
 

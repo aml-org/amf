@@ -775,6 +775,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       parseOASFields(map, shape)
 
       val validatedTypeDef: TypeDef = ScalarFormatType(shape, typeDef).parse(map)
+      ensureFormatInDateTime(validatedTypeDef)
       typeOrSchema(map)
         .fold(
           shape
@@ -815,6 +816,23 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       // shape.set(ScalarShapeModel.Repeat, value = false) // 0.8 support, not exists in 1/.0, set default
 
       shape
+    }
+
+    private def ensureFormatInDateTime(typeDef: TypeDef): Unit = {
+      typeDef match {
+        case TypeDef.DateTimeType =>
+          shape.format
+            .option()
+            .foreach(format => {
+              if (format != "rfc3339" && format != "rfc2616") {
+                ctx.violation(InvalidDatetimeFormat,
+                              shape.id,
+                              s"Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
+                              ast)
+              }
+            })
+        case _ =>
+      }
     }
 
     protected def ensurePrecision(dataType: Option[String], value: String, ast: YNode): Boolean = {
