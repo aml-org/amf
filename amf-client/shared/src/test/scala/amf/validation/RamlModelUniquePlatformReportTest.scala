@@ -366,4 +366,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("datetime-format-values.raml", Some("datetime-format-values.report"))
   }
 
+  test("Merging fields defined in resource type and endpoint") {
+    validate("resource-type-merging-fields.raml", Some("resource-type-merging-fields.report"))
+  }
+
 }
