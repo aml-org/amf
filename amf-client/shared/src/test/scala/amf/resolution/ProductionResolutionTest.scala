@@ -265,6 +265,10 @@ class ProductionResolutionTest extends RamlResolutionTest {
   test("Test resource type parameters ids") {
     cycle("rt-parameters.raml", "rt-parameters.raml.resolved", RamlYamlHint, Amf, validationPath)
   }
+
+  test("Test nil type with additional facets") {
+    cycle("nil-type.raml", "nil-type.raml.resolved", RamlYamlHint, Amf, validationPath)
+  }
 }
 
 class OASProductionResolutionTest extends OasResolutionTest {

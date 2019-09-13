@@ -584,7 +584,10 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     if (typeDef.isNil) {
       val nilShape = NilShape(ast).withName(name, nameAnnotations)
       adopt(nilShape)
-      nilShape
+      node.tagType match {
+        case YType.Map => NilShapeParser(nilShape, node.as[YMap]).parse()
+        case _         => nilShape
+      }
     } else {
       val shape = ScalarShape(ast).withName(name, nameAnnotations)
       adopt(shape)
@@ -762,6 +765,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
 
   }
+
+  case class NilShapeParser(shape: NilShape, map: YMap) extends AnyShapeParser
 
   case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
       extends AnyShapeParser
