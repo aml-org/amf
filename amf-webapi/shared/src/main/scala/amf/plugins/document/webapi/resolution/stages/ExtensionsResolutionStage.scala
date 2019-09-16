@@ -149,12 +149,11 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
         // All includes are resolved and applied for both Master Tree and Extension Tree.
         referenceStage.resolve(document)
-        // All Trait and Resource Types applications are applied in the Master Tree.
-        extendsStage.resolve(document)
 
         // Current Target Tree Object is set to the Target Tree root (API).
         val masterTree = document.asInstanceOf[EncodesModel].encodes.asInstanceOf[WebApi]
 
+        // First I need to merge all the declarations and references to Master Tree
         extensions.foreach {
           // Current Extension Tree Object is set to the Extension Tree root (API).
           case extension: ExtensionLike[_] =>
@@ -175,6 +174,16 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                             extension.asInstanceOf[ExtensionLike[WebApi]],
                             extension.id,
                             ExtendsHelper.findUnitLocationOfElement(extension.id, model))
+        }
+
+        // Then, with all the declarations and references applied.
+        // All Trait and Resource Types applications are applied in the Master Tree.
+        extendsStage.resolve(document)
+
+        extensions.foreach {
+          // Current Extension Tree Object is set to the Extension Tree root (API).
+          case extension: ExtensionLike[_] =>
+            val iriMerger = IriMerger(document.id + "#", extension.id + "#")
 
             merge(masterTree,
                   extension.encodes,
