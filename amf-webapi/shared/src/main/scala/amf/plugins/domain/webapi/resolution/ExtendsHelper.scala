@@ -16,6 +16,7 @@ import amf.plugins.document.webapi.contexts.{
   RamlWebApiContext,
   RamlWebApiContextType
 }
+import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
@@ -290,11 +291,13 @@ object ExtendsHelper {
     }
 
     addNestedDeclarations(ctx, declaringUnit)
+    if (declaringUnit != root) addNestedDeclarations(ctx, root)
   }
 
   private def addNestedDeclarations(ctx: RamlWebApiContext, model: BaseUnit): Unit = {
     model.references.foreach {
-      case f: Fragment =>
+      // Declarations of traits and resourceTypes are contextual, so should skip it
+      case f: Fragment if !f.isInstanceOf[ResourceTypeFragment] && !f.isInstanceOf[TraitFragment] =>
         ctx.declarations += (f.location().getOrElse(f.id), f)
         addNestedDeclarations(ctx, f)
       case m: DeclaresModel =>
@@ -310,6 +313,7 @@ object ExtendsHelper {
             }
         }
         addNestedDeclarations(ctx, m)
+      case _: Fragment => // Trait or RT, nothing to do
       case other =>
         ctx.violation(
           CoreValidations.ResolutionValidation,

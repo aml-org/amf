@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: api
+
+resourceTypes:
+  rt1: !include rt1.raml
+  rt2: !include rt2.raml
+
+/endpoint1:
+  type: rt1
+/endpoint2:
+  type: rt2

@@ -306,10 +306,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Inexistent reference in resource type fragment within extension") {
-    validate(
-      "references-in-fragments-within-extension/rt-fragment-non-existent/extension.raml",
-      Some("inexistent-reference-in-resource-type-within-extension.report")
-    )
+    validate("references-in-fragments-within-extension/rt-fragment-non-existent/extension.raml")
   }
 
   test("Reference in trait fragment within extension") {
@@ -317,10 +314,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Inexistent reference in trait fragment within extension") {
-    validate(
-      "references-in-fragments-within-extension/trait-fragment-non-existent/extension.raml",
-      Some("inexistent-reference-in-trait-within-extension.report")
-    )
+    validate("references-in-fragments-within-extension/trait-fragment-non-existent/extension.raml")
   }
 
   test("Reference in data type fragment within extension") {
@@ -356,6 +350,50 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Facet 'required' in type declarations") {
     validate("invalid-required-type-declaration.raml", Some("invalid-required-type-declaration.report"))
+  }
+
+  test("Resource Type - Plain text - In API") {
+    validate("resource_types/plain-text/in-api/api.raml")
+  }
+
+  test("Resource Type - Plain text - In Extension 1") {
+    validate("resource_types/plain-text/in-extension-A/extension.raml")
+  }
+
+  test("Resource Type - Plain text - In Extension 2") {
+    validate("resource_types/plain-text/in-extension-B/extension.raml", Some("rt-plain-extension-invalid.report"))
+  }
+
+  test("Resource Type - Plain text - In Extension 3") {
+    validate("resource_types/plain-text/in-extension-C/extension.raml")
+  }
+
+  test("Resource Type - Plain text - In Overlay") {
+    validate("resource_types/plain-text/in-overlay/overlay.raml")
+  }
+
+  test("Resource Type - Plain text - In Fragment") {
+    validate("resource_types/plain-text/in-fragment/api.raml")
+  }
+
+  test("Resource Type - Plain text - In Including File") {
+    validate("resource_types/plain-text/in-including-file/api.raml")
+  }
+
+  test("Resource Type - Parameterized - Type") {
+    validate("resource_types/parameterized/type/api.raml")
+  }
+
+  test("Resource Type - Parameterized - Library type") {
+    validate("resource_types/parameterized/lib-type/api.raml")
+  }
+
+  test("Resource Type - Parameterized - Extension library type") {
+    validate("resource_types/parameterized/extension-type/extension.raml")
+  }
+
+  test("Resource Type - Plain text - Test the independency of context between two rt") {
+    validate("resource_types/plain-text/two-rt-unresolve-ref/api.raml", Some("two-rt-unresolve-ref.report"))
   }
 
 }

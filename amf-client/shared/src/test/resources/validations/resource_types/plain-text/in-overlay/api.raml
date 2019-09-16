@@ -1,0 +1,11 @@
+#%RAML 1.0
+title: api
+
+types:
+  myString: string
+
+resourceTypes:
+  rt: !include rt.raml
+
+/endpoint:
+  type: rt

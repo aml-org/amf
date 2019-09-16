@@ -1,0 +1,10 @@
+#%RAML 1.0
+title: api
+uses:
+  lib: lib.raml
+
+resourceTypes:
+  rt: !include rt.raml
+
+/endpoint:
+  type: rt
