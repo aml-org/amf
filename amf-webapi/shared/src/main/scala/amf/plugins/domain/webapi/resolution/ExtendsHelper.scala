@@ -25,6 +25,7 @@ import amf.validations.ResolutionSideValidations.ParseResourceTypeFail
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
+import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
@@ -258,18 +259,21 @@ object ExtendsHelper {
     }
   }
 
-  private def getDeclaringUnit(root: BaseUnit, sourceName: String): BaseUnit = {
-    val maybeFragment = root.references.find {
-      case f: Fragment =>
-        f.annotations
-          .find(classOf[SourceLocation])
-          .map(_.location)
-          .contains(sourceName)
-      case _ => false
-    }
-
-    maybeFragment.getOrElse(root)
+  private def getDeclaringUnit(refs: List[BaseUnit], sourceName: String): Option[BaseUnit] = refs match {
+    case (f: Fragment) :: _ if sourceNameMatch(f, sourceName) => Some(f)
+    case unit :: tail =>
+      getDeclaringUnit(tail, sourceName) match {
+        case ref @ Some(_) => ref
+        case _             => getDeclaringUnit(unit.references.toList, sourceName)
+      }
+    case _ => None
   }
+
+  private def sourceNameMatch(f: Fragment, sourceName: String): Boolean =
+    f.annotations
+      .find(classOf[SourceLocation])
+      .map(_.location)
+      .contains(sourceName)
 
   private def extractFilteredDeclarations(unit: BaseUnit,
                                           filterCondition: DomainElement => Boolean): Seq[DomainElement] = {
@@ -280,7 +284,7 @@ object ExtendsHelper {
   }
 
   private def addDeclarations(ctx: RamlWebApiContext, root: BaseUnit, sourceName: String): Unit = {
-    val declaringUnit     = getDeclaringUnit(root, sourceName)
+    val declaringUnit     = getDeclaringUnit(root.references.toList, sourceName).getOrElse(root)
     val libraries         = extractFilteredDeclarations(declaringUnit, _.isInstanceOf[Module]).map((_, declaringUnit))
     val otherDeclarations = extractFilteredDeclarations(root, !_.isInstanceOf[Module]).map((_, root))
 

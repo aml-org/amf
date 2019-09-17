@@ -1,0 +1,13 @@
+#%RAML 1.0
+
+title: test
+mediaType: application/json
+
+uses:
+  lib: lib1.raml
+
+resourceTypes:
+  rt: !include rt.raml
+
+/endpoint:
+  type: rt
