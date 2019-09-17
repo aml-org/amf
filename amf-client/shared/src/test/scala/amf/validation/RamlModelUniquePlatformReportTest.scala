@@ -408,4 +408,12 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("resource_types/plain-text/two-rt-unresolve-ref/api.raml", Some("two-rt-unresolve-ref.report"))
   }
 
+  test("Resource Type - Plain text - Multiple libraries") {
+    validate("resource_types/plain-text/multi-lib/api.raml")
+  }
+
+  test("Resource Type - Plain text - Libraries with same name in a merged context") {
+    validate("resource_types/plain-text/multi-lib-same-name/api.raml")
+  }
+
 }
