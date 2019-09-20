@@ -802,7 +802,7 @@
                                 ],
                                 "shacl:raw": [
                                   {
-                                    "@value": "\"one\":\n  \"prop1\": \"something\"\n  \"prop2\": 20\n\"two\":\n  \"prop1\": \"other\"\n  \"prop2\": 21"
+                                    "@value": "{\n                \"one\": {\n                  \"prop1\": \"something\",\n                  \"prop2\": 20\n                },\n                \"two\": {\n                  \"prop1\": \"other\",\n                  \"prop2\": 21\n                }\n              }"
                                   }
                                 ],
                                 "smaps": {
@@ -1249,7 +1249,7 @@
             ],
             "shacl:raw": [
               {
-                "@value": "\"prop1\": \"John Doe\"\n\"prop2\": 1"
+                "@value": "{\n        \"prop1\": \"John Doe\",\n        \"prop2\": 1\n      }"
               }
             ],
             "smaps": {
@@ -1368,7 +1368,7 @@
             ],
             "shacl:raw": [
               {
-                "@value": "\"prop1\": \"example5\"\n\"prop2\": 5"
+                "@value": "{\n                \"prop1\": \"example5\",\n                \"prop2\": 5\n              }"
               }
             ],
             "smaps": {
@@ -1490,7 +1490,7 @@
             ],
             "shacl:raw": [
               {
-                "@value": "\"prop1\": \"resource example\"\n\"prop2\": 10"
+                "@value": "{\n                \"prop1\": \"resource example\",\n                \"prop2\": 10\n              }"
               }
             ],
             "smaps": {
@@ -1716,7 +1716,7 @@
             ],
             "shacl:raw": [
               {
-                "@value": "\"one\":\n  \"prop1\": \"something else\"\n  \"prop2\": 30\n\"two\":\n  \"prop1\": \"another\"\n  \"prop2\": 31"
+                "@value": "{\n                \"one\": {\n                  \"prop1\": \"something else\",\n                  \"prop2\": 30\n                },\n                \"two\": {\n                  \"prop1\": \"another\",\n                  \"prop2\": 31\n                }\n              }"
               }
             ],
             "smaps": {
