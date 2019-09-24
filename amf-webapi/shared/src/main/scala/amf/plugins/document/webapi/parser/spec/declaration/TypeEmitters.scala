@@ -1529,9 +1529,12 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
   }
 
   private def findInPath(id: String): Option[String] = {
+    // List of chars that generates an URISyntaxException in Java but works in JS
+    // Pointers with these keys must be ignored
+    val extraneousChars = Seq('^')
     schemaPath.reverse.find(_._1 == id) match {
       case Some((_, pointer)) if pointer.equals("#") && !spec.isInstanceOf[JsonSchemaEmitterContext] => None
-      case Some((_, pointer))                                                                        => Some(pointer)
+      case Some((_, pointer)) if !extraneousChars.forall(pointer.contains(_))                        => Some(pointer)
       case _                                                                                         => None
     }
   }
@@ -1890,23 +1893,8 @@ case class OasNodeShapeEmitter(node: NodeShape,
     fs.entry(NodeShapeModel.Properties).map(f => result += OasRequiredPropertiesShapeEmitter(f, references))
 
     fs.entry(NodeShapeModel.Properties)
-      .map(
-        f =>
-          result += OasPropertiesShapeEmitter(f,
-                                              ordering,
-                                              references,
-                                              patterned = false,
-                                              pointer = pointer,
-                                              schemaPath = schemaPath))
-    fs.entry(NodeShapeModel.Properties)
-      .map(
-        f =>
-          result += OasPropertiesShapeEmitter(f,
-                                              ordering,
-                                              references,
-                                              patterned = true,
-                                              pointer = pointer,
-                                              schemaPath = schemaPath))
+      .map(f =>
+        result += OasPropertiesShapeEmitter(f, ordering, references, pointer = pointer, schemaPath = schemaPath))
 
     val properties = ListMap(node.properties.map(p => p.id -> p): _*)
 
@@ -2195,34 +2183,50 @@ case class OasRequiredPropertiesShapeEmitter(f: FieldEntry, references: Seq[Base
 case class OasPropertiesShapeEmitter(f: FieldEntry,
                                      ordering: SpecOrdering,
                                      references: Seq[BaseUnit],
-                                     patterned: Boolean,
                                      pointer: Seq[String] = Nil,
                                      schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val propertiesKey = if (patterned) "patternProperties" else "properties"
-    val properties = f.array.values.filter {
-      _.asInstanceOf[PropertyShape].patternName.option().isDefined == patterned
+    val properties = f.array.values.partition(_.asInstanceOf[PropertyShape].patternName.option().isDefined)
+
+    // If properties not empty, emit it
+    properties._2 match {
+      case Nil  =>
+      case some => emitProperties(some, "properties", b)
     }
-    if (properties.nonEmpty) {
-      b.entry(
-        propertiesKey,
-        _.obj { b =>
-          val result =
-            properties.map(v =>
-              OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape], ordering, references, pointer, schemaPath))
-          traverse(ordering.sorted(result), b)
-        }
-      )
+
+    // If patternProperties not empty, emit it
+    properties._1 match {
+      case Nil  =>
+      case some => emitProperties(some, "patternProperties", b)
     }
   }
 
   override def position(): Position = pos(f.value.annotations)
+
+  private def emitProperties(properties: Seq[AmfElement], propertiesKey: String, b: EntryBuilder) {
+    b.entry(
+      propertiesKey,
+      _.obj { b =>
+        val result =
+          properties.map(
+            v =>
+              OasPropertyShapeEmitter(v.asInstanceOf[PropertyShape],
+                                      ordering,
+                                      references,
+                                      propertiesKey,
+                                      pointer,
+                                      schemaPath))
+        traverse(ordering.sorted(result), b)
+      }
+    )
+  }
 }
 
 case class OasPropertyShapeEmitter(property: PropertyShape,
                                    ordering: SpecOrdering,
                                    references: Seq[BaseUnit],
+                                   propertiesKey: String = "properties",
                                    pointer: Seq[String] = Nil,
                                    schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends OasTypePartCollector(property.range, ordering, Nil, references)
@@ -2235,7 +2239,7 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
   val propertyKey          = YNode(YScalar(propertyName), YType.Str)
 
   val computedEmitters: Either[PartEmitter, Seq[EntryEmitter]] =
-    emitter(pointer ++ Seq("properties", propertyName), schemaPath)
+    emitter(pointer ++ Seq(propertiesKey, propertyName), schemaPath)
 
   override def emit(b: EntryBuilder): Unit = {
     property.range match {

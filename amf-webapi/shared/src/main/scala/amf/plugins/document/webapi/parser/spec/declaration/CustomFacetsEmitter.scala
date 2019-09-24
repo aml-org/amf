@@ -26,7 +26,7 @@ case class OasCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, referen
   override val key: String = "facets".asOasExtension
 
   override def shapeEmitter: (PropertyShape, SpecOrdering, Seq[BaseUnit]) => EntryEmitter =
-    (p: PropertyShape, o: SpecOrdering, s: Seq[BaseUnit]) => OasPropertyShapeEmitter.apply(p, o, s, Nil)
+    (p: PropertyShape, o: SpecOrdering, s: Seq[BaseUnit]) => OasPropertyShapeEmitter.apply(p, o, s)
 }
 
 abstract class CustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
