@@ -1268,7 +1268,7 @@ case class OasTypePartEmitter(shape: Shape,
       case Right(entries) => b.obj(traverse(entries, _))
     }
 
-  override def position(): Position = emitters.headOption.map(_.position()).getOrElse(ZERO)
+  override def position(): Position = getEmitters.headOption.map(_.position()).getOrElse(ZERO)
 
 }
 
@@ -1279,7 +1279,7 @@ abstract class OasTypePartCollector(shape: Shape,
   private var _emitters: Option[Seq[Emitter]]                          = None
   private var _emitter: Option[Either[PartEmitter, Seq[EntryEmitter]]] = None
 
-  protected def emitters: Seq[Emitter] = emitters(Nil, Nil)
+  protected def getEmitters: Seq[Emitter] = _emitters.getOrElse(Nil)
 
   protected def emitters(pointer: Seq[String], schemaPath: Seq[(String, String)]): Seq[Emitter] = {
     _emitters match {
@@ -1326,7 +1326,7 @@ case class OasTypeEmitter(shape: Shape,
   def emitters(): Seq[Emitter] = {
 
     // Adjusting JSON Schema  pointer
-    val nextPointerStr                           = s"#${pointer.map(p => s"/$p").mkString}"
+    val nextPointerStr = s"#${pointer.map(p => s"/$p").mkString}"
     var updatedSchemaPath: Seq[(String, String)] = {
       schemaPath :+ (shape.id, nextPointerStr)
     }
@@ -1350,7 +1350,7 @@ case class OasTypeEmitter(shape: Shape,
         OasTypeEmitter(union.anyOf.head, ordering, ignored, references).emitters()
       case union: UnionShape =>
         val copiedNode = union.copy(fields = union.fields.filter(f => !ignored.contains(f._1)))
-        Seq(OasUnionShapeEmitter(copiedNode, ordering, references))
+        OasUnionShapeEmitter(copiedNode, ordering, references, pointer, updatedSchemaPath).emitters()
       case array: ArrayShape =>
         val copiedArray = array.copy(fields = array.fields.filter(f => !ignored.contains(f._1)))
         OasArrayShapeEmitter(copiedArray, ordering, references, pointer, updatedSchemaPath, isHeader).emitters()
@@ -1466,15 +1466,39 @@ abstract class OasShapeEmitter(shape: Shape,
   }
 }
 
-case class OasUnionShapeEmitter(shape: UnionShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
+case class OasUnionShapeEmitter(shape: UnionShape,
+                                ordering: SpecOrdering,
+                                references: Seq[BaseUnit],
+                                pointer: Seq[String] = Nil,
+                                schemaPath: Seq[(String, String)] = Nil,
+                                isHeader: Boolean = false)(implicit spec: OasSpecEmitterContext)
+    extends OasAnyShapeEmitter(shape, ordering, references, isHeader = isHeader) {
+
+  override def emitters(): Seq[EntryEmitter] =
+    super.emitters() ++ Seq(OasAnyOfShapeEmitter(shape, ordering, references, pointer, schemaPath))
+}
+
+case class OasAnyOfShapeEmitter(shape: UnionShape,
+                                ordering: SpecOrdering,
+                                references: Seq[BaseUnit],
+                                pointer: Seq[String] = Nil,
+                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
+
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       spec.anyOfKey,
       _.list { b =>
-        val emitters = shape.anyOf.map(OasTypePartEmitter(_, ordering, references = references))
-        ordering.sorted(emitters).foreach(_.emit(b))
+        val emitters = shape.anyOf.zipWithIndex map {
+          case (s: Shape, i: Int) =>
+            OasTypePartEmitter(s,
+                               ordering,
+                               ignored = Nil,
+                               references,
+                               pointer = pointer ++ Seq("anyOf", s"$i"),
+                               schemaPath)
+        }
+        traverse(ordering.sorted(emitters), b)
       }
     )
   }
@@ -1504,7 +1528,7 @@ case class OasRecursiveShapeEmitter(recursive: RecursiveShape,
     for { p <- pointer } b.entry("$ref", p)
   }
 
-  private def findInPath(id: String) = {
+  private def findInPath(id: String): Option[String] = {
     schemaPath.reverse.find(_._1 == id) match {
       case Some((_, pointer)) if pointer.equals("#") && !spec.isInstanceOf[JsonSchemaEmitterContext] => None
       case Some((_, pointer))                                                                        => Some(pointer)

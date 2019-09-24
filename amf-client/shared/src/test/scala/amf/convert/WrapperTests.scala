@@ -29,6 +29,7 @@ import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
+import org.yaml.parser.JsonParser
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -1153,7 +1154,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       gen  <- AMF.raml10Generator().generateString(res).asFuture
     } yield {
       gen should not include ("!include")
-      gen should include ("type: string")
+      gen should include("type: string")
     }
   }
 
@@ -1754,6 +1755,19 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
                         |""".stripMargin
       val generated = resolved.asInstanceOf[Document].declares.asSeq(2).asInstanceOf[NodeShape].buildJsonSchema()
       assert(generated == golden)
+    }
+  }
+
+  // This test is here because of I need to resolve with default and then validate
+  test("Test json schema emittion of recursive union shape") {
+    val file = "file://amf-client/shared/src/test/resources/validations/recursion-union.raml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseFileAsync(file).asFuture
+      resolved <- Future.successful(AMF.resolveRaml10(unit))
+      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+    } yield {
+      assert(report.conforms)
     }
   }
 
