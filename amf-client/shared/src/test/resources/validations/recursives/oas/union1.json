@@ -7,6 +7,20 @@
   "paths": {},
   "definitions": {
     "A": {
+      "x-amf-examples": {
+        "valid": {
+          "b": "foo",
+          "c": {
+            "c": "wadus"
+          }
+        },
+        "invalid": {
+          "c": 1,
+          "b": {
+            "b": 2
+          }
+        }
+      },
       "x-amf-union": [
         {
           "type": "object",

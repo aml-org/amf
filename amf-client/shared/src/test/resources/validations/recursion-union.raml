@@ -1,0 +1,25 @@
+#%RAML 1.0
+
+title: some title
+
+types:
+  A:
+    type: object
+    properties:
+      a1: string
+      a2?: B
+  B:
+    type: object
+    properties:
+      b1: string
+      b2?: A
+  C:
+    type: A[]
+
+/endpoint:
+  get:
+    body:
+      application/json:
+        type: A|C
+        example:
+          a1: this is a text

@@ -53,18 +53,18 @@
           {
             "name": "bodyParam",
             "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/Org"
-                }
-              ],
               "type": "object",
               "example": {
                 "value": {
                   "name": "Doe Enterprise",
                   "value": "Silver"
                 }
-              }
+              },
+              "allOf": [
+                {
+                  "$ref": "#/definitions/Org"
+                }
+              ]
             },
             "x-amf-mediaType": "application/json",
             "in": "body"
@@ -78,11 +78,6 @@
           "201": {
             "x-amf-mediaType": "application/json",
             "schema": {
-              "allOf": [
-                {
-                  "$ref": "#/definitions/Org"
-                }
-              ],
               "type": "object",
               "example": {
                 "name": "Acme"
@@ -95,7 +90,12 @@
                     "value": "Gold"
                   }
                 }
-              }
+              },
+              "allOf": [
+                {
+                  "$ref": "#/definitions/Org"
+                }
+              ]
             },
             "examples": {
               "application/json": {
