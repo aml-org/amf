@@ -68,6 +68,7 @@ nodeMappings:
         propertyTerm: core.mediaType
         range: string
 
+
   RecursiveShape:
     classTerm: raml-shapes.RecursiveShape
     extends: AnyShape
@@ -234,7 +235,7 @@ nodeMappings:
         propertyTerm: apiContract.binding
         range: string
       schema:
-        propertyTerm: apiContract.schema
+        propertyTerm: raml-shapes.schema
         range: DataShapesUnion
       payload:
         propertyTerm: apiContract.payload
@@ -1033,7 +1034,7 @@ nodeMappings:
         propertyTerm: core.mediaType
         range: string
       schema:
-        propertyTerm: apiContract.schema
+        propertyTerm: raml-shapes.schema
         range: DataShapesUnion
       examples:
         propertyTerm: apiContract.examples
@@ -1197,6 +1198,7 @@ nodeMappings:
       collectionFormat:
         propertyTerm: raml-shapes.collectionFormat
         range: string
+
 
 
 

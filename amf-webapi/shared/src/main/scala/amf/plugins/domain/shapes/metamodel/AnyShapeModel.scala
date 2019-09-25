@@ -25,7 +25,8 @@ object AnyShapeModel extends AnyShapeModel {
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,
     "Any Shape",
-    "Base class for all shapes stored in the graph model"
+    "Base class for all shapes stored in the graph model",
+    superClasses = Seq((Shapes + "Shape").iri())
   )
 
   override val fields: List[Field] =

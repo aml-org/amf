@@ -80,6 +80,9 @@ propertyTerms:
   alias:
     displayName: alias
     range: string
+  customDomainProperties:
+    displayName: custom domain properties
+    description: Extensions provided for a particular domain element.
   dataNode:
     displayName: data node
     description: Associated dynamic structure for the declaration
@@ -176,3 +179,7 @@ propertyTerms:
     displayName: variable
     description: Variables to be replaced in the graph template introduced by an AbstractDeclaration
     range: VariableValue
+  version:
+    displayName: version
+    description: Version of the current model
+    range: string

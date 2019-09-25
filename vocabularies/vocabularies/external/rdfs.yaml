@@ -1,8 +1,8 @@
 #%Vocabulary 1.0
 base: http://www.w3.org/2000/01/rdf-schema#
 usage: RDFS vocabulary
-uses:
-  data: data_model.yaml
+external:
+  data: http://a.ml/vocabularies/data#
 propertyTerms:
   domain:
     displayName: domain

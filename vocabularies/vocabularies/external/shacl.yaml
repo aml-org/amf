@@ -1,9 +1,9 @@
 #%Vocabulary 1.0
 base: http://www.w3.org/ns/shacl#
 usage: SHACL vocabulary
-uses:
-  shapes: data_shapes.yaml
-  data: data_model.yaml
+external:
+  shapes: http://a.ml/vocabularies/shapes#
+  data: http://a.ml/vocabularies/data#
 classTerms:
   NodeShape:
     displayName: Node Shape

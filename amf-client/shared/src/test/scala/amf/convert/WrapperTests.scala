@@ -481,15 +481,15 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
    */
 
   test("Vocabularies parsing aml_doc") {
-    testVocabulary(aml_doc, 14, 25)
+    testVocabulary(aml_doc, 14, 27)
   }
 
   test("Vocabularies parsing aml_meta") {
-    testVocabulary(aml_meta, 17, 26)
+    testVocabulary(aml_meta, 17, 29)
   }
 
   test("Vocabularies parsing api_contract") {
-    testVocabulary(api_contract, 28, 41)
+    testVocabulary(api_contract, 28, 40)
   }
 
   test("Vocabularies parsing core") {

@@ -122,10 +122,17 @@ propertyTerms:
   externals:
     displayName: externals
     range: owl.Ontology
+  fragment:
+    displayName: fragment
+    range: string
   fragments:
     displayName: fragments
     description: Mapping of fragment base unit for a particular dialect
     range: DocumentMapping
+  keyProperty:
+    displayName: key property
+    description: Information about whether the dialect is defined by the header or a key property
+    range: boolean
   library:
     displayName: library
     description: Mappig of module base unit for a particular dialect
@@ -158,6 +165,10 @@ propertyTerms:
     displayName: properties
     description: Properties that have the ClassTerm in the domain
     range: uri
+  referenceStyle:
+    displayName: reference style
+    description: Determines the style for inclusions (RamlStyle or JsonSchemaStyle)
+    range: string
   resolvedExtends:
     displayName: resolvedExtends
     range: uri

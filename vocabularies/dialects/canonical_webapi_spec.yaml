@@ -1,177 +1,22 @@
 #%Dialect 1.0
 
-dialect: WebAPI Spec
+dialect: WebAPI
 version: 1.0
 
 uses:
   raml-shapes: ../vocabularies/data_shapes.yaml
   security: ../vocabularies/security.yaml
-  doc: ../vocabularies/aml_doc.yaml
   data: ../vocabularies/data_model.yaml
+  doc: ../vocabularies/aml_doc.yaml
   apiContract: ../vocabularies/api_contract.yaml
   core: ../vocabularies/core.yaml
+  meta: ../vocabularies/aml_meta.yaml
 
 external:
   shacl: http://www.w3.org/ns/shacl#
   rdfs: http://www.w3.org/2000/01/rdf-schema#
 
 nodeMappings:
-
-  ParsedUnit:
-    classTerm: doc.Unit
-    mapping:
-      location:
-        propertyTerm: apiContract.location
-        range: string
-      internalRef:
-        propertyTerm: apiContract.internalReference
-        range: ParsedUnitUnion
-        allowMultiple: true
-      externalRef:
-        propertyTerm: apiContract.externalReference
-        range: link
-        allowMultiple: true
-
-  WebAPIDocument:
-    extends: ParsedUnit
-    classTerm: apiContract.WebAPIDocument
-    mapping:
-      encodes:
-        propertyTerm: doc.encodes
-        range: WebAPI
-      declares:
-        propertyTerm: doc.declares
-        range: DeclaredDomainElementUnion
-        allowMultiple: true
-
-  DataTypeFragment:
-    extends: ParsedUnit
-    classTerm: apiContract.DataTypeFragment
-    mapping:
-      encodes:
-        propertyTerm: doc.encodes
-        range: Shape
-
-  UserDocumentationFragment:
-    extends: ParsedUnit
-    classTerm: apiContract.UserDocumentationFragment
-    mapping:
-      encodes:
-        propertyTerm: doc.encodes
-        range: CreativeWork
-
-  NamedExampleFragment:
-    extends: ParsedUnit
-    classTerm: apiContract.NamedExampleFragment
-    mapping:
-      encodes:
-        propertyTerm: doc.encodes
-        range: Examples
-
-  ResourceTypeFragment:
-    extends: ParsedUnit
-    classTerm: apiContract.ResourceTypeFragment
-    mapping:
-      encodes:
-        propertyTerm: doc.encodes
-        range: ResourceType
-
-  TraitFragment:
-    extends: ParsedUnit
-    classTerm: apiContract.TraitFragment
-    mapping:
-      encodes:
-        propertyTerm: doc.encodes
-        range: Trait
-
-  SecuritySchemeFragment:
-    extends: ParsedUnit
-    classTerm: apiContract.SecuritySchemeFragment
-    mapping:
-      encodes:
-        propertyTerm: doc.encodes
-        range: SecurityScheme
-
-  AnnotationTypeFragment:
-    extends: ParsedUnit
-    classTerm: apiContract.AnnotationTypeDeclarationFragment
-    mapping:
-      encodes:
-        propertyTerm: doc.encodes
-        range: CustomDomainProperty
-
-  LibraryModule:
-    extends: ParsedUnit
-    classTerm: apiContract.LibraryModule
-    mapping:
-      declares:
-        propertyTerm: doc.declares
-        range: DeclaredDomainElementUnion
-        allowMultiple: true
-
-  ParsedUnitUnion:
-    typeDiscriminatorName: unitType
-    typeDiscriminator:
-      DataTypeFragment: DataTypeFragment
-      UserDocumentationFragment: UserDocumentationFragment
-      NamedExampleFragment: NamedExampleFragment
-      ResourceTypeFragment: ResourceTypeFragment
-      TraitFragment: TraitFragment
-      SecuritySchemeFragment: SecuritySchemeFragment
-      LibraryModule: LibraryModule
-      WebAPIDocument: WebAPIDocument
-    union:
-      - DataTypeFragment
-      - UserDocumentationFragment
-      - NamedExampleFragment
-      - ResourceTypeFragment
-      - TraitFragment
-      - SecuritySchemeFragment
-      - LibraryModule
-      - WebAPIDocument
-
-#  DataObject:
-#    classTerm: data.Object
-#    mapping:
-#      name:
-#        propertyTerm: core.name
-#        range: string
-#      properties:
-#        propertyTerm: data.property
-#        range: DataNodeUnion
-#        allowMultiple: true
-
-  DeclaredDomainElementUnion:
-    typeDiscriminatorName: declarationType
-    typeDiscriminator:
-      Union: UnionShape
-      Tuple: TupleShape
-      Node: NodeShape
-      Array: ArrayShape
-      Schema: SchemaShape
-      File: FileShape
-      Nil: NilShape
-      Scalar: ScalarShape
-      Any: AnyShape
-      Parameter: Parameter
-      ResourceType: ResourceType
-      Trait: Trait
-      SecurityScheme: SecurityScheme
-    union:
-      - UnionShape
-      - TupleShape
-      - NodeShape
-      - ArrayShape
-      - SchemaShape
-      - FileShape
-      - MatrixShape
-      - NilShape
-      - ScalarShape
-      - AnyShape
-      - Parameter
-      - ResourceType
-      - Trait
-      - SecurityScheme
 
   DataShapesUnion:
     typeDiscriminatorName: shapeType
@@ -185,6 +30,8 @@ nodeMappings:
       Nil: NilShape
       Scalar: ScalarShape
       Any: AnyShape
+      Recursive: RecursiveShape
+    
     union:
       - UnionShape
       - TupleShape
@@ -196,7 +43,8 @@ nodeMappings:
       - NilShape
       - ScalarShape
       - AnyShape
-
+      - RecursiveShape
+    
   SecuritySettingsUnion:
     typeDiscriminatorName: settingsType
     typeDiscriminator:
@@ -205,76 +53,730 @@ nodeMappings:
       APIKey: APIKeySettings
       Http: HTTPSettings
       OpenID: OpenIDSettings
+    
     union:
       - OAuth2Settings
       - OAuth1Settings
       - APIKeySettings
       - HTTPSettings
       - OpenIDSettings
+    
 
-  SchemaShape:
-    classTerm: raml-shapes.SchemaShape
-    extends: AnyShape
+  DataNodeUnion:
+    typeDiscriminatorName: elementType
+    typeDiscriminator:
+      Scalar: ScalarNode
+      Array: ArrayNode
+      Link: LinkNode
+      Object: ObjectNode
+
+    union:
+      - ScalarNode
+      - ArrayNode
+      - LinkNode
+      - ObjectNode
+
+
+  DomainElementUnion:
+    typeDiscriminatorName: elementType
+    typeDiscriminator:
+      Union: UnionShape
+      Tuple: TupleShape
+      Node: NodeShape
+      Array: ArrayShape
+      Schema: SchemaShape
+      File: FileShape
+      Nil: NilShape
+      Scalar: ScalarShape
+      Any: AnyShape
+      Recursive: RecursiveShape
+      OAuth2: OAuth2Settings
+      SecurityScheme: SecurityScheme
+      Parameter: Parameter
+      Request: Request
+      Callback: Callback
+      Tag: Tag
+      WebAPI: WebAPI
+      Example: Example
+      Trait: Trait
+      TemplatedLink: TemplatedLink
+      Server: Server
+      ResourceType: ResourceType
+
+    union:
+      - UnionShape
+      - TupleShape
+      - NodeShape
+      - ArrayShape
+      - SchemaShape
+      - FileShape
+      - MatrixShape
+      - NilShape
+      - ScalarShape
+      - AnyShape
+      - RecursiveShape
+      - SecurityScheme
+      - Parameter
+      - Request
+      - Callback
+      - Tag
+      - WebAPI
+      - Example
+      - Trait
+      - TemplatedLink
+      - Server
+      - ResourceType
+
+  ParsedUnitUnion:
+    typeDiscriminatorName: unitType
+    typeDiscriminator:
+      AnnotationTypeFragment: AnnotationTypeFragment
+      DataTypeFragment: DataTypeFragment
+      DocumentationItemFragment: DocumentationItemFragment
+      NamedExampleFragment: NamedExampleFragment
+      ResourceTypeFragment: ResourceTypeFragment
+      TraitFragment: TraitFragment
+      SecuritySchemeFragment: SecuritySchemeFragment
+      ExternalFragment: ExternalFragment
+      Library: Module
+      Document: Document
+      Extension: Extension
+      Overlay: OverlayModel
+    union:
+      - DataTypeFragment
+      - DocumentationItemFragment
+      - NamedExampleFragment
+      - ResourceTypeFragment
+      - TraitFragment
+      - SecuritySchemeFragment
+      - Module
+      - Document
+      - Extension
+      - OverlayModel
+
+  APIKeySettings:
+    classTerm: security.ApiKeySettings
+    extends: Settings
     mapping:
-      mediaType:
-        propertyTerm: shacl.mediaType
+      name:
+        propertyTerm: core.name
+        range: string
+      in:
+        propertyTerm: security.in
         range: string
 
 
-  RecursiveShape:
-    classTerm: raml-shapes.RecursiveShape
-    extends: AnyShape
+  AbstractDeclaration:
+    classTerm: doc.AbstractDeclaration
     mapping:
-      fixpoint:
-        propertyTerm: raml-shapes.fixPoint
-        range: link
-
-
-  Request:
-    classTerm: apiContract.Request
-    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
       description:
         propertyTerm: core.description
         range: string
-      required:
-        propertyTerm: apiContract.required
-        range: boolean
-      parameter:
-        propertyTerm: apiContract.parameter
-        range: Parameter
+      dataNode:
+        propertyTerm: doc.dataNode
+        range: DataNodeUnion
+      variable:
+        propertyTerm: doc.variable
+        range: string
         allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  AnnotationTypeFragment:
+    classTerm: apiContract.AnnotationTypeDeclarationFragment
+    extends: Fragment
+
+
+  AnyShape:
+    classTerm: raml-shapes.AnyShape
+    extends: Shape
+    mapping:
+      documentation:
+        propertyTerm: core.documentation
+        range: CreativeWork
+      XMLSerialization:
+        propertyTerm: raml-shapes.xmlSerialization
+        range: XMLSerializer
+      examples:
+        propertyTerm: apiContract.examples
+        range: Example
+        allowMultiple: true
+      raw:
+        propertyTerm: doc.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
+
+
+  ArrayNode:
+    classTerm: data.Array
+    extends: DataNode
+    mapping:
+      member:
+        propertyTerm: rdfs.member
+        range: DataNodeUnion
+        allowMultiple: true
+
+
+  ArrayShape:
+    classTerm: raml-shapes.ArrayShape
+    extends: AnyShape
+    mapping:
+      items:
+        propertyTerm: raml-shapes.items
+        range: DataShapesUnion
+      minCount:
+        propertyTerm: shacl.minCount
+        range: integer
+      maxCount:
+        propertyTerm: shacl.maxCount
+        range: integer
+      uinqueItems:
+        propertyTerm: raml-shapes.uniqueItems
+        range: boolean
+      collectionFormat:
+        propertyTerm: raml-shapes.collectionFormat
+        range: string
+
+
+  BaseUnit:
+    classTerm: doc.Unit
+    mapping:
+      version:
+        propertyTerm: doc.version
+        range: string
+      references:
+        propertyTerm: doc.references
+        range: ParsedUnitUnion
+        allowMultiple: true
+      usage:
+        propertyTerm: doc.usage
+        range: string
+      describedBy:
+        propertyTerm: meta.describedBy
+        range: link
+
+
+  Callback:
+    classTerm: apiContract.Callback
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      expression:
+        propertyTerm: apiContract.expression
+        range: string
+      endpoint:
+        propertyTerm: apiContract.endpoint
+        range: EndPoint
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  CreativeWork:
+    classTerm: core.CreativeWork
+    mapping:
+      url:
+        propertyTerm: core.url
+        range: link
+      title:
+        propertyTerm: core.title
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  CustomDomainProperty:
+    classTerm: doc.DomainProperty
+    mapping:
+      domain:
+        propertyTerm: rdfs.domain
+        range: link
+        allowMultiple: true
+      schema:
+        propertyTerm: raml-shapes.schema
+        range: DataShapesUnion
+      name:
+        propertyTerm: core.name
+        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  DataNode:
+    classTerm: data.Node
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  DataTypeFragment:
+    classTerm: raml-shapes.DataTypeFragment
+    extends: Fragment
+
+
+  Document:
+    classTerm: doc.Document
+    extends: BaseUnit
+    mapping:
+      encodes:
+        propertyTerm: doc.encodes
+        range: DomainElementUnion
+      declares:
+        propertyTerm: doc.declares
+        range: DomainElementUnion
+        allowMultiple: true
+
+
+  DocumentExtension:
+    classTerm: doc.DocumentExtension
+    extends: BaseUnit
+    mapping:
+      encodes:
+        propertyTerm: doc.encodes
+        range: DomainElementUnion
+      declares:
+        propertyTerm: doc.declares
+        range: DomainElementUnion
+        allowMultiple: true
+
+
+  DocumentationItemFragment:
+    classTerm: apiContract.UserDocumentationFragment
+    extends: Fragment
+
+
+  DomainExtension:
+    classTerm: apiContract.DomainExtension
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      definedBy:
+        propertyTerm: doc.definedBy
+        range: CustomDomainProperty
+      extension:
+        propertyTerm: doc.extension
+        range: DataNodeUnion
+      element:
+        propertyTerm: doc.element
+        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  Encoding:
+    classTerm: apiContract.Encoding
+    mapping:
+      propertyName:
+        propertyTerm: apiContract.propertyName
+        range: string
+      contentType:
+        propertyTerm: apiContract.contentType
+        range: string
       header:
         propertyTerm: apiContract.header
+        range: Parameter
+        allowMultiple: true
+      style:
+        propertyTerm: apiContract.style
+        range: string
+      explode:
+        propertyTerm: apiContract.explode
+        range: boolean
+      allowReserved:
+        propertyTerm: apiContract.allowReserved
+        range: boolean
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  EndPoint:
+    classTerm: apiContract.EndPoint
+    mapping:
+      extends:
+        propertyTerm: doc.extends
+        typeDiscriminatorName: type
+        typeDiscriminator:
+          AppliedResourceType: ParametrizedResourceType
+          AppliedTrait: ParametrizedTrait
+        range:
+          - ParametrizedResourceType
+          - ParametrizedTrait
+        allowMultiple: true
+    
+      path:
+        propertyTerm: apiContract.path
+        range: string
+      name:
+        propertyTerm: core.name
+        range: string
+      summary:
+        propertyTerm: core.summary
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      supportedOperation:
+        propertyTerm: apiContract.supportedOperation
+        range: Operation
+        allowMultiple: true
+      parameter:
+        propertyTerm: apiContract.parameter
         range: Parameter
         allowMultiple: true
       payload:
         propertyTerm: apiContract.payload
         range: Payload
         allowMultiple: true
-      queryString:
-        propertyTerm: apiContract.queryString
+      servers:
+        propertyTerm: apiContract.server
+        range: Server
+        allowMultiple: true
+      security:
+        propertyTerm: security.security
+        range: ParametrizedSecurityScheme
+        allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  Example:
+    classTerm: apiContract.Example
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      displayName:
+        propertyTerm: core.displayName
+        range: string
+      guiSummary:
+        propertyTerm: apiContract.guiSummary
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      externalValue:
+        propertyTerm: doc.externalValue
+        range: string
+      strict:
+        propertyTerm: doc.strict
+        range: boolean
+      mediaType:
+        propertyTerm: core.mediaType
+        range: string
+      structuredValue:
+        propertyTerm: doc.structuredValue
+        range: DataNodeUnion
+      raw:
+        propertyTerm: doc.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  Extension:
+    classTerm: apiContract.Extension
+    extends: Document
+
+
+  ExternalDomainElement:
+    classTerm: doc.ExternalDomainElement
+    mapping:
+      raw:
+        propertyTerm: doc.raw
+        range: string
+      mediaType:
+        propertyTerm: core.mediaType
+        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  ExternalFragment:
+    classTerm: doc.ExternalFragment
+    extends: Fragment
+
+
+  ExternalSourceElement:
+    classTerm: doc.ExternalSource
+    mapping:
+      raw:
+        propertyTerm: doc.raw
+        range: string
+      referenceId:
+        propertyTerm: doc.reference-id
+        range: link
+      location:
+        propertyTerm: doc.location
+        range: string
+
+
+  FileShape:
+    classTerm: raml-shapes.FileShape
+    extends: AnyShape
+    mapping:
+      fileType:
+        propertyTerm: raml-shapes.fileType
+        range: string
+        allowMultiple: true
+      pattern:
+        propertyTerm: shacl.pattern
+        range: string
+      min.Length:
+        propertyTerm: shacl.minLength
+        range: integer
+      max.Length:
+        propertyTerm: shacl.maxLength
+        range: integer
+      min.Inclusive:
+        propertyTerm: shacl.minInclusive
+        range: double
+      max.Inclusive:
+        propertyTerm: shacl.maxInclusive
+        range: double
+      min.Exclusive:
+        propertyTerm: shacl.minExclusive
+        range: boolean
+      max.Exclusive:
+        propertyTerm: shacl.maxExclusive
+        range: boolean
+      format:
+        propertyTerm: raml-shapes.format
+        range: string
+      multipleOf:
+        propertyTerm: raml-shapes.multipleOf
+        range: double
+
+
+  Fragment:
+    classTerm: doc.Fragment
+    extends: BaseUnit
+    mapping:
+      encodes:
+        propertyTerm: doc.encodes
+        range: DomainElementUnion
+
+
+  HTTPSettings:
+    classTerm: security.HttpSettings
+    extends: Settings
+    mapping:
+      scheme:
+        propertyTerm: security.scheme
+        range: string
+      bearerFormat:
+        propertyTerm: security.bearerFormat
+        range: string
+
+
+  IriTemplate:
+    classTerm: apiContract.IriTemplateMapping
+    mapping:
+      variable:
+        propertyTerm: apiContract.variable
+        range: string
+      linkExpression:
+        propertyTerm: apiContract.linkExpression
+        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  License:
+    classTerm: core.License
+    mapping:
+      url:
+        propertyTerm: core.url
+        range: link
+      name:
+        propertyTerm: core.name
+        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  LinkNode:
+    classTerm: data.Link
+    extends: DataNode
+    mapping:
+      value:
+        propertyTerm: data.value
+        range: string
+
+
+  MatrixShape:
+    classTerm: raml-shapes.MatrixShape
+    extends: ArrayShape
+
+
+  Module:
+    classTerm: doc.Module
+    extends: BaseUnit
+    mapping:
+      declares:
+        propertyTerm: doc.declares
+        range: DomainElementUnion
+        allowMultiple: true
+
+
+  NamedExampleFragment:
+    classTerm: apiContract.NamedExampleFragment
+    extends: Fragment
+
+
+  NilShape:
+    classTerm: raml-shapes.NilShape
+    extends: AnyShape
+
+
+  NodeShape:
+    classTerm: shacl.NodeShape
+    extends: AnyShape
+    mapping:
+      minProperties:
+        propertyTerm: raml-shapes.minProperties
+        range: integer
+      maxProperties:
+        propertyTerm: raml-shapes.maxProperties
+        range: integer
+      closed:
+        propertyTerm: shacl.closed
+        range: boolean
+      additionalPropertiesSchema:
+        propertyTerm: shacl.additionalPropertiesSchema
         range: DataShapesUnion
-      uriParameter:
-        propertyTerm: apiContract.uriParameter
-        range: Parameter
+      discriminator:
+        propertyTerm: raml-shapes.discriminator
+        range: string
+      discriminatorValue:
+        propertyTerm: raml-shapes.discriminatorValue
+        range: string
+      property:
+        propertyTerm: shacl.property
+        range: PropertyShape
         allowMultiple: true
-      cookieParameter:
-        propertyTerm: apiContract.cookieParameter
-        range: Parameter
+      dependencies:
+        propertyTerm: raml-shapes.dependencies
+        range: PropertyDependencies
         allowMultiple: true
+
+
+  OAuth1Settings:
+    classTerm: security.OAuth1Settings
+    extends: Settings
+    mapping:
+      requestTokenURI:
+        propertyTerm: security.requestTokenUri
+        range: string
+      authorizationURI:
+        propertyTerm: security.authorizationUri
+        range: string
+      tokenCredentialsURI:
+        propertyTerm: security.tokenCredentialsUri
+        range: string
+      signature:
+        propertyTerm: security.signature
+        range: string
+        allowMultiple: true
+
+
+  OAuth2Settings:
+    classTerm: security.OAuth2Settings
+    extends: Settings
+    mapping:
+      authorizationURI:
+        propertyTerm: security.authorizationUri
+        range: string
+      accessTokenURI:
+        propertyTerm: security.accessTokenUri
+        range: string
+      authorizationGrant:
+        propertyTerm: security.authorizationGrant
+        range: string
+        allowMultiple: true
+      flow:
+        propertyTerm: security.flow
+        range: string
+      refreshURI:
+        propertyTerm: security.refreshUri
+        range: string
+      scope:
+        propertyTerm: security.scope
+        range: Scope
+        allowMultiple: true
+
+
+  ObjectNode:
+    classTerm: data.Object
+    extends: DataNode
+
+
+  OpenIDSettings:
+    classTerm: security.OpenIdConnectSettings
+    extends: Settings
+    mapping:
+      OpenIDConnectURL:
+        propertyTerm: security.openIdConnectUrl
+        range: string
 
 
   Operation:
     classTerm: apiContract.Operation
     mapping:
       extends:
-        propertyTerm: apiContract.extends
-        typeDiscriminatorName: operationType
+        propertyTerm: doc.extends
+        typeDiscriminatorName: type
         typeDiscriminator:
           AppliedTrait: ParametrizedTrait
         range:
           - ParametrizedTrait
         allowMultiple: true
+    
       method:
         propertyTerm: apiContract.method
         range: string
@@ -328,28 +830,33 @@ nodeMappings:
         propertyTerm: apiContract.server
         range: Server
         allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
 
 
-  LinkNode:
-    classTerm: data.Link
+  Organization:
+    classTerm: core.Organization
     mapping:
-      value:
-        propertyTerm: data.value
-        range: string
+      url:
+        propertyTerm: core.url
+        range: link
       name:
         propertyTerm: core.name
         range: string
+      email:
+        propertyTerm: core.email
+        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
 
 
-  Scope:
-    classTerm: security.Scope
-    mapping:
-      name:
-        propertyTerm: security.name
-        range: string
-      description:
-        propertyTerm: security.description
-        range: string
+  OverlayModel:
+    classTerm: apiContract.Overlay
+    extends: Document
 
 
   Parameter:
@@ -386,7 +893,7 @@ nodeMappings:
         propertyTerm: apiContract.binding
         range: string
       schema:
-        propertyTerm: apiContract.schema
+        propertyTerm: raml-shapes.schema
         range: DataShapesUnion
       payload:
         propertyTerm: apiContract.payload
@@ -394,104 +901,94 @@ nodeMappings:
         allowMultiple: true
       examples:
         propertyTerm: apiContract.examples
-        range: Examples
-      linkTarget:
-        propertyTerm: apiContract.link-target
-        range: link
-      linkLabel:
-        propertyTerm: apiContract.link-label
-        range: string
-
-
-
-  OAuth2Settings:
-    classTerm: security.OAuth2Settings
-    mapping:
-      authorizationURI:
-        propertyTerm: security.authorizationUri
-        range: string
-      accessTokenURI:
-        propertyTerm: security.accessTokenUri
-        range: string
-      authorizationGrant:
-        propertyTerm: security.authorizationGrant
-        range: string
+        range: Example
         allowMultiple: true
-      flow:
-        propertyTerm: security.flow
-        range: string
-      refreshURI:
-        propertyTerm: security.refreshUri
-        range: string
-      scope:
-        propertyTerm: security.scope
-        range: Scope
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
         allowMultiple: true
 
 
-  ObjectNode:
-    classTerm: data.Object
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-
-
-  ResourceType:
-    classTerm: doc.ResourceType
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      variable:
-        propertyTerm: doc.variable
-        range: string
-        allowMultiple: true
-      linkTarget:
-        propertyTerm: apiContract.link-target
-        range: link
-      linkLabel:
-        propertyTerm: apiContract.link-label
-        range: string
-
-
-  ParametrizedTrait:
-    classTerm: doc.ParametrizedTrait
+  ParametrizedDeclaration:
+    classTerm: doc.ParametrizedDeclaration
     mapping:
       name:
         propertyTerm: core.name
         range: string
       target:
         propertyTerm: doc.target
-        range: Trait
+        range:
+          - ResourceType
+          - Trait
+    
       variable:
         propertyTerm: doc.variable
         range: VariableValue
         allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
 
-  Callback:
-    classTerm: apiContract.Callback
+
+  ParametrizedResourceType:
+    classTerm: apiContract.ParametrizedResourceType
+    extends: ParametrizedDeclaration
+
+
+  ParametrizedSecurityScheme:
+    classTerm: security.ParametrizedSecurityScheme
     mapping:
       name:
         propertyTerm: core.name
         range: string
-      expression:
-        propertyTerm: apiContract.expression
-        range: string
-      endpoint:
-        propertyTerm: apiContract.endpoint
-        range: EndPoint
+      scheme:
+        propertyTerm: security.scheme
+        range: SecurityScheme
+      settings:
+        propertyTerm: security.settings
+        range: SecuritySettingsUnion
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
 
 
-  ExternalDomainElement:
-    classTerm: doc.ExternalDomainElement
+  ParametrizedTrait:
+    classTerm: apiContract.ParametrizedTrait
+    extends: ParametrizedDeclaration
+
+
+  Payload:
+    classTerm: apiContract.Payload
     mapping:
-      raw:
-        propertyTerm: doc.raw
+      name:
+        propertyTerm: core.name
         range: string
+      mediaType:
+        propertyTerm: core.mediaType
+        range: string
+      schema:
+        propertyTerm: raml-shapes.schema
+        range: DataShapesUnion
+      examples:
+        propertyTerm: apiContract.examples
+        range: Example
+        allowMultiple: true
+      encoding:
+        propertyTerm: apiContract.encoding
+        range: Encoding
+        allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  PayloadFragment:
+    classTerm: apiContract.PayloadFragment
+    extends: Fragment
+    mapping:
       mediaType:
         propertyTerm: core.mediaType
         range: string
@@ -507,15 +1004,146 @@ nodeMappings:
         propertyTerm: raml-shapes.propertyTarget
         range: link
         allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
 
-  FileShape:
-    classTerm: raml-shapes.FileShape
+
+  PropertyShape:
+    classTerm: shacl.PropertyShape
+    extends: Shape
+    mapping:
+      path:
+        propertyTerm: shacl.path
+        range: link
+      range:
+        propertyTerm: raml-shapes.range
+        range: DataShapesUnion
+      min.Count:
+        propertyTerm: shacl.minCount
+        range: integer
+      max.Count:
+        propertyTerm: shacl.maxCount
+        range: integer
+      readOnly:
+        propertyTerm: raml-shapes.readOnly
+        range: boolean
+      patternName:
+        propertyTerm: raml-shapes.patternName
+        range: string
+
+
+  RecursiveShape:
+    classTerm: raml-shapes.RecursiveShape
+    extends: Shape
+    mapping:
+      fixpoint:
+        propertyTerm: raml-shapes.fixPoint
+        range: link
+
+
+  Request:
+    classTerm: apiContract.Request
+    mapping:
+      description:
+        propertyTerm: core.description
+        range: string
+      required:
+        propertyTerm: apiContract.required
+        range: boolean
+      parameter:
+        propertyTerm: apiContract.parameter
+        range: Parameter
+        allowMultiple: true
+      header:
+        propertyTerm: apiContract.header
+        range: Parameter
+        allowMultiple: true
+      payload:
+        propertyTerm: apiContract.payload
+        range: Payload
+        allowMultiple: true
+      queryString:
+        propertyTerm: apiContract.queryString
+        range: DataShapesUnion
+      uriParameter:
+        propertyTerm: apiContract.uriParameter
+        range: Parameter
+        allowMultiple: true
+      cookieParameter:
+        propertyTerm: apiContract.cookieParameter
+        range: Parameter
+        allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  ResourceType:
+    classTerm: apiContract.ResourceType
+    extends: AbstractDeclaration
+
+
+  ResourceTypeFragment:
+    classTerm: apiContract.ResourceTypeFragment
+    extends: Fragment
+
+
+  Response:
+    classTerm: apiContract.Response
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      statusCode:
+        propertyTerm: apiContract.statusCode
+        range: string
+      header:
+        propertyTerm: apiContract.header
+        range: Parameter
+        allowMultiple: true
+      payload:
+        propertyTerm: apiContract.payload
+        range: Payload
+        allowMultiple: true
+      links:
+        propertyTerm: apiContract.link
+        range: TemplatedLink
+        allowMultiple: true
+      examples:
+        propertyTerm: apiContract.examples
+        range: Example
+        allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  ScalarNode:
+    classTerm: data.Scalar
+    extends: DataNode
+    mapping:
+      value:
+        propertyTerm: data.value
+        range: string
+      dataType:
+        propertyTerm: shacl.datatype
+        range: link
+
+
+  ScalarShape:
+    classTerm: raml-shapes.ScalarShape
     extends: AnyShape
     mapping:
-      fileType:
-        propertyTerm: raml-shapes.fileType
-        range: string
-        allowMultiple: true
+      datatype:
+        propertyTerm: shacl.datatype
+        range: link
       pattern:
         propertyTerm: shacl.pattern
         range: string
@@ -545,75 +1173,247 @@ nodeMappings:
         range: double
 
 
-  PropertyShape:
-    classTerm: shacl.PropertyShape
-    extends: Shape
+  SchemaShape:
+    classTerm: raml-shapes.SchemaShape
+    extends: AnyShape
     mapping:
-      range:
-        propertyTerm: raml-shapes.range
-        range: DataShapesUnion
-      min.Count:
-        propertyTerm: shacl.minCount
-        range: integer
-      max.Count:
-        propertyTerm: shacl.maxCount
-        range: integer
-      readOnly:
-        propertyTerm: raml-shapes.readOnly
-        range: boolean
-      patternName:
-        propertyTerm: raml-shapes.patternName
+      mediaType:
+        propertyTerm: core.mediaType
         range: string
 
 
-  OAuth1Settings:
-    classTerm: security.OAuth1Settings
+  Scope:
+    classTerm: security.Scope
     mapping:
-      requestTokenURI:
-        propertyTerm: security.requestTokenUri
+      name:
+        propertyTerm: core.name
         range: string
-      authorizationURI:
-        propertyTerm: security.authorizationUri
+      description:
+        propertyTerm: core.description
         range: string
-      tokenCredentialsURI:
-        propertyTerm: security.tokenCredentialsUri
-        range: string
-      signature:
-        propertyTerm: security.signature
-        range: string
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
         allowMultiple: true
 
 
-  APIKeySettings:
-    classTerm: security.ApiKeySettings
+  SecurityScheme:
+    classTerm: security.SecurityScheme
     mapping:
       name:
-        propertyTerm: security.name
+        propertyTerm: core.name
         range: string
+      type:
+        propertyTerm: security.type
+        range: string
+      displayName:
+        propertyTerm: core.displayName
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      header:
+        propertyTerm: apiContract.header
+        range: Parameter
+        allowMultiple: true
+      parameter:
+        propertyTerm: apiContract.parameter
+        range: Parameter
+        allowMultiple: true
+      response:
+        propertyTerm: apiContract.response
+        range: Response
+        allowMultiple: true
+      settings:
+        propertyTerm: security.settings
+        range: SecuritySettingsUnion
+      queryString:
+        propertyTerm: apiContract.queryString
+        range: DataShapesUnion
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  SecuritySchemeFragment:
+    classTerm: security.SecuritySchemeFragment
+    extends: Fragment
+
+
+  Server:
+    classTerm: apiContract.Server
+    mapping:
+      urlTemplate:
+        propertyTerm: core.urlTemplate
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      variable:
+        propertyTerm: apiContract.variable
+        range: Parameter
+        allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  Settings:
+    classTerm: security.Settings
+    mapping:
+      additionalProperties:
+        propertyTerm: security.additionalProperties
+        range: DataNodeUnion
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  Shape:
+    classTerm: shacl.Shape
+    mapping:
+      name:
+        propertyTerm: shacl.name
+        range: string
+      name1:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      defaultValue:
+        propertyTerm: shacl.defaultValue
+        range: DataNodeUnion
       in:
-        propertyTerm: security.in
+        propertyTerm: shacl.in
+        range: DataNodeUnion
+        allowMultiple: true
+      inherits:
+        propertyTerm: raml-shapes.inherits
+        range: DataShapesUnion
+        allowMultiple: true
+      defaultValueString:
+        propertyTerm: shacl.defaultValueStr
         range: string
+      not:
+        propertyTerm: shacl.not
+        range: DataShapesUnion
+      and:
+        propertyTerm: shacl.and
+        range: DataShapesUnion
+        allowMultiple: true
+      or:
+        propertyTerm: shacl.or
+        range: DataShapesUnion
+        allowMultiple: true
+      exclusiveOr:
+        propertyTerm: shacl.xone
+        range: DataShapesUnion
+        allowMultiple: true
+      inheritanceClosure:
+        propertyTerm: raml-shapes.closure
+        range: link
+        allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
 
 
-  MatrixShape:
-    classTerm: raml-shapes.MatrixShape
+  ShapeExtension:
+    classTerm: apiContract.ShapeExtension
+    mapping:
+      definedBy:
+        propertyTerm: doc.definedBy
+        range: CustomDomainProperty
+      extension:
+        propertyTerm: doc.extension
+        range: DataNodeUnion
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  Tag:
+    classTerm: apiContract.Tag
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      documentation:
+        propertyTerm: core.documentation
+        range: CreativeWork
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  TemplatedLink:
+    classTerm: apiContract.TemplatedLink
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      template:
+        propertyTerm: apiContract.template
+        range: string
+      operationID:
+        propertyTerm: apiContract.operationId
+        range: string
+      mapping:
+        propertyTerm: apiContract.mapping
+        range: IriTemplate
+        allowMultiple: true
+      requestBody:
+        propertyTerm: apiContract.requestBody
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      server:
+        propertyTerm: apiContract.server
+        range: Server
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
+
+
+  Trait:
+    classTerm: apiContract.Trait
+    extends: AbstractDeclaration
+
+
+  TraitFragment:
+    classTerm: apiContract.TraitFragment
+    extends: Fragment
+
+
+  TupleShape:
+    classTerm: raml-shapes.TupleShape
+    extends: ArrayShape
+    mapping:
+      additionalItems:
+        propertyTerm: raml-shapes.additionalItems
+        range: boolean
+
+
+  UnionShape:
+    classTerm: raml-shapes.UnionShape
     extends: AnyShape
     mapping:
-      items:
-        propertyTerm: raml-shapes.items
+      anyOf:
+        propertyTerm: raml-shapes.anyOf
         range: DataShapesUnion
-      minCount:
-        propertyTerm: shacl.minCount
-        range: integer
-      maxCount:
-        propertyTerm: shacl.maxCount
-        range: integer
-      uinqueItems:
-        propertyTerm: raml-shapes.uniqueItems
-        range: boolean
-      collectionFormat:
-        propertyTerm: raml-shapes.collectionFormat
-        range: string
+        allowMultiple: true
 
 
   VariableValue:
@@ -622,31 +1422,13 @@ nodeMappings:
       name:
         propertyTerm: core.name
         range: string
-
-
-  NilShape:
-    classTerm: raml-shapes.NilShape
-    extends: AnyShape
-
-
-  XMLSerializer:
-    classTerm: raml-shapes.XMLSerializer
-    mapping:
-      xmlAttribute:
-        propertyTerm: raml-shapes.xmlAttribute
-        range: boolean
-      xmlWrapped:
-        propertyTerm: raml-shapes.xmlWrapped
-        range: boolean
-      xmlName:
-        propertyTerm: raml-shapes.xmlName
-        range: string
-      xmlNamespace:
-        propertyTerm: raml-shapes.xmlNamespace
-        range: string
-      xmlPrefix:
-        propertyTerm: raml-shapes.xmlPrefix
-        range: string
+      value:
+        propertyTerm: doc.value
+        range: DataNodeUnion
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
 
 
   WebAPI:
@@ -702,658 +1484,34 @@ nodeMappings:
         propertyTerm: apiContract.tag
         range: Tag
         allowMultiple: true
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
+        allowMultiple: true
 
 
-  ScalarShape:
-    classTerm: raml-shapes.ScalarShape
-    extends: AnyShape
+  XMLSerializer:
+    classTerm: raml-shapes.XMLSerializer
     mapping:
-      datatype:
-        propertyTerm: shacl.datatype
-        range: link
-      pattern:
-        propertyTerm: shacl.pattern
-        range: string
-      min.Length:
-        propertyTerm: shacl.minLength
-        range: integer
-      max.Length:
-        propertyTerm: shacl.maxLength
-        range: integer
-      min.Inclusive:
-        propertyTerm: shacl.minInclusive
-        range: double
-      max.Inclusive:
-        propertyTerm: shacl.maxInclusive
-        range: double
-      min.Exclusive:
-        propertyTerm: shacl.minExclusive
+      xmlAttribute:
+        propertyTerm: raml-shapes.xmlAttribute
         range: boolean
-      max.Exclusive:
-        propertyTerm: shacl.maxExclusive
+      xmlWrapped:
+        propertyTerm: raml-shapes.xmlWrapped
         range: boolean
-      format:
-        propertyTerm: raml-shapes.format
+      xmlName:
+        propertyTerm: raml-shapes.xmlName
         range: string
-      multipleOf:
-        propertyTerm: raml-shapes.multipleOf
-        range: double
-
-
-  SecurityScheme:
-    classTerm: security.SecurityScheme
-    mapping:
-      name:
-        propertyTerm: core.name
+      xmlNamespace:
+        propertyTerm: raml-shapes.xmlNamespace
         range: string
-      type:
-        propertyTerm: security.type
+      xmlPrefix:
+        propertyTerm: raml-shapes.xmlPrefix
         range: string
-      displayName:
-        propertyTerm: core.displayName
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      header:
-        propertyTerm: apiContract.header
-        range: Parameter
+      customDomainProperties:
+        propertyTerm: doc.customDomainProperties
+        range: DomainExtension
         allowMultiple: true
-      parameter:
-        propertyTerm: apiContract.parameter
-        range: Parameter
-        allowMultiple: true
-      response:
-        propertyTerm: apiContract.response
-        range: Response
-        allowMultiple: true
-      settings:
-        propertyTerm: security.settings
-        range: SecuritySettingsUnion
-      queryString:
-        propertyTerm: apiContract.queryString
-        range: DataShapesUnion
-      linkTarget:
-        propertyTerm: apiContract.link-target
-        range: link
-      linkLabel:
-        propertyTerm: apiContract.link-label
-        range: string
-
-
-
-  ParametrizedResourceType:
-    classTerm: doc.ParametrizedResourceType
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      target:
-        propertyTerm: doc.target
-        range: ResourceType
-      variable:
-        propertyTerm: doc.variable
-        range: VariableValue
-        allowMultiple: true
-
-
-  AnyShape:
-    classTerm: raml-shapes.AnyShape
-    extends: Shape
-    mapping:
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-      documentation:
-        propertyTerm: core.documentation
-        range: CreativeWork
-      XMLSerialization:
-        propertyTerm: raml-shapes.xmlSerialization
-        range: XMLSerializer
-      examples:
-        propertyTerm: apiContract.examples
-        range: Examples
-
-
-  CustomDomainProperty:
-    classTerm: doc.DomainProperty
-    mapping:
-      domain:
-        propertyTerm: rdfs.domain
-        range: link
-        allowMultiple: true
-      schema:
-        propertyTerm: raml-shapes.schema
-        range: DataShapesUnion
-      name:
-        propertyTerm: core.name
-        range: string
-
-
-  Examples:
-    classTerm: apiContract.NamedExamples
-    mapping:
-      examples:
-        propertyTerm: apiContract.examples
-        range: Example
-        allowMultiple: true
-
-
-  Tag:
-    classTerm: apiContract.Tag
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      documentation:
-        propertyTerm: core.documentation
-        range: CreativeWork
-
-
-  ArrayNode:
-    classTerm: data.Array
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-
-
-  IriTemplate:
-    classTerm: apiContract.IriTemplateMapping
-    mapping:
-      variable:
-        propertyTerm: apiContract.variable
-        range: string
-      linkExpression:
-        propertyTerm: apiContract.linkExpression
-        range: string
-
-
-  ExternalSourceElement:
-    classTerm: doc.ExternalSource
-    mapping:
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-
-
-  ShapeExtension:
-    classTerm: apiContract.ShapeExtension
-    mapping:
-      definedBy:
-        propertyTerm: doc.definedBy
-        range: CustomDomainProperty
-
-
-  ScalarNode:
-    classTerm: data.Scalar
-    mapping:
-      value:
-        propertyTerm: data.value
-        range: string
-      name:
-        propertyTerm: core.name
-        range: string
-
-
-  UnionShape:
-    classTerm: raml-shapes.UnionShape
-    extends: AnyShape
-    mapping:
-      anyOf:
-        propertyTerm: raml-shapes.anyOf
-        range: DataShapesUnion
-        allowMultiple: true
-
-
-  TemplatedLink:
-    classTerm: apiContract.TemplatedLink
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      template:
-        propertyTerm: apiContract.template
-        range: string
-      operationID:
-        propertyTerm: apiContract.operationId
-        range: string
-      mapping:
-        propertyTerm: apiContract.mapping
-        range: IriTemplate
-        allowMultiple: true
-      requestBody:
-        propertyTerm: apiContract.requestBody
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      server:
-        propertyTerm: apiContract.server
-        range: Server
-
-
-  HTTPSettings:
-    classTerm: security.HttpSettings
-    mapping:
-      scheme:
-        propertyTerm: security.scheme
-        range: string
-      bearerFormat:
-        propertyTerm: security.bearerFormat
-        range: string
-
-
-  OpenIDSettings:
-    classTerm: security.OpenIdConnectSettings
-    mapping:
-      OpenIDConnectURL:
-        propertyTerm: security.openIdConnectUrl
-        range: string
-
-
-  ParametrizedSecurityScheme:
-    classTerm: security.ParametrizedSecurityScheme
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      scheme:
-        propertyTerm: security.scheme
-        range: SecurityScheme
-      settings:
-        propertyTerm: security.settings
-        range: SecuritySettingsUnion
-      linkTarget:
-        propertyTerm: apiContract.link-target
-        range: link
-      linkLabel:
-        propertyTerm: apiContract.link-label
-        range: string
-
-
-  Server:
-    classTerm: apiContract.Server
-    mapping:
-      url:
-        propertyTerm: apiContract.url
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      variable:
-        propertyTerm: apiContract.variable
-        range: Parameter
-        allowMultiple: true
-
-
-  CreativeWork:
-    classTerm: core.CreativeWork
-    mapping:
-      url:
-        propertyTerm: core.url
-        range: link
-      title:
-        propertyTerm: core.title
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-
-
-  EndPoint:
-    classTerm: apiContract.EndPoint
-    mapping:
-      extends:
-        propertyTerm: apiContract.extends
-        typeDiscriminatorName: extensionType
-        typeDiscriminator:
-          AppliedResourceType: ParametrizedResourceType
-          AppliedTrait: ParametrizedTrait
-        range:
-          - ParametrizedResourceType
-          - ParametrizedTrait
-        allowMultiple: true
-
-      path:
-        propertyTerm: apiContract.path
-        range: string
-      name:
-        propertyTerm: core.name
-        range: string
-      summary:
-        propertyTerm: core.summary
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      supportedOperation:
-        propertyTerm: apiContract.supportedOperation
-        range: Operation
-        allowMultiple: true
-      parameter:
-        propertyTerm: apiContract.parameter
-        range: Parameter
-        allowMultiple: true
-      payload:
-        propertyTerm: apiContract.payload
-        range: Payload
-        allowMultiple: true
-      servers:
-        propertyTerm: apiContract.server
-        range: Server
-        allowMultiple: true
-      security:
-        propertyTerm: security.security
-        range: ParametrizedSecurityScheme
-        allowMultiple: true
-
-
-  TupleShape:
-    classTerm: raml-shapes.TupleShape
-    extends: AnyShape
-    mapping:
-      items:
-        propertyTerm: raml-shapes.items
-        range: DataShapesUnion
-        allowMultiple: true
-      minCount:
-        propertyTerm: shacl.minCount
-        range: integer
-      maxCount:
-        propertyTerm: shacl.maxCount
-        range: integer
-      uinqueItems:
-        propertyTerm: raml-shapes.uniqueItems
-        range: boolean
-      additionalItems:
-        propertyTerm: raml-shapes.additionalItems
-        range: boolean
-      collectionFormat:
-        propertyTerm: raml-shapes.collectionFormat
-        range: string
-
-
-  License:
-    classTerm: core.License
-    mapping:
-      url:
-        propertyTerm: core.url
-        range: link
-      name:
-        propertyTerm: core.name
-        range: string
-
-
-  Response:
-    classTerm: apiContract.Response
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      statusCode:
-        propertyTerm: apiContract.statusCode
-        range: string
-      header:
-        propertyTerm: apiContract.header
-        range: Parameter
-        allowMultiple: true
-      payload:
-        propertyTerm: apiContract.payload
-        range: Payload
-        allowMultiple: true
-      links:
-        propertyTerm: apiContract.link
-        range: TemplatedLink
-        allowMultiple: true
-      examples:
-        propertyTerm: apiContract.examples
-        range: Examples
-
-
-  Organization:
-    classTerm: core.Organization
-    mapping:
-      url:
-        propertyTerm: core.url
-        range: link
-      name:
-        propertyTerm: core.name
-        range: string
-      email:
-        propertyTerm: core.email
-        range: string
-
-
-  Example:
-    classTerm: apiContract.Example
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      displayName:
-        propertyTerm: core.displayName
-        range: string
-      guiSummary:
-        propertyTerm: apiContract.guiSummary
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      externalValue:
-        propertyTerm: doc.externalValue
-        range: string
-      strict:
-        propertyTerm: doc.strict
-        range: boolean
-      mediaType:
-        propertyTerm: core.mediaType
-        range: string
-      raw:
-        propertyTerm: shacl.raw
-        range: string
-      referenceId:
-        propertyTerm: doc.reference-id
-        range: link
-
-
-  Payload:
-    classTerm: apiContract.Payload
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      mediaType:
-        propertyTerm: apiContract.mediaType
-        range: string
-      schema:
-        propertyTerm: apiContract.schema
-        range: DataShapesUnion
-      examples:
-        propertyTerm: apiContract.examples
-        range: Examples
-      encoding:
-        propertyTerm: apiContract.encoding
-        range: Encoding
-        allowMultiple: true
-
-
-  DomainExtension:
-    classTerm: apiContract.DomainExtension
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      definedBy:
-        propertyTerm: doc.definedBy
-        range: CustomDomainProperty
-      element:
-        propertyTerm: doc.element
-        range: string
-
-
-  NodeShape:
-    classTerm: shacl.NodeShape
-    extends: AnyShape
-    mapping:
-      minProperties:
-        propertyTerm: raml-shapes.minProperties
-        range: integer
-      maxProperties:
-        propertyTerm: raml-shapes.maxProperties
-        range: integer
-      closed:
-        propertyTerm: shacl.closed
-        range: boolean
-      additionalPropertiesSchema:
-        propertyTerm: shacl.additionalPropertiesSchema
-        range: DataShapesUnion
-      discriminator:
-        propertyTerm: raml-shapes.discriminator
-        range: string
-      discriminatorValue:
-        propertyTerm: raml-shapes.discriminatorValue
-        range: string
-      property:
-        propertyTerm: shacl.property
-        range: PropertyShape
-        allowMultiple: true
-      dependencies:
-        propertyTerm: raml-shapes.dependencies
-        range: PropertyDependencies
-        allowMultiple: true
-
-
-  Shape:
-    classTerm: shacl.Shape
-    mapping:
-      name:
-        propertyTerm: shacl.name
-        range: string
-      name1:
-        propertyTerm: core.name
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      inherits:
-        propertyTerm: raml-shapes.inherits
-        range: DataShapesUnion
-        allowMultiple: true
-      defaultValueString:
-        propertyTerm: shacl.defaultValueStr
-        range: string
-      not:
-        propertyTerm: shacl.not
-        range: DataShapesUnion
-      and:
-        propertyTerm: shacl.and
-        range: DataShapesUnion
-        allowMultiple: true
-      or:
-        propertyTerm: shacl.or
-        range: DataShapesUnion
-        allowMultiple: true
-      exclusiveOr:
-        propertyTerm: shacl.xone
-        range: DataShapesUnion
-        allowMultiple: true
-      inheritanceClosure:
-        propertyTerm: raml-shapes.closure
-        range: link
-        allowMultiple: true
-      linkTarget:
-        propertyTerm: apiContract.link-target
-        range: link
-      linkLabel:
-        propertyTerm: apiContract.link-label
-        range: string
-
-
-  Trait:
-    classTerm: doc.Trait
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
-      variable:
-        propertyTerm: doc.variable
-        range: string
-        allowMultiple: true
-      linkTarget:
-        propertyTerm: apiContract.link-target
-        range: link
-      linkLabel:
-        propertyTerm: apiContract.link-label
-        range: string
-
-
-  Encoding:
-    classTerm: apiContract.Encoding
-    mapping:
-      propertyName:
-        propertyTerm: apiContract.propertyName
-        range: string
-      contentType:
-        propertyTerm: apiContract.contentType
-        range: string
-      header:
-        propertyTerm: apiContract.header
-        range: Parameter
-        allowMultiple: true
-      style:
-        propertyTerm: apiContract.style
-        range: string
-      explode:
-        propertyTerm: apiContract.explode
-        range: boolean
-      allowReserved:
-        propertyTerm: apiContract.allowReserved
-        range: boolean
-
-
-  DataNode:
-    classTerm: data.Node
-    mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-
-
-  ArrayShape:
-    classTerm: raml-shapes.ArrayShape
-    extends: AnyShape
-    mapping:
-      items:
-        propertyTerm: raml-shapes.items
-        range: DataShapesUnion
-      minCount:
-        propertyTerm: shacl.minCount
-        range: integer
-      maxCount:
-        propertyTerm: shacl.maxCount
-        range: integer
-      uinqueItems:
-        propertyTerm: raml-shapes.uniqueItems
-        range: boolean
-      collectionFormat:
-        propertyTerm: raml-shapes.collectionFormat
-        range: string
 
 
 

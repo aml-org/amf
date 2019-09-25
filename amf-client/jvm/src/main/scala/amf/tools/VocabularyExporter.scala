@@ -141,17 +141,27 @@ object VocabularyExporter {
 
           // vocabularies
           if (uses.nonEmpty) {
-            b.entry("uses", b => {
-              b.obj { b =>
-                uses.foreach(vocab =>
-                  if (ExternalModelVocabularies.all.contains(vocab)) {
-                    b.entry(vocab.alias, s"external/${vocab.filename}")
-                  } else {
-                    b.entry(vocab.alias, vocab.filename)
-                  }
-                )
-              }
-            })
+            if (ExternalModelVocabularies.all.contains(vocabulary)) {
+              b.entry("external", b => {
+                b.obj { b =>
+                  uses.foreach(vocab =>
+                    b.entry(vocab.alias, vocab.base)
+                  )
+                }
+              })
+            } else {
+              b.entry("uses", b => {
+                b.obj { b =>
+                  uses.foreach(vocab =>
+                    if (ExternalModelVocabularies.all.contains(vocab)) {
+                      b.entry(vocab.alias, s"external/${vocab.filename}")
+                    } else {
+                      b.entry(vocab.alias, vocab.filename)
+                    }
+                  )
+                }
+              })
+            }
           }
 
           // classTerms
@@ -408,14 +418,18 @@ object VocabularyExporter {
       case a: Type.Array       => computeRange(a.element, propertyTerm)
       case a: Type.SortedArray => computeRange(a.element, propertyTerm)
       case other: Obj =>
-        val id = other.`type`.head.iri()
-        propertyTerm.copy(objectRange = Some(id))
+        if (propertyTerm.id != DomainElementModel.CustomDomainProperties.value.iri()) {
+          val id = other.`type`.head.iri()
+          propertyTerm.copy(objectRange = Some(id))
+        } else {
+          propertyTerm
+        }
     }
   }
 
   def buildPropertyTerm(field: Field, klass: VocabClassTerm): Unit = {
     val id = field.value.iri()
-    var propertyTerm = properties.get(id) match {
+    val propertyTerm = properties.get(id) match {
       case Some(prop) => prop
       case None =>
         val doc         = field.doc
@@ -476,8 +490,17 @@ object VocabularyExporter {
       classes = classes + (id -> classTerm)
       classToFile = classToFile + (id -> vocab)
 
-      // index fields
-      modelObject.fields.foreach { field =>
+      /// index fields
+
+      val fields = if (id == DomainElementModel.`type`.head.iri()) {
+        // Annotation propery is lazy, not connected in fields, we need to add it manually
+        modelObject.fields ++ Seq(DomainElementModel.CustomDomainProperties)
+      } else {
+        // regular fields
+        modelObject.fields
+      }
+
+      fields.foreach { field =>
         buildPropertyTerm(field, classTerm)
         classTerm = classes(id) // update after linking in property term
       }
@@ -538,7 +561,7 @@ object VocabularyExporter {
          ModelVocabularies.ApiContract,
          ModelVocabularies.Core,
          ModelVocabularies.Data,
-      ModelVocabularies.Shapes,
+         ModelVocabularies.Shapes,
          ModelVocabularies.Security,
          ModelVocabularies.Meta) ++
       ExternalModelVocabularies.all).foreach { vocab =>
