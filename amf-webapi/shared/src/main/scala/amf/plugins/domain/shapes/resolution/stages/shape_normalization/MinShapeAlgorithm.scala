@@ -295,7 +295,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     val superProperties = superNode.properties
     val baseProperties  = baseNode.properties
 
-    val commonProps: mutable.HashMap[String, Boolean] = mutable.HashMap()
+    type IsOverridden = Boolean
+    type PropertyPath = String
+
+    val commonProps: mutable.HashMap[PropertyPath, IsOverridden] = mutable.HashMap()
 
     superProperties.foreach(p => commonProps.put(p.path.value(), false))
     baseProperties.foreach { p =>
@@ -311,15 +314,24 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         val superProp = superProperties.find(_.path.is(path)).get
         val baseProp  = baseProperties.find(_.path.is(path)).get
         context.minShape(baseProp, superProp)
+
       case (path, false) =>
-        val superProp = superProperties.find(_.path.is(path))
-        val baseProp  = baseProperties.find(_.path.is(path))
+        val superPropOption = superProperties.find(_.path.is(path))
+        val basePropOption  = baseProperties.find(_.path.is(path))
         if (keepEditingInfo) {
-          superProp.map(inheritProp(superNode)).getOrElse { baseProp.get.cloneShape(Some(context.errorHandler)) }
+          superPropOption
+            .map(inheritProp(superNode))
+            .getOrElse {
+              basePropOption.get.cloneShape(Some(context.errorHandler))
+            }
+            .adopted(baseNode.id)
         } else {
-          superProp.map(_.cloneShape(Some(context.errorHandler))).getOrElse {
-            baseProp.get.cloneShape(Some(context.errorHandler))
-          }
+          superPropOption
+            .map(_.cloneShape(Some(context.errorHandler)))
+            .getOrElse {
+              basePropOption.get.cloneShape(Some(context.errorHandler))
+            }
+            .adopted(baseNode.id)
         }
     }
 
@@ -427,10 +439,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields,
-                              baseUnion,
-                              superNode,
-                              filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }
