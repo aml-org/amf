@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/Order",
+  "definitions": {
+    "Order": {
+      "type": "object",
+      "x-amf-examples": {
+        "application/json0": {
+          "firstName": "Bob",
+          "lastName": "Jones"
+        },
+        "application/json1": {
+          "firstName": "Bob",
+          "lastName": "Jones"
+        }
+      },
+      "additionalProperties": true,
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

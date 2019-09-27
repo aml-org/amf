@@ -2,7 +2,7 @@ package amf.emit
 
 import amf.core.model.document.{BaseUnit, Document, Module}
 import amf.core.parser.UnhandledErrorHandler
-import amf.core.remote.RamlYamlHint
+import amf.core.remote.{Hint, OasJsonHint, RamlYamlHint}
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.Oas20Plugin
@@ -15,6 +15,32 @@ import scala.concurrent.{ExecutionContext, Future}
 class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  test("Test api with x-examples") {
+    val func = (u: BaseUnit) =>
+      encodedWebApi(u)
+        .flatMap(_.endPoints.headOption)
+        .flatMap(_.operations.headOption)
+        .flatMap(_.responses.headOption)
+        .flatMap(_.payloads.headOption)
+        .map(_.schema)
+        .collectFirst({ case any: AnyShape => any })
+
+    cycle("x-examples.json", "x-examples.schema.json", func, hint = OasJsonHint)
+  }
+
+  test("Test api with x-examples 2") {
+    val func = (u: BaseUnit) =>
+      encodedWebApi(u)
+        .flatMap(_.endPoints.headOption)
+        .flatMap(_.operations.headOption)
+        .flatMap(_.responses.headOption)
+        .flatMap(_.payloads.headOption)
+        .map(_.schema)
+        .collectFirst({ case any: AnyShape => any })
+
+    cycle("x-examples2.json", "x-examples2.schema.json", func, hint = OasJsonHint)
+  }
 
   test("Test array with object items") {
     val func = (u: BaseUnit) =>
@@ -111,10 +137,11 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
   private def cycle(file: String,
                     golden: String,
                     findShapeFunc: BaseUnit => Option[AnyShape],
-                    renderFn: AnyShape => String = (a: AnyShape) => a.toJsonSchema): Future[Assertion] = {
+                    renderFn: AnyShape => String = (a: AnyShape) => a.toJsonSchema,
+                    hint: Hint = RamlYamlHint): Future[Assertion] = {
     val jsonSchema: Future[String] = for {
       v    <- Validation(platform)
-      unit <- AMFCompiler(basePath + file, platform, RamlYamlHint, v).build()
+      unit <- AMFCompiler(basePath + file, platform, hint, v).build()
     } yield {
       findShapeFunc(Oas20Plugin.resolve(unit, UnhandledErrorHandler)).map(_.toJsonSchema).getOrElse("")
     }
