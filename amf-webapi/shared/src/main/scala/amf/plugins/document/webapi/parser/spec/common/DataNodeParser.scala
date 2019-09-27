@@ -33,10 +33,11 @@ case class DataNodeParser(node: YNode,
   protected def parseArray(seq: Seq[YNode], ast: YPart): DataNode = {
     val node = DataArrayNode(Annotations(ast)).withName(idCounter.genId("array"))
     parent.foreach(p => node.adopted(p))
-    seq.foreach { v =>
-      val element = DataNodeParser(v, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addMember(element)
+    val members: ListBuffer[DataNode] = ListBuffer()
+    for { v <- seq } yield {
+      members += DataNodeParser(v, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
     }
+    node.withMembers(members)
     node
   }
 
