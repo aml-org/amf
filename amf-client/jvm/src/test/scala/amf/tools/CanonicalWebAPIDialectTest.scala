@@ -5,6 +5,7 @@ import amf.core.AMF
 import amf.core.emitter.RenderOptions
 import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote._
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.emit.AMFRenderer
@@ -13,6 +14,7 @@ import amf.io.BuildCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.webapi.Raml10Plugin
+import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.tools.canonical.{CanonicalWebAPISpecTransformer, CanonicalWebAPITransformer}
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -21,28 +23,36 @@ import scala.concurrent.Future
 class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with PlatformSecrets {
 
   val CANONICAL_WEBAPI_DIALECT = "file://vocabularies/dialects/canonical_webapi_spec.yaml"
-  override def basePath: String = "amf-tools/jvm/src/test/resources/transformed/"
+  override def basePath: String = "file://amf-client/shared/src/test/resources/transformations/"
 
-  def checkCanonicalDialectTransformation(amfWebApi: String,
-                                          canonicalTarget: String,
+  def checkCanonicalDialectTransformation(source: String,
+                                          target: String,
                                           shouldTranform: Boolean): Future[Assertion] = {
-    val golden = basePath + canonicalTarget
+    val amfWebApi = basePath + source
+    val golden = basePath + target
     for {
       _               <- AMF.init()
       _               <- Future(amf.Core.registerPlugin(AMLPlugin))
       v               <- Validation(platform).map(_.withEnabledValidation(true))
       d               <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, v).build()
       _               <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
-      unit            <- AMFCompiler(amfWebApi, platform, AmfJsonHint, v).build()
+      unit            <- AMFCompiler(amfWebApi, platform, RamlYamlHint, v).build()
       resolved        <- {
-        if (shouldTranform)
-          Future { Raml10Plugin.resolve(unit, UnhandledErrorHandler) } else
-          Future(unit)
+        if (shouldTranform) {
+          Future { Raml10Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE) }
+        } else {
+            Future(unit)
+          }
       }
+      // jsonld          <- new AMFRenderer(resolved, Vendor.AMF, RenderOptions(), Some(Syntax.Json)).renderToString
       dialectInstance <- CanonicalWebAPISpecTransformer.transform(resolved)
-      rendered        <- new AMFRenderer(dialectInstance, Vendor.AML, RenderOptions(), Some(Syntax.Yaml)).renderToString
+      // jsonld          <- new AMFRenderer(dialectInstance, Vendor.AMF, RenderOptions(), Some(Syntax.Json)).renderToString
+      rendered        <- new AMFRenderer(dialectInstance, Vendor.AML, RenderOptions().withNodeIds, Some(Syntax.Yaml)).renderToString
       tmp             <- writeTemporaryFile(golden)(rendered)
-      res             <- assertDifferences(tmp, golden)
+      res             <- {
+        // println(jsonld)
+        assertLinesDifferences(tmp, golden)
+      }
       report <- {
         RuntimeValidator(
           dialectInstance,
@@ -55,30 +65,33 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with
     }
   }
 
-  val tests: Map[String, String] = Map(
-//    TODO: positions moving
-//    "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml.jsonld"        -> "banking-api.webapi.yaml",
+  val tests: Seq[String] = Seq(
+    "simple/api.raml",
+    "annotations/api.raml",
+    "macros/api.raml"
+
+    // "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml.jsonld" -> "banking-api.webapi.yaml",
+  // "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml.jsonld" -> "banking-api.webapi.yaml",
 
 //    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/all-type-types/api.raml.jsonld" -> "all-type-types.webapi.yaml",
-//     TODO: refactor annotations as common logic for webapi | dialects
-//    "file://amf-client/shared/src/test/resources/upanddown/annotations.raml.jsonld" -> "annotations.webapi.yaml",
-//     TODO: data nodes
-//    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/jukebox-api/api.raml.jsonld" -> "jukebox-api.webapi.yaml"
 
 //    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/api.raml.jsonld" -> "secured-by.webapi.yaml",
 //    TODO: positions moving
-    "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml.jsonld"     -> "full-banking-api.webapi.yaml",
+//    "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml.jsonld"     -> "full-banking-api.webapi.yaml",
 //    "file://amf-tools/jvm/src/test/resources/input/sample.raml.resolved.jsonld"                     -> "sample.webapi.yaml"
   )
 
+  /*
   val resolve: Map[String, Boolean] = Map(
     "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/sample.oas.resolved.jsonld" -> false,
     "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/api.raml.jsonld" -> false
   )
+  */
 
-  tests.foreach {case (input, golden) =>
-    ignore(s"HERE_HERE Test parsed RAML/OAS WebAPIs can be re-parsed with the WebAPI dialect '${golden}'") {
-      checkCanonicalDialectTransformation(input, golden, resolve.get(input).getOrElse(false))
+  tests.foreach {case (input) =>
+    val golden = input.replace("api.raml", "webapi.yaml")
+    test(s"Test parsed RAML/OAS WebAPIs can be re-parsed with the WebAPI dialect '${golden}'") {
+      checkCanonicalDialectTransformation(input, golden, false)
     }
   }
 }

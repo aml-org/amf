@@ -24,11 +24,23 @@ classTerms:
     displayName: Object Node
     description: Node that represents a dynamic object with records data structure
     extends: Node
+  Property:
+    displayName: Property Node
+    description: Node that represents a dynamic property in a dynamic node
+    extends: Node
   Scalar:
     displayName: Scalar Node
     description: Node that represents a dynamic scalar value data structure
     extends: Node
 propertyTerms:
+  properties:
+    displayName: properties
+    description: properties in a dynamic object
+    range: Property
+  range:
+    displayName: range
+    description: value for a property
+    range: Node
   value:
     displayName: value
     description: value for an scalar dynamic node

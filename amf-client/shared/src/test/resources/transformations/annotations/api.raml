@@ -1,0 +1,35 @@
+#%RAML 1.0
+title: test
+version: 1.0
+mediaType: application/json
+baseUri: falsedomain.com/apis
+types:
+  A:
+    properties:
+      a: string
+      b: integer
+
+annotationTypes:
+  annot:
+    type:
+      properties:
+        lala: string
+  simple:
+    type: string
+  arrAnot:
+    type: array
+    items: string
+/test:
+  (arrAnot): ["a", "b"]
+  get:
+    description: an operation
+    responses:
+      200:
+        (simple): other annotation
+        (annot):
+          lala: lolo
+        body:
+          application/json:
+            type: A
+            properties:
+              c: string

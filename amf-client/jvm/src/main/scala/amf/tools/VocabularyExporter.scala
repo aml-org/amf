@@ -6,6 +6,7 @@ import amf.core.metamodel.Type.{Bool, Date, DateTime, Double, EncodedIri, Float,
 import amf.core.metamodel.domain._
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.vocabulary.Namespace
+import amf.tools.canonical.CanonicalWebAPISpecTransformer
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
 import org.yaml.model.YDocument
@@ -65,7 +66,12 @@ object VocabularyExporter {
 
   def allClasses: Seq[VocabClassTerm] = classToFile.keys.map(classes).toSeq
 
-  def allProperties: Seq[VocabPropertyTerm] = allClasses.flatMap { klass => klass.properties }.map { propertyId => properties(propertyId) }
+  def allProperties: Seq[VocabPropertyTerm] = allClasses.flatMap { klass => klass.properties }.map { propertyId => properties(propertyId) } ++
+    Seq(
+      fieldToVocabProperty(CanonicalWebAPISpecDialectExporter.DesignLinkTargetField),
+      fieldToVocabProperty(CanonicalWebAPISpecDialectExporter.DesignAnnotationField),
+      fieldToVocabProperty(CanonicalWebAPISpecDialectExporter.DataPropertiesField)
+    )
 
   def findNamespace(id: String) = {
     (ModelVocabularies.all ++ ExternalModelVocabularies.all).find { vocab =>
@@ -73,7 +79,7 @@ object VocabularyExporter {
     }
   }
 
-  val conflictive = Seq((Namespace.Document + "RootDomainElement").iri(), (Namespace.Document + "DomainElement").iri(), (Namespace.Document + "Linkable").iri())
+  val conflictive = Seq((Namespace.Document + "RootDomainElement").iri(), (Namespace.Document + "DomainElement").iri(), (Namespace.Document + "Linkable").iri(), (Namespace.ApiContract + "DomainExtension").iri())
 
   val blacklist: Map[ModelVocabulary, Seq[ModelVocabulary]] = Map()
 
@@ -86,6 +92,7 @@ object VocabularyExporter {
   val reflectionsShapes       = new Reflections("amf.plugins.domain.shapes.metamodel", new SubTypesScanner(false))
   val reflectionsVocabularies = new Reflections("amf.plugins.document.vocabularies.metamodel.domain", new SubTypesScanner(false))
   val reflectionsVocabDoc = new Reflections("amf.plugins.document.vocabularies.metamodel.document", new SubTypesScanner(false))
+  val reflectionsExtModel = new Reflections("amf.tools", new SubTypesScanner(false))
 
   var files: Map[String, VocabularyFile]         = Map()
   var classToFile: Map[String, String]           = Map()
@@ -381,7 +388,9 @@ object VocabularyExporter {
       property.superClasses.filter(!_.startsWith(vocabulary.base))
     }
     val propertiesRangeRefs = propertyTerms.flatMap { property =>
-      property.objectRange.filter { range => !range.startsWith(vocabulary.base) }
+      property.objectRange.filter { range =>
+        !conflictive.contains(range) && !range.startsWith(vocabulary.base)
+      }
     }
 
     val vocabularies = (classExtendsRefs ++ propertiesExtendsRefs ++ propertiesRangeRefs).map { id =>
@@ -427,19 +436,23 @@ object VocabularyExporter {
     }
   }
 
+  def fieldToVocabProperty(field: Field): VocabPropertyTerm = {
+    val id          = field.value.iri()
+    val doc         = field.doc
+    val displayName = doc.displayName
+    val description = doc.description
+
+    var propertyTerm = VocabPropertyTerm(id, displayName, description, doc.superClasses, None, None, Set())
+
+    computeRange(field.`type`, propertyTerm)
+  }
+
   def buildPropertyTerm(field: Field, klass: VocabClassTerm): Unit = {
     val id = field.value.iri()
     val propertyTerm = properties.get(id) match {
       case Some(prop) => prop
       case None =>
-        val doc         = field.doc
-        val displayName = doc.displayName
-        val description = doc.description
-        val vocab       = doc.vocabulary.filename
-
-        var propertyTerm = VocabPropertyTerm(id, displayName, description, doc.superClasses, None, None, Set())
-
-        propertyTerm = computeRange(field.`type`, propertyTerm)
+        val propertyTerm = fieldToVocabProperty(field)
         properties = properties + (propertyTerm.id -> propertyTerm)
         propertyTerm
     }
@@ -516,7 +529,8 @@ object VocabularyExporter {
         try {
           val singleton = Class.forName(klassName)
           singleton.getField("MODULE$").get(singleton) match {
-            case modelObject: Obj => buildClassTerm(klassName, modelObject)
+            case modelObject: Obj =>
+              buildClassTerm(klassName, modelObject)
             case other            =>
               //println(s"Other thing: $other")
               None
@@ -549,6 +563,7 @@ object VocabularyExporter {
     metaObjects(reflectionsTemplates, parseMetaObject)
     metaObjects(reflectionsVocabularies, parseMetaObject)
     metaObjects(reflectionsVocabDoc, parseMetaObject)
+    metaObjects(reflectionsExtModel, parseMetaObject)
 
     // review
     println(s"*** Parsed classes: ${classes.keys.toSeq.size}")

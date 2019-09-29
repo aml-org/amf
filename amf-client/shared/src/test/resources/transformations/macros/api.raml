@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Example with headers
+resourceTypes:
+  collection:
+    usage: This resourceType should be used for any collection of items
+    description: The collection of <<resourcePathName>>
+    get:
+      description: Get all <<param>>, optionally filtered
+    post:
+      description: Create a new <<resourcePathName | !singularize>>
+traits:
+  traceable:
+    headers:
+      X-Tracker:
+        description: A code to track API calls end to end
+        pattern: ^\w{16}$
+        example: abcdefghijklmnop
+/users:
+  type: { collection: { param: usuarios } }
+  get:
+    is: [ traceable ]

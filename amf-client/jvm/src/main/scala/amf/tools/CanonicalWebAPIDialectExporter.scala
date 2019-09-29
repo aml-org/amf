@@ -3,6 +3,7 @@ package amf.tools
 import java.io.{File, FileWriter}
 
 import amf.core.metamodel.Type.Scalar
+import amf.core.metamodel.domain.DomainElementModel
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.webapi.metamodel.WebApiModel

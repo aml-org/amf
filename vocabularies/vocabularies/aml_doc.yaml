@@ -100,6 +100,13 @@ propertyTerms:
     displayName: deprecated
     description: Marks the parameter as deprecated
     range: boolean
+  design-link-target:
+    displayName: design link target
+    description: URI of the linked element linked at design time
+    range: uri
+  designAnnotation:
+    displayName: design annotation
+    description: Extensions provided for a particular domain element during design time
   element:
     displayName: element
     description: Element being extended

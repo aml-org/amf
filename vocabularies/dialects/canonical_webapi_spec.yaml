@@ -1,6 +1,6 @@
 #%Dialect 1.0
 
-dialect: WebAPI
+dialect: WebAPI Spec
 version: 1.0
 
 uses:
@@ -102,6 +102,7 @@ nodeMappings:
       TemplatedLink: TemplatedLink
       Server: Server
       ResourceType: ResourceType
+      CustomDomainProperty: CustomDomainProperty
 
     union:
       - UnionShape
@@ -126,6 +127,7 @@ nodeMappings:
       - TemplatedLink
       - Server
       - ResourceType
+      - CustomDomainProperty
 
   ParsedUnitUnion:
     typeDiscriminatorName: unitType
@@ -182,8 +184,11 @@ nodeMappings:
         propertyTerm: doc.variable
         range: string
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -279,8 +284,8 @@ nodeMappings:
       endpoint:
         propertyTerm: apiContract.endpoint
         range: EndPoint
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -297,8 +302,11 @@ nodeMappings:
       description:
         propertyTerm: core.description
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -316,8 +324,11 @@ nodeMappings:
       name:
         propertyTerm: core.name
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -328,8 +339,8 @@ nodeMappings:
       name:
         propertyTerm: core.name
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -385,8 +396,8 @@ nodeMappings:
       element:
         propertyTerm: doc.element
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -413,8 +424,8 @@ nodeMappings:
       allowReserved:
         propertyTerm: apiContract.allowReserved
         range: boolean
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -465,8 +476,8 @@ nodeMappings:
         propertyTerm: security.security
         range: ParametrizedSecurityScheme
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -507,8 +518,11 @@ nodeMappings:
       location:
         propertyTerm: doc.location
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -527,8 +541,8 @@ nodeMappings:
       mediaType:
         propertyTerm: core.mediaType
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -619,8 +633,8 @@ nodeMappings:
       linkExpression:
         propertyTerm: apiContract.linkExpression
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -634,8 +648,8 @@ nodeMappings:
       name:
         propertyTerm: core.name
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -754,6 +768,11 @@ nodeMappings:
   ObjectNode:
     classTerm: data.Object
     extends: DataNode
+    mapping:
+      properties:
+        propertyTerm: data.properties
+        range: PropertyNode
+        allowMultiple: true
 
 
   OpenIDSettings:
@@ -830,8 +849,8 @@ nodeMappings:
         propertyTerm: apiContract.server
         range: Server
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -848,8 +867,8 @@ nodeMappings:
       email:
         propertyTerm: core.email
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -903,8 +922,11 @@ nodeMappings:
         propertyTerm: apiContract.examples
         range: Example
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -925,8 +947,8 @@ nodeMappings:
         propertyTerm: doc.variable
         range: VariableValue
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -948,8 +970,8 @@ nodeMappings:
       settings:
         propertyTerm: security.settings
         range: SecuritySettingsUnion
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -979,8 +1001,11 @@ nodeMappings:
         propertyTerm: apiContract.encoding
         range: Encoding
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1004,10 +1029,19 @@ nodeMappings:
         propertyTerm: raml-shapes.propertyTarget
         range: link
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
+
+
+  PropertyNode:
+    classTerm: data.Property
+    extends: DataNode
+    mapping:
+      range:
+        propertyTerm: data.range
+        range: DataNodeUnion
 
 
   PropertyShape:
@@ -1075,8 +1109,8 @@ nodeMappings:
         propertyTerm: apiContract.cookieParameter
         range: Parameter
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1119,8 +1153,11 @@ nodeMappings:
         propertyTerm: apiContract.examples
         range: Example
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1191,8 +1228,8 @@ nodeMappings:
       description:
         propertyTerm: core.description
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1230,8 +1267,11 @@ nodeMappings:
       queryString:
         propertyTerm: apiContract.queryString
         range: DataShapesUnion
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1254,8 +1294,8 @@ nodeMappings:
         propertyTerm: apiContract.variable
         range: Parameter
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1266,8 +1306,8 @@ nodeMappings:
       additionalProperties:
         propertyTerm: security.additionalProperties
         range: DataNodeUnion
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1317,8 +1357,11 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1332,8 +1375,8 @@ nodeMappings:
       extension:
         propertyTerm: doc.extension
         range: DataNodeUnion
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1350,8 +1393,8 @@ nodeMappings:
       documentation:
         propertyTerm: core.documentation
         range: CreativeWork
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1381,8 +1424,11 @@ nodeMappings:
       server:
         propertyTerm: apiContract.server
         range: Server
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1425,8 +1471,8 @@ nodeMappings:
       value:
         propertyTerm: doc.value
         range: DataNodeUnion
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1484,8 +1530,8 @@ nodeMappings:
         propertyTerm: apiContract.tag
         range: Tag
         allowMultiple: true
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 
@@ -1508,8 +1554,8 @@ nodeMappings:
       xmlPrefix:
         propertyTerm: raml-shapes.xmlPrefix
         range: string
-      customDomainProperties:
-        propertyTerm: doc.customDomainProperties
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
         range: DomainExtension
         allowMultiple: true
 

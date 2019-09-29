@@ -2,18 +2,76 @@ package amf.tools
 
 import java.io.{File, FileWriter}
 
-import amf.core.metamodel.Type.Scalar
-import amf.core.metamodel.domain.DomainElementModel
+import amf.core.metamodel.Type.{Iri, Scalar, Str, Array => MetaArray}
+import amf.core.metamodel.domain.extensions.DomainExtensionModel
+import amf.core.metamodel.domain._
 import amf.core.metamodel.{Field, Obj, Type}
-import amf.core.vocabulary.Namespace
+import amf.core.model.domain.{AmfObject, DomainElement}
+import amf.core.parser.{Annotations, Fields}
+import amf.core.vocabulary.{Namespace, ValueType}
 import org.reflections.Reflections
 import org.reflections.scanners.SubTypesScanner
+import org.yaml.model.YPart
 
 import scala.collection.mutable
 
+// Auxiliary class to hold the parsed data
 case class ExtendedDialectNodeMapping(id: String, name: String, classTerm: String, extended: Seq[String], propertyMappings: List[DialectPropertyMapping], isShape: Boolean)
 
-object CanonicalWebAPISpecDialectExporter {
+// This model is just to reify the dynamic properties in an
+// ObjectNode
+class PropertyNode(override val fields: Fields, val annotations: Annotations) extends DomainElement {
+  override def meta: Obj = PropertyNodeModel
+  override def componentId: String = "/property"
+}
+
+object PropertyNode {
+  def apply(): PropertyNode = apply(Annotations())
+
+  def apply(ast: YPart): PropertyNode = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): PropertyNode =
+    new PropertyNode(Fields(), annotations)
+}
+
+object PropertyNodeModel extends DomainElementModel {
+  val Range =
+    Field(DataNodeModel, Namespace.Data + "range", ModelDoc(ModelVocabularies.Data, "range", "value for a property"))
+
+  override def fields: List[Field]      = Range :: DataNodeModel.fields
+  override val `type`: List[ValueType]  = Namespace.Data + "Property" :: DataNodeModel.`type`
+  override def modelInstance: AmfObject = PropertyNode()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.Data,
+    "Property Node",
+    "Node that represents a dynamic property in a dynamic node"
+  )
+}
+
+// The actual exporter
+object CanonicalWebAPISpecDialectExporter  {
+
+  val DesignLinkTargetField = Field(Iri,
+    Namespace.Document + "design-link-target",
+    ModelDoc(ModelVocabularies.AmlDoc, "design link target", "URI of the linked element linked at design time"))
+
+  val DesignAnnotationField = Field(MetaArray(DomainExtensionModel),
+    Namespace.Document + "designAnnotation",
+    ModelDoc(
+      ModelVocabularies.AmlDoc,
+      "design annotation",
+      "Extensions provided for a particular domain element during design time")
+  )
+
+  val DataPropertiesField = Field(MetaArray(PropertyNodeModel),
+    Namespace.Data + "properties",
+    ModelDoc(
+      ModelVocabularies.Data,
+      "properties",
+      "properties in a dynamic object")
+  )
+
   val DIALECT_FILE = "canonical_webapi_spec.yaml"
   val WELL_KNOWN_VOCABULARIES = Map[String,String](
     "http://a.ml/vocabularies/document#" -> "../vocabularies/aml_doc.yaml",
@@ -32,6 +90,7 @@ object CanonicalWebAPISpecDialectExporter {
   val reflectionsDataNode   = new Reflections("amf.core.metamodel.domain", new SubTypesScanner(false))
   val reflectionsApiDocs    = new Reflections("amf.plugins.document.webapi.metamodel", new SubTypesScanner(false))
   val reflectionsDocs       = new Reflections("amf.core.metamodel.document", new SubTypesScanner(false))
+  val reflectionsExtModel   = new Reflections("amf.tools", new SubTypesScanner(false))
 
   var nodeMappings: Map[String, ExtendedDialectNodeMapping] = Map()
 
@@ -86,7 +145,11 @@ object CanonicalWebAPISpecDialectExporter {
 
     // index fields
     val fields = if (types.contains((DomainElementModel.`type`.head.iri())) && displayName != "CustomDomainProperty") {
-      modelObject.fields ++ Seq(DomainElementModel.CustomDomainProperties) // domain elements can have annotations
+      if (modelObject == ObjectNodeModel) {
+        modelObject.fields ++ Seq(DataPropertiesField, DomainElementModel.CustomDomainProperties) // add the missing properties field for object node models
+      } else {
+        modelObject.fields ++ Seq(DomainElementModel.CustomDomainProperties) // domain elements can have annotations
+      }
     } else {
       modelObject.fields
     }
@@ -207,10 +270,11 @@ object CanonicalWebAPISpecDialectExporter {
   }
 
   val blacklistedProperties: Set[String] = Set(
-    (Namespace.Document + "extends").iri(),
     (Namespace.Document + "link-target").iri(),
     (Namespace.Document + "link-label").iri(),
-    (Namespace.Document + "recursive").iri()
+    (Namespace.Document + "recursive").iri(),
+    (Namespace.Document + "extends").iri(),
+    DomainElementModel.CustomDomainProperties.value.iri()
   )
 
   val blacklistedSupertypes: Set[String] = Set(
@@ -222,9 +286,7 @@ object CanonicalWebAPISpecDialectExporter {
     (Namespace.Rdf +  "Seq").iri()
   )
 
-  val blacklistedRanges: Set[String] = Set(
-
-  )
+  val blacklistedRanges: Set[String] = Set()
 
   // Base classes that should not appear in the dialect
   val blacklistedMappings: Set[String] = Set(
@@ -374,6 +436,7 @@ object CanonicalWebAPISpecDialectExporter {
       |      TemplatedLink: TemplatedLink
       |      Server: Server
       |      ResourceType: ResourceType
+      |      CustomDomainProperty: CustomDomainProperty
       |
       |    union:
       |      - UnionShape
@@ -398,6 +461,7 @@ object CanonicalWebAPISpecDialectExporter {
       |      - TemplatedLink
       |      - Server
       |      - ResourceType
+      |      - CustomDomainProperty
       |""".stripMargin
 
   val parsedUnitUnionDeclaration = "ParsedUnitUnion"
@@ -434,7 +498,7 @@ object CanonicalWebAPISpecDialectExporter {
     val stringBuilder = new StringBuilder()
     val externals: mutable.HashMap[String,String] = mutable.HashMap()
     val header = "#%Dialect 1.0\n\n" ++
-      "dialect: WebAPI\n" ++
+      "dialect: WebAPI Spec\n" ++
       "version: 1.0\n\n"
 
     // Shapes union
@@ -469,12 +533,13 @@ object CanonicalWebAPISpecDialectExporter {
             stringBuilder.append(s"    classTerm: $compacted\n")
 
             // Lets find the effective property mappings for this node mapping
-            val nodeMappingWithProperties = dialectNodeMapping.propertyMappings.filter { propertyMapping =>
+            var nodeMappingWithProperties = dialectNodeMapping.propertyMappings.filter { propertyMapping =>
               // dynamic and linking information only relevant for design will not be dumped in the dialect
               !blacklistedProperties.contains(propertyMapping.propertyTerm) &&
                 !blacklistedRanges.contains(propertyMapping.range)
             }
 
+            // extends relationship for macros
             if (dialectNodeMapping.extended.nonEmpty) {
               if (dialectNodeMapping.extended.length == 1) {
                 stringBuilder.append(s"    extends: ${nodeMappings(dialectNodeMapping.extended.head).name}\n")
@@ -486,6 +551,7 @@ object CanonicalWebAPISpecDialectExporter {
               }
             }
 
+            // Let's generate the actual properties
             if (nodeMappingWithProperties.nonEmpty) {
 
               var propertyCounters: mutable.Map[String, Int] = mutable.Map() // for properties with dupplicated labels
@@ -538,6 +604,22 @@ object CanonicalWebAPISpecDialectExporter {
                   stringBuilder.append(s"        allowMultiple: ${propertyMapping.allowMultiple}\n")
                 }
 
+              }
+
+              if (dialectNodeMapping.propertyMappings.exists(_.propertyTerm == LinkableElementModel.TargetId.value.iri())) {
+                stringBuilder.append(s"      designLink:\n")
+                val (compacted, _, _) = compact(DesignLinkTargetField.value.iri())
+                stringBuilder.append(s"        propertyTerm: $compacted\n")
+                stringBuilder.append(s"        range: link\n")
+              }
+
+              val annotationMapping = dialectNodeMapping.propertyMappings.find(_.propertyTerm == DomainElementModel.CustomDomainProperties.value.iri())
+              if (annotationMapping.isDefined) {
+                stringBuilder.append(s"      designAnnotations:\n")
+                val (compacted, _, _) = compact(DesignAnnotationField.value.iri())
+                stringBuilder.append(s"        propertyTerm: $compacted\n")
+                stringBuilder.append(s"        range: ${annotationMapping.get.range}\n")
+                stringBuilder.append(s"        allowMultiple: true\n")
               }
             }
             stringBuilder.append("\n\n")
@@ -593,6 +675,7 @@ object CanonicalWebAPISpecDialectExporter {
       VocabularyExporter.metaObjects(reflectionsDataNode, parseMetaObject)
       VocabularyExporter.metaObjects(reflectionsApiDocs, parseMetaObject)
       VocabularyExporter.metaObjects(reflectionsDocs, parseMetaObject)
+      VocabularyExporter.metaObjects(reflectionsExtModel, parseMetaObject)
       cleanInheritance()
       val dialectText = renderDialect()
       println(dialectText)

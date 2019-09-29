@@ -1,6 +1,6 @@
 package amf.io
 
-import amf.common.Tests.checkDiff
+import amf.common.Tests.{checkLinesDiff, checkDiff}
 import amf.core.unsafe.PlatformSecrets
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
 import org.scalatest.Assertion
@@ -22,6 +22,11 @@ trait FileAssertionTest extends PlatformSecrets {
   protected def assertDifferences(actual: AsyncFile, golden: String): Future[Assertion] = {
     val expected = fs.asyncFile(golden)
     expected.read().flatMap(_ => checkDiff(actual, expected))
+  }
+
+  protected def assertLinesDifferences(actual: AsyncFile, golden: String): Future[Assertion] = {
+    val expected = fs.asyncFile(golden.replace("file://", ""))
+    expected.read().flatMap(_ => checkLinesDiff(actual, expected))
   }
 
   /** Return random temporary file name for testing. */

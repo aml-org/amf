@@ -143,6 +143,22 @@ object Tests {
     }
   }
 
+  def checkLinesDiff(a: AsyncFile, e: AsyncFile, encoding: String = Utf8): Future[Assertion] = {
+    a.read(encoding).zip(e.read(encoding)).flatMap {
+      case (actual, expected) =>
+        val actualLines = actual.toString.lines.toSeq.map(_.trim).toSet
+        val expectedLines = expected.toString.lines.toSeq.map(_.trim).toSet
+        if (actualLines != expectedLines) {
+          val diff = actualLines.diff(expectedLines)
+          System.err.println("Not matching lines")
+          diff.foreach(l => System.err.println(l))
+          checkDiff(a, e)
+        } else {
+          Future { assert(actualLines == expectedLines) }
+        }
+    }
+  }
+
   def checkDiff(a: AsyncFile, e: AsyncFile, encoding: String = Utf8): Future[Assertion] = {
     a.read(encoding).zip(e.read(encoding)).map {
       case (actual, expected) =>
