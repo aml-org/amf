@@ -9,7 +9,7 @@ Level: Violation
   Message: Status code for a Response must be a value between 100 and 599, a [1-5]XX wildcard, or 'default'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json#/web-api/end-points/%2Ftest/get/6XX
-  Property: http://www.w3.org/ns/hydra/core#statusCode
+  Property: http://a.ml/vocabularies/apiContract#statusCode
   Position: Some(LexicalInformation([(42,10)-(51,11)]))
   Location: file://amf-client/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json
 
@@ -17,6 +17,6 @@ Level: Violation
   Message: Status code for a Response must be a value between 100 and 599, a [1-5]XX wildcard, or 'default'
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json#/web-api/end-points/%2Ftest/get/2X1
-  Property: http://www.w3.org/ns/hydra/core#statusCode
+  Property: http://a.ml/vocabularies/apiContract#statusCode
   Position: Some(LexicalInformation([(52,10)-(61,11)]))
   Location: file://amf-client/shared/src/test/resources/upanddown/oas3/response-code-wildcards.json

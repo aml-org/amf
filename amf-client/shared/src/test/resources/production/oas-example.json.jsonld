@@ -374,7 +374,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#raw": [
                                   {
-                                    "@value": "\"name\": \"Software Corp\"\n\"address\": \"35 Central Street\"\n\"value\": \"Gold\""
+                                    "@value": "{\n                    \"name\": \"Software Corp\",\n                    \"address\": \"35 Central Street\",\n                    \"value\": \"Gold\"\n                  }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -573,7 +573,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#raw": [
                                   {
-                                    "@value": "\"name\": \"Acme\""
+                                    "@value": "{\n                \"name\": \"Acme\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1006,7 +1006,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#raw": [
                                   {
-                                    "@value": "\"name\": \"Puma\"\n\"type\": \"Dog\"\n\"color\": \"Black\"\n\"gender\": \"Female\"\n\"breed\": \"Mixed\""
+                                    "@value": "{\n                \"name\": \"Puma\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1439,7 +1439,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#raw": [
                                   {
-                                    "@value": "\"name\": \"Tiger\"\n\"type\": \"Dog\"\n\"color\": \"Black\"\n\"gender\": \"Female\"\n\"breed\": \"Mixed\""
+                                    "@value": "{\n                \"name\": \"Tiger\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1894,7 +1894,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#raw": [
                                   {
-                                    "@value": "\"name\": \"Software Corp\"\n\"address\": \"35 Central Street\"\n\"value\": \"Gold\""
+                                    "@value": "{\n                    \"name\": \"Software Corp\",\n                    \"address\": \"35 Central Street\",\n                    \"value\": \"Gold\"\n                  }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -2093,7 +2093,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#raw": [
                                   {
-                                    "@value": "\"name\": \"Acme\""
+                                    "@value": "{\n                \"name\": \"Acme\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -2526,7 +2526,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#raw": [
                                   {
-                                    "@value": "\"name\": \"Puma\"\n\"type\": \"Dog\"\n\"color\": \"Black\"\n\"gender\": \"Female\"\n\"breed\": \"Mixed\""
+                                    "@value": "{\n                \"name\": \"Puma\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -2959,7 +2959,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document#raw": [
                                   {
-                                    "@value": "\"name\": \"Tiger\"\n\"type\": \"Dog\"\n\"color\": \"Black\"\n\"gender\": \"Female\"\n\"breed\": \"Mixed\""
+                                    "@value": "{\n                \"name\": \"Tiger\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -3310,7 +3310,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "1.0.0"
+        "@value": "2.0.0"
       }
     ],
     "http://a.ml/vocabularies/document#declares": [
@@ -3857,7 +3857,7 @@
             ],
             "http://a.ml/vocabularies/document#raw": [
               {
-                "@value": "\"name\": \"Bob\"\n\"lastname\": \"Marley\""
+                "@value": "{\n        \"name\": \"Bob\",\n        \"lastname\": \"Marley\"\n      }"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [

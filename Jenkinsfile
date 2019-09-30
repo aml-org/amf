@@ -37,6 +37,7 @@ pipeline {
           branch 'master'
           branch 'develop'
           branch 'release/*'
+          branch 'new_model'
         }
       }
       steps {
@@ -47,7 +48,10 @@ pipeline {
     }
     stage('Nexus IQ') {
       when {
-        branch 'develop'
+        anyOf {
+          branch 'develop'
+          branch 'new_model'
+        }
       }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {

@@ -15,6 +15,7 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
+import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.{AnnotationTypeDeclarationFragmentModel, DataTypeFragmentModel, DocumentationItemFragmentModel, NamedExampleFragmentModel, ResourceTypeFragmentModel, SecuritySchemeFragmentModel, TraitFragmentModel}
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -25,7 +26,7 @@ import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object CanonicalWebAPISpecTransformer  extends PlatformSecrets {
+class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
 
   val CANONICAL_WEBAPI_NAME = "WebAPI Spec 1.0"
 
@@ -148,7 +149,7 @@ object CanonicalWebAPISpecTransformer  extends PlatformSecrets {
         t != (Namespace.Document + "Document").iri() &&
         t != (Namespace.Document + "Fragment").iri()
       }
-      Namespace.ApiContract.base + cleanTypes.head.split("#").last
+      cleanTypes.head
     }
 
     dialect.declares.find { nodeMapping =>
@@ -246,28 +247,6 @@ object CanonicalWebAPISpecTransformer  extends PlatformSecrets {
       // Let's manipulate the @type of the unit to match the dialect expectations
       mapBaseUnits(unit, dialect, nativeModel)
 
-
-      // relations: normal doc:references to the domain level internalReference
-      val allReferences = mutable.ArrayBuffer[String]()
-      val referencesIterator = nativeModel.listObjectsOfProperty(
-        nativeModel.createResource(unit),
-        nativeModel.createProperty((Namespace.Document + "references").iri()),
-      )
-      while (referencesIterator.hasNext) {
-        allReferences += referencesIterator.next().asResource().getURI
-      }
-      allReferences.foreach { ref =>
-        nativeModel.remove(
-          nativeModel.createResource(unit),
-          nativeModel.createProperty((Namespace.Document + "references").iri()),
-          nativeModel.createResource(ref)
-        )
-        nativeModel.add(
-          nativeModel.createResource(unit),
-          nativeModel.createProperty(REPO_INTERNAL_REF),
-          nativeModel.createResource(ref)
-        )
-      }
     }
 
     // we introduce a new top level document with the URI of the old top level document
@@ -513,12 +492,22 @@ object CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     val defaultRegistryModels = Seq(
       DocumentModel,
       ModuleModel,
+      ExternalFragmentModel,
+      DataTypeFragmentModel,
+      AnnotationTypeDeclarationFragmentModel,
+      DocumentationItemFragmentModel,
+      NamedExampleFragmentModel,
+      ResourceTypeFragmentModel,
+      TraitFragmentModel,
+      SecuritySchemeFragmentModel,
+      ExtensionModel,
+      OverlayModel,
+      // internal models
       VariableValueModel,
       RecursiveShapeModel,
       PropertyShapeModel,
       ShapeExtensionModel,
       CustomDomainPropertyModel,
-      ExternalFragmentModel,
       ExternalDomainElementModel,
       DomainExtensionModel,
       // dynamic nodes
@@ -531,7 +520,9 @@ object CanonicalWebAPISpecTransformer  extends PlatformSecrets {
       AMFDomainRegistry.metadataRegistry.remove(defaultIri(iri))
     } collect { case Some(x) => x }
 
-    // now we generate the uni
+    // now we generate the unit
+    customTransform(nativeModel)
+
     val parsedUnit = new RdfModelParser(platform)(ParserContext()).parse(model, baseUnitId)
 
     // we put default objects back
@@ -540,6 +531,8 @@ object CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     parsedUnit
   }
 
+  // Extension point to transform the model
+  protected def customTransform(model: Model): Model = model
 
   protected def transformLink(nativeModel: Model, domainElement: String): Unit = {
     val linksIt = nativeModel.listObjectsOfProperty(
@@ -667,5 +660,11 @@ object CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     } yield {
       transformed
     }
+  }
+}
+
+object CanonicalWebAPISpecTransformer {
+  def apply(): CanonicalWebAPISpecTransformer = {
+    new CanonicalWebAPISpecTransformer()
   }
 }

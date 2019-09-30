@@ -1,6 +1,34 @@
 #%WebAPI Spec 1.0
 unitType: Document
 $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/rootAsset
+declares:
+  -
+    elementType: Node
+    $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A
+    name: A
+    property:
+      -
+        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/b
+        range:
+          shapeType: Scalar
+          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/b/scalar/b
+          name: b
+          datatype: http://www.w3.org/2001/XMLSchema#integer
+        name: b
+        min.Count: 1
+        path: http://a.ml/vocabularies/data#b
+      -
+        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/a
+        range:
+          shapeType: Scalar
+          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/a/scalar/a
+          name: a
+          datatype: http://www.w3.org/2001/XMLSchema#string
+        name: a
+        min.Count: 1
+        path: http://a.ml/vocabularies/data#a
+    closed: false
+version: 2.0.0
 encodes:
   elementType: WebAPI
   $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api
@@ -29,24 +57,24 @@ encodes:
                   schema:
                     shapeType: Node
                     $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema
-                    property:
-                      -
-                        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c
-                        range:
-                          shapeType: Scalar
-                          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c/scalar/c
-                          datatype: http://www.w3.org/2001/XMLSchema#string
-                          name: c
-                        min.Count: 1
-                        name: c
-                        path: http://a.ml/vocabularies/data#c
-                    name: schema
                     inherits:
                       -
                         shapeType: Node
                         $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/linked_1
                         designLink: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A
                         name: A
+                    name: schema
+                    property:
+                      -
+                        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c
+                        range:
+                          shapeType: Scalar
+                          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema/property/c/scalar/c
+                          name: c
+                          datatype: http://www.w3.org/2001/XMLSchema#string
+                        name: c
+                        min.Count: 1
+                        path: http://a.ml/vocabularies/data#c
                     closed: false
                   mediaType: application/json
               statusCode: "200"
@@ -54,31 +82,3 @@ encodes:
       path: /test
   contentType:
     - application/json
-declares:
-  -
-    elementType: Node
-    $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A
-    property:
-      -
-        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/b
-        range:
-          shapeType: Scalar
-          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/b/scalar/b
-          datatype: http://www.w3.org/2001/XMLSchema#integer
-          name: b
-        min.Count: 1
-        name: b
-        path: http://a.ml/vocabularies/data#b
-      -
-        $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/a
-        range:
-          shapeType: Scalar
-          $id: file://amf-client/shared/src/test/resources/transformations/simple/api.raml#/declarations/types/A/property/a/scalar/a
-          datatype: http://www.w3.org/2001/XMLSchema#string
-          name: a
-        min.Count: 1
-        name: a
-        path: http://a.ml/vocabularies/data#a
-    name: A
-    closed: false
-version: 1.0.0

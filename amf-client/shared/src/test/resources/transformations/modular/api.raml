@@ -1,0 +1,23 @@
+#%RAML 1.0
+title: test
+version: 1.0
+mediaType: application/json
+baseUri: falsedomain.com/apis
+uses:
+  lib: lib.raml
+types:
+  A:
+    properties:
+      a: string
+      b: integer
+/test:
+  get:
+    description: an operation
+    responses:
+      200:
+        body:
+          application/json:
+            type: A
+            properties:
+              c: lib.A
+              d: !include fragment2.raml

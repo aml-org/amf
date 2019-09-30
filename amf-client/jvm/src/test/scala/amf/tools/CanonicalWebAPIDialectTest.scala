@@ -22,34 +22,32 @@ import scala.concurrent.Future
 
 class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with PlatformSecrets {
 
-  val CANONICAL_WEBAPI_DIALECT = "file://vocabularies/dialects/canonical_webapi_spec.yaml"
+  val CANONICAL_WEBAPI_DIALECT  = "file://vocabularies/dialects/canonical_webapi_spec.yaml"
   override def basePath: String = "file://amf-client/shared/src/test/resources/transformations/"
 
-  def checkCanonicalDialectTransformation(source: String,
-                                          target: String,
-                                          shouldTranform: Boolean): Future[Assertion] = {
+  def checkCanonicalDialectTransformation(source: String, target: String, shouldTranform: Boolean): Future[Assertion] = {
     val amfWebApi = basePath + source
-    val golden = basePath + target
+    val golden    = basePath + target
     for {
-      _               <- AMF.init()
-      _               <- Future(amf.Core.registerPlugin(AMLPlugin))
-      v               <- Validation(platform).map(_.withEnabledValidation(true))
-      d               <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, v).build()
-      _               <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
-      unit            <- AMFCompiler(amfWebApi, platform, RamlYamlHint, v).build()
-      resolved        <- {
+      _    <- AMF.init()
+      _    <- Future(amf.Core.registerPlugin(AMLPlugin))
+      v    <- Validation(platform).map(_.withEnabledValidation(true))
+      d    <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, v).build()
+      _    <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
+      unit <- AMFCompiler(amfWebApi, platform, RamlYamlHint, v).build()
+      resolved <- {
         if (shouldTranform) {
           Future { Raml10Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE) }
         } else {
-            Future(unit)
-          }
+          Future(unit)
+        }
       }
       // jsonld          <- new AMFRenderer(resolved, Vendor.AMF, RenderOptions(), Some(Syntax.Json)).renderToString
-      dialectInstance <- CanonicalWebAPISpecTransformer.transform(resolved)
+      dialectInstance <- CanonicalWebAPISpecTransformer().transform(resolved)
       // jsonld          <- new AMFRenderer(dialectInstance, Vendor.AMF, RenderOptions(), Some(Syntax.Json)).renderToString
-      rendered        <- new AMFRenderer(dialectInstance, Vendor.AML, RenderOptions().withNodeIds, Some(Syntax.Yaml)).renderToString
-      tmp             <- writeTemporaryFile(golden)(rendered)
-      res             <- {
+      rendered <- new AMFRenderer(dialectInstance, Vendor.AML, RenderOptions().withNodeIds, Some(Syntax.Yaml)).renderToString
+      tmp      <- writeTemporaryFile(golden)(rendered)
+      res <- {
         // println(jsonld)
         assertLinesDifferences(tmp, golden)
       }
@@ -69,9 +67,10 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with
     "simple/api.raml",
     "annotations/api.raml",
     "macros/api.raml"
+//    "modular/api.raml"
 
     // "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml.jsonld" -> "banking-api.webapi.yaml",
-  // "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml.jsonld" -> "banking-api.webapi.yaml",
+    // "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml.jsonld" -> "banking-api.webapi.yaml",
 
 //    "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/all-type-types/api.raml.jsonld" -> "all-type-types.webapi.yaml",
 
@@ -86,12 +85,13 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with
     "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/sample.oas.resolved.jsonld" -> false,
     "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/api.raml.jsonld" -> false
   )
-  */
+   */
 
-  tests.foreach {case (input) =>
-    val golden = input.replace("api.raml", "webapi.yaml")
-    test(s"Test parsed RAML/OAS WebAPIs can be re-parsed with the WebAPI dialect '${golden}'") {
-      checkCanonicalDialectTransformation(input, golden, false)
-    }
+  tests.foreach {
+    case (input) =>
+      val golden = input.replace("api.raml", "webapi.yaml")
+      test(s"Test parsed RAML/OAS WebAPIs can be re-parsed with the WebAPI dialect '${golden}'") {
+        checkCanonicalDialectTransformation(input, golden, false)
+      }
   }
 }
