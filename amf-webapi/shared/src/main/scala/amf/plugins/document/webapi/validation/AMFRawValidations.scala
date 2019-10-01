@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.validation
 
 import amf._
-import amf.core.remote.{Amf, Oas, Raml, Raml08}
+import amf.core.remote._
 import amf.core.vocabulary.{Namespace, ValueType}
 
 object AMFRawValidations {
@@ -523,19 +523,6 @@ object AMFRawValidations {
       "xsd:string",
       "Status code for a Response must be a string",
       "Status code for a Response object must be a string",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-http:Response",
-      "hydra:statusCode",
-      "PropertyShape",
-      "sh:path",
-      "sh:pattern",
-      "^([1-5]{1}[0-9]{2})$|^(default)$",
-      "Status code for a Response must be valid be between 100 and 599",
-      "Status code for a Response must be valid be between 100 and 599 or 'default'",
       "Violation"
     ),
     AMFValidation(
@@ -1865,6 +1852,19 @@ object AMFRawValidations {
       "Invalid OAuth 1.0 signature. The options are: HMAC-SHA1, RSA-SHA1, or PLAINTEXT",
       "Invalid OAuth 1.0 signature. The options are: HMAC-SHA1, RSA-SHA1, or PLAINTEXT",
       "Violation"
+    ),
+    AMFValidation(
+      Raml.name,
+      "Domain",
+      "raml-http:Response",
+      "hydra:statusCode",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      "^([1-5]{1}[0-9]{2})$|^(default)$",
+      "Status code for a Response must be a value between 100 and 599",
+      "Status code for a Response must be a value between 100 and 599 or 'default'",
+      "Violation"
     )
     /*
     ,
@@ -2116,6 +2116,38 @@ object AMFRawValidations {
     )
   )
 
+  private val OAS20 = Seq(
+    AMFValidation(
+      Oas20.name,
+      "Domain",
+      "raml-http:Response",
+      "hydra:statusCode",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      "^([1-5]{1}[0-9]{2})$|^(default)$",
+      "",
+      "Status code for a Response must be a value between 100 and 599 or 'default'",
+      "Violation"
+    )
+  )
+
+  private val OAS30 = Seq(
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "raml-http:Response",
+      "hydra:statusCode",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      "^([1-5]{1}(([0-9]{2})|XX))$|^(default)$",
+      "",
+      "Status code for a Response must be a value between 100 and 599, a [1-5]XX wildcard, or 'default'",
+      "Violation"
+    )
+  )
+
   val map: Map[ProfileName, Seq[AMFValidation]] = Map(
     AmfProfile    -> forProfile(AmfProfile),
     Raml10Profile -> forProfile(Raml10Profile),
@@ -2128,11 +2160,12 @@ object AMFRawValidations {
 
   def forProfile(p: ProfileName): Seq[AMFValidation] = {
     p match {
-      case Raml10Profile | RamlProfile              => RAML ++ RAML10 ++ AMF
-      case Raml08Profile                            => RAML ++ RAML08 ++ AMF
-      case Oas30Profile | OasProfile | Oas20Profile => OAS ++ AMF
-      case AmfProfile                               => AMF
-      case _                                        => Nil
+      case Raml10Profile | RamlProfile => RAML ++ RAML10 ++ AMF
+      case Raml08Profile               => RAML ++ RAML08 ++ AMF
+      case OasProfile | Oas20Profile   => OAS ++ OAS20 ++ AMF
+      case Oas30Profile                => OAS ++ OAS30 ++ AMF
+      case AmfProfile                  => AMF
+      case _                           => Nil
     }
   }
 
