@@ -1771,6 +1771,17 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test external fragment that includes a reference") {
+    val file = "file://amf-client/shared/src/test/resources/resolution/ex-frag-with-refs/api.raml"
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseFileAsync(file).asFuture
+    } yield {
+      // Check that the external fragment has references
+      assert(unit.references().asSeq.head.references().asSeq.nonEmpty)
+    }
+  }
+
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }

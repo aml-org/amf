@@ -198,6 +198,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                 val resolved = handleRamlExternalFragment(ParsedReference(unit, r), ctx, updated, environment, cache)
 
                 resolved.map(res => {
+                  val newRefs = reference.unit.references :+ res.unit
+                  reference.unit.withReferences(newRefs)
                   r.refs.foreach { refContainer =>
                     refContainer.node match {
                       case mut: MutRef =>
