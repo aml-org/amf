@@ -459,6 +459,8 @@ object ParserSideValidations extends Validations {
     "User defined facet name matches built in facet of type"
   )
 
+  val InvalidEndpointDeclaration = validation("invalid-endpoint-declaration", "Invalid endpoint declaration")
+
   val UserDefinedFacetMatchesAncestorsTypeFacets = validation(
     "user-defined-facets-matches-ancestor",
     "User defined facet name matches ancestor type facet"
@@ -470,9 +472,7 @@ object ParserSideValidations extends Validations {
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
-
     ExclusiveLinkTargetError.id -> all(VIOLATION),
-
     OasBodyAndFormDataParameterSpecification.id -> Map(
       OasProfile   -> VIOLATION,
       Oas20Profile -> VIOLATION

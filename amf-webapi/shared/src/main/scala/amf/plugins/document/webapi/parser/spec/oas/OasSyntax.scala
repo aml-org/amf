@@ -50,6 +50,8 @@ object Oas3Syntax extends SpecSyntax {
       "connect",
       "trace",
       "parameters",
+      "servers",
+      "summary",
       "\\$ref"
     ),
     "operation" -> Set(

@@ -1,7 +1,7 @@
 package amf.emit
 
 import amf.core.remote._
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 
 class Oas30CycleTest extends FunSuiteCycleTests {
   override val basePath: String = "amf-client/shared/src/test/resources/upanddown/oas3/"
@@ -40,7 +40,13 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     FixtureData("Basic callbacks", "basic-callbacks.json", "basic-callbacks.json"),
     FixtureData("Basic operation", "basic-operation.json", "basic-operation.json"),
     FixtureData("Basic oas3 patch version", "basic-oas-patch.json", "basic-oas-patch-corrected.json"),
-    FixtureData("Response codes with wildcard", "response-code-wildcards.json", "response-code-wildcards.json")
+    FixtureData("Response codes with wildcard", "response-code-wildcards.json", "response-code-wildcards.json"),
+    FixtureData("Basic paths object with single server",
+                "basic-paths-object-with-server.json",
+                "basic-paths-object-with-server.json"),
+    FixtureData("Basic paths object with multiple servers",
+                "basic-paths-object-with-servers.json",
+                "basic-paths-object-with-servers.json")
   )
 
   cyclesOas3.foreach { f =>

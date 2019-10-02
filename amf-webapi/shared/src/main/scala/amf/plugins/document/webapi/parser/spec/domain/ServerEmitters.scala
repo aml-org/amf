@@ -6,17 +6,17 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.parser.{ErrorHandler, FieldEntry, Position, Value}
-import amf.plugins.document.webapi.contexts.{Oas3SpecEmitterFactory, OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.core.parser.{FieldEntry, Position, Value}
+import amf.core.utils.Strings
+import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter, EnumValuesEmitter}
 import amf.plugins.document.webapi.parser.spec.{BaseUriSplitter, toRaml}
 import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
-import amf.plugins.domain.webapi.models.{Operation, Parameter, Server, WebApi}
+import amf.plugins.domain.webapi.models._
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Strings
 
 import scala.collection.mutable.ListBuffer
 
@@ -62,7 +62,20 @@ abstract class OasServersEmitter(elem: DomainElement, f: FieldEntry, ordering: S
     if (servers.nonEmpty) result += ServersEmitters(key, servers, ordering)
 }
 
-case class Oas3ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+abstract class Oas3ServersEmitter(elem: DomainElement, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext)
+    extends OasServersEmitter(elem, f, ordering, references) {
+
+  override protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit = {
+    spec.factory match {
+      case _: Oas3SpecEmitterFactory =>
+        super.asExtension(key, servers, result)
+      case _ => // Nothing
+    }
+  }
+}
+
+case class Oas3WebApiServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends OasServersEmitter(api, f, ordering, references) {
 
@@ -75,17 +88,27 @@ case class Oas3ServersEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering
   }
 }
 
-case class Oas3OperationServersEmitter(operation: Operation, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: OasSpecEmitterContext)
-  extends OasServersEmitter(operation, f, ordering, references) {
+case class Oas3EndPointServersEmitter(endpoint: EndPoint,
+                                      f: FieldEntry,
+                                      ordering: SpecOrdering,
+                                      references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+    extends OasServersEmitter(endpoint, f, ordering, references) {
+  override def emitters(): Seq[EntryEmitter] = {
+    val result = ListBuffer[EntryEmitter]()
+    asExtension("servers", endpoint.servers, result)
+    result
+  }
+}
+
+case class Oas3OperationServersEmitter(operation: Operation,
+                                       f: FieldEntry,
+                                       ordering: SpecOrdering,
+                                       references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+    extends Oas3ServersEmitter(operation, f, ordering, references) {
 
   def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
-
-    if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
-      val servers: Seq[Server] = operation.servers
-      if (servers.nonEmpty) result += ServersEmitters("servers", servers, ordering)
-    }
+    asExtension("servers", operation.servers, result)
     result
   }
 }

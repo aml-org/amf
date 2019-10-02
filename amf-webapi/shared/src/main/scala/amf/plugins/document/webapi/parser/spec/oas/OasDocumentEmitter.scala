@@ -13,7 +13,7 @@ import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
 import amf.core.utils.{IdCounter, Strings}
 import amf.plugins.document.webapi.annotations.FormBodyParameter
-import amf.plugins.document.webapi.contexts.{BaseSpecEmitter, Oas3SpecEmitterFactory, OasSpecEmitterContext, Raml10SpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration._
@@ -30,8 +30,9 @@ import scala.collection.mutable
 
 trait AccessibleOasDocumentEmitters {
 
-  case class EndPointEmitter(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit val spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+  case class EndPointEmitter(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])(
+      implicit val spec: OasSpecEmitterContext)
+      extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val fs = endpoint.fields
       sourceOr(
@@ -49,12 +50,26 @@ trait AccessibleOasDocumentEmitters {
             val parameters =
               Parameters.classified(endpoint.path.value(), endpoint.parameters, endpoint.payloads)
 
+            spec match {
+              case _: Oas3SpecEmitterContext =>
+                fs.entry(EndPointModel.Summary).map(f => result += ValueEmitter("summary", f))
+
+                fs.entry(EndPointModel.Servers).map { f =>
+                  result ++= spec.factory
+                    .asInstanceOf[Oas3SpecEmitterFactory]
+                    .serversEmitter(endpoint, f, ordering, references)
+                    .emitters()
+                }
+
+              case _ => //
+            }
+
             if (parameters.nonEmpty)
               result ++= OasParametersEmitter("parameters",
-                parameters.query ++ parameters.path ++ parameters.header,
-                ordering,
-                parameters.body,
-                references)
+                                              parameters.query ++ parameters.path ++ parameters.header,
+                                              ordering,
+                                              parameters.body,
+                                              references)
                 .oasEndpointEmitters()
 
             fs.entry(EndPointModel.Operations)
@@ -85,7 +100,7 @@ trait AccessibleOasDocumentEmitters {
                               ordering: SpecOrdering,
                               endpointPayloadEmitted: Boolean,
                               references: Seq[BaseUnit])(implicit val spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+      extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val fs = operation.fields
 
@@ -105,8 +120,8 @@ trait AccessibleOasDocumentEmitters {
               .map(
                 f =>
                   result += OasEntryCreativeWorkEmitter("externalDocs",
-                    f.value.value.asInstanceOf[CreativeWork],
-                    ordering))
+                                                        f.value.value.asInstanceOf[CreativeWork],
+                                                        ordering))
             fs.entry(OperationModel.Schemes).map(f => result += ArrayEmitter("schemes", f, ordering))
             fs.entry(OperationModel.Accepts).map(f => result += ArrayEmitter("consumes", f, ordering))
             fs.entry(OperationModel.ContentType).map(f => result += ArrayEmitter("produces", f, ordering))
@@ -116,7 +131,7 @@ trait AccessibleOasDocumentEmitters {
             // Annotations collected from the "responses" element that has no direct representation in any model element
             // They will be passed to the ResponsesEmitter
             val orphanAnnotations =
-            operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+              operation.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
             fs.entry(OperationModel.Responses)
               .fold(result += EntryPartEmitter("responses", EmptyMapEmitter()))(f =>
                 result += ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
@@ -125,10 +140,11 @@ trait AccessibleOasDocumentEmitters {
               .map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
 
             if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
-              operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach  { f: FieldEntry =>
+              operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
                 val callbacks: Seq[Callback] = f.arrayValues
-                val annotations = f.value.annotations
-                result += EntryPartEmitter("callbacks", OasCallbacksEmitter(callbacks, ordering, references, annotations)(spec))
+                val annotations              = f.value.annotations
+                result += EntryPartEmitter("callbacks",
+                                           OasCallbacksEmitter(callbacks, ordering, references, annotations)(spec))
               }
 
               fs.entry(OperationModel.Servers)
@@ -147,14 +163,12 @@ trait AccessibleOasDocumentEmitters {
 
     def requestEmitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit]): Seq[EntryEmitter] = {
 
-
-      val result           = mutable.ListBuffer[EntryEmitter]()
+      val result = mutable.ListBuffer[EntryEmitter]()
 
       if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
 
         // OAS 3.0.0
         result ++= Seq(Oas3RequestBodyEmitter(request, ordering, references))
-
 
       } else {
 
@@ -167,10 +181,10 @@ trait AccessibleOasDocumentEmitters {
 
         if (parameters.nonEmpty || payloads.default.isDefined || formData.nonEmpty)
           result ++= OasParametersEmitter("parameters",
-            parameters,
-            ordering,
-            payloads.default.toSeq ++ formData,
-            references)
+                                          parameters,
+                                          ordering,
+                                          payloads.default.toSeq ++ formData,
+                                          references)
             .emitters()
 
         if (payloads.other.nonEmpty)
@@ -183,11 +197,11 @@ trait AccessibleOasDocumentEmitters {
                 result += RamlNamedTypeEmitter(shape, ordering, Nil, ramlTypesEmitter)
               case Some(other) =>
                 spec.eh.violation(ResolutionValidation,
-                  request.id,
-                  None,
-                  "Cannot emit a non WebApi Shape",
-                  other.position(),
-                  other.location())
+                                  request.id,
+                                  None,
+                                  "Cannot emit a non WebApi Shape",
+                                  other.position(),
+                                  other.location())
               case None => // ignore
             }
           }
@@ -213,7 +227,7 @@ trait AccessibleOasDocumentEmitters {
                               ordering: SpecOrdering,
                               references: Seq[BaseUnit],
                               orphanAnnotations: Seq[DomainExtension])(implicit val spec: OasSpecEmitterContext)
-    extends EntryEmitter {
+      extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val emitters = responses(f, ordering) ++ responsesElementsAnnotations()
       sourceOr(
@@ -236,11 +250,13 @@ trait AccessibleOasDocumentEmitters {
     override def position(): Position = pos(f.value.annotations)
   }
 }
+
 /**
   * OpenAPI Spec Emitter.
   */
 abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec: OasSpecEmitterContext)
-    extends OasSpecEmitter with AccessibleOasDocumentEmitters {
+    extends OasSpecEmitter
+    with AccessibleOasDocumentEmitters {
 
   private def retrieveWebApi(): WebApi = document match {
     case document: Document => document.encodes.asInstanceOf[WebApi]
@@ -466,18 +482,19 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
   }
 }
 
-case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
-  extends EntryEmitter {
+case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: OasSpecEmitterContext)
+    extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val fs = request.fields
+    val fs     = request.fields
     val result = mutable.ListBuffer[EntryEmitter]()
 
     fs.entry(RequestModel.Description).map(f => result += ValueEmitter("description", f))
     fs.entry(RequestModel.Required).map(f => result += ValueEmitter("required", f))
-    request.fields.fields().find(_.field == RequestModel.Payloads) foreach  { f: FieldEntry =>
+    request.fields.fields().find(_.field == RequestModel.Payloads) foreach { f: FieldEntry =>
       val payloads: Seq[Payload] = f.arrayValues
-      val annotations = f.value.annotations
+      val annotations            = f.value.annotations
       result += EntryPartEmitter("content", OasContentPayloadsEmitter(payloads, ordering, references, annotations))
     }
 
@@ -486,7 +503,6 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
 
   override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)
 }
-
 
 class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecEmitter {
 
@@ -581,8 +597,11 @@ case class TagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(impl
   }
 }
 
-object OasDocumentEmitter extends  AccessibleOasDocumentEmitters {
-  def endpointEmitter(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit], spec: OasSpecEmitterContext) = {
+object OasDocumentEmitter extends AccessibleOasDocumentEmitters {
+  def endpointEmitter(endpoint: EndPoint,
+                      ordering: SpecOrdering,
+                      references: Seq[BaseUnit],
+                      spec: OasSpecEmitterContext) = {
     EndPointEmitter(endpoint, ordering, references)(spec)
   }
 }
