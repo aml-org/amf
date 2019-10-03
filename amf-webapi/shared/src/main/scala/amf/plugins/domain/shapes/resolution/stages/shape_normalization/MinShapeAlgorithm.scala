@@ -324,14 +324,14 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
             .getOrElse {
               basePropOption.get.cloneShape(Some(context.errorHandler))
             }
-            .adopted(baseNode.id)
+//            .adopted(baseNode.id)
         } else {
           superPropOption
             .map(_.cloneShape(Some(context.errorHandler)))
             .getOrElse {
               basePropOption.get.cloneShape(Some(context.errorHandler))
             }
-            .adopted(baseNode.id)
+//            .adopted(baseNode.id)
         }
     }
 
@@ -439,7 +439,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
 
-    computeNarrowRestrictions(UnionShapeModel.fields, baseUnion, superNode, filteredFields = Seq(UnionShapeModel.AnyOf))
+    computeNarrowRestrictions(UnionShapeModel.fields,
+                              baseUnion,
+                              superNode,
+                              filteredFields = Seq(UnionShapeModel.AnyOf))
 
     baseUnion
   }

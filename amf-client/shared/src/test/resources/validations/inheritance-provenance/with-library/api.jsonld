@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#10",
+        "@id": "#8",
         "@type": [
           "schema-org:WebAPI",
           "doc:RootDomainElement",
@@ -22,11 +22,11 @@
         ],
         "smaps": {
           "source-vendor": {
-            "#10": "RAML 1.0"
+            "#8": "RAML 1.0"
           },
           "lexical": {
             "schema-org:name": "[(2,0)-(3,0)]",
-            "#10": "[(2,0)-(7,21)]"
+            "#8": "[(2,0)-(7,21)]"
           }
         }
       }
@@ -110,7 +110,7 @@
         ],
         "shacl:property": [
           {
-            "@id": "#7",
+            "@id": "#3",
             "@type": [
               "shacl:PropertyShape",
               "shacl:Shape",
@@ -124,7 +124,7 @@
             ],
             "raml-shapes:range": [
               {
-                "@id": "#8",
+                "@id": "#4",
                 "@type": [
                   "raml-shapes:ScalarShape",
                   "raml-shapes:AnyShape",
@@ -144,7 +144,7 @@
                 ],
                 "smaps": {
                   "lexical": {
-                    "#8": "[(6,6)-(6,21)]"
+                    "#4": "[(6,6)-(6,21)]"
                   }
                 }
               }
@@ -161,10 +161,10 @@
             ],
             "smaps": {
               "inheritance-provenance": {
-                "#7": "amf://id#2"
+                "#3": "amf://id#2"
               },
               "lexical": {
-                "#7": "[(6,6)-(6,21)]"
+                "#3": "[(6,6)-(6,21)]"
               }
             }
           }
@@ -176,7 +176,7 @@
         ],
         "smaps": {
           "inherited-shapes": {
-            "#6": "amf://id#9"
+            "#6": "amf://id#7"
           },
           "type-property-lexical-info": {
             "#6": "[(7,4)-(7,8)]"
@@ -256,6 +256,9 @@
               }
             ],
             "smaps": {
+              "inheritance-provenance": {
+                "#3": "amf://id#2"
+              },
               "lexical": {
                 "#3": "[(6,6)-(6,21)]"
               }
