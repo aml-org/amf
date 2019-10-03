@@ -1,0 +1,131 @@
+#%RAML 1.0
+
+title: violations when merging resource types
+
+resourceTypes:
+  object-with-properties:
+    (some-annotation): valid in resource type
+    post:
+      description: some description
+      body:
+        application/json:
+          description: some description
+          type: object
+          properties:
+            a1: number
+
+  object-with-closed:
+    post:
+      body:
+        application/json:
+          type: object
+          additionalProperties: false
+
+  optional-resource:
+    post?:
+      body:
+        application/json:
+          description: a string
+
+  scalar-shape-data-type:
+    post:
+      body:
+        application/json:
+          type: number
+          minimum: 4
+          multipleOf: 9
+          description: holaaa
+
+  implicit-scalar-shape-data-type:
+    post:
+      body:
+        application/json:
+          minimum: 4
+          multipleOf: 9
+          description: holaaa
+
+  implicit-object-with-properties:
+      post:
+        body:
+          application/json:
+            properties:
+              a1: number
+
+
+traits:  #delta
+  response-with-schema:
+    responses:
+      404:
+        body:
+          application/json:
+            type: !include from-trait.json
+
+
+
+/merging-properties:
+  type: object-with-properties
+  post:
+    body:
+      application/json:
+        type: string #violations for properties field
+
+/merging-properties-onto-any-shape:
+  type: object-with-properties
+  post:
+    body:
+      application/json: #valid case
+
+/merging-closed:
+  type: object-with-closed
+  post:
+    body:
+      application/json:
+        type: string #violation for additional properties
+
+/merging-optional-resource:
+  type: optional-resource
+  post:
+    body:
+      application/json:
+        type: string #valid case
+
+/merging-scalar-shape-onto-any-shape:
+  type: scalar-shape-data-type
+  post:
+    body:
+      application/json: #valid
+
+/merging-implicit-number-to-object:
+  type: implicit-scalar-shape-data-type
+  post:
+    body:
+      application/json:
+        type: object  #validates minimum and multipleOf
+
+/merging-implicit-object-to-number:
+  type: implicit-object-with-properties
+  post:
+    body:
+      application/json:
+        type: number  #validates properties
+
+/merging-number-to-string:
+  type: scalar-shape-data-type
+  post:
+    body:
+      application/json:
+        type: string  #this is a violation that is not taken into account
+
+/using-response-schema-trait:
+  post:
+    is: [response-with-schema]
+    body:
+      application/json: string
+    responses:
+      404:
+        body:
+          application/json:
+            type: string #merging string with a union type does not throw a violation
+
+
+
