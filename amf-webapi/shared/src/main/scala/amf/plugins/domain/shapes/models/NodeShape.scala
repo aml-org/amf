@@ -7,6 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel}
+import amf.plugins.domain.webapi.models.IriTemplateMapping
 import org.yaml.model.YPart
 
 /**
@@ -15,22 +16,24 @@ import org.yaml.model.YPart
 case class NodeShape(override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {
 
-  def minProperties: IntField                 = fields.field(MinProperties)
-  def maxProperties: IntField                 = fields.field(MaxProperties)
-  def closed: BoolField                       = fields.field(Closed)
-  def discriminator: StrField                 = fields.field(Discriminator)
-  def discriminatorValue: StrField            = fields.field(DiscriminatorValue)
-  def properties: Seq[PropertyShape]          = fields.field(Properties)
-  def dependencies: Seq[PropertyDependencies] = fields.field(Dependencies)
-  def additionalPropertiesSchema: Shape       = fields.field(AdditionalPropertiesSchema)
+  def minProperties: IntField                       = fields.field(MinProperties)
+  def maxProperties: IntField                       = fields.field(MaxProperties)
+  def closed: BoolField                             = fields.field(Closed)
+  def discriminator: StrField                       = fields.field(Discriminator)
+  def discriminatorValue: StrField                  = fields.field(DiscriminatorValue)
+  def discriminatorMapping: Seq[IriTemplateMapping] = fields.field(DiscriminatorMapping)
+  def properties: Seq[PropertyShape]                = fields.field(Properties)
+  def dependencies: Seq[PropertyDependencies]       = fields.field(Dependencies)
+  def additionalPropertiesSchema: Shape             = fields.field(AdditionalPropertiesSchema)
 
-  def withMinProperties(min: Int): this.type                               = set(MinProperties, min)
-  def withMaxProperties(max: Int): this.type                               = set(MaxProperties, max)
-  def withClosed(closed: Boolean): this.type                               = set(Closed, closed)
-  def withDiscriminator(discriminator: String): this.type                  = set(Discriminator, discriminator)
-  def withDiscriminatorValue(value: String): this.type                     = set(DiscriminatorValue, value)
-  def withProperties(properties: Seq[PropertyShape]): this.type            = setArray(Properties, properties)
-  def withDependencies(dependencies: Seq[PropertyDependencies]): this.type = setArray(Dependencies, dependencies)
+  def withMinProperties(min: Int): this.type                                 = set(MinProperties, min)
+  def withMaxProperties(max: Int): this.type                                 = set(MaxProperties, max)
+  def withClosed(closed: Boolean): this.type                                 = set(Closed, closed)
+  def withDiscriminator(discriminator: String): this.type                    = set(Discriminator, discriminator)
+  def withDiscriminatorValue(value: String): this.type                       = set(DiscriminatorValue, value)
+  def withDiscriminatorMapping(mappings: Seq[IriTemplateMapping]): this.type = setArray(DiscriminatorMapping, mappings)
+  def withProperties(properties: Seq[PropertyShape]): this.type              = setArray(Properties, properties)
+  def withDependencies(dependencies: Seq[PropertyDependencies]): this.type   = setArray(Dependencies, dependencies)
 
   def withDependency(): PropertyDependencies = {
     val result = PropertyDependencies()

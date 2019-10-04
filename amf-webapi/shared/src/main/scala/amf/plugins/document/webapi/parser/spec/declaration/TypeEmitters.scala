@@ -5,14 +5,15 @@ import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Bool
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
 import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
+import amf.core.remote.Vendor
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
@@ -26,6 +27,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
@@ -1867,6 +1869,8 @@ case class OasNodeShapeEmitter(node: NodeShape,
                                isHeader: Boolean = false)(implicit spec: OasSpecEmitterContext)
     extends OasAnyShapeEmitter(node, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
+    val isOas3 = spec.vendor == Vendor.OAS30
+
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 
     val fs = node.fields
@@ -1885,7 +1889,13 @@ case class OasNodeShapeEmitter(node: NodeShape,
           .map(f => result += OasEntryShapeEmitter("additionalProperties", f, ordering, references))
     }
 
-    fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
+    if (isOas3) {
+      fs.entry(NodeShapeModel.Discriminator)
+        .orElse(fs.entry(NodeShapeModel.DiscriminatorMapping))
+        .map(f => result += Oas3DiscriminatorEmitter(f, fs, ordering))
+    } else {
+      fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("discriminator", f))
+    }
 
     fs.entry(NodeShapeModel.DiscriminatorValue)
       .map(f => result += ValueEmitter("discriminatorValue".asOasExtension, f))
@@ -1904,6 +1914,44 @@ case class OasNodeShapeEmitter(node: NodeShape,
 
     result
   }
+}
+
+case class Oas3DiscriminatorEmitter(found: FieldEntry, fs: Fields, ordering: SpecOrdering) extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      "discriminator",
+      _.obj { b =>
+        val result: ListBuffer[EntryEmitter] = ListBuffer()
+        fs.entry(NodeShapeModel.Discriminator).map(f => result += ValueEmitter("propertyName", f))
+        fs.entry(NodeShapeModel.DiscriminatorMapping).map(f => result += IriTemplateEmitter("mapping", f, ordering))
+        traverse(ordering.sorted(result), b)
+      }
+    )
+  }
+  override def position(): Position = pos(found.value.annotations)
+}
+
+case class IriTemplateEmitter(key: String, f: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      key,
+      _.obj { b =>
+        val emitters = f
+          .arrayValues[AmfObject]
+          .flatMap(iriMapping => {
+            for {
+              variable <- iriMapping.fields.entry(IriTemplateMappingModel.TemplateVariable)
+              link     <- iriMapping.fields.entry(IriTemplateMappingModel.LinkExpression)
+            } yield {
+              ValueEmitter(variable.scalar.toString, link)
+            }
+          })
+        traverse(ordering.sorted(emitters), b)
+      }
+    )
+  }
+
+  override def position(): Position = pos(f.value.annotations)
 }
 
 case class OasEntryShapeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(

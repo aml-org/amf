@@ -46,7 +46,10 @@ class Oas30CycleTest extends FunSuiteCycleTests {
                 "basic-paths-object-with-server.json"),
     FixtureData("Basic paths object with multiple servers",
                 "basic-paths-object-with-servers.json",
-                "basic-paths-object-with-servers.json")
+                "basic-paths-object-with-servers.json"),
+    FixtureData("Basic discriminator object",
+                "discriminator-object/discriminator-object.json",
+                "discriminator-object/output.json")
   )
 
   cyclesOas3.foreach { f =>

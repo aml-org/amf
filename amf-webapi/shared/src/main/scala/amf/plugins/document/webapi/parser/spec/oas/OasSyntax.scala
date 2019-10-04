@@ -186,6 +186,10 @@ object Oas3Syntax extends SpecSyntax {
       "description",
       "externalDocs"
     ),
+    "discriminator" -> Set(
+      "propertyName",
+      "mapping"
+    ),
     "schema" -> Set(
       "$ref",
       "$schema",
@@ -221,6 +225,7 @@ object Oas3Syntax extends SpecSyntax {
       "externalDocs",
       "allOf",
       "anyOf",
+      "oneOf",
       "dependencies",
       "multipleOf",
       "default",

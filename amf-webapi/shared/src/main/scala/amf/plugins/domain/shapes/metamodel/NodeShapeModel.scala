@@ -63,6 +63,7 @@ object NodeShapeModel extends AnyShapeModel {
                             AdditionalPropertiesSchema,
                             Discriminator,
                             DiscriminatorValue,
+                            DiscriminatorMapping,
                             Properties,
                             Dependencies)
 
