@@ -6,6 +6,7 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.remote.Vendor
 import amf.core.utils.Strings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
@@ -20,6 +21,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
+import amf.plugins.domain.webapi.models.IriTemplateMapping
 import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations.InvalidUnionType
 import amf.validations.ParserSideValidations._
@@ -41,7 +43,9 @@ class OAS20SchemaVersion(override val position: String)(implicit eh: ErrorHandle
 object OAS20SchemaVersion { def apply(position: String)(implicit eh: ErrorHandler) = new OAS20SchemaVersion(position) }
 class OAS30SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
     extends OASSchemaVersion("oas3.0.0", position)
-object OAS30SchemaVersion { def apply(position: String, eh: ErrorHandler) = new OAS20SchemaVersion(position)(eh) }
+object OAS30SchemaVersion {
+  def apply(position: String)(implicit eh: ErrorHandler) = new OAS30SchemaVersion(position)(eh)
+}
 object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3")
 object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4")
 object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
@@ -56,11 +60,14 @@ object OasTypeParser {
     new OasTypeParser(Left(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
 
   def apply(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: OasWebApiContext): OasTypeParser =
-    new OasTypeParser(Left(entry),
-                      entry.key.as[YScalar].text,
-                      entry.value.as[YMap],
-                      adopt,
-                      OAS20SchemaVersion("schema")(ctx))
+    new OasTypeParser(
+      Left(entry),
+      entry.key.as[YScalar].text,
+      entry.value.as[YMap],
+      adopt,
+      (if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx)
+       else OAS20SchemaVersion("schema")(ctx))
+    )
 
   def apply(node: YNode, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
       implicit ctx: OasWebApiContext): OasTypeParser =
@@ -166,6 +173,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       .orElse(map.key("dependencies"))
       .orElse(map.key("patternProperties"))
       .orElse(map.key("additionalProperties"))
+      .orElse(map.key("discriminator"))
       .orElse(map.key("required"))
       .map(_ => ObjectType)
 
@@ -801,8 +809,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       }
 
-      map.key("discriminator", NodeShapeModel.Discriminator in shape)
-      map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
+      if (isOas3) {
+        map.key("discriminator", DiscriminatorParser(shape, _).parse())
+      } else {
+        map.key("discriminator", NodeShapeModel.Discriminator in shape)
+        map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
+      }
 
       val requiredFields = map
         .key("required")
@@ -877,6 +889,21 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       )
 
       shape
+    }
+  }
+
+  case class DiscriminatorParser(shape: NodeShape, entry: YMapEntry) {
+    def parse(): Unit = {
+      val map = entry.value.as[YMap]
+      map.key("propertyName", NodeShapeModel.Discriminator in shape)
+      map.key("mapping", parseMappings)
+      ctx.closedShape(shape.id, map, "discriminator")
+    }
+
+    private def parseMappings(mappingEntry: YMapEntry): Unit = {
+      val map      = mappingEntry.value.as[YMap]
+      val mappings = map.entries.map(entry => IriTemplateMapping(entry.key.as[String], entry.value.as[String]))
+      shape.setArray(NodeShapeModel.DiscriminatorMapping, mappings, Annotations(mappingEntry))
     }
   }
 

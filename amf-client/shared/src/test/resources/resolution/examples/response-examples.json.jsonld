@@ -604,7 +604,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#raw": [
                                   {
-                                    "@value": "\"name\": \"Doe Enterprise\"\n\"value\": \"Silver\""
+                                    "@value": "{\n                  \"name\": \"Doe Enterprise\",\n                  \"value\": \"Silver\"\n                }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1175,7 +1175,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#raw": [
                                   {
-                                    "@value": "\"name\": \"Software Corp\"\n\"address\": \"35 Central Street\"\n\"value\": \"Gold\""
+                                    "@value": "{\n                    \"name\": \"Software Corp\",\n                    \"address\": \"35 Central Street\",\n                    \"value\": \"Gold\"\n                  }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1374,7 +1374,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#raw": [
                                   {
-                                    "@value": "\"name\": \"Acme\""
+                                    "@value": "{\n                \"name\": \"Acme\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1807,7 +1807,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#raw": [
                                   {
-                                    "@value": "\"name\": \"Puma\"\n\"type\": \"Dog\"\n\"color\": \"Black\"\n\"gender\": \"Female\"\n\"breed\": \"Mixed\""
+                                    "@value": "{\n                \"name\": \"Puma\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -2240,7 +2240,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#raw": [
                                   {
-                                    "@value": "\"name\": \"Puma\"\n\"type\": \"Dog\"\n\"color\": \"Black\"\n\"gender\": \"Female\"\n\"breed\": \"Mixed\""
+                                    "@value": "{\n                \"name\": \"Puma\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -2695,7 +2695,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#raw": [
                                   {
-                                    "@value": "\"name\": \"Software Corp\"\n\"address\": \"35 Central Street\"\n\"value\": \"Gold\""
+                                    "@value": "{\n                    \"name\": \"Software Corp\",\n                    \"address\": \"35 Central Street\",\n                    \"value\": \"Gold\"\n                  }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -2894,7 +2894,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#raw": [
                                   {
-                                    "@value": "\"name\": \"Acme\""
+                                    "@value": "{\n                \"name\": \"Acme\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -3327,7 +3327,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#raw": [
                                   {
-                                    "@value": "\"name\": \"Puma\"\n\"type\": \"Dog\"\n\"color\": \"Black\"\n\"gender\": \"Female\"\n\"breed\": \"Mixed\""
+                                    "@value": "{\n                \"name\": \"Puma\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -3760,7 +3760,7 @@
                                 ],
                                 "http://www.w3.org/ns/shacl#raw": [
                                   {
-                                    "@value": "\"name\": \"Puma\"\n\"type\": \"Dog\"\n\"color\": \"Black\"\n\"gender\": \"Female\"\n\"breed\": \"Mixed\""
+                                    "@value": "{\n                \"name\": \"Puma\",\n                \"type\": \"Dog\",\n                \"color\": \"Black\",\n                \"gender\": \"Female\",\n                \"breed\": \"Mixed\"\n              }"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -4634,7 +4634,7 @@
             ],
             "http://www.w3.org/ns/shacl#raw": [
               {
-                "@value": "\"name\": \"Bob\"\n\"lastname\": \"Marley\""
+                "@value": "{\n        \"name\": \"Bob\",\n        \"lastname\": \"Marley\"\n      }"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [

@@ -22,9 +22,10 @@ case class ShapeExtensionParser(shape: Shape,
                                 typeInfo: TypeInfo,
                                 overrideSyntax: Option[String] = None) {
   def parse(): Unit = {
-    val shapeExtensionDefinitions = shape.collectCustomShapePropertyDefinitions(onlyInherited = true)
-    val properties                = shapeExtensionDefinitions.flatMap(_.values).distinct
-    properties.foreach { shapeExtensionDefinition =>
+    val inheritedDefinitions =
+      shape.collectCustomShapePropertyDefinitions(onlyInherited = true).flatMap(_.values).distinct
+    val directlyInherited = shape.effectiveInherits.flatMap(_.customShapePropertyDefinitions)
+    inheritedDefinitions.foreach { shapeExtensionDefinition =>
       val extensionKey = ctx.vendor match {
         case _: Raml => shapeExtensionDefinition.name.value() // TODO check this.
         case _: Oas  => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
@@ -43,10 +44,11 @@ case class ShapeExtensionParser(shape: Shape,
             .withDefinedBy(shapeExtensionDefinition)
             .withExtension(dataNode)
           shape.add(ShapeModel.CustomShapeProperties, extension)
-        case None =>
+        case None if directlyInherited.contains(shapeExtensionDefinition) =>
           if (shapeExtensionDefinition.minCount.option().exists(_ > 0)) {
             ctx.violation(MissingRequiredUserDefinedFacet, shape.id, s"Missing required facet '$extensionKey'", map)
           }
+        case _ =>
       }
     }
     if (!shape.inherits.exists(s => s.isUnresolved)) { // only validate shapes when the father its resolved, to avoid close shape over custom annotations
@@ -56,7 +58,7 @@ case class ShapeExtensionParser(shape: Shape,
         case None                             => shape.ramlSyntaxKey
       }
 
-      val extensionsNames = properties.flatMap(_.name.option())
+      val extensionsNames = inheritedDefinitions.flatMap(_.name.option())
       val m               = YMap(map.entries.filter(e => !extensionsNames.contains(e.key.value.toString)), "")
       ctx.closedRamlTypeShape(shape, m, syntax, typeInfo)
       validateCustomFacetDefinitions(syntax)

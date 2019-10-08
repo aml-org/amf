@@ -26,17 +26,19 @@ class ExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler
 
     allResponses.zipWithIndex.foreach {
       case (response, index) =>
-        val mappedExamples = response.examples.map(e => e.mediaType.value() -> e).toMap
+        val examplesByMediaType = response.examples.map(e => e.mediaType.value() -> e).toMap
         response.fields.removeField(ResponseModel.Examples)
-        mappedExamples.foreach {
+        examplesByMediaType.foreach {
           case (mediaType, example) =>
             response.payloads.find(_.mediaType.value() == mediaType) match {
               case Some(p) =>
                 p.schema match {
                   case shape: AnyShape =>
-                    example.withName(example.mediaType.value() + index)
                     example.add(TrackedElement(p.id))
-                    shape.withExamples(shape.examples ++ Seq(example))
+                    if (!shape.examples.exists(_.id == example.id)) {
+                      example.withName(example.mediaType.value() + index)
+                      shape.withExamples(shape.examples ++ Seq(example))
+                    }
                   case _ => response.withExamples(response.examples ++ Seq(example))
                 }
               case _ =>

@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/default",
+  "definitions": {
+    "default": {
+      "type": "object",
+      "x-amf-examples": {
+        "application/json0": {
+          "name": "Bob"
+        }
+      },
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

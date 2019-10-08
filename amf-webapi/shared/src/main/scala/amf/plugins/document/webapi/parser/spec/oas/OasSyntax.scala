@@ -50,6 +50,8 @@ object Oas3Syntax extends SpecSyntax {
       "connect",
       "trace",
       "parameters",
+      "servers",
+      "summary",
       "\\$ref"
     ),
     "operation" -> Set(
@@ -184,6 +186,10 @@ object Oas3Syntax extends SpecSyntax {
       "description",
       "externalDocs"
     ),
+    "discriminator" -> Set(
+      "propertyName",
+      "mapping"
+    ),
     "schema" -> Set(
       "$ref",
       "$schema",
@@ -219,6 +225,7 @@ object Oas3Syntax extends SpecSyntax {
       "externalDocs",
       "allOf",
       "anyOf",
+      "oneOf",
       "dependencies",
       "multipleOf",
       "default",

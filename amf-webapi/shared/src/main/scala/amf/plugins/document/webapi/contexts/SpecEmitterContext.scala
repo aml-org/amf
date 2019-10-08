@@ -192,7 +192,15 @@ abstract class OasSpecEmitterFactory(implicit val spec: OasSpecEmitterContext) e
 
   def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): OasServersEmitter
 
-  def serversEmitter(operation: Operation, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): OasServersEmitter
+  def serversEmitter(operation: Operation,
+                     f: FieldEntry,
+                     ordering: SpecOrdering,
+                     references: Seq[BaseUnit]): OasServersEmitter
+
+  def serversEmitter(endpoint: EndPoint,
+                     f: FieldEntry,
+                     ordering: SpecOrdering,
+                     references: Seq[BaseUnit]): OasServersEmitter
 
   def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter = OasHeaderEmitter.apply
 
@@ -207,14 +215,25 @@ case class Oas2SpecEmitterFactory(implicit override val spec: OasSpecEmitterCont
   override def serversEmitter(operation: Operation, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =
     Oas3OperationServersEmitter(operation, f, ordering, references)
 
+  override def serversEmitter(endpoint: EndPoint,
+                              f: FieldEntry,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit]): OasServersEmitter =
+    Oas3EndPointServersEmitter(endpoint, f, ordering, references)
 }
 
 case class Oas3SpecEmitterFactory(implicit override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory {
   override def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =
-    Oas3ServersEmitter(api, f, ordering, references)
+    Oas3WebApiServersEmitter(api, f, ordering, references)
 
   override def serversEmitter(operation: Operation, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =
     Oas3OperationServersEmitter(operation, f, ordering, references)
+
+  override def serversEmitter(endpoint: EndPoint,
+                              f: FieldEntry,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit]): OasServersEmitter =
+    Oas3EndPointServersEmitter(endpoint, f, ordering, references)
 }
 
 trait RamlEmitterVersionFactory extends SpecEmitterFactory {

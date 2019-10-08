@@ -22,9 +22,9 @@ class ParametersNormalizationStage(profile: ProfileName)(override implicit val e
 
   override def resolve[T <: BaseUnit](model: T): T = {
     profile match {
-      case RamlProfile                => parametersRaml10(model).asInstanceOf[T]
-      case OasProfile | Raml08Profile => parametersOpenApi(model).asInstanceOf[T]
-      case AmfProfile                 => parametersAmf(model).asInstanceOf[T]
+      case RamlProfile                               => parametersRaml10(model).asInstanceOf[T]
+      case OasProfile | Oas30Profile | Raml08Profile => parametersOpenApi(model).asInstanceOf[T]
+      case AmfProfile                                => parametersAmf(model).asInstanceOf[T]
       case _ =>
         errorHandler.violation(CoreValidations.ResolutionValidation,
                                model.id,

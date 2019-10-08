@@ -38,6 +38,14 @@ types:
 
   normal-string: string
 
+  User:
+    facets:
+      role: string
+  Admin:
+    type: User
+    role: admin
+  SuperAdmin:    #valid because role facet is not directly inherited, but can be overridden
+    type: Admin
 
   # validation of built-in facets
 

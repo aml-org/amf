@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.Oas30Profile
 import amf.core.remote.{Hint, OasJsonHint}
 
 class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
@@ -87,6 +88,10 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Invalid paths in paths object") {
     validate("invalid-oas-path/invalid-oas-path.json", Some("invalid-oas-path.report"))
+  }
+
+  test("Response status code wildcards") {
+    validate("../upanddown/oas3/response-code-wildcards.json", Some("response-code-wildcards.report"), Oas30Profile)
   }
 
   override val hint: Hint = OasJsonHint

@@ -1,0 +1,65 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic links",
+    "version": "0.1"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "discriminator": {
+                    "propertyName": "animalType",
+                    "mapping": {
+                      "cat": "#/components/schemas/Cat",
+                      "dog": "#/components/schemas/Dog"
+                    }
+                  },
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/Cat"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Dog"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Cat": {
+        "type": "object",
+        "properties": {
+          "animalType": {
+            "type": "string",
+            "required": "true"
+          },
+          "someProp": {
+            "type": "string",
+            "required": "true"
+          }
+        }
+      },
+      "Dog": {
+        "type": "object",
+        "properties": {
+          "animalType": {
+            "type": "string",
+            "required": "true"
+          }
+        }
+      }
+    }
+  }
+}

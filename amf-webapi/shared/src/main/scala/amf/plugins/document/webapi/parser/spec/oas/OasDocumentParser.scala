@@ -286,9 +286,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       map.key("displayName".asOasExtension, EndPointModel.Name in endpoint)
       map.key("description".asOasExtension, EndPointModel.Description in endpoint)
+      map.key("summary", EndPointModel.Summary in endpoint)
 
       var parameters = Parameters()
       val entries    = ListBuffer[YMapEntry]()
+
+      ctx.factory.serversParser(map, endpoint).parse()
 
       // This are the rest of the parameters, this must be simple to be supported by OAS.
       map
@@ -380,7 +383,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key("description", RequestModel.Description in request)
       map.key("required", RequestModel.Required in request)
 
-
       val payloads = mutable.ListBuffer[Payload]()
 
       map.key(
@@ -388,11 +390,11 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         entry =>
           entry.value
             .as[YMap]
-            .entries.
-            foreach { entry =>
+            .entries
+            .foreach { entry =>
               val mediaType = ScalarNode(entry.key).text().value.toString
               payloads += OasContentParser(entry.value, mediaType, request.withPayload).parse()
-            }
+          }
       )
 
       request.set(ResponseModel.Payloads, AmfArray(payloads))
@@ -548,11 +550,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         map.key(
           "callbacks",
           entry => {
-            entry.value.as[YMap]
+            entry.value
+              .as[YMap]
               .entries
               .map { callbackEntry =>
-                val name = callbackEntry.key.as[YScalar].text
-                val callback = operation.withCallback(name)
+                val name               = callbackEntry.key.as[YScalar].text
+                val callback           = operation.withCallback(name)
                 val callbackOperations = callbackEntry.value.as[YMap].entries
                 if (callbackOperations.size != 1) {
                   // TODO throw violation here

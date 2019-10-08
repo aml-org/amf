@@ -1,0 +1,124 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API"
+  },
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/endpoint": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Order"
+            },
+            "x-examples": {
+              "application/json": {
+                "firstName": "Bob",
+                "lastName": "Jones"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/Created"
+          }
+        }
+      }
+    },
+    "/endpoint/{id}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/OK"
+          }
+        }
+
+      },
+      "patch": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Order"
+            },
+            "x-examples": {
+              "application/json": {
+                "firstName": "Bob",
+                "lastName": "Jones"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/OK"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Order": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "responses": {
+    "Created": {
+      "schema": {
+        "$ref": "#/definitions/Order"
+      },
+      "examples": {
+        "id": "6CD8F158",
+        "application/json": {
+          "firstName": "Bob",
+          "lastName": "Jones"
+        }
+      }
+    },
+    "OK": {
+      "schema": {
+        "$ref": "#/definitions/Order"
+      },
+      "examples": {
+        "application/json": {
+          "firstName": "Bob",
+          "lastName": "Jones"
+        }
+      }
+    }
+  }
+}

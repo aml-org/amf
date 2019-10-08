@@ -333,6 +333,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Resolution of server objects") {
+    cycle(
+      "overriding-server-object.json",
+      "overriding-server-object-resolved.json",
+      OasJsonHint,
+      Oas30,
+      cyclePath + "oas3/"
+    )
+  }
+
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")

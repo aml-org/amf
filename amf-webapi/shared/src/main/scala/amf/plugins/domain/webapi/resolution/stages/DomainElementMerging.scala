@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution.stages
 
-import amf.core.annotations.DefaultNode
+import amf.core.annotations.{DefaultNode, ExplicitField}
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
@@ -13,9 +13,9 @@ import amf.core.parser.{ErrorHandler, FieldEntry, Value}
 import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.{EmptyPayload, Inferred}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.domain.shapes.metamodel.ScalarShapeModel
+import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.{AnyShape, ScalarShape}
+import amf.plugins.domain.shapes.models.{AnyShape, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.features.validation.CoreValidations
@@ -44,7 +44,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         main.fields.entry(otherField) match {
           case None =>
             // Case 2
-            handleNewFieldEntry(main, otherFieldEntry)
+            handleNewFieldEntry(main, otherFieldEntry, errorHandler)
           case Some(mainFieldEntry) =>
             // Cases 2 & 3 (check for some special conditions of case 2 where main field entry actually exists)
             merged = handleExistingFieldEntries(main, mainFieldEntry, otherFieldEntry, errorHandler)
@@ -57,7 +57,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     }
   }
 
-  def handleNewFieldEntry[T <: DomainElement](main: T, otherFieldEntry: FieldEntry): Unit = {
+  def handleNewFieldEntry[T <: DomainElement](main: T, otherFieldEntry: FieldEntry, errorHandler: ErrorHandler): Unit = {
     val otherField = otherFieldEntry.field
     val otherValue = otherFieldEntry.value
 
@@ -67,15 +67,34 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         case _                                                              => // Nothing
       }
     }
-
-    otherField.`type` match {
-      case t: OptionalField if isOptional(t, otherValue.value.asInstanceOf[DomainElement]) =>
-      case Type.ArrayLike(otherElement) =>
-        adoptNonOptionalArrayElements(main, otherField, otherValue, otherElement)
-      case _ =>
-        main.set(otherField, adoptInner(main.id, otherValue.value))
+    if (isValidToAdd(main, otherField)) {
+      otherField.`type` match {
+        case t: OptionalField if isOptional(t, otherValue.value.asInstanceOf[DomainElement]) =>
+        case Type.ArrayLike(otherElement) =>
+          adoptNonOptionalArrayElements(main, otherField, otherValue, otherElement)
+        case _ =>
+          main.set(otherField, adoptInner(main.id, otherValue.value))
+      }
+    } else if (isExplicitField(otherFieldEntry)) {
+      errorHandler.violation(CoreValidations.ResolutionValidation,
+                             main.id,
+                             s"Cannot merge '${otherField.value.name}' into ${main.meta.doc.displayName}",
+                             main.annotations)
     }
   }
+
+  val whiteListFields = List(DomainElementModel.CustomDomainProperties, OperationModel.Optional)
+
+  private def isValidToAdd(main: DomainElement, field: Field): Boolean =
+    main match {
+      case ScalarShape(_, _) | NodeShape(_, _) => (whiteListFields ::: main.meta.fields).contains(field)
+      case _                                   => true
+    }
+
+  val possibleImplicitFields = List(NodeShapeModel.Closed, ScalarShapeModel.DataType, UnionShapeModel.AnyOf)
+
+  private def isExplicitField(fe: FieldEntry) =
+    !possibleImplicitFields.contains(fe.field) || fe.value.annotations.contains(classOf[ExplicitField])
 
   def handleExistingFieldEntries[T <: DomainElement](main: T,
                                                      mainFieldEntry: FieldEntry,

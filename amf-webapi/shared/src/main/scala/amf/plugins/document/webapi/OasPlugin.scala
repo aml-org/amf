@@ -16,7 +16,12 @@ import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.{CompatibilityPipeline, OasCompatibilityPipeline}
-import amf.plugins.document.webapi.resolution.pipelines.{OasEditingPipeline, OasResolutionPipeline}
+import amf.plugins.document.webapi.resolution.pipelines.{
+  Oas30EditingPipeline,
+  Oas30ResolutionPipeline,
+  OasEditingPipeline,
+  OasResolutionPipeline
+}
 import amf.plugins.domain.webapi.models.WebApi
 import amf._
 import org.yaml.model.{YDocument, YNode}
@@ -219,8 +224,11 @@ object Oas30Plugin extends OasPlugin {
     */
   override def resolve(unit: BaseUnit,
                        errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    new OasResolutionPipeline(errorHandler).resolve(unit)
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
+    case ResolutionPipeline.DEFAULT_PIPELINE => new Oas30ResolutionPipeline(errorHandler).resolve(unit)
+    case ResolutionPipeline.EDITING_PIPELINE => new Oas30EditingPipeline(errorHandler).resolve(unit)
+    case _                                   => super.resolve(unit, errorHandler, pipelineId)
+  }
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],

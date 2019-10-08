@@ -1,0 +1,54 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic servers",
+    "version": "0.1"
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com/v1",
+      "description": "The production API server"
+    }
+  ],
+  "paths": {
+    "/with-no-overriding": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": "get in files path"
+          }
+        }
+      }
+    },
+    "/ping": {
+      "servers": [
+        {
+          "url": "https://ping.example.com",
+          "description": "Override base path for all operations with the /ping path"
+        }
+      ],
+      "post": {
+        "responses": {
+          "default": {
+            "description": "get in files path"
+          }
+        }
+      },
+      "get": {
+        "responses": {
+          "default": {
+            "description": "get in files path"
+          }
+        },
+        "servers": [
+          {
+            "url": "https://echo.example.com",
+            "description": "Override base path for the GET /ping operation"
+          }
+        ]
+      }
+    },
+    "/only-path":{
+    }
+  }
+}
