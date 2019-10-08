@@ -20,6 +20,7 @@ class AmfResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPip
     new ShapeNormalizationStage(profileName, keepEditingInfo = false),
     new SecurityResolutionStage(),
     new ParametersNormalizationStage(profileName),
+    new ServersNormalizationStage(profileName),
     new MediaTypeResolutionStage(profileName),
     new ExamplesResolutionStage(),
     new CleanReferencesStage(),

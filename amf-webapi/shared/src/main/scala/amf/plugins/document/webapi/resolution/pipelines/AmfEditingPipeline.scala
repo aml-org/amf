@@ -10,7 +10,8 @@ import amf.plugins.domain.webapi.resolution.stages.{
   ExamplesResolutionStage,
   MediaTypeResolutionStage,
   ParametersNormalizationStage,
-  SecurityResolutionStage
+  SecurityResolutionStage,
+  ServersNormalizationStage
 }
 import amf.{AmfProfile, ProfileName}
 
@@ -24,6 +25,7 @@ class AmfEditingPipeline(override val eh: ErrorHandler) extends ResolutionPipeli
     new ShapeNormalizationStage(profileName, keepEditingInfo = true),
     new SecurityResolutionStage(),
     new ParametersNormalizationStage(profileName),
+    new ServersNormalizationStage(profileName),
     new MediaTypeResolutionStage(profileName, keepEditingInfo = true),
     new ExamplesResolutionStage(),
     new UrlShortenerStage()
