@@ -54,16 +54,20 @@ case class RamlServersEmitter(f: FieldEntry, ordering: SpecOrdering, references:
     if (servers.nonEmpty) result += ServersEmitters("servers".asRamlAnnotation, servers, ordering)
 }
 
-abstract class OasServersEmitter(elem: DomainElement, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext) {
+abstract class OasServersEmitter(elem: DomainElement,
+                                 f: FieldEntry,
+                                 ordering: SpecOrdering,
+                                 references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[EntryEmitter]
 
   protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit =
     if (servers.nonEmpty) result += ServersEmitters(key, servers, ordering)
 }
 
-abstract class Oas3ServersEmitter(elem: DomainElement, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasSpecEmitterContext)
+abstract class Oas3ServersEmitter(elem: DomainElement,
+                                  f: FieldEntry,
+                                  ordering: SpecOrdering,
+                                  references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
     extends OasServersEmitter(elem, f, ordering, references) {
 
   override protected def asExtension(key: String, servers: Seq[Server], result: ListBuffer[EntryEmitter]): Unit = {
