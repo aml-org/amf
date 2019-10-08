@@ -98,6 +98,154 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     document
   }
 
+  def parseDeclarations(root: Root, map: YMap): Unit = {
+    val parent = root.location + "#/declarations"
+    parseTypeDeclarations(map, parent + "/types")
+    parseAnnotationTypeDeclarations(map, parent)
+    AbstractDeclarationsParser("resourceTypes".asOasExtension,
+                               (entry: YMapEntry) => ResourceType(entry),
+                               map,
+                               parent + "/resourceTypes").parse()
+    AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent + "/traits")
+      .parse()
+    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
+    parseParameterDeclarations(map, parent + "/parameters")
+    parseResponsesDeclarations("responses", map, parent + "/responses")
+  }
+
+  private def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
+
+    map.key(
+      "annotationTypes".asOasExtension,
+      e => {
+        e.value
+          .as[YMap]
+          .entries
+          .map(entry => {
+            val typeName = entry.key.as[YScalar].text
+            val customProperty = AnnotationTypesParser(entry,
+                                                       customProperty =>
+                                                         customProperty
+                                                           .withName(typeName)
+                                                           .adopted(customProperties))
+            ctx.declarations += customProperty.add(DeclaredElement())
+          })
+      }
+    )
+  }
+
+  protected val definitionsKey: String
+  protected val securityKey: String
+
+  def parseTypeDeclarations(map: YMap, typesPrefix: String): Unit = {
+
+    map.key(
+      definitionsKey,
+      entry => {
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            val typeName = e.key.as[YScalar].text
+            OasTypeParser(e, shape => {
+              shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
+              shape.adopted(typesPrefix)
+            })(ctx).parse() match {
+              case Some(shape) =>
+                ctx.declarations += shape.add(DeclaredElement())
+              case None =>
+                ctx.violation(UnableToParseShape,
+                              NodeShape().adopted(typesPrefix).id,
+                              s"Error parsing shape at $typeName",
+                              e)
+            }
+          })
+      }
+    )
+  }
+
+  private def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
+    map.key(
+      securityKey,
+      e => {
+        e.value.as[YMap].entries.foreach { entry =>
+          ctx.declarations += SecuritySchemeParser(
+            entry,
+            (scheme, name) => {
+              scheme.set(ParametrizedSecuritySchemeModel.Name,
+                         AmfScalar(name, Annotations(entry.key.value)),
+                         Annotations(entry.key))
+              scheme.adopted(parent)
+            }
+          ).parse()
+            .add(DeclaredElement())
+        }
+      }
+    )
+
+    map.key(
+      "securitySchemes".asOasExtension,
+      e => {
+        e.value.as[YMap].entries.foreach { entry =>
+          ctx.declarations += SecuritySchemeParser(
+            entry,
+            (scheme, name) => {
+              scheme.set(ParametrizedSecuritySchemeModel.Name,
+                         AmfScalar(name, Annotations(entry.key.value)),
+                         Annotations(entry.key))
+              scheme.adopted(parent)
+            }
+          ).parse()
+            .add(DeclaredElement())
+        }
+      }
+    )
+  }
+
+  private def parseParameterDeclarations(map: YMap, parentPath: String): Unit = {
+    map.key(
+      "parameters",
+      entry => {
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            val typeName      = e.key
+            val nameGenerator = new IdCounter()
+            val oasParameter: domain.OasParameter = e.value.to[YMap] match {
+              case Right(_) => OasParameterParser(Left(e), parentPath, Some(typeName), nameGenerator).parse()
+              case _ =>
+                val parameter =
+                  OasParameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator).parse()
+                ctx.violation(InvalidParameterType,
+                              parameter.domainElement.id,
+                              "Map needed to parse a parameter declaration",
+                              e)
+                parameter
+            }
+            ctx.declarations.registerOasParameter(oasParameter)
+
+          })
+      }
+    )
+  }
+
+  private def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+    map.key(
+      key,
+      entry => {
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            ctx.declarations +=
+              OasResponseParser(e, (r: Response) => r.adopted(parentPath).add(DeclaredElement()))
+                .parse()
+          })
+      }
+    )
+  }
+
   def parseWebApi(map: YMap): WebApi = {
 
     val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
@@ -270,7 +418,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case Some(n) =>
               ctx.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
             case None =>
-              ctx.violation(InvalidEndpointPath, endpoint.id, s"Cannot find fragment path item ref $value", entry.value)
+              ctx.violation(InvalidEndpointPath,
+                            endpoint.id,
+                            s"Cannot find fragment path item ref $value",
+                            entry.value)
           }
         case Right(node) if node.tagType == YType.Map =>
           parseEndpointMap(endpoint, node.as[YMap])
@@ -632,151 +783,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 }
 
 abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseSpecParser with SpecParserOps {
-
-  protected def parseDeclarations(root: Root, map: YMap): Unit = {
-    val parent = root.location + "#/declarations"
-    parseTypeDeclarations(map, parent + "/types")
-    parseAnnotationTypeDeclarations(map, parent)
-    AbstractDeclarationsParser("resourceTypes".asOasExtension,
-                               (entry: YMapEntry) => ResourceType(entry),
-                               map,
-                               parent + "/resourceTypes").parse()
-    AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent + "/traits")
-      .parse()
-    parseSecuritySchemeDeclarations(map, parent + "/securitySchemes")
-    parseParameterDeclarations(map, parent + "/parameters")
-    parseResponsesDeclarations("responses", map, parent + "/responses")
-  }
-
-  def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
-
-    map.key(
-      "annotationTypes".asOasExtension,
-      e => {
-        e.value
-          .as[YMap]
-          .entries
-          .map(entry => {
-            val typeName = entry.key.as[YScalar].text
-            val customProperty = AnnotationTypesParser(entry,
-                                                       customProperty =>
-                                                         customProperty
-                                                           .withName(typeName)
-                                                           .adopted(customProperties))
-            ctx.declarations += customProperty.add(DeclaredElement())
-          })
-      }
-    )
-  }
-
-  def parseTypeDeclarations(map: YMap, typesPrefix: String): Unit = {
-
-    map.key(
-      "definitions",
-      entry => {
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val typeName = e.key.as[YScalar].text
-            OasTypeParser(e, shape => {
-              shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
-              shape.adopted(typesPrefix)
-            })(ctx).parse() match {
-              case Some(shape) =>
-                ctx.declarations += shape.add(DeclaredElement())
-              case None =>
-                ctx.violation(UnableToParseShape,
-                              NodeShape().adopted(typesPrefix).id,
-                              s"Error parsing shape at $typeName",
-                              e)
-            }
-          })
-      }
-    )
-  }
-
-  private def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
-    map.key(
-      "securityDefinitions",
-      e => {
-        e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += SecuritySchemeParser(
-            entry,
-            (scheme, name) => {
-              scheme.set(ParametrizedSecuritySchemeModel.Name,
-                         AmfScalar(name, Annotations(entry.key.value)),
-                         Annotations(entry.key))
-              scheme.adopted(parent)
-            }
-          ).parse()
-            .add(DeclaredElement())
-        }
-      }
-    )
-
-    map.key(
-      "securitySchemes".asOasExtension,
-      e => {
-        e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += SecuritySchemeParser(
-            entry,
-            (scheme, name) => {
-              scheme.set(ParametrizedSecuritySchemeModel.Name,
-                         AmfScalar(name, Annotations(entry.key.value)),
-                         Annotations(entry.key))
-              scheme.adopted(parent)
-            }
-          ).parse()
-            .add(DeclaredElement())
-        }
-      }
-    )
-  }
-
-  def parseParameterDeclarations(map: YMap, parentPath: String): Unit = {
-    map.key(
-      "parameters",
-      entry => {
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val typeName      = e.key
-            val nameGenerator = new IdCounter()
-            val oasParameter: domain.OasParameter = e.value.to[YMap] match {
-              case Right(_) => OasParameterParser(Left(e), parentPath, Some(typeName), nameGenerator).parse()
-              case _ =>
-                val parameter =
-                  OasParameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator).parse()
-                ctx.violation(InvalidParameterType,
-                              parameter.domainElement.id,
-                              "Map needed to parse a parameter declaration",
-                              e)
-                parameter
-            }
-            ctx.declarations.registerOasParameter(oasParameter)
-
-          })
-      }
-    )
-  }
-
-  def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {
-    map.key(
-      key,
-      entry => {
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            ctx.declarations +=
-              OasResponseParser(e, (r: Response) => r.adopted(parentPath).add(DeclaredElement()))
-                .parse()
-          })
-      }
-    )
-  }
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {

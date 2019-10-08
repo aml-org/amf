@@ -13,6 +13,13 @@ import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
 import amf.core.utils.{IdCounter, Strings}
 import amf.plugins.document.webapi.annotations.FormBodyParameter
+import amf.plugins.document.webapi.contexts.{
+  BaseSpecEmitter,
+  Oas3SpecEmitterFactory,
+  OasSpecEmitterContext,
+  Raml10SpecEmitterContext,
+  SpecEmitterContext
+}
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
@@ -283,15 +290,18 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
     case _            => throw new Exception("Document has no header.")
   }
 
+  protected def wrapDeclarations(emitters: Seq[EntryEmitter], ordering: SpecOrdering): Seq[EntryEmitter] = emitters
+
   def emitDocument(): YDocument = {
     val doc = document.asInstanceOf[Document]
 
     val ordering = SpecOrdering.ordering(Oas, doc.encodes.annotations)
 
     val references = ReferencesEmitter(document, ordering)
-    val declares   = OasDeclarationsEmitter(doc.declares, ordering, document.references).emitters
-    val api        = emitWebApi(ordering, document.references)
-    val extension  = extensionEmitter()
+    val declares =
+      wrapDeclarations(OasDeclarationsEmitter(doc.declares, ordering, document.references).emitters, ordering)
+    val api       = emitWebApi(ordering, document.references)
+    val extension = extensionEmitter()
     val usage: Option[ValueEmitter] =
       doc.fields.entry(BaseUnitModel.Usage).map(f => ValueEmitter("usage".asOasExtension, f))
 

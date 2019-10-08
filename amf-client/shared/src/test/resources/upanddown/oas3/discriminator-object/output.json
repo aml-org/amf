@@ -36,5 +36,28 @@
         }
       }
     }
+  },
+  "components": {
+    "schemas": {
+      "Cat": {
+        "type": "object",
+        "properties": {
+          "animalType": {
+            "type": "string"
+          },
+          "someProp": {
+            "type": "string"
+          }
+        }
+      },
+      "Dog": {
+        "type": "object",
+        "properties": {
+          "animalType": {
+            "type": "string"
+          }
+        }
+      }
+    }
   }
 }

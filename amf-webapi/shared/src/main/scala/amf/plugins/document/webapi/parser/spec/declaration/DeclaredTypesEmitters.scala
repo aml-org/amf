@@ -6,6 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{RecursiveShape, Shape}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
+import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validations.RenderSideValidations.RenderValidation
@@ -42,11 +43,14 @@ case class OasDeclaredTypesEmitters(types: Seq[Shape], references: Seq[BaseUnit]
     implicit spec: OasSpecEmitterContext)
     extends DeclaredTypesEmitters(types, references, ordering) {
   override def emitTypes(b: EntryBuilder): Unit = {
-    b.entry("definitions",
-            _.obj(
-              traverse(
-                ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq("definitions")))),
-                _)))
+    val isOas3 = spec.vendor == Vendor.OAS30
+    b.entry(
+      if (isOas3) "schemas" else "definitions",
+      _.obj(
+        traverse(
+          ordering.sorted(types.map(OasNamedTypeEmitter(_, ordering, references, pointer = Seq("definitions")))),
+          _))
+    )
   }
 
 }

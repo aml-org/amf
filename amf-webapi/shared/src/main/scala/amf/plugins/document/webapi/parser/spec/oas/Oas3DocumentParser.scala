@@ -10,6 +10,7 @@ import org.yaml.model._
 
 case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
     extends OasDocumentParser(root) {
+
   override def parseWebApi(map: YMap): WebApi = {
     val api = super.parseWebApi(map)
 
@@ -19,4 +20,15 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
 
     api
   }
+
+  override protected val definitionsKey: String = "schemas"
+  override protected val securityKey: String    = "securitySchemes"
+
+  override def parseDeclarations(root: Root, map: YMap): Unit =
+    map.key("components").foreach { components =>
+      val map = components.value.as[YMap]
+      super.parseDeclarations(root, map)
+
+    // TODO also parse examples, requestBodies, headers, links and callbacks
+    }
 }

@@ -1,0 +1,56 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "components": {
+    "securitySchemes": {
+      "openIdConnectType": {
+        "type": "openIdConnect",
+        "openIdConnectUrl": "https://test.com/"
+      },
+      "apiKeyType": {
+        "type": "apiKey",
+        "name": "example",
+        "in": "query"
+      },
+      "httpType": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "oauth2Type": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://example.com/api/oauth/dialog",
+            "refreshUrl": "https://example.com",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets"
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "summary": "this is a test",
+        "responses": {
+          "200": {
+            "description": "description"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://test.com/",
+      "description": "The production API server"
+    }
+  ]
+}

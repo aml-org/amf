@@ -5,7 +5,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml}
 import amf.core.utils.Strings
-import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.{isOasAnnotation, isRamlAnnotation}
 import amf.plugins.document.webapi.parser.spec.common._
@@ -13,9 +13,8 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.security._
-import amf.plugins.domain.webapi.models.security.{Scope, SecurityScheme, Settings}
+import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.{Parameter, Response}
-import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
@@ -29,7 +28,7 @@ object SecuritySchemeParser {
       implicit ctx: WebApiContext): SecuritySchemeParser = // todo factory for oas too?
     ctx.vendor match {
       case _: Raml => RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx))
-      case _: Oas  => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)
+      case _: Oas  => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)(toOas(ctx))
       case other =>
         ctx.violation(UnexpectedVendor, "", s"Unsupported vendor $other in security scheme parsers", entry)
         RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx)) // use raml as default?
@@ -212,7 +211,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
 case class OasSecuritySchemeParser(ast: YPart,
                                    key: String,
                                    node: YNode,
-                                   adopt: (SecurityScheme, String) => SecurityScheme)(implicit ctx: WebApiContext)
+                                   adopt: (SecurityScheme, String) => SecurityScheme)(implicit ctx: OasWebApiContext)
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
     ctx.link(node) match {
@@ -273,140 +272,14 @@ case class OasSecuritySchemeParser(ast: YPart,
 
         RamlDescribedByParser("describedBy".asOasExtension, map, scheme)(toRaml(ctx)).parse()
 
-        OasSecuritySettingsParser(map, scheme)
+        ctx.factory
+          .securitySettingsParser(map, scheme)
           .parse()
           .foreach(scheme.set(SecuritySchemeModel.Settings, _, Annotations(ast)))
 
         AnnotationParser(scheme, map).parse()
 
         scheme
-    }
-  }
-
-  case class OasSecuritySettingsParser(map: YMap, scheme: SecurityScheme) {
-    def parse(): Option[Settings] = {
-      val result = scheme.`type`.value() match {
-        case "OAuth 1.0" => Some(oauth1())
-        case "OAuth 2.0" => Some(oauth2())
-        case "Api Key"   => Some(apiKey())
-        case _ =>
-          map
-            .key("settings".asOasExtension)
-            .map(entry => dynamicSettings(entry.value.as[YMap], scheme.withDefaultSettings()))
-      }
-
-      result.map(ss => {
-        AnnotationParser(ss, map).parse()
-        ss.add(Annotations(map))
-      })
-    }
-
-    def dynamicSettings(xSettings: YMap, settings: Settings, properties: String*): Settings = {
-      val entries = xSettings.entries.filterNot { entry =>
-        val key: String = entry.key.as[YScalar].text
-        properties.contains(key) || isOasAnnotation(key)
-      }
-
-      if (entries.nonEmpty) {
-        val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))),
-                                  parent = Some(settings.id)).parse()
-        settings.set(SettingsModel.AdditionalProperties, node)
-      }
-
-      AnnotationParser(scheme, xSettings).parse()
-
-      settings
-    }
-
-    private def apiKey() = {
-      val settings = scheme.withApiKeySettings()
-
-      map.key("name", entry => {
-        val value = ScalarNode(entry.value)
-        settings.set(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
-      })
-
-      map.key("in", entry => {
-        val value = ScalarNode(entry.value)
-        settings.set(ApiKeySettingsModel.In, value.string(), Annotations(entry))
-      })
-
-      map.key(
-        "settings".asOasExtension,
-        entry => dynamicSettings(entry.value.as[YMap], settings, "name", "in")
-      )
-
-      settings
-    }
-
-    private def oauth2() = {
-      val settings = scheme.withOAuth2Settings()
-
-      map.key("authorizationUrl", OAuth2SettingsModel.AuthorizationUri in settings)
-      map.key("tokenUrl", OAuth2SettingsModel.AccessTokenUri in settings)
-
-      // TODO we should find similarity between raml authorizationGrants and this to map between values.
-      map.key(
-        "flow",
-        entry => {
-          val value = ScalarNode(entry.value)
-          settings.set(OAuth2SettingsModel.Flow, value.string(), Annotations(entry))
-        }
-      )
-
-      map.key(
-        "scopes",
-        entry => {
-          val scopeMap = entry.value.as[YMap]
-          val scopes =
-            scopeMap.entries.filterNot(entry => isOasAnnotation(entry.key)).map(parseScope)
-          settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(entry))
-        }
-      )
-
-      map.key(
-        "settings".asOasExtension,
-        entry => {
-          val xSettings = entry.value.as[YMap]
-
-          xSettings.key("authorizationGrants", OAuth2SettingsModel.AuthorizationGrants in settings)
-
-          dynamicSettings(xSettings, settings, "authorizationGrants")
-        }
-      )
-
-      AnnotationParser(settings, map).parseOrphanNode("scopes")
-
-      settings
-    }
-
-    private def parseScope(scopeEntry: YMapEntry) = {
-      val name: String        = scopeEntry.key.as[YScalar].text
-      val description: String = scopeEntry.value
-
-      Scope(scopeEntry)
-        .set(ScopeModel.Name, AmfScalar(name), Annotations(scopeEntry.key))
-        .set(ScopeModel.Description, AmfScalar(description), Annotations(scopeEntry.value))
-    }
-
-    private def oauth1() = {
-      val settings = scheme.withOAuth1Settings()
-
-      map.key(
-        "settings".asOasExtension,
-        entry => {
-          val map = entry.value.as[YMap]
-
-          map.key("requestTokenUri", OAuth1SettingsModel.RequestTokenUri in settings)
-          map.key("authorizationUri", OAuth1SettingsModel.AuthorizationUri in settings)
-          map.key("tokenCredentialsUri", OAuth1SettingsModel.TokenCredentialsUri in settings)
-          map.key("signatures", OAuth1SettingsModel.Signatures in settings)
-
-          dynamicSettings(map, settings, "requestTokenUri", "authorizationUri", "tokenCredentialsUri", "signatures")
-        }
-      )
-
-      settings
     }
   }
 
@@ -420,5 +293,203 @@ case class OasSecuritySchemeParser(ast: YPart,
     val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
     adopt(copied, name)
     copied.withName(name)
+  }
+}
+
+trait OasSecuritySettingsParser extends SpecParserOps {
+  def parse(): Option[Settings]
+}
+
+/** OAS3 security scheme settings. Extends OAS2 ones because we reuse the existing OAS2 ones. */
+class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: OasWebApiContext)
+    extends Oas2SecuritySettingsParser(map, scheme) {
+
+  override def parse(): Option[Settings] =
+    parseAnnotations(super.parse() match {
+      case resolved @ Some(_) => resolved
+      case None               => parseSettings()
+    })
+
+  private def parseSettings(): Option[Settings] = scheme.`type`.value() match {
+    case "openIdConnect" => Some(openIdConnect())
+    case "http"          => Some(http())
+    case _               => None
+  }
+
+  private def openIdConnect(): OpenIdConnectSettings = {
+    val settings = scheme.withOpenIdConnectSettings()
+
+    map.key("openIdConnectUrl", OpenIdConnectSettingsModel.Url in settings)
+    map.key("settings".asOasExtension, entry => dynamicSettings(entry.value.as[YMap], settings))
+
+    settings
+  }
+
+  private def http(): HttpSettings = {
+    val settings = scheme.withHttpSettings()
+
+    map.key("scheme", HttpSettingsModel.Scheme in settings)
+    map.key("bearerFormat", HttpSettingsModel.BearerFormat in settings)
+
+    settings
+  }
+
+  override protected def oauth2(): OAuth2Settings = {
+    val settings = scheme.withOAuth2Settings()
+
+    map.key("flows", parseFlows(_, settings))
+
+    map.key(
+      "settings".asOasExtension,
+      entry => dynamicSettings(entry.value.as[YMap], settings, "authorizationGrants")
+    )
+
+    AnnotationParser(settings, map).parseOrphanNode("flows")
+
+    settings
+  }
+
+  private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
+    val map = entry.value.as[YMap]
+    // TODO Security schemes in OAS 3 can have multiple flows
+    map.entries.headOption match {
+      case Some(flowEntry) =>
+        val flowMap = flowEntry.value.as[YMap]
+        val flow    = ScalarNode(flowEntry.key).string()
+        settings.set(OAuth2SettingsModel.Flow, flow)
+        flowMap.key("authorizationUrl", OAuth2SettingsModel.AuthorizationUri in settings)
+        flowMap.key("tokenUrl", OAuth2SettingsModel.AccessTokenUri in settings)
+        flowMap.key("refreshUrl", OAuth2SettingsModel.RefreshUri in settings)
+        parseScopes(settings, flowMap)
+      case None =>
+    }
+  }
+}
+
+case class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: OasWebApiContext)
+    extends OasSecuritySettingsParser {
+  override def parse(): Option[Settings] = {
+    val result = scheme.`type`.value() match {
+      case "OAuth 1.0" => Some(oauth1())
+      case "OAuth 2.0" => Some(oauth2())
+      case "Api Key"   => Some(apiKey())
+      case _ =>
+        map
+          .key("settings".asOasExtension)
+          .map(entry => dynamicSettings(entry.value.as[YMap], scheme.withDefaultSettings()))
+    }
+
+    parseAnnotations(result)
+  }
+
+  protected def parseAnnotations(result: Option[Settings]): Option[Settings] = result.map { ss =>
+    AnnotationParser(ss, map).parse()
+    ss.add(Annotations(map))
+  }
+
+  protected def dynamicSettings(xSettings: YMap, settings: Settings, properties: String*): Settings = {
+    val entries = xSettings.entries.filterNot { entry =>
+      val key: String = entry.key.as[YScalar].text
+      properties.contains(key) || isOasAnnotation(key)
+    }
+
+    if (entries.nonEmpty) {
+      val node = DataNodeParser(YNode(YMap(entries, entries.headOption.map(_.sourceName).getOrElse(""))),
+                                parent = Some(settings.id)).parse()
+      settings.set(SettingsModel.AdditionalProperties, node)
+    }
+
+    AnnotationParser(scheme, xSettings).parse()
+
+    settings
+  }
+
+  private def apiKey() = {
+    val settings = scheme.withApiKeySettings()
+
+    map.key("name", entry => {
+      val value = ScalarNode(entry.value)
+      settings.set(ApiKeySettingsModel.Name, value.string(), Annotations(entry))
+    })
+
+    map.key("in", entry => {
+      val value = ScalarNode(entry.value)
+      settings.set(ApiKeySettingsModel.In, value.string(), Annotations(entry))
+    })
+
+    map.key(
+      "settings".asOasExtension,
+      entry => dynamicSettings(entry.value.as[YMap], settings, "name", "in")
+    )
+
+    settings
+  }
+
+  protected def oauth2(): OAuth2Settings = {
+    val settings = scheme.withOAuth2Settings()
+
+    map.key("authorizationUrl", OAuth2SettingsModel.AuthorizationUri in settings)
+    map.key("tokenUrl", OAuth2SettingsModel.AccessTokenUri in settings)
+
+    // TODO we should find similarity between raml authorizationGrants and this to map between values.
+    map.key(
+      "flow",
+      entry => {
+        val value = ScalarNode(entry.value)
+        settings.set(OAuth2SettingsModel.Flow, value.string(), Annotations(entry))
+      }
+    )
+
+    parseScopes(settings, map)
+
+    map.key(
+      "settings".asOasExtension,
+      entry => {
+        val xSettings = entry.value.as[YMap]
+
+        xSettings.key("authorizationGrants", OAuth2SettingsModel.AuthorizationGrants in settings)
+
+        dynamicSettings(xSettings, settings, "authorizationGrants")
+      }
+    )
+
+    AnnotationParser(settings, map).parseOrphanNode("scopes")
+
+    settings
+  }
+
+  protected def parseScopes(settings: OAuth2Settings, map: YMap): Unit = map.key("scopes").foreach { entry =>
+    val scopeMap = entry.value.as[YMap]
+    val scopes   = scopeMap.entries.filterNot(entry => isOasAnnotation(entry.key)).map(parseScope)
+    settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(entry))
+  }
+
+  private def parseScope(scopeEntry: YMapEntry) = {
+    val name: String        = scopeEntry.key.as[YScalar].text
+    val description: String = scopeEntry.value
+
+    Scope(scopeEntry)
+      .set(ScopeModel.Name, AmfScalar(name), Annotations(scopeEntry.key))
+      .set(ScopeModel.Description, AmfScalar(description), Annotations(scopeEntry.value))
+  }
+
+  private def oauth1() = {
+    val settings = scheme.withOAuth1Settings()
+
+    map.key(
+      "settings".asOasExtension,
+      entry => {
+        val map = entry.value.as[YMap]
+
+        map.key("requestTokenUri", OAuth1SettingsModel.RequestTokenUri in settings)
+        map.key("authorizationUri", OAuth1SettingsModel.AuthorizationUri in settings)
+        map.key("tokenCredentialsUri", OAuth1SettingsModel.TokenCredentialsUri in settings)
+        map.key("signatures", OAuth1SettingsModel.Signatures in settings)
+
+        dynamicSettings(map, settings, "requestTokenUri", "authorizationUri", "tokenCredentialsUri", "signatures")
+      }
+    )
+
+    settings
   }
 }

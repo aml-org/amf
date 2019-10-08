@@ -10,6 +10,7 @@ import org.yaml.model.YMap
 
 case class Oas2DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
     extends OasDocumentParser(root) {
+
   override def parseWebApi(map: YMap): WebApi = {
     val api = super.parseWebApi(map)
 
@@ -19,4 +20,7 @@ case class Oas2DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
 
     api
   }
+
+  override protected val definitionsKey: String = "definitions"
+  override protected val securityKey: String    = "securityDefinitions"
 }

@@ -1577,7 +1577,7 @@ object AMFRawValidations {
       "PropertyShape",
       "sh:path",
       "sh:pattern",
-      "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|x-.+$",
+      "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|http|openIdConnect|x-.+$",
       "Security scheme type should be one of the supported ones",
       "Security scheme type should be one of the supported ones",
       "Violation"
@@ -2129,6 +2129,32 @@ object AMFRawValidations {
       "",
       "Status code for a Response must be a value between 100 and 599 or 'default'",
       "Violation"
+    ),
+    AMFValidation(
+      Oas20.name,
+      "Domain",
+      "security:Settings",
+      "security:flow",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      "^(implicit|password|application|accessCode)$",
+      "Invalid flow. The options are: implicit, password, application or accessCode",
+      "Invalid flow. The options are: implicit, password, application or accessCode",
+      "Violation"
+    ),
+    AMFValidation(
+      Oas20.name,
+      "Domain",
+      "security:Settings",
+      "security:in",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      "^(query|header)$",
+      "Invalid 'in' value. The options are: query or header",
+      "Invalid 'in' value. The options are: query or header",
+      "Violation"
     )
   )
 
@@ -2144,6 +2170,32 @@ object AMFRawValidations {
       "^([1-5]{1}(([0-9]{2})|XX))$|^(default)$",
       "",
       "Status code for a Response must be a value between 100 and 599, a [1-5]XX wildcard, or 'default'",
+      "Violation"
+    ),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "security:Settings",
+      "security:flow",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      "^(implicit|password|clientCredentials|authorizationCode)$",
+      "Invalid flow. The options are: implicit, password, clientCredentials or authorizationCode",
+      "Invalid flow. The options are: implicit, password, clientCredentials or authorizationCode",
+      "Violation"
+    ),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "security:Settings",
+      "security:in",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      "^(query|header|cookie)$",
+      "Invalid 'in' value. The options are: query, header or cookie",
+      "Invalid 'in' value. The options are: query, header or cookie",
       "Violation"
     )
   )

@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser
 
 import amf.core.parser.ParsedReference
+import amf.core.remote.Vendor
 import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.contexts._
 
@@ -34,12 +35,23 @@ package object spec {
 
   // TODO oas2? raml10?
   def toOas(ctx: WebApiContext): OasWebApiContext = {
-    new Oas2WebApiContext(ctx.rootContextDocument,
-                          ctx.refs,
-                          ctx,
-                          Some(toOasDeclarations(ctx.declarations)),
-                          Some(ctx.parserCount),
-                          ctx.eh)
+    ctx.vendor match {
+      case Vendor.OAS30 =>
+        new Oas3WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(toOasDeclarations(ctx.declarations)),
+                              Some(ctx.parserCount),
+                              ctx.eh)
+      case _ =>
+        new Oas2WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(toOasDeclarations(ctx.declarations)),
+                              Some(ctx.parserCount),
+                              ctx.eh)
+    }
+
   }
 
   def toOas(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
