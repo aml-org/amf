@@ -40,7 +40,7 @@ case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: Spec
 }
 
 case class Oas3ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
-  extends EntryEmitter {
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(keyName(example), _.obj(traverse(ordering.sorted(emitters), _)))
   }
@@ -53,25 +53,26 @@ case class Oas3ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(im
     fs.entry(ExampleModel.Summary).foreach(f => results += RamlScalarEmitter("summary", f))
     fs.entry(ExampleModel.Description).foreach(f => results += RamlScalarEmitter("description", f))
     fs.entry(ExampleModel.ExternalValue).foreach(f => results += RamlScalarEmitter("externalValue", f))
-    fs.entry(ExampleModel.StructuredValue).foreach(f => {
-      results += EntryPartEmitter("value",
-        DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
-        position = pos(f.value.annotations))
-    })
+    fs.entry(ExampleModel.StructuredValue)
+      .foreach(f => {
+        results += EntryPartEmitter("value",
+                                    DataNodeEmitter(example.structuredValue, ordering)(spec.eh),
+                                    position = pos(f.value.annotations))
+      })
     results ++= AnnotationsEmitter(example, ordering).emitters
 
     results
   }
 
-  protected def keyName(example: Example) = {
-    example.name.value()
+  protected def keyName(example: Example): String = {
+    example.name.option().getOrElse("default")
   }
 
   override def position(): Position = pos(example.annotations)
 }
 
 case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
-  extends EntryEmitter {
+    extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     example.fields
       .entry(ExampleModel.StructuredValue)
@@ -94,7 +95,6 @@ case class OasResponseExampleEmitter(example: Example, ordering: SpecOrdering)(i
 
   override def position(): Position = pos(example.annotations)
 }
-
 
 case class MultipleExampleEmitter(key: String,
                                   examples: Seq[Example],

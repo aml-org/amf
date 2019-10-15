@@ -413,10 +413,10 @@ abstract class WebApiContext(val loc: String,
       .filter(_.unit.location().get == baseFileUrl) collectFirst {
       case ref if ref.unit.isInstanceOf[ExternalFragment] =>
         val jsonFile = ref.unit.asInstanceOf[ExternalFragment]
-        JsonSchemaPlugin.parseParameterFragment(jsonFile, referenceUrl, parentId, toJsonSchema(ctx))
+        JsonSchemaPlugin.parseParameterFragment(jsonFile, referenceUrl, parentId, ctx)
       case ref if ref.unit.isInstanceOf[RecursiveUnit] =>
         val jsonFile = ref.unit.asInstanceOf[RecursiveUnit]
-        JsonSchemaPlugin.parseParameterFragment(jsonFile, referenceUrl, parentId, toJsonSchema(ctx))
+        JsonSchemaPlugin.parseParameterFragment(jsonFile, referenceUrl, parentId, ctx)
     }
     res.flatten
   }

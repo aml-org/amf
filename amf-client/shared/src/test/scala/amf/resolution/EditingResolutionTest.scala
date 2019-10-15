@@ -343,6 +343,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Overriding parameters in operation") {
+    cycle(
+      "overriding-parameters.json",
+      "overriding-param-output.json",
+      OasJsonHint,
+      Oas30,
+      cyclePath + "oas3/basic-parameters/"
+    )
+  }
+
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")

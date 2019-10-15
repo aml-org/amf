@@ -9,6 +9,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{FieldEntry, Fields, Position, Value}
+import amf.core.remote.Vendor
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.annotations.{FormBodyParameter, ParameterNameForPayload, RequiredParamPayload}
 import amf.plugins.document.webapi.contexts.{
@@ -24,7 +25,7 @@ import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
-import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -217,12 +218,8 @@ case class OasParametersEmitter(key: String,
   def ramlEndpointEmitters(): Seq[EntryEmitter] = Seq(OasParameterEmitter(parameters, references))
 
   def oasEndpointEmitters(): Seq[EntryEmitter] = {
-    val results = ListBuffer[EntryEmitter]()
-    val (oasParameters, ramlParameters) =
-      parameters.partition(
-        p =>
-          Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
-            .isInstanceOf[ArrayShape] || p.schema.isInstanceOf[FileShape])
+    val results                         = ListBuffer[EntryEmitter]()
+    val (oasParameters, ramlParameters) = parameters.partition(isValidOasParam)
 
     if (oasParameters.nonEmpty || payloads.nonEmpty)
       results += OasParameterEmitter(oasParameters, references)
@@ -233,6 +230,15 @@ case class OasParametersEmitter(key: String,
         results += XRamlParameterEmitter("uriParameters".asOasExtension, path)
     }
     results
+  }
+
+  private def isValidOasParam(p: Parameter): Boolean = {
+    spec.vendor match {
+      case Vendor.OAS30 => p.isQuery || p.isHeader || p.isPath || p.isCookie
+      case _ =>
+        Option(p.schema).isEmpty || p.schema.isInstanceOf[ScalarShape] || p.schema
+          .isInstanceOf[ArrayShape] || p.schema.isInstanceOf[FileShape]
+    }
   }
 
   def emitters(): Seq[EntryEmitter] = {
@@ -295,14 +301,16 @@ case class OasParametersEmitter(key: String,
                          ordering: SpecOrdering,
                          references: Seq[BaseUnit]): Seq[PartEmitter] = {
     val result = ListBuffer[PartEmitter]()
-    parameters.foreach(e => result += ParameterEmitter(e, ordering, references))
+    parameters.foreach(e => result += ParameterEmitter(e, ordering, references, asHeader = false))
     payloads.foreach(payload => result += PayloadAsParameterEmitter(payload, ordering, references))
     ordering.sorted(result)
   }
 }
 
-case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit val spec: OasSpecEmitterContext)
+case class ParameterEmitter(parameter: Parameter,
+                            ordering: SpecOrdering,
+                            references: Seq[BaseUnit],
+                            asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
 
   override def emit(b: PartBuilder): Unit = {
@@ -314,10 +322,7 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         val result = mutable.ListBuffer[EntryEmitter]()
         val fs     = parameter.fields
 
-        val isOas3Header = (parameter.binding.option().map(_ == "header").getOrElse(false) &&
-          spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
-
-        if (!isOas3Header) {
+        if (!asHeader) {
           fs.entry(ParameterModel.ParameterName)
             .orElse(fs.entry(ParameterModel.Name))
             .map { f =>
@@ -328,10 +333,10 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
         fs.entry(ParameterModel.Description).map(f => result += ValueEmitter("description", f))
 
         fs.entry(ParameterModel.Required)
-          .filter(_.value.annotations.contains(classOf[ExplicitField]) || parameter.required.value())
+          .filter(isExplicit(_) || parameter.required.value())
           .map(f => result += ValueEmitter("required", f))
 
-        if (!isOas3Header) {
+        if (!asHeader) {
           fs.entry(ParameterModel.Binding)
             .map { f =>
               result += RawValueEmitter("in", ParameterModel.Binding, binding(f), f.value.annotations)
@@ -350,10 +355,32 @@ case class ParameterEmitter(parameter: Parameter, ordering: SpecOrdering, refere
                                         references).entries()
             }
           }
-
+        if (spec.vendor == Vendor.OAS30) result ++= oas3Emitters(fs)
         b.obj(traverse(ordering.sorted(result), _))
       }
     )
+  }
+
+  def oas3Emitters(fs: Fields): Seq[EntryEmitter] = {
+    val result = mutable.ListBuffer[EntryEmitter]()
+    fs.entry(ParameterModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
+    fs.entry(ParameterModel.AllowEmptyValue).filter(isExplicit).map(f => result += ValueEmitter("allowEmptyValue", f))
+    fs.entry(ParameterModel.Style).filter(isExplicit).map(f => result += ValueEmitter("style", f))
+    fs.entry(ParameterModel.Explode).filter(isExplicit).map(f => result += ValueEmitter("explode", f))
+    fs.entry(ParameterModel.AllowReserved).filter(isExplicit).map(f => result += ValueEmitter("allowReserved", f))
+    fs.entry(ParameterModel.Payloads).map { f: FieldEntry =>
+      val payloads: Seq[Payload] = f.arrayValues
+      val annotations            = f.value.annotations
+      result += EntryPartEmitter("content",
+                                 OasContentPayloadsEmitter(payloads, ordering, references, annotations),
+                                 position = pos(annotations))
+    }
+    fs.entry(PayloadModel.Examples).map(f => result += OasResponseExamplesEmitter("examples", f, ordering))
+    result
+  }
+
+  private def isExplicit(entry: FieldEntry) = {
+    entry.value.annotations.contains(classOf[ExplicitField])
   }
 
   def binding(f: FieldEntry): String = {
@@ -375,7 +402,7 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
       parameter.name.option().get,
       b => {
         if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
-          ParameterEmitter(parameter, ordering, references).emit(b)
+          ParameterEmitter(parameter, ordering, references, asHeader = true).emit(b)
         } else {
           emitOas2Header(b)
         }
@@ -386,19 +413,20 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
 
   protected def emitOas2Header(b: PartBuilder): Unit = {
     b.obj { b: EntryBuilder =>
-        val result = mutable.ListBuffer[EntryEmitter]()
-        val fs     = parameter.fields
-        if (Option(parameter.schema).isDefined && Option(parameter.schema.description).isEmpty)
-          fs.entry(ParameterModel.Description).map(f => result += RamlScalarEmitter("description", f))
+      val result = mutable.ListBuffer[EntryEmitter]()
+      val fs     = parameter.fields
+      if (Option(parameter.schema).isDefined && Option(parameter.schema.description).isEmpty)
+        fs.entry(ParameterModel.Description).map(f => result += RamlScalarEmitter("description", f))
 
-        fs.entry(ParameterModel.Required)
-          .filter(_.value.annotations.contains(classOf[ExplicitField]))
-          .map(f => result += RamlScalarEmitter("x-amf-required", f))
+      fs.entry(ParameterModel.Required)
+        .filter(_.value.annotations.contains(classOf[ExplicitField]))
+        .map(f => result += RamlScalarEmitter("x-amf-required", f))
 
-        fs.entry(ParameterModel.Schema)
-          .map( _ => result ++= OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references).entries())
+      fs.entry(ParameterModel.Schema)
+        .map(_ =>
+          result ++= OasTypeEmitter(parameter.schema, ordering, isHeader = true, references = references).entries())
 
-        traverse(ordering.sorted(result), b)
+      traverse(ordering.sorted(result), b)
     }
   }
 

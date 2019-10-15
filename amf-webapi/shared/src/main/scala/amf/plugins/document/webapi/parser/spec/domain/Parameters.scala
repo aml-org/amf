@@ -8,6 +8,7 @@ import org.yaml.model.YPart
 case class Parameters(query: Seq[Parameter] = Nil,
                       path: Seq[Parameter] = Nil,
                       header: Seq[Parameter] = Nil,
+                      cookie: Seq[Parameter] = Nil,
                       baseUri08: Seq[Parameter] = Nil,
                       body: Seq[Payload] = Nil) {
   def merge(inner: Parameters): Parameters = {
@@ -15,6 +16,7 @@ case class Parameters(query: Seq[Parameter] = Nil,
       mergeParams(query, inner.query),
       mergeParams(path, inner.path),
       mergeParams(header, inner.header),
+      mergeParams(cookie, inner.cookie),
       mergeParams(baseUri08, inner.baseUri08),
       mergePayloads(body, inner.body)
     )
@@ -25,6 +27,7 @@ case class Parameters(query: Seq[Parameter] = Nil,
       addParams(query, inner.query),
       addParams(path, inner.path),
       addParams(header, inner.header),
+      addParams(cookie, inner.cookie),
       addParams(baseUri08, inner.baseUri08),
       addPayloads(body, inner.body)
     )
@@ -48,7 +51,7 @@ case class Parameters(query: Seq[Parameter] = Nil,
 
   private def addPayloads(global: Seq[Payload], inner: Seq[Payload]): Seq[Payload] = global ++ inner
 
-  def nonEmpty: Boolean = query.nonEmpty || path.nonEmpty || header.nonEmpty || body.nonEmpty
+  def nonEmpty: Boolean = query.nonEmpty || path.nonEmpty || header.nonEmpty || body.nonEmpty || cookie.nonEmpty
 }
 
 object Parameters {
@@ -61,7 +64,12 @@ object Parameters {
       else
         uriParams ++= Seq(param)
     }
-    Parameters(params.filter(_.isQuery), pathParams, params.filter(_.isHeader), uriParams, payloads)
+    Parameters(params.filter(_.isQuery),
+               pathParams,
+               params.filter(_.isHeader),
+               params.filter(_.isCookie),
+               uriParams,
+               payloads)
   }
 }
 
@@ -79,7 +87,8 @@ class OasParameter(val element: Either[Parameter, Payload], val ast: Option[YPar
   def query: Option[Parameter]     = paramOption.filter(_.isQuery)
   def path: Option[Parameter]      = paramOption.filter(_.isPath)
   def header: Option[Parameter]    = paramOption.filter(_.isHeader)
-  def invalids: Option[Parameter]  = paramOption.filter(p => !p.isQuery && !p.isHeader && !p.isPath)
+  def cookie: Option[Parameter]    = paramOption.filter(_.isCookie)
+  def invalids: Option[Parameter]  = paramOption.filter(p => !p.isQuery && !p.isHeader && !p.isPath && !p.isCookie)
   def parameter: Option[Parameter] = paramOption
 
   def formData: Option[Payload] = if (isFormData) element.right.toOption else None

@@ -27,7 +27,7 @@ import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
-import amf.plugins.document.webapi.parser.spec.domain.{OasParameter, OasParameterParser}
+import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax, _}
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
@@ -91,11 +91,10 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
-  def parseParameterFragment(
-      inputFragment: Fragment,
-      pointer: Option[String],
-      parentId: String,
-      jsonContext: JsonSchemaWebApiContext)(implicit ctx: OasWebApiContext): Option[OasParameter] = {
+  def parseParameterFragment(inputFragment: Fragment,
+                             pointer: Option[String],
+                             parentId: String,
+                             jsonContext: OasWebApiContext)(implicit ctx: OasWebApiContext): Option[OasParameter] = {
 
     val encoded: YNode = getYNode(inputFragment, ctx)
     val doc: Root      = getRoot(inputFragment, pointer, encoded)
@@ -234,7 +233,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   def parseOasParameter(document: Root,
                         parentContext: ParserContext,
                         parentId: String,
-                        ctx: JsonSchemaWebApiContext): Option[OasParameter] = {
+                        ctx: OasWebApiContext): Option[OasParameter] = {
 
     document.parsed match {
       case parsedDoc: SyamlParsedDocument =>
@@ -246,8 +245,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
         val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
         val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
-
-        Some(OasParameterParser(Right(rootAst), parentId, None, new IdCounter())(ctx).parse())
+        Some(ctx.factory.parameterParser(Right(rootAst), parentId, None, new IdCounter()).parse)
 
       case _ => None
     }

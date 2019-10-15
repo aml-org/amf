@@ -13,7 +13,11 @@ import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
-import amf.validations.ParserSideValidations.{ExamplesMustBeAMap, ExclusivePropertiesSpecification, InvalidFragmentType}
+import amf.validations.ParserSideValidations.{
+  ExamplesMustBeAMap,
+  ExclusivePropertiesSpecification,
+  InvalidFragmentType
+}
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
@@ -33,6 +37,28 @@ case class OasResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiConte
       .map(e => results += OasResponseExampleParser(e).parse())
 
     results
+  }
+}
+
+case class OasExamplesParser(map: YMap, parentId: String)(implicit ctx: WebApiContext) {
+  def parse(): Seq[Example] = {
+    (map.key("example"), map.key("examples")) match {
+      case (Some(exampleEntry), None) =>
+        List(Oas3ResponseExampleParser(exampleEntry).parse())
+
+      case (None, Some(examplesEntry)) =>
+        Oas3ResponseExamplesParser(examplesEntry).parse()
+
+      case (Some(_), Some(_)) =>
+        ctx.violation(
+          ExclusivePropertiesSpecification,
+          parentId,
+          s"Properties 'example' and 'examples' are exclusive and cannot be declared together",
+          map
+        )
+        Nil
+      case _ => Nil
+    }
   }
 }
 
@@ -58,12 +84,15 @@ case class Oas3ResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiCont
 
 case class Oas3ResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiContext) {
   def parse(): Example = {
-    val name = yMapEntry.key.as[YScalar].text
+    val name    = yMapEntry.key.as[YScalar].text
     val example = Example(yMapEntry).withName(name)
     if (ctx.syntax == Oas3Syntax) {
-      Oas3SingleExampleValueParser(yMapEntry, {() => example}, ExampleOptions(strictDefault = false, quiet = true)).parse()
+      Oas3SingleExampleValueParser(yMapEntry, { () =>
+        example
+      }, ExampleOptions(strictDefault = false, quiet = true)).parse()
     } else {
-      RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true)).populate()
+      RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true))
+        .populate()
     }
   }
 }
@@ -209,8 +238,8 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
 }
 
 case class Oas3SingleExampleValueParser(entry: YMapEntry, producer: () => Example, options: ExampleOptions)(
-  implicit ctx: WebApiContext)
-  extends SpecParserOps {
+    implicit ctx: WebApiContext)
+    extends SpecParserOps {
   def parse(): Example = {
     val example = producer().add(Annotations(entry))
 

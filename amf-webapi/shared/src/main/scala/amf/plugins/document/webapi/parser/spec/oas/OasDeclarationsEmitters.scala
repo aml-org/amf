@@ -103,7 +103,7 @@ case class OasNamedParameterEmitter(oasParameter: OasParameter, ordering: SpecOr
       name,
       p => {
         oasParameter.domainElement match {
-          case param: Parameter => ParameterEmitter(param, ordering, references).emit(p)
+          case param: Parameter => ParameterEmitter(param, ordering, references, asHeader = false).emit(p)
           case payload: Payload => PayloadAsParameterEmitter(payload, ordering, references).emit(p)
           case _                => // ignore
         }

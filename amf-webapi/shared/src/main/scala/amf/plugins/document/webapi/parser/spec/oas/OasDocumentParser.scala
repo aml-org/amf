@@ -213,10 +213,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             val typeName      = e.key
             val nameGenerator = new IdCounter()
             val oasParameter: domain.OasParameter = e.value.to[YMap] match {
-              case Right(_) => OasParameterParser(Left(e), parentPath, Some(typeName), nameGenerator).parse()
+              case Right(_) => ctx.factory.parameterParser(Left(e), parentPath, Some(typeName), nameGenerator).parse
               case _ =>
                 val parameter =
-                  OasParameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator).parse()
+                  ctx.factory.parameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator).parse
                 ctx.violation(InvalidParameterType,
                               parameter.domainElement.id,
                               "Map needed to parse a parameter declaration",
@@ -460,9 +460,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       }
 
       parameters match {
-        case Parameters(query, path, header, _, _) if query.nonEmpty || path.nonEmpty || header.nonEmpty =>
+        case Parameters(query, path, header, cookie, _, _)
+            if query.nonEmpty || path.nonEmpty || header.nonEmpty || cookie.nonEmpty =>
           endpoint.set(EndPointModel.Parameters,
-                       AmfArray(query ++ path ++ header, Annotations(entries.head.value)),
+                       AmfArray(query ++ path ++ header ++ cookie, Annotations(entries.head.value)),
                        Annotations(entries.head))
         case _ =>
       }
@@ -612,7 +613,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       )
 
       parameters match {
-        case Parameters(query, path, header, baseUri08, _) =>
+        case Parameters(query, path, header, _, baseUri08, _) =>
           if (query.nonEmpty)
             request.getOrCreate.set(RequestModel.QueryParameters,
                                     AmfArray(query, Annotations(entries.head)),
@@ -655,6 +656,37 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
+  case class Oas3ParametersParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
+
+    def parseParameters(): Unit = {
+      val request = new Lazy[Request](producer)
+      map
+        .key("parameters")
+        .foreach { entry =>
+          val parameters =
+            OasParametersParser(entry.value.as[Seq[YNode]], request.getOrCreate.id).parse(inRequest = true)
+          parameters match {
+            case Parameters(query, path, header, cookie, baseUri08, _) =>
+              if (query.nonEmpty)
+                request.getOrCreate.set(RequestModel.QueryParameters,
+                                        AmfArray(query, Annotations(entry)),
+                                        Annotations(entry))
+              if (header.nonEmpty)
+                request.getOrCreate.set(RequestModel.Headers, AmfArray(header, Annotations(entry)), Annotations(entry))
+              if (path.nonEmpty || baseUri08.nonEmpty)
+                request.getOrCreate.set(RequestModel.UriParameters,
+                                        AmfArray(path ++ baseUri08, Annotations(entry)),
+                                        Annotations(entry))
+              if (cookie.nonEmpty)
+                request.getOrCreate.set(RequestModel.CookieParameters,
+                                        AmfArray(cookie, Annotations(entry)),
+                                        Annotations(entry))
+          }
+        }
+
+    }
+  }
+
   case class OperationParser(entry: YMapEntry, producer: String => Operation) {
     def parse(): Operation = {
 
@@ -694,6 +726,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             Oas3RequestParser(entry.value.as[YMap], operation.withRequest).parse()
           }
         )
+
+        // parameters defined in endpoint are stored in the request
+        Oas3ParametersParser(map, Option(operation.request).map(() => _).getOrElse(operation.withRequest))
+          .parseParameters()
 
         map.key(
           "callbacks",

@@ -72,11 +72,12 @@ trait AccessibleOasDocumentEmitters {
             }
 
             if (parameters.nonEmpty)
-              result ++= OasParametersEmitter("parameters",
-                                              parameters.query ++ parameters.path ++ parameters.header,
-                                              ordering,
-                                              parameters.body,
-                                              references)
+              result ++= OasParametersEmitter(
+                "parameters",
+                parameters.query ++ parameters.path ++ parameters.header ++ parameters.cookie,
+                ordering,
+                parameters.body,
+                references)
                 .oasEndpointEmitters()
 
             fs.entry(EndPointModel.Operations)
@@ -175,6 +176,9 @@ trait AccessibleOasDocumentEmitters {
       if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
 
         // OAS 3.0.0
+        val parameters = request.queryParameters ++ request.uriParameters ++ request.headers ++ request.cookieParameters
+        if (parameters.nonEmpty)
+          result ++= OasParametersEmitter("parameters", parameters, ordering, Nil, references).emitters()
         result ++= Seq(Oas3RequestBodyEmitter(request, ordering, references))
 
       } else {
@@ -508,7 +512,8 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
       result += EntryPartEmitter("content", OasContentPayloadsEmitter(payloads, ordering, references, annotations))
     }
 
-    b.entry("requestBody", _.obj(traverse(ordering.sorted(result), _)))
+    if (result.nonEmpty)
+      b.entry("requestBody", _.obj(traverse(ordering.sorted(result), _)))
   }
 
   override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)

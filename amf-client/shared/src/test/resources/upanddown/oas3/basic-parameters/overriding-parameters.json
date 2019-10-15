@@ -1,0 +1,78 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "paths": {
+    "/test/{itemId}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "itemId",
+          "deprecated": true,
+          "description": "description of parameter that will be overridden",
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "in": "cookie",
+          "name": "aCookie",
+          "description": "description of cookie that will be overridden",
+          "required": true,
+          "deprecated": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "in": "query",
+          "name": "someNumber",
+          "allowEmptyValue": true,
+          "allowReserved": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "itemId",
+            "deprecated": false,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple",
+            "example": "some example"
+          },
+          {
+            "in": "cookie",
+            "name": "aCookie",
+            "schema": {
+              "type": "string"
+            },
+            "style": "form"
+          }
+        ],
+        "summary": "this is a test",
+        "operationId": "test",
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
