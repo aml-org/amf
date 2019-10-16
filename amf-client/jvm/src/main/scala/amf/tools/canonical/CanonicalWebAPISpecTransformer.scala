@@ -2,7 +2,12 @@ package amf.tools.canonical
 
 import amf.core.metamodel.Obj
 import amf.core.metamodel.document.{DocumentModel, ExternalFragmentModel, ModuleModel}
-import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel, PropertyShapeModel, ShapeExtensionModel}
+import amf.core.metamodel.domain.extensions.{
+  CustomDomainPropertyModel,
+  DomainExtensionModel,
+  PropertyShapeModel,
+  ShapeExtensionModel
+}
 import amf.core.metamodel.domain.templates.VariableValueModel
 import amf.core.metamodel.domain._
 import amf.core.model.document.BaseUnit
@@ -15,7 +20,15 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
-import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.{AnnotationTypeDeclarationFragmentModel, DataTypeFragmentModel, DocumentationItemFragmentModel, NamedExampleFragmentModel, ResourceTypeFragmentModel, SecuritySchemeFragmentModel, TraitFragmentModel}
+import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.{
+  AnnotationTypeDeclarationFragmentModel,
+  DataTypeFragmentModel,
+  DocumentationItemFragmentModel,
+  NamedExampleFragmentModel,
+  ResourceTypeFragmentModel,
+  SecuritySchemeFragmentModel,
+  TraitFragmentModel
+}
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -26,16 +39,16 @@ import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
+class CanonicalWebAPISpecTransformer extends PlatformSecrets {
 
   val CANONICAL_WEBAPI_NAME = "WebAPI Spec 1.0"
 
   // Properties that will be inserted in the graph
-  val REPO_INTERNAL_REF = "http://anypoint.com/vocabs/digital-repository#internalReference"
+  val REPO_INTERNAL_REF   = "http://anypoint.com/vocabs/digital-repository#internalReference"
   val REPO_ASSET_LOCATION = "http://anypoint.com/vocabs/digital-repository#location"
-  val REPO_LINK_TARGET = "http://anypoint.com/vocabs/digital-repository#link-target"
-  val REPO_LINK_LABEL = "http://anypoint.com/vocabs/digital-repository#link-label"
-  val REPO_EXTENDS = "http://anypoint.com/vocabs/digital-repository#extends"
+  val REPO_LINK_TARGET    = "http://anypoint.com/vocabs/digital-repository#link-target"
+  val REPO_LINK_LABEL     = "http://anypoint.com/vocabs/digital-repository#link-label"
+  val REPO_EXTENDS        = "http://anypoint.com/vocabs/digital-repository#extends"
 
   /**
     * Cleans plugins that will cause a conflict with the canonical WebAPI dialect revivers
@@ -67,10 +80,11 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     findWebAPIDialect match {
       case Some(webApiDialect) =>
         val nodeMappings = webApiDialect.declares.collect { case mapping: NodeMapping => mapping }
-        nodeMappings.foldLeft(Map[String,String]()) { case (acc, mapping) =>
-          acc + (mapping.nodetypeMapping.value() -> mapping.id)
+        nodeMappings.foldLeft(Map[String, String]()) {
+          case (acc, mapping) =>
+            acc + (mapping.nodetypeMapping.value() -> mapping.id)
         }
-      case None                =>
+      case None =>
         throw new Exception("Cannot find WebAPI 1.0 Dialect in Dialect registry")
     }
   }
@@ -81,7 +95,7 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
   def renameResource(source: String, target: String, nativeModel: Model): Unit = {
     // remove matching S(source)-p-o statements, add S(target)-p-o statements
     val subjectsIterator = nativeModel.listStatements(nativeModel.createResource(source), null, null)
-    val acc = mutable.ArrayBuffer[Statement]()
+    val acc              = mutable.ArrayBuffer[Statement]()
     while (subjectsIterator.hasNext) {
       val nextStatement = subjectsIterator.nextStatement()
       acc += nextStatement
@@ -114,7 +128,7 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     }
   }
 
-  def mapBaseUnits(unit: String, dialect:Dialect, nativeModel: Model) = {
+  def mapBaseUnits(unit: String, dialect: Dialect, nativeModel: Model) = {
     val unitResource = nativeModel.createResource(unit)
 
     // Process and remove old types
@@ -127,7 +141,6 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     while (allTypesIterator.hasNext) {
       allTypes += allTypesIterator.next().asResource().getURI
     }
-
 
     val mappedDocumentType = if (allTypes.contains((Namespace.ApiContract + "Extension").iri())) {
       ExtensionModel.`type`.head.iri()
@@ -161,7 +174,7 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
           nativeModel.createProperty((Namespace.Rdf + "type").iri()),
           nativeModel.createResource(nodeMapping.id)
         )
-      case _                 =>
+      case _ =>
         println(s"Couldn't find node mapping for ${mappedDocumentType}")
     }
 
@@ -178,9 +191,7 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
       nativeModel.createResource((Namespace.Document + "DomainElement").iri())
     )
 
-
-    println(s"Generated TYPE: $mappedDocumentType")
-
+//    println(s"Generated TYPE: $mappedDocumentType")
 
     // remove the old types
     allTypes.foreach { t =>
@@ -212,9 +223,10 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
           nativeModel.createProperty(NodeMappingModel.ResolvedExtends.value.iri()),
           nativeModel.createLiteral(parsedUnitNode.id)
         )
-      case _                    => // ignore
+      case _ => // ignore
     }
   }
+
   /**
     * Transforms the doc:Units in the graph into the domain elements for assets in the canonical web api spec dialect
     */
@@ -223,10 +235,13 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     val dialect = findWebAPIDialect.get
 
     // we save the top level document we will not transform into a domain level asset
-    val topLevelUnit = nativeModel.listSubjectsWithProperty(
-      nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-      nativeModel.createResource((Namespace.Document + "Document").iri())
-    ).next().getURI
+    val topLevelUnit = nativeModel
+      .listSubjectsWithProperty(
+        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+        nativeModel.createResource((Namespace.Document + "Document").iri())
+      )
+      .next()
+      .getURI
 
     // get all the document units
     val unitsIterator = nativeModel.listSubjectsWithProperty(
@@ -241,7 +256,6 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     // for each document unit that is not the root one, we transform that into the canonical webpi spec asset fragment node
     // defined in the SpecDocument node mapping schema
     unitUris.foreach { unit =>
-
       val unitResource = nativeModel.createResource(unit)
 
       // Let's manipulate the @type of the unit to match the dialect expectations
@@ -290,7 +304,7 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     topLevelUnit
   }
 
-  protected def transformDataNodes(mapping: Map[String,String], nativeModel: Model) = {
+  protected def transformDataNodes(mapping: Map[String, String], nativeModel: Model) = {
     // we first remove the name from al ldata nodes
     // we first list all the data nodes
     val toCleanIt = nativeModel.listSubjectsWithProperty(
@@ -299,13 +313,15 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     )
     while (toCleanIt.hasNext) {
       val nextToClean = toCleanIt.next()
-      val namesIt = nativeModel.listObjectsOfProperty(nextToClean, nativeModel.createProperty(DataNodeModel.Name.value.iri()))
+      val namesIt =
+        nativeModel.listObjectsOfProperty(nextToClean, nativeModel.createProperty(DataNodeModel.Name.value.iri()))
       if (namesIt.hasNext) {
-        nativeModel.remove(nativeModel.createStatement(
-          nextToClean,
-          nativeModel.createProperty(DataNodeModel.Name.value.iri()),
-          namesIt.next()
-        ))
+        nativeModel.remove(
+          nativeModel.createStatement(
+            nextToClean,
+            nativeModel.createProperty(DataNodeModel.Name.value.iri()),
+            namesIt.next()
+          ))
       }
     }
 
@@ -315,60 +331,62 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
       nativeModel.createResource(ObjectNodeModel.`type`.head.iri())
     )
 
-    while(dataNodesIt.hasNext) {
+    while (dataNodesIt.hasNext) {
       val nextDataNode = dataNodesIt.nextResource()
       val propertiesIt = nativeModel.listStatements(nextDataNode, null, null)
-      val props = mutable.ListBuffer[(Resource, RDFNode)]()
+      val props        = mutable.ListBuffer[(Resource, RDFNode)]()
       while (propertiesIt.hasNext) {
         val nextStatement = propertiesIt.next()
-        val nextProperty = nextStatement.getPredicate.asResource()
-        val nextValue = nextStatement.getObject
+        val nextProperty  = nextStatement.getPredicate.asResource()
+        val nextValue     = nextStatement.getObject
         if (nextProperty.getURI.startsWith(Namespace.Data.base)) {
           props.+=((nextProperty, nextValue))
         }
       }
 
-      props.foreach { case (p, v) =>
-        val name = p.getURI.split("#").last.split("/").last
-        val pReif = nativeModel.createResource(nextDataNode.getURI + "_prop_" + name)
+      props.foreach {
+        case (p, v) =>
+          val name  = p.getURI.split("#").last.split("/").last
+          val pReif = nativeModel.createResource(nextDataNode.getURI + "_prop_" + name)
 
-        // link parent node and the reified property
-        nativeModel.add(
-          nextDataNode,
-          nativeModel.createProperty((CanonicalWebAPISpecDialectExporter.DataPropertiesField.value.iri())),
-          pReif
-        )
+          // link parent node and the reified property
+          nativeModel.add(
+            nextDataNode,
+            nativeModel.createProperty((CanonicalWebAPISpecDialectExporter.DataPropertiesField.value.iri())),
+            pReif
+          )
 
-        // name
-        nativeModel.add(
-          pReif,
-          nativeModel.createProperty((DataNodeModel.Name.value.iri())),
-          nativeModel.createLiteral(name)
-        )
+          // name
+          nativeModel.add(
+            pReif,
+            nativeModel.createProperty((DataNodeModel.Name.value.iri())),
+            nativeModel.createLiteral(name)
+          )
 
-        // range
-        nativeModel.add(
-          pReif,
-          nativeModel.createProperty(PropertyNodeModel.Range.value.iri()),
-          v
-        )
+          // range
+          nativeModel.add(
+            pReif,
+            nativeModel.createProperty(PropertyNodeModel.Range.value.iri()),
+            v
+          )
 
-        // types
-        nativeModel.add(
-          pReif,
-          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-          nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
-        )
-        nativeModel.add(
-          pReif,
-          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-          nativeModel.createResource(mapping(PropertyNodeModel.`type`.head.iri()))
-        )
+          // types
+          nativeModel.add(
+            pReif,
+            nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+            nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
+          )
+          nativeModel.add(
+            pReif,
+            nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+            nativeModel.createResource(mapping(PropertyNodeModel.`type`.head.iri()))
+          )
       }
 
-      props.foreach { case (p, v) =>
-        val toRemove = nativeModel.createStatement(nextDataNode, nativeModel.createProperty(p.getURI), v)
-        nativeModel.remove(toRemove)
+      props.foreach {
+        case (p, v) =>
+          val toRemove = nativeModel.createStatement(nextDataNode, nativeModel.createProperty(p.getURI), v)
+          nativeModel.remove(toRemove)
       }
     }
   }
@@ -382,8 +400,8 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     * @return Equivalent Canonical WebAPI AML dialect instance
     */
   protected def cleanAMFModel(unit: BaseUnit): BaseUnit = {
-    val mapping = buildCanonicalClassMapping
-    val model = unit.toNativeRdfModel()
+    val mapping     = buildCanonicalClassMapping
+    val model       = unit.toNativeRdfModel()
     val nativeModel = model.native().asInstanceOf[Model]
 
     val baseUnitId = preProcessUnits(nativeModel)
@@ -396,7 +414,7 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
           nativeModel.createProperty((Namespace.Meta + "definedBy").iri()),
           nativeModel.createResource(dialect.id)
         )
-      case None          => //ignore
+      case None => //ignore
     }
 
     // transform dynamic data nodes to list the properties
@@ -433,15 +451,16 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
       // We need to deal with node shape inheritance
       // These flags allow us to track if we found any shape or shape in case
       // we cannot find a more specific shape
-      var foundShape: Option[String] = None
+      var foundShape: Option[String]    = None
       var foundAnyShape: Option[String] = None
-      var found = false
+      var found                         = false
       while (nodeIt.hasNext) {
         val nextType = nodeIt.next().asResource().getURI
         mapping.get(nextType) match {
           case Some(dialectNode) =>
             // dealing with inheritance here
-            if (!dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape") && !dialectNode.endsWith("#/declarations/DataNode")) {
+            if (!dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape") && !dialectNode
+                  .endsWith("#/declarations/DataNode")) {
               found = true
               domainElementsMapping += (domainElement -> dialectNode)
             } else if (dialectNode.endsWith("#/declarations/Shape")) {
@@ -474,17 +493,18 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
     }
 
     // Add the dialect domain element and right mapped node mapping type in the model
-    domainElementsMapping.foreach { case (domainElement, nodeMapping) =>
-      nativeModel.add(
-        nativeModel.createResource(domainElement),
-        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-        nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
-      )
-      nativeModel.add(
-        nativeModel.createResource(domainElement),
-        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-        nativeModel.createResource(nodeMapping)
-      )
+    domainElementsMapping.foreach {
+      case (domainElement, nodeMapping) =>
+        nativeModel.add(
+          nativeModel.createResource(domainElement),
+          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+          nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
+        )
+        nativeModel.add(
+          nativeModel.createResource(domainElement),
+          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+          nativeModel.createResource(nodeMapping)
+        )
     }
 
     // default meta object we need to remove so they don't clash
@@ -555,92 +575,91 @@ class CanonicalWebAPISpecTransformer  extends PlatformSecrets {
   }
 
   protected def transformAnnotations(nativeModel: Model, mapping: Map[String, String], domainElement: String) {
-      val annotsIt = nativeModel.listObjectsOfProperty(
+    val annotsIt = nativeModel.listObjectsOfProperty(
+      nativeModel.createResource(domainElement),
+      nativeModel.createProperty(DomainElementModel.CustomDomainProperties.value.iri())
+    )
+    var c = 0
+    while (annotsIt.hasNext) {
+      val nextAnnotation = annotsIt.next()
+      nativeModel.remove(
         nativeModel.createResource(domainElement),
-        nativeModel.createProperty(DomainElementModel.CustomDomainProperties.value.iri())
+        nativeModel.createProperty(DomainElementModel.CustomDomainProperties.value.iri()),
+        nextAnnotation
       )
-      var c = 0
-      while (annotsIt.hasNext) {
-        val nextAnnotation = annotsIt.next()
-        nativeModel.remove(
-          nativeModel.createResource(domainElement),
-          nativeModel.createProperty(DomainElementModel.CustomDomainProperties.value.iri()),
-          nextAnnotation
-        )
-        // now we find the value of the annotation, the annotation property links to this value
-        // directly in the annotated node
-        val nextAnnotationValueIt = nativeModel.listObjectsOfProperty(
-          nativeModel.createResource(domainElement),
-          nativeModel.createProperty(nextAnnotation.asResource().getURI)
-        )
-        val nextAnnotationValue = nextAnnotationValueIt.next()
+      // now we find the value of the annotation, the annotation property links to this value
+      // directly in the annotated node
+      val nextAnnotationValueIt = nativeModel.listObjectsOfProperty(
+        nativeModel.createResource(domainElement),
+        nativeModel.createProperty(nextAnnotation.asResource().getURI)
+      )
+      val nextAnnotationValue = nextAnnotationValueIt.next()
 
-        // autogen URI for the reified annotation
-        val reifiedAnnotationUri = nativeModel.createResource(domainElement + s"_annotations_${c}")
-        c += 1
+      // autogen URI for the reified annotation
+      val reifiedAnnotationUri = nativeModel.createResource(domainElement + s"_annotations_${c}")
+      c += 1
 
-        nativeModel.add(
-          nativeModel.createResource(domainElement),
-          nativeModel.createProperty(CanonicalWebAPISpecDialectExporter.DesignAnnotationField.value.iri()),
-          reifiedAnnotationUri
-        )
-        nativeModel.add(
-          reifiedAnnotationUri,
-          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-          nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
-        )
-        nativeModel.add(
-          reifiedAnnotationUri,
-          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-          nativeModel.createResource(mapping(DomainExtensionModel.`type`.head.iri()))
-        )
-        // the extension
-        nativeModel.add(
-          reifiedAnnotationUri,
-          nativeModel.createProperty(DomainExtensionModel.Extension.value.iri()),
-          nextAnnotationValue
-        )
+      nativeModel.add(
+        nativeModel.createResource(domainElement),
+        nativeModel.createProperty(CanonicalWebAPISpecDialectExporter.DesignAnnotationField.value.iri()),
+        reifiedAnnotationUri
+      )
+      nativeModel.add(
+        reifiedAnnotationUri,
+        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+        nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
+      )
+      nativeModel.add(
+        reifiedAnnotationUri,
+        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+        nativeModel.createResource(mapping(DomainExtensionModel.`type`.head.iri()))
+      )
+      // the extension
+      nativeModel.add(
+        reifiedAnnotationUri,
+        nativeModel.createProperty(DomainExtensionModel.Extension.value.iri()),
+        nextAnnotationValue
+      )
 
-        // the link back to the annotation definition
-        val annotationLink = nativeModel.createResource(reifiedAnnotationUri.getURI + "_link")
+      // the link back to the annotation definition
+      val annotationLink = nativeModel.createResource(reifiedAnnotationUri.getURI + "_link")
+      nativeModel.add(
+        annotationLink,
+        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+        nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
+      )
+      nativeModel.add(
+        annotationLink,
+        nativeModel.createProperty((Namespace.Rdf + "type").iri()),
+        nativeModel.createResource(mapping(CustomDomainPropertyModel.`type`.head.iri()))
+      )
+      nativeModel.add(
+        annotationLink,
+        nativeModel.createProperty(CanonicalWebAPISpecDialectExporter.DesignLinkTargetField.value.iri()),
+        nextAnnotation
+      )
+
+      // We try to also add the name of the annotation to the annotation link
+      val maybeAnnotationNameIt = nativeModel.listObjectsOfProperty(
+        nextAnnotation.asResource(),
+        nativeModel.createProperty((CustomDomainPropertyModel.Name.value.iri()))
+      )
+      if (maybeAnnotationNameIt.hasNext) {
         nativeModel.add(
           annotationLink,
-          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-          nativeModel.createResource((Namespace.Meta + "DialectDomainElement").iri())
+          nativeModel.createProperty(CustomDomainPropertyModel.Name.value.iri()),
+          maybeAnnotationNameIt.next().asLiteral()
         )
-        nativeModel.add(
-          annotationLink,
-          nativeModel.createProperty((Namespace.Rdf + "type").iri()),
-          nativeModel.createResource(mapping(CustomDomainPropertyModel.`type`.head.iri()))
-        )
-        nativeModel.add(
-          annotationLink,
-          nativeModel.createProperty(CanonicalWebAPISpecDialectExporter.DesignLinkTargetField.value.iri()),
-          nextAnnotation
-        )
-
-        // We try to also add the name of the annotation to the annotation link
-        val maybeAnnotationNameIt = nativeModel.listObjectsOfProperty(
-          nextAnnotation.asResource(),
-          nativeModel.createProperty((CustomDomainPropertyModel.Name.value.iri()))
-        )
-        if (maybeAnnotationNameIt.hasNext) {
-          nativeModel.add(
-            annotationLink,
-            nativeModel.createProperty(CustomDomainPropertyModel.Name.value.iri()),
-            maybeAnnotationNameIt.next().asLiteral()
-          )
-        }
-
-
-        // we get definedBy to the linked annotation
-        nativeModel.add(
-          reifiedAnnotationUri,
-          nativeModel.createProperty(DomainExtensionModel.DefinedBy.value.iri()),
-          annotationLink
-        )
-
       }
+
+      // we get definedBy to the linked annotation
+      nativeModel.add(
+        reifiedAnnotationUri,
+        nativeModel.createProperty(DomainExtensionModel.DefinedBy.value.iri()),
+        annotationLink
+      )
+
+    }
 
   }
 
