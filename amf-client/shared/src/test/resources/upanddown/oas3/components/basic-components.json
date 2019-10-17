@@ -1,0 +1,111 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "components": {
+    "links": {
+      "someLink": {
+        "operationId": "test",
+        "parameters": {
+          "paramA": "$request.path.id"
+        },
+        "requestBody": "$request.body",
+        "description": "a link",
+        "server": {
+          "url": "http://test.com/servera",
+          "description": "a description"
+        }
+      }
+    },
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      }
+    },
+    "responses": {
+      "NotFound": {
+        "description": "Entity not found."
+      }
+    },
+    "parameters": {
+      "limitParam": {
+        "name": "limit",
+        "in": "query",
+        "description": "max records to return",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "callbacks": {
+      "myWebhook": {
+        "http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body}": {
+          "post": {
+            "requestBody": {
+              "description": "Callback payload",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "description": "webhook successfully processed and no retries will be performed"
+              }
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "integerExample": {
+        "value": 5
+      }
+    },
+    "requestBodies": {
+      "someRequest": {
+        "description": "description of the request",
+        "required": false,
+        "content": {
+          "application/xml": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "b": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "headers": {
+      "someHeader": {
+        "description": "The number of allowed requests in the current period",
+        "schema": {
+          "type": "integer"
+        }
+      }
+    },
+    "securitySchemes": {
+      "openIdConnectType": {
+        "type": "openIdConnect",
+        "openIdConnectUrl": "https://test.com/"
+      }
+    }
+  }
+}

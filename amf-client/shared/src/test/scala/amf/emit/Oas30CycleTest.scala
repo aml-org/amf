@@ -53,7 +53,8 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     FixtureData("Security scheme types", "basic-security-types.json", "basic-security-types.json"),
     FixtureData("Basic parameter object",
                 "basic-parameters/basic-parameters.json",
-                "basic-parameters/basic-parameters-output.json")
+                "basic-parameters/basic-parameters-output.json"),
+    FixtureData("Basic components object", "components/basic-components.json", "components/components-output.json")
   )
 
   cyclesOas3.foreach { f =>

@@ -1,23 +1,19 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.emitter.BaseEmitters.{pos, traverse}
+import amf.core.annotations.DeclaredHeader
+import amf.core.emitter.BaseEmitters.{EntryPartEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
+import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.Strings
-import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain.{
-  OasParameter,
-  OasResponseEmitter,
-  ParameterEmitter,
-  PayloadAsParameterEmitter
-}
+import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import amf.plugins.features.validation.CoreValidations._
@@ -54,11 +50,33 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
 
     val oasParams = declarations.parameters.values.map(OasParameter(_)) ++ declarations.payloads.values
       .map(OasParameter(_))
-    if (oasParams.nonEmpty)
-      result += OasDeclaredParametersEmitter(oasParams.toSeq, ordering, references)
+    if (oasParams.nonEmpty) {
+      val (headerDeclarations, params) =
+        oasParams.partition(_.parameter.exists(_.annotations.contains(classOf[DeclaredHeader])))
+      if (params.nonEmpty) result += OasDeclaredParametersEmitter(params.toSeq, ordering, references)
+      if (headerDeclarations.nonEmpty)
+        result += OasDeclaredHeadersEmitter(headerDeclarations.flatMap(_.parameter).toSeq, ordering, references)
+    }
 
     if (declarations.responses.nonEmpty)
       result += OasDeclaredResponsesEmitter("responses", declarations.responses.values.toSeq, ordering, references)
+
+    if (declarations.examples.nonEmpty)
+      result += OasResponseExamplesEmitter("examples", examples = declarations.examples.values.toSeq, ordering)
+
+    if (declarations.requests.nonEmpty)
+      result += Oas3RequestBodyDeclarationsEmitter(declarations.requests.values.toSeq, ordering, references)
+
+    if (declarations.links.nonEmpty)
+      result += Oas3LinkDeclarationEmitter(declarations.links.values.toSeq, ordering, references)
+
+    if (declarations.callbacks.nonEmpty) {
+      val callbacks   = declarations.callbacks.values.toSeq
+      val annotations = callbacks.headOption.map(_.annotations).getOrElse(Annotations())
+      result += EntryPartEmitter("callbacks",
+                                 OasCallbacksEmitter(callbacks, ordering, references, annotations),
+                                 position = pos(annotations))
+    }
     result
   }
 }

@@ -1,11 +1,17 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
+import amf.core.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.parser._
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.parser.spec.domain.{
+  Oas3ResponseExamplesParser,
+  OasHeaderParametersParser,
+  OasLinkParser
+}
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.{Callback, Parameter, Request, TemplatedLink, WebApi}
 import org.yaml.model._
 
 case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
@@ -29,6 +35,88 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
       val map = components.value.as[YMap]
       super.parseDeclarations(root, map)
 
-    // TODO also parse examples, requestBodies, headers, links and callbacks
+      val parent = root.location + "#/declarations"
+      parseExamplesDeclaration(map, parent + "/examples")
+      parseRequestBodyDeclarations(map, parent + "/requestBodies")
+      parseHeaderDeclarations(map, parent + "/headers")
+      parseLinkDeclarations(map, parent + "/links")
+      parseCallbackDeclarations(map, parent + "/callbacks")
     }
+
+  def parseExamplesDeclaration(map: YMap, parent: String): Unit = {
+    map.key(
+      "examples",
+      e => {
+        val examples = Oas3ResponseExamplesParser(e).parse()
+        examples.foreach(ex => {
+          ex.adopted(parent)
+          ctx.declarations += ex.add(DeclaredElement())
+        })
+      }
+    )
+  }
+
+  def parseRequestBodyDeclarations(map: YMap, parent: String): Unit = {
+    map.key(
+      "requestBodies",
+      e => {
+        e.value
+          .as[YMap]
+          .entries
+          .map(entry => {
+            val typeName = entry.key.as[YScalar].text
+            val requestBody =
+              Oas3RequestParser(entry.value.as[YMap], () => Request().withName(typeName).adopted(parent)).parse()
+            requestBody.foreach(ctx.declarations += _.add(DeclaredElement()))
+          })
+      }
+    )
+  }
+
+  def parseHeaderDeclarations(map: YMap, parent: String): Unit = {
+    map.key(
+      "headers",
+      entry => {
+        val headers: Seq[Parameter] =
+          OasHeaderParametersParser(entry.value.as[YMap], Parameter().withName(_).adopted(parent)).parse()
+        headers.foreach(header => {
+          header.add(DeclaredElement()).add(DeclaredHeader())
+          ctx.declarations.registerHeader(header)
+        })
+      }
+    )
+  }
+
+  def parseLinkDeclarations(map: YMap, parent: String): Unit = {
+    map.key(
+      "links",
+      entry =>
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach { entry =>
+            val linkName = ScalarNode(entry.key).text().value.toString
+            val link     = OasLinkParser(entry.value, linkName, TemplatedLink().withName(_).adopted(parent)).parse()
+            link.add(DeclaredElement())
+            ctx.declarations += link
+        }
+    )
+  }
+
+  def parseCallbackDeclarations(map: YMap, parent: String): Unit = {
+    map.key(
+      "callbacks",
+      entry => {
+        entry.value
+          .as[YMap]
+          .entries
+          .map { callbackEntry =>
+            val callback = CallbackParser(callbackEntry, Callback().withName(_).adopted(parent)).parse()
+            callback.add(DeclaredElement())
+            ctx.declarations += callback
+          }
+      }
+    )
+  }
+
 }

@@ -456,6 +456,21 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
   override def position(): Position = pos(parameter.annotations)
 }
 
+case class OasDeclaredHeadersEmitter(parameters: Seq[Parameter], ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit val spec: OasSpecEmitterContext)
+    extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry("headers", decBuilder => {
+      val emitters = parameters.map(OasHeaderEmitter(_, ordering, references))
+      decBuilder.obj(traverse(ordering.sorted(emitters), _))
+    })
+  }
+
+  override def position(): Position =
+    parameters.headOption.map(param => pos(param.annotations)).getOrElse(Position.ZERO)
+}
+
 case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {

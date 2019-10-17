@@ -20,7 +20,7 @@ import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{EndPoint, Parameter, Payload, Response}
+import amf.plugins.domain.webapi.models.{Callback, EndPoint, Parameter, Payload, Request, Response, TemplatedLink}
 import org.yaml.model.{YNode, YPart}
 
 /**
@@ -37,6 +37,11 @@ class WebApiDeclarations(val alias: Option[String],
                          var traits: Map[String, Trait] = Map(),
                          var securitySchemes: Map[String, SecurityScheme] = Map(),
                          var responses: Map[String, Response] = Map(),
+                         var examples: Map[String, Example] = Map(),
+                         var requests: Map[String, Request] = Map(),
+                         var headers: Map[String, Parameter] = Map(),
+                         var links: Map[String, TemplatedLink] = Map(),
+                         var callbacks: Map[String, Callback] = Map(),
                          val errorHandler: Option[ErrorHandler],
                          val futureDeclarations: FutureDeclarations,
                          var others: Map[String, BaseUnit] = Map())
@@ -117,6 +122,14 @@ class WebApiDeclarations(val alias: Option[String],
         securitySchemes = securitySchemes + (ss.name.value() -> ss)
       case re: Response =>
         responses = responses + (re.name.value() -> re)
+      case ex: Example =>
+        examples = examples + (ex.name.value() -> ex)
+      case rq: Request =>
+        requests = requests + (rq.name.value() -> rq)
+      case l: TemplatedLink =>
+        links = links + (l.name.value() -> l)
+      case c: Callback =>
+        callbacks = callbacks + (c.name.value() -> c)
       case _ => super.+=(element)
     }
     this
@@ -143,6 +156,10 @@ class WebApiDeclarations(val alias: Option[String],
     this += oasParameter.domainElement
   }
 
+  def registerHeader(header: Parameter): Unit = {
+    this.headers = headers + (header.name.value() -> header)
+  }
+
   def parameterPayload(parameter: Parameter): Payload = payloads(parameter.name.value())
 
   /** Get or create specified library. */
@@ -161,7 +178,7 @@ class WebApiDeclarations(val alias: Option[String],
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values ++ headers.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {

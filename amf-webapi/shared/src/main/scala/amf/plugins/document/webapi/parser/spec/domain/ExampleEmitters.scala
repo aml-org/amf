@@ -21,12 +21,11 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
+case class OasResponseExamplesEmitter(key: String, examples: Seq[Example], ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
     extends EntryEmitter {
 
-  override def emit(b: EntryBuilder): Unit = {
-    val examples = f.array.values.collect({ case e: Example => e })
+  override def emit(b: EntryBuilder): Unit =
     if (examples.nonEmpty) {
       if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
         b.entry(key, _.obj(traverse(ordering.sorted(examples.map(Oas3ExampleValuesEmitter(_, ordering)(spec))), _)))
@@ -34,9 +33,14 @@ case class OasResponseExamplesEmitter(key: String, f: FieldEntry, ordering: Spec
         b.entry(key, _.obj(traverse(ordering.sorted(examples.map(OasResponseExampleEmitter(_, ordering)(spec))), _)))
       }
     }
-  }
 
-  override def position(): Position = f.array.values.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+  override def position(): Position = examples.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+}
+
+object OasResponseExamplesEmitter {
+  def apply(key: String, f: FieldEntry, ordering: SpecOrdering)(
+      implicit spec: SpecEmitterContext): OasResponseExamplesEmitter =
+    OasResponseExamplesEmitter(key, f.array.values.collect({ case e: Example => e }), ordering)(spec)
 }
 
 case class Oas3ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)

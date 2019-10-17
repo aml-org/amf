@@ -34,6 +34,7 @@ import org.yaml.model.YDocument
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 
 trait AccessibleOasDocumentEmitters {
 
@@ -501,6 +502,17 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
+    val result = Oas3RequestBodyEmitter.emitters(request, ordering, references)
+    if (result.nonEmpty)
+      b.entry("requestBody", _.obj(traverse(ordering.sorted(result), _)))
+  }
+
+  override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)
+}
+
+object Oas3RequestBodyEmitter {
+  def emitters(request: Request, ordering: SpecOrdering, references: Seq[BaseUnit])(
+      implicit spec: OasSpecEmitterContext): ListBuffer[EntryEmitter] = {
     val fs     = request.fields
     val result = mutable.ListBuffer[EntryEmitter]()
 
@@ -511,12 +523,31 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
       val annotations            = f.value.annotations
       result += EntryPartEmitter("content", OasContentPayloadsEmitter(payloads, ordering, references, annotations))
     }
+    result
+  }
+}
 
-    if (result.nonEmpty)
-      b.entry("requestBody", _.obj(traverse(ordering.sorted(result), _)))
+case class Oas3RequestBodyDeclarationsEmitter(requests: Seq[Request],
+                                              ordering: SpecOrdering,
+                                              references: Seq[BaseUnit])(implicit spec: OasSpecEmitterContext)
+    extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      "requestBodies",
+      _.obj(decBuilder => {
+        requests.foreach(request => {
+          val result = Oas3RequestBodyEmitter.emitters(request, ordering, references)
+          if (result.nonEmpty)
+            decBuilder.entry(request.name.value(), _.obj(traverse(ordering.sorted(result), _)))
+        })
+      })
+    )
   }
 
-  override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)
+  override def position(): Position = {
+    requests.headOption.map(rq => pos(rq.payloads.headOption.getOrElse(rq).annotations)).getOrElse(Position.ZERO)
+  }
 }
 
 class OasSpecEmitter(implicit val spec: OasSpecEmitterContext) extends BaseSpecEmitter {

@@ -687,6 +687,21 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
+  case class CallbackParser(callbackEntry: YMapEntry, producer: String => Callback) {
+    def parse(): Callback = {
+      val name               = callbackEntry.key.as[YScalar].text
+      val map                = callbackEntry.value.as[YMap]
+      val callbackOperations = map.entries
+      val callback           = producer(name).add(Annotations(map))
+      if (callbackOperations.size != 1) {
+        // TODO throw violation here
+      } else {
+        EndpointParser(callbackOperations.head, callback.withEndpoint, mutable.ListBuffer.empty).parse()
+      }
+      callback
+    }
+  }
+
   case class OperationParser(entry: YMapEntry, producer: String => Operation) {
     def parse(): Operation = {
 
@@ -738,14 +753,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
               .as[YMap]
               .entries
               .map { callbackEntry =>
-                val name               = callbackEntry.key.as[YScalar].text
-                val callback           = operation.withCallback(name)
-                val callbackOperations = callbackEntry.value.as[YMap].entries
-                if (callbackOperations.size != 1) {
-                  // TODO throw violation here
-                } else {
-                  EndpointParser(callbackOperations.head, callback.withEndpoint, mutable.ListBuffer.empty).parse()
-                }
+                CallbackParser(callbackEntry, operation.withCallback).parse()
               }
           }
         )

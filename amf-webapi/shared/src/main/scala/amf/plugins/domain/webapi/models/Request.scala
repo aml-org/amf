@@ -1,8 +1,9 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.Obj
+import amf.core.metamodel.domain.common.NameFieldSchema
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.{BoolField, StrField}
-import amf.core.model.domain.{DomainElement, Shape}
+import amf.core.model.domain.{NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.metamodel.RequestModel._
@@ -10,7 +11,7 @@ import amf.plugins.domain.webapi.metamodel.RequestModel._
 /**
   * Request internal model.
   */
-case class Request(fields: Fields, annotations: Annotations) extends DomainElement {
+class Request(override val fields: Fields, override val annotations: Annotations) extends NamedDomainElement {
 
   def description: StrField            = fields.field(Description)
   def required: BoolField              = fields.field(Required)
@@ -29,6 +30,8 @@ case class Request(fields: Fields, annotations: Annotations) extends DomainEleme
   def withQueryString(queryString: Shape): this.type                    = set(QueryString, queryString)
   def withUriParameters(uriParameters: Seq[Parameter]): this.type       = setArray(UriParameters, uriParameters)
   def withCookieParameters(cookieParameters: Seq[Parameter]): this.type = setArray(CookieParameters, cookieParameters)
+
+  override protected def nameField: Field = NameFieldSchema.Name
 
   def withQueryParameter(name: String): Parameter = {
     val result = Parameter().withName(name)
