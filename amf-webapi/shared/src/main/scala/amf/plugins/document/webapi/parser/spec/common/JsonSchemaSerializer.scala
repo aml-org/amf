@@ -2,10 +2,10 @@ package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.AMFSerializer
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, ShapeRenderOptions, SpecOrdering}
 import amf.core.model.document.Document
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{ErrorHandler, Position}
+import amf.core.parser.Position
 import amf.core.remote.JsonSchema
 import amf.core.services.RuntimeSerializer
 import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
@@ -31,11 +31,11 @@ trait JsonSchemaSerializer {
     }
   }
 
-  protected def generateJsonSchema(element: AnyShape): String = {
+  protected def generateJsonSchema(element: AnyShape, options: ShapeRenderOptions = ShapeRenderOptions()): String = {
     AMFSerializer.init()
     val originalId = element.id
     val document   = Document().withDeclares(Seq(fixNameIfNeeded(element)) ++ element.closureShapes)
-    val jsonSchema = RuntimeSerializer(document, "application/schema+json", JsonSchema.name)
+    val jsonSchema = RuntimeSerializer(document, "application/schema+json", JsonSchema.name, shapeOptions = options)
     element.withId(originalId)
     element.annotations.reject(a =>
       a.isInstanceOf[ParsedJSONSchema] || a.isInstanceOf[GeneratedJSONSchema] || a.isInstanceOf[JSONSchemaRoot])
@@ -64,7 +64,7 @@ object JsonSchemaEntry extends EntryEmitter {
 case class JsonSchemaEmitter(root: AnyShape,
                              declarations: Seq[DomainElement],
                              ordering: SpecOrdering = SpecOrdering.Lexical,
-                             eh: ErrorHandler) {
+                             options: ShapeRenderOptions) {
   def emitDocument(): YDocument = {
     YDocument(b => {
       b.obj { b =>
@@ -81,8 +81,9 @@ case class JsonSchemaEmitter(root: AnyShape,
   }
 
   private def sortedTypeEntries =
-    ordering.sorted(
-      OasDeclarationsEmitter(declarations, SpecOrdering.Lexical, Seq())(JsonSchemaEmitterContext(eh)).emitters) // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
+    ordering.sorted(OasDeclarationsEmitter(declarations, SpecOrdering.Lexical, Seq())(JsonSchemaEmitterContext(
+      options.errorHandler,
+      options)).emitters) // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
 
   private val emitters = Seq(JsonSchemaEntry, jsonSchemaRefEntry) ++ sortedTypeEntries
 }

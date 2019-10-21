@@ -2,7 +2,7 @@ package amf.plugins.domain.shapes.models
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, StrictValidationMode}
 import amf.core.annotations.DeclaredElement
-import amf.core.metamodel.domain.ExternalSourceElementModel
+import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
@@ -110,6 +110,8 @@ class AnyShape(val fields: Fields, val annotations: Annotations)
   def toJsonSchema: String = toJsonSchema(this)
 
   def buildJsonSchema(): String = generateJsonSchema(this)
+
+  def buildJsonSchema(options: ShapeRenderOptions): String = generateJsonSchema(this, options)
 
   /** Delegates generation of a new RAML Data Type or returns cached
     * one if it was generated before.

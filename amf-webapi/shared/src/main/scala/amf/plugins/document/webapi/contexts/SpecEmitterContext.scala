@@ -40,7 +40,7 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter) {
+abstract class SpecEmitterContext(val eh: ErrorHandler, refEmitter: RefEmitter, val options: ShapeRenderOptions) {
 
   def ref(b: PartBuilder, url: String): Unit = refEmitter.ref(url, b)
 
@@ -449,28 +449,35 @@ class Raml08EmitterVersionFactory()(implicit val spec: RamlSpecEmitterContext) e
 
 }
 
-class Raml10SpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = RamlRefEmitter)
-    extends RamlSpecEmitterContext(eh, refEmitter) {
+class Raml10SpecEmitterContext(eh: ErrorHandler,
+                               refEmitter: RefEmitter = RamlRefEmitter,
+                               options: ShapeRenderOptions = ShapeRenderOptions())
+    extends RamlSpecEmitterContext(eh, refEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml10EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml10
 }
 
-class XRaml10SpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = OasRefEmitter)
-    extends Raml10SpecEmitterContext(eh, refEmitter) {
+class XRaml10SpecEmitterContext(eh: ErrorHandler,
+                                refEmitter: RefEmitter = OasRefEmitter,
+                                options: ShapeRenderOptions = ShapeRenderOptions())
+    extends Raml10SpecEmitterContext(eh, refEmitter, options) {
   override def localReference(reference: Linkable): PartEmitter =
     oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
-  val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(new Oas2SpecEmitterContext(eh, refEmitter))
+  val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(new Oas2SpecEmitterContext(eh, refEmitter, options))
 }
 
-class Raml08SpecEmitterContext(eh: ErrorHandler) extends RamlSpecEmitterContext(eh, RamlRefEmitter) {
+class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())
+    extends RamlSpecEmitterContext(eh, RamlRefEmitter, options) {
   override val factory: RamlEmitterVersionFactory = new Raml08EmitterVersionFactory()(this)
   override val vendor: Vendor                     = Raml08
 
 }
 
-abstract class RamlSpecEmitterContext(override val eh: ErrorHandler, refEmitter: RefEmitter)
-    extends SpecEmitterContext(eh, refEmitter) {
+abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
+                                      refEmitter: RefEmitter,
+                                      options: ShapeRenderOptions = ShapeRenderOptions())
+    extends SpecEmitterContext(eh, refEmitter, options) {
 
   import BaseEmitters._
 
@@ -487,8 +494,10 @@ abstract class RamlSpecEmitterContext(override val eh: ErrorHandler, refEmitter:
 
 }
 
-abstract class OasSpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = OasRefEmitter)
-    extends SpecEmitterContext(eh, refEmitter) {
+abstract class OasSpecEmitterContext(eh: ErrorHandler,
+                                     refEmitter: RefEmitter = OasRefEmitter,
+                                     options: ShapeRenderOptions = ShapeRenderOptions())
+    extends SpecEmitterContext(eh, refEmitter, options) {
 
   def schemasDeclarationsPath: String
 
@@ -503,7 +512,9 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = 
   val anyOfKey: String = "union".asOasExtension
 }
 
-final case class JsonSchemaEmitterContext(override val eh: ErrorHandler) extends Oas2SpecEmitterContext(eh = eh) {
+final case class JsonSchemaEmitterContext(override val eh: ErrorHandler,
+                                          override val options: ShapeRenderOptions = ShapeRenderOptions())
+    extends Oas2SpecEmitterContext(eh = eh, options = options) {
   override val typeDefMatcher: OasTypeDefStringValueMatcher = JsonSchemaTypeDefMatcher
 
   override val anyOfKey: String = "anyOf"
@@ -511,15 +522,19 @@ final case class JsonSchemaEmitterContext(override val eh: ErrorHandler) extends
   override def schemasDeclarationsPath: String = "/definitions/"
 }
 
-class Oas3SpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = OasRefEmitter)
-    extends OasSpecEmitterContext(eh, refEmitter) {
+class Oas3SpecEmitterContext(eh: ErrorHandler,
+                             refEmitter: RefEmitter = OasRefEmitter,
+                             options: ShapeRenderOptions = ShapeRenderOptions())
+    extends OasSpecEmitterContext(eh, refEmitter, options) {
   override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory()(this)
   override val vendor: Vendor                  = Oas30
   override def schemasDeclarationsPath: String = "/components/schemas/"
 }
 
-class Oas2SpecEmitterContext(eh: ErrorHandler, refEmitter: RefEmitter = OasRefEmitter)
-    extends OasSpecEmitterContext(eh, refEmitter) {
+class Oas2SpecEmitterContext(eh: ErrorHandler,
+                             refEmitter: RefEmitter = OasRefEmitter,
+                             options: ShapeRenderOptions = ShapeRenderOptions())
+    extends OasSpecEmitterContext(eh, refEmitter, options) {
   override val factory: OasSpecEmitterFactory  = Oas2SpecEmitterFactory()(this)
   override val vendor: Vendor                  = Oas20
   override def schemasDeclarationsPath: String = "/definitions/"

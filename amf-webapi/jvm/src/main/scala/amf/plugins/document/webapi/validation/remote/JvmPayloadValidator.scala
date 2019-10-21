@@ -50,13 +50,9 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
 
     loadJson(
       jsonSchema.toString
-        .replace("\"type\": \"file\"", "\"type\": \"string\"")
         .replace("x-amf-union", "anyOf")) match {
       case schemaNode: JSONObject =>
         schemaNode.remove("x-amf-fragmentType")
-        schemaNode.remove("example")
-        schemaNode.remove("examples")
-        schemaNode.remove("x-amf-examples")
 
         val schemaBuilder = SchemaLoader
           .builder()

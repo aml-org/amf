@@ -1405,25 +1405,30 @@ abstract class OasShapeEmitter(shape: Shape,
                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
 
+    val emitDocumentation = spec.options.isWithDocumentation
+
     val result = ListBuffer[EntryEmitter]()
     val fs     = shape.fields
 
-    fs.entry(ShapeModel.DisplayName).map(f => result += ValueEmitter("title", f))
+    if (emitDocumentation) {
+      fs.entry(ShapeModel.DisplayName).map(f => result += ValueEmitter("title", f))
 
-    fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
-    fs.entry(ShapeModel.Default) match {
-      case Some(f) =>
-        result += EntryPartEmitter("default",
-                                   DataNodeEmitter(shape.default, ordering)(spec.eh),
-                                   position = pos(f.value.annotations))
-      case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
+      fs.entry(ShapeModel.Description).map(f => result += ValueEmitter("description", f))
+
+      fs.entry(ShapeModel.Default) match {
+        case Some(f) =>
+          result += EntryPartEmitter("default",
+                                     DataNodeEmitter(shape.default, ordering)(spec.eh),
+                                     position = pos(f.value.annotations))
+        case None => fs.entry(ShapeModel.DefaultValueString).map(dv => result += ValueEmitter("default", dv))
+      }
+
+      fs.entry(AnyShapeModel.Documentation)
+        .map(f =>
+          result += OasEntryCreativeWorkEmitter("externalDocs", f.value.value.asInstanceOf[CreativeWork], ordering))
     }
 
     fs.entry(ShapeModel.Values).map(f => result += EnumValuesEmitter("enum", f.value, ordering))
-
-    fs.entry(AnyShapeModel.Documentation)
-      .map(f =>
-        result += OasEntryCreativeWorkEmitter("externalDocs", f.value.value.asInstanceOf[CreativeWork], ordering))
 
     fs.entry(AnyShapeModel.XMLSerialization).map(f => result += XMLSerializerEmitter("xml", f, ordering))
 
@@ -1656,19 +1661,20 @@ class OasAnyShapeEmitter(shape: AnyShape,
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
 
-    shape.fields
-      .entry(AnyShapeModel.Examples)
-      .map(f => {
-        val examples = spec.filterLocal(f.array.values.collect({ case e: Example => e }))
-        val tuple    = examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
+    if (spec.options.isWithDocumentation)
+      shape.fields
+        .entry(AnyShapeModel.Examples)
+        .map(f => {
+          val examples = spec.filterLocal(f.array.values.collect({ case e: Example => e }))
+          val tuple    = examples.partition(e => !e.fields.fieldsMeta().contains(ExampleModel.Name) && !e.isLink)
 
-        result ++= (tuple match {
-          case (Nil, Nil)         => Nil
-          case (named, Nil)       => examplesEmitters(named.headOption, named.tail, isHeader)
-          case (Nil, named)       => examplesEmitters(None, named, isHeader)
-          case (anonymous, named) => examplesEmitters(anonymous.headOption, anonymous.tail ++ named, isHeader)
+          result ++= (tuple match {
+            case (Nil, Nil)         => Nil
+            case (named, Nil)       => examplesEmitters(named.headOption, named.tail, isHeader)
+            case (Nil, named)       => examplesEmitters(None, named, isHeader)
+            case (anonymous, named) => examplesEmitters(anonymous.headOption, anonymous.tail ++ named, isHeader)
+          })
         })
-      })
 
     super.emitters() ++ result
   }

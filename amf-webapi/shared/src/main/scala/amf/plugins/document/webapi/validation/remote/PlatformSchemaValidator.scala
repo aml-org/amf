@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.validation.remote
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
@@ -124,7 +125,8 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
         "application/json",
         SyamlParsedDocument(
           document = new JsonSchemaValidationFragmentEmitter(dataType)(
-            JsonSchemaEmitterContext(DefaultParserSideErrorHandler(dataType)))
+            JsonSchemaEmitterContext(DefaultParserSideErrorHandler(dataType),
+                                     new ShapeRenderOptions().withoutDocumentation))
             .emitFragment())
       )
 

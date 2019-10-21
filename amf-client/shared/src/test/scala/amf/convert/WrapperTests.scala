@@ -1782,6 +1782,81 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test JSON Schema emission without documentation") {
+    val api = """#%RAML 1.0
+                |title: test json schema
+                |
+                |types:
+                |  A:
+                |    type: object
+                |    description: this is a test of documentation description
+                |    displayName: this is a test of display name
+                |    properties:
+                |      a1:
+                |        type: string
+                |        description: the first property
+                |        examples:
+                |          a: I am a string
+                |          b: I am other string
+                |          c: I am another string
+                |      a2:
+                |        type: integer
+                |        description: the second property
+                |        example: 1
+                |      a3:
+                |        type: number
+                |        description: the third property
+                |        example: 3.2
+                |    example:
+                |      a1: blahblahblah
+                |      a2: 32
+                |      a3: 256.3""".stripMargin
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+    } yield {
+      val expectedSchema = """{
+                             |  "$schema": "http://json-schema.org/draft-04/schema#",
+                             |  "$ref": "#/definitions/A",
+                             |  "definitions": {
+                             |    "A": {
+                             |      "type": "object",
+                             |      "additionalProperties": true,
+                             |      "required": [
+                             |        "a1",
+                             |        "a2",
+                             |        "a3"
+                             |      ],
+                             |      "properties": {
+                             |        "a1": {
+                             |          "type": "string"
+                             |        },
+                             |        "a2": {
+                             |          "type": "integer"
+                             |        },
+                             |        "a3": {
+                             |          "type": "number"
+                             |        }
+                             |      }
+                             |    }
+                             |  }
+                             |}
+                             |""".stripMargin
+      val options        = new ShapeRenderOptions().withoutDocumentation
+      val schema = resolved
+        .asInstanceOf[Document]
+        .declares
+        .asSeq
+        .head
+        .asInstanceOf[AnyShape]
+        .buildJsonSchema(options)
+      assert(report.conforms)
+      assert(schema == expectedSchema)
+    }
+  }
+
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }

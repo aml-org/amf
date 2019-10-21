@@ -4,7 +4,7 @@ import amf._
 import amf.core.Root
 import amf.core.annotations.SourceAST
 import amf.core.client.ParsingOptions
-import amf.core.emitter.RenderOptions
+import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.model.document._
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser.{EmptyFutureDeclarations, ErrorHandler, LinkReference, ParserContext, RefContainer}
@@ -159,7 +159,10 @@ object Raml08Plugin extends RamlPlugin {
     case _                                    => false
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
+  override protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderOptions: RenderOptions,
+      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
       case document: Document => Some(RamlDocumentEmitter(document)(specContext(renderOptions)).emitDocument())
       case fragment: Fragment => Some(new RamlFragmentEmitter(fragment)(specContext(renderOptions)).emitFragment())
@@ -219,7 +222,10 @@ object Raml10Plugin extends RamlPlugin {
     case _                                    => false
   }
 
-  override protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] =
+  override protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderOptions: RenderOptions,
+      shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] =
     unit match {
       case module: Module             => Some(RamlModuleEmitter(module)(specContext(renderOptions)).emitModule())
       case document: Document         => Some(RamlDocumentEmitter(document)(specContext(renderOptions)).emitDocument())

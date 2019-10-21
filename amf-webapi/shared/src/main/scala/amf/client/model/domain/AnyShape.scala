@@ -3,7 +3,9 @@ package amf.client.model.domain
 import amf.client.convert.WebApiClientConverters._
 import amf.client.environment.Environment
 import amf.client.model.document.PayloadFragment
+import amf.client.render.ShapeRenderOptions
 import amf.client.validate.{PayloadValidator, ValidationReport}
+import amf.core.emitter.{ShapeRenderOptions => InternalShapeRenderOptions}
 import amf.plugins.domain.shapes.models.{AnyShape => InternalAnyShape}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
@@ -46,6 +48,9 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
     * Stores the result for futures toJsonSchema invocations.
     * Should use this method when you have mutated this instance */
   def buildJsonSchema(): String = _internal.buildJsonSchema()
+
+  def buildJsonSchema(options: ShapeRenderOptions): String =
+    _internal.buildJsonSchema(InternalShapeRenderOptions(options))
 
   /** If the shape was parsed of RAML, or a new RAML has been previously generated,
     * returns that value, otherwise generates a new RAML Data Type and stores
