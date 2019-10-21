@@ -7,6 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.{FieldEntry, Position}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.{Oas3SpecEmitterFactory, RamlScalarEmitter, SpecEmitterContext}
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
@@ -46,7 +47,11 @@ object OasResponseExamplesEmitter {
 case class Oas3ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry(keyName(example), _.obj(traverse(ordering.sorted(emitters), _)))
+    if (example.isLink) {
+      val refUrl = OasDefinitions.appendOas3ComponentsPrefix(example.linkLabel.value(), "examples")
+      b.entry(keyName(example), _.obj(_.entry("$ref", refUrl)))
+    } else
+      b.entry(keyName(example), _.obj(traverse(ordering.sorted(emitters), _)))
   }
 
   val emitters: Seq[EntryEmitter] = {

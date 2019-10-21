@@ -317,7 +317,11 @@ case class ParameterEmitter(parameter: Parameter,
     sourceOr(
       parameter.annotations,
       if (parameter.isLink) {
-        spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(parameter.linkLabel.value()))
+        spec.ref(
+          b,
+          if (asHeader) OasDefinitions.appendOas3ComponentsPrefix(parameter.linkLabel.value(), "headers")
+          else OasDefinitions.appendParameterDefinitionsPrefix(parameter.linkLabel.value())
+        )
       } else {
         val result = mutable.ListBuffer[EntryEmitter]()
         val fs     = parameter.fields
@@ -433,7 +437,8 @@ case class OasHeaderEmitter(parameter: Parameter, ordering: SpecOrdering, refere
   override def emit(b: EntryBuilder): Unit = {
     sourceOr(
       parameter.annotations,
-      if (parameter.isLink) emitLink(b) else emitParameter(b)
+      if (parameter.isLink && !spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) emitLink(b)
+      else emitParameter(b)
     )
   }
 

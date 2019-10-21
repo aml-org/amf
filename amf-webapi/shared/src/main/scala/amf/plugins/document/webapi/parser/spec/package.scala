@@ -13,22 +13,52 @@ package object spec {
   object OasDefinitions {
     val definitionsPrefix = "#/definitions/"
 
+    val oas3ComponentsPrefix = "#/components/"
+
     val parameterDefinitionsPrefix = "#/parameters/"
 
     val responsesDefinitionsPrefix = "#/responses/"
 
     def stripDefinitionsPrefix(url: String): String = url.stripPrefix(definitionsPrefix)
 
-    def stripParameterDefinitionsPrefix(url: String): String = url.stripPrefix(parameterDefinitionsPrefix)
+    def stripParameterDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
+      if (ctx.vendor == Vendor.OAS30)
+        stripOas3ComponentsPrefix(url, "parameters")
+      else
+        url.stripPrefix(parameterDefinitionsPrefix)
+    }
 
-    def stripResponsesDefinitionsPrefix(url: String): String = url.stripPrefix(responsesDefinitionsPrefix)
+    def stripOas3ComponentsPrefix(url: String, fieldName: String): String =
+      url.stripPrefix(oas3ComponentsPrefix + fieldName + "/")
+
+    def stripResponsesDefinitionsPrefix(url: String)(implicit ctx: OasWebApiContext): String = {
+      if (ctx.vendor == Vendor.OAS30)
+        stripOas3ComponentsPrefix(url, "responses")
+      else
+        url.stripPrefix(responsesDefinitionsPrefix)
+    }
 
     def appendDefinitionsPrefix(url: String): String =
       if (!url.startsWith(definitionsPrefix)) appendPrefix(definitionsPrefix, url) else url
 
-    def appendParameterDefinitionsPrefix(url: String): String = appendPrefix(parameterDefinitionsPrefix, url)
+    def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
+        implicit spec: OasSpecEmitterContext): String = {
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
+        appendOas3ComponentsPrefix(url, "parameters")
+      else
+        appendPrefix(parameterDefinitionsPrefix, url)
+    }
 
-    def appendResponsesDefinitionsPrefix(url: String): String = appendPrefix(responsesDefinitionsPrefix, url)
+    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: OasSpecEmitterContext): String = {
+      if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
+        appendOas3ComponentsPrefix(url, "responses")
+      else
+        appendPrefix(responsesDefinitionsPrefix, url)
+    }
+
+    def appendOas3ComponentsPrefix(url: String, fieldName: String): String = {
+      appendPrefix(oas3ComponentsPrefix + s"$fieldName/", url)
+    }
 
     private def appendPrefix(prefix: String, url: String): String = prefix + url
   }

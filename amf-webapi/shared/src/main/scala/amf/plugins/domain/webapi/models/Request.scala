@@ -3,7 +3,7 @@ package amf.plugins.domain.webapi.models
 import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.metamodel.{Field, Obj}
 import amf.core.model.{BoolField, StrField}
-import amf.core.model.domain.{NamedDomainElement, Shape}
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.metamodel.RequestModel._
@@ -11,7 +11,9 @@ import amf.plugins.domain.webapi.metamodel.RequestModel._
 /**
   * Request internal model.
   */
-class Request(override val fields: Fields, override val annotations: Annotations) extends NamedDomainElement {
+class Request(override val fields: Fields, override val annotations: Annotations)
+    extends NamedDomainElement
+    with Linkable {
 
   def description: StrField            = fields.field(Description)
   def required: BoolField              = fields.field(Required)
@@ -68,6 +70,12 @@ class Request(override val fields: Fields, override val annotations: Annotations
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/request"
+
+  override def linkCopy(): Linkable = Request().withId(id)
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    (fields, annot) => new Request(fields, annot)
 }
 
 object Request {

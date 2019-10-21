@@ -6,7 +6,12 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{Oas3SpecEmitterFactory, OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.{
+  Oas3SpecEmitterFactory,
+  OasSpecEmitterContext,
+  RamlScalarEmitter,
+  RamlSpecEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
@@ -138,10 +143,11 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
     fs.entry(OperationModel.Security)
       .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))
 
-    operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach  { f: FieldEntry =>
+    operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
       val callbacks: Seq[Callback] = f.arrayValues
-      val annotations = f.value.annotations
-      result += EntryPartEmitter("callbacks".asRamlAnnotation, OasCallbacksEmitter(callbacks, ordering, references, annotations)(toOas(spec)))
+      val annotations              = f.value.annotations
+      result += EntryPartEmitter("callbacks".asRamlAnnotation,
+                                 OasCallbacksEmitter(callbacks, ordering, references, annotations)(toOas(spec)))
 
     }
     result
@@ -163,14 +169,21 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
   override def position(): Position = pos(operation.annotations)
 }
 
-case class OasCallbacksEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, references: Seq[BaseUnit], annotations: Annotations)(
-  implicit spec: OasSpecEmitterContext)
-  extends PartEmitter {
+case class OasCallbacksEmitter(callbacks: Seq[Callback],
+                               ordering: SpecOrdering,
+                               references: Seq[BaseUnit],
+                               annotations: Annotations)(implicit spec: OasSpecEmitterContext)
+    extends PartEmitter {
   override def emit(b: PartBuilder): Unit = {
     sourceOr(
       annotations,
       b.obj { b =>
-        val emitters = callbacks.map(callback => EntryPartEmitter(callback.name.value(), OasCallbackEmitter(callback, ordering, references), YType.Str, pos(callback.annotations)))
+        val emitters = callbacks.map(
+          callback =>
+            EntryPartEmitter(callback.name.value(),
+                             OasCallbackEmitter(callback, ordering, references),
+                             YType.Str,
+                             pos(callback.annotations)))
         traverse(ordering.sorted(emitters), b)
       }
     )
@@ -180,13 +193,17 @@ case class OasCallbacksEmitter(callbacks: Seq[Callback], ordering: SpecOrdering,
 }
 
 case class OasCallbackEmitter(callback: Callback, ordering: SpecOrdering, references: Seq[BaseUnit])(
-  implicit spec: OasSpecEmitterContext)
-  extends PartEmitter {
+    implicit spec: OasSpecEmitterContext)
+    extends PartEmitter {
 
   override def emit(p: PartBuilder): Unit = {
-    p.obj(
-      traverse(Seq(OasDocumentEmitter.endpointEmitter(callback.endpoint, ordering, references, spec)), _)
-    )
+    if (callback.isLink)
+      callback.linkTarget.foreach { l =>
+        OasTagToReferenceEmitter(l, callback.linkLabel.option(), references).emit(p)
+      } else
+      p.obj(
+        traverse(Seq(OasDocumentEmitter.endpointEmitter(callback.endpoint, ordering, references, spec)), _)
+      )
   }
 
   override def position(): Position = pos(callback.annotations)

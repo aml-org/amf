@@ -23,6 +23,7 @@ import amf.plugins.document.webapi.contexts.{
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models._
@@ -502,9 +503,14 @@ case class Oas3RequestBodyEmitter(request: Request, ordering: SpecOrdering, refe
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val result = Oas3RequestBodyEmitter.emitters(request, ordering, references)
-    if (result.nonEmpty)
-      b.entry("requestBody", _.obj(traverse(ordering.sorted(result), _)))
+    if (request.isLink) {
+      val refUrl = OasDefinitions.appendOas3ComponentsPrefix(request.linkLabel.value(), "requestBodies")
+      b.entry("requestBody", _.obj(_.entry("$ref", refUrl)))
+    } else {
+      val result = Oas3RequestBodyEmitter.emitters(request, ordering, references)
+      if (result.nonEmpty)
+        b.entry("requestBody", _.obj(traverse(ordering.sorted(result), _)))
+    }
   }
 
   override def position(): Position = pos(request.payloads.headOption.getOrElse(request).annotations)

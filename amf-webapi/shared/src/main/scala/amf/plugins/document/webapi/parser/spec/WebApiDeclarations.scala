@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec
 
-import amf.core.annotations.DeclaredElement
+import amf.core.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
@@ -114,6 +114,8 @@ class WebApiDeclarations(val alias: Option[String],
         traits = traits + (t.name.value() -> t)
       case s: Shape =>
         addSchema(s)
+      case h: Parameter if h.annotations.contains(classOf[DeclaredHeader]) =>
+        headers = headers + (h.name.value() -> h)
       case p: Parameter =>
         parameters = parameters + (p.name.value() -> p)
       case p: Payload =>
@@ -189,14 +191,10 @@ class WebApiDeclarations(val alias: Option[String],
     }
 
   def findParameter(key: String, scope: SearchScope.Scope): Option[Parameter] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].parameters, scope) collect {
-      case p: Parameter => p
-    }
+    findDeclaration[Parameter](key, scope, _.parameters)
 
   def findPayload(key: String, scope: SearchScope.Scope): Option[Payload] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].payloads, scope) collect {
-      case p: Payload => p
-    }
+    findDeclaration[Payload](key, scope, _.payloads)
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
     findResourceType(key, scope) match {
@@ -278,9 +276,12 @@ class WebApiDeclarations(val alias: Option[String],
     }
 
   def findResponse(key: String, scope: SearchScope.Scope): Option[Response] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].responses, scope) collect {
-      case re: Response => re
-    }
+    findDeclaration[Response](key, scope, _.responses)
+
+  def findDeclaration[T](key: String,
+                         scope: SearchScope.Scope,
+                         map: WebApiDeclarations => Map[String, DomainElement]): Option[T] =
+    findForType(key, dec => map(dec.asInstanceOf[WebApiDeclarations]), scope).map(_.asInstanceOf[T])
 
   def findResponseOrError(ast: YPart)(key: String, searchScope: SearchScope.Scope): Response =
     findResponse(key, searchScope) match {
@@ -371,6 +372,10 @@ object WebApiDeclarations {
       extends Parameter(Fields(), Annotations(ast))
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorParameter/"
+    withId(idPart)
+  }
+  class ErrorLink(idPart: String, ast: YPart) extends TemplatedLink(Fields(), Annotations(ast)) with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#errorTemplateLink/"
     withId(idPart)
   }
   case class ErrorResponse(idPart: String, ast: YPart)

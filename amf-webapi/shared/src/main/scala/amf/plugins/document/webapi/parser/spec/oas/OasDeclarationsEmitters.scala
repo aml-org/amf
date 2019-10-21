@@ -50,13 +50,11 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
 
     val oasParams = declarations.parameters.values.map(OasParameter(_)) ++ declarations.payloads.values
       .map(OasParameter(_))
-    if (oasParams.nonEmpty) {
-      val (headerDeclarations, params) =
-        oasParams.partition(_.parameter.exists(_.annotations.contains(classOf[DeclaredHeader])))
-      if (params.nonEmpty) result += OasDeclaredParametersEmitter(params.toSeq, ordering, references)
-      if (headerDeclarations.nonEmpty)
-        result += OasDeclaredHeadersEmitter(headerDeclarations.flatMap(_.parameter).toSeq, ordering, references)
-    }
+    if (oasParams.nonEmpty)
+      result += OasDeclaredParametersEmitter(oasParams.toSeq, ordering, references)
+
+    if (declarations.headers.nonEmpty)
+      result += OasDeclaredHeadersEmitter(declarations.headers.values.toSeq, ordering, references)
 
     if (declarations.responses.nonEmpty)
       result += OasDeclaredResponsesEmitter("responses", declarations.responses.values.toSeq, ordering, references)

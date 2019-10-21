@@ -2,7 +2,7 @@ package amf.plugins.domain.webapi.models
 
 import amf.core.metamodel.Field
 import amf.core.model.StrField
-import amf.core.model.domain.NamedDomainElement
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.Strings
 import amf.plugins.domain.webapi.metamodel.CallbackModel
@@ -12,7 +12,7 @@ import org.yaml.model.YMap
 /**
   * Callback internal model
   */
-case class Callback(fields: Fields, annotations: Annotations) extends NamedDomainElement {
+case class Callback(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 
   def expression: StrField = fields.field(Expression)
   def endpoint: EndPoint   = fields.field(Endpoint)
@@ -31,6 +31,12 @@ case class Callback(fields: Fields, annotations: Annotations) extends NamedDomai
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String        = "/" + name.option().getOrElse("default-callback").urlComponentEncoded
   override protected def nameField: Field = Name
+
+  override def linkCopy(): Linkable = Callback().withId(id)
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    (fields, annot) => new Callback(fields, annot)
 }
 
 object Callback {

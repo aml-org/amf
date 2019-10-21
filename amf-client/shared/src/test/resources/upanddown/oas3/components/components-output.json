@@ -32,7 +32,40 @@
     },
     "responses": {
       "NotFound": {
-        "description": "Entity not found."
+        "description": "Entity not found.",
+        "headers": {
+          "someKey": {
+            "$ref": "#/components/headers/someHeader"
+          }
+        },
+        "links": {
+          "someLink": {
+            "$ref": "#/components/links/someLink"
+          }
+        }
+      },
+      "Success": {
+        "description": "A simple string response",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "integerExample": {
+        "value": 5
+      },
+      "productExample": {
+        "value": {
+          "id": 43
+        }
+      },
+      "stringExample": {
+        "value": "some example"
       }
     },
     "parameters": {
@@ -42,8 +75,12 @@
         "description": "max records to return",
         "required": true,
         "schema": {
-          "type": "integer",
-          "format": "int32"
+          "$ref": "#/components/schemas/Product"
+        },
+        "examples": {
+          "simpleExample": {
+            "$ref": "#/components/examples/productExample"
+          }
         }
       }
     },
@@ -57,6 +94,11 @@
                 "application/json": {
                   "schema": {
                     "type": "string"
+                  },
+                  "examples": {
+                    "someExample": {
+                      "$ref": "#/components/examples/stringExample"
+                    }
                   }
                 }
               }
@@ -70,11 +112,6 @@
         }
       }
     },
-    "examples": {
-      "integerExample": {
-        "value": 5
-      }
-    },
     "requestBodies": {
       "someRequest": {
         "description": "description of the request",
@@ -82,12 +119,7 @@
         "content": {
           "application/xml": {
             "schema": {
-              "type": "object",
-              "properties": {
-                "b": {
-                  "type": "number"
-                }
-              }
+              "$ref": "#/components/schemas/Product"
             }
           }
         }
@@ -108,5 +140,40 @@
       }
     }
   },
-  "paths": {}
+  "paths": {
+    "/endpoint": {
+      "summary": "This is the",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/limitParam"
+        }
+      ],
+      "post": {
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/limitParam"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/someRequest"
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/Success"
+          }
+        },
+        "callbacks": {
+          "someCallback": {
+            "$ref": "#/components/callbacks/myWebhook"
+          }
+        }
+      }
+    }
+  }
 }

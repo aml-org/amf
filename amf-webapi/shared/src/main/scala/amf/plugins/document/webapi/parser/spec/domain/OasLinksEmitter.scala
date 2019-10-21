@@ -6,6 +6,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, Position}
 import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
+import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel
 import amf.plugins.domain.webapi.models.{IriTemplateMapping, TemplatedLink}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -42,8 +43,14 @@ case class OasLinkEmitter(link: TemplatedLink, ordering: SpecOrdering, reference
     extends PartEmitter {
 
   override def emit(p: PartBuilder): Unit = {
-    val result = OasLinkEmitter.emitters(link, ordering, references)
-    p.obj(traverse(ordering.sorted(result), _))
+    if (link.isLink) {
+      link.linkTarget.foreach { l =>
+        OasTagToReferenceEmitter(l, link.linkLabel.option(), references).emit(p)
+      }
+    } else {
+      val result = OasLinkEmitter.emitters(link, ordering, references)
+      p.obj(traverse(ordering.sorted(result), _))
+    }
   }
 
   override def position(): Position = pos(link.annotations)

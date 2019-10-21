@@ -8,6 +8,7 @@ import amf.plugins.document.webapi.annotations.ParsedJSONExample
 import amf.plugins.document.webapi.contexts.RamlWebApiContextType.DEFAULT
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -87,8 +88,9 @@ case class Oas3ResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiC
     val name    = yMapEntry.key.as[YScalar].text
     val example = Example(yMapEntry).withName(name)
     if (ctx.syntax == Oas3Syntax) {
-      Oas3SingleExampleValueParser(yMapEntry, { () =>
-        example
+      Oas3SingleExampleValueParser(yMapEntry, (ex) => {
+        ex.add(Annotations(yMapEntry))
+        ex.withName(name)
       }, ExampleOptions(strictDefault = false, quiet = true)).parse()
     } else {
       RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true))
@@ -237,39 +239,53 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
   }
 }
 
-case class Oas3SingleExampleValueParser(entry: YMapEntry, producer: () => Example, options: ExampleOptions)(
+case class Oas3SingleExampleValueParser(entry: YMapEntry, adopt: Example => Unit, options: ExampleOptions)(
     implicit ctx: WebApiContext)
     extends SpecParserOps {
   def parse(): Example = {
-    val example = producer().add(Annotations(entry))
+    val example = Example()
+    adopt(example)
 
-    entry.value.tagType match {
+    val parsedExample = entry.value.tagType match {
       case YType.Map =>
         val map = entry.value.as[YMap]
+        val result = ctx.link(map) match {
+          case Left(fullRef) =>
+            val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
+            ctx.declarations
+              .findDeclaration[Example](name, SearchScope.All, _.examples)
+              .map(found => {
+                val ex: Example = found.link(name)
+                adopt(ex)
+                ex
+              })
+          case Right(_) =>
+            if (map.key("value").nonEmpty) {
+              map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
+              map.key("description", (ExampleModel.Description in example).allowingAnnotations)
+              map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
 
-        if (map.key("value").nonEmpty) {
-          map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
-          map.key("description", (ExampleModel.Description in example).allowingAnnotations)
-          map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
+              // OAS examples are not strict
+              example.withStrict(false)
 
-          // OAS examples are not strict
-          example.withStrict(false)
+              map
+                .key("value")
+                .foreach { entry =>
+                  RamlExampleValueAsString(entry.value, example, options).populate()
+                }
 
-          map
-            .key("value")
-            .foreach { entry =>
-              RamlExampleValueAsString(entry.value, example, options).populate()
-            }
+              AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
-          AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
-
-          if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
-        } else RamlExampleValueAsString(entry.value, example, options).populate()
-      case YType.Null => // ignore
-      case _          => RamlExampleValueAsString(entry.value, example, options).populate()
+              if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
+              Some(example)
+            } else Some(RamlExampleValueAsString(entry.value, example, options).populate())
+        }
+        result
+      case YType.Null => None
+      case _          => Some(RamlExampleValueAsString(entry.value, example, options).populate())
     }
 
-    example
+    parsedExample.getOrElse(example)
   }
 }
 

@@ -113,7 +113,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     parseResponsesDeclarations("responses", map, parent + "/responses")
   }
 
-  private def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
+  protected def parseAnnotationTypeDeclarations(map: YMap, customProperties: String): Unit = {
 
     map.key(
       "annotationTypes".asOasExtension,
@@ -164,7 +164,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     )
   }
 
-  private def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
+  protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
     map.key(
       securityKey,
       e => {
@@ -202,7 +202,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     )
   }
 
-  private def parseParameterDeclarations(map: YMap, parentPath: String): Unit = {
+  protected def parseParameterDeclarations(map: YMap, parentPath: String): Unit = {
     map.key(
       "parameters",
       entry => {
@@ -230,7 +230,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     )
   }
 
-  private def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {
+  protected def parseResponsesDeclarations(key: String, map: YMap, parentPath: String): Unit = {
     map.key(
       key,
       entry => {
@@ -515,50 +515,65 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
-  case class RequestParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
+  case class RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
       if (ctx.syntax == Oas3Syntax) {
-        Oas3RequestParser(map, producer).parse()
+        Oas3RequestParser(map, adopt).parse()
       } else {
-        Oas2RequestParser(map, producer).parse()
+        Oas2RequestParser(map, adopt).parse()
       }
     }
   }
 
-  case class Oas3RequestParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
+  case class Oas3RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
-      val request = producer()
+      ctx.link(map) match {
+        case Left(fullRef) =>
+          val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "requestBodies")
+          ctx.declarations
+            .findDeclaration[Request](name, SearchScope.All, _.requests)
+            .map(req => {
+              val linkReq: Request = req.link(name, Annotations(map))
+              linkReq.withName(name)
+              adopt(linkReq)
+              linkReq
+            })
+        case Right(_) =>
+          val request = Request()
+          adopt(request)
 
-      map.key("description", RequestModel.Description in request)
-      map.key("required", RequestModel.Required in request)
+          map.key("description", RequestModel.Description in request)
+          map.key("required", RequestModel.Required in request)
 
-      val payloads = mutable.ListBuffer[Payload]()
+          val payloads = mutable.ListBuffer[Payload]()
 
-      map.key(
-        "content",
-        entry =>
-          entry.value
-            .as[YMap]
-            .entries
-            .foreach { entry =>
-              val mediaType = ScalarNode(entry.key).text().value.toString
-              payloads += OasContentParser(entry.value, mediaType, request.withPayload).parse()
-          }
-      )
+          map.key(
+            "content",
+            entry =>
+              entry.value
+                .as[YMap]
+                .entries
+                .foreach { entry =>
+                  val mediaType = ScalarNode(entry.key).text().value.toString
+                  payloads += OasContentParser(entry.value, mediaType, request.withPayload).parse()
+              }
+          )
+          request.set(ResponseModel.Payloads, AmfArray(payloads))
 
-      request.set(ResponseModel.Payloads, AmfArray(payloads))
-
-      AnnotationParser(request, map).parse()
-
-      ctx.closedShape(request.id, map, "request")
-
-      Some(request)
+          AnnotationParser(request, map).parse()
+          ctx.closedShape(request.id, map, "request")
+          Some(request)
+      }
     }
   }
 
-  case class Oas2RequestParser(map: YMap, producer: () => Request)(implicit ctx: OasWebApiContext) {
+  case class Oas2RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
-      val request    = new Lazy[Request](producer)
+      val request = new Lazy[Request](() => {
+        val req = Request()
+        adopt(req)
+        req
+      })
       var parameters = Parameters()
       var entries    = ListBuffer[YMapEntry]()
 
@@ -687,18 +702,33 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
-  case class CallbackParser(callbackEntry: YMapEntry, producer: String => Callback) {
-    def parse(): Callback = {
-      val name               = callbackEntry.key.as[YScalar].text
-      val map                = callbackEntry.value.as[YMap]
-      val callbackOperations = map.entries
-      val callback           = producer(name).add(Annotations(map))
-      if (callbackOperations.size != 1) {
-        // TODO throw violation here
-      } else {
-        EndpointParser(callbackOperations.head, callback.withEndpoint, mutable.ListBuffer.empty).parse()
+  case class CallbackParser(callbackEntry: YMapEntry, adopt: Callback => Unit) {
+    def parse(): Option[Callback] = {
+      val name = callbackEntry.key.as[YScalar].text
+      val map  = callbackEntry.value.as[YMap]
+      ctx.link(map) match {
+        case Left(fullRef) =>
+          val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "callbacks")
+          ctx.declarations
+            .findDeclaration[Callback](label, SearchScope.All, _.callbacks)
+            .map(callback => {
+              val linkCallback: Callback = callback.link(label, Annotations(map))
+              linkCallback.withName(name)
+              adopt(linkCallback)
+              linkCallback
+            })
+        case Right(_) =>
+          val callbackOperations = map.entries
+          val callback           = Callback().withName(name).add(Annotations(map))
+          adopt(callback)
+          if (callbackOperations.size != 1) {
+            // TODO throw violation here
+          } else {
+            EndpointParser(callbackOperations.head, callback.withEndpoint, mutable.ListBuffer.empty).parse()
+          }
+          Some(callback)
       }
-      callback
+
     }
   }
 
@@ -738,7 +768,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         map.key(
           "requestBody",
           entry => {
-            Oas3RequestParser(entry.value.as[YMap], operation.withRequest).parse()
+            Oas3RequestParser(entry.value.as[YMap], req => operation.withRequest(req)).parse()
           }
         )
 
@@ -749,12 +779,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         map.key(
           "callbacks",
           entry => {
-            entry.value
+            val callbacks = entry.value
               .as[YMap]
               .entries
-              .map { callbackEntry =>
-                CallbackParser(callbackEntry, operation.withCallback).parse()
+              .flatMap { callbackEntry =>
+                CallbackParser(callbackEntry, _.adopted(operation.id)).parse()
               }
+            operation.withCallbacks(callbacks)
           }
         )
         ctx.factory.serversParser(map, operation).parse()
@@ -790,7 +821,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       // oas 2.0
       if (ctx.syntax == Oas2Syntax) {
-        RequestParser(map, () => operation.withRequest())
+        RequestParser(map, req => operation.withRequest(req))
           .parse()
           .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
       }

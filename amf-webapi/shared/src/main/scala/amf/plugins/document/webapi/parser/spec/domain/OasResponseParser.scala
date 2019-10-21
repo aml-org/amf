@@ -15,6 +15,7 @@ import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, Response
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.{YMap, YMapEntry}
 import amf.core.utils.Strings
+import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
 
 import scala.collection.mutable
 
@@ -44,7 +45,7 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              OasHeaderParametersParser(entry.value.as[YMap], res.withHeader).parse()
+              OasHeaderParametersParser(entry.value.as[YMap], res.add(Headers, _)).parse()
             res.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
           }
         )
@@ -79,7 +80,6 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
               .map(value => payloads += OasPayloadParser(value, res.withPayload).parse())
         )
 
-
         // OAS 3.0.0
         if (ctx.syntax == Oas3Syntax) {
           map.key(
@@ -102,8 +102,9 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
                 .entries
                 .foreach { entry =>
                   val linkName = ScalarNode(entry.key).text().value.toString
-                  OasLinkParser(entry.value, linkName, res.withLink).parse()
-                }
+                  OasLinkParser(entry.value, linkName, link => res.add(ResponseModel.Links, link).adopted(res.id))
+                    .parse()
+              }
           )
         }
 

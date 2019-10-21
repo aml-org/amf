@@ -9,7 +9,7 @@ import amf.core.parser.Position
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecEmitter
-import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
+import amf.plugins.domain.webapi.models.{Callback, Parameter, Payload, Response, TemplatedLink}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
@@ -31,6 +31,10 @@ case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String]
         spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(referenceLabel))
       case r: Response if r.annotations.contains(classOf[DeclaredElement]) =>
         spec.ref(b, OasDefinitions.appendResponsesDefinitionsPrefix(referenceLabel))
+      case c: Callback if c.annotations.contains(classOf[DeclaredElement]) =>
+        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "callbacks"))
+      case c: TemplatedLink if c.annotations.contains(classOf[DeclaredElement]) =>
+        spec.ref(b, OasDefinitions.appendOas3ComponentsPrefix(referenceLabel, "links"))
       case _ => spec.ref(b, referenceLabel)
     }
   }
