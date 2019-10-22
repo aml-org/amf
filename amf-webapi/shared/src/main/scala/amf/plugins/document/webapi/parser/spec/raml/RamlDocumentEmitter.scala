@@ -351,7 +351,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
       if (notOas) {
         val graph                                               = endpoints.map(e => (e, e.parent.toSet)).toMap
         val all: mutable.ListMap[EndPoint, RamlEndPointEmitter] = mutable.ListMap[EndPoint, RamlEndPointEmitter]()
-        tsort(graph, Seq()).foreach(e => {
+        tsort(graph, Seq()).foreach(_.foreach(e => {
           val emitter = spec.factory.endpointEmitter(e, ordering, ListBuffer(), references)
           e.parent match {
             case Some(parent) =>
@@ -359,7 +359,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
               all += (e -> emitter)
             case _ => all += (e -> emitter)
           }
-        })
+        }))
         defaultOrder(
           all
             .filterKeys(_.parent.isEmpty)
