@@ -21,7 +21,7 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.webapi.metamodel.WebApiModel
+import amf.plugins.domain.webapi.metamodel.{ResponseModel, WebApiModel}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
@@ -307,13 +307,16 @@ abstract class RamlBaseDocumentParser(implicit ctx: RamlWebApiContext) extends R
         entry.value
           .as[YMap]
           .entries
-          .foreach(e => {
-            ctx.declarations +=
-              OasResponseParser(e, (r: Response) => r.adopted(parentPath))(toOas(ctx))
-                .parse()
-                .add(DeclaredElement())
-
-          })
+          .foreach { e =>
+            val node = ScalarNode(e.key).text()
+            val res = OasResponseParser(e.value.as[YMap], { r: Response =>
+              r.set(ResponseModel.Name, node).adopted(parentPath)
+              r.annotations ++= Annotations(e)
+            })(toOas(ctx))
+              .parse()
+            res.add(DeclaredElement())
+            ctx.declarations += res
+          }
       }
     )
   }

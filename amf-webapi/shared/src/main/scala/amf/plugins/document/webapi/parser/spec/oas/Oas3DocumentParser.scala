@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 }
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Callback, Parameter, Request, TemplatedLink, WebApi}
+import amf.plugins.domain.webapi.models.{Parameter, WebApi}
 import org.yaml.model._
 
 case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
@@ -108,9 +108,12 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .entries
           .foreach { entry =>
             val linkName = ScalarNode(entry.key).text().value.toString
-            val link     = OasLinkParser(entry.value, linkName, (link) => link.adopted(parent)).parse()
-            link.add(DeclaredElement())
-            ctx.declarations += link
+            OasLinkParser(entry.value, linkName, (link) => link.adopted(parent))
+              .parse()
+              .foreach { link =>
+                link.add(DeclaredElement())
+                ctx.declarations += link
+              }
         }
     )
   }
@@ -123,11 +126,10 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .as[YMap]
           .entries
           .map { callbackEntry =>
-            val callback = CallbackParser(callbackEntry, _.adopted(parent)).parse()
-            callback.map(parsed => {
-              parsed.add(DeclaredElement())
-              ctx.declarations += parsed
-            })
+            val name     = callbackEntry.key.as[YScalar].text
+            val callback = CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent)).parse()
+            callback.add(DeclaredElement())
+            ctx.declarations += callback
           }
       }
     )

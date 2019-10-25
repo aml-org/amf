@@ -17,9 +17,24 @@
           "url": "http://test.com/servera",
           "description": "a description"
         }
+      },
+      "extLink": {
+        "operationRef": "#/paths/test",
+        "parameters": {
+          "paramA": "$request.path.id"
+        },
+        "requestBody": "$request.body",
+        "description": "another link",
+        "server": {
+          "url": "http://test.com/serverb",
+          "description": "b description"
+        }
       }
     },
     "schemas": {
+      "External": {
+        "type": "number"
+      },
       "Product": {
         "type": "object",
         "properties": {
@@ -53,6 +68,9 @@
             }
           }
         }
+      },
+      "extResponse": {
+        "description": "some response"
       }
     },
     "examples": {
@@ -66,9 +84,21 @@
       },
       "stringExample": {
         "value": "some example"
+      },
+      "extExample": {
+        "value": "some example",
+        "description": "this example is found in external file"
       }
     },
     "parameters": {
+      "extParam": {
+        "in": "path",
+        "name": "itemId",
+        "deprecated": true,
+        "schema": {
+          "type": "object"
+        }
+      },
       "limitParam": {
         "name": "limit",
         "in": "query",
@@ -85,6 +115,27 @@
       }
     },
     "callbacks": {
+      "extCallback": {
+        "http://notificationServer2.com?transactionId={$request.body#/id}&email={$request.body}": {
+          "post": {
+            "requestBody": {
+              "description": "Callback payload 2",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200": {
+                "description": "webhook 2 successfully processed and no retries will be performed"
+              }
+            }
+          }
+        }
+      },
       "myWebhook": {
         "http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body}": {
           "post": {
@@ -123,6 +174,17 @@
             }
           }
         }
+      },
+      "extRequest": {
+        "description": "description of external request",
+        "required": true,
+        "content": {
+          "application/xml": {
+            "schema": {
+              "type": "integer"
+            }
+          }
+        }
       }
     },
     "headers": {
@@ -131,12 +193,22 @@
         "schema": {
           "type": "integer"
         }
+      },
+      "extHeader": {
+        "description": "Some header defined in external file",
+        "schema": {
+          "type": "string"
+        }
       }
     },
     "securitySchemes": {
       "openIdConnectType": {
         "type": "openIdConnect",
         "openIdConnectUrl": "https://test.com/"
+      },
+      "extSecurityScheme": {
+        "type": "http",
+        "scheme": "string"
       }
     }
   },

@@ -17,6 +17,9 @@
           "url": "http://test.com/servera",
           "description": "a description"
         }
+      },
+      "extLink": {
+        "$ref": "definitions.json#/SimpleLink"
       }
     },
     "schemas": {
@@ -28,6 +31,9 @@
             "format": "int64"
           }
         }
+      },
+      "External": {
+        "$ref": "definitions.json#/NumberSchema"
       }
     },
     "responses": {
@@ -53,6 +59,9 @@
             }
           }
         }
+      },
+      "extResponse": {
+        "$ref": "definitions.json#/SimpleResponse"
       }
     },
     "examples": {
@@ -66,6 +75,9 @@
       },
       "stringExample": {
         "value": "some example"
+      },
+      "extExample": {
+        "$ref": "definitions.json#/SimpleExample"
       }
     },
     "parameters": {
@@ -82,6 +94,9 @@
             "$ref": "#/components/examples/productExample"
           }
         }
+      },
+      "extParam": {
+        "$ref": "definitions.json#/SimpleParam"
       }
     },
     "callbacks": {
@@ -110,6 +125,9 @@
             }
           }
         }
+      },
+      "extCallback": {
+        "$ref": "definitions.json#/SimpleCallback"
       }
     },
     "requestBodies": {
@@ -123,6 +141,9 @@
             }
           }
         }
+      },
+      "extRequest": {
+        "$ref": "simpleRequest.json"
       }
     },
     "headers": {
@@ -131,12 +152,18 @@
         "schema": {
           "type": "integer"
         }
+      },
+      "extHeader": {
+        "$ref": "definitions.json#/SimpleHeader"
       }
     },
     "securitySchemes": {
       "openIdConnectType": {
         "type": "openIdConnect",
         "openIdConnectUrl": "https://test.com/"
+      },
+      "extSecurityScheme": {
+        "$ref": "definitions.json#/SimpleScheme"
       }
     }
   },

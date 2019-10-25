@@ -1,13 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.model.domain.AmfArray
-import amf.core.parser.{Annotations, ScalarNode, _}
+import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.metamodel.EncodingModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
 import amf.plugins.domain.webapi.models.{Encoding, Parameter}
-import org.yaml.model.{YMap, YNode, YScalar}
+import org.yaml.model.{YMap, YScalar}
 
 case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
@@ -24,7 +23,10 @@ case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit c
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              OasHeaderParametersParser(entry.value.as[YMap], encoding.add(Headers, _)).parse()
+              OasHeaderParametersParser(entry.value.as[YMap], { header =>
+                header.adopted(encoding.id)
+                encoding.add(Headers, header)
+              }).parse()
             encoding.setArray(EncodingModel.Headers, parameters, Annotations(entry))
           }
         )

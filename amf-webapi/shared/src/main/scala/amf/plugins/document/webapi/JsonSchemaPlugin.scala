@@ -91,17 +91,31 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     }
   }
 
-  def parseParameterFragment(inputFragment: Fragment,
-                             pointer: Option[String],
-                             parentId: String,
-                             jsonContext: OasWebApiContext)(implicit ctx: OasWebApiContext): Option[OasParameter] = {
-
+  def obtainRootAst(inputFragment: Fragment, pointer: Option[String])(implicit ctx: WebApiContext): Option[YNode] = {
     val encoded: YNode = getYNode(inputFragment, ctx)
     val doc: Root      = getRoot(inputFragment, pointer, encoded)
 
-    parseOasParameter(doc, ctx, parentId, jsonContext)
+    doc.parsed match {
+      case parsedDoc: SyamlParsedDocument =>
+        val shapeId: String      = if (doc.location.contains("#")) doc.location else doc.location + "#/"
+        val parts: Array[String] = doc.location.split("#")
+        val url: String          = parts.head
+        val hashFragment: Option[String] =
+          parts.tail.headOption.map(t => if (t.startsWith("/")) t.stripPrefix("/") else t)
 
+        val jsonSchemaContext = getJsonSchemaContext(doc, ctx, url)
+        val rootAst           = getRootAst(doc, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
+        Some(rootAst)
+
+      case _ => None
+    }
   }
+
+  def parseParameterFragment(inputFragment: Fragment, pointer: Option[String], parentId: String)(
+      implicit ctx: OasWebApiContext): Option[OasParameter] =
+    obtainRootAst(inputFragment, pointer).map { node =>
+      ctx.factory.parameterParser(Right(node), parentId, None, new IdCounter()).parse
+    }
 
   private def getYNode(inputFragment: Fragment, ctx: WebApiContext): YNode = {
     inputFragment match {
@@ -225,27 +239,6 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
           DataTypeFragment().withId(document.location).withLocation(document.location).withEncodes(parsed)
         unit.withRaw(document.raw)
         Some(unit)
-
-      case _ => None
-    }
-  }
-
-  def parseOasParameter(document: Root,
-                        parentContext: ParserContext,
-                        parentId: String,
-                        ctx: OasWebApiContext): Option[OasParameter] = {
-
-    document.parsed match {
-      case parsedDoc: SyamlParsedDocument =>
-        val shapeId: String      = if (document.location.contains("#")) document.location else document.location + "#/"
-        val parts: Array[String] = document.location.split("#")
-        val url: String          = parts.head
-        val hashFragment: Option[String] =
-          parts.tail.headOption.map(t => if (t.startsWith("/")) t.stripPrefix("/") else t)
-
-        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
-        val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
-        Some(ctx.factory.parameterParser(Right(rootAst), parentId, None, new IdCounter()).parse)
 
       case _ => None
     }

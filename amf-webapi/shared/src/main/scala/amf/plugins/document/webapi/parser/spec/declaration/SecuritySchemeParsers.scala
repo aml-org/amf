@@ -6,6 +6,7 @@ import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml}
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorSecurityScheme
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.{isOasAnnotation, isRamlAnnotation}
 import amf.plugins.document.webapi.parser.spec.common._
@@ -13,8 +14,9 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.security._
-import amf.plugins.domain.webapi.models.security._
+import amf.plugins.domain.webapi.models.security.{SecurityScheme, _}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
+import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
@@ -28,7 +30,12 @@ object SecuritySchemeParser {
       implicit ctx: WebApiContext): SecuritySchemeParser = // todo factory for oas too?
     ctx.vendor match {
       case _: Raml => RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx))
-      case _: Oas  => OasSecuritySchemeParser(entry, entry.key, entry.value, adopt)(toOas(ctx))
+      case _: Oas =>
+        OasSecuritySchemeParser(entry.value, scheme => {
+          val name = entry.key.as[YScalar].text
+          scheme.add(Annotations(entry))
+          adopt(scheme, name)
+        })(toOas(ctx))
       case other =>
         ctx.violation(UnexpectedVendor, "", s"Unsupported vendor $other in security scheme parsers", entry)
         RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx)) // use raml as default?
@@ -208,18 +215,15 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
   }
 }
 
-case class OasSecuritySchemeParser(ast: YPart,
-                                   key: String,
-                                   node: YNode,
-                                   adopt: (SecurityScheme, String) => SecurityScheme)(implicit ctx: OasWebApiContext)
+case class OasSecuritySchemeParser(node: YNode, adopt: SecurityScheme => SecurityScheme)(
+    implicit ctx: OasWebApiContext)
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
     ctx.link(node) match {
-      case Left(link) => parseReferenced(key, link, Annotations(node), adopt)
+      case Left(link) => parseReferenced(link, node, adopt)
       case Right(value) =>
-        val scheme = adopt(SecurityScheme(ast), key)
-
-        val map = value.as[YMap]
+        val scheme = adopt(SecurityScheme())
+        val map    = value.as[YMap]
 
         // 3 stages
         // 2 pipes
@@ -275,7 +279,7 @@ case class OasSecuritySchemeParser(ast: YPart,
         ctx.factory
           .securitySettingsParser(map, scheme)
           .parse()
-          .foreach(scheme.set(SecuritySchemeModel.Settings, _, Annotations(ast)))
+          .foreach(scheme.set(SecuritySchemeModel.Settings, _, Annotations(map)))
 
         AnnotationParser(scheme, map).parse()
 
@@ -283,16 +287,26 @@ case class OasSecuritySchemeParser(ast: YPart,
     }
   }
 
-  def parseReferenced(name: String,
-                      parsedUrl: String,
-                      annotations: Annotations,
-                      adopt: (SecurityScheme, String) => SecurityScheme): SecurityScheme = {
-    val scheme = ctx.declarations
-      .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.Fragments)
-
-    val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
-    adopt(copied, name)
-    copied.withName(name)
+  def parseReferenced(parsedUrl: String, node: YNode, adopt: SecurityScheme => SecurityScheme): SecurityScheme = {
+    ctx.declarations
+      .findSecurityScheme(parsedUrl, SearchScope.Fragments)
+      .map(securityScheme => {
+        val scheme: SecurityScheme = securityScheme.link(parsedUrl, Annotations(node))
+        adopt(scheme)
+        scheme
+      })
+      .getOrElse {
+        ctx.obtainRemoteYNode(parsedUrl) match {
+          case Some(schemeNode) =>
+            OasSecuritySchemeParser(schemeNode, adopt).parse()
+          case None =>
+            ctx.violation(CoreValidations.UnresolvedReference,
+                          "",
+                          s"Cannot find link reference $parsedUrl",
+                          Annotations(node))
+            ErrorSecurityScheme(parsedUrl, node)
+        }
+      }
   }
 }
 

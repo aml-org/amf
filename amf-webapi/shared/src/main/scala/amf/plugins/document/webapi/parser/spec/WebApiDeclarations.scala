@@ -191,10 +191,44 @@ class WebApiDeclarations(val alias: Option[String],
     }
 
   def findParameter(key: String, scope: SearchScope.Scope): Option[Parameter] =
-    findDeclaration[Parameter](key, scope, _.parameters)
+    findForType(key, _.asInstanceOf[WebApiDeclarations].parameters, scope) collect {
+      case p: Parameter => p
+    }
 
   def findPayload(key: String, scope: SearchScope.Scope): Option[Payload] =
-    findDeclaration[Payload](key, scope, _.payloads)
+    findForType(key, _.asInstanceOf[WebApiDeclarations].payloads, scope) collect {
+      case p: Payload => p
+    }
+
+  def findRequestBody(key: String, scope: SearchScope.Scope): Option[Request] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].requests, scope) collect {
+      case r: Request => r
+    }
+
+  def findExample(key: String, scope: SearchScope.Scope): Option[Example] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].examples, scope) collect {
+      case e: Example => e
+    }
+
+  def findResponse(key: String, scope: SearchScope.Scope): Option[Response] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].responses, scope) collect {
+      case r: Response => r
+    }
+
+  def findTemplatedLink(key: String, scope: SearchScope.Scope): Option[TemplatedLink] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].links, scope) collect {
+      case l: TemplatedLink => l
+    }
+
+  def findHeader(key: String, scope: SearchScope.Scope): Option[Parameter] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].headers, scope) collect {
+      case p: Parameter => p
+    }
+
+  def findCallback(key: String, scope: SearchScope.Scope): Option[Callback] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].callbacks, scope) collect {
+      case c: Callback => c
+    }
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
     findResourceType(key, scope) match {
@@ -274,14 +308,6 @@ class WebApiDeclarations(val alias: Option[String],
         None
       case _ => None
     }
-
-  def findResponse(key: String, scope: SearchScope.Scope): Option[Response] =
-    findDeclaration[Response](key, scope, _.responses)
-
-  def findDeclaration[T](key: String,
-                         scope: SearchScope.Scope,
-                         map: WebApiDeclarations => Map[String, DomainElement]): Option[T] =
-    findForType(key, dec => map(dec.asInstanceOf[WebApiDeclarations]), scope).map(_.asInstanceOf[T])
 
   def findResponseOrError(ast: YPart)(key: String, searchScope: SearchScope.Scope): Response =
     findResponse(key, searchScope) match {
@@ -376,6 +402,10 @@ object WebApiDeclarations {
   }
   class ErrorLink(idPart: String, ast: YPart) extends TemplatedLink(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorTemplateLink/"
+    withId(idPart)
+  }
+  class ErrorCallback(idPart: String, ast: YPart) extends Callback(Fields(), Annotations(ast)) with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#errorCallback/"
     withId(idPart)
   }
   case class ErrorResponse(idPart: String, ast: YPart)

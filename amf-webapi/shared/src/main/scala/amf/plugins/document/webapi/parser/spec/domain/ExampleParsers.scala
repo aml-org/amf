@@ -9,11 +9,13 @@ import amf.plugins.document.webapi.contexts.RamlWebApiContextType.DEFAULT
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorNamedExample
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
+import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations.{
   ExamplesMustBeAMap,
   ExclusivePropertiesSpecification,
@@ -243,49 +245,68 @@ case class Oas3SingleExampleValueParser(entry: YMapEntry, adopt: Example => Unit
     implicit ctx: WebApiContext)
     extends SpecParserOps {
   def parse(): Example = {
-    val example = Example()
-    adopt(example)
-
-    val parsedExample = entry.value.tagType match {
+    entry.value.tagType match {
       case YType.Map =>
         val map = entry.value.as[YMap]
-        val result = ctx.link(map) match {
-          case Left(fullRef) =>
-            val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
-            ctx.declarations
-              .findDeclaration[Example](name, SearchScope.All, _.examples)
-              .map(found => {
-                val ex: Example = found.link(name)
-                adopt(ex)
-                ex
-              })
-          case Right(_) =>
-            if (map.key("value").nonEmpty) {
-              map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
-              map.key("description", (ExampleModel.Description in example).allowingAnnotations)
-              map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
-
-              // OAS examples are not strict
-              example.withStrict(false)
-
-              map
-                .key("value")
-                .foreach { entry =>
-                  RamlExampleValueAsString(entry.value, example, options).populate()
-                }
-
-              AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
-
-              if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
-              Some(example)
-            } else Some(RamlExampleValueAsString(entry.value, example, options).populate())
-        }
-        result
-      case YType.Null => None
-      case _          => Some(RamlExampleValueAsString(entry.value, example, options).populate())
+        Oas3ExampleValueParser(map, adopt, options).parse()
+      case YType.Null =>
+        val example = Example()
+        adopt(example)
+        example
+      case _ =>
+        val example = Example()
+        adopt(example)
+        RamlExampleValueAsString(entry.value, example, options).populate()
     }
+  }
+}
 
-    parsedExample.getOrElse(example)
+case class Oas3ExampleValueParser(map: YMap, adopt: Example => Unit, options: ExampleOptions)(
+    implicit ctx: WebApiContext)
+    extends SpecParserOps {
+  def parse(): Example = {
+    ctx.link(map) match {
+      case Left(fullRef) =>
+        val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
+        ctx.declarations
+          .findExample(name, SearchScope.All)
+          .map(found => {
+            val ex: Example = found.link(name)
+            adopt(ex)
+            ex
+          })
+          .getOrElse {
+            ctx.obtainRemoteYNode(fullRef) match {
+              case Some(exampleNode) =>
+                Oas3ExampleValueParser(exampleNode.as[YMap], adopt, options).parse()
+              case None =>
+                ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
+                ErrorNamedExample(name, map)
+            }
+          }
+      case Right(_) =>
+        val example = Example()
+        adopt(example)
+        if (map.key("value").nonEmpty) {
+          map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
+          map.key("description", (ExampleModel.Description in example).allowingAnnotations)
+          map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
+
+          // OAS examples are not strict
+          example.withStrict(false)
+
+          map
+            .key("value")
+            .foreach { entry =>
+              RamlExampleValueAsString(entry.value, example, options).populate()
+            }
+
+          AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
+
+          if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
+          example
+        } else RamlExampleValueAsString(map, example, options).populate()
+    }
   }
 }
 

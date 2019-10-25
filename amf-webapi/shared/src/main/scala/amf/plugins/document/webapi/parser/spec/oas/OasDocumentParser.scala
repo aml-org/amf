@@ -14,6 +14,7 @@ import amf.core.utils.{IdCounter, Lazy, Strings, TemplateUri}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorCallback
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
@@ -27,6 +28,7 @@ import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
+import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import org.yaml.model.{YNode, _}
@@ -238,9 +240,11 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           .as[YMap]
           .entries
           .foreach(e => {
-            ctx.declarations +=
-              OasResponseParser(e, (r: Response) => r.adopted(parentPath).add(DeclaredElement()))
-                .parse()
+            val node = ScalarNode(e.key).text()
+            ctx.declarations += OasResponseParser(e.value.as[YMap], { r: Response =>
+              r.set(ResponseModel.Name, node).adopted(parentPath).add(DeclaredElement())
+              r.annotations ++= Annotations(e)
+            }).parse()
           })
       }
     )
@@ -529,15 +533,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     def parse(): Option[Request] = {
       ctx.link(map) match {
         case Left(fullRef) =>
-          val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "requestBodies")
-          ctx.declarations
-            .findDeclaration[Request](name, SearchScope.All, _.requests)
-            .map(req => {
-              val linkReq: Request = req.link(name, Annotations(map))
-              linkReq.withName(name)
-              adopt(linkReq)
-              linkReq
-            })
+          parseRef(fullRef)
         case Right(_) =>
           val request = Request()
           adopt(request)
@@ -564,6 +560,30 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           ctx.closedShape(request.id, map, "request")
           Some(request)
       }
+    }
+
+    private def parseRef(fullRef: String): Option[Request] = {
+      val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "requestBodies")
+      ctx.declarations
+        .findRequestBody(name, SearchScope.Named)
+        .map { req =>
+          val linkReq: Request = req.link(name, Annotations(map))
+          linkReq.withName(name)
+          adopt(linkReq)
+          linkReq
+        }
+        .orElse {
+          ctx.obtainRemoteYNode(fullRef) match {
+            case Some(requestNode) =>
+              Oas3RequestParser(requestNode.as[YMap], adopt).parse()
+            case None =>
+              ctx.violation(CoreValidations.UnresolvedReference,
+                            "",
+                            s"Cannot find requestBody reference $fullRef",
+                            map)
+              None
+          }
+        }
     }
   }
 
@@ -702,31 +722,40 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
-  case class CallbackParser(callbackEntry: YMapEntry, adopt: Callback => Unit) {
-    def parse(): Option[Callback] = {
-      val name = callbackEntry.key.as[YScalar].text
-      val map  = callbackEntry.value.as[YMap]
+  case class CallbackParser(map: YMap, adopt: Callback => Unit) {
+    def parse(): Callback = {
       ctx.link(map) match {
         case Left(fullRef) =>
           val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "callbacks")
           ctx.declarations
-            .findDeclaration[Callback](label, SearchScope.All, _.callbacks)
-            .map(callback => {
+            .findCallback(label, SearchScope.Named)
+            .map { callback =>
               val linkCallback: Callback = callback.link(label, Annotations(map))
-              linkCallback.withName(name)
               adopt(linkCallback)
               linkCallback
-            })
+            }
+            .getOrElse {
+              ctx.obtainRemoteYNode(fullRef) match {
+                case Some(callbackNode) =>
+                  CallbackParser(callbackNode.as[YMap], adopt).parse()
+                case None =>
+                  ctx.violation(CoreValidations.UnresolvedReference,
+                                "",
+                                s"Cannot find callback reference $fullRef",
+                                map)
+                  new ErrorCallback(label, map)
+              }
+            }
         case Right(_) =>
           val callbackOperations = map.entries
-          val callback           = Callback().withName(name).add(Annotations(map))
+          val callback           = Callback().add(Annotations(map))
           adopt(callback)
           if (callbackOperations.size != 1) {
             // TODO throw violation here
           } else {
             EndpointParser(callbackOperations.head, callback.withEndpoint, mutable.ListBuffer.empty).parse()
           }
-          Some(callback)
+          callback
       }
 
     }
@@ -782,8 +811,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             val callbacks = entry.value
               .as[YMap]
               .entries
-              .flatMap { callbackEntry =>
-                CallbackParser(callbackEntry, _.adopted(operation.id)).parse()
+              .map { callbackEntry =>
+                val name = callbackEntry.key.as[YScalar].text
+                CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(operation.id)).parse()
               }
             operation.withCallbacks(callbacks)
           }
@@ -837,10 +867,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             .entries
             .filter(y => !isOasAnnotation(y.key.as[YScalar].text))
             .foreach { entry =>
-              responses += OasResponseParser(entry,
-                                             r =>
-                                               r.adopted(operation.id)
-                                                 .withStatusCode(r.name.value())).parse()
+              val node = ScalarNode(entry.key).text()
+              responses += OasResponseParser(entry.value.as[YMap], { r =>
+                r.set(ResponseModel.Name, node)
+                  .adopted(operation.id)
+                  .withStatusCode(r.name.value())
+                r.annotations ++= Annotations(entry)
+              }).parse()
             }
 
           operation.set(OperationModel.Responses, AmfArray(responses, Annotations(entry.value)), Annotations(entry))

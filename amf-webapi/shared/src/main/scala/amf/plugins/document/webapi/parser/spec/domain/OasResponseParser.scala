@@ -13,30 +13,41 @@ import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
-import org.yaml.model.{YMap, YMapEntry}
+import org.yaml.model.YMap
 import amf.core.utils.Strings
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorResponse
 import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
+import amf.plugins.features.validation.CoreValidations
 
 import scala.collection.mutable
 
-case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implicit ctx: OasWebApiContext)
+case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
   def parse(): Response = {
 
-    val node = ScalarNode(entry.key).text()
-
-    val response: Response = ctx.link(entry.value) match {
+    ctx.link(map) match {
       case Left(url) =>
         val name = OasDefinitions.stripResponsesDefinitionsPrefix(url)
-        val response: Response = ctx.declarations
-          .findResponseOrError(entry.value)(name, SearchScope.Named)
-          .link(OasDefinitions.stripResponsesDefinitionsPrefix(url))
-        adopted(response.set(ResponseModel.Name, node))
-        response.annotations ++= Annotations(entry)
-        response
-      case Right(value) =>
-        val map = value.as[YMap]
-        val res = Response(entry).set(ResponseModel.Name, node)
+        ctx.declarations
+          .findResponse(name, SearchScope.Named)
+          .map { res =>
+            val resLink: Response = res.link(name)
+            adopted(resLink)
+            resLink
+          }
+          .getOrElse {
+            ctx.obtainRemoteYNode(url) match {
+              case Some(respNode) =>
+                OasResponseParser(respNode.as[YMap], adopted).parse()
+              case None =>
+                ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find response reference $url", map)
+                val errorRes: Response = ErrorResponse(url, map).link(name)
+                adopted(errorRes)
+                errorRes
+            }
+          }
+      case Right(_) =>
+        val res = Response()
         adopted(res)
 
         map.key("description", ResponseModel.Description in res)
@@ -45,7 +56,10 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
           "headers",
           entry => {
             val parameters: Seq[Parameter] =
-              OasHeaderParametersParser(entry.value.as[YMap], res.add(Headers, _)).parse()
+              OasHeaderParametersParser(entry.value.as[YMap], { header =>
+                header.adopted(res.id)
+                res.add(Headers, header)
+              }).parse()
             res.set(RequestModel.Headers, AmfArray(parameters, Annotations(entry.value)), Annotations(entry))
           }
         )
@@ -115,7 +129,6 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
 
         res
     }
-
 //    if (!response.annotations.contains(classOf[DeclaredElement])) {
 //      if (response.name.is("default")) {
 //        response.set(ResponseModel.StatusCode, "200")
@@ -123,8 +136,6 @@ case class OasResponseParser(entry: YMapEntry, adopted: Response => Unit)(implic
 //        response.set(ResponseModel.StatusCode, node)
 //      }
 //    }
-
-    response
   }
 
   private def defaultPayload(entries: YMap, parentId: String): Option[Payload] = {

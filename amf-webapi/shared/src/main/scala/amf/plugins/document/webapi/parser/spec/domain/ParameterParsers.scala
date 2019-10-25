@@ -23,9 +23,9 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   _
 }
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
-import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toJsonSchema, toOas}
+import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.domain.shapes.models.ExampleTracking._
-import amf.plugins.domain.shapes.models.{Example, FileShape, NodeShape}
+import amf.plugins.domain.shapes.models.{FileShape, NodeShape}
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
@@ -467,7 +467,14 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
           case None =>
             val fullRef = ctx.resolvedPath(ctx.rootContextDocument, refUrl)
             ctx.parseRemoteOasParameter(fullRef, parentId)(toOas(ctx)) match {
-              case Some(oasParameter) => oasParameter
+              case Some(oasParameter) =>
+                for {
+                  param <- oasParameter.parameter
+                  name  <- nameNode.map(ScalarNode(_).text())
+                } yield {
+                  param.set(ParameterModel.Name, name).adopted(parentId)
+                }
+                oasParameter
               case _ =>
                 val parameter = Parameter(ref)
                 setName(parameter)

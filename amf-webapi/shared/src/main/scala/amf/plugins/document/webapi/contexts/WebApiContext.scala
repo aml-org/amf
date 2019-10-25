@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.contexts
 
-import amf.core.model.document.{ExternalFragment, RecursiveUnit}
+import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.model.domain.Shape
 import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
 import amf.core.remote._
@@ -406,19 +406,29 @@ abstract class WebApiContext(val loc: String,
   def parseRemoteOasParameter(fileUrl: String, parentId: String)(
       implicit ctx: OasWebApiContext): Option[OasParameter] = {
     val referenceUrl = getReferenceUrl(fileUrl)
+    obtainFragment(fileUrl) flatMap { fragment =>
+      JsonSchemaPlugin.parseParameterFragment(fragment, referenceUrl, parentId)
+    }
+  }
 
+  def obtainRemoteYNode(ref: String)(implicit ctx: WebApiContext): Option[YNode] = {
+    val fileUrl      = ctx.resolvedPath(ctx.rootContextDocument, ref)
+    val referenceUrl = getReferenceUrl(fileUrl)
+    obtainFragment(fileUrl) flatMap { fragment =>
+      JsonSchemaPlugin.obtainRootAst(fragment, referenceUrl)
+    }
+  }
+
+  private def obtainFragment(fileUrl: String): Option[Fragment] = {
     val baseFileUrl = fileUrl.split("#").head
-    val res: Option[Option[OasParameter]] = refs
+    refs
       .filter(r => r.unit.location().isDefined)
       .filter(_.unit.location().get == baseFileUrl) collectFirst {
       case ref if ref.unit.isInstanceOf[ExternalFragment] =>
-        val jsonFile = ref.unit.asInstanceOf[ExternalFragment]
-        JsonSchemaPlugin.parseParameterFragment(jsonFile, referenceUrl, parentId, ctx)
+        ref.unit.asInstanceOf[ExternalFragment]
       case ref if ref.unit.isInstanceOf[RecursiveUnit] =>
-        val jsonFile = ref.unit.asInstanceOf[RecursiveUnit]
-        JsonSchemaPlugin.parseParameterFragment(jsonFile, referenceUrl, parentId, ctx)
+        ref.unit.asInstanceOf[RecursiveUnit]
     }
-    res.flatten
   }
 
   private def getReferenceUrl(fileUrl: String): Option[String] = {
