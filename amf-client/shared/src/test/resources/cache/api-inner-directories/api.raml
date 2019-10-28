@@ -1,0 +1,16 @@
+#%RAML 1.0
+
+title: test baseunit cache of a library
+
+uses:
+  lib1: lib.raml
+  lib2: pseudo-exchange-modules/lib.raml
+
+/someEndpoint:
+  get:
+    body:
+      application/json:
+        type: lib2.B
+        example:
+          b1: pepe
+          b2: 12

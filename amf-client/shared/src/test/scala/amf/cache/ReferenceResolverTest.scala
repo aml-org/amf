@@ -37,19 +37,19 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
   test("Without resolve - Simple API") {
 
     val path        = "file://amf-client/shared/src/test/resources/cache/api-library/"
-    val libraryPath = "library.raml"
-    val mainPath    = "api.raml"
+    val libraryPath = path + "library.raml"
+    val mainPath    = path + "api.raml"
 
     for {
       _       <- AMF.init().asFuture
-      library <- new RamlParser().parseFileAsync(path + libraryPath).asFuture
+      library <- new RamlParser().parseFileAsync(libraryPath).asFuture
       environment <- {
         val references = Seq(new CachedReference(libraryPath, library, resolved = false))
         Future.successful(
           DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
         )
       }
-      root   <- new RamlParser(environment).parseFileAsync(path + mainPath).asFuture
+      root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
       report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
@@ -61,14 +61,14 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
   test("Without resolve - Multiple References Mixed") {
 
     val path        = "file://amf-client/shared/src/test/resources/cache/api-multiple-references/"
-    val libraryPath = "library.raml"
-    val type1Path   = "datatypeC.raml"
-    val mainPath    = "api.raml"
+    val libraryPath = path + "library.raml"
+    val type1Path   = path + "datatypeC.raml"
+    val mainPath    = path + "api.raml"
 
     for {
       _         <- AMF.init().asFuture
-      library   <- new RamlParser().parseFileAsync(path + libraryPath).asFuture
-      datatype1 <- new RamlParser().parseFileAsync(path + type1Path).asFuture
+      library   <- new RamlParser().parseFileAsync(libraryPath).asFuture
+      datatype1 <- new RamlParser().parseFileAsync(type1Path).asFuture
       environment <- {
         val references = Seq(new CachedReference(libraryPath, library, resolved = false),
                              new CachedReference(type1Path, datatype1, resolved = false))
@@ -76,7 +76,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
           DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
         )
       }
-      root   <- new RamlParser(environment).parseFileAsync(path + mainPath).asFuture
+      root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
       report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
@@ -88,19 +88,19 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
   test("Without resolve - rt with reference of root type declaration") {
 
     val path     = "file://amf-client/shared/src/test/resources/cache/api-rt/"
-    val rtPath   = "rt.raml"
-    val mainPath = "api.raml"
+    val rtPath   = path + "rt.raml"
+    val mainPath = path + "api.raml"
 
     for {
       _  <- AMF.init().asFuture
-      rt <- new RamlParser().parseFileAsync(path + rtPath).asFuture
+      rt <- new RamlParser().parseFileAsync(rtPath).asFuture
       environment <- {
         val references = Seq(new CachedReference(rtPath, rt, resolved = false))
         Future.successful(
           DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
         )
       }
-      root   <- new RamlParser(environment).parseFileAsync(path + mainPath).asFuture
+      root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
       report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
@@ -111,19 +111,19 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
   test("Without resolve - trait with reference of root type declaration") {
 
     val path      = "file://amf-client/shared/src/test/resources/cache/api-trait/"
-    val traitPath = "trait.raml"
-    val mainPath  = "api.raml"
+    val traitPath = path + "trait.raml"
+    val mainPath  = path + "api.raml"
 
     for {
       _  <- AMF.init().asFuture
-      tr <- new RamlParser().parseFileAsync(path + traitPath).asFuture
+      tr <- new RamlParser().parseFileAsync(traitPath).asFuture
       environment <- {
         val references = Seq(new CachedReference(traitPath, tr, resolved = false))
         Future.successful(
           DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
         )
       }
-      root   <- new RamlParser(environment).parseFileAsync(path + mainPath).asFuture
+      root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
       report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
@@ -134,12 +134,12 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
   test("Resolved - Library fragment with complex types") {
 
     val path     = "file://amf-client/shared/src/test/resources/cache/api-complex-lib-1/"
-    val libPath  = "library.raml"
-    val mainPath = "api.raml"
+    val libPath  = path + "library.raml"
+    val mainPath = path + "api.raml"
 
     for {
       _               <- AMF.init().asFuture
-      library         <- new RamlParser().parseFileAsync(path + libPath).asFuture
+      library         <- new RamlParser().parseFileAsync(libPath).asFuture
       libraryResolved <- Future(new Raml10Resolver().resolve(library, ResolutionPipeline.EDITING_PIPELINE))
       environment <- {
         val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false))
@@ -147,7 +147,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
           DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
         )
       }
-      root   <- new RamlParser(environment).parseFileAsync(path + mainPath).asFuture
+      root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
       report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
@@ -177,12 +177,12 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
   test("Resolved - Library fragment with complex rt") {
 
     val path     = "file://amf-client/shared/src/test/resources/cache/api-complex-lib-2/"
-    val libPath  = "library.raml"
-    val mainPath = "api.raml"
+    val libPath  = path + "library.raml"
+    val mainPath = path + "api.raml"
 
     for {
       _               <- AMF.init().asFuture
-      library         <- new RamlParser().parseFileAsync(path + libPath).asFuture
+      library         <- new RamlParser().parseFileAsync(libPath).asFuture
       libraryResolved <- Future(new Raml10Resolver().resolve(library, ResolutionPipeline.EDITING_PIPELINE))
       environment <- {
         val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false))
@@ -190,7 +190,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
           DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
         )
       }
-      root   <- new RamlParser(environment).parseFileAsync(path + mainPath).asFuture
+      root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
       report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
     } yield {
       assert(report.conforms)
@@ -214,6 +214,34 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
           .properties
           .asSeq
           .size == 2)
+    }
+  }
+
+  test("Test API with repeated file names in different paths") {
+
+    val path     = "file://amf-client/shared/src/test/resources/cache/api-inner-directories/"
+    val libPath  = path + "pseudo-exchange-modules/lib.raml"
+    val typePath = path + "pseudo-exchange-modules/type.raml"
+    val mainPath = path + "api.raml"
+
+    for {
+      _               <- AMF.init().asFuture
+      library         <- new RamlParser().parseFileAsync(libPath).asFuture
+      libraryResolved <- Future(new Raml10Resolver().resolve(library, ResolutionPipeline.EDITING_PIPELINE))
+      dataType        <- new RamlParser().parseFileAsync(typePath).asFuture
+      typeResolved    <- Future(new Raml10Resolver().resolve(dataType, ResolutionPipeline.EDITING_PIPELINE))
+      environment <- {
+        val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false),
+                             new CachedReference(typePath, typeResolved, resolved = false))
+        Future.successful(
+          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+        )
+      }
+      root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
+      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+    } yield {
+      root
+      assert(report.conforms)
     }
   }
 
