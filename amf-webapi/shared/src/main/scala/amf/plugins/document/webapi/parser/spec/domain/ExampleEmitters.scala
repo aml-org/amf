@@ -169,8 +169,9 @@ case class NamedExampleEmitter(example: Example, ordering: SpecOrdering)(implici
 case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
     extends PartEmitter {
   override def emit(b: PartBuilder): Unit = emitters match {
-    case Left(p)       => p.emit(b)
-    case Right(values) => b.obj(traverse(ordering.sorted(values), _))
+    case Left(p)                          => p.emit(b)
+    case Right(values) if values.nonEmpty => b.obj(traverse(ordering.sorted(values), _))
+    case _                                => NullEmitter(example.annotations).emit(b)
   }
 
   val entries: Seq[Emitter] = {
@@ -178,15 +179,17 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
 
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
-    val explicitFielMeta = List(ExampleModel.Strict,
-                                ExampleModel.Description,
-                                ExampleModel.DisplayName,
-                                ExampleModel.CustomDomainProperties).filter { f =>
-      fs.entry(f) match {
-        case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])
-        case None        => false
-      }
-    }
+    val explicitFielMeta =
+      List(ExampleModel.Strict,
+           ExampleModel.Description,
+           ExampleModel.DisplayName,
+           ExampleModel.CustomDomainProperties)
+        .filter { f =>
+          fs.entry(f) match {
+            case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])
+            case None        => false
+          }
+        }
     val isExpanded = fs.fieldsMeta().exists(explicitFielMeta.contains(_)) || example.raw
       .option()
       .exists(_.contains("value"))

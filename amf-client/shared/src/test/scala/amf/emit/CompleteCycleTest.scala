@@ -686,6 +686,14 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("enums.json", "enums.raml.jsonld", OasJsonHint, Amf, basePath + "enums/")
   }
 
+  test("Test nil example raml to raml") {
+    cycle("nil-example.raml", "nil-example.raml.raml", RamlYamlHint, Raml)
+  }
+
+  test("Test nil example raml generated to itself") {
+    cycle("nil-example.raml.raml", "nil-example.raml.raml", RamlYamlHint, Raml)
+  }
+
   /**
   * Please do not add more test for raml to raml or to jsonld in here. You can use Raml10CycleTestByDirectory or Raml08CycleTestByDirectory.
   * Check CycleTestByDirectory for information off how to use.
