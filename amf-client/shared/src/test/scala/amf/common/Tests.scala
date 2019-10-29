@@ -137,17 +137,17 @@ object Tests {
   def getHostName: String = {
     try {
       val host: String = InetAddress.getLocalHost.getHostName.replaceAll("-", "")
-      host.substring(0, Math.min(index(host, '.'), Math.min(index(host, '_'), index(host, '-'))));
+      host.substring(0, Math.min(index(host, '.'), Math.min(index(host, '_'), index(host, '-'))))
     } catch {
-      case e: UnknownHostException => "localhost";
+      case _: UnknownHostException => "localhost";
     }
   }
 
   def checkLinesDiff(a: AsyncFile, e: AsyncFile, encoding: String = Utf8): Future[Assertion] = {
     a.read(encoding).zip(e.read(encoding)).flatMap {
       case (actual, expected) =>
-        val actualLines = actual.toString.lines.toSeq.map(_.trim).toSet
-        val expectedLines = expected.toString.lines.toSeq.map(_.trim).toSet
+        val actualLines = actual.toString.linesIterator.toSeq.map(_.trim).toSet
+        val expectedLines = expected.toString.linesIterator.toSeq.map(_.trim).toSet
         if (actualLines != expectedLines) {
           val diff = actualLines.diff(expectedLines)
           System.err.println("Not matching lines")
@@ -213,24 +213,5 @@ object Tests {
     }
   }
 
-  private object GoldenTest {
-    def apply(testFile: File, outputDirName: String): GoldenTest = {
-      val name: String     = testFile.getName
-      val outputFile: File = createOutputFile(outputDirName, name)
-      val dot: Int         = name.lastIndexOf('.')
-      val bareName: String = if (dot == -1) name else name.substring(0, dot)
-      val goldenFile: File = new File(testFile.getParent, bareName + ".golden")
-      new GoldenTest(outputFile, goldenFile)
-    }
 
-    def apply(testName: String, outputDirName: String, goldenDirName: String): GoldenTest = {
-      new GoldenTest(createOutputFile(outputDirName, testName), new File(goldenDirName, testName))
-    }
-
-    def createOutputFile(outputDirName: String, name: String): File = {
-      val outputDir: File = new File(outputDirName)
-      outputDir.mkdirs()
-      new File(outputDir, name)
-    }
-  }
 }
