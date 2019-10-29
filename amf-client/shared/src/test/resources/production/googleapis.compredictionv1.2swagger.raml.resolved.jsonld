@@ -3163,67 +3163,134 @@
                               "http://a.ml/vocabularies/security#Settings",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/security#authorizationUri": [
-                              {
-                                "@value": "https://accounts.google.com/o/oauth2/auth"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/security#accessTokenUri": [
-                              {
-                                "@value": ""
-                              }
-                            ],
                             "http://a.ml/vocabularies/security#authorizationGrant": [
                               {
                                 "@value": "implicit"
                               }
                             ],
-                            "http://a.ml/vocabularies/security#scope": [
+                            "http://a.ml/vocabularies/security#flows": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow",
                                 "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/security#OAuth2Flow",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#authorizationUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                    "@value": "https://accounts.google.com/o/oauth2/auth"
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#accessTokenUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                    "@value": ""
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#scope": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/prediction"
+                                      }
+                                    ]
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#scope"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(81,6)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,6)-(78,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,0)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(78,6)-(79,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
                                   }
                                 ]
                               }
@@ -3238,24 +3305,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(81,6)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#accessTokenUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(78,6)-(79,0)]"
+                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   },
@@ -3268,30 +3323,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(77,0)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(77,6)-(78,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   }
@@ -3394,16 +3425,59 @@
                           "http://a.ml/vocabularies/security#Settings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/security#scope": [
+                        "http://a.ml/vocabularies/security#flows": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining/post/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining/post/Oauth2/settings/oauth2/default-flow",
                             "@type": [
-                              "http://a.ml/vocabularies/security#Scope",
+                              "http://a.ml/vocabularies/security#OAuth2Flow",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/core#name": [
+                            "http://a.ml/vocabularies/security#scope": [
                               {
-                                "@value": "https://www.googleapis.com/auth/prediction"
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining/post/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                "@type": [
+                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining/post/Oauth2/settings/oauth2/default-flow/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(196,10)-(198,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining/post/Oauth2/settings/oauth2/default-flow"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(196,0)-(198,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -3415,18 +3489,6 @@
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/security#scope"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(196,10)-(198,0)]"
-                                  }
-                                ]
-                              },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
@@ -5928,67 +5990,134 @@
                               "http://a.ml/vocabularies/security#Settings",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/security#authorizationUri": [
-                              {
-                                "@value": "https://accounts.google.com/o/oauth2/auth"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/security#accessTokenUri": [
-                              {
-                                "@value": ""
-                              }
-                            ],
                             "http://a.ml/vocabularies/security#authorizationGrant": [
                               {
                                 "@value": "implicit"
                               }
                             ],
-                            "http://a.ml/vocabularies/security#scope": [
+                            "http://a.ml/vocabularies/security#flows": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow",
                                 "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/security#OAuth2Flow",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#authorizationUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                    "@value": "https://accounts.google.com/o/oauth2/auth"
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#accessTokenUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                    "@value": ""
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#scope": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/prediction"
+                                      }
+                                    ]
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#scope"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(81,6)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,6)-(78,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,0)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(78,6)-(79,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
                                   }
                                 ]
                               }
@@ -6003,24 +6132,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(81,6)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#accessTokenUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(78,6)-(79,0)]"
+                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   },
@@ -6033,30 +6150,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(77,0)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(77,6)-(78,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   }
@@ -6159,16 +6252,59 @@
                           "http://a.ml/vocabularies/security#Settings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/security#scope": [
+                        "http://a.ml/vocabularies/security#flows": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/put/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/put/Oauth2/settings/oauth2/default-flow",
                             "@type": [
-                              "http://a.ml/vocabularies/security#Scope",
+                              "http://a.ml/vocabularies/security#OAuth2Flow",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/core#name": [
+                            "http://a.ml/vocabularies/security#scope": [
                               {
-                                "@value": "https://www.googleapis.com/auth/prediction"
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/put/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                "@type": [
+                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/put/Oauth2/settings/oauth2/default-flow/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(138,12)-(140,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/put/Oauth2/settings/oauth2/default-flow"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(138,0)-(140,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -6180,18 +6316,6 @@
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/security#scope"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(138,12)-(140,0)]"
-                                  }
-                                ]
-                              },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
@@ -8160,67 +8284,134 @@
                               "http://a.ml/vocabularies/security#Settings",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/security#authorizationUri": [
-                              {
-                                "@value": "https://accounts.google.com/o/oauth2/auth"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/security#accessTokenUri": [
-                              {
-                                "@value": ""
-                              }
-                            ],
                             "http://a.ml/vocabularies/security#authorizationGrant": [
                               {
                                 "@value": "implicit"
                               }
                             ],
-                            "http://a.ml/vocabularies/security#scope": [
+                            "http://a.ml/vocabularies/security#flows": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow",
                                 "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/security#OAuth2Flow",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#authorizationUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                    "@value": "https://accounts.google.com/o/oauth2/auth"
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#accessTokenUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                    "@value": ""
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#scope": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/prediction"
+                                      }
+                                    ]
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#scope"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(81,6)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,6)-(78,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,0)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(78,6)-(79,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
                                   }
                                 ]
                               }
@@ -8235,24 +8426,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(81,6)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#accessTokenUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(78,6)-(79,0)]"
+                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   },
@@ -8265,30 +8444,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(77,0)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(77,6)-(78,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   }
@@ -8391,16 +8546,59 @@
                           "http://a.ml/vocabularies/security#Settings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/security#scope": [
+                        "http://a.ml/vocabularies/security#flows": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/get/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/get/Oauth2/settings/oauth2/default-flow",
                             "@type": [
-                              "http://a.ml/vocabularies/security#Scope",
+                              "http://a.ml/vocabularies/security#OAuth2Flow",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/core#name": [
+                            "http://a.ml/vocabularies/security#scope": [
                               {
-                                "@value": "https://www.googleapis.com/auth/prediction"
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/get/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                "@type": [
+                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/get/Oauth2/settings/oauth2/default-flow/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(161,12)-(163,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/get/Oauth2/settings/oauth2/default-flow"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(161,0)-(163,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -8412,18 +8610,6 @@
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/security#scope"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(161,12)-(163,0)]"
-                                  }
-                                ]
-                              },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
@@ -10322,67 +10508,134 @@
                               "http://a.ml/vocabularies/security#Settings",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/security#authorizationUri": [
-                              {
-                                "@value": "https://accounts.google.com/o/oauth2/auth"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/security#accessTokenUri": [
-                              {
-                                "@value": ""
-                              }
-                            ],
                             "http://a.ml/vocabularies/security#authorizationGrant": [
                               {
                                 "@value": "implicit"
                               }
                             ],
-                            "http://a.ml/vocabularies/security#scope": [
+                            "http://a.ml/vocabularies/security#flows": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow",
                                 "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/security#OAuth2Flow",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#authorizationUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                    "@value": "https://accounts.google.com/o/oauth2/auth"
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#accessTokenUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                    "@value": ""
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#scope": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/prediction"
+                                      }
+                                    ]
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#scope"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(81,6)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,6)-(78,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,0)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(78,6)-(79,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
                                   }
                                 ]
                               }
@@ -10397,24 +10650,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(81,6)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#accessTokenUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(78,6)-(79,0)]"
+                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   },
@@ -10427,30 +10668,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(77,0)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(77,6)-(78,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   }
@@ -10553,16 +10770,59 @@
                           "http://a.ml/vocabularies/security#Settings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/security#scope": [
+                        "http://a.ml/vocabularies/security#flows": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/delete/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/delete/Oauth2/settings/oauth2/default-flow",
                             "@type": [
-                              "http://a.ml/vocabularies/security#Scope",
+                              "http://a.ml/vocabularies/security#OAuth2Flow",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/core#name": [
+                            "http://a.ml/vocabularies/security#scope": [
                               {
-                                "@value": "https://www.googleapis.com/auth/prediction"
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/delete/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                "@type": [
+                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/delete/Oauth2/settings/oauth2/default-flow/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(173,12)-(175,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D/delete/Oauth2/settings/oauth2/default-flow"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(173,0)-(175,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -10574,18 +10834,6 @@
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/security#scope"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(173,12)-(175,0)]"
-                                  }
-                                ]
-                              },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
@@ -13071,67 +13319,134 @@
                               "http://a.ml/vocabularies/security#Settings",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/security#authorizationUri": [
-                              {
-                                "@value": "https://accounts.google.com/o/oauth2/auth"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/security#accessTokenUri": [
-                              {
-                                "@value": ""
-                              }
-                            ],
                             "http://a.ml/vocabularies/security#authorizationGrant": [
                               {
                                 "@value": "implicit"
                               }
                             ],
-                            "http://a.ml/vocabularies/security#scope": [
+                            "http://a.ml/vocabularies/security#flows": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow",
                                 "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/security#OAuth2Flow",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#authorizationUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                    "@value": "https://accounts.google.com/o/oauth2/auth"
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#accessTokenUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                    "@value": ""
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#scope": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/prediction"
+                                      }
+                                    ]
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#scope"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(81,6)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,6)-(78,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,0)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(78,6)-(79,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
                                   }
                                 ]
                               }
@@ -13146,24 +13461,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(81,6)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#accessTokenUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(78,6)-(79,0)]"
+                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   },
@@ -13176,30 +13479,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(77,0)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(77,6)-(78,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   }
@@ -13302,16 +13581,59 @@
                           "http://a.ml/vocabularies/security#Settings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/security#scope": [
+                        "http://a.ml/vocabularies/security#flows": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/post/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/post/Oauth2/settings/oauth2/default-flow",
                             "@type": [
-                              "http://a.ml/vocabularies/security#Scope",
+                              "http://a.ml/vocabularies/security#OAuth2Flow",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/core#name": [
+                            "http://a.ml/vocabularies/security#scope": [
                               {
-                                "@value": "https://www.googleapis.com/auth/prediction"
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/post/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                "@type": [
+                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/post/Oauth2/settings/oauth2/default-flow/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(108,14)-(110,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/post/Oauth2/settings/oauth2/default-flow"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(108,0)-(110,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -13323,18 +13645,6 @@
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/security#scope"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(108,14)-(110,0)]"
-                                  }
-                                ]
-                              },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
@@ -15914,67 +16224,134 @@
                               "http://a.ml/vocabularies/security#Settings",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/security#authorizationUri": [
-                              {
-                                "@value": "https://accounts.google.com/o/oauth2/auth"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/security#accessTokenUri": [
-                              {
-                                "@value": ""
-                              }
-                            ],
                             "http://a.ml/vocabularies/security#authorizationGrant": [
                               {
                                 "@value": "implicit"
                               }
                             ],
-                            "http://a.ml/vocabularies/security#scope": [
+                            "http://a.ml/vocabularies/security#flows": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow",
                                 "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/security#OAuth2Flow",
                                   "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#authorizationUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                    "@value": "https://accounts.google.com/o/oauth2/auth"
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#accessTokenUri": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                    "@value": ""
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/security#scope": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/security#Scope",
+                                      "http://a.ml/vocabularies/document#DomainElement"
+                                    ],
+                                    "http://a.ml/vocabularies/core#name": [
+                                      {
+                                        "@value": "https://www.googleapis.com/auth/prediction"
+                                      }
+                                    ]
                                   }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
-                                "@type": [
-                                  "http://a.ml/vocabularies/security#Scope",
-                                  "http://a.ml/vocabularies/document#DomainElement"
                                 ],
-                                "http://a.ml/vocabularies/core#name": [
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
                                   {
-                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#scope"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(81,6)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,6)-(78,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(77,0)-(86,0)]"
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(78,6)-(79,0)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
                                   }
                                 ]
                               }
@@ -15989,24 +16366,12 @@
                                   {
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
-                                        "@value": "[(81,6)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#accessTokenUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(78,6)-(79,0)]"
+                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   },
@@ -16019,30 +16384,6 @@
                                     "http://a.ml/vocabularies/document-source-maps#value": [
                                       {
                                         "@value": "[(77,0)-(86,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationUri"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(77,6)-(78,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(79,6)-(81,0)]"
                                       }
                                     ]
                                   }
@@ -16145,16 +16486,59 @@
                           "http://a.ml/vocabularies/security#Settings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/security#scope": [
+                        "http://a.ml/vocabularies/security#flows": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/post/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/post/Oauth2/settings/oauth2/default-flow",
                             "@type": [
-                              "http://a.ml/vocabularies/security#Scope",
+                              "http://a.ml/vocabularies/security#OAuth2Flow",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/core#name": [
+                            "http://a.ml/vocabularies/security#scope": [
                               {
-                                "@value": "https://www.googleapis.com/auth/prediction"
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/post/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                                "@type": [
+                                  "http://a.ml/vocabularies/security#Scope",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/core#name": [
+                                  {
+                                    "@value": "https://www.googleapis.com/auth/prediction"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/post/Oauth2/settings/oauth2/default-flow/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/security#scope"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(229,14)-(231,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/post/Oauth2/settings/oauth2/default-flow"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(229,0)-(231,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -16166,18 +16550,6 @@
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/security#scope"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(229,14)-(231,0)]"
-                                  }
-                                ]
-                              },
                               {
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
@@ -17722,67 +18094,134 @@
               "http://a.ml/vocabularies/security#Settings",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/security#authorizationUri": [
-              {
-                "@value": "https://accounts.google.com/o/oauth2/auth"
-              }
-            ],
-            "http://a.ml/vocabularies/security#accessTokenUri": [
-              {
-                "@value": ""
-              }
-            ],
             "http://a.ml/vocabularies/security#authorizationGrant": [
               {
                 "@value": "implicit"
               }
             ],
-            "http://a.ml/vocabularies/security#scope": [
+            "http://a.ml/vocabularies/security#flows": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow",
                 "@type": [
-                  "http://a.ml/vocabularies/security#Scope",
+                  "http://a.ml/vocabularies/security#OAuth2Flow",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/core#name": [
+                "http://a.ml/vocabularies/security#authorizationUri": [
                   {
-                    "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                    "@value": "https://accounts.google.com/o/oauth2/auth"
                   }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
-                "@type": [
-                  "http://a.ml/vocabularies/security#Scope",
-                  "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/core#name": [
+                "http://a.ml/vocabularies/security#accessTokenUri": [
                   {
-                    "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                    "@value": ""
                   }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
-                "@type": [
-                  "http://a.ml/vocabularies/security#Scope",
-                  "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/core#name": [
+                "http://a.ml/vocabularies/security#scope": [
                   {
-                    "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.full_control",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#Scope",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "https://www.googleapis.com/auth/devstorage.full_control"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_only",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#Scope",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "https://www.googleapis.com/auth/devstorage.read_only"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdevstorage.read_write",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#Scope",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "https://www.googleapis.com/auth/devstorage.read_write"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#Scope",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "https://www.googleapis.com/auth/prediction"
+                      }
+                    ]
                   }
-                ]
-              },
-              {
-                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fprediction",
-                "@type": [
-                  "http://a.ml/vocabularies/security#Scope",
-                  "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/core#name": [
+                "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@value": "https://www.googleapis.com/auth/prediction"
+                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow/source-map",
+                    "@type": [
+                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/security#scope"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(81,6)-(86,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(77,6)-(78,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/declarations/securitySchemes/Oauth2/settings/oauth2/default-flow"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(77,0)-(86,0)]"
+                          }
+                        ]
+                      },
+                      {
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(78,6)-(79,0)]"
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
@@ -17797,24 +18236,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/security#scope"
+                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(81,6)-(86,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/security#accessTokenUri"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(78,6)-(79,0)]"
+                        "@value": "[(79,6)-(81,0)]"
                       }
                     ]
                   },
@@ -17827,30 +18254,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(77,0)-(86,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/security#authorizationUri"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(77,6)-(78,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/security#authorizationGrant"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(79,6)-(81,0)]"
                       }
                     ]
                   }

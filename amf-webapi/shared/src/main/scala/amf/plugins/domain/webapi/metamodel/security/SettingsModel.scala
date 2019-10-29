@@ -56,25 +56,15 @@ object OAuth1SettingsModel extends SettingsModel {
 
 object OAuth2SettingsModel extends SettingsModel {
 
-  val AuthorizationUri =
-    Field(Str, Security + "authorizationUri", ModelDoc(ModelVocabularies.Security, "authorization URI", ""))
-
-  val AccessTokenUri =
-    Field(Str, Security + "accessTokenUri", ModelDoc(ModelVocabularies.Security, "access token URI", ""))
-
   val AuthorizationGrants =
     Field(Array(Str), Security + "authorizationGrant", ModelDoc(ModelVocabularies.Security, "authorization grant", ""))
 
-  val Flow = Field(Str, Security + "flow", ModelDoc(ModelVocabularies.Security, "flow", ""))
-
-  val RefreshUri = Field(Str, Security + "refreshUri", ModelDoc(ModelVocabularies.Security, "refresh URI", ""))
-
-  val Scopes = Field(Array(ScopeModel), Security + "scope", ModelDoc(ModelVocabularies.Security, "scope", ""))
+  val Flows = Field(Array(OAuth2FlowModel), Security + "flows", ModelDoc(ModelVocabularies.Security, "flows", ""))
 
   override val `type`: List[ValueType] = List(Security + "OAuth2Settings") ++ SettingsModel.`type`
 
   override val fields: List[Field] =
-    List(AuthorizationUri, AccessTokenUri, AuthorizationGrants, Flow, RefreshUri, Scopes) ++ SettingsModel.fields
+    List(AuthorizationGrants, Flows) ++ SettingsModel.fields
 
   override def modelInstance = OAuth2Settings()
 

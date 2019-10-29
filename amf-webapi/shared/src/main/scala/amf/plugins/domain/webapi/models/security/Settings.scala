@@ -1,14 +1,14 @@
 package amf.plugins.domain.webapi.models.security
 
 import amf.core.metamodel.Obj
-import amf.core.model.{StrField, domain}
 import amf.core.model.domain.{AmfArray, DataNode, DomainElement}
+import amf.core.model.{StrField, domain}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.ApiKeySettingsModel._
 import amf.plugins.domain.webapi.metamodel.security.HttpSettingsModel._
-import amf.plugins.domain.webapi.metamodel.security.OpenIdConnectSettingsModel._
 import amf.plugins.domain.webapi.metamodel.security.OAuth1SettingsModel.{AuthorizationUri => AuthorizationUri1, _}
-import amf.plugins.domain.webapi.metamodel.security.OAuth2SettingsModel.{AuthorizationUri => AuthorizationUri2, _}
+import amf.plugins.domain.webapi.metamodel.security.OAuth2SettingsModel._
+import amf.plugins.domain.webapi.metamodel.security.OpenIdConnectSettingsModel._
 import amf.plugins.domain.webapi.metamodel.security.SettingsModel._
 import amf.plugins.domain.webapi.metamodel.security._
 
@@ -91,21 +91,18 @@ object OAuth1Settings {
 case class OAuth2Settings(override val fields: Fields, override val annotations: Annotations)
     extends Settings(fields, annotations) {
 
-  def authorizationUri: StrField         = fields.field(AuthorizationUri2)
-  def accessTokenUri: StrField           = fields.field(AccessTokenUri)
   def authorizationGrants: Seq[StrField] = fields.field(AuthorizationGrants)
-  def flow: StrField                     = fields.field(Flow)
-  def refreshUri: StrField               = fields.field(RefreshUri)
-  def scopes: Seq[Scope]                 = fields.field(Scopes)
+  def flows: Seq[OAuth2Flow]             = fields.field(Flows)
 
-  def withAuthorizationUri(authorizationUri: String): this.type =
-    set(AuthorizationUri2, authorizationUri)
-  def withAccessTokenUri(accessTokenUri: String): this.type = set(AccessTokenUri, accessTokenUri)
   def withAuthorizationGrants(authorizationGrants: Seq[String]): this.type =
     set(AuthorizationGrants, authorizationGrants)
-  def withFlow(flow: String): this.type             = set(Flow, flow)
-  def withRefreshUri(refreshUri: String): this.type = set(RefreshUri, refreshUri)
-  def withScopes(scopes: Seq[Scope]): this.type     = setArray(Scopes, scopes)
+  def withFlows(flows: Seq[OAuth2Flow]): this.type = setArray(Flows, flows)
+
+  def withFlow(): OAuth2Flow = {
+    val flow = OAuth2Flow()
+    add(OAuth2FlowModel.Flow, flow)
+    flow
+  }
 
   override def meta: Obj = OAuth2SettingsModel
 

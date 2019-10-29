@@ -1635,7 +1635,7 @@ object AMFRawValidations {
     AMFValidation(
       Oas20.name,
       "Domain",
-      "security:Settings",
+      "security:OAuth2Flow",
       "security:flow",
       "PropertyShape",
       "sh:path",
@@ -1678,7 +1678,7 @@ object AMFRawValidations {
     AMFValidation(
       Oas30.name,
       "Domain",
-      "security:Settings",
+      "security:OAuth2Flow",
       "security:flow",
       "PropertyShape",
       "sh:path",

@@ -99,6 +99,9 @@ object WebApiRegister {
     platform.registerWrapper(webapi.metamodel.security.ScopeModel) {
       case s: webapi.models.security.Scope => Scope(s)
     }
+    platform.registerWrapper(webapi.metamodel.security.OAuth2FlowModel) {
+      case of: webapi.models.security.OAuth2Flow => OAuth2Flow(of)
+    }
     platform.registerWrapper(webapi.metamodel.security.SettingsModel) {
       case s: webapi.models.security.Settings => new Settings(s)
     }

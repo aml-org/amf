@@ -50,16 +50,19 @@ endpoint:
               type: OAuth 2.0
               settings:
                 type: OAuth2
-                authorizationURI: https://example.com/oauth/authorize
-                scope:
-                  -
-                    name: profile
-                  -
-                    name: history
                 authorizationGrant:
                   - implicit
                   - authorization_code
-                accessTokenURI: https://example.com/oauth/token
+                flows:
+                  -
+                    authorizationURI: https://example.com/oauth/authorize
+                    scope:
+                      -
+                        name: profile
+                      -
+                        name: history
+
+                    accessTokenURI: https://example.com/oauth/token
             name: oauth_2_0
           -
             name: "null"
@@ -104,16 +107,20 @@ endpoint:
               type: OAuth 2.0
               settings:
                 type: OAuth2
-                authorizationURI: https://example.com/oauth/authorize
-                scope:
-                  -
-                    name: profile
-                  -
-                    name: history
                 authorizationGrant:
                   - implicit
                   - authorization_code
-                accessTokenURI: https://example.com/oauth/token
+                flows:
+                  -
+                    authorizationURI: https://example.com/oauth/authorize
+                    scope:
+                      -
+                        name: profile
+                      -
+                        name: history
+
+                    accessTokenURI: https://example.com/oauth/token
+
             name: oauth_2_0
           -
             scheme:

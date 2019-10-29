@@ -5,7 +5,7 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.metamodel.security.OAuth2SettingsModel
+import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.WebApi
 import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme, Settings}
@@ -18,15 +18,15 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
     root match {
       case rootAuth2: OAuth2Settings if settings.isInstanceOf[OAuth2Settings] =>
         val auth2Settings   = settings.asInstanceOf[OAuth2Settings]
-        val rootAuth2Scopes = rootAuth2.scopes.flatMap(_.name.option())
-        val scopes = auth2Settings.scopes.flatMap(_.name.option()).filter { s =>
+        val rootAuth2Scopes = scopeNames(rootAuth2)
+        val scopes = scopeNames(auth2Settings).filter { s =>
           !rootAuth2Scopes.contains(s)
         }
         if (scopes.nonEmpty)
           errorHandler.violation(
             CoreValidations.ResolutionValidation,
             settings.id,
-            Some(OAuth2SettingsModel.Scopes.value.toString),
+            Some(OAuth2FlowModel.Scopes.value.toString),
             "Follow scopes are not defined in root: " + scopes.toString(),
             settings.position(),
             settings.location()
@@ -34,6 +34,9 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
       // Should I validate that settings are from same class?
       case _ => // ignore
     }
+
+  private def scopeNames(oauth2: OAuth2Settings): Seq[String] =
+    oauth2.flows.headOption.toList.flatMap(_.scopes.flatMap(_.name.option()))
 
   private def resolveSecurity(api: WebApi): Unit = {
     val rootSecurity = field(api, WebApiModel.Security)

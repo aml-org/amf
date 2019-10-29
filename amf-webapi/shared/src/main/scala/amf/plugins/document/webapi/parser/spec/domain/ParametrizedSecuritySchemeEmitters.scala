@@ -72,7 +72,10 @@ case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrized
       case Some(f) =>
         val scopes = f.element match {
           case settings: OAuth2Settings =>
-            settings.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
+            settings.flows.headOption.toList
+              .flatMap { flow =>
+                flow.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
+              }
           case _ => // we cant emit, if its not 2.0 isnt valid in oas.
             Nil
 

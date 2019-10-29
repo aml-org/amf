@@ -4,7 +4,7 @@ import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml}
-import amf.core.utils.AmfStrings
+import amf.core.utils.{Lazy, AmfStrings}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorSecurityScheme
 import amf.plugins.document.webapi.parser.spec._
@@ -363,20 +363,25 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
     settings
   }
 
-  private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
-    val map = entry.value.as[YMap]
-    // TODO Security schemes in OAS 3 can have multiple flows
-    map.entries.headOption match {
-      case Some(flowEntry) =>
-        val flowMap = flowEntry.value.as[YMap]
-        val flow    = ScalarNode(flowEntry.key).string()
-        settings.set(OAuth2SettingsModel.Flow, flow)
-        flowMap.key("authorizationUrl", OAuth2SettingsModel.AuthorizationUri in settings)
-        flowMap.key("tokenUrl", OAuth2SettingsModel.AccessTokenUri in settings)
-        flowMap.key("refreshUrl", OAuth2SettingsModel.RefreshUri in settings)
-        parseScopes(settings, flowMap)
-      case None =>
-    }
+  private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit =
+    entry.value.as[YMap].entries.foreach(parseFlow(settings, _))
+
+  private def parseFlow(settings: OAuth2Settings, flowEntry: YMapEntry) = {
+    val flow    = OAuth2Flow(flowEntry)
+    val flowMap = flowEntry.value.as[YMap]
+    val flowKey = ScalarNode(flowEntry.key).string()
+
+    flow.set(OAuth2FlowModel.Flow, flowKey)
+
+    flow.adopted(settings.id)
+
+    flowMap.key("authorizationUrl", OAuth2FlowModel.AuthorizationUri in flow)
+    flowMap.key("tokenUrl", OAuth2FlowModel.AccessTokenUri in flow)
+    flowMap.key("refreshUrl", OAuth2FlowModel.RefreshUri in flow)
+
+    parseScopes(flow, flowMap)
+
+    settings.add(OAuth2SettingsModel.Flows, flow)
   }
 }
 
@@ -441,20 +446,28 @@ case class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implici
 
   protected def oauth2(): OAuth2Settings = {
     val settings = scheme.withOAuth2Settings()
+    val flow     = new Lazy[OAuth2Flow](() => OAuth2Flow(map).adopted(settings.id))
 
-    map.key("authorizationUrl", OAuth2SettingsModel.AuthorizationUri in settings)
-    map.key("tokenUrl", OAuth2SettingsModel.AccessTokenUri in settings)
+    map.key("authorizationUrl",
+            entry =>
+              flow.getOrCreate.set(OAuth2FlowModel.AuthorizationUri,
+                                   ScalarNode(entry.value).string(),
+                                   Annotations(entry.value)))
+    map.key("tokenUrl",
+            entry =>
+              flow.getOrCreate.set(OAuth2FlowModel.AccessTokenUri,
+                                   ScalarNode(entry.value).string(),
+                                   Annotations(entry.value)))
 
-    // TODO we should find similarity between raml authorizationGrants and this to map between values.
     map.key(
       "flow",
       entry => {
         val value = ScalarNode(entry.value)
-        settings.set(OAuth2SettingsModel.Flow, value.string(), Annotations(entry))
+        flow.getOrCreate.set(OAuth2FlowModel.Flow, value.string(), Annotations(entry))
       }
     )
 
-    parseScopes(settings, map)
+    map.key("scopes").foreach(_ => parseScopes(flow.getOrCreate, map))
 
     map.key(
       "settings".asOasExtension,
@@ -469,22 +482,28 @@ case class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implici
 
     AnnotationParser(settings, map).parseOrphanNode("scopes")
 
+    flow.option.foreach { f =>
+      f.adopted(settings.id)
+      settings.add(OAuth2SettingsModel.Flows, f)
+    }
+
     settings
   }
 
-  protected def parseScopes(settings: OAuth2Settings, map: YMap): Unit = map.key("scopes").foreach { entry =>
+  protected def parseScopes(flow: OAuth2Flow, map: YMap): Unit = map.key("scopes").foreach { entry =>
     val scopeMap = entry.value.as[YMap]
-    val scopes   = scopeMap.entries.filterNot(entry => isOasAnnotation(entry.key)).map(parseScope)
-    settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(entry))
+    val scopes   = scopeMap.entries.filterNot(entry => isOasAnnotation(entry.key)).map(parseScope(_, flow.id))
+    flow.setArray(OAuth2FlowModel.Scopes, scopes, Annotations(entry))
   }
 
-  private def parseScope(scopeEntry: YMapEntry) = {
+  private def parseScope(scopeEntry: YMapEntry, parentId: String) = {
     val name: String        = scopeEntry.key.as[YScalar].text
     val description: String = scopeEntry.value
 
     Scope(scopeEntry)
       .set(ScopeModel.Name, AmfScalar(name), Annotations(scopeEntry.key))
       .set(ScopeModel.Description, AmfScalar(description), Annotations(scopeEntry.value))
+      .adopted(parentId)
   }
 
   private def oauth1() = {

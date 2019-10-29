@@ -43,6 +43,7 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
     SettingsModel,
     OAuth1SettingsModel,
     OAuth2SettingsModel,
+    OAuth2FlowModel,
     ApiKeySettingsModel,
     TraitModel,
     ResourceTypeModel,

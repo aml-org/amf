@@ -601,7 +601,7 @@ object OAS20Dialect {
             .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/flow")
             .withName("flow")
             .withMinCount(1)
-            .withNodePropertyMapping(OAuth2SettingsModel.Flow.value.iri())
+            .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
             .withEnum(Seq(
               "implicit",
               "password",
@@ -610,25 +610,25 @@ object OAS20Dialect {
             ))
             .withLiteralRange(xsdString.iri()),
 
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/authorizationUrl")
-          .withName("authorizationUrl")
-          .withNodePropertyMapping(OAuth2SettingsModel.AuthorizationUri.value.iri())
-          .withLiteralRange(xsdUri.iri()),
+          PropertyMapping()
+            .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/authorizationUrl")
+            .withName("authorizationUrl")
+            .withNodePropertyMapping(OAuth2FlowModel.AuthorizationUri.value.iri())
+            .withLiteralRange(xsdUri.iri()),
 
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/tokenUrl")
-          .withName("tokenUrl")
-          .withNodePropertyMapping(OAuth2SettingsModel.AccessTokenUri.value.iri())
-          .withLiteralRange(xsdUri.iri()),
+          PropertyMapping()
+            .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/tokenUrl")
+            .withName("tokenUrl")
+            .withNodePropertyMapping(OAuth2FlowModel.AccessTokenUri.value.iri())
+            .withLiteralRange(xsdUri.iri()),
 
-        PropertyMapping()
-          .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/scopes")
-          .withName("scopes")
-          .withNodePropertyMapping(OAuth2SettingsModel.Scopes.value.iri())
-          .withMapTermKeyProperty(ScopeModel.Name.value.iri())
-          .withMapTermValueProperty(ScopeModel.Description.value.iri())
-          .withObjectRange(Seq(ScopeObject.id))
+          PropertyMapping()
+            .withId(DialectLocation + "#/declarations/Oauth2SecurityScheme/scopes")
+            .withName("scopes")
+            .withNodePropertyMapping(OAuth2FlowModel.Scopes.value.iri())
+            .withMapTermKeyProperty(ScopeModel.Name.value.iri())
+            .withMapTermValueProperty(ScopeModel.Description.value.iri())
+            .withObjectRange(Seq(ScopeObject.id))
 
       ))
 

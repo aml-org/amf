@@ -73,46 +73,18 @@ case class OAuth2Settings(override private[amf] val _internal: InternalOAuth2Set
   @JSExportTopLevel("model.domain.OAuth2Settings")
   def this() = this(InternalOAuth2Settings())
 
-  def authorizationUri: StrField                = _internal.authorizationUri
-  def accessTokenUri: StrField                  = _internal.accessTokenUri
+  def flows: ClientList[OAuth2Flow]             = _internal.flows.asClient
   def authorizationGrants: ClientList[StrField] = _internal.authorizationGrants.asClient
-  def flow: StrField                            = _internal.flow
-  def refreshUri: StrField                      = _internal.refreshUri
-  def scopes: ClientList[Scope]                 = _internal.scopes.asClient
 
-  /** Set authorizationUri property of this OAuth2Settings. */
-  def withAuthorizationUri(uri: String): this.type = {
-    _internal.withAuthorizationUri(uri)
-    this
-  }
-
-  /** Set accessTokenUri property of this OAuth2Settings] */
-  def withAccessTokenUri(token: String): this.type = {
-    _internal.withAccessTokenUri(token)
+  /** Set flows property of this OAuth2Settings. */
+  def withFlows(flows: ClientList[OAuth2Flow]): this.type = {
+    _internal.withFlows(flows.asInternal)
     this
   }
 
   /** Set authorizationGrants property of this OAuth2Settings] */
   def withAuthorizationGrants(grants: ClientList[String]): this.type = {
     _internal.withAuthorizationGrants(grants.asInternal)
-    this
-  }
-
-  /** Set flow property of this OAuth2Settings] */
-  def withFlow(flow: String): this.type = {
-    _internal.withFlow(flow)
-    this
-  }
-
-  /** Set refreshUri property of this OAuth2Settings] */
-  def withRefreshUri(refreshUri: String): this.type = {
-    _internal.withRefreshUri(refreshUri)
-    this
-  }
-
-  /** Set scopes property of this OAuth2Settings] */
-  def withScopes(scopes: ClientList[Scope]): this.type = {
-    _internal.withScopes(scopes.asInternal)
     this
   }
 }

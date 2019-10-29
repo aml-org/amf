@@ -23,14 +23,14 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
-import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
+import amf.plugins.domain.webapi.metamodel.security.{OAuth2FlowModel, ParametrizedSecuritySchemeModel, ScopeModel}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations
-import amf.validations.ParserSideValidations._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
+import amf.validations.ParserSideValidations._
 import org.yaml.model.{YNode, _}
 
 import scala.collection.mutable
@@ -378,9 +378,12 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           val scopes = schemeEntry.value
             .as[Seq[YNode]]
             .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
+          val flows = Seq(
+            settings
+              .withFlow()
+              .setArray(OAuth2FlowModel.Scopes, scopes, Annotations(schemeEntry.value)))
 
-          scheme.set(ParametrizedSecuritySchemeModel.Settings,
-                     settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
+          scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows))
         }
 
         validateScopesArray(scheme, declaration, schemeEntry)

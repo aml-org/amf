@@ -11,8 +11,11 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
 
   def fixOauth2(oauth2: OAuth2Settings): Unit = {
     if (oauth2.authorizationGrants.isEmpty) oauth2.withAuthorizationGrants(Seq("implicit"))
-    if (oauth2.accessTokenUri.option().isEmpty) oauth2.withAccessTokenUri("")
-    if (oauth2.authorizationUri.option().isEmpty) oauth2.withAuthorizationUri("")
+
+    val flow = oauth2.flows.headOption.getOrElse(oauth2.withFlow())
+
+    if (flow.accessTokenUri.option().isEmpty) flow.withAccessTokenUri("")
+    if (flow.authorizationUri.option().isEmpty) flow.withAuthorizationUri("")
   }
 
   def fixApiKey(security: SecurityScheme, apiKey: ApiKeySettings): Unit = {
