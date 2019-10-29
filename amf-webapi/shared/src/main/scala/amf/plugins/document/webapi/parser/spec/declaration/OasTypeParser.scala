@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONS
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser}
 import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, NodeDataNodeParser, RamlExamplesParser}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
@@ -509,6 +509,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   case class ScalarShapeParser(typeDef: TypeDef, shape: ScalarShape, map: YMap)
       extends AnyShapeParser()
       with CommonScalarParsingLogic {
+
+    override lazy val dataNodeParser: YNode => DataNode = ScalarNodeParser(parent = Some(shape.id)).parse
+
     override def parse(): ScalarShape = {
       super.parse()
       val validatedTypeDef = parseScalar(map, shape, typeDef)
@@ -1020,6 +1023,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val shape: Shape
     val map: YMap
+    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id))
 
     def parse(): Shape = {
 
@@ -1037,7 +1041,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
       )
 
-      map.key("enum", ShapeModel.Values in shape using DataNodeParser.parse(Some(shape.id)))
+      map.key("enum", ShapeModel.Values in shape using dataNodeParser)
       map.key("externalDocs", AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
