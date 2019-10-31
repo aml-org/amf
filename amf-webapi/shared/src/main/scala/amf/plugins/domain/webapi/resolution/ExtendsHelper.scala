@@ -1,6 +1,6 @@
 package amf.plugins.domain.webapi.resolution
 
-import amf.core.annotations._
+import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
 import amf.core.emitter.BaseEmitters.yscalarWithRange
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
@@ -10,12 +10,7 @@ import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity
 import amf.core.services.{AllValidationsMerger, RuntimeValidator}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  RamlWebApiContextType
-}
+import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
@@ -23,11 +18,12 @@ import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ResolutionSideValidations.ParseResourceTypeFail
 import amf.{ProfileName, Raml08Profile}
+import org.mulesoft.lexer.SourceLocation
 import org.yaml.model._
 
-import scala.annotation.tailrec
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
+
 
 object ExtendsHelper {
   def custom(profile: ProfileName): RamlWebApiContext = profile match {
@@ -271,7 +267,7 @@ object ExtendsHelper {
 
   private def sourceNameMatch(f: Fragment, sourceName: String): Boolean =
     f.annotations
-      .find(classOf[SourceLocation])
+      .find(classOf[AmfSourceLocation])
       .map(_.location)
       .contains(sourceName)
 
@@ -372,7 +368,7 @@ class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserConte
                        message: String,
                        lexical: Option[LexicalInformation],
                        location: Option[String]): Unit      = {}
-  override def handle(node: YPart, e: SyamlException): Unit = {}
+  override def handle(loc: SourceLocation, e: SyamlException): Unit = {}
 }
 
 class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext()) {
@@ -390,5 +386,5 @@ class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserConte
                        message: String,
                        lexical: Option[LexicalInformation],
                        location: Option[String]): Unit      = {}
-  override def handle(node: YPart, e: SyamlException): Unit = {}
+  override def handle(location: SourceLocation, e: SyamlException): Unit = {}
 }

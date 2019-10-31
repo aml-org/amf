@@ -19,6 +19,7 @@ import amf.plugins.domain.shapes.models._
 import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.{ProfileName, ProfileNames}
+import org.mulesoft.lexer.SourceLocation
 import org.yaml.builder.YDocumentBuilder
 import org.yaml.model._
 import org.yaml.parser.{JsonParser, YamlParser}
@@ -214,7 +215,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     override val currentFile: String                          = ""
     override val parserCount: Int                             = 1
     private val errors: ListBuffer[AMFValidationResult]       = ListBuffer()
-    override def handle(node: YPart, e: SyamlException): Unit = errors += processError(e.getMessage)
+    override def handle(loc: SourceLocation, e: SyamlException): Unit = errors += processError(e.getMessage)
     override def handle[T](error: YError, defaultValue: T): T = {
       errors += processError(error.error)
       defaultValue
