@@ -1,9 +1,17 @@
 Model: file://amf-client/shared/src/test/resources/validations/parameter-without-shape/parameter-without-shape.json
 Profile: OAS 2.0
 Conforms? false
-Number of results: 1
+Number of results: 2
 
 Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#description-is-required-in-response
+  Message: Response must have a 'description' field
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/parameter-without-shape/parameter-without-shape.json#/web-api/end-points/%2Fwildcards/post/205
+  Property: http://a.ml/vocabularies/core#description
+  Position: Some(LexicalInformation([(12,10)-(18,11)]))
+  Location: file://amf-client/shared/src/test/resources/validations/parameter-without-shape/parameter-without-shape.json
 
 - Source: http://a.ml/vocabularies/amf/parser#Parameter-schema-minCount
   Message: Schema/type information required for Parameter objects

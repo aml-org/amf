@@ -94,5 +94,11 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("../upanddown/oas3/response-code-wildcards.json", Some("response-code-wildcards.report"), Oas30Profile)
   }
 
+  test("Response object with no description") {
+    validate("../upanddown/oas3/response-no-description.json",
+             Some("response-missing-description.report"),
+             Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

@@ -587,7 +587,7 @@ object AMFRawValidations {
       "sh:datatype",
       "xsd:string",
       "Information about the binding of the parameter is mandatory",
-      "in' property of a Parameter object must be a string",
+      "'in' property of a Parameter object must be a string",
       "Violation"
     ),
     AMFValidation(
@@ -600,7 +600,7 @@ object AMFRawValidations {
       "sh:minCount",
       "1",
       "Binding information for a parameter is mandatory",
-      "in' property of a Parameter object is mandatory",
+      "'in' property of a Parameter object is mandatory",
       "Violation"
     ),
     AMFValidation(
@@ -613,7 +613,7 @@ object AMFRawValidations {
       "sh:maxCount",
       "1",
       "Only one binding is allowed per parameter",
-      "in' property of a Parameter object must be a single value",
+      "'in' property of a Parameter object must be a single value",
       "Violation"
     ),
     AMFValidation(
@@ -626,7 +626,7 @@ object AMFRawValidations {
       "sh:in",
       "query,path,header,uri",
       "Binding information for a parameter with an invalid value",
-      "in' property of a parameter with an invalid value",
+      "'in' property of a parameter with an invalid value",
       "Violation"
     ),
     AMFValidation(
@@ -1566,7 +1566,7 @@ object AMFRawValidations {
       "sh:minCount",
       "1",
       "Server must have an 'url' property",
-      "Server must have an 'url' propert",
+      "Server must have an 'url' property",
       "Violation"
     ),
     AMFValidation(
@@ -2125,6 +2125,21 @@ object AMFRawValidations {
       "0",
       "Parameter of type file must set property 'in' to formData",
       "Parameter of type file must set property 'in' to formData",
+      "Violation"
+    ),
+    AMFValidation(
+      "amf-parser:description-is-required-in-response",
+      "Description must be defined in a response",
+      Oas.name,
+      "Domain",
+      "apiContract:Response",
+      "core:description",
+      "PropertyShape",
+      "sh:path",
+      "sh:minCount",
+      "1",
+      "",
+      "Response must have a 'description' field",
       "Violation"
     )
   )
