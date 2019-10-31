@@ -900,7 +900,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   case class DiscriminatorParser(shape: NodeShape, entry: YMapEntry) {
     def parse(): Unit = {
       val map = entry.value.as[YMap]
-      map.key("propertyName", NodeShapeModel.Discriminator in shape)
+      map.key("propertyName") match {
+        case Some(entry) =>
+          (NodeShapeModel.Discriminator in shape)(entry)
+        case None =>
+          ctx.violation(DiscriminatorNameRequired, shape.id, s"Discriminator must have a propertyName defined", map)
+      }
       map.key("mapping", parseMappings)
       ctx.closedShape(shape.id, map, "discriminator")
     }

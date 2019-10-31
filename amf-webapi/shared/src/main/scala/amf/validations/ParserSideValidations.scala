@@ -58,6 +58,16 @@ object ParserSideValidations extends Validations {
     "Parameter name is required"
   )
 
+  val RequestBodyContentRequired = validation(
+    "content-required",
+    "Request body content is required"
+  )
+
+  val DiscriminatorNameRequired = validation(
+    "discriminator-name-required",
+    "Discriminator property name is required"
+  )
+
   val InvalidServerPath = validation(
     "invalid-server-path",
     "Invalid server path"
@@ -568,6 +578,8 @@ object ParserSideValidations extends Validations {
     SchemaDeprecated,
     UnresolvedParameter,
     ParameterNameRequired,
+    RequestBodyContentRequired,
+    DiscriminatorNameRequired,
     InvalidSecuredByType,
     InvalidSecuritySchemeDescribedByType,
     InvalidEndpointPath,

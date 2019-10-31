@@ -112,9 +112,15 @@
 <http://a.ml/vocabularies/amf/parser#chained-reference-error> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#chained-reference-error> <http://www.w3.org/ns/shacl#message> "References cannot be chained" .
 <http://a.ml/vocabularies/amf/parser#chained-reference-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#content-required> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#content-required> <http://www.w3.org/ns/shacl#message> "Request body content is required" .
+<http://a.ml/vocabularies/amf/parser#content-required> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#cross-security-warning> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#cross-security-warning> <http://www.w3.org/ns/shacl#message> "Using a security scheme type from raml in oas or from oas in raml" .
 <http://a.ml/vocabularies/amf/parser#cross-security-warning> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#discriminator-name-required> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#discriminator-name-required> <http://www.w3.org/ns/shacl#message> "Discriminator property name is required" .
+<http://a.ml/vocabularies/amf/parser#discriminator-name-required> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#message> "Property 'discriminator' not supported in a node extending a unionShape" .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

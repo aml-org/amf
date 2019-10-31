@@ -108,5 +108,11 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("../upanddown/oas3/invalid-email-address.json", Some("invalid-email-address.report"), Oas30Profile)
   }
 
+  test("Request body must define content field, discriminator must define propertyName") {
+    validate("../upanddown/oas3/request-body-and-discriminator-required-fields.json",
+             Some("request-body-and-discriminator-required-fields.report"),
+             Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

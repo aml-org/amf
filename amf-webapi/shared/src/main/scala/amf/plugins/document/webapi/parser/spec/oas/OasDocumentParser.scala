@@ -557,17 +557,21 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
           val payloads = mutable.ListBuffer[Payload]()
 
-          map.key(
-            "content",
-            entry =>
+          map.key("content") match {
+            case Some(entry) =>
               entry.value
                 .as[YMap]
                 .entries
                 .foreach { entry =>
                   val mediaType = ScalarNode(entry.key).text().value.toString
                   payloads += OasContentParser(entry.value, mediaType, request.withPayload).parse()
-              }
-          )
+                }
+            case None =>
+              ctx.violation(RequestBodyContentRequired,
+                            request.id,
+                            s"Request body must have a 'content' field defined",
+                            map)
+          }
           request.set(ResponseModel.Payloads, AmfArray(payloads))
 
           AnnotationParser(request, map).parse()
