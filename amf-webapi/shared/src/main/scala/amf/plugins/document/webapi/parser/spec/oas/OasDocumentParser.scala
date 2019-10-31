@@ -278,6 +278,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         entry.value.tagType match {
           case YType.Seq =>
             val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
+            validateDuplicated(tags, entry)
             api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
           case _ => // ignore
         }
@@ -344,6 +345,19 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     ctx.closedShape(api.id, map, "webApi")
 
     api
+  }
+
+  private def validateDuplicated(tags: Seq[Tag], entry: YMapEntry): Unit = {
+    val groupedByName = tags
+      .flatMap { tag =>
+        tag.name.option().map(_ -> tag)
+      }
+      .groupBy { case (name, _) => name }
+    val namesWithTag = groupedByName.collect { case (_, ys) if ys.lengthCompare(1) > 0 => ys.tail }.flatten
+    namesWithTag.foreach {
+      case (name, tag) =>
+        ctx.violation(DuplicatedTags, tag.id, s"Tag with name '$name' was found duplicated", tag.annotations)
+    }
   }
 
   case class ParametrizedSecuritySchemeParser(node: YNode, producer: String => ParametrizedSecurityScheme) {

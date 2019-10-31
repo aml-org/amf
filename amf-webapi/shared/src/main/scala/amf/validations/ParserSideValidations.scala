@@ -278,6 +278,11 @@ object ParserSideValidations extends Validations {
     "Sibling parameters must have unique 'name' and 'in' values"
   )
 
+  val DuplicatedTags = validation(
+    "duplicate-tags",
+    "Sibling tags must have unique names"
+  )
+
   val OasInvalidParameterBinding = validation(
     "oas-invalid-parameter-binding",
     "Parameter has invalid binding"
@@ -528,6 +533,7 @@ object ParserSideValidations extends Validations {
     UnsupportedExampleMediaTypeErrorSpecification,
     OasInvalidBodyParameter,
     DuplicatedParameters,
+    DuplicatedTags,
     PatternPropertiesOnClosedNodeSpecification,
     DiscriminatorOnExtendedUnionSpecification,
     OasFormDataNotFileSpecification,

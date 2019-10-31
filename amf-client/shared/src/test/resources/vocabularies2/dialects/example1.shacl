@@ -121,6 +121,9 @@
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/ns/shacl#message> "Sibling parameters must have unique 'name' and 'in' values" .
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#duplicate-tags> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#duplicate-tags> <http://www.w3.org/ns/shacl#message> "Sibling tags must have unique names" .
+<http://a.ml/vocabularies/amf/parser#duplicate-tags> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path> <http://www.w3.org/ns/shacl#message> "Duplicated endpoint path" .
 <http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

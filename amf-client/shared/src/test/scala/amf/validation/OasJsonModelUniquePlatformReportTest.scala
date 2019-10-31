@@ -100,5 +100,13 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Oas30Profile)
   }
 
+  test("Unique name for tags") {
+    validate("../upanddown/oas3/unique-name-for-tags.json", Some("unique-name-for-tags.report"), Oas30Profile)
+  }
+
+  test("Valid format of email address") {
+    validate("../upanddown/oas3/invalid-email-address.json", Some("invalid-email-address.report"), Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

@@ -2141,6 +2141,19 @@ object AMFRawValidations {
       "",
       "Response must have a 'description' field",
       "Violation"
+    ),
+    AMFValidation(
+      Oas.name,
+      "Domain",
+      "core:Organization",
+      "core:email",
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      """^[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$""".stripMargin,
+      "",
+      "Field 'email' must be in the format of an email address",
+      "Violation"
     )
   )
 
