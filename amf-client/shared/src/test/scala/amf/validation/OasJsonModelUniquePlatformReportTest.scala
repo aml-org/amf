@@ -134,10 +134,8 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Oas30Profile)
   }
 
-  test("Items field must be present if type is array") {
-    validate("../upanddown/oas3/array-schema-without-items.json",
-             Some("array-schema-without-items.report"),
-             Oas30Profile)
+  test("OAS 3 schema object validations") {
+    validate("../upanddown/oas3/schema-definitions.json", Some("oas3-schema-validations.report"), Oas30Profile)
   }
 
   override val hint: Hint = OasJsonHint
