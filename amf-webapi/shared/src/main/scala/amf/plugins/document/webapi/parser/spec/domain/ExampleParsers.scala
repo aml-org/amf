@@ -288,7 +288,7 @@ case class Oas3ExampleValueParser(map: YMap, adopt: Example => Unit, options: Ex
       case Right(_) =>
         val example = Example()
         adopt(example)
-        if (map.key("value").nonEmpty) {
+        if (map.key("value").nonEmpty || map.key("externalValue").nonEmpty) {
           map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
           map.key("description", (ExampleModel.Description in example).allowingAnnotations)
           map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)

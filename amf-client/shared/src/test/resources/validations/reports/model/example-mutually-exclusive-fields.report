@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-content.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#example-mutually-exclusive-fields
+  Message: Example 'value' and 'externalValue' fields are mutually exclusive
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-content.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/example/a
+  Property: 
+  Position: Some(LexicalInformation([(26,18)-(32,19)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-content.json

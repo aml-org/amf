@@ -4,7 +4,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
-import amf.{AmfProfile, OasProfile, RamlProfile}
+import amf.{AmfProfile, Oas30Profile, OasProfile, RamlProfile}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -46,6 +46,7 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "path-parameter-required/required-set-to-true.jsonld"    -> ExpectedReport(conforms = true, 0, OasProfile),
     "file-parameter/invalid.jsonld"                          -> ExpectedReport(conforms = false, 1, OasProfile),
 //  "file-parameter/valid.jsonld"                            -> ExpectedReport(conforms = true, 0, OasProfile) fails in clientJVM with unkown error
+    "../upanddown/oas3/basic-content.jsonld" -> ExpectedReport(conforms = false, 1, Oas30Profile)
   )
 
   for {

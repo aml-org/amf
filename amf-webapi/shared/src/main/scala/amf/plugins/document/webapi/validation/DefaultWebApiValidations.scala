@@ -318,6 +318,14 @@ object JsCustomValidations {
         |  var protocolsArray = shape["apiContract:scheme"];
         |  return !Array.isArray(protocolsArray) || protocolsArray.length > 0;
         |}
+      """.stripMargin,
+    "exampleMutuallyExclusiveFields" ->
+      """
+        |function(shape) {
+        |  var externalValue = shape["doc:externalValue"];
+        |  var value = shape["doc:structuredValue"];
+        |  return !(externalValue != null && value != null);
+        |}
       """.stripMargin
   )
 

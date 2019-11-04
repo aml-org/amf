@@ -2238,6 +2238,21 @@ object AMFRawValidations {
       "Invalid 'in' value. The options are: query, header or cookie",
       "Invalid 'in' value. The options are: query, header or cookie",
       "Violation"
+    ),
+    AMFValidation(
+      "amf-parser:example-mutually-exclusive-fields",
+      "Example 'value' and 'externalValue' fields are mutually exclusive",
+      Oas30.name,
+      "Domain",
+      "apiContract:Example",
+      "doc:externalValue",
+      "PropertyShape",
+      "sh:path",
+      "raml-shapes:exampleMutuallyExclusiveFields",
+      "0",
+      "",
+      "Example 'value' and 'externalValue' fields are mutually exclusive",
+      "Violation"
     )
   )
 

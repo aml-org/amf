@@ -138,6 +138,14 @@ object CustomShaclFunctions {
             violation(Some(maybeValue.map(_.annotations).getOrElse(Annotations()), WebApiModel.Schemes))
           case _ =>
         }
+    }),
+    "exampleMutuallyExclusiveFields" -> ((element, violation) => {
+      for {
+        _ <- element.fields.getValueAsOption(ExampleModel.StructuredValue)
+        _ <- element.fields.getValueAsOption(ExampleModel.ExternalValue)
+      } yield {
+        violation(None)
+      }
     })
   )
 

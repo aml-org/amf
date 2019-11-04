@@ -114,5 +114,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Oas30Profile)
   }
 
+  test("Mutually exclusive fields in example") {
+    validate("../upanddown/oas3/basic-content.json", Some("example-mutually-exclusive-fields.report"), Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }
