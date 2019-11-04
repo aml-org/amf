@@ -30,6 +30,7 @@ import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingIn
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
+import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
@@ -511,6 +512,7 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     parseStyleField(result)
     parseExplodeField(result)
     map.key("deprecated", ParameterModel.Deprecated in result)
+    validateSchemaOrContent(result)
     OasParameter(result)
   }
 
@@ -589,6 +591,19 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
         if (payloads.nonEmpty) param.set(ResponseModel.Payloads, AmfArray(payloads), Annotations(entry))
       }
     )
+  }
+
+  private def validateSchemaOrContent(param: Parameter): Unit = {
+    (map.key("schema"), map.key("content")) match {
+      case (Some(_), Some(_)) | (None, None) =>
+        ctx.violation(
+          ParserSideValidations.ParameterMissingSchemaOrContent,
+          param.id,
+          s"Parameter must define a 'schema' or 'content' field, but not both",
+          param.annotations
+        )
+      case _ =>
+    }
   }
 
 }

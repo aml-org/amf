@@ -146,6 +146,20 @@ object AMFRawValidations {
       else Namespace.uri(value).iri() // this might not be a URI, but trying to expand it is still safe
   }
 
+  val schemaRequiredInParameter = AMFValidation(
+    Amf.name,
+    "Domain",
+    "apiContract:Parameter",
+    "raml-shapes:schema",
+    "PropertyShape",
+    "sh:path",
+    "sh:minCount",
+    "1",
+    "RAML Type information is mandatory for parameters",
+    "Schema/type information required for Parameter objects",
+    "Violation"
+  )
+
   // todo: Use valuetype instead of string uri.
   private val AMF = Seq(
     AMFValidation(
@@ -624,7 +638,7 @@ object AMFRawValidations {
       "PropertyShape",
       "sh:path",
       "sh:in",
-      "query,path,header,uri",
+      "query,path,header,uri,cookie",
       "Binding information for a parameter with an invalid value",
       "'in' property of a parameter with an invalid value",
       "Violation"
@@ -640,19 +654,6 @@ object AMFRawValidations {
       "1",
       "Only one RAML type can be specified",
       "Only one Schema object can be specified",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:Parameter",
-      "raml-shapes:schema",
-      "PropertyShape",
-      "sh:path",
-      "sh:minCount",
-      "1",
-      "RAML Type information is mandatory for parameters",
-      "Schema/type information required for Parameter objects",
       "Violation"
     ),
     AMFValidation(
@@ -1878,7 +1879,8 @@ object AMFRawValidations {
       "Status code for a Response must be a value between 100 and 599",
       "Status code for a Response must be a value between 100 and 599 or 'default'",
       "Violation"
-    )
+    ),
+    schemaRequiredInParameter
     /*
     ,
     AMFValidation(
@@ -2196,7 +2198,8 @@ object AMFRawValidations {
       "Invalid 'in' value. The options are: query or header",
       "Invalid 'in' value. The options are: query or header",
       "Violation"
-    )
+    ),
+    schemaRequiredInParameter
   )
 
   private val OAS30 = Seq(

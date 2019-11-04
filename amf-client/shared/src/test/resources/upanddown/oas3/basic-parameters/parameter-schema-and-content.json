@@ -1,0 +1,62 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "components": {
+    "parameters": {
+      "simple": {
+        "name": "token",
+        "in": "header",
+        "description": "token to be passed as a header",
+        "required": true,
+        "examples": {
+          "a": {
+            "summary": "simple example",
+            "description": "description of the example",
+            "value": [1,2,3,4]
+          }
+        },
+        "explode": true,
+        "style": "simple"
+      },
+      "query-with-content": {
+        "in": "query",
+        "name": "coordinates",
+        "deprecated": true,
+        "allowEmptyValue": true,
+        "allowReserved": true,
+        "example": {
+          "lat": 5,
+          "long": 4
+        },
+        "schema": {
+          "type": "object"
+        },
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "lat",
+                "long"
+              ],
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "long": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+  }
+
+}

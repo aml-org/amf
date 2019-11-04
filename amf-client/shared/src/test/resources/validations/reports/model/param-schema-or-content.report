@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-schema-and-content.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#parameter-missing-schema-or-content
+  Message: Parameter must define a 'schema' or 'content' field, but not both
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-schema-and-content.json#/declarations/parameters/parameter/simple
+  Property: 
+  Position: Some(LexicalInformation([(9,6)-(23,7)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-schema-and-content.json
+
+- Source: http://a.ml/vocabularies/amf/parser#parameter-missing-schema-or-content
+  Message: Parameter must define a 'schema' or 'content' field, but not both
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-schema-and-content.json#/declarations/parameters/parameter/query-with-content
+  Property: 
+  Position: Some(LexicalInformation([(24,6)-(56,7)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-schema-and-content.json

@@ -474,6 +474,11 @@ object ParserSideValidations extends Validations {
     "Type is missing required user defined facet"
   )
 
+  val ParameterMissingSchemaOrContent = validation(
+    "parameter-missing-schema-or-content",
+    "Parameter must define a 'schema' or 'content' field, but not both"
+  )
+
   val UserDefinedFacetMatchesBuiltInFacets = validation(
     "user-defined-facets-matches-built-in",
     "User defined facet name matches built in facet of type"
@@ -624,6 +629,7 @@ object ParserSideValidations extends Validations {
     InvalidUserDefinedFacetName,
     InvalidFieldNameInComponents,
     MissingRequiredUserDefinedFacet,
+    ParameterMissingSchemaOrContent,
     SlashInUriParameterValues,
     InvalidDatetimeFormat
   )

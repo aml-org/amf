@@ -122,5 +122,11 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("../upanddown/oas3/components/invalid-component-keys.json", Some("components-regex.report"), Oas30Profile)
   }
 
+  test("Parameter must define a schema or content property") {
+    validate("../upanddown/oas3/basic-parameters/parameter-schema-and-content.json",
+             Some("param-schema-or-content.report"),
+             Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }
