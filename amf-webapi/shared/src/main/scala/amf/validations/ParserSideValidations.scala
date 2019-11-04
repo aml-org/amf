@@ -464,6 +464,11 @@ object ParserSideValidations extends Validations {
     "User defined facets must not begin with open parenthesis"
   )
 
+  val InvalidFieldNameInComponents = validation(
+    "invalid-field-name-in-components",
+    "Field name in components must match the following expression: ^[a-zA-Z0-9\\.\\-_]+$"
+  )
+
   val MissingRequiredUserDefinedFacet = validation(
     "missing-user-defined-facet",
     "Type is missing required user defined facet"
@@ -617,6 +622,7 @@ object ParserSideValidations extends Validations {
     InvalidPayload,
     InvalidValueInPropertiesFacet,
     InvalidUserDefinedFacetName,
+    InvalidFieldNameInComponents,
     MissingRequiredUserDefinedFacet,
     SlashInUriParameterValues,
     InvalidDatetimeFormat

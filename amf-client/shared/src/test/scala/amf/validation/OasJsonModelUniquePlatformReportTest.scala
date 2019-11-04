@@ -118,5 +118,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("../upanddown/oas3/basic-content.json", Some("example-mutually-exclusive-fields.report"), Oas30Profile)
   }
 
+  test("Components must use keys with certain regex") {
+    validate("../upanddown/oas3/components/invalid-component-keys.json", Some("components-regex.report"), Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

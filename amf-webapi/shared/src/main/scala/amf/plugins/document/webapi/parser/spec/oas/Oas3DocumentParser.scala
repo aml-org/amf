@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
 import amf.core.annotations.{DeclaredElement, DeclaredHeader}
+import amf.core.model.domain.NamedDomainElement
 import amf.core.parser._
 import amf.core.utils.Strings
 import amf.plugins.document.webapi.contexts.OasWebApiContext
@@ -14,6 +15,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, WebApi}
+import amf.validations.ParserSideValidations
 import org.yaml.model._
 
 case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
@@ -53,6 +55,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
                                  parent + "/resourceTypes").parse()
       AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent + "/traits")
         .parse()
+      validateNames()
     }
 
   def parseExamplesDeclaration(map: YMap, parent: String): Unit = {
@@ -133,6 +136,23 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           }
       }
     )
+  }
+
+  def validateNames(): Unit = {
+    val declarations = ctx.declarations.declarables()
+    val keyRegex     = """^[a-zA-Z0-9\.\-_]+$""".r
+    declarations.foreach {
+      case elem: NamedDomainElement =>
+        val name = elem.name.value()
+        if (!keyRegex.pattern.matcher(name).matches())
+          ctx.violation(
+            ParserSideValidations.InvalidFieldNameInComponents,
+            elem.id,
+            s"Name $name does not match regular expression ${keyRegex.toString()} for component declarations",
+            elem.annotations
+          )
+      case _ =>
+    }
   }
 
 }

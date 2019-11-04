@@ -1,0 +1,35 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "components": {
+    "links": {
+      "some$Link": {
+        "$ref": "definitions.json#/SimpleLink"
+      }
+    },
+    "schemas": {
+      "my.org.Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "External-schema": {
+        "$ref": "definitions.json#/NumberSchema"
+      }
+    },
+    "responses": {
+      "ext_Response_1": {
+        "$ref": "definitions.json#/SimpleResponse"
+      }
+    }
+  },
+  "paths": {
+  }
+}
