@@ -70,5 +70,32 @@
   "SimpleScheme": {
     "type": "http",
     "scheme": "string"
+  },
+  "PathItem": {
+    "get": {
+      "summary": "this is a test",
+      "requestBody": {
+        "description": "request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "description",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

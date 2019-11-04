@@ -430,9 +430,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     private def parseEndpoint(endpoint: EndPoint) =
       ctx.link(entry.value) match {
         case Left(value) =>
-          ctx.declarations.asts.get(value) match {
-            case Some(n) if n.tagType == YType.Map =>
-              parseEndpointMap(endpoint, n.as[YMap])
+          ctx.obtainRemoteYNode(value).orElse(ctx.declarations.asts.get(value)) match {
+            case Some(map) if map.tagType == YType.Map =>
+              parseEndpointMap(endpoint, map.as[YMap])
             case Some(n) =>
               ctx.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
             case None =>
