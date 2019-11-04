@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-multiple-content-entries.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#Parameter-payload-maxCount
+  Message: Parameters 'content' field must only have one entry
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-multiple-content-entries.json#/declarations/parameters/parameter/query-with-content
+  Property: http://a.ml/vocabularies/apiContract#payload
+  Position: Some(LexicalInformation([(19,8)-(54,9)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/basic-parameters/parameter-multiple-content-entries.json

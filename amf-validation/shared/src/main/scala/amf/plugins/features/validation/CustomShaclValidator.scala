@@ -328,24 +328,21 @@ class CustomShaclValidator(model: BaseUnit,
   def validateMaxCount(validationSpecification: ValidationSpecification,
                        propertyConstraint: PropertyConstraint,
                        parentElement: DomainElement): Unit = {
-    /*
     extractPropertyValue(propertyConstraint, parentElement) match {
 
-      case Some((_, arr: AmfArray, _))  =>
-        if (! (arr.values.length <= propertyConstraint.maxCount.get.toInt)) {
+      case Some((_, arr: AmfArray, _)) =>
+        if (!(arr.values.length <= propertyConstraint.maxCount.get.toInt)) {
           reportFailure(validationSpecification, propertyConstraint, parentElement.id, arr.annotations)
         }
 
-
-      case Some((_, x: AmfElement, _))  =>
-        if (! (1 <= propertyConstraint.maxCount.get.toInt)) {
+      case Some((_, x: AmfElement, _)) =>
+        if (!(1 <= propertyConstraint.maxCount.get.toInt)) {
           reportFailure(validationSpecification, propertyConstraint, parentElement.id, x.annotations)
         }
 
       case _ =>
-        // ignore
+      // ignore
     }
-   */
   }
 
   def validateMinLength(validationSpecification: ValidationSpecification,

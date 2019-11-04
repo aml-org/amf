@@ -31,7 +31,7 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "webapi/bad_protocol.jsonld"                            -> ExpectedReport(conforms = false, 1, RamlProfile),
     "types/scalars/missing_type.jsonld"                     -> ExpectedReport(conforms = false, 1, RamlProfile),
     "types/scalars/missing_type_valid.jsonld"               -> ExpectedReport(conforms = true, 0, RamlProfile),
-    "types/scalars/wrong_facet.jsonld"                      -> ExpectedReport(conforms = false, 2, RamlProfile),
+    "types/scalars/wrong_facet.jsonld"                      -> ExpectedReport(conforms = false, 1, RamlProfile),
     "types/scalars/valid_facet.jsonld"                      -> ExpectedReport(conforms = true, 0, RamlProfile),
     "types/scalars/invalid_xml_attribute_non_scalar.jsonld" -> ExpectedReport(conforms = false, 1, RamlProfile),
     "types/scalars/invalid_xml_wrapped_scalar.jsonld"       -> ExpectedReport(conforms = false, 1, RamlProfile),

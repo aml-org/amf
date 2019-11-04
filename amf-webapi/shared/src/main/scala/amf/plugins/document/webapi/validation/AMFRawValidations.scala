@@ -179,19 +179,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "doc:DomainElement",
-      "core:name",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Titles and names must be single values",
-      "Names and titles must be single values",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "doc:DomainElement",
       "core:description",
       "PropertyShape",
       "sh:path",
@@ -199,19 +186,6 @@ object AMFRawValidations {
       "xsd:string",
       "Descriptions must be strings",
       "Description must be strings",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "doc:DomainElement",
-      "core:description",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Descriptions must be single values",
-      "Descriptions must be single values",
       "Violation"
     ),
     AMFValidation(
@@ -309,19 +283,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "apiContract:WebAPI",
-      "core:version",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "API version must be a single value",
-      "Info object 'version' must be a single value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:WebAPI",
       "core:termsOfService",
       "PropertyShape",
       "sh:path",
@@ -329,45 +290,6 @@ object AMFRawValidations {
       "xsd:string",
       "API terms of service must be a string",
       "Info object 'termsOfService' must be string",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:WebAPI",
-      "core:termsOfService",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "API terms of service must be a single value",
-      "Info object 'termsOfService' must a single value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:WebAPI",
-      "core:provider",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "API provider must be a single value",
-      "Info object 'contact' must be a single value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "core:Organization",
-      "core:url",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "API provider URL must be a single value",
-      "Contact object 'url' must be a single value",
       "Violation"
     ),
     AMFValidation(
@@ -381,32 +303,6 @@ object AMFRawValidations {
       "xsd:string",
       "API provider email must be a string",
       "Contact object 'email' must be a string",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "core:Organization",
-      "core:email",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "API provider must be a single value",
-      "Contact object 'email' must be a single value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:EndPoint",
-      "apiContract:path",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Resource path must be unique",
-      "PathItem object must have a single path",
       "Violation"
     ),
     AMFValidation(
@@ -452,19 +348,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "apiContract:Operation",
-      "apiContract:method",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Methods can only have a single type",
-      "Operations can only have a single type",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:Operation",
       "apiContract:guiSummary",
       "PropertyShape",
       "sh:path",
@@ -478,19 +361,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "apiContract:Operation",
-      "apiContract:guiSummary",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Methods can only have a single value for the summary information",
-      "Methods can only have a single value for summary information",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:Operation",
       "doc:deprecated",
       "PropertyShape",
       "sh:path",
@@ -498,19 +368,6 @@ object AMFRawValidations {
       "xsd:boolean",
       "Methods' deprecated must be a boolean",
       "Methods' deprecated must be a boolean",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:Operation",
-      "doc:deprecated",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Methods' deprecated must be a single value",
-      "Methods' deprecated must be a single value",
       "Violation"
     ),
     AMFValidation(
@@ -582,19 +439,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "apiContract:Parameter",
-      "apiContract:required",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Only one value is allowed for required information of a parameter",
-      "Required property of a Parameter object must be a single value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:Parameter",
       "apiContract:binding",
       "PropertyShape",
       "sh:path",
@@ -624,36 +468,10 @@ object AMFRawValidations {
       "apiContract:binding",
       "PropertyShape",
       "sh:path",
-      "sh:maxCount",
-      "1",
-      "Only one binding is allowed per parameter",
-      "'in' property of a Parameter object must be a single value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:Parameter",
-      "apiContract:binding",
-      "PropertyShape",
-      "sh:path",
       "sh:in",
       "query,path,header,uri,cookie",
       "Binding information for a parameter with an invalid value",
       "'in' property of a parameter with an invalid value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:Parameter",
-      "raml-shapes:schema",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Only one RAML type can be specified",
-      "Only one Schema object can be specified",
       "Violation"
     ),
     AMFValidation(
@@ -667,45 +485,6 @@ object AMFRawValidations {
       "xsd:string",
       "Method default media types must be strings",
       "Operation object 'produces' must be strings",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:Payload",
-      "core:mediaType",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Only one media type per payload is allowed",
-      "Only one media type per payload is allowed",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "apiContract:Payload",
-      "raml-shapes:schema",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Only one RAML type can be specified",
-      "Only one Schema object can be specified",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:Shape",
-      "raml-shapes:xmlSerialization",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "XML serialisation object must be a single value",
-      "XML Object for the 'xml' property of a Schema object must be  single value",
       "Violation"
     ),
     AMFValidation(
@@ -741,19 +520,6 @@ object AMFRawValidations {
     AMFValidation(
       Amf.name,
       "Domain",
-      "raml-shapes:Shape",
-      "sh:in",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Property 'enum'  must have a single list of values",
-      "Property 'enum' for a Schema object must have a single list of values",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
       "raml-shapes:XMLSerializer",
       "raml-shapes:xmlAtribute",
       "PropertyShape",
@@ -762,19 +528,6 @@ object AMFRawValidations {
       "xsd:boolean",
       "XML attribute serialisation info must be boolean",
       "XML attribute serialisation info must be boolean",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:XMLSerializer",
-      "raml-shapes:xmlAtribute",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "property 'attribute' of the XML serialisation mut be a single value",
-      "property 'attribute' of the XML serialisation mut be a single value",
       "Violation"
     ),
     AMFValidation(
@@ -794,19 +547,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-shapes:XMLSerializer",
-      "raml-shapes:xmlWrapped",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "property 'wrapped' of the XML serialisation mut be a single value",
-      "property 'wrapped' of the XML serialisation mut be a single value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:XMLSerializer",
       "raml-shapes:xmlName",
       "PropertyShape",
       "sh:path",
@@ -814,19 +554,6 @@ object AMFRawValidations {
       "xsd:string",
       "XML name serialisation info must be string",
       "XML name serialisation info must be string",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:XMLSerializer",
-      "raml-shapes:xmlName",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "property 'name' of the XML serialisation mut be a single value",
-      "property 'name' of the XML serialisation mut be a single value",
       "Violation"
     ),
     AMFValidation(
@@ -846,19 +573,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-shapes:XMLSerializer",
-      "raml-shapes:xmlNamespace",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "property 'namespace' of the XML serialisation mut be a single value",
-      "property 'namespace' of the XML serialisation mut be a single value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:XMLSerializer",
       "raml-shapes:xmlPrefix",
       "PropertyShape",
       "sh:path",
@@ -866,32 +580,6 @@ object AMFRawValidations {
       "xsd:string",
       "XML prefix serialisation info must be string",
       "XML prefix serialisation info must be string",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:XMLSerializer",
-      "raml-shapes:xmlPrefix",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Property 'prefix' of the XML serialisation mut be a single value",
-      "Property 'prefix' of the XML serialisation mut be a single value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:Shape",
-      "sh:defaultValue",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "Default value for a RAML type must be unique",
-      "Default property for an Schema object must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -924,19 +612,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-shapes:ObjectShape",
-      "raml-shapes:minProperties",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "minProperties for a RAML Object type must be unique",
-      "minProperties for a Schema object must be unique",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ObjectShape",
       "raml-shapes:maxProperties",
       "PropertyShape",
       "sh:path",
@@ -963,19 +638,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-shapes:ObjectShape",
-      "raml-shapes:maxProperties",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "maxProperties for a RAML Object type must be unique",
-      "maxProperties for a Schema object must be unique",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ObjectShape",
       "sh:closed",
       "PropertyShape",
       "sh:path",
@@ -983,19 +645,6 @@ object AMFRawValidations {
       "xsd:boolean",
       "additionalProperties for a RAML Object type must be a boolean",
       "additionalProperties for a Schema object must be a boolean",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ObjectShape",
-      "sh:closed",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "additionalProperties for a RAML Object must be unique",
-      "additionalProperties for a Schema object must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -1015,19 +664,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-shapes:ObjectShape",
-      "raml-shapes:discriminator",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "discriminator for RAML Object type must be unique",
-      "discriminator for a Schema object must be unique",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ObjectShape",
       "raml-shapes:discriminatorValue",
       "PropertyShape",
       "sh:path",
@@ -1035,19 +671,6 @@ object AMFRawValidations {
       "xsd:string",
       "x-discriminatorValue for RAML Object type must be a string value",
       "discriminatorValue for a Schema object must be a string value",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ObjectShape",
-      "raml-shapes:discriminatorValue",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "x-discriminatorValue for RAML Object type must be unique",
-      "discriminatorValue for a Schema object must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -1066,19 +689,6 @@ object AMFRawValidations {
     AMFValidation(
       Amf.name,
       "Domain",
-      "raml-shapes:ObjectShape",
-      "raml-shapes:readOnly ",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "(readOnly) for a RAML Object must be unique",
-      "readOnly for a Schema object must be unique",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
       "raml-shapes:ArrayShape",
       "sh:minCount",
       "PropertyShape",
@@ -1087,19 +697,6 @@ object AMFRawValidations {
       "xsd:integer",
       "minItems for a RAML Array type must be an integer",
       "minItems of a Schema object of type 'array' must be an integer",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ArrayShape",
-      "sh:minCount",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "minItems for a RAML Array type must be unique",
-      "minItems of a Schema object of type 'array' must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -1126,19 +723,6 @@ object AMFRawValidations {
       "xsd:integer",
       "maxItems for a RAML Array type must be an integer",
       "maxItems of a Schema object of type 'array' must be an integer",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ArrayShape",
-      "sh:maxCount",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "maxItems for a RAML Array type must be unique",
-      "maxItems of a Schema object of type 'array' must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -1183,19 +767,6 @@ object AMFRawValidations {
     AMFValidation(
       Amf.name,
       "Domain",
-      "raml-shapes:ArrayShape",
-      "raml-shapes:uniqueItems",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "uniqueItems for a RAML Array type must be unique",
-      "uniqueItems of a Schema object of type 'array' must be unique",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
       "raml-shapes:ScalarShape",
       "sh:pattern",
       "PropertyShape",
@@ -1204,19 +775,6 @@ object AMFRawValidations {
       "xsd:string",
       "pattern facet for a RAML scalar type must be a string",
       "pattern for scalar Schema object of scalar type must be a string",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
-      "sh:pattern",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "pattern facet for a RAML scalar type must be unique",
-      "pattern for scalar Schema object of scalar type must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -1236,19 +794,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-shapes:ScalarShape",
-      "sh:minLength",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "minLength facet for a RAML scalar type must be unique",
-      "minLength for scalar Schema object of scalar type must be unique",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
       "sh:maxLength",
       "PropertyShape",
       "sh:path",
@@ -1256,19 +801,6 @@ object AMFRawValidations {
       "xsd:integer",
       "maxLength facet for a RAML scalar type must be a integer",
       "maxLength for scalar Schema object of scalar type must be a integer",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
-      "sh:maxLength",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "maxLength facet for a RAML scalar type must be unique",
-      "maxLength for scalar Schema object of scalar type must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -1288,19 +820,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-shapes:ScalarShape",
-      "sh:minInclusive",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "minimum facet for a RAML scalar type must be unique",
-      "minimum for scalar Schema object of scalar type must be unique",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
       "sh:maxInclusive",
       "PropertyShape",
       "sh:path",
@@ -1308,19 +827,6 @@ object AMFRawValidations {
       "xsd:double",
       "maximum facet for a RAML scalar type must be a number",
       "maximum for scalar Schema object of scalar type must be a integer",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
-      "sh:maxInclusive",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "maximum facet for a RAML scalar type must be unique",
-      "maximum for scalar Schema object of scalar type must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -1340,19 +846,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-shapes:ScalarShape",
-      "sh:minExclusive",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "x-exclusiveMinimum facet for a RAML scalar type must be unique",
-      "exclusiveMinimum for scalar Schema object of scalar type must be unique",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
       "sh:maxExclusive",
       "PropertyShape",
       "sh:path",
@@ -1360,19 +853,6 @@ object AMFRawValidations {
       "xsd:boolean",
       "x-exclusiveMaximum facet for a RAML scalar type must be a boolean",
       "exclusiveMaximum for scalar Schema object of scalar type must be a boolean",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
-      "sh:maxExclusive",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "x-exclusiveMaximum facet for a RAML scalar type must be unique",
-      "exclusiveMaximum for scalar Schema object of scalar type must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -1444,19 +924,6 @@ object AMFRawValidations {
       Amf.name,
       "Domain",
       "raml-shapes:ScalarShape",
-      "raml-shapes:format",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "format facet for a RAML scalar type must be unique",
-      "format for scalar Schema object of scalar type must be unique",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
       "raml-shapes:multipleOf",
       "PropertyShape",
       "sh:path",
@@ -1464,19 +931,6 @@ object AMFRawValidations {
       "xsd:double",
       "multipleOf facet for a RAML scalar type must be a number",
       "multipleOf for scalar Schema object of scalar type must be a number",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "raml-shapes:ScalarShape",
-      "raml-shapes:multipleOf",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "multipleOf facet for a RAML scalar type must be unique",
-      "multipleOf for scalar Schema object of scalar type must be unique",
       "Violation"
     ),
     AMFValidation(
@@ -1503,19 +957,6 @@ object AMFRawValidations {
       "1",
       "type information for a RAML scalar is required",
       "type information fo a Schema object of scalar type is required",
-      "Violation"
-    ),
-    AMFValidation(
-      Amf.name,
-      "Domain",
-      "doc:DomainProperty",
-      "raml-shapes:schema",
-      "PropertyShape",
-      "sh:path",
-      "sh:maxCount",
-      "1",
-      "type must be a single value for a RAML annotationType",
-      "schema must be a single value for an extension type",
       "Violation"
     ),
     AMFValidation(
@@ -2255,6 +1696,19 @@ object AMFRawValidations {
       "0",
       "",
       "Example 'value' and 'externalValue' fields are mutually exclusive",
+      "Violation"
+    ),
+    AMFValidation(
+      Amf.name,
+      "Domain",
+      "apiContract:Parameter",
+      "apiContract:payload",
+      "PropertyShape",
+      "sh:path",
+      "sh:maxCount",
+      "1",
+      "",
+      "Parameters 'content' field must only have one entry",
       "Violation"
     )
   )

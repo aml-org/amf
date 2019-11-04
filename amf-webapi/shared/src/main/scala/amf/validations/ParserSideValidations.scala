@@ -496,11 +496,6 @@ object ParserSideValidations extends Validations {
     "Values of uri parameter must not contain '/' character"
   )
 
-  val ParameterContentSingleEntry = validation(
-    "content-of-parameter-single-entry",
-    "Parameters 'content' field must only have one entry"
-  )
-
   val ItemsFieldRequired = validation(
     "items-field-required",
     "'items' field is required when type is array"
@@ -642,7 +637,6 @@ object ParserSideValidations extends Validations {
     ParameterMissingSchemaOrContent,
     SlashInUriParameterValues,
     InvalidDatetimeFormat,
-    ParameterContentSingleEntry,
     ItemsFieldRequired
   )
 }
