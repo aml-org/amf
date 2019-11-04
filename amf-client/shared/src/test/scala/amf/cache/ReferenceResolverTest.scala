@@ -24,7 +24,7 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
 
   case class CustomReferenceResolver(references: Seq[CachedReference]) extends ReferenceResolver {
 
-    /** If the resource not exists, you should return a future failed with an [[ResourceNotFound]] exception. */
+    /** If the resource not exists, you should return a future failed with an ResourceNotFound exception. */
     override def fetch(url: String): ClientFuture[reference.CachedReference] =
       references.find(r => r.url == url) match {
         case Some(value) =>

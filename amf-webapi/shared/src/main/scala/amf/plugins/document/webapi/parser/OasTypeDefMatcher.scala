@@ -4,7 +4,7 @@ import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._
 
 /**
-  * Oas type to [[TypeDef]] matcher
+  * Oas type to TypeDef matcher
   */
 object OasTypeDefMatcher {
 

@@ -86,7 +86,8 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations"
   ).disablePlugins(SonarPlugin)
 
 lazy val webapiJVM = webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(amfAmlJVMRef, amfAmlLibJVM)

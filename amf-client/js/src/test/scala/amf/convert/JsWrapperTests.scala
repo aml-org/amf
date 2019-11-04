@@ -1,6 +1,7 @@
 package amf.convert
 
-import amf.client.convert.NativeOps
+import scala.language.implicitConversions
+import amf.client.convert.{NativeOps=>NatOps}
 import amf.client.convert.VocabulariesClientConverter.{ClientFuture, ClientList, ClientOption}
 
 import scala.concurrent.Future
@@ -15,7 +16,7 @@ class JsWrapperTests extends WrapperTests with NativeOpsFromJs {
   }
 }
 
-private[amf] trait NativeOpsFromJs extends NativeOps {
+private[amf] trait NativeOpsFromJs extends NatOps {
 
   override implicit def toNativeOption[E](client: ClientOption[E]): NativeOption[E]   = new JsNativeOption[E](client)
   override implicit def toNativeList[E](client: ClientList[E]): JsNativeList[E]       = new JsNativeList(client)

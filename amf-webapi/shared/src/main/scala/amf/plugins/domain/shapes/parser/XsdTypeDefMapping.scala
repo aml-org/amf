@@ -7,7 +7,7 @@ import amf.plugins.domain.shapes.models.TypeDef._
 import org.yaml.model.YType
 
 /**
-  * XSD [[TypeDef]] mapping
+  * XSD TypeDef mapping
   */
 object XsdTypeDefMapping {
 

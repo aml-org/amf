@@ -211,14 +211,14 @@ case class DataNodeEmitter(
 
   def scalarEmitter(scalar: ScalarNode): PartEmitter = {
     scalar.dataType.option() match {
-      case Some(t) if t == xsdString => TextScalarEmitter(scalar.value.value(), scalar.annotations, YType.Str)
+      case Some(t) if t == xsdString => TextScalarEmitter(scalar.value.value(), scalar.annotations)
       case Some(t) if t == xsdInteger =>
         TextScalarEmitter(scalar.value.value(), scalar.annotations, YType.Int)
       case Some(t) if t == xsdDouble | t == amlNumber =>
         TextScalarEmitter(scalar.value.value(), scalar.annotations, YType.Float)
       case Some(t) if t == xsdBoolean => TextScalarEmitter(scalar.value.value(), scalar.annotations, YType.Bool)
       case Some(t) if t == xsdNil     => NullEmitter(scalar.annotations)
-      case _                          => TextScalarEmitter(scalar.value.value(), Annotations(), YType.Str)
+      case _                          => TextScalarEmitter(scalar.value.value(), Annotations())
     }
   }
 
@@ -241,11 +241,9 @@ case class DataPropertyEmitter(key: String,
       .collectFirst({ case e: YMapEntry => Annotations(e.key) })
       .getOrElse(propertyAnnotations)
     b.entry(
-      YNode(yscalarWithRange(key.urlComponentDecoded, YType.Str, keyAnnotations), YType.Str),
-      b => {
-        // In the current implementation ther can only be one value, we are NOT flattening arrays
-        DataNodeEmitter(value, ordering, resolvedLinks, referencesCollector)(eh).emit(b)
-      }
+      YNode(YScalar.withLocation(key.urlComponentDecoded, YType.Str, keyAnnotations.sourceLocation), YType.Str),
+      // In the current implementation there can only be one value, we are NOT flattening arrays
+      DataNodeEmitter(value, ordering, resolvedLinks, referencesCollector)(eh).emit(_)
     )
   }
 
