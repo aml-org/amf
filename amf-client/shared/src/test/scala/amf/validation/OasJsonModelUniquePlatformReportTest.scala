@@ -128,5 +128,17 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Oas30Profile)
   }
 
+  test("Parameter content must contain only one entry") {
+    validate("../upanddown/oas3/basic-parameters/parameter-multiple-content-entries.json",
+             Some("parameter-multiple-content-entries.report"),
+             Oas30Profile)
+  }
+
+  test("Items field must be present if type is array") {
+    validate("../upanddown/oas3/array-schema-without-items.json",
+             Some("array-schema-without-items.report"),
+             Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

@@ -685,9 +685,17 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       lookAhead() match {
         case None =>
           val array = ArrayShape(ast).withName(name, nameAnnotations)
-          ArrayShapeParser(array, map, adopt).parse()
+          val shape = ArrayShapeParser(array, map, adopt).parse()
+          validateMissingItemsField(shape)
+          shape
         case Some(Left(tuple))  => TupleShapeParser(tuple, map, adopt).parse()
         case Some(Right(array)) => ArrayShapeParser(array, map, adopt).parse()
+      }
+    }
+
+    private def validateMissingItemsField(shape: Shape): Unit = {
+      if (version.isInstanceOf[OAS30SchemaVersion]) {
+        ctx.violation(ItemsFieldRequired, shape.id, "'items' field is required when schema type is array", map)
       }
     }
 

@@ -283,6 +283,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-xone-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-xone-type> <http://www.w3.org/ns/shacl#message> "Xone should be a sequence" .
 <http://a.ml/vocabularies/amf/parser#invalid-xone-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#items-field-required> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#items-field-required> <http://www.w3.org/ns/shacl#message> "'items' field is required when type is array" .
+<http://a.ml/vocabularies/amf/parser#items-field-required> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#json-schema-fragment-not-found> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#json-schema-fragment-not-found> <http://www.w3.org/ns/shacl#message> "Json schema fragment not found" .
 <http://a.ml/vocabularies/amf/parser#json-schema-fragment-not-found> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

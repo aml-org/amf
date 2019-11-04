@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/upanddown/oas3/array-schema-without-items.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#items-field-required
+  Message: 'items' field is required when schema type is array
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/array-schema-without-items.json#/declarations/types/array/invalid-array-type
+  Property: 
+  Position: Some(LexicalInformation([(15,28)-(17,7)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/array-schema-without-items.json

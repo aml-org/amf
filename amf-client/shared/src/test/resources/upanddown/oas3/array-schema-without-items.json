@@ -1,0 +1,22 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "some title",
+    "version": "0.1"
+  },
+  "components": {
+    "schemas": {
+      "valid-array-type": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "invalid-array-type": {
+        "type": "array"
+      }
+    }
+  },
+  "paths": {
+  }
+}

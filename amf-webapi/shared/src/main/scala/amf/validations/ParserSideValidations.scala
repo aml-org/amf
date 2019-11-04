@@ -496,6 +496,16 @@ object ParserSideValidations extends Validations {
     "Values of uri parameter must not contain '/' character"
   )
 
+  val ParameterContentSingleEntry = validation(
+    "content-of-parameter-single-entry",
+    "Parameters 'content' field must only have one entry"
+  )
+
+  val ItemsFieldRequired = validation(
+    "items-field-required",
+    "'items' field is required when type is array"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -631,6 +641,8 @@ object ParserSideValidations extends Validations {
     MissingRequiredUserDefinedFacet,
     ParameterMissingSchemaOrContent,
     SlashInUriParameterValues,
-    InvalidDatetimeFormat
+    InvalidDatetimeFormat,
+    ParameterContentSingleEntry,
+    ItemsFieldRequired
   )
 }
