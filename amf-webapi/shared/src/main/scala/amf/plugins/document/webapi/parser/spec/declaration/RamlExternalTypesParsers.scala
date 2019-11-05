@@ -111,14 +111,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       val url       = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
-      val schemaAst = JsonParser.withSource(text, valueAST.sourceName)(ctx).parse()
-      val schemaEntry = schemaAst.collectFirst({ case d: YDocument => d }) match {
-        case Some(d) => d
-        case _       =>
-          // TODO get parent id
-          ctx.violation(InvalidJsonSchemaExpression, "", "invalid json schema expression", valueAST)
-          YDocument(YMap.empty)
-      }
+      val schemaEntry = JsonParser.withSource(text, valueAST.sourceName)(ctx).document()
       val jsonSchemaContext = toSchemaContext(ctx, valueAST)
       jsonSchemaContext.localJSONSchemaContext = Some(schemaEntry.node)
       jsonSchemaContext.setJsonSchemaAST(schemaEntry.node)
@@ -161,14 +154,7 @@ case class RamlJsonSchemaExpression(key: YNode,
                                     valueAST.value.sourceName,
                                     Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
 
-    val schemaAst = parser.parse()
-    val schemaEntry = schemaAst.head match {
-      case d: YDocument => YMapEntry(key, d.node)
-      case _            =>
-        // TODO get parent id
-        ctx.violation(InvalidJsonSchemaExpression, "", "invalid json schema expression", valueAST)
-        YMapEntry(key, YNode.Null)
-    }
+    val schemaEntry = YMapEntry(key, parser.document().node)
 
     // we set the local schema entry to be able to resolve local $refs
     ctx.setJsonSchemaAST(schemaEntry.value)
@@ -348,23 +334,21 @@ trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with Ram
           case Some(typeEntry: YMapEntry) if typeEntry.value.toOption[YScalar].isDefined =>
             ValueAndOrigin(typeEntry.value.as[YScalar].text, typeEntry.value, getOrigin(typeEntry.value))
           case _ =>
-            val shape = SchemaShape()
-            adopt(shape)
-            ctx.violation(InvalidExternalTypeType,
-                          shape.id,
-                          s"Cannot parse $externalType Schema expression out of a non string value",
-                          value)
-            ValueAndOrigin("", value, None, Some(shape))
+            failSchemaExpressionParser
         }
       case YType.Seq =>
-        val shape = SchemaShape()
-        adopt(shape)
-        ctx.violation(InvalidExternalTypeType,
-                      shape.id,
-                      s"Cannot parse $externalType Schema expression out of a non string value",
-                      value)
-        ValueAndOrigin("", value, None, Some(shape))
+        failSchemaExpressionParser
       case _ => ValueAndOrigin(value.as[YScalar].text, value, getOrigin(value))
     }
+  }
+
+  private def failSchemaExpressionParser = {
+    val shape = SchemaShape()
+    adopt(shape)
+    ctx.violation(InvalidExternalTypeType,
+      shape.id,
+      s"Cannot parse $externalType Schema expression out of a non string value",
+      value)
+    ValueAndOrigin("", value, None, Some(shape))
   }
 }

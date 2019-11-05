@@ -120,26 +120,16 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   private def getYNode(inputFragment: Fragment, ctx: WebApiContext): YNode = {
     inputFragment match {
       case fragment: ExternalFragment =>
-        fragment.encodes.parsed.getOrElse {
+        fragment.encodes.parsed.getOrElse(
           JsonParser
             .withSource(fragment.encodes.raw.value(), fragment.location().getOrElse(""))(ctx)
-            .parse(keepTokens = true)
-            .head match {
-            case doc: YDocument => doc.node
-            case _ =>
-              ctx.violation(UnableToParseJsonSchema,
-                            inputFragment,
-                            None,
-                            "Cannot parse JSON Schema from unit with missing syntax information")
-              YNode(YMap(IndexedSeq(), ""))
-          }
-        }
+            .document()
+            .node)
+
       case fragment: RecursiveUnit if fragment.raw.isDefined =>
         JsonParser
           .withSource(fragment.raw.get, fragment.location().getOrElse(""))(ctx)
-          .parse(keepTokens = true)
-          .head
-          .asInstanceOf[YDocument]
+          .document()
           .node
       case _ =>
         ctx.violation(UnableToParseJsonSchema,

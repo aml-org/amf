@@ -235,9 +235,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         Right(
           YamlParser(e.encodes.raw.value(), e.location().getOrElse(""))(ctx)
             .withIncludeTag("!include")
-            .parse()
-            .collectFirst({ case d: YDocument => d })
-            .getOrElse(YDocument(YNode.Null)))
+            .document())
       case e: ExternalFragment =>
         Left(e.encodes.raw.value())
       case o if hasDocumentAST(o) =>

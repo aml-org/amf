@@ -251,7 +251,7 @@ case class StringToAstEmitter(value: String) extends PartEmitter {
       if (value.isXml || value.isJson) // check the media type for yaml examples that has been setted in memory as value
         YNode(value) // i can't parse (yamlparser) the string because i will lose the multiline string like |- token.
       else
-        YamlParser(value).parse().collectFirst { case d: YDocument => d }.map(_.node).getOrElse(YNode(value))
+        YamlParser(value).document().node
 
     emitNode(node, b)
   }

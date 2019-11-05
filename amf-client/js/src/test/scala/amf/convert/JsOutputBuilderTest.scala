@@ -20,9 +20,8 @@ class JsOutputBuilderTest extends DocBuilderTest {
     renderer
       .renderToBuilder(builder)
       .map(_ => {
-        val jsObject: js.Any = builder.result
-        val content: String  = js.JSON.stringify(jsObject)
-        val document         = JsonParser.apply(content).parse().head.asInstanceOf[YDocument]
+        val parser: JsonParser = JsonParser(js.JSON.stringify(builder.result))
+        val document: YDocument = parser.documents()(0)
         JsonRender.render(document)
       })
   }

@@ -205,16 +205,13 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       case "application/json" => JsonParser(payload)(errorHandler)
       case _                  => YamlParser(payload)(errorHandler)
     }
-    parser.parse(keepTokens = true).collectFirst { case doc: YDocument => doc.node } match {
-      case Some(node: YNode) =>
-        PayloadFragment(DataNodeParser(node)(defaultCtx).parse(), mediaType)
-      case None => PayloadFragment(ScalarNode(payload, None), mediaType)
-    }
+    val node = parser.document().node
+    PayloadFragment(if (node.isNull) ScalarNode(payload, None) else DataNodeParser(node)(defaultCtx).parse(), mediaType)
   }
   case class PayloadErrorHandler() extends RuntimeErrorHandler {
-    override val currentFile: String                          = ""
-    override val parserCount: Int                             = 1
-    private val errors: ListBuffer[AMFValidationResult]       = ListBuffer()
+    override val currentFile: String                                  = ""
+    override val parserCount: Int                                     = 1
+    private val errors: ListBuffer[AMFValidationResult]               = ListBuffer()
     override def handle(loc: SourceLocation, e: SyamlException): Unit = errors += processError(e.getMessage)
     override def handle[T](error: YError, defaultValue: T): T = {
       errors += processError(error.error)
@@ -225,7 +222,8 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       new AMFValidationResult(message, SeverityLevels.VIOLATION, "", None, "", None, None, "")
   }
 
-  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+  protected def buildPayloadNode(mediaType: String,
+                                 payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
     val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, env, shape) match {
       case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
         val frag = ScalarPayloadForParam(result.fragment, shape)
@@ -298,8 +296,7 @@ object ScalarPayloadForParam {
 
       fragment.encodes match {
         case s: ScalarNode if !s.dataType.option().exists(_.equals(DataType.String)) =>
-          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations),
-                          fragment.mediaType.value())
+          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations), fragment.mediaType.value())
         case _ => fragment
       }
     } else fragment

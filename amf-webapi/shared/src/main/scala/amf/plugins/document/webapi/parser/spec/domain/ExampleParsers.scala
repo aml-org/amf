@@ -370,16 +370,14 @@ case class NodeDataNodeParser(node: YNode,
         jsonText = Some(scalar.text)
         node
           .toOption[YScalar]
-          .flatMap { scalar =>
+          .map { scalar =>
             val parser =
               if (!fromExternal)
                 JsonParser.withSource(scalar.text,
                                             scalar.sourceName,
                                             Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
               else JsonParser.withSource(scalar.text, scalar.sourceName)
-            parser
-              .parse()
-              .collectFirst({ case doc: YDocument => doc.node })
+            parser.document().node
           }
       case Some(scalar) if XMLSchema.unapply(scalar.text).isDefined => None
       case _                                                        => Some(node) // return default node for xml too.

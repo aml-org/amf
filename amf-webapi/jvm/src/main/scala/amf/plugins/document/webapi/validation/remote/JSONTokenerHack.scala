@@ -1,7 +1,6 @@
 package amf.plugins.document.webapi.validation.remote
 
 import java.lang
-import java.lang.Integer.parseInt
 
 import org.json.{JSONArray, JSONObject, JSONTokener}
 
