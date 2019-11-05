@@ -24,7 +24,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
   def `document/api/stringExamples`: Document = doc(stringExamples())
 
   private def bare(): WebApi = {
-    val api = WebApi()
+    val api: WebApi = WebApi()
+    api
       .withName("test")
       .withDescription("test description")
       .withSchemes(List("http", "https"))
@@ -33,9 +34,8 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
       .withVersion("1.1")
       .withTermsOfService("termsOfService")
       .adopted("file:///tmp/test")
-
-    api.withServer("localhost.com/api").add(SynthesizedField())
-
+      .withServer("localhost.com/api")
+      .add(SynthesizedField())
     api
   }
 

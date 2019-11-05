@@ -5,6 +5,7 @@ import amf.client.convert.VocabulariesClientConverter.{ClientFuture, ClientList,
 
 import scala.concurrent.Future
 import scala.scalajs.js
+import scala.language.implicitConversions
 
 class JsReferenceResolverTest extends ReferenceResolverTest with NativeOpsFromJs
 

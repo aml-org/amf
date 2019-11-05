@@ -240,7 +240,6 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
       root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
       report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
     } yield {
-      root
       assert(report.conforms)
     }
   }

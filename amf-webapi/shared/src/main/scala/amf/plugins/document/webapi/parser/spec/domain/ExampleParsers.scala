@@ -25,6 +25,7 @@ import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 import org.yaml.render.YamlRender
+import org.mulesoft.lexer.Position
 
 import scala.collection.mutable.ListBuffer
 
@@ -90,7 +91,7 @@ case class Oas3ResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiC
     val name    = yMapEntry.key.as[YScalar].text
     val example = Example(yMapEntry).withName(name)
     if (ctx.syntax == Oas3Syntax) {
-      Oas3SingleExampleValueParser(yMapEntry, (ex) => {
+      Oas3SingleExampleValueParser(yMapEntry, ex => {
         ex.add(Annotations(yMapEntry))
         ex.withName(name)
       }, ExampleOptions(strictDefault = false, quiet = true)).parse()
@@ -372,12 +373,12 @@ case class NodeDataNodeParser(node: YNode,
           .flatMap { scalar =>
             val parser =
               if (!fromExternal)
-                JsonParser.withSourceOffset(scalar.text,
+                JsonParser.withSource(scalar.text,
                                             scalar.sourceName,
-                                            (node.range.lineFrom, node.range.columnFrom))(errorHandler)
+                                            Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
               else JsonParser.withSource(scalar.text, scalar.sourceName)
             parser
-              .parse(true)
+              .parse()
               .collectFirst({ case doc: YDocument => doc.node })
           }
       case Some(scalar) if XMLSchema.unapply(scalar.text).isDefined => None

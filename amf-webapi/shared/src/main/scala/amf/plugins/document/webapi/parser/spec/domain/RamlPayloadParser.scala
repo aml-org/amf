@@ -73,7 +73,8 @@ case class Raml08PayloadParser(entry: YMapEntry, producer: Option[String] => Pay
 
     entry.value.tagType match {
       case YType.Null =>
-        val anyShape = AnyShape().withName("schema").adopted(payload.id)
+        val shape: AnyShape = AnyShape()
+        val anyShape = shape.withName("schema").adopted(payload.id)
         anyShape.annotations += SynthesizedField()
         payload.withSchema(anyShape)
 
@@ -107,7 +108,8 @@ case class Raml08WebFormParser(map: YMap, parentId: String)(implicit ctx: RamlWe
         val entries = entry.value.as[YMap].entries
         entries.headOption.map {
           _ =>
-            val webFormShape = NodeShape(entry.value).withName("schema").adopted(parentId)
+            val nodeShape: NodeShape = NodeShape(entry.value)
+            val webFormShape = nodeShape.withName("schema").adopted(parentId)
             entries.foreach(e => {
 
               Raml08TypeParser(e,

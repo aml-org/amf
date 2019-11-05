@@ -127,7 +127,8 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   }
 
   def cloneScheme(parent: String): SecurityScheme = {
-    val cloned = SecurityScheme(annotations).withName(name.value()).adopted(parent)
+    val scheme: SecurityScheme = SecurityScheme(annotations)
+    val cloned = scheme.withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

@@ -74,10 +74,9 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Cache duplicate imports") {
     val cache = new TestCache()
-    build("file://amf-client/shared/src/test/resources/input-duplicate-includes.json",
-          OasJsonHint,
-          cache = Some(cache)) map { _ =>
-      cache.assertCacheSize(2)
+    build("file://amf-client/shared/src/test/resources/input-duplicate-includes.json", OasJsonHint, cache = Some(cache)) map {
+      _ =>
+        cache.assertCacheSize(2)
     }
   }
 
@@ -114,9 +113,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     Validation(platform)
       .flatMap(v => {
 
-        build("file://amf-client/shared/src/test/resources/non-exists-include.raml",
-              RamlYamlHint,
-              validation = Some(v))
+        build("file://amf-client/shared/src/test/resources/non-exists-include.raml", RamlYamlHint, validation = Some(v))
           .flatMap(bu => {
             v.validate(bu, RamlProfile, RAMLStyle)
           })
@@ -136,7 +133,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Feature plugin test") {
     val url = "file://amf-client/shared/src/test/resources/tck/raml-1.0/Api/test003/api.raml"
     amf.core.AMF.init()
-    val featurePlugin = new AMFFeaturePlugin {
+    object FeaturePlugin extends AMFFeaturePlugin {
 
       override def init(): Future[AMFPlugin] = Future { this }
 
@@ -170,8 +167,8 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
         unit
       }
     }
-    amf.core.AMF.registerPlugin(featurePlugin)
-    featurePlugin.init() flatMap { _ =>
+    amf.core.AMF.registerPlugin(FeaturePlugin)
+    FeaturePlugin.init() flatMap { _ =>
       RuntimeCompiler(url, Some("application/yaml"), Some(Raml10.name), Context(platform), cache = Cache()) map { _ =>
         val allPhases = Seq("begin_parsing_invocation",
                             "begin_document_parsing",
@@ -179,7 +176,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
                             "model_parsed",
                             "finished_parsing").foldLeft(true) {
           case (acc, phase) =>
-            acc && featurePlugin.invocations.contains(phase)
+            acc && FeaturePlugin.invocations.contains(phase)
         }
         assert(allPhases)
       }

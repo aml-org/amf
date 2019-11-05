@@ -2,6 +2,8 @@ package amf.plugins.domain.shapes.models
 
 import amf.core.model.domain.extensions.PropertyShape
 
+import scala.language.implicitConversions
+
 class PropertyShapeMixin(propertyShape: PropertyShape) {
   def withScalarSchema(name: String): ScalarShape = {
     val scalar = ScalarShape().withName(name)
@@ -17,5 +19,6 @@ class PropertyShapeMixin(propertyShape: PropertyShape) {
 }
 
 object DomainExtensions {
-  implicit def propertyShapeToPropertyShape(property: PropertyShape) = new PropertyShapeMixin(property)
+  implicit def propertyShapeToPropertyShape(property: PropertyShape): PropertyShapeMixin =
+    new PropertyShapeMixin(property)
 }

@@ -38,6 +38,7 @@ trait ShapeHelpers { this: Shape =>
       cloned.withExamples(s.examples.map { e =>
         e.copyElement().asInstanceOf[Example]
       })
+    case _ =>
   }
 
   def cloneShape(recursionErrorHandler: Option[ErrorHandler],

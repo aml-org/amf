@@ -58,7 +58,8 @@ class Response(override val fields: Fields, override val annotations: Annotation
   }
 
   def cloneResponse(parent: String): Response = {
-    val cloned = Response(annotations).withName(name.value()).adopted(parent)
+    val response:Response = Response(annotations)
+    val cloned = response.withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

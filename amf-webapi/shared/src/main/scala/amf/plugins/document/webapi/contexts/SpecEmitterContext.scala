@@ -14,17 +14,8 @@ import amf.core.utils.Strings
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{
-  Raml08RootLevelEmitters,
-  Raml10RootLevelEmitters,
-  RamlRootLevelEmitters
-}
-import amf.plugins.document.webapi.parser.{
-  CommonOasTypeDefMatcher,
-  JsonSchemaTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlHeader
-}
+import amf.plugins.document.webapi.parser.spec.raml.{Raml08RootLevelEmitters, Raml10RootLevelEmitters, RamlRootLevelEmitters}
+import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, JsonSchemaTypeDefMatcher, OasTypeDefStringValueMatcher, RamlHeader}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, UnionShape}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
@@ -208,32 +199,44 @@ abstract class OasSpecEmitterFactory(implicit val spec: OasSpecEmitterContext) e
     OasDeclaredTypesEmitters.apply
 }
 
-case class Oas2SpecEmitterFactory(implicit override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory {
-  override def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =
-    Oas2ServersEmitter(api, f, ordering, references)
+case class Oas2SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
+  override def serversEmitter(api: WebApi,
+                              f: FieldEntry,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit]): Oas2ServersEmitter =
+    Oas2ServersEmitter(api, f, ordering, references)(spec)
 
-  override def serversEmitter(operation: Operation, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =
-    Oas3OperationServersEmitter(operation, f, ordering, references)
+  override def serversEmitter(operation: Operation,
+                              f: FieldEntry,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit]): Oas3OperationServersEmitter =
+    Oas3OperationServersEmitter(operation, f, ordering, references)(spec)
 
   override def serversEmitter(endpoint: EndPoint,
                               f: FieldEntry,
                               ordering: SpecOrdering,
                               references: Seq[BaseUnit]): OasServersEmitter =
-    Oas3EndPointServersEmitter(endpoint, f, ordering, references)
+    Oas3EndPointServersEmitter(endpoint, f, ordering, references)(spec)
 }
 
-case class Oas3SpecEmitterFactory(implicit override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory {
-  override def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =
-    Oas3WebApiServersEmitter(api, f, ordering, references)
+case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
+  override def serversEmitter(api: WebApi,
+                              f: FieldEntry,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit]): Oas3WebApiServersEmitter =
+    Oas3WebApiServersEmitter(api, f, ordering, references)(spec)
 
-  override def serversEmitter(operation: Operation, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]) =
-    Oas3OperationServersEmitter(operation, f, ordering, references)
+  override def serversEmitter(operation: Operation,
+                              f: FieldEntry,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit]): Oas3OperationServersEmitter =
+    Oas3OperationServersEmitter(operation, f, ordering, references)(spec)
 
   override def serversEmitter(endpoint: EndPoint,
                               f: FieldEntry,
                               ordering: SpecOrdering,
                               references: Seq[BaseUnit]): OasServersEmitter =
-    Oas3EndPointServersEmitter(endpoint, f, ordering, references)
+    Oas3EndPointServersEmitter(endpoint, f, ordering, references)(spec)
 }
 
 trait RamlEmitterVersionFactory extends SpecEmitterFactory {
@@ -464,7 +467,7 @@ class XRaml10SpecEmitterContext(eh: ErrorHandler,
   override def localReference(reference: Linkable): PartEmitter =
     oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
-  val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory()(new Oas2SpecEmitterContext(eh, refEmitter, options))
+  val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory(new Oas2SpecEmitterContext(eh, refEmitter, options))
 }
 
 class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())
@@ -526,7 +529,7 @@ class Oas3SpecEmitterContext(eh: ErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
                              options: ShapeRenderOptions = ShapeRenderOptions())
     extends OasSpecEmitterContext(eh, refEmitter, options) {
-  override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory()(this)
+  override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory(this)
   override val vendor: Vendor                  = Oas30
   override def schemasDeclarationsPath: String = "/components/schemas/"
 }
@@ -535,7 +538,7 @@ class Oas2SpecEmitterContext(eh: ErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
                              options: ShapeRenderOptions = ShapeRenderOptions())
     extends OasSpecEmitterContext(eh, refEmitter, options) {
-  override val factory: OasSpecEmitterFactory  = Oas2SpecEmitterFactory()(this)
+  override val factory: OasSpecEmitterFactory  = Oas2SpecEmitterFactory(this)
   override val vendor: Vendor                  = Oas20
   override def schemasDeclarationsPath: String = "/definitions/"
 }

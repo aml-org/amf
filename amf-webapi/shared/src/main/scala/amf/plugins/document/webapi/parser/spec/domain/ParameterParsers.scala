@@ -117,17 +117,16 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                   .asInstanceOf[Parameter]
                   .set(ParameterModel.Name, name.text())
               case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
-                val schema = ctx.declarations
+                val shape: Shape = ctx.declarations
                   .findType(ref.text,
                             scope,
                             Some((s: String) => ctx.violation(InvalidFragmentType, parameter.id, s, entry.value)))
                   .get
                   .link[Shape](ref.text, Annotations(entry))
-                  .withName("schema")
-                  .adopted(parameter.id)
-                parameter.withSchema(schema)
+                parameter.withSchema(shape.withName("schema").adopted(parameter.id))
               case Right(ref) if wellKnownType(ref.text, isRef = true) =>
-                val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
+                val shape: Shape = parseWellKnownTypeRef(ref.text)
+                val schema       = shape.withName("schema").adopted(parameter.id)
                 parameter.withSchema(schema)
 
               case Right(ref) if isTypeExpression(ref.text) =>
@@ -599,7 +598,8 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
   def formDataPayload(formData: Seq[Payload]): Option[Payload] =
     if (formData.isEmpty) None
     else {
-      val schema = NodeShape().withName("formData").adopted(parentId)
+      val shape: NodeShape = NodeShape()
+      val schema           = shape.withName("formData").adopted(parentId)
 
       formData.foreach { p =>
         val payload = if (p.isLink) p.effectiveLinkTarget().asInstanceOf[Payload] else p

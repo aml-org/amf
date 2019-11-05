@@ -362,7 +362,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     clonedProp
   }
 
-  val unionErrorHandler = new RuntimeErrorHandler {
+  object UnionErrorHandler extends RuntimeErrorHandler {
     override val parserCount: Int    = 0
     override val currentFile: String = ""
 
@@ -391,7 +391,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
 
-    val unionContext: NormalizationContext = unionErrorHandler.wrapContext(context)
+    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     val newUnionItems =
       if (baseUnion.anyOf.isEmpty || superUnion.anyOf.isEmpty) {
         baseUnion.anyOf ++ superUnion.anyOf
@@ -428,7 +428,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   protected def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
-    val unionContext: NormalizationContext = unionErrorHandler.wrapContext(context)
+    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     val newUnionItems = for {
       baseUnionElement <- baseUnion.anyOf
     } yield {
@@ -448,7 +448,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   protected def computeMinSuperUnion(baseShape: Shape, superUnion: UnionShape): Shape = {
-    val unionContext: NormalizationContext = unionErrorHandler.wrapContext(context)
+    val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
     val minItems = for {
       superUnionElement <- superUnion.anyOf
     } yield {

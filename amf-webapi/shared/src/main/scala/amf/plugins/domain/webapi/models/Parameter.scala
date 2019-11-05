@@ -78,7 +78,8 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   override def linkCopy(): Parameter = Parameter().withBinding(binding.value()).withId(id)
 
   def cloneParameter(parent: String): Parameter = {
-    val cloned = Parameter(Annotations(annotations)).withName(name.value()).adopted(parent)
+    val parameter: Parameter = Parameter(Annotations(annotations))
+    val cloned = parameter.withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

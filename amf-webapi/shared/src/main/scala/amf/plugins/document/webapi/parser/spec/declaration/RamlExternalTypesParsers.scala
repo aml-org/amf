@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.Root
 import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
 import amf.core.metamodel.domain.ShapeModel
-import amf.core.model.domain.{AmfScalar, Shape}
+import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.Strings
@@ -19,7 +19,7 @@ import amf.validations.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
-import org.yaml.render.YamlRender
+import org.mulesoft.lexer.Position
 
 import scala.collection.mutable
 case class RamlJsonSchemaExpression(key: YNode,
@@ -111,7 +111,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       val url       = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
-      val schemaAst = JsonParser.withSource(text, valueAST.sourceName)(ctx).parse(keepTokens = true)
+      val schemaAst = JsonParser.withSource(text, valueAST.sourceName)(ctx).parse()
       val schemaEntry = schemaAst.collectFirst({ case d: YDocument => d }) match {
         case Some(d) => d
         case _       =>
@@ -157,11 +157,11 @@ case class RamlJsonSchemaExpression(key: YNode,
       if (url.isDefined)
         JsonParser.withSource(text, url.get)(ctx)
       else
-        JsonParser.withSourceOffset(text,
+        JsonParser.withSource(text,
                                     valueAST.value.sourceName,
-                                    (valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
+                                    Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
 
-    val schemaAst = parser.parse(keepTokens = true)
+    val schemaAst = parser.parse()
     val schemaEntry = schemaAst.head match {
       case d: YDocument => YMapEntry(key, d.node)
       case _            =>
