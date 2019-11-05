@@ -306,6 +306,16 @@ class OASProductionResolutionTest extends OasResolutionTest {
   test("OAS XML payload test") {
     cycle("oas20/xml-payload.json", "oas20/xml-payload.json.jsonld", OasYamlHint, Amf)
   }
+
+  test("Summary and description from path applied to operations") {
+    cycle(
+      "description-applied-to-operations.json",
+      "description-applied-to-operations-resolution.jsonld",
+      OasJsonHint,
+      Oas30,
+      completeCyclePath + "oas3/summary-description-in-path/"
+    )
+  }
 }
 
 class Raml08ResolutionTest extends RamlResolutionTest {

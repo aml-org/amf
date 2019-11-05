@@ -52,6 +52,7 @@ object Oas3Syntax extends SpecSyntax {
       "parameters",
       "servers",
       "summary",
+      "description",
       "\\$ref"
     ),
     "operation" -> Set(

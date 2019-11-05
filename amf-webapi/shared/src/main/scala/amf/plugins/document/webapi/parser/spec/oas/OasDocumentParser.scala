@@ -452,8 +452,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       map.key("displayName".asOasExtension, EndPointModel.Name in endpoint)
       map.key("description".asOasExtension, EndPointModel.Description in endpoint)
-      map.key("summary", EndPointModel.Summary in endpoint)
-
+      if (ctx.syntax == Oas3Syntax) {
+        map.key("summary", EndPointModel.Summary in endpoint)
+        map.key("description", EndPointModel.Description in endpoint)
+      }
       var parameters = Parameters()
       val entries    = ListBuffer[YMapEntry]()
 

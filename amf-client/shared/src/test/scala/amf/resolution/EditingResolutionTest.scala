@@ -353,6 +353,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Summary and description from path applied to operations") {
+    cycle(
+      "description-applied-to-operations.json",
+      "description-applied-to-operations-editing.json",
+      OasJsonHint,
+      Oas30,
+      cyclePath + "oas3/summary-description-in-path/"
+    )
+  }
+
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")

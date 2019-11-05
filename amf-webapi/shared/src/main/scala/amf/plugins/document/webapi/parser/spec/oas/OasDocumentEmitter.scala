@@ -52,7 +52,11 @@ trait AccessibleOasDocumentEmitters {
             val result = mutable.ListBuffer[EntryEmitter]()
 
             fs.entry(EndPointModel.Name).map(f => result += ValueEmitter("displayName".asOasExtension, f))
-            fs.entry(EndPointModel.Description).map(f => result += ValueEmitter("description".asOasExtension, f))
+            fs.entry(EndPointModel.Description).map { f =>
+              val descriptionKey =
+                if (spec.isInstanceOf[Oas3SpecEmitterContext]) "description" else "description".asOasExtension
+              result += ValueEmitter(descriptionKey, f)
+            }
             fs.entry(DomainElementModel.Extends)
               .map(f => result ++= ExtendsEmitter(f, ordering, oasExtension = true)(spec.eh).emitters())
 
