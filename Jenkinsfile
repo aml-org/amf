@@ -2,7 +2,9 @@
 
 pipeline {
   agent {
-    dockerfile true
+    dockerfile {
+      additionalBuildArgs '--no-cache'
+    }
   }
   environment {
     NEXUS = credentials('exchange-nexus')
@@ -37,7 +39,6 @@ pipeline {
           branch 'master'
           branch 'develop'
           branch 'release/*'
-          branch 'new_model'
         }
       }
       steps {
@@ -50,7 +51,6 @@ pipeline {
       when {
         anyOf {
           branch 'develop'
-          branch 'new_model'
         }
       }
       steps {
