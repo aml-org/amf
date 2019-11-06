@@ -385,7 +385,7 @@ nodeMappings:
     classTerm: apiContract.DomainExtension
     mapping:
       name:
-        propertyTerm: core.name
+        propertyTerm: core.extensionName
         range: string
       definedBy:
         propertyTerm: doc.definedBy
@@ -710,6 +710,10 @@ nodeMappings:
       discriminatorValue:
         propertyTerm: raml-shapes.discriminatorValue
         range: string
+      discriminatorMapping:
+        propertyTerm: raml-shapes.discriminatorMapping
+        range: IriTemplate
+        allowMultiple: true
       property:
         propertyTerm: shacl.property
         range: PropertyShape
@@ -1080,6 +1084,9 @@ nodeMappings:
   Request:
     classTerm: apiContract.Request
     mapping:
+      name:
+        propertyTerm: core.name
+        range: string
       description:
         propertyTerm: core.description
         range: string
