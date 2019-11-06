@@ -50,12 +50,12 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
   private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
-  private val aml_doc = "file://vocabularies/vocabularies/aml_doc.yaml"
-  private val aml_meta = "file://vocabularies/vocabularies/aml_meta.yaml"
-  private val api_contract = "file://vocabularies/vocabularies/api_contract.yaml"
-  private val core = "file://vocabularies/vocabularies/core.yaml"
-  private val data_model = "file://vocabularies/vocabularies/data_model.yaml"
-  private val data_shapes = "file://vocabularies/vocabularies/data_shapes.yaml"
+  private val aml_doc        = "file://vocabularies/vocabularies/aml_doc.yaml"
+  private val aml_meta       = "file://vocabularies/vocabularies/aml_meta.yaml"
+  private val api_contract   = "file://vocabularies/vocabularies/api_contract.yaml"
+  private val core           = "file://vocabularies/vocabularies/core.yaml"
+  private val data_model     = "file://vocabularies/vocabularies/data_model.yaml"
+  private val data_shapes    = "file://vocabularies/vocabularies/data_shapes.yaml"
   private val security_model = "file://vocabularies/vocabularies/security.yaml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
@@ -120,10 +120,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       assert(declares.size == 1)
       assert(declares.head.isInstanceOf[NodeShape])
       val shape = declares.head.asInstanceOf[NodeShape]
-      assert(
-        shape.defaultValueStr
-          .value()
-          .equals("\n      name: roman\n      lastname: riquelme\n      age: 39".stripMargin))
+
+      shape.defaultValueStr.value() shouldBe "name: roman\nlastname: riquelme\nage: 39"
       assert(shape.defaultValue.isInstanceOf[ObjectNode])
     }
   }
@@ -1687,8 +1685,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file).asFuture
     } yield {
-      assert(
-        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
@@ -1711,8 +1708,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-      json <- Future(
-        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+      json     <- Future(resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
     } yield {
       val golden = """{
                      |  "$schema": "http://json-schema.org/draft-04/schema#",
