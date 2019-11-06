@@ -40,14 +40,14 @@ repositories {
 }
 
 def versions = new Properties()
-file("versions.properties").withInputStream {
+file("amf-webapi.versions").withInputStream {
     stream -> versions.load(stream)
 }
 
 dependencies {
-    compile "com.github.amlorg:amf-client_2.12:${versions.version}"
-    compile "com.github.amlorg:amf-webapi_2.12:${versions.version}"
-    compile "com.github.amlorg:amf-validation_2.12:${versions.version}"
+    compile "com.github.amlorg:amf-client_2.12:${versions.'amf.webapi'}"
+    compile "com.github.amlorg:amf-webapi_2.12:${versions.'amf.webapi'}"
+    compile "com.github.amlorg:amf-validation_2.12:${versions.'amf.webapi'}"
 }
 
 mainClassName = 'amf.Main'
