@@ -622,40 +622,6 @@ private[shape_normalization] trait RestrictionComputation {
           )
         }
 
-      case NodeShapeModel.Closed =>
-        if (computeBooleanComparison(
-              lcomparison = true,
-              rcomparison = true,
-              superValue,
-              derivedValue,
-              Some(NodeShapeModel.Closed.value.iri()),
-              derivedValue.annotations.find(classOf[LexicalInformation])
-            ) ||
-            computeBooleanComparison(
-              lcomparison = false,
-              rcomparison = false,
-              superValue,
-              derivedValue,
-              Some(NodeShapeModel.Closed.value.iri()),
-              derivedValue.annotations.find(classOf[LexicalInformation])
-            ) ||
-            computeBooleanComparison(
-              lcomparison = true,
-              rcomparison = false,
-              superValue,
-              derivedValue,
-              Some(NodeShapeModel.Closed.value.iri()),
-              derivedValue.annotations.find(classOf[LexicalInformation])
-            )) {
-          derivedValue
-        } else {
-          // base has closed properties while super is open
-          throw new InheritanceIncompatibleShapeError("closed shapes cannot inherit from open shapes",
-                                                      Some(NodeShapeModel.Closed.value.iri()),
-                                                      derivedValue.location(),
-                                                      derivedValue.position())
-        }
-
       case _ => derivedValue
     }
   }
