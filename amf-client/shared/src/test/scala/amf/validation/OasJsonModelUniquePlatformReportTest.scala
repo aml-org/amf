@@ -138,5 +138,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("../upanddown/oas3/schema-definitions.json", Some("oas3-schema-validations.report"), Oas30Profile)
   }
 
+  test("Templated paths with same hierarchy must not exist") {
+    validate("oas3/paths-with-same-hierarchy.json", Some("paths-with-same-hierarchy.report"), Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

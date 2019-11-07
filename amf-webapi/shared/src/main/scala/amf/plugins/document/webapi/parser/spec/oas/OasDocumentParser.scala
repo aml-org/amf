@@ -422,9 +422,19 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       if (!TemplateUri.isValid(path))
         ctx.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
-      if (collector.exists(e => e.path.is(path)))
+      if (collector.exists(other => other.path.option() exists (identicalPaths(_, path))))
         ctx.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
       else parseEndpoint(endpoint)
+    }
+
+    /**
+      * Verify if two paths are identical. In the case of OAS 3.0, paths with the same hierarchy but different templated
+      * names are considered identical.
+      */
+    private def identicalPaths(first: String, second: String): Boolean = {
+      def stripPathParams(s: String): String = s.replaceAll("\\{.*?\\}", "");
+      if (ctx.syntax == Oas3Syntax) stripPathParams(first) == stripPathParams(second)
+      else first == second
     }
 
     private def parseEndpoint(endpoint: EndPoint) =

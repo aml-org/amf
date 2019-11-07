@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/validations/oas3/paths-with-same-hierarchy.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path
+  Message: Duplicated resource path /path/{other}
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/paths-with-same-hierarchy.json#/web-api/end-points/%2Fpath%2F%7Bother%7D
+  Property: 
+  Position: Some(LexicalInformation([(83,4)-(101,5)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/paths-with-same-hierarchy.json
+
+- Source: http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path
+  Message: Duplicated resource path /path/{otherDuplicated}/other
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/paths-with-same-hierarchy.json#/web-api/end-points/%2Fpath%2F%7BotherDuplicated%7D%2Fother
+  Property: 
+  Position: Some(LexicalInformation([(121,4)-(139,5)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/paths-with-same-hierarchy.json
