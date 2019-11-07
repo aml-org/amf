@@ -1,0 +1,10 @@
+#%RAML 0.8
+title: api
+mediaType: application/xml
+
+/individual:
+  post:
+    body:
+      application/xml:
+        example: !include common/examples/example.xml
+        schema: !include common/schema/schema.xsd

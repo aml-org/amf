@@ -336,6 +336,10 @@ class Raml08ResolutionTest extends RamlResolutionTest {
     cycle("api.raml", "api.raml.raml", RamlYamlHint, Raml08, basePath + "included-schema/")
   }
 
+  test("Test included schema and example") {
+    cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, basePath + "included-schema-and-example/")
+  }
+
   test("Test json_schemasa refs") {
     cycle("json_schemas.raml", "json_schemas.resolved.raml", RamlYamlHint, Raml08)
   }
