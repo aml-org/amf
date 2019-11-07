@@ -26,7 +26,6 @@ import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations.InvalidUnionType
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
-import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 
@@ -221,8 +220,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     // val detectedTypes = map.key("type").get.value.as[YSequence].nodes.map(_.as[String])
     val filtered = YMap(map.entries.filter(_.key.as[String] != "type"), map.sourceName)
 
-    val union = UnionShapeParser(Right(filtered), name).parse()
-    adopt(union)
+    val parser = UnionShapeParser(Right(filtered), name)
+    adopt(parser.shape) // We need to set the shape id before parsing to properly adopt nested nodes
+    val union = parser.parse()
 
     val finals = filtered.entries.filter { entry =>
       val prop = entry.key.as[String]
