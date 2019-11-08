@@ -2,9 +2,9 @@
 
 pipeline {
   agent {
-    dockerfile {
+    dockerfile true /*{
       additionalBuildArgs '--no-cache'
-    }
+    }*/
   }
   environment {
     NEXUS = credentials('exchange-nexus')
