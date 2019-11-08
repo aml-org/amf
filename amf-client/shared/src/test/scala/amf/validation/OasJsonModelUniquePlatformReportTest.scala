@@ -142,5 +142,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("oas3/paths-with-same-hierarchy.json", Some("paths-with-same-hierarchy.report"), Oas30Profile)
   }
 
+  test("Fields with mandatory valid URLs") {
+    validate("oas3/invalid-urls.json", Some("invalid-urls.report"), Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

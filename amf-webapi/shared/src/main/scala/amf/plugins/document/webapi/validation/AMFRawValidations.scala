@@ -160,6 +160,21 @@ object AMFRawValidations {
     "Violation"
   )
 
+  private def urlValidation(spec: String, owlClass: String, owlProperty: String) =
+    AMFValidation(
+      spec,
+      "Domain",
+      owlClass,
+      owlProperty,
+      "PropertyShape",
+      "sh:path",
+      "sh:pattern",
+      """^((https?|ftp|file)://)?[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$""".stripMargin,
+      "Must be in the format of a URL",
+      "Must be in the format of a URL",
+      "Violation"
+    )
+
   // todo: Use valuetype instead of string uri.
   private val AMF = Seq(
     AMFValidation(
@@ -1597,7 +1612,10 @@ object AMFRawValidations {
       "",
       "Field 'email' must be in the format of an email address",
       "Violation"
-    )
+    ),
+    urlValidation(Oas.name, "core:License", "core:url"),
+    urlValidation(Oas.name, "core:Organization", "core:url"),
+    urlValidation(Oas.name, "core:CreativeWork", "core:url")
   )
 
   private val OAS20 = Seq(
@@ -1699,7 +1717,7 @@ object AMFRawValidations {
       "Violation"
     ),
     AMFValidation(
-      Amf.name,
+      Oas30.name,
       "Domain",
       "apiContract:Parameter",
       "apiContract:payload",
@@ -1710,7 +1728,8 @@ object AMFRawValidations {
       "",
       "Parameters 'content' field must only have one entry",
       "Violation"
-    )
+    ),
+    urlValidation(Oas30.name, "apiContract:WebAPI", "core:termsOfService")
   )
 
   val map: Map[ProfileName, Seq[AMFValidation]] = Map(

@@ -1,0 +1,38 @@
+Model: file://amf-client/shared/src/test/resources/validations/oas3/invalid-urls.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 4
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#WebAPI-termsOfService-pattern
+  Message: Must be in the format of a URL
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-urls.json#/web-api
+  Property: http://a.ml/vocabularies/core#termsOfService
+  Position: Some(LexicalInformation([(6,22)-(6,34)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-urls.json
+
+- Source: http://a.ml/vocabularies/amf/parser#License-url-pattern
+  Message: Must be in the format of a URL
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-urls.json#/web-api/license
+  Property: http://a.ml/vocabularies/core#url
+  Position: Some(LexicalInformation([(9,13)-(9,23)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-urls.json
+
+- Source: http://a.ml/vocabularies/amf/parser#Organization-url-pattern
+  Message: Must be in the format of a URL
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-urls.json#/web-api/organization
+  Property: http://a.ml/vocabularies/core#url
+  Position: Some(LexicalInformation([(12,13)-(12,24)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-urls.json
+
+- Source: http://a.ml/vocabularies/amf/parser#CreativeWork-url-pattern
+  Message: Must be in the format of a URL
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-urls.json#/web-api/creative-work/jojo%20olalal
+  Property: http://a.ml/vocabularies/core#url
+  Position: Some(LexicalInformation([(16,11)-(16,24)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-urls.json
