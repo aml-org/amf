@@ -1,6 +1,7 @@
 #!groovy
 
 pipeline {
+  sh "git clean -fxd"
   agent {
     dockerfile {
       additionalBuildArgs '--no-cache'
