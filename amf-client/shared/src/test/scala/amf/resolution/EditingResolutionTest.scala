@@ -386,6 +386,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   }
    */
 
+  test("Tracked examples in OAS body parameter with mediatype annotation") {
+    cycle(
+      "tracked-oas-param-body.yaml",
+      "tracked-oas-param-body.jsonld",
+      OasYamlHint,
+      Amf,
+      validationsPath + "tracked-oas-param-body/"
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {
       case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
