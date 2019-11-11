@@ -8,7 +8,7 @@ ENV SBT_VERSION 0.13.16
 # Update the repository sources list and install dependencies
 RUN apt-get update
 
-RUN apt-get install -y software-properties-common unzip htop rsync openssh-client jq
+RUN apt-get install -y software-properties-common unzip htop rsync openssh-client jq git
 
 # install Java
 USER root
