@@ -399,6 +399,10 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     val payload: Payload = commonPayload(bindingRange)
     ctx.closedShape(payload.id, map, "bodyParameter")
 
+    map.key("mediaType".asOasExtension, PayloadModel.MediaType in payload)
+    // Force to re-adopt with the new mediatype if exists
+    if (payload.mediaType.nonEmpty) validateEntryName(payload)
+
     map.key(
       "schema",
       entry => {
@@ -415,7 +419,6 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
       }
     )
 
-    map.key("mediaType".asOasExtension, PayloadModel.MediaType in payload)
     payload
   }
 
