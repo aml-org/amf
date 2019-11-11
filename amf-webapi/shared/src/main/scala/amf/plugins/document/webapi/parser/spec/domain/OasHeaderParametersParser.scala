@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -8,8 +9,8 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.webapi.metamodel.ParameterModel
-import amf.plugins.domain.webapi.models.Parameter
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
+import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.CoreValidations
 import org.yaml.model.YMap
 
@@ -91,7 +92,6 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
     map.key("required", (ParameterModel.Required in parameter).explicit)
     map.key("deprecated", (ParameterModel.Deprecated in parameter).explicit)
     map.key("allowEmptyValue", (ParameterModel.AllowEmptyValue in parameter).explicit)
-
     map.key(
       "schema",
       entry => {
@@ -100,6 +100,26 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
           .map(s => parameter.set(ParameterModel.Schema, tracking(s, parameter.id), Annotations(entry)))
       }
     )
+    map.key(
+      "content",
+      entry => {
+        val payloadProducer: Option[String] => Payload = mediaType => {
+          val res = Payload()
+          mediaType.map(res.withMediaType)
+          res
+        }
+        val payloads = OasContentsParser(entry, payloadProducer).parse()
+        if (payloads.nonEmpty) parameter.set(ResponseModel.Payloads, AmfArray(payloads), Annotations(entry))
+      }
+    )
+    Oas3ParameterParser.validateSchemaOrContent(map, parameter)
+
+    val examples = OasExamplesParser(map, parameter.id).parse()
+    if (examples.nonEmpty) parameter.set(PayloadModel.Examples, AmfArray(examples))
+
+    parameter.withBinding("header")
+    Oas3ParameterParser.parseStyleField(map, parameter)
+    Oas3ParameterParser.parseExplodeField(map, parameter)
 
     ctx.closedShape(parameter.id, map, "header")
   }

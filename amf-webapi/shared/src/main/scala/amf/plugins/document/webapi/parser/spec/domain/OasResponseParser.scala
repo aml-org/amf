@@ -98,14 +98,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
         if (ctx.syntax == Oas3Syntax) {
           map.key(
             "content",
-            entry =>
-              entry.value
-                .as[YMap]
-                .entries
-                .foreach { entry =>
-                  val mediaType = ScalarNode(entry.key).text().value.toString
-                  payloads += OasContentParser(entry.value, mediaType, res.withPayload).parse()
-              }
+            entry => payloads ++= OasContentsParser(entry, res.withPayload).parse()
           )
 
           map.key(

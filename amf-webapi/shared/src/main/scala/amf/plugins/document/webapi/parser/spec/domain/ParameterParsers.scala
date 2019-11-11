@@ -509,10 +509,10 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     parseExamples(result)
     parseContent(result)
     parseQueryFields(result)
-    parseStyleField(result)
-    parseExplodeField(result)
+    Oas3ParameterParser.parseStyleField(map, result)
+    Oas3ParameterParser.parseExplodeField(map, result)
     map.key("deprecated", ParameterModel.Deprecated in result)
-    validateSchemaOrContent(result)
+    Oas3ParameterParser.validateSchemaOrContent(map, result)
     OasParameter(result)
   }
 
@@ -568,8 +568,10 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
       }
     )
 
-  private def parseExamples(param: Parameter): Unit =
-    param.set(PayloadModel.Examples, AmfArray(OasExamplesParser(map, param.id).parse()))
+  private def parseExamples(param: Parameter): Unit = {
+    val examples = OasExamplesParser(map, param.id).parse()
+    if (examples.nonEmpty) param.set(PayloadModel.Examples, AmfArray(examples))
+  }
 
   private def parseContent(param: Parameter): Unit = {
     val payloadProducer: Option[String] => Payload = mediaType => {
@@ -580,20 +582,47 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     map.key(
       "content",
       entry => {
-        val payloads = mutable.ListBuffer[Payload]()
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach { entry =>
-            val mediaType = ScalarNode(entry.key).text().value.toString
-            payloads += OasContentParser(entry.value, mediaType, payloadProducer)(toOas(ctx)).parse()
-          }
+        val payloads = OasContentsParser(entry, payloadProducer)(toOas(ctx)).parse()
         if (payloads.nonEmpty) param.set(ResponseModel.Payloads, AmfArray(payloads), Annotations(entry))
       }
     )
   }
 
-  private def validateSchemaOrContent(param: Parameter): Unit = {
+}
+
+object Oas3ParameterParser {
+
+  def parseExplodeField(map: YMap, result: Parameter): Unit = {
+    map.key("explode") match {
+      case Some(entry) =>
+        result.fields.setWithoutId(ParameterModel.Explode,
+                                   AmfScalar(entry.value.as[Boolean]),
+                                   Annotations(entry) += ExplicitField())
+      case None =>
+        val defValue: Option[Boolean] = result.style.option().map {
+          case "form" => true
+          case _      => false
+        }
+        defValue.foreach(result.set(ParameterModel.Explode, _))
+    }
+  }
+
+  def parseStyleField(map: YMap, result: Parameter): Unit = {
+    map.key("style") match {
+      case Some(entry) =>
+        result.fields.setWithoutId(ParameterModel.Style,
+                                   AmfScalar(entry.value.as[String]),
+                                   Annotations(entry) += ExplicitField())
+      case None =>
+        val defValue: Option[String] = result.binding.option().map {
+          case "query" | "cookie" => "form"
+          case "path" | "header"  => "simple"
+        }
+        defValue.foreach(result.set(ParameterModel.Style, _))
+    }
+  }
+
+  def validateSchemaOrContent(map: YMap, param: Parameter)(implicit ctx: WebApiContext): Unit = {
     (map.key("schema"), map.key("content")) match {
       case (Some(_), Some(_)) | (None, None) =>
         ctx.violation(
@@ -605,7 +634,6 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
       case _ =>
     }
   }
-
 }
 
 case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ctx: OasWebApiContext) {

@@ -571,13 +571,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
           map.key("content") match {
             case Some(entry) =>
-              entry.value
-                .as[YMap]
-                .entries
-                .foreach { entry =>
-                  val mediaType = ScalarNode(entry.key).text().value.toString
-                  payloads += OasContentParser(entry.value, mediaType, request.withPayload).parse()
-                }
+              payloads ++= OasContentsParser(entry, request.withPayload).parse()
             case None =>
               ctx.violation(RequestBodyContentRequired,
                             request.id,
