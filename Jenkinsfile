@@ -2,20 +2,13 @@
 
 pipeline {
   agent {
-    dockerfile {
-      additionalBuildArgs '--no-cache'
-    }
+    dockerfile true
   }
   environment {
     NEXUS = credentials('exchange-nexus')
     NEXUSIQ = credentials('nexus-iq')
   }
   stages {
-    stage('Clean') {
-      steps {
-        sh "git clean -fxd"
-      }
-    }
     stage('Test') {
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
