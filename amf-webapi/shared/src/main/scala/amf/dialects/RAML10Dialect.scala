@@ -597,7 +597,8 @@ object RAML10Dialect {
             "HTTP",
             "HTTPS"
           ))
-          .withLiteralRange(xsdString.iri()),
+          .withLiteralRange(xsdString.iri())
+          .withAllowMultiple(true),
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/RootNode/mediaType")
           .withName("mediaType")
