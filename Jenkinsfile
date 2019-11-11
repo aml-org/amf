@@ -1,7 +1,6 @@
 #!groovy
 
 pipeline {
-  sh "git clean -fxd"
   agent {
     dockerfile {
       additionalBuildArgs '--no-cache'
@@ -12,6 +11,11 @@ pipeline {
     NEXUSIQ = credentials('nexus-iq')
   }
   stages {
+    stage('Clean') {
+      steps {
+        sh "git clean -fxd"
+      }
+    }
     stage('Test') {
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
