@@ -41,7 +41,7 @@ class WebApiDeclarations(val alias: Option[String],
                          var requests: Map[String, Request] = Map(),
                          var headers: Map[String, Parameter] = Map(),
                          var links: Map[String, TemplatedLink] = Map(),
-                         var callbacks: Map[String, Callback] = Map(),
+                         var callbacks: Map[String, List[Callback]] = Map(),
                          val errorHandler: Option[ErrorHandler],
                          val futureDeclarations: FutureDeclarations,
                          var others: Map[String, BaseUnit] = Map())
@@ -131,7 +131,11 @@ class WebApiDeclarations(val alias: Option[String],
       case l: TemplatedLink =>
         links = links + (l.name.value() -> l)
       case c: Callback =>
-        callbacks = callbacks + (c.name.value() -> c)
+        val name = c.name.value()
+        callbacks.get(name) match {
+          case Some(prev) => callbacks = callbacks + (name -> (c :: prev))
+          case None       => callbacks = callbacks + (name -> List(c))
+        }
       case _ => super.+=(element)
     }
     this
@@ -180,7 +184,7 @@ class WebApiDeclarations(val alias: Option[String],
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values ++ headers.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -225,10 +229,7 @@ class WebApiDeclarations(val alias: Option[String],
       case p: Parameter => p
     }
 
-  def findCallback(key: String, scope: SearchScope.Scope): Option[Callback] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].callbacks, scope) collect {
-      case c: Callback => c
-    }
+  def findCallbackInDeclarations(key: String): Option[List[Callback]] = callbacks.get(key)
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
     findResourceType(key, scope) match {

@@ -7,6 +7,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document._
+import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Fields, Position}
@@ -39,15 +40,17 @@ import scala.collection.mutable.ListBuffer
 
 trait AccessibleOasDocumentEmitters {
 
-  case class EndPointEmitter(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])(
-      implicit val spec: OasSpecEmitterContext)
+  case class EndPointEmitter(endpoint: EndPoint,
+                             pathName: Option[String] = None,
+                             ordering: SpecOrdering,
+                             references: Seq[BaseUnit])(implicit val spec: OasSpecEmitterContext)
       extends EntryEmitter {
     override def emit(b: EntryBuilder): Unit = {
       val fs = endpoint.fields
       sourceOr(
         endpoint.annotations,
         b.complexEntry(
-          ScalarEmitter(fs.entry(EndPointModel.Path).get.scalar).emit(_),
+          ScalarEmitter(pathName.map(AmfScalar(_)).getOrElse(fs.entry(EndPointModel.Path).get.scalar)).emit(_),
           _.obj { b =>
             val result = mutable.ListBuffer[EntryEmitter]()
 
@@ -108,6 +111,12 @@ trait AccessibleOasDocumentEmitters {
         .map(e => OperationEmitter(e.asInstanceOf[Operation], ordering, endpointPayloadEmitted, references))
 
     override def position(): Position = pos(endpoint.annotations)
+  }
+
+  object EndPointEmitter {
+    def apply(endpoint: EndPoint, ordering: SpecOrdering, references: Seq[BaseUnit])(
+        implicit spec: OasSpecEmitterContext): EndPointEmitter =
+      new EndPointEmitter(endpoint, None, ordering, references)(spec)
   }
 
   case class OperationEmitter(operation: Operation,
@@ -659,5 +668,14 @@ object OasDocumentEmitter extends AccessibleOasDocumentEmitters {
                       references: Seq[BaseUnit],
                       spec: OasSpecEmitterContext) = {
     EndPointEmitter(endpoint, ordering, references)(spec)
+  }
+
+  def endpointEmitterWithPath(endpoint: EndPoint,
+                              path: String,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit],
+                              spec: OasSpecEmitterContext) = {
+    endpoint.withPath(path)
+    EndPointEmitter(endpoint, Some(path), ordering, references)(spec)
   }
 }

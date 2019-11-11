@@ -746,17 +746,23 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
+  /**
+    * A single named callback may be parsed into multiple Callback when multiple expressions are defined.
+    * This is due to inconsistency in the model, pending refactor in APIMF-1771
+    */
   case class CallbackParser(map: YMap, adopt: Callback => Unit) {
-    def parse(): Callback = {
+    def parse(): List[Callback] = {
       ctx.link(map) match {
         case Left(fullRef) =>
           val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "callbacks")
           ctx.declarations
-            .findCallback(label, SearchScope.Named)
-            .map { callback =>
-              val linkCallback: Callback = callback.link(label, Annotations(map))
-              adopt(linkCallback)
-              linkCallback
+            .findCallbackInDeclarations(label)
+            .map { callbacks =>
+              callbacks.map { callback =>
+                val linkCallback: Callback = callback.link(label, Annotations(map))
+                adopt(linkCallback)
+                linkCallback
+              }
             }
             .getOrElse {
               ctx.obtainRemoteYNode(fullRef) match {
@@ -767,19 +773,22 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                                 "",
                                 s"Cannot find callback reference $fullRef",
                                 map)
-                  new ErrorCallback(label, map)
+                  List(new ErrorCallback(label, map))
               }
             }
         case Right(_) =>
-          val callbackOperations = map.entries
-          val callback           = Callback().add(Annotations(map))
-          adopt(callback)
-          if (callbackOperations.size != 1) {
-            // TODO throw violation here
-          } else {
-            EndpointParser(callbackOperations.head, callback.withEndpoint, mutable.ListBuffer.empty).parse()
-          }
-          callback
+          val callbackEntries = map.entries
+          callbackEntries.map { entry =>
+            val expression = entry.key.as[YScalar].text
+            val callback   = Callback().add(Annotations(entry))
+            callback.withExpression(expression)
+            adopt(callback)
+            val collector = mutable.ListBuffer[EndPoint]()
+            EndpointParser(entry, callback.withEndpoint, collector).parse()
+            collector.foreach(_.withPath(s"/$expression")) // rename path to avoid endpoint validations
+            callback
+          }.toList
+
       }
 
     }
@@ -835,7 +844,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             val callbacks = entry.value
               .as[YMap]
               .entries
-              .map { callbackEntry =>
+              .flatMap { callbackEntry =>
                 val name = callbackEntry.key.as[YScalar].text
                 CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(operation.id)).parse()
               }

@@ -178,12 +178,15 @@ case class OasCallbacksEmitter(callbacks: Seq[Callback],
     sourceOr(
       annotations,
       b.obj { b =>
-        val emitters = callbacks.map(
-          callback =>
-            EntryPartEmitter(callback.name.value(),
-                             OasCallbackEmitter(callback, ordering, references),
+        // TODO multiple callbacks may have the same name due to inconsistency in the model, pending refactor in APIMF-1771
+        val stringToCallbacks: Map[String, Seq[Callback]] = callbacks.groupBy(_.name.value())
+        val emitters = stringToCallbacks.map {
+          case (name, callbacks) =>
+            EntryPartEmitter(name,
+                             OasCallbackEmitter(callbacks, ordering, references),
                              YType.Str,
-                             pos(callback.annotations)))
+                             pos(callbacks.headOption.map(_.annotations).getOrElse(Annotations())))
+        }.toSeq
         traverse(ordering.sorted(emitters), b)
       }
     )
@@ -192,20 +195,26 @@ case class OasCallbacksEmitter(callbacks: Seq[Callback],
   override def position(): Position = pos(annotations)
 }
 
-case class OasCallbackEmitter(callback: Callback, ordering: SpecOrdering, references: Seq[BaseUnit])(
+case class OasCallbackEmitter(callbacks: Seq[Callback], ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasSpecEmitterContext)
     extends PartEmitter {
 
   override def emit(p: PartBuilder): Unit = {
-    if (callback.isLink)
-      callback.linkTarget.foreach { l =>
-        OasTagToReferenceEmitter(l, callback.linkLabel.option(), references).emit(p)
+    if (callbacks.headOption.exists(_.isLink))
+      callbacks.head.linkTarget.foreach { l =>
+        OasTagToReferenceEmitter(l, callbacks.head.linkLabel.option(), references).emit(p)
       } else
       p.obj(
-        traverse(Seq(OasDocumentEmitter.endpointEmitter(callback.endpoint, ordering, references, spec)), _)
+        traverse(callbacks.map { callback =>
+          OasDocumentEmitter.endpointEmitterWithPath(callback.endpoint,
+                                                     callback.expression.value(),
+                                                     ordering,
+                                                     references,
+                                                     spec)
+        }, _)
       )
   }
 
-  override def position(): Position = pos(callback.annotations)
+  override def position(): Position = pos(callbacks.headOption.map(_.annotations).getOrElse(Annotations()))
 
 }

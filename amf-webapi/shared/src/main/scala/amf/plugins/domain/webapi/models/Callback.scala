@@ -29,10 +29,17 @@ case class Callback(fields: Fields, annotations: Annotations) extends NamedDomai
   override def meta = CallbackModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String        = "/" + name.option().getOrElse("default-callback").urlComponentEncoded
+  override def componentId: String =
+    "/" + name.option().getOrElse("default-callback").urlComponentEncoded +
+      s"/${expression.option().getOrElse("default-expression").urlComponentEncoded}"
   override protected def nameField: Field = Name
 
-  override def linkCopy(): Linkable = Callback().withId(id)
+  override def linkCopy(): Linkable = {
+    val callback = Callback().withId(id)
+    name.option().foreach(callback.withName(_))
+    expression.option().foreach(callback.withExpression)
+    callback
+  }
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =

@@ -129,10 +129,12 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .as[YMap]
           .entries
           .map { callbackEntry =>
-            val name     = callbackEntry.key.as[YScalar].text
-            val callback = CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent)).parse()
-            callback.add(DeclaredElement())
-            ctx.declarations += callback
+            val name      = callbackEntry.key.as[YScalar].text
+            val callbacks = CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent)).parse()
+            callbacks.foreach { callback =>
+              callback.add(DeclaredElement())
+              ctx.declarations += callback
+            }
           }
       }
     )

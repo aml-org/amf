@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.OasProfile
+import amf.{Oas30Profile, OasProfile}
 import amf.core.remote.{Hint, OasJsonHint}
 
 class ValidOasModelParserTest extends ValidModelTest {
@@ -63,6 +63,10 @@ class ValidOasModelParserTest extends ValidModelTest {
 
   test("multiple examples defined with valid mime type with produces general definition") {
     checkValid("examples-mime-type/valid-mime-type.json", OasProfile)
+  }
+
+  test("Callback definitions") {
+    checkValid("../upanddown/oas3/one-subscription-multiple-callbacks.json", Oas30Profile)
   }
 
   // Check http inner reference.
