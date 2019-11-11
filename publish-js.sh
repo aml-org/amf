@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-PROPERTY_FILE=versions.properties
+PROPERTY_FILE=amf-webapi.versions
 
 function getProperty {
    PROP_KEY=$1
-   PROP_VALUE=`cat ${PROPERTY_FILE} | grep "version" | cut -d'=' -f2`
+   PROP_VALUE=`cat ${PROPERTY_FILE} | grep "amf.webapi" | cut -d'=' -f2`
    echo ${PROP_VALUE}
 }
 
@@ -23,7 +23,7 @@ else
     IS_RC=false
 fi
 
-echo "versions.properties version: $PROJECT_VERSION"
+echo "amf-webapi.versions version: $PROJECT_VERSION"
 echo "Is snapshot: $IS_SNAPSHOT"
 echo "Is RC: $IS_RC"
 

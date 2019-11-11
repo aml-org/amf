@@ -11,7 +11,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf"
 
-version in ThisBuild := versions("version")
+version in ThisBuild := versions("amf.webapi")
 
 publish := {}
 
@@ -25,7 +25,7 @@ sonarProperties ++= Map(
   "sonar.login" -> sonarToken,
   "sonar.projectKey" -> "mulesoft.amf",
   "sonar.projectName" -> "AMF",
-  "sonar.projectVersion" -> versions("version"),
+  "sonar.projectVersion" -> versions("amf.webapi"),
 
   "sonar.sourceEncoding" -> "UTF-8",
   "sonar.github.repository" -> "mulesoft/amf",
@@ -54,7 +54,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfAmlVersion = versions("amf-aml")
+val amfAmlVersion = versions("amf.aml")
 
 lazy val amfAmlJVMRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJVM")
 lazy val amfAmlJSRef = ProjectRef(workspaceDirectory / "amf-aml", "amlJS")
@@ -81,7 +81,7 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.json4s"             %% "json4s-native"         % "3.5.4",
     libraryDependencies += "com.github.everit-org.json-schema" % "org.everit.json.schema" % "1.9.2",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-webapi-javadoc.jar",
-    mappings in (Compile, packageBin) += file("versions.properties") -> "versions.properties"
+    mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions"
   )
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
@@ -140,7 +140,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     mainClass in Compile := Some("amf.Main"),
     packageOptions in (Compile, packageBin) += Package.ManifestAttributes("Automatic-Module-Name" → "org.mule.amf"),
-    mappings in (Compile, packageBin) += file("versions.properties") -> "versions.properties",
+    mappings in (Compile, packageBin) += file("amf-webapi.versions") -> "amf-webapi.versions",
     aggregate in assembly := true,
     test in assembly := {},
     mainClass in assembly := Some("amf.Main"),
