@@ -382,7 +382,8 @@ object RAML08Dialect {
             "HTTP",
             "HTTPS"
           ))
-          .withLiteralRange(xsdString.iri()),
+          .withLiteralRange(xsdString.iri())
+          .withAllowMultiple(true),
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/MethodNode/trait")
           .withName("is")
@@ -519,7 +520,8 @@ object RAML08Dialect {
             "HTTP",
             "HTTPS"
           ))
-          .withLiteralRange(xsdString.iri()),
+          .withLiteralRange(xsdString.iri())
+          .withAllowMultiple(true),
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/RootNode/mediaType")
           .withName("mediaType")
@@ -572,35 +574,29 @@ object RAML08Dialect {
               .withEncoded(DialectNodes.RootNode.id)
           ))
 
-    d.withExternals(Seq(
-
-      External()
-        .withId(DialectLocation + "#/externals/core")
-        .withAlias("core")
-        .withBase(Namespace.Core.base),
-
-      External()
-        .withId(DialectLocation + "#/externals/shacl")
-        .withAlias("shacl")
-        .withBase(Namespace.Shacl.base),
-
-      External()
-        .withId(DialectLocation + "#/externals/apiContract")
-        .withAlias("apiContract")
-        .withBase(Namespace.ApiContract.base),
-
-      External()
-        .withId(DialectLocation + "#/externals/meta")
-        .withAlias("meta")
-        .withBase(Namespace.Meta.base),
-
-      External()
-        .withId(DialectLocation + "#/externals/owl")
-        .withAlias("owl")
-        .withBase(Namespace.Owl.base)
-
-    ))
-
+    d.withExternals(
+      Seq(
+        External()
+          .withId(DialectLocation + "#/externals/core")
+          .withAlias("core")
+          .withBase(Namespace.Core.base),
+        External()
+          .withId(DialectLocation + "#/externals/shacl")
+          .withAlias("shacl")
+          .withBase(Namespace.Shacl.base),
+        External()
+          .withId(DialectLocation + "#/externals/apiContract")
+          .withAlias("apiContract")
+          .withBase(Namespace.ApiContract.base),
+        External()
+          .withId(DialectLocation + "#/externals/meta")
+          .withAlias("meta")
+          .withBase(Namespace.Meta.base),
+        External()
+          .withId(DialectLocation + "#/externals/owl")
+          .withAlias("owl")
+          .withBase(Namespace.Owl.base)
+      ))
 
     val vocabularies = Seq(
       ModelVocabularies.AmlDoc,
