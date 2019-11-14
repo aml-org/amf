@@ -5,7 +5,7 @@ import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.ShapeExtension
 import amf.core.parser._
 import amf.core.remote.{Oas, Raml}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
 import amf.validations.ParserSideValidations.{

@@ -10,12 +10,21 @@ import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, 
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.{ErrorHandler, FieldEntry, Position}
 import amf.core.remote._
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{Raml08RootLevelEmitters, Raml10RootLevelEmitters, RamlRootLevelEmitters}
-import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, JsonSchemaTypeDefMatcher, OasTypeDefStringValueMatcher, RamlHeader}
+import amf.plugins.document.webapi.parser.spec.raml.{
+  Raml08RootLevelEmitters,
+  Raml10RootLevelEmitters,
+  RamlRootLevelEmitters
+}
+import amf.plugins.document.webapi.parser.{
+  CommonOasTypeDefMatcher,
+  JsonSchemaTypeDefMatcher,
+  OasTypeDefStringValueMatcher,
+  RamlHeader
+}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, UnionShape}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo

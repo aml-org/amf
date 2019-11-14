@@ -8,7 +8,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.remote.{Oas, Raml08}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Shapes
 import amf.plugins.document.webapi.annotations._

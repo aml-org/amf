@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, Strings}
+import amf.core.utils.{IdCounter, AmfStrings}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.{
   FormBodyParameter,

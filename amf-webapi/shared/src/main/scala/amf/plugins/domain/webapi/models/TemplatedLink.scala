@@ -6,7 +6,7 @@ import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel._
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 case class TemplatedLink(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
 

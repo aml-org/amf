@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel.{Settings => SettingsField, _}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import org.yaml.model.YPart
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
     extends DomainElement

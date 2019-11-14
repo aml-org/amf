@@ -4,7 +4,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel._
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel}
 import amf.plugins.domain.webapi.models.IriTemplateMapping

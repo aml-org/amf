@@ -5,7 +5,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel._
 import org.yaml.model.YPart
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 case class UnionShape(override val fields: Fields, override val annotations: Annotations)
     extends AnyShape(fields, annotations) {

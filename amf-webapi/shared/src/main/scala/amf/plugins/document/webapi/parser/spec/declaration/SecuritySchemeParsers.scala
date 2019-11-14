@@ -4,7 +4,7 @@ import amf.core.annotations.LexicalInformation
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorSecurityScheme
 import amf.plugins.document.webapi.parser.spec._

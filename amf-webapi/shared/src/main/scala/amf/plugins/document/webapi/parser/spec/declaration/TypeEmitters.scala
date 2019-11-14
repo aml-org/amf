@@ -14,7 +14,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.core.remote.Vendor
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts._

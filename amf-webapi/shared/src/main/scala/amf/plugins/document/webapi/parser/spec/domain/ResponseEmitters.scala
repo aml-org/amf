@@ -9,7 +9,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.AnnotationsEmitter
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.Response
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

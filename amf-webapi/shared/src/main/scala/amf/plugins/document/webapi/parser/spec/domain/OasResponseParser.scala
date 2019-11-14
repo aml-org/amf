@@ -14,7 +14,7 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.YMap
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorResponse
 import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
 import amf.plugins.features.validation.CoreValidations

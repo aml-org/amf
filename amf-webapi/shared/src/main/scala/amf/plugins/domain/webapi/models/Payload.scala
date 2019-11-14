@@ -4,7 +4,7 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.models.{ArrayShape, Example, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.metamodel.PayloadModel.{Encoding => EncodingModel, _}

@@ -8,7 +8,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration._

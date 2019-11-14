@@ -5,7 +5,7 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.contexts.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier

@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel._
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import org.yaml.model.YMapEntry
 
 /**
@@ -58,8 +58,8 @@ class Response(override val fields: Fields, override val annotations: Annotation
   }
 
   def cloneResponse(parent: String): Response = {
-    val response:Response = Response(annotations)
-    val cloned = response.withName(name.value()).adopted(parent)
+    val response: Response = Response(annotations)
+    val cloned             = response.withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

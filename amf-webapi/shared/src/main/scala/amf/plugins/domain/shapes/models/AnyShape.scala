@@ -6,7 +6,7 @@ import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, ExternalSourceElement, Linkable, Shape}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.core.validation.{AMFValidationReport, PayloadValidator, SeverityLevels}
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.annotations.InlineDefinition

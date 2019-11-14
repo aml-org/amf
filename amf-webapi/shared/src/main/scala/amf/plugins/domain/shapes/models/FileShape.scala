@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.FileShapeModel._
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel, SchemaShapeModel}
 import org.yaml.model.YPart

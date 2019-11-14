@@ -10,7 +10,7 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, Lazy, Strings, TemplateUri}
+import amf.core.utils.{IdCounter, Lazy, AmfStrings, TemplateUri}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec

@@ -12,7 +12,7 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
-import amf.core.utils.{IdCounter, Strings}
+import amf.core.utils.{IdCounter, AmfStrings}
 import amf.plugins.document.webapi.annotations.FormBodyParameter
 import amf.plugins.document.webapi.contexts.{
   BaseSpecEmitter,

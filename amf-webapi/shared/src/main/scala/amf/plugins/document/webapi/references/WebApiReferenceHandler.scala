@@ -49,7 +49,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
   def isRamlOverlayOrExtension(vendor: String, parsed: ParsedDocument): Boolean = {
     parsed.asInstanceOf[SyamlParsedDocument].comment match {
       case Some(c) =>
-        RamlHeader.fromText(c.metaText) match {
+        RamlHeader.fromText(c) match {
           case Some(Raml10Overlay | Raml10Extension) if vendor == Raml10.name => true
           case _                                                              => false
         }

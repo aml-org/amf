@@ -13,7 +13,7 @@ import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Payload, Response, TemplatedLink}
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 import scala.collection.mutable
 
@@ -43,15 +43,16 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
 
                 // OAS 3.0.0
                 if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
-                  response.fields.fields().find(_.field == ResponseModel.Payloads) foreach  { f: FieldEntry =>
+                  response.fields.fields().find(_.field == ResponseModel.Payloads) foreach { f: FieldEntry =>
                     val payloads: Seq[Payload] = f.arrayValues
-                    val annotations = f.value.annotations
-                    result += EntryPartEmitter("content", OasContentPayloadsEmitter(payloads, ordering, references, annotations))
+                    val annotations            = f.value.annotations
+                    result += EntryPartEmitter("content",
+                                               OasContentPayloadsEmitter(payloads, ordering, references, annotations))
                   }
 
-                  response.fields.fields().find(_.field == ResponseModel.Links) foreach  { f: FieldEntry =>
+                  response.fields.fields().find(_.field == ResponseModel.Links) foreach { f: FieldEntry =>
                     val links: Seq[TemplatedLink] = f.arrayValues
-                    val annotations = f.value.annotations
+                    val annotations               = f.value.annotations
                     result += EntryPartEmitter("links", OasLinksEmitter(links, ordering, references, annotations))
                   }
                 }
@@ -74,7 +75,10 @@ case class OasResponseEmitter(response: Response, ordering: SpecOrdering, refere
                   })
 
                   if (payloads.other.nonEmpty)
-                    result += OasPayloadsEmitter("responsePayloads".asOasExtension, payloads.other, ordering, references)
+                    result += OasPayloadsEmitter("responsePayloads".asOasExtension,
+                                                 payloads.other,
+                                                 ordering,
+                                                 references)
                 }
 
                 fs.entry(ResponseModel.Examples)

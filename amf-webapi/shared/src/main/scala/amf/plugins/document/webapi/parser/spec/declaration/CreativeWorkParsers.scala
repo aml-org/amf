@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.{YMap, YNode}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.validations.ParserSideValidations.UnexpectedVendor
 

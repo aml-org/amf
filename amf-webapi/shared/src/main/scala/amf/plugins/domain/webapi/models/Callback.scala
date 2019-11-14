@@ -4,7 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.webapi.metamodel.CallbackModel
 import amf.plugins.domain.webapi.metamodel.CallbackModel._
 import org.yaml.model.YMap

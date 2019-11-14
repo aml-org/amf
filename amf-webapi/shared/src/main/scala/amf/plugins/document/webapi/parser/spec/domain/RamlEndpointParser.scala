@@ -4,7 +4,7 @@ import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{Strings, TemplateUri}
+import amf.core.utils.{AmfStrings, TemplateUri}
 import amf.plugins.document.webapi.contexts.{
   Raml08WebApiContext,
   Raml10WebApiContext,

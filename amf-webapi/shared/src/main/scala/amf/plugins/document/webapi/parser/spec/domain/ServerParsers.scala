@@ -5,7 +5,7 @@ import amf.core.metamodel.Field
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{Strings, TemplateUri}
+import amf.core.utils.{AmfStrings, TemplateUri}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
@@ -110,7 +110,8 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   }
 }
 
-abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(implicit val ctx: OasWebApiContext) extends SpecParserOps {
+abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(implicit val ctx: OasWebApiContext)
+    extends SpecParserOps {
   def parse(): Unit
 
   protected def parseServers(key: String): Unit =

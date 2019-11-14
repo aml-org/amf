@@ -7,7 +7,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{ExternalDomainElement, Shape}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument}
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.ExternalJsonRefsPlugin
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model._

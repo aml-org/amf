@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.model.domain.{AmfArray, DomainElement}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{Lazy, Strings}
+import amf.core.utils.{Lazy, AmfStrings}
 import amf.plugins.document.webapi.annotations.EmptyPayload
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps

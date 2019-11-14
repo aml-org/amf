@@ -9,7 +9,7 @@ import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.{Request => OperationRequest, _}
 import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
 import amf.plugins.domain.webapi.models.templates.ParametrizedTrait
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 /**
   * Operation internal model.

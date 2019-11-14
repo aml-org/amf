@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, SpecEmitterConte
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 import scala.collection.mutable.ListBuffer
 

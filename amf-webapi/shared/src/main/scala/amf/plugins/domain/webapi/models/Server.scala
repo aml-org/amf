@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.ServerModel
 import amf.plugins.domain.webapi.metamodel.ServerModel._
 import org.yaml.model.YMap
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 /**
   * Server internal model

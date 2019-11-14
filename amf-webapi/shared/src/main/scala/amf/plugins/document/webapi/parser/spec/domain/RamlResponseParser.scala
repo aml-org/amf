@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, _}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations.EmptyPayload
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}

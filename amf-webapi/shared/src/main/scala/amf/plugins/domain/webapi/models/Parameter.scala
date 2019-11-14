@@ -8,7 +8,7 @@ import amf.plugins.domain.shapes.models.{Example, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.metamodel.ParameterModel._
 import org.yaml.model.YPart
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 /**
   * Parameter internal model.
@@ -79,7 +79,7 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
 
   def cloneParameter(parent: String): Parameter = {
     val parameter: Parameter = Parameter(Annotations(annotations))
-    val cloned = parameter.withName(name.value()).adopted(parent)
+    val cloned               = parameter.withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

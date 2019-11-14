@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
@@ -110,8 +110,8 @@ case class RamlJsonSchemaExpression(key: YNode,
   case class RamlExternalOasLibParser(ctx: RamlWebApiContext, text: String, valueAST: YNode, path: String) {
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
-      val url       = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
-      val schemaEntry = JsonParser.withSource(text, valueAST.sourceName)(ctx).document()
+      val url               = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
+      val schemaEntry       = JsonParser.withSource(text, valueAST.sourceName)(ctx).document()
       val jsonSchemaContext = toSchemaContext(ctx, valueAST)
       jsonSchemaContext.localJSONSchemaContext = Some(schemaEntry.node)
       jsonSchemaContext.setJsonSchemaAST(schemaEntry.node)
@@ -151,8 +151,8 @@ case class RamlJsonSchemaExpression(key: YNode,
         JsonParser.withSource(text, url.get)(ctx)
       else
         JsonParser.withSource(text,
-                                    valueAST.value.sourceName,
-                                    Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
+                              valueAST.value.sourceName,
+                              Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
 
     val schemaEntry = YMapEntry(key, parser.document().node)
 
@@ -346,9 +346,9 @@ trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with Ram
     val shape = SchemaShape()
     adopt(shape)
     ctx.violation(InvalidExternalTypeType,
-      shape.id,
-      s"Cannot parse $externalType Schema expression out of a non string value",
-      value)
+                  shape.id,
+                  s"Cannot parse $externalType Schema expression out of a non string value",
+                  value)
     ValueAndOrigin("", value, None, Some(shape))
   }
 }

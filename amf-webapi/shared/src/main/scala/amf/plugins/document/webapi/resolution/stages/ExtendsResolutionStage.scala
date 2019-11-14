@@ -58,7 +58,7 @@ class ExtendsResolutionStage(
                  tree: ElementTree): EndPoint = {
     Option(r.target) match {
       case Some(rt: ResourceType) =>
-        val node = rt.dataNode.cloneNode()
+        val node = rt.dataNode.copyNode()
         node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
           apiContext.violation(ResolutionValidation, r.id, None, message, r.position(), r.location()))
 
@@ -281,7 +281,7 @@ class ExtendsResolutionStage(
             case err: ErrorTrait =>
               Some(TraitBranch(key, Operation().withId(err.id + "_op"), Nil))
             case t: Trait =>
-              val node: DataNode = t.dataNode.cloneNode()
+              val node: DataNode = t.dataNode.copyNode()
               node.replaceVariables(local.variables, subTree)((message: String) => {
                 apiContext.violation(ResolutionValidation,
                                      t.id,

@@ -4,7 +4,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser

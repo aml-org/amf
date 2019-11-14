@@ -18,7 +18,7 @@ import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
 import amf.plugins.domain.webapi.models.{Callback, Operation}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.parser.spec.oas.OasDocumentEmitter
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YType

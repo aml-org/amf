@@ -8,7 +8,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.metamodel.ExampleModel._
 import org.yaml.model.YPart
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.parser.spec.common.PayloadSerializer
 
 /**

@@ -5,7 +5,7 @@ import java.util.Optional
 import amf.core.model.domain.{AmfArray, DomainElement, Linkable, Shape}
 import amf.core.model.{BoolField, IntField}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.metamodel.ArrayShapeModel._
 import amf.plugins.domain.shapes.metamodel.TupleShapeModel.TupleItems
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, ArrayShapeModel, MatrixShapeModel, TupleShapeModel}

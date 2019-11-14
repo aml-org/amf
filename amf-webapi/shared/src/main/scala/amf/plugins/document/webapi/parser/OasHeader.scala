@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser
 import amf.core.Root
 import amf.core.parser._
 import org.yaml.model.YMap
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 /**
   *

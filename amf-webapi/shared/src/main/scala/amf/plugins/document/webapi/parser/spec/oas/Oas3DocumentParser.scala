@@ -4,7 +4,7 @@ import amf.core.Root
 import amf.core.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser._
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.AbstractDeclarationsParser
 import amf.plugins.document.webapi.parser.spec.domain.{

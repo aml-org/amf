@@ -21,7 +21,7 @@ import amf.plugins.domain.webapi.models.security._
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 
 import scala.collection.mutable.ListBuffer

@@ -11,7 +11,7 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.remote._
 import amf.core.utils.TSort.tsort
-import amf.core.utils.{IdCounter, Strings}
+import amf.core.utils.{IdCounter, AmfStrings}
 import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._

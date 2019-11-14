@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.NullSecurity
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common._

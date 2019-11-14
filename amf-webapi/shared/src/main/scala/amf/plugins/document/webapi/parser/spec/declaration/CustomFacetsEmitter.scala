@@ -7,7 +7,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 case class RamlCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)
