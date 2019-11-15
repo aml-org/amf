@@ -77,19 +77,21 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       val newInherits = shape.inherits.map {
         case r: RecursiveShape if r.fixpoint.option().exists(_.equals(shape.id)) =>
           r.fixpointTarget.foreach(target => addClosure(target, shape))
+          addClosures(r.closureShapes.toSeq, shape)
           recursionRegister.recursionError(shape, r, traversal) // direct recursion
         case r: RecursiveShape =>
           r.fixpointTarget.foreach(target => addClosure(target, shape))
+          addClosures(r.closureShapes.toSeq, shape)
           r
         case other =>
           recursiveNormalization(other) match {
             case rec: RecursiveShape =>
               rec.fixpointTarget.foreach(target => addClosure(target, shape))
+              addClosures(rec.closureShapes.toSeq, shape)
               rec
             case o =>
-              val closures = o.closureShapes
-              shape.closureShapes ++= closures
-              context.cache.addClosures(closures.toSeq, shape)
+              addClosures(o.closureShapes.toSeq, shape)
+              context.cache.addClosures(shape.closureShapes.toSeq, shape)
               o
           }
       }
@@ -253,6 +255,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
         newPropertyShape.range match {
           case rec: RecursiveShape =>
             rec.fixpointTarget.foreach(target => addClosure(target, node))
+            addClosures(rec.closureShapes.toSeq, node)
           case other =>
             addClosures(other.closureShapes.toSeq, node)
 
