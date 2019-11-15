@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: Some API
+
+types:
+  A:
+    type: object
+    properties:
+      a1?:
+        type: B
+  B:
+    type: object
+    properties:
+      b1?: A
+  C:
+    type: object
+    properties:
+      c1:
+        type: B
+      c2:
+        type: D
+  D:
+    type: object
+    properties:
+      d1?: C
+      d2: string
+    example:
+      d2: sometext

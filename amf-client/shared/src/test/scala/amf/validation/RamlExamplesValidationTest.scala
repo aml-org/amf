@@ -296,5 +296,9 @@ class RamlExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/single-complex-inheritance.raml", Some("single-complex-inheritance.report"))
   }
 
+  test("Shape cross recursion") {
+    validate("/examples/cross-recursion.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }
