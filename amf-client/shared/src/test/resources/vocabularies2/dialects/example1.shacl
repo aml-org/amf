@@ -343,6 +343,12 @@
 <http://a.ml/vocabularies/amf/parser#schemas-deprecated> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#schemas-deprecated> <http://www.w3.org/ns/shacl#message> "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead" .
 <http://a.ml/vocabularies/amf/parser#schemas-deprecated> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#scope-names-must-be-empty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#scope-names-must-be-empty> <http://www.w3.org/ns/shacl#message> "Scope names must be an empty array" .
+<http://a.ml/vocabularies/amf/parser#scope-names-must-be-empty> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#server-variable-missing-default> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#server-variable-missing-default> <http://www.w3.org/ns/shacl#message> "Server variable must define a 'default' field" .
+<http://a.ml/vocabularies/amf/parser#server-variable-missing-default> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value> <http://www.w3.org/ns/shacl#message> "Values of uri parameter must not contain '/' character" .
 <http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

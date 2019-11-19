@@ -187,12 +187,15 @@ private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: 
 
     map.key("description", ServerModel.Description in server)
 
-    map.key("parameters".asOasExtension).orElse(map.key("variables")).foreach { entry =>
-      val variables = entry.value
-        .as[YMap]
-        .entries
-        .map(Raml10ParameterParser(_, (p: Parameter) => p.adopted(server.id))(toRaml(ctx)).parse())
-
+    map.key("variables").foreach { entry =>
+      val variables = entry.value.as[YMap].entries.map { varEntry =>
+        val serverVariable =
+          Raml10ParameterParser(varEntry, (p: Parameter) => p.adopted(server.id))(toRaml(ctx)).parse()
+        serverVariable.withBinding("path")
+        // required field is validated in parsing as there is no way to differentiate a server variable from a parameter
+        requiredDefaultField(serverVariable, varEntry.value.as[YMap])
+        serverVariable
+      }
       server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
     }
 
@@ -200,4 +203,9 @@ private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: 
 
     server
   }
+
+  private def requiredDefaultField(serverVar: Parameter, map: YMap): Unit =
+    if (map.key("default").isEmpty)
+      ctx.violation(ServerVariableMissingDefault, serverVar.id, "Server variable must define a 'default' field", map)
+
 }

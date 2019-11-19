@@ -83,6 +83,11 @@ object ParserSideValidations extends Validations {
     "Invalid 'securedBy' type"
   )
 
+  val ScopeNamesMustBeEmpty = validation(
+    "scope-names-must-be-empty",
+    "Scope names must be an empty array"
+  )
+
   val InvalidSecuritySchemeDescribedByType = validation(
     "invalid-security-scheme-described-by-type",
     "Invalid 'describedBy' type, map expected"
@@ -479,6 +484,11 @@ object ParserSideValidations extends Validations {
     "Parameter must define a 'schema' or 'content' field, but not both"
   )
 
+  val ServerVariableMissingDefault = validation(
+    "server-variable-missing-default",
+    "Server variable must define a 'default' field"
+  )
+
   val UserDefinedFacetMatchesBuiltInFacets = validation(
     "user-defined-facets-matches-built-in",
     "User defined facet name matches built in facet of type"
@@ -596,6 +606,7 @@ object ParserSideValidations extends Validations {
     RequestBodyContentRequired,
     DiscriminatorNameRequired,
     InvalidSecuredByType,
+    ScopeNamesMustBeEmpty,
     InvalidSecuritySchemeDescribedByType,
     InvalidEndpointPath,
     DuplicatedEndpointPath,
@@ -635,6 +646,7 @@ object ParserSideValidations extends Validations {
     InvalidFieldNameInComponents,
     MissingRequiredUserDefinedFacet,
     ParameterMissingSchemaOrContent,
+    ServerVariableMissingDefault,
     SlashInUriParameterValues,
     InvalidDatetimeFormat,
     ItemsFieldRequired

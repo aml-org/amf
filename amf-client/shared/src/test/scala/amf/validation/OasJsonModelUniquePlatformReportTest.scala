@@ -146,5 +146,17 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("oas3/invalid-urls.json", Some("invalid-urls.report"), Oas30Profile)
   }
 
+  test("Server variables with missing default field") {
+    validate("oas3/server-variable-missing-field.json",
+             Some("server-variable-missing-default-field.report"),
+             Oas30Profile)
+  }
+
+  test("Security requirement object with non empty scopes array") {
+    validate("oas3/security-definition-non-empty-scopes.json",
+             Some("security-requirement-non-empty-scopes.report"),
+             Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

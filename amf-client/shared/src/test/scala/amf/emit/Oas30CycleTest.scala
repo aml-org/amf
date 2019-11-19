@@ -8,10 +8,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
 
   case class FixtureData(name: String, apiFrom: String, apiTo: String)
 
-  val cycleOas3ToRaml10 = Seq(
-    FixtureData("Basic servers", "basic-servers.json", "basic-servers.raml"),
-    FixtureData("Complex servers", "complex-servers.json", "complex-servers.json.raml")
-  )
+  val cycleOas3ToRaml10: Seq[FixtureData] = Nil
 
   cycleOas3ToRaml10.foreach { f =>
     test(s"${f.name} - oas3 to raml10") {
@@ -66,10 +63,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     }
   }
 
-  val cyclesRamlOas3 = Seq(
-    FixtureData("Basic servers", "basic-servers.raml", "basic-servers.raml.json"),
-    FixtureData("Complex servers", "complex-servers.raml", "complex-servers.json")
-  )
+  val cyclesRamlOas3: Seq[FixtureData] = Nil
 
   cyclesRamlOas3.foreach { f =>
     test(s"${f.name} - raml to oas3") {
@@ -77,9 +71,7 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     }
   }
 
-  val cyclesOas3Amf = Seq(
-    FixtureData("Complex servers", "complex-servers.json", "complex-servers.jsonld")
-  )
+  val cyclesOas3Amf: Seq[FixtureData] = Nil
 
   cyclesOas3Amf.foreach { f =>
     test(s"${f.name} - oas3 to amf") {

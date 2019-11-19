@@ -383,6 +383,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                      settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
         }
 
+        validateScopesArray(scheme, declaration, schemeEntry)
         Some(scheme)
       case Right(map) if map.entries.isEmpty =>
         None
@@ -390,6 +391,23 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         val scheme = producer(node.toString)
         ctx.violation(InvalidSecuredByType, scheme.id, s"Invalid type $node", node)
         None
+    }
+
+    private def validateScopesArray(scheme: ParametrizedSecurityScheme,
+                                    declaration: SecurityScheme,
+                                    schemeEntry: YMapEntry): Unit = {
+      if (declaration.`type`.nonEmpty &&
+          !(declaration.`type`.is("OAuth 2.0") || declaration.`type`.is("openIdConnect"))) {
+        schemeEntry.value.tag.tagType match {
+          case YType.Seq if schemeEntry.value.as[Seq[YNode]].nonEmpty =>
+            val msg = declaration.`type`.option() match {
+              case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
+              case None             => "Scopes array must be empty for given security scheme"
+            }
+            ctx.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
+          case _ =>
+        }
+      }
     }
 
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
