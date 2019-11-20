@@ -857,6 +857,7 @@ object OAS20Dialect {
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/InfoObject/title")
           .withName("title")
+          .withMinCount(1)
           .withNodePropertyMapping(WebApiModel.Name.value.iri())
           .withLiteralRange(xsdString.iri()),
 
@@ -875,6 +876,7 @@ object OAS20Dialect {
         PropertyMapping()
           .withId(DialectLocation + "#/declarations/InfoObject/version")
           .withName("version")
+          .withMinCount(1)
           .withNodePropertyMapping(WebApiModel.Version.value.iri())
           .withLiteralRange(xsdString.iri()),
 
