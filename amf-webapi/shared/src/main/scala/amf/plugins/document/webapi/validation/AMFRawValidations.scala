@@ -169,7 +169,7 @@ object AMFRawValidations {
       "PropertyShape",
       "sh:path",
       "sh:pattern",
-      """^((https?|ftp|file)://)?[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$""".stripMargin,
+      """^((https?|ftp|file)://)?[-a-zA-Z0-9()+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9()+&@#/%=~_|]$""".stripMargin,
       "Must be in the format of a URL",
       "Must be in the format of a URL",
       "Violation"
