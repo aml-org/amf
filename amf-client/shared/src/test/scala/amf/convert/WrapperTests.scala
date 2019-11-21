@@ -39,6 +39,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
   private val banking       = "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml"
   private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
+  private val oas3          = "file://amf-client/shared/src/test/resources/api/oas3.json"
   private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
   private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
@@ -165,6 +166,17 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       result <- new Oas20Parser().parseStringAsync(output).asFuture
     } yield {
       assertBaseUnit(result, "http://a.ml/amf/default_document")
+    }
+  }
+
+  test("Render / parse test OAS 3.0") {
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- new Oas30Parser().parseFileAsync(oas3).asFuture
+      output <- new Oas30Renderer().generateString(unit).asFuture
+    } yield {
+      print(output)
+      output should include("openIdConnectUrl")
     }
   }
 
@@ -1685,7 +1697,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       _    <- AMF.init().asFuture
       unit <- new RamlParser().parseFileAsync(file).asFuture
     } yield {
-      assert(unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
+      assert(
+        unit.asInstanceOf[Document].declares.asSeq.head.asInstanceOf[Shape].defaultValueStr.value() == "A default")
     }
   }
 
@@ -1708,7 +1721,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit     <- new RamlParser().parseStringAsync(api).asFuture
       resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
       report   <- AMF.validateResolved(unit, Raml10Profile, AMFStyle).asFuture
-      json     <- Future(resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
+      json <- Future(
+        resolved.asInstanceOf[DeclaresModel].declares.asSeq.head.asInstanceOf[NodeShape].buildJsonSchema())
     } yield {
       val golden = """{
                      |  "$schema": "http://json-schema.org/draft-04/schema#",

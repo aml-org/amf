@@ -31,6 +31,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
     val generator: Option[Renderer] = syntax match {
       case Raml10.name | Raml.name => Some(new Raml10Renderer)
       case Raml08.name             => Some(new Raml08Renderer)
+      case Oas30.name              => Some(new Oas30Renderer)
       case Oas20.name              => Some(new Oas20Renderer)
       case Amf.name                => Some(new AmfGraphRenderer)
       case _ =>
@@ -68,6 +69,7 @@ class Repl(val in: InputStream, val out: PrintStream) extends NativeOpsFromJvm {
     case Raml10  => new Raml10Parser
     case Raml08  => new Raml08Parser
     case Raml    => new RamlParser
+    case Oas30   => new Oas30Parser
     case Oas     => new Oas20Parser
     case Amf     => new AmfGraphParser
     case Payload => throw new Exception("Cannot find a parser for Payload vendor")
