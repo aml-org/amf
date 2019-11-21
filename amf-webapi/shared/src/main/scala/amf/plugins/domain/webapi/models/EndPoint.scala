@@ -16,7 +16,8 @@ import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, Par
   */
 class EndPoint(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
-    with ExtensibleWebApiDomainElement {
+    with ExtensibleWebApiDomainElement
+    with ServerContainer {
 
   def description: StrField                     = fields.field(Description)
   def summary: StrField                         = fields.field(Summary)
@@ -43,6 +44,8 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
   def withSecurity(security: Seq[ParametrizedSecurityScheme]): this.type = setArray(Security, security)
   def withPayloads(payloads: Seq[Payload]): this.type                    = setArray(Payloads, payloads)
   def withServers(servers: Seq[Server]): this.type                       = setArray(Servers, servers)
+
+  override def removeServers(): Unit = fields.removeField(EndPointModel.Servers)
 
   def withOperation(method: String): Operation = {
     val result = Operation().withMethod(method)

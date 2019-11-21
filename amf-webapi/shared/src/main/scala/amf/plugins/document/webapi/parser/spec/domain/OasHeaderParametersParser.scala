@@ -106,7 +106,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
         val payloadProducer: Option[String] => Payload = mediaType => {
           val res = Payload()
           mediaType.map(res.withMediaType)
-          res
+          res.adopted(parameter.id)
         }
         val payloads = OasContentsParser(entry, payloadProducer).parse()
         if (payloads.nonEmpty) parameter.set(ResponseModel.Payloads, AmfArray(payloads), Annotations(entry))

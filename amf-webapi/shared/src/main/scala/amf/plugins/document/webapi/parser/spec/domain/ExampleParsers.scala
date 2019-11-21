@@ -94,9 +94,9 @@ case class Oas3ResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiC
       Oas3SingleExampleValueParser(yMapEntry, ex => {
         ex.add(Annotations(yMapEntry))
         ex.withName(name)
-      }, ExampleOptions(strictDefault = false, quiet = true)).parse()
+      }, ExampleOptions(strictDefault = true, quiet = true)).parse()
     } else {
-      RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true))
+      RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = true, quiet = true))
         .populate()
     }
   }
@@ -293,8 +293,7 @@ case class Oas3ExampleValueParser(map: YMap, adopt: Example => Unit, options: Ex
           map.key("description", (ExampleModel.Description in example).allowingAnnotations)
           map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
 
-          // OAS examples are not strict
-          example.withStrict(false)
+          example.withStrict(options.strictDefault)
 
           map
             .key("value")
@@ -374,8 +373,8 @@ case class NodeDataNodeParser(node: YNode,
             val parser =
               if (!fromExternal)
                 JsonParser.withSource(scalar.text,
-                                            scalar.sourceName,
-                                            Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
+                                      scalar.sourceName,
+                                      Position(node.range.lineFrom, node.range.columnFrom))(errorHandler)
               else JsonParser.withSource(scalar.text, scalar.sourceName)
             parser.document().node
           }

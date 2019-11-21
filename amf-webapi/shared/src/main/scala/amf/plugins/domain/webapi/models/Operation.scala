@@ -16,7 +16,8 @@ import amf.core.utils.AmfStrings
   */
 case class Operation(fields: Fields, annotations: Annotations)
     extends NamedDomainElement
-    with ExtensibleWebApiDomainElement {
+    with ExtensibleWebApiDomainElement
+    with ServerContainer {
 
   def method: StrField                          = fields.field(Method)
   def description: StrField                     = fields.field(Description)
@@ -49,6 +50,8 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withTags(tag: Seq[String]): this.type                     = set(Tags, tag.toList)
   def withCallbacks(callbacks: Seq[Callback]): this.type        = setArray(Callbacks, callbacks)
   def withServers(servers: Seq[Server]): this.type              = setArray(Servers, servers)
+
+  override def removeServers(): Unit = fields.removeField(OperationModel.Servers)
 
   def withResponse(name: String): Response = {
     val result = Response().withName(name).withStatusCode(if (name == "default") "200" else name)

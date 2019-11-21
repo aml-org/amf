@@ -22,14 +22,12 @@
             "name": "itemId",
             "deprecated": false,
             "schema": {
-              "type": "string"
-            },
-            "style": "simple",
-            "examples": {
-              "example": {
-                "value": "some example"
+              "type": "string",
+              "x-amf-examples": {
+                "example": "some example"
               }
-            }
+            },
+            "style": "simple"
           },
           {
             "in": "cookie",

@@ -15,7 +15,7 @@ import org.yaml.model.{YMap, YNode}
 /**
   * Web Api internal model
   */
-case class WebApi(fields: Fields, annotations: Annotations) extends NamedDomainElement {
+case class WebApi(fields: Fields, annotations: Annotations) extends NamedDomainElement with ServerContainer {
 
   def description: StrField                     = fields.field(Description)
   def schemes: Seq[StrField]                    = fields.field(Schemes)
@@ -45,6 +45,8 @@ case class WebApi(fields: Fields, annotations: Annotations) extends NamedDomainE
   def withSecurity(security: Seq[ParametrizedSecurityScheme]): this.type = setArray(Security, security)
 
   def withTags(tags: Seq[Tag]): this.type = setArray(Tags, tags)
+
+  override def removeServers(): Unit = fields.removeField(WebApiModel.Servers)
 
   def withEndPoint(path: String): EndPoint = {
     val result = EndPoint().withPath(path)

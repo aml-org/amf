@@ -580,7 +580,7 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     val payloadProducer: Option[String] => Payload = mediaType => {
       val res = Payload()
       mediaType.map(res.withMediaType)
-      res
+      res.adopted(param.id)
     }
     map.key(
       "content",

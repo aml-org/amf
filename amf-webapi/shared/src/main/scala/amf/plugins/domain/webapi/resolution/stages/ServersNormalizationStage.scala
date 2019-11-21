@@ -2,11 +2,9 @@ package amf.plugins.domain.webapi.resolution.stages
 
 import amf._
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.model.domain.DomainElement
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.domain.webapi.models.{Server, WebApi}
+import amf.plugins.domain.webapi.models.{Server, ServerContainer, WebApi}
 
 /**
   * Place server models in the right locations according to OAS 3.0 and our own criterium for AMF
@@ -47,13 +45,13 @@ class ServersNormalizationStage(profile: ProfileName)(override implicit val erro
   /**
     * moves servers defined in base to each child that has no servers defined.
     */
-  private def propagateServers(base: DomainElement, children: Seq[DomainElement]): Unit =
+  private def propagateServers(base: ServerContainer, children: Seq[ServerContainer]): Unit =
     if (children.nonEmpty) {
-      val servers: Seq[Server] = base.fields.field(WebApiModel.Servers)
-      base.fields.removeField(WebApiModel.Servers)
+      val servers: Seq[Server] = base.servers
+      base.removeServers()
       children.foreach { child =>
-        if (!child.fields.exists(WebApiModel.Servers))
-          child.setArray(WebApiModel.Servers, servers)
+        if (child.servers.isEmpty)
+          child.withServers(servers)
       }
     }
 

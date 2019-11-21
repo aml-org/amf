@@ -7,10 +7,11 @@ import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage, Ur
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages.{
-  ExamplesResolutionStage,
   MediaTypeResolutionStage,
   ParametersNormalizationStage,
   PathDescriptionNormalizationStage,
+  PayloadAndParameterResolutionStage,
+  ResponseExamplesResolutionStage,
   SecurityResolutionStage,
   ServersNormalizationStage
 }
@@ -29,7 +30,8 @@ class AmfEditingPipeline(override val eh: ErrorHandler) extends ResolutionPipeli
     new ServersNormalizationStage(profileName),
     new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
     new MediaTypeResolutionStage(profileName, keepEditingInfo = true),
-    new ExamplesResolutionStage(),
+    new ResponseExamplesResolutionStage(),
+    new PayloadAndParameterResolutionStage(profileName),
     new UrlShortenerStage()
   )
 

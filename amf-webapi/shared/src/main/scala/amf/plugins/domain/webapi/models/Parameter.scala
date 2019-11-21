@@ -15,7 +15,8 @@ import amf.core.utils.AmfStrings
   */
 class Parameter(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
-    with Linkable {
+    with Linkable
+    with SchemaContainer {
 
   def parameterName: StrField    = fields.field(ParameterName)
   def description: StrField      = fields.field(Description)
@@ -42,6 +43,8 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withSchema(schema: Shape): this.type                     = set(Schema, schema)
   def withPayloads(payloads: Seq[Payload]): this.type          = setArray(Payloads, payloads)
   def withExamples(examples: Seq[Example]): this.type          = setArray(Examples, examples)
+
+  override def removeExamples(): Unit = fields.removeField(Examples)
 
   def isHeader: Boolean = binding.is("header")
   def isQuery: Boolean  = binding.is("query")

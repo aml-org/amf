@@ -14,7 +14,7 @@ import amf.validations.ResolutionSideValidations.{ExamplesWithInvalidMimeType, E
   * MediaTypeResolution and Shape Normalization stages must already been run
   * for mutate each payload schema
   */
-class ExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
+class ResponseExamplesResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
   override def resolve[T <: BaseUnit](model: T): T = model match {
     case d: Document if d.encodes.isInstanceOf[WebApi] =>
       d.withEncodes(resolveWebApi(d.encodes.asInstanceOf[WebApi])).asInstanceOf[T]
