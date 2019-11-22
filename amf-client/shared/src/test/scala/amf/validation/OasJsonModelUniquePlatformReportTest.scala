@@ -158,5 +158,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
              Oas30Profile)
   }
 
+  test("Security schemes validations") {
+    validate("oas3/invalid-security-schemes.json", Some("invalid-security-schemes.report"), Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

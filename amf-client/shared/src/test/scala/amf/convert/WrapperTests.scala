@@ -175,7 +175,6 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       unit   <- new Oas30Parser().parseFileAsync(oas3).asFuture
       output <- new Oas30Renderer().generateString(unit).asFuture
     } yield {
-      print(output)
       output should include("openIdConnectUrl")
     }
   }

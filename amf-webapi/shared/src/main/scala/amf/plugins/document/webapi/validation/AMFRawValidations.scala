@@ -1729,7 +1729,72 @@ object AMFRawValidations {
       "Parameters 'content' field must only have one entry",
       "Violation"
     ),
-    urlValidation(Oas30.name, "apiContract:WebAPI", "core:termsOfService")
+    urlValidation(Oas30.name, "apiContract:WebAPI", "core:termsOfService"),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "security:HttpSettings",
+      "security:scheme",
+      "PropertyShape",
+      "sh:path",
+      "sh:minCount",
+      "1",
+      "'scheme' field is mandatory in http security scheme",
+      "'scheme' field is mandatory in http security scheme",
+      "Violation"
+    ),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "security:ApiKeySettings",
+      "core:name",
+      "PropertyShape",
+      "sh:path",
+      "sh:minCount",
+      "1",
+      "'name' field is mandatory in apiKey security scheme",
+      "'name' field is mandatory in apiKey security scheme",
+      "Violation"
+    ),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "security:ApiKeySettings",
+      "security:in",
+      "PropertyShape",
+      "sh:path",
+      "sh:minCount",
+      "1",
+      "'in' field is mandatory in apiKey security scheme",
+      "'in' field is mandatory in apiKey security scheme",
+      "Violation"
+    ),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "security:OpenIdConnectSettings",
+      "security:openIdConnectUrl",
+      "PropertyShape",
+      "sh:path",
+      "sh:minCount",
+      "1",
+      "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
+      "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
+      "Violation"
+    ),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "security:OAuth2Settings",
+      "security:flow",
+      "PropertyShape",
+      "sh:path",
+      "sh:minCount",
+      "1",
+      "'flows' field is mandatory in OAuth2 security scheme",
+      "'flows' field is mandatory in OAuth2 security scheme",
+      "Violation"
+    )
   )
 
   val map: Map[ProfileName, Seq[AMFValidation]] = Map(
