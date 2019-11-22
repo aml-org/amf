@@ -1,0 +1,17 @@
+#%RAML 1.0
+title: api
+description: this is a description
+types:
+  Parent:
+    description: this is a description
+    type: object
+    properties:
+      type:
+        example: parent-example
+        description: this is a description
+        type: ChildType
+        required: true
+  ChildType:
+    example: child-example
+    description: this is a description
+    type: string

@@ -111,6 +111,7 @@ private[shape_normalization] trait RestrictionComputation {
   }
 
   protected def restrictShape(restriction: Shape, shape: Shape): Shape = {
+    shape.id = restriction.id
     restriction.fields.foreach {
       case (field, derivedValue) =>
         if (field != NodeShapeModel.Inherits) {
