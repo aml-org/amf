@@ -96,7 +96,7 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
   def authorizationGrants: Seq[StrField] = fields.field(AuthorizationGrants)
   def flow: StrField                     = fields.field(Flow)
   def refreshUri: StrField               = fields.field(RefreshUri)
-  def scopes: Seq[Scope]                 = fields.field(Scopes)
+  def scopes: Seq[Scope]                 = fields.field(OAuth2SettingsModel.Scopes)
 
   def withAuthorizationUri(authorizationUri: String): this.type =
     set(AuthorizationUri2, authorizationUri)
@@ -105,7 +105,7 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
     set(AuthorizationGrants, authorizationGrants)
   def withFlow(flow: String): this.type             = set(Flow, flow)
   def withRefreshUri(refreshUri: String): this.type = set(RefreshUri, refreshUri)
-  def withScopes(scopes: Seq[Scope]): this.type     = setArray(Scopes, scopes)
+  def withScopes(scopes: Seq[Scope]): this.type     = setArray(OAuth2SettingsModel.Scopes, scopes)
 
   override def meta: Obj = OAuth2SettingsModel
 
@@ -167,7 +167,8 @@ object HttpSettings {
 case class OpenIdConnectSettings(override val fields: Fields, override val annotations: Annotations)
     extends Settings(fields, annotations) {
 
-  def url: StrField = fields.field(Url)
+  def url: StrField      = fields.field(Url)
+  def scopes: Seq[Scope] = fields.field(OpenIdConnectSettingsModel.Scopes)
 
   def withUrl(url: String): this.type = set(Url, url)
 

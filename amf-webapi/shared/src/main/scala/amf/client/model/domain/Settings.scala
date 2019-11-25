@@ -168,7 +168,8 @@ case class OpenIdConnectSettings(override private[amf] val _internal: InternalOp
   @JSExportTopLevel("model.domain.OpenIdConnectSettings")
   def this() = this(InternalOpenIdConnectSettings())
 
-  def url: StrField = _internal.url
+  def url: StrField             = _internal.url
+  def scopes: ClientList[Scope] = _internal.scopes.asClient
 
   /** Set openIdConnectUrl property of this OpenIdConnectSettings. */
   def withUrl(url: String): this.type = {

@@ -10,7 +10,7 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, Lazy, AmfStrings, TemplateUri}
+import amf.core.utils.{AmfStrings, IdCounter, Lazy, TemplateUri}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
@@ -23,7 +23,12 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
-import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
+import amf.plugins.domain.webapi.metamodel.security.{
+  OAuth2SettingsModel,
+  OpenIdConnectSettingsModel,
+  ParametrizedSecuritySchemeModel,
+  ScopeModel
+}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security._
@@ -373,17 +378,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           case None    => declaration
         }
 
-        if (declaration.`type`.is("OAuth 2.0")) {
-          val settings = OAuth2Settings().adopted(scheme.id)
-          val scopes = schemeEntry.value
-            .as[Seq[YNode]]
-            .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
-
-          scheme.set(ParametrizedSecuritySchemeModel.Settings,
-                     settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
-        }
-
-        validateScopesArray(scheme, declaration, schemeEntry)
+        parseScopes(scheme, declaration, schemeEntry)
         Some(scheme)
       case Right(map) if map.entries.isEmpty =>
         None
@@ -393,11 +388,19 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         None
     }
 
-    private def validateScopesArray(scheme: ParametrizedSecurityScheme,
-                                    declaration: SecurityScheme,
-                                    schemeEntry: YMapEntry): Unit = {
-      if (declaration.`type`.nonEmpty &&
-          !(declaration.`type`.is("OAuth 2.0") || declaration.`type`.is("openIdConnect"))) {
+    private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
+      def scopesForSettings(initial: Settings, field: Field) = {
+        val settings = initial.adopted(scheme.id)
+        val scopes = schemeEntry.value
+          .as[Seq[YNode]]
+          .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
+        scheme.set(ParametrizedSecuritySchemeModel.Settings,
+                   settings.setArray(field, scopes, Annotations(schemeEntry.value)))
+      }
+      if (declaration.`type`.is("OAuth 2.0")) scopesForSettings(OAuth2Settings(), OAuth2SettingsModel.Scopes)
+      else if (declaration.`type`.is("openIdConnect"))
+        scopesForSettings(OpenIdConnectSettings(), OpenIdConnectSettingsModel.Scopes)
+      else
         schemeEntry.value.tag.tagType match {
           case YType.Seq if schemeEntry.value.as[Seq[YNode]].nonEmpty =>
             val msg = declaration.`type`.option() match {
@@ -407,7 +410,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             ctx.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
           case _ =>
         }
-      }
     }
 
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
