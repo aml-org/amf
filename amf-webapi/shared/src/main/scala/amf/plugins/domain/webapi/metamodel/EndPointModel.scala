@@ -7,7 +7,7 @@ import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.vocabulary.Namespace.{ApiContract, Core}
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.webapi.models.EndPoint
 
 /**
@@ -17,14 +17,12 @@ import amf.plugins.domain.webapi.models.EndPoint
   */
 object EndPointModel extends DomainElementModel with KeyField with NameFieldSchema with DescriptionField {
 
-  val Path = Field(Str, ApiContract + "path", ModelDoc(ModelVocabularies.ApiContract, "path", "Path template for an endpoint"))
+  val Path =
+    Field(Str, ApiContract + "path", ModelDoc(ModelVocabularies.ApiContract, "path", "Path template for an endpoint"))
 
-  val Summary = Field(
-    Str,
-    Core + "summary",
-    ModelDoc(ModelVocabularies.Core,
-             "summary",
-             "Human readable short description of the endpoint"))
+  val Summary = Field(Str,
+                      Core + "summary",
+                      ModelDoc(ModelVocabularies.Core, "summary", "Human readable short description of the endpoint"))
 
   val Operations = Field(
     Array(OperationModel),
@@ -35,21 +33,24 @@ object EndPointModel extends DomainElementModel with KeyField with NameFieldSche
   val Parameters = Field(
     Array(ParameterModel),
     ApiContract + "parameter",
-    ModelDoc(ModelVocabularies.ApiContract, "parameter", "Additional data required or returned by an operation"))
+    ModelDoc(ModelVocabularies.ApiContract, "parameter", "Additional data required or returned by an operation")
+  )
 
   val Payloads = Field(
     Array(PayloadModel),
     ApiContract + "payload",
     ModelDoc(ModelVocabularies.ApiContract, "payload", "Main payload data required or returned by an operation"))
 
-  val Servers = Field(Array(ServerModel),
-                      ApiContract + "server",
-                      ModelDoc(ModelVocabularies.ApiContract,
-                               "servers",
-                               "Specific information about the server where the endpoint is accessible"))
+  val Servers = Field(
+    Array(ServerModel),
+    ApiContract + "server",
+    ModelDoc(ModelVocabularies.ApiContract,
+             "servers",
+             "Specific information about the server where the endpoint is accessible")
+  )
 
   val Security = Field(
-    Array(ParametrizedSecuritySchemeModel),
+    Array(SecurityRequirementModel),
     Namespace.Security + "security",
     ModelDoc(ModelVocabularies.Security, "security", "Security information associated to the endpoint")
   )

@@ -100,7 +100,7 @@ case class OAuth2Settings(override val fields: Fields, override val annotations:
 
   def withFlow(): OAuth2Flow = {
     val flow = OAuth2Flow()
-    add(OAuth2FlowModel.Flow, flow)
+    add(Flows, flow)
     flow
   }
 

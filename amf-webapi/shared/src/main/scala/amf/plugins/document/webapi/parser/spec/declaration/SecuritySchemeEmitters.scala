@@ -7,13 +7,8 @@ import amf.core.model.domain.DataNode
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.Vendor
-import amf.core.utils.Strings
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
@@ -21,10 +16,6 @@ import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.domain.webapi.annotations.OrphanOasExtension
-import amf.core.utils.AmfStrings
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YNode

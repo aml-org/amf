@@ -6,7 +6,7 @@ import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel._
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import org.yaml.model.YPart
 
 case class OAuth2Flow(fields: Fields, annotations: Annotations) extends DomainElement {

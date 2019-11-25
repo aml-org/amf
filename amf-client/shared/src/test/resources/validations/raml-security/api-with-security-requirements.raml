@@ -1,0 +1,21 @@
+#%RAML 1.0
+title: Prediction
+securitySchemes:
+  Oauth2:
+    type: OAuth 2.0
+    settings:
+      authorizationUri: 'https://https://oauth.net/2/'
+      accessTokenUri: ''
+      authorizationGrants:
+        - implicit
+      scopes:
+        - 'https://oauth.net/2.full_control'
+        - 'https://oauth.net/2.read_only'
+        - 'https://oauth.net/2.read_write'
+    description: Oauth 2.0 authentication
+/training:
+  post:
+    securedBy:
+      - Oauth2:
+          scopes:
+            - 'https://oauth.net/2.full_control'

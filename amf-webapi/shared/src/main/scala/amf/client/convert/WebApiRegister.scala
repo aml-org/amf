@@ -84,6 +84,9 @@ object WebApiRegister {
     platform.registerWrapper(webapi.metamodel.security.ParametrizedSecuritySchemeModel) {
       case s: webapi.models.security.ParametrizedSecurityScheme => ParametrizedSecurityScheme(s)
     }
+    platform.registerWrapper(webapi.metamodel.security.SecurityRequirementModel) {
+      case s: webapi.models.security.SecurityRequirement => SecurityRequirement(s)
+    }
     platform.registerWrapper(webapi.metamodel.security.SecuritySchemeModel) {
       case s: webapi.models.security.SecurityScheme => SecurityScheme(s)
     }

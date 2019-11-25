@@ -93,7 +93,7 @@ trait AccessibleOasDocumentEmitters {
               .map(f => result ++= operations(f, ordering, parameters.body.nonEmpty, references))
 
             fs.entry(EndPointModel.Security)
-              .map(f => result += ParametrizedSecuritiesSchemeEmitter("security".asOasExtension, f, ordering))
+              .map(f => result += SecurityRequirementsEmitter("security".asOasExtension, f, ordering))
 
             result ++= AnnotationsEmitter(endpoint, ordering).emitters
 
@@ -160,7 +160,7 @@ trait AccessibleOasDocumentEmitters {
                 result += ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
 
             fs.entry(OperationModel.Security)
-              .map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
+              .map(f => result += SecurityRequirementsEmitter("security", f, ordering))
 
             if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
               operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
@@ -374,7 +374,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
         .fold(result += EntryPartEmitter("paths", EmptyMapEmitter()))(f =>
           result += EndpointsEmitter("paths", f, ordering, references, orphanAnnotations))
 
-      fs.entry(WebApiModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
+      fs.entry(WebApiModel.Security).map(f => result += SecurityRequirementsEmitter("security", f, ordering))
 
       result ++= AnnotationsEmitter(api, ordering).emitters
 

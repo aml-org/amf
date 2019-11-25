@@ -8,7 +8,7 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme, Settings}
+import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme, SecurityRequirement, Settings}
 import amf.plugins.features.validation.CoreValidations
 
 class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
@@ -48,14 +48,18 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
         // I need to know if this is an empty array or if it's not defined.
         val opSecurity = field(operation, OperationModel.Security)
 
-        merge(endPointSecurity, opSecurity).foreach { schemes =>
-          schemes.foreach {
-            case s: ParametrizedSecurityScheme
-                if Option(s.settings).isDefined && Option(s.scheme).map(_.settings).isDefined =>
-              validateSettings(s.scheme.settings, s.settings)
+        merge(endPointSecurity, opSecurity).foreach { requirements =>
+          requirements.foreach {
+            case r: SecurityRequirement =>
+              r.schemes.foreach {
+                case s: ParametrizedSecurityScheme
+                  if Option(s.settings).isDefined && Option(s.scheme).map(_.settings).isDefined =>
+                  validateSettings(s.scheme.settings, s.settings)
+                case _ => // ignore
+              }
             case _ => // ignore
           }
-          if (schemes.nonEmpty) operation.setArray(OperationModel.Security, schemes)
+          if (requirements.nonEmpty) operation.setArray(OperationModel.Security, requirements)
 
         }
       }
@@ -64,13 +68,13 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
 
   /** Get and remove field from domain element */
   private def field(element: DomainElement, field: Field) = {
-    val result = element.fields.entry(field).map(_.array.values.map(v => v.asInstanceOf[ParametrizedSecurityScheme]))
+    val result = element.fields.entry(field).map(_.array.values.map(v => v.asInstanceOf[SecurityRequirement]))
     element.fields.removeField(field)
     result
   }
 
-  private def merge(root: Option[Seq[ParametrizedSecurityScheme]],
-                    ep: Option[Seq[ParametrizedSecurityScheme]]): Option[Seq[ParametrizedSecurityScheme]] =
+  private def merge(root: Option[Seq[SecurityRequirement]],
+                    ep: Option[Seq[SecurityRequirement]]): Option[Seq[SecurityRequirement]] =
     ep.orElse(root).filter(_.nonEmpty)
 
   override def resolve[T <: BaseUnit](model: T): T = {

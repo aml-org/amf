@@ -17,20 +17,20 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   @JSExportTopLevel("model.domain.Operation")
   def this() = this(InternalOperation())
 
-  def method: StrField                                 = _internal.method
-  override def name: StrField                          = _internal.name
-  def description: StrField                            = _internal.description
-  def deprecated: BoolField                            = _internal.deprecated
-  def summary: StrField                                = _internal.summary
-  def documentation: CreativeWork                      = _internal.documentation
-  def schemes: ClientList[StrField]                    = _internal.schemes.asClient
-  def accepts: ClientList[StrField]                    = _internal.accepts.asClient
-  def contentType: ClientList[StrField]                = _internal.contentType.asClient
-  def request: Request                                 = _internal.request
-  def responses: ClientList[Response]                  = _internal.responses.asClient
-  def security: ClientList[ParametrizedSecurityScheme] = _internal.security.asClient
-  def callbacks: ClientList[Callback]                  = _internal.callbacks.asClient
-  def servers: ClientList[Server]                      = _internal.servers.asClient
+  def method: StrField                          = _internal.method
+  override def name: StrField                   = _internal.name
+  def description: StrField                     = _internal.description
+  def deprecated: BoolField                     = _internal.deprecated
+  def summary: StrField                         = _internal.summary
+  def documentation: CreativeWork               = _internal.documentation
+  def schemes: ClientList[StrField]             = _internal.schemes.asClient
+  def accepts: ClientList[StrField]             = _internal.accepts.asClient
+  def contentType: ClientList[StrField]         = _internal.contentType.asClient
+  def request: Request                          = _internal.request
+  def responses: ClientList[Response]           = _internal.responses.asClient
+  def security: ClientList[SecurityRequirement] = _internal.security.asClient
+  def callbacks: ClientList[Callback]           = _internal.callbacks.asClient
+  def servers: ClientList[Server]               = _internal.servers.asClient
 
   /** Set method property of this Operation. */
   def withMethod(method: String): this.type = {
@@ -99,7 +99,7 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   }
 
   /** Set security property of this Operation. */
-  def withSecurity(security: ClientList[DomainElement]): this.type = {
+  def withSecurity(security: ClientList[SecurityRequirement]): this.type = {
     _internal.withSecurity(security.asInternal)
     this
   }

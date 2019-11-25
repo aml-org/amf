@@ -10,7 +10,7 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, Lazy, AmfStrings, TemplateUri}
+import amf.core.utils.{AmfStrings, IdCounter, Lazy, TemplateUri}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
@@ -31,7 +31,7 @@ import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations._
-import org.yaml.model.{YNode, _}
+import org.yaml.model.{YMapEntry, YNode, _}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -291,14 +291,15 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       entry => {
         entry.value.tagType match {
           case YType.Seq =>
+            val idCounter = new IdCounter()
             val securedBy =
               entry.value
                 .as[Seq[YNode]]
-                .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity).parse())
+                .map(s => OasSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
                 .collect { case Some(s) => s }
-
             api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-          case _ => // ignore
+          case _ =>
+            ctx.violation(InvalidSecurityRequirementsSeq, entry.value, "'security' must be an array of security requirement object")
         }
       }
     )
@@ -543,9 +544,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         "security".asOasExtension,
         entry => {
           // TODO check for empty array for resolution ?
+          val idCounter = new IdCounter()
           val securedBy = entry.value
             .as[Seq[YNode]]
-            .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
+            .map(s => OasSecurityRequirementParser(s, endpoint.withSecurity, idCounter).parse())
             .collect { case Some(s) => s }
 
           if (securedBy.nonEmpty)
@@ -893,10 +895,11 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key(
         "security",
         entry => {
+          val idCounter = new IdCounter()
           // TODO check for empty array for resolution ?
           val securedBy = entry.value
             .as[Seq[YNode]]
-            .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity).parse())
+            .map(s => OasSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
             .collect { case Some(s) => s }
 
           operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))

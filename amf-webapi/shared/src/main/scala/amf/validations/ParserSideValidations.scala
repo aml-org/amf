@@ -93,6 +93,21 @@ object ParserSideValidations extends Validations {
     "Invalid 'describedBy' type, map expected"
   )
 
+  val InvalidSecuritySchemeObject = validation(
+    "invalid-security-scheme-object",
+    "Invalid security scheme"
+  )
+
+  val InvalidSecurityRequirementObject = validation(
+    "invalid-security-requirement-object",
+    "Invalid security requirement object"
+  )
+
+  val InvalidSecurityRequirementsSeq = validation(
+    "invalid-security-requirements-sequence",
+    "'security' must be an array of security requirements object"
+  )
+
   val InvalidEndpointPath = validation(
     "invalid-endpoint-path",
     "Invalid endpoint path (invalid template uri)"

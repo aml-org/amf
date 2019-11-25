@@ -17,6 +17,7 @@ import amf.client.model.domain.{
   Parameter => ClientParameter,
   ParametrizedSecurityScheme => ClientParametrizedSecurityScheme,
   OAuth2Flow => ClientOAuth2Flow,
+  SecurityRequirement => ClientSecurityRequirement,
   Payload => ClientPayload,
   Request => ClientRequest,
   ResourceType => ClientResourceType,
@@ -60,6 +61,7 @@ trait WebApiBaseConverter
     with EncodingConverter
     with PayloadValidatorConverter
     with OAuth2FlowConverter
+    with SecurityRequirementConverter
 
 trait EndPointConverter extends PlatformSecrets {
 
@@ -198,6 +200,16 @@ trait OAuth2FlowConverter extends PlatformSecrets {
   implicit object OAuth2FlowMatcher extends BidirectionalMatcher[OAuth2Flow, ClientOAuth2Flow] {
     override def asClient(from: OAuth2Flow): ClientOAuth2Flow   = platform.wrap[ClientOAuth2Flow](from)
     override def asInternal(from: ClientOAuth2Flow): OAuth2Flow = from._internal
+  }
+}
+
+trait SecurityRequirementConverter extends PlatformSecrets {
+
+  implicit object SecurityRequirementMatcher
+      extends BidirectionalMatcher[SecurityRequirement, ClientSecurityRequirement] {
+    override def asClient(from: SecurityRequirement): ClientSecurityRequirement =
+      platform.wrap[ClientSecurityRequirement](from)
+    override def asInternal(from: ClientSecurityRequirement): SecurityRequirement = from._internal
   }
 }
 

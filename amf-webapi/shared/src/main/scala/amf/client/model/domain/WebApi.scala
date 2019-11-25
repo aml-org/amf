@@ -16,19 +16,19 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
   @JSExportTopLevel("model.domain.WebApi")
   def this() = this(InternalWebApi())
 
-  def name: StrField                                   = _internal.name
-  def description: StrField                            = _internal.description
-  def schemes: ClientList[StrField]                    = _internal.schemes.asClient
-  def endPoints: ClientList[EndPoint]                  = _internal.endPoints.asClient
-  def accepts: ClientList[StrField]                    = _internal.accepts.asClient
-  def contentType: ClientList[StrField]                = _internal.contentType.asClient
-  def version: StrField                                = _internal.version
-  def termsOfService: StrField                         = _internal.termsOfService
-  def provider: Organization                           = _internal.provider
-  def license: License                                 = _internal.license
-  def documentations: ClientList[CreativeWork]         = _internal.documentations.asClient
-  def servers: ClientList[Server]                      = _internal.servers.asClient
-  def security: ClientList[ParametrizedSecurityScheme] = _internal.security.asClient
+  def name: StrField                            = _internal.name
+  def description: StrField                     = _internal.description
+  def schemes: ClientList[StrField]             = _internal.schemes.asClient
+  def endPoints: ClientList[EndPoint]           = _internal.endPoints.asClient
+  def accepts: ClientList[StrField]             = _internal.accepts.asClient
+  def contentType: ClientList[StrField]         = _internal.contentType.asClient
+  def version: StrField                         = _internal.version
+  def termsOfService: StrField                  = _internal.termsOfService
+  def provider: Organization                    = _internal.provider
+  def license: License                          = _internal.license
+  def documentations: ClientList[CreativeWork]  = _internal.documentations.asClient
+  def servers: ClientList[Server]               = _internal.servers.asClient
+  def security: ClientList[SecurityRequirement] = _internal.security.asClient
 
   /** Set name property of this WebApi. */
   def withName(name: String): this.type = {
@@ -102,8 +102,8 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
     this
   }
 
-  /** Set security property of this WebApi using a list of ParametrizedSecurityScheme */
-  def withSecurity(security: ClientList[ParametrizedSecurityScheme]): this.type = {
+  /** Set security property of this WebApi using a list of SecurityRequirement */
+  def withSecurity(security: ClientList[SecurityRequirement]): this.type = {
     _internal.withSecurity(security.asInternal)
     this
   }

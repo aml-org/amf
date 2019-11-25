@@ -9,7 +9,7 @@ import amf.core.remote.Vendor
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.metamodel.WebApiModel.{License => WebApiLicense, _}
-import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
+import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import org.yaml.model.{YMap, YNode}
 
 /**
@@ -17,32 +17,32 @@ import org.yaml.model.{YMap, YNode}
   */
 case class WebApi(fields: Fields, annotations: Annotations) extends NamedDomainElement with ServerContainer {
 
-  def description: StrField                     = fields.field(Description)
-  def schemes: Seq[StrField]                    = fields.field(Schemes)
-  def accepts: Seq[StrField]                    = fields.field(Accepts)
-  def contentType: Seq[StrField]                = fields.field(ContentType)
-  def version: StrField                         = fields.field(Version)
-  def termsOfService: StrField                  = fields.field(TermsOfService)
-  def provider: Organization                    = fields.field(Provider)
-  def license: License                          = fields.field(WebApiLicense)
-  def documentations: Seq[CreativeWork]         = fields.field(Documentations)
-  def endPoints: Seq[EndPoint]                  = fields.field(EndPoints)
-  def servers: Seq[Server]                      = fields.field(Servers)
-  def security: Seq[ParametrizedSecurityScheme] = fields.field(Security)
-  def tags: Seq[Tag]                            = fields(Tags)
+  def description: StrField              = fields.field(Description)
+  def schemes: Seq[StrField]             = fields.field(Schemes)
+  def accepts: Seq[StrField]             = fields.field(Accepts)
+  def contentType: Seq[StrField]         = fields.field(ContentType)
+  def version: StrField                  = fields.field(Version)
+  def termsOfService: StrField           = fields.field(TermsOfService)
+  def provider: Organization             = fields.field(Provider)
+  def license: License                   = fields.field(WebApiLicense)
+  def documentations: Seq[CreativeWork]  = fields.field(Documentations)
+  def endPoints: Seq[EndPoint]           = fields.field(EndPoints)
+  def servers: Seq[Server]               = fields.field(Servers)
+  def security: Seq[SecurityRequirement] = fields.field(Security)
+  def tags: Seq[Tag]                     = fields(Tags)
 
-  def withDescription(description: String): this.type                    = set(Description, description)
-  def withSchemes(schemes: Seq[String]): this.type                       = set(Schemes, schemes)
-  def withEndPoints(endPoints: Seq[EndPoint]): this.type                 = setArray(EndPoints, endPoints)
-  def withAccepts(accepts: Seq[String]): this.type                       = set(Accepts, accepts)
-  def withContentType(contentType: Seq[String]): this.type               = set(ContentType, contentType)
-  def withVersion(version: String): this.type                            = set(Version, version)
-  def withTermsOfService(terms: String): this.type                       = set(TermsOfService, terms)
-  def withProvider(provider: Organization): this.type                    = set(Provider, provider)
-  def withLicense(license: License): this.type                           = set(WebApiLicense, license)
-  def withDocumentations(documentations: Seq[CreativeWork]): this.type   = setArray(Documentations, documentations)
-  def withServers(servers: Seq[Server]): this.type                       = setArray(Servers, servers)
-  def withSecurity(security: Seq[ParametrizedSecurityScheme]): this.type = setArray(Security, security)
+  def withDescription(description: String): this.type                  = set(Description, description)
+  def withSchemes(schemes: Seq[String]): this.type                     = set(Schemes, schemes)
+  def withEndPoints(endPoints: Seq[EndPoint]): this.type               = setArray(EndPoints, endPoints)
+  def withAccepts(accepts: Seq[String]): this.type                     = set(Accepts, accepts)
+  def withContentType(contentType: Seq[String]): this.type             = set(ContentType, contentType)
+  def withVersion(version: String): this.type                          = set(Version, version)
+  def withTermsOfService(terms: String): this.type                     = set(TermsOfService, terms)
+  def withProvider(provider: Organization): this.type                  = set(Provider, provider)
+  def withLicense(license: License): this.type                         = set(WebApiLicense, license)
+  def withDocumentations(documentations: Seq[CreativeWork]): this.type = setArray(Documentations, documentations)
+  def withServers(servers: Seq[Server]): this.type                     = setArray(Servers, servers)
+  def withSecurity(security: Seq[SecurityRequirement]): this.type      = setArray(Security, security)
 
   def withTags(tags: Seq[Tag]): this.type = setArray(Tags, tags)
 
@@ -62,8 +62,8 @@ case class WebApi(fields: Fields, annotations: Annotations) extends NamedDomainE
     result
   }
 
-  def withSecurity(name: String): ParametrizedSecurityScheme = {
-    val result = ParametrizedSecurityScheme().withName(name)
+  def withSecurity(name: String): SecurityRequirement = {
+    val result = SecurityRequirement().withName(name)
     add(Security, result)
     result
   }

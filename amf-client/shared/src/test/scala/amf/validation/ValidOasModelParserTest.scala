@@ -69,6 +69,10 @@ class ValidOasModelParserTest extends ValidModelTest {
     checkValid("../upanddown/oas3/one-subscription-multiple-callbacks.json", Oas30Profile)
   }
 
+  test("Security requirements") {
+    checkValid("oas-security/api-with-security-requirements.json", OasProfile)
+  }
+
   // Check http inner reference.
   ignore("Http with # reference") {
     checkValid("/http-with-hashtag/http-with-hashtag.json", OasProfile)

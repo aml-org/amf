@@ -123,8 +123,8 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       }
     )
 
-    val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(operation.withSecurity) _
-    map.key("securedBy", (OperationModel.Security in operation using SchemeParser).allowingSingleValue)
+    val RequirementParser = RamlSecurityRequirementParser.parse(operation.withSecurity) _
+    map.key("securedBy", (OperationModel.Security in operation using RequirementParser).allowingSingleValue)
 
     map.key("description", (OperationModel.Description in operation).allowingAnnotations)
 
