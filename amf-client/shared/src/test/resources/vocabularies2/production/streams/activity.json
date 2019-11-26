@@ -70,6 +70,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root"
@@ -96,6 +97,70 @@
     "http://a.ml/vocabularies/document#version": [
       {
         "@value": "2.0.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map/aliases-array/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "crm->http://crm.com/vocabularies/core#::crm.yaml"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map/lexical/element_2",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/core#name"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(4,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/core#version"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(4,0)-(6,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map/lexical/element_1",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(346,0)]"
+              }
+            ]
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document#references": [
@@ -136,6 +201,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PersonalValueType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonalValueType"
@@ -175,6 +241,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#GlobalParty/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#GlobalParty"
@@ -214,6 +281,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Country/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Country"
@@ -253,6 +321,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Hobby/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Hobby"
@@ -292,6 +361,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Ethnicity/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Ethnicity"
@@ -331,6 +401,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Occupation/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Occupation"
@@ -588,6 +659,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Individual/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Individual"
@@ -627,6 +699,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Religion/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Religion"
@@ -666,6 +739,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#IncomeRange/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#IncomeRange"
@@ -705,6 +779,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PersonLifeStage/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonLifeStage"
@@ -754,6 +829,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#CanonicalEntity/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#CanonicalEntity"
@@ -793,6 +869,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#LifeAttitudeType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#LifeAttitudeType"
@@ -832,6 +909,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#LifeStyleType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#LifeStyleType"
@@ -871,6 +949,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MilitaryStatus/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MilitaryStatus"
@@ -910,6 +989,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Language/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Language"
@@ -949,6 +1029,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Currency/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Currency"
@@ -988,6 +1069,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DietaryHabitType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DietaryHabitType"
@@ -1027,6 +1109,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DisabilityType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DisabilityType"
@@ -1066,6 +1149,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PartyNoMergeReason/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PartyNoMergeReason"
@@ -1105,6 +1189,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DoNotProcessReason/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoNotProcessReason"
@@ -1144,6 +1229,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#HeightUOM/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#HeightUOM"
@@ -1183,6 +1269,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Organization/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Organization"
@@ -1222,6 +1309,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#WeightUOM/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#WeightUOM"
@@ -1261,6 +1349,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Gender/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Gender"
@@ -1300,6 +1389,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Household/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Household"
@@ -1339,6 +1429,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PersonalityType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonalityType"
@@ -1378,6 +1469,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MaritalStatus/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MaritalStatus"
@@ -1434,6 +1526,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Party/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Party"
@@ -1479,6 +1572,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MainDietaryHabitType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MainDietaryHabitType"
@@ -1524,6 +1618,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#NameSuffix/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#NameSuffix"
@@ -1569,6 +1664,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#YearlyIncome/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#YearlyIncome"
@@ -1614,6 +1710,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Id/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Id"
@@ -1659,6 +1756,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MiddleName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MiddleName"
@@ -1704,6 +1802,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DeletionCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DeletionCode"
@@ -1749,6 +1848,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#GenderCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#GenderCode"
@@ -1794,6 +1894,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#YearlyIncomeCurrencyCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#YearlyIncomeCurrencyCode"
@@ -1839,6 +1940,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#WebSiteURL/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#WebSiteURL"
@@ -1884,6 +1986,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MainDisabilityType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MainDisabilityType"
@@ -1929,6 +2032,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PrimaryHouseholdId/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PrimaryHouseholdId"
@@ -1974,6 +2078,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#NetWorth/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#NetWorth"
@@ -2019,6 +2124,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#HasOptedOutProfiling/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#HasOptedOutProfiling"
@@ -2064,6 +2170,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#NoMergeReasonCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#NoMergeReasonCode"
@@ -2109,6 +2216,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#ReligionCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#ReligionCode"
@@ -2154,6 +2262,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MainPersonalityType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MainPersonalityType"
@@ -2199,6 +2308,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#OccupationTypeCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#OccupationTypeCode"
@@ -2244,6 +2354,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#LastKnownLocation/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#LastKnownLocation"
@@ -2289,6 +2400,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Occupation/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Occupation"
@@ -2334,6 +2446,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#FirstName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#FirstName"
@@ -2379,6 +2492,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MaritalStatusCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MaritalStatusCode"
@@ -2424,6 +2538,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#HasOptedOutTracking/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#HasOptedOutTracking"
@@ -2469,6 +2584,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#ResidenceCaptureMethodCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#ResidenceCaptureMethodCode"
@@ -2514,6 +2630,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#EthnicityCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#EthnicityCode"
@@ -2559,6 +2676,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DoNotTrackLocationUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoNotTrackLocationUpdateDate"
@@ -2604,6 +2722,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PrimaryHobbyCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PrimaryHobbyCode"
@@ -2649,6 +2768,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#SourceSystemId/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#SourceSystemId"
@@ -2694,6 +2814,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PersonName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonName"
@@ -2739,6 +2860,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#BirthDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#BirthDate"
@@ -2784,6 +2906,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#ConsumerCreditScoreProviderName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#ConsumerCreditScoreProviderName"
@@ -2829,6 +2952,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DoNotProcessFromUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoNotProcessFromUpdateDate"
@@ -2874,6 +2998,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Salutation/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Salutation"
@@ -2919,6 +3044,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#OfficialName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#OfficialName"
@@ -2964,6 +3090,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DeathDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DeathDate"
@@ -3009,6 +3136,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DoNotProcessReasonCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoNotProcessReasonCode"
@@ -3054,6 +3182,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MailingName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MailingName"
@@ -3099,6 +3228,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PrimaryLanguageCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PrimaryLanguageCode"
@@ -3144,6 +3274,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PartyType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PartyType"
@@ -3189,6 +3320,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PersonHeight/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonHeight"
@@ -3234,6 +3366,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PersonWeightUnitofMeasure/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonWeightUnitofMeasure"
@@ -3279,6 +3412,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#HasOptedOutSolicit/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#HasOptedOutSolicit"
@@ -3324,6 +3458,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#ConsumerCreditScore/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#ConsumerCreditScore"
@@ -3369,6 +3504,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DoNotTrackUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoNotTrackUpdateDate"
@@ -3414,6 +3550,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#ChildrenCount/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#ChildrenCount"
@@ -3459,6 +3596,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MainPersonalValueType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MainPersonalValueType"
@@ -3504,6 +3642,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DoNotProfileFromUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoNotProfileFromUpdateDate"
@@ -3549,6 +3688,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PersonHeightUnitofMeasure/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonHeightUnitofMeasure"
@@ -3594,6 +3734,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MilitaryStatusCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MilitaryStatusCode"
@@ -3639,6 +3780,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#InfluencerRating/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#InfluencerRating"
@@ -3684,6 +3826,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#SecondFamilyName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#SecondFamilyName"
@@ -3729,6 +3872,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#HasOptedOutGeoTracking/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#HasOptedOutGeoTracking"
@@ -3774,6 +3918,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#BirthPlace/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#BirthPlace"
@@ -3819,6 +3964,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#CountryofOrigin/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#CountryofOrigin"
@@ -3864,6 +4010,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MainLifeAttitudeType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MainLifeAttitudeType"
@@ -3909,6 +4056,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#ResidenceCountryCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#ResidenceCountryCode"
@@ -3954,6 +4102,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#IsHomeOwner/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#IsHomeOwner"
@@ -3999,6 +4148,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#ShouldForget/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#ShouldForget"
@@ -4044,6 +4194,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#NickName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#NickName"
@@ -4089,6 +4240,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#FamilyName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#FamilyName"
@@ -4134,6 +4286,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#OrderingName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#OrderingName"
@@ -4179,6 +4332,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#SourceRecordId/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#SourceRecordId"
@@ -4224,6 +4378,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#OverAgeNumber/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#OverAgeNumber"
@@ -4269,6 +4424,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#SendIndividualData/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#SendIndividualData"
@@ -4314,6 +4470,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#GlobalPartyId/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#GlobalPartyId"
@@ -4359,6 +4516,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DoExtractMyDataUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoExtractMyDataUpdateDate"
@@ -4404,6 +4562,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DoNotMarketFromUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoNotMarketFromUpdateDate"
@@ -4449,6 +4608,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#YearlyIncomeRangeCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#YearlyIncomeRangeCode"
@@ -4494,6 +4654,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DoForgetMeFromUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoForgetMeFromUpdateDate"
@@ -4539,6 +4700,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PhotoURL/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PhotoURL"
@@ -4584,6 +4746,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#HasOptedOutProcessing/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#HasOptedOutProcessing"
@@ -4629,6 +4792,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PrimaryCitizenshipCountryCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PrimaryCitizenshipCountryCode"
@@ -4674,6 +4838,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PersonWeight/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonWeight"
@@ -4719,6 +4884,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#PersonLifeStageCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonLifeStageCode"
@@ -4764,6 +4930,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#ConvictionsCount/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#ConvictionsCount"
@@ -4809,6 +4976,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MilitaryServiceFlag/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MilitaryServiceFlag"
@@ -4854,6 +5022,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#MainLifeStyleType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MainLifeStyleType"
@@ -4899,6 +5068,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#DeathPlace/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DeathPlace"
@@ -4944,6 +5114,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#CanStorePIIElsewhere/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#CanStorePIIElsewhere"
@@ -4983,6 +5154,20 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/crm.yaml#/source-map/lexical/element_2",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,0)-(5,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/crm.yaml#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/meta#base"
@@ -4995,6 +5180,7 @@
                 ]
               },
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/crm.yaml#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/crm.yaml"
@@ -5005,78 +5191,6 @@
                     "@value": "[(3,0)-(568,0)]"
                   }
                 ]
-              },
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/core#name"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(3,0)-(5,0)]"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "http://a.ml/vocabularies/document-source-maps#sources": [
-      {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map",
-        "@type": [
-          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-        ],
-        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
-          {
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "crm->http://crm.com/vocabularies/core#::crm.yaml"
-              }
-            ]
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#lexical": [
-          {
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "http://a.ml/vocabularies/core#version"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "[(4,0)-(6,0)]"
-              }
-            ]
-          },
-          {
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "[(3,0)-(346,0)]"
-              }
-            ]
-          },
-          {
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "http://a.ml/vocabularies/core#name"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "[(3,0)-(4,0)]"
               }
             ]
           }
@@ -5131,6 +5245,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure"
@@ -5175,6 +5290,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalValueType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalValueType"
@@ -5219,6 +5335,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHouseholdId/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHouseholdId"
@@ -5263,6 +5380,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeight/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeight"
@@ -5307,6 +5425,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PhotoURL/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PhotoURL"
@@ -5351,6 +5470,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDisabilityType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDisabilityType"
@@ -5395,6 +5515,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SendIndividualData/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SendIndividualData"
@@ -5439,6 +5560,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NetWorth/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NetWorth"
@@ -5483,6 +5605,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutGeoTracking/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutGeoTracking"
@@ -5527,6 +5650,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoExtractMyDataUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoExtractMyDataUpdateDate"
@@ -5571,6 +5695,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/EthnicityCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/EthnicityCode"
@@ -5615,6 +5740,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHobbyCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHobbyCode"
@@ -5659,6 +5785,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FirstName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FirstName"
@@ -5703,6 +5830,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CanStorePIIElsewhere/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CanStorePIIElsewhere"
@@ -5747,6 +5875,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessFromUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessFromUpdateDate"
@@ -5791,6 +5920,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/IsHomeOwner/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/IsHomeOwner"
@@ -5835,6 +5965,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryServiceFlag/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryServiceFlag"
@@ -5879,6 +6010,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NickName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NickName"
@@ -5923,6 +6055,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackLocationUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackLocationUpdateDate"
@@ -5967,6 +6100,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessReasonCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessReasonCode"
@@ -6011,6 +6145,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OfficialName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OfficialName"
@@ -6055,6 +6190,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryStatusCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryStatusCode"
@@ -6099,6 +6235,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Occupation/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Occupation"
@@ -6143,6 +6280,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MailingName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MailingName"
@@ -6187,6 +6325,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathDate"
@@ -6231,6 +6370,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutSolicit/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutSolicit"
@@ -6275,6 +6415,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonLifeStageCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonLifeStageCode"
@@ -6319,6 +6460,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/LastKnownLocation/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/LastKnownLocation"
@@ -6363,6 +6505,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotMarketFromUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotMarketFromUpdateDate"
@@ -6407,6 +6550,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCountryCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCountryCode"
@@ -6451,6 +6595,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryCitizenshipCountryCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryCitizenshipCountryCode"
@@ -6495,6 +6640,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/InfluencerRating/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/InfluencerRating"
@@ -6539,6 +6685,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SecondFamilyName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SecondFamilyName"
@@ -6583,6 +6730,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScoreProviderName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScoreProviderName"
@@ -6627,6 +6775,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OrderingName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OrderingName"
@@ -6671,6 +6820,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NameSuffix/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NameSuffix"
@@ -6715,6 +6865,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/GenderCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/GenderCode"
@@ -6759,6 +6910,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutTracking/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutTracking"
@@ -6803,6 +6955,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MiddleName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MiddleName"
@@ -6847,6 +7000,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/WebSiteURL/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/WebSiteURL"
@@ -6891,6 +7045,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeightUnitofMeasure/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeightUnitofMeasure"
@@ -6935,6 +7090,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalityType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalityType"
@@ -6979,6 +7135,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthPlace/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthPlace"
@@ -7023,6 +7180,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProfileFromUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProfileFromUpdateDate"
@@ -7067,6 +7225,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathPlace/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathPlace"
@@ -7111,6 +7270,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ReligionCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ReligionCode"
@@ -7155,6 +7315,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OccupationTypeCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OccupationTypeCode"
@@ -7199,6 +7360,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ShouldForget/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ShouldForget"
@@ -7243,6 +7405,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeight/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeight"
@@ -7287,6 +7450,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeletionCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeletionCode"
@@ -7331,6 +7495,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCaptureMethodCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCaptureMethodCode"
@@ -7375,6 +7540,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncome/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncome"
@@ -7419,6 +7585,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConvictionsCount/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConvictionsCount"
@@ -7463,6 +7630,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MaritalStatusCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MaritalStatusCode"
@@ -7507,6 +7675,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeCurrencyCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeCurrencyCode"
@@ -7551,6 +7720,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Salutation/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Salutation"
@@ -7595,6 +7765,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoForgetMeFromUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoForgetMeFromUpdateDate"
@@ -7639,6 +7810,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeRangeCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeRangeCode"
@@ -7683,6 +7855,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProcessing/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProcessing"
@@ -7727,6 +7900,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeStyleType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeStyleType"
@@ -7771,6 +7945,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FamilyName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FamilyName"
@@ -7815,6 +7990,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDietaryHabitType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDietaryHabitType"
@@ -7859,6 +8035,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeAttitudeType/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeAttitudeType"
@@ -7903,6 +8080,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryLanguageCode/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryLanguageCode"
@@ -7947,6 +8125,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackUpdateDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackUpdateDate"
@@ -7991,6 +8170,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonName/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonName"
@@ -8035,6 +8215,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthDate/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthDate"
@@ -8079,6 +8260,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CountryofOrigin/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CountryofOrigin"
@@ -8123,6 +8305,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OverAgeNumber/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OverAgeNumber"
@@ -8167,6 +8350,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScore/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScore"
@@ -8211,6 +8395,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ChildrenCount/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ChildrenCount"
@@ -8255,6 +8440,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProfiling/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProfiling"
@@ -8279,6 +8465,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode"
@@ -8346,6 +8533,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/timestamp/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/timestamp"
@@ -8401,6 +8589,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor"
@@ -8456,6 +8645,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object"
@@ -8480,6 +8670,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode"
@@ -8547,6 +8738,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/timestamp/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/timestamp"
@@ -8602,6 +8794,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor"
@@ -8657,6 +8850,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object"
@@ -8681,6 +8875,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode"
@@ -8748,6 +8943,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/timestamp/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/timestamp"
@@ -8803,6 +8999,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor"
@@ -8858,6 +9055,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object"
@@ -8882,6 +9080,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode"
@@ -8944,6 +9143,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/prev/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/prev"
@@ -8988,6 +9188,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/count/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/count"
@@ -9032,6 +9233,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/next/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/next"
@@ -9107,6 +9309,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items"
@@ -9131,6 +9334,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode"
@@ -9199,6 +9403,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added"
@@ -9249,6 +9454,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed"
@@ -9298,6 +9504,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/id/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/id"
@@ -9327,6 +9534,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode"
@@ -9394,6 +9602,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/property/id/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/property/id"
@@ -9423,6 +9632,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode"
@@ -9490,6 +9700,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/property/id/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/property/id"
@@ -9519,6 +9730,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode"

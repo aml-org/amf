@@ -36,6 +36,11 @@
         "@value": "2.0.0"
       }
     ],
+    "smaps": {
+      "aliases-array": {
+        "": "lib->amf://id#1::lib.raml"
+      }
+    },
     "doc:references": [
       {
         "@id": "#1",
@@ -44,28 +49,102 @@
           "doc:Unit"
         ],
         "doc:declares": [
-          [
-            {
-              "@id": "#2/linked_3",
-              "@type": [
-                "shacl:NodeShape",
-                "raml-shapes:AnyShape",
-                "shacl:Shape",
-                "raml-shapes:Shape",
-                "doc:DomainElement"
-              ],
-              "doc:link-target": [
-                {
-                  "@id": "#2"
+          {
+            "@id": "#2",
+            "@type": [
+              "shacl:NodeShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:closed": [
+              {
+                "@value": false
+              }
+            ],
+            "shacl:property": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#libProp"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "libProp"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#4": "[(6,6)-(6,21)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "libProp"
+                  }
+                ],
+                "smaps": {
+                  "inheritance-provenance": {
+                    "#3": "amf://id#2"
+                  },
+                  "lexical": {
+                    "#3": "[(6,6)-(6,21)]"
+                  }
                 }
-              ],
-              "doc:link-label": [
-                {
-                  "@value": "LibType"
-                }
-              ]
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "LibType"
+              }
+            ],
+            "smaps": {
+              "resolved-link-target": {
+                "#2": "amf://id#2"
+              },
+              "declared-element": {
+                "#2": ""
+              },
+              "lexical": {
+                "shacl:name": "[(4,2)-(4,9)]",
+                "#2": "[(4,2)-(6,21)]"
+              },
+              "resolved-link": {
+                "#2": "amf://id#5"
+              }
             }
-          ]
+          }
         ],
         "doc:version": [
           {
@@ -88,11 +167,6 @@
         }
       }
     ],
-    "smaps": {
-      "aliases-array": {
-        "": "lib->amf://id#1::lib.raml"
-      }
-    },
     "doc:declares": [
       {
         "@id": "#6",
@@ -187,102 +261,6 @@
           },
           "declared-element": {
             "#6": ""
-          }
-        }
-      },
-      {
-        "@id": "#2",
-        "@type": [
-          "shacl:NodeShape",
-          "raml-shapes:AnyShape",
-          "shacl:Shape",
-          "raml-shapes:Shape",
-          "doc:DomainElement"
-        ],
-        "shacl:closed": [
-          {
-            "@value": false
-          }
-        ],
-        "shacl:property": [
-          {
-            "@id": "#3",
-            "@type": [
-              "shacl:PropertyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "shacl:path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#libProp"
-              }
-            ],
-            "raml-shapes:range": [
-              {
-                "@id": "#4",
-                "@type": [
-                  "raml-shapes:ScalarShape",
-                  "raml-shapes:AnyShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "libProp"
-                  }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#4": "[(6,6)-(6,21)]"
-                  }
-                }
-              }
-            ],
-            "shacl:minCount": [
-              {
-                "@value": 1
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "libProp"
-              }
-            ],
-            "smaps": {
-              "inheritance-provenance": {
-                "#3": "amf://id#2"
-              },
-              "lexical": {
-                "#3": "[(6,6)-(6,21)]"
-              }
-            }
-          }
-        ],
-        "shacl:name": [
-          {
-            "@value": "LibType"
-          }
-        ],
-        "smaps": {
-          "resolved-link-target": {
-            "#2": "amf://id#2"
-          },
-          "declared-element": {
-            "#2": ""
-          },
-          "lexical": {
-            "shacl:name": "[(4,2)-(4,9)]",
-            "#2": "[(4,2)-(6,21)]"
-          },
-          "resolved-link": {
-            "#2": "amf://id#5"
           }
         }
       }

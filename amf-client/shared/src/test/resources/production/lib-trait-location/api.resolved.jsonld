@@ -312,6 +312,11 @@
         "@value": "2.0.0"
       }
     ],
+    "smaps": {
+      "aliases-array": {
+        "": "lib->amf://id#1::lib.raml"
+      }
+    },
     "doc:references": [
       {
         "@id": "#1",
@@ -456,11 +461,6 @@
         }
       }
     ],
-    "smaps": {
-      "aliases-array": {
-        "": "lib->amf://id#1::lib.raml"
-      }
-    },
     "@context": {
       "@base": "amf://id",
       "shacl": "http://www.w3.org/ns/shacl#",

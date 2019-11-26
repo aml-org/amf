@@ -145,7 +145,7 @@
         ],
         "raml-shapes:items": [
           {
-            "@id": "#1/linked_7",
+            "@id": "#1/link--2056959564",
             "@type": [
               "shacl:NodeShape",
               "raml-shapes:AnyShape",
@@ -202,50 +202,46 @@
           "doc:DomainElement"
         ],
         "raml-shapes:anyOf": [
-          [
-            {
-              "@id": "#1/linked_8",
-              "@type": [
-                "shacl:NodeShape",
-                "raml-shapes:AnyShape",
-                "shacl:Shape",
-                "raml-shapes:Shape",
-                "doc:DomainElement"
-              ],
-              "doc:link-target": [
-                {
-                  "@id": "#1"
-                }
-              ],
-              "doc:link-label": [
-                {
-                  "@value": "user"
-                }
-              ]
-            }
-          ],
-          [
-            {
-              "@id": "#7/linked_1",
-              "@type": [
-                "raml-shapes:ArrayShape",
-                "raml-shapes:AnyShape",
-                "shacl:Shape",
-                "raml-shapes:Shape",
-                "doc:DomainElement"
-              ],
-              "doc:link-target": [
-                {
-                  "@id": "#7"
-                }
-              ],
-              "doc:link-label": [
-                {
-                  "@value": "users"
-                }
-              ]
-            }
-          ]
+          {
+            "@id": "#1/link--2056959564",
+            "@type": [
+              "shacl:NodeShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "doc:link-target": [
+              {
+                "@id": "#1"
+              }
+            ],
+            "doc:link-label": [
+              {
+                "@value": "user"
+              }
+            ]
+          },
+          {
+            "@id": "#7/link-830537977",
+            "@type": [
+              "raml-shapes:ArrayShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "doc:link-target": [
+              {
+                "@id": "#7"
+              }
+            ],
+            "doc:link-label": [
+              {
+                "@value": "users"
+              }
+            ]
+          }
         ],
         "shacl:name": [
           {
