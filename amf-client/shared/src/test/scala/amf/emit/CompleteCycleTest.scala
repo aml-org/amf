@@ -694,12 +694,16 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("nil-example.raml.raml", "nil-example.raml.raml", RamlYamlHint, Raml)
   }
 
-  test("Security requirements OAS") {
+  test("Security requirement OAS to OAS") {
+    cycle("api-with-security-requirement.json", "api-with-security-requirement.json", OasJsonHint, Oas20, validationsPath + "oas-security/")
+  }
+
+  test("Security requirements OAS to OAS") {
     cycle("api-with-security-requirements.json", "api-with-security-requirements.json", OasJsonHint, Oas20, validationsPath + "oas-security/")
   }
 
-  test("Security requirements RAML") {
-    cycle("api-with-security-requirements.raml", "api-with-security-requirements.raml", RamlYamlHint, Raml10, validationsPath + "raml-security/")
+  test("Security requirements OAS to JSONLD") {
+    cycle("api-with-security-requirements.json", "api-with-security-requirements.jsonld", OasJsonHint, Amf, validationsPath + "oas-security/")
   }
 
   /**

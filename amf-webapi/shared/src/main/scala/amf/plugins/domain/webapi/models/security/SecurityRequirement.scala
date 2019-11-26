@@ -23,6 +23,12 @@ case class SecurityRequirement(fields: Fields, annotations: Annotations) extends
     scheme
   }
 
+  def withScheme(name: String): ParametrizedSecurityScheme = {
+    val scheme = ParametrizedSecurityScheme().withName(name)
+    add(Schemes, scheme)
+    scheme
+  }
+
   override def meta: Obj = SecurityRequirementModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */

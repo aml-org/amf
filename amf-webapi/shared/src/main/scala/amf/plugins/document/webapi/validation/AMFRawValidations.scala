@@ -1786,7 +1786,7 @@ object AMFRawValidations {
       Oas30.name,
       "Domain",
       "security:OAuth2Settings",
-      "security:flow",
+      "security:flows",
       "PropertyShape",
       "sh:path",
       "sh:minCount",

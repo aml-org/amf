@@ -46,41 +46,72 @@
                 ],
                 "http://a.ml/vocabularies/security#security": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/null",
+                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/default-requirement",
                     "@type": [
-                      "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
+                      "http://a.ml/vocabularies/security#SecurityRequirement",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/security#schemes": [
                       {
-                        "@value": "null"
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/default-requirement/null",
+                        "@type": [
+                          "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#name": [
+                          {
+                            "@value": "null"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/default-requirement/null/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#null-security": [
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/default-requirement/null"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": ""
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/default-requirement/null"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(6,8)-(6,12)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/null/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/default-requirement/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#null-security": [
-                          {
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/null"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": ""
-                              }
-                            ]
-                          }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/null"
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/null-secured-by/api.raml#/web-api/end-points/%2Fusers/get/default-requirement"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [

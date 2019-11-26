@@ -38,6 +38,7 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
     CustomDomainPropertyModel,
     DomainExtensionModel,
     ParametrizedSecuritySchemeModel,
+    SecurityRequirementModel,
     ScopeModel,
     SecuritySchemeModel,
     SettingsModel,
