@@ -244,4 +244,31 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test cached library with included trait") {
+
+    val path      = "file://amf-client/shared/src/test/resources/cache/lib-with-trait/"
+    val libPath   = path + "lib.raml"
+    val traitPath = path + "trait.raml"
+    val mainPath  = path + "api.raml"
+
+    for {
+      _               <- AMF.init().asFuture
+      library         <- new RamlParser().parseFileAsync(libPath).asFuture
+      libraryResolved <- Future(new Raml10Resolver().resolve(library, ResolutionPipeline.EDITING_PIPELINE))
+      traitType       <- new RamlParser().parseFileAsync(traitPath).asFuture
+      traitResolved   <- Future(new Raml10Resolver().resolve(traitType, ResolutionPipeline.EDITING_PIPELINE))
+      environment <- {
+        val references = Seq(new CachedReference(libPath, libraryResolved, resolved = false),
+                             new CachedReference(traitPath, traitResolved, resolved = false))
+        Future.successful(
+          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+        )
+      }
+      root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
+      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
 }
