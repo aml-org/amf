@@ -184,6 +184,7 @@ object Raml08Plugin extends RamlPlugin {
     pipelineId match {
       case ResolutionPipeline.DEFAULT_PIPELINE => new Raml08ResolutionPipeline(errorHandler).resolve(unit)
       case ResolutionPipeline.EDITING_PIPELINE => new Raml08EditingPipeline(errorHandler).resolve(unit)
+      case ResolutionPipeline.CACHE_PIPELINE   => new Raml08EditingPipeline(errorHandler, false).resolve(unit)
       case _                                   => super.resolve(unit, errorHandler, pipelineId)
     }
   }
@@ -252,7 +253,8 @@ object Raml10Plugin extends RamlPlugin {
     case ResolutionPipeline.EDITING_PIPELINE => new Raml10EditingPipeline(errorHandler).resolve(unit)
     case ResolutionPipeline.COMPATIBILITY_PIPELINE =>
       new CompatibilityPipeline(errorHandler, RamlProfile).resolve(unit)
-    case _ => super.resolve(unit, errorHandler, pipelineId)
+    case ResolutionPipeline.CACHE_PIPELINE => new Raml10EditingPipeline(errorHandler, false).resolve(unit)
+    case _                                 => super.resolve(unit, errorHandler, pipelineId)
   }
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
