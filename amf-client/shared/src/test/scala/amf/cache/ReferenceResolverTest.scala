@@ -271,4 +271,27 @@ trait ReferenceResolverTest extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test cached library with spaces at name (encode)") {
+
+    val path     = "file://amf-client/shared/src/test/resources/cache/ref-with-spaces/"
+    val refPath  = path + "name spaced.raml"
+    val mainPath = path + "api.raml"
+
+    for {
+      _               <- AMF.init().asFuture
+      library         <- new RamlParser().parseFileAsync(refPath).asFuture
+      libraryResolved <- Future(new Raml10Resolver().resolve(library, ResolutionPipeline.EDITING_PIPELINE))
+      environment <- {
+        val references = Seq(new CachedReference(refPath, libraryResolved, resolved = false))
+        Future.successful(
+          DefaultEnvironment().withResolver(CustomReferenceResolver(references).asInstanceOf[ClientReference])
+        )
+      }
+      root   <- new RamlParser(environment).parseFileAsync(mainPath).asFuture
+      report <- AMF.validate(root, RamlProfile, RamlProfile.messageStyle).asFuture
+    } yield {
+      assert(report.conforms)
+    }
+  }
+
 }
