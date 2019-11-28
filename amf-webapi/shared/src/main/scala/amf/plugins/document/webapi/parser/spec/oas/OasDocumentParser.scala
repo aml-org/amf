@@ -452,7 +452,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       * names are considered identical.
       */
     private def identicalPaths(first: String, second: String): Boolean = {
-      def stripPathParams(s: String): String = s.replaceAll("\\{.*?\\}", "");
+      def stripPathParams(s: String): String = {
+        val trimmed = if (s.endsWith("/")) s.init else s
+        trimmed.replaceAll("\\{.*?\\}", "")
+      }
       if (ctx.syntax == Oas3Syntax) stripPathParams(first) == stripPathParams(second)
       else first == second
     }
