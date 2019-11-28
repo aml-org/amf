@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.references
 
-import amf.core.annotations.SourceAST
+import amf.core.annotations.{ReferenceTargets, SourceAST}
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
 import amf.core.parser._
@@ -199,15 +199,23 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
 
                 resolved.map(res => {
                   reference.unit.addReference(res.unit)
-                  r.refs.foreach { refContainer =>
-                    refContainer.node match {
-                      case mut: MutRef =>
-                        res.unit.references.foreach(u => ctx.addSonRef(u))
-                        mut.target = res.ast
-                      case other =>
-                        ctx.violation(InvalidFragmentType, "", "Cannot inline a fragment in a not mutable node", other)
-                    }
-                  // not meaning, only for collect all futures, not matter the type
+                  r.refs.foreach {
+                    refContainer =>
+                      reference.unit.add(
+                        ReferenceTargets(res.unit.location().getOrElse(res.unit.id),
+                                         refContainer.node.location.sourceName,
+                                         amf.core.parser.Range(refContainer.node.location.inputRange)))
+                      refContainer.node match {
+                        case mut: MutRef =>
+                          res.unit.references.foreach(u => ctx.addSonRef(u))
+                          mut.target = res.ast
+                        case other =>
+                          ctx.violation(InvalidFragmentType,
+                                        "",
+                                        "Cannot inline a fragment in a not mutable node",
+                                        other)
+                      }
+                    // not meaning, only for collect all futures, not matter the type
                   }
                 })
               case ReferenceResolutionResult(Some(_), _) => Future(Nil)
