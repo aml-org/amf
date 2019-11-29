@@ -1772,12 +1772,12 @@ object AMFRawValidations {
     AMFValidation(
       Oas30.name,
       "Domain",
-      "security:OpenIdConnectSettings",
-      "security:openIdConnectUrl",
+      "security:SecurityScheme",
+      "security:settings",
       "PropertyShape",
       "sh:path",
-      "sh:minCount",
-      "1",
+      "raml-shapes:requiredOpenIdConnectUrl",
+      "0",
       "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
       "'openIdConnectUrl' field is mandatory in openIdConnect security scheme",
       "Violation"
@@ -1785,12 +1785,12 @@ object AMFRawValidations {
     AMFValidation(
       Oas30.name,
       "Domain",
-      "security:OAuth2Settings",
-      "security:flow",
+      "security:SecurityScheme",
+      "security:settings",
       "PropertyShape",
       "sh:path",
-      "sh:minCount",
-      "1",
+      "raml-shapes:requiredFlowsInOAuth2",
+      "0",
       "'flows' field is mandatory in OAuth2 security scheme",
       "'flows' field is mandatory in OAuth2 security scheme",
       "Violation"

@@ -37,18 +37,18 @@ Level: Violation
   Position: Some(LexicalInformation([(16,28)-(18,7)]))
   Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
-- Source: http://a.ml/vocabularies/amf/parser#OpenIdConnectSettings-openIdConnectUrl-minCount
+- Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredOpenIdConnectUrl
   Message: 'openIdConnectUrl' field is mandatory in openIdConnect security scheme
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-openIdConnectType/settings/open-id-connect
-  Property: http://a.ml/vocabularies/security#openIdConnectUrl
-  Position: Some(LexicalInformation([(19,35)-(21,7)]))
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-openIdConnectType
+  Property: 
+  Position: Some(LexicalInformation([(19,6)-(21,7)]))
   Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json
 
-- Source: http://a.ml/vocabularies/amf/parser#OAuth2Settings-flow-minCount
+- Source: http://a.ml/vocabularies/amf/parser#SecurityScheme-settings-requiredFlowsInOAuth2
   Message: 'flows' field is mandatory in OAuth2 security scheme
   Level: Violation
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-oauth2Type/settings/oauth2
-  Property: http://a.ml/vocabularies/security#flow
-  Position: Some(LexicalInformation([(22,28)-(24,7)]))
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json#/declarations/securitySchemes/invalid-oauth2Type
+  Property: 
+  Position: Some(LexicalInformation([(22,6)-(24,7)]))
   Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-security-schemes.json

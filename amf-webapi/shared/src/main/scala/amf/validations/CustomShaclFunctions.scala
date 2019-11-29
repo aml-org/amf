@@ -8,7 +8,13 @@ import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.utils.RegexConverter
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.{FileShape, ScalarShape}
+import amf.plugins.domain.webapi.metamodel.security.{
+  OAuth2SettingsModel,
+  OpenIdConnectSettingsModel,
+  SecuritySchemeModel
+}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, WebApiModel}
+import amf.plugins.domain.webapi.models.security.{OAuth2Settings, OpenIdConnectSettings}
 
 object CustomShaclFunctions {
 
@@ -145,6 +151,20 @@ object CustomShaclFunctions {
         _ <- element.fields.getValueAsOption(ExampleModel.ExternalValue)
       } yield {
         violation(None)
+      }
+    }),
+    "requiredOpenIdConnectUrl" -> ((element, violation) => {
+      element.fields.getValueAsOption(SecuritySchemeModel.Settings).map(_.value) foreach {
+        case OpenIdConnectSettings(fields, _) =>
+          if (!fields.exists(OpenIdConnectSettingsModel.Url)) violation(None)
+        case _ =>
+      }
+    }),
+    "requiredFlowsInOAuth2" -> ((element, violation) => {
+      element.fields.getValueAsOption(SecuritySchemeModel.Settings).map(_.value) foreach {
+        case OAuth2Settings(fields, _) =>
+          if (!fields.exists(OAuth2SettingsModel.Flow)) violation(None)
+        case _ =>
       }
     })
   )

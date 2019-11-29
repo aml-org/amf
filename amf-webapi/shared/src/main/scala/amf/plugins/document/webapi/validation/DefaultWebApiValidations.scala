@@ -326,6 +326,18 @@ object JsCustomValidations {
         |  var value = shape["doc:structuredValue"];
         |  return !(externalValue != null && value != null);
         |}
+      """.stripMargin,
+    "requiredFlowsInOAuth2" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
+      """.stripMargin, // TODO pending JS implementation
+    "requiredOpenIdConnectUrl" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
       """.stripMargin
   )
 
