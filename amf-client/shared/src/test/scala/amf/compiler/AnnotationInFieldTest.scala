@@ -1,6 +1,6 @@
 package amf.compiler
 
-import amf.core.annotations.{LexicalInformation, SourceAST}
+import amf.core.annotations.{LexicalInformation, ReferenceTargets, SourceAST}
 import amf.core.model.document.Document
 import amf.core.model.domain.NamedDomainElement
 import amf.core.model.domain.extensions.PropertyShape
@@ -10,6 +10,7 @@ import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.templates.ResourceType
 import amf.plugins.domain.webapi.models.{Parameter, Response, WebApi}
 import org.scalatest.AsyncFunSuite
+import amf.core.parser.Range
 
 import scala.concurrent.ExecutionContext
 
@@ -174,6 +175,19 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
                   amf.core.parser.Range((6, 2), (9, 12)))
       assertRange(point.path.annotations().find(classOf[LexicalInformation]).get.range,
                   amf.core.parser.Range((6, 2), (6, 5)))
+      succeed
+    }
+  }
+
+  test("test raml ReferenceTarget annotations") {
+    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/"
+    for {
+      unit <- build(s"${uri}root.raml", RamlYamlHint)
+    } yield {
+      val targets = unit.annotations.collect { case rt: ReferenceTargets => rt }
+      assert(targets.size == 1)
+      assert(targets.head.targetLocation == s"${uri}reference.json")
+      assert(targets.head.originRange == Range(Position(6, 8), Position(6, 31)))
       succeed
     }
   }

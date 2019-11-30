@@ -3,6 +3,7 @@ package amf.plugins.document.webapi.references
 import amf.core.annotations.{ReferenceTargets, SourceAST}
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.ExternalDomainElement
+import amf.core.parser.Range
 import amf.core.parser._
 import amf.core.remote._
 import amf.core.utils._
@@ -201,10 +202,8 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
                   reference.unit.addReference(res.unit)
                   r.refs.foreach {
                     refContainer =>
-                      reference.unit.add(
-                        ReferenceTargets(res.unit.location().getOrElse(res.unit.id),
-                                         refContainer.node.location.sourceName,
-                                         amf.core.parser.Range(refContainer.node.location.inputRange)))
+                      reference.unit.add(ReferenceTargets(res.unit.location().getOrElse(res.unit.id),
+                                                          Range(refContainer.node.location.inputRange)))
                       refContainer.node match {
                         case mut: MutRef =>
                           res.unit.references.foreach(u => ctx.addSonRef(u))
