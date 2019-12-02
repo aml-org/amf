@@ -179,7 +179,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
-  test("test raml ReferenceTarget annotations") {
+  test("test raml ReferenceTarget annotations - ExternalFragment") {
     val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/"
     for {
       unit <- build(s"${uri}root.raml", RamlYamlHint)
@@ -187,7 +187,20 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       val targets = unit.annotations.collect { case rt: ReferenceTargets => rt }
       assert(targets.size == 1)
       assert(targets.head.targetLocation == s"${uri}reference.json")
-      assert(targets.head.originRange == Range(Position(6, 8), Position(6, 31)))
+      assert(targets.head.originRange == Range(Position(6, 5), Position(6, 28)))
+      succeed
+    }
+  }
+
+  test("test raml ReferenceTarget annotations - DataType") {
+    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/"
+    for {
+      unit <- build(s"${uri}root-2.raml", RamlYamlHint)
+    } yield {
+      val targets = unit.annotations.collect { case rt: ReferenceTargets => rt }
+      assert(targets.size == 1)
+      assert(targets.head.targetLocation == s"${uri}reference.raml")
+      assert(targets.head.originRange == Range(Position(6, 5), Position(6, 28)))
       succeed
     }
   }
@@ -206,9 +219,9 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
   private def findLexical(id: String, annotations: Annotations): Unit =
     if (!annotations.contains(classOf[LexicalInformation]))
-      fail(s"LexicalInformation annotation not found for name in respose $id")
+      fail(s"LexicalInformation annotation not found for name in response $id")
 
   private def findSourceAST(id: String, annotations: Annotations): Unit =
-    if (!annotations.contains(classOf[SourceAST])) fail(s"SourceAST annotation not found for name in respose $id")
+    if (!annotations.contains(classOf[SourceAST])) fail(s"SourceAST annotation not found for name in response $id")
 
 }
