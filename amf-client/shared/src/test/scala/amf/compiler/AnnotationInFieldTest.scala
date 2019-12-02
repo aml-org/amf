@@ -1,6 +1,6 @@
 package amf.compiler
 
-import amf.core.annotations.{LexicalInformation, SourceAST}
+import amf.core.annotations.{LexicalInformation, ReferenceTargets, SourceAST}
 import amf.core.model.document.Document
 import amf.core.model.domain.NamedDomainElement
 import amf.core.model.domain.extensions.PropertyShape
@@ -10,6 +10,7 @@ import amf.plugins.domain.shapes.models.NodeShape
 import amf.plugins.domain.webapi.models.templates.ResourceType
 import amf.plugins.domain.webapi.models.{Parameter, Response, WebApi}
 import org.scalatest.AsyncFunSuite
+import amf.core.parser.Range
 
 import scala.concurrent.ExecutionContext
 
@@ -178,6 +179,32 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
+  test("test raml ReferenceTarget annotations - ExternalFragment") {
+    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/"
+    for {
+      unit <- build(s"${uri}root.raml", RamlYamlHint)
+    } yield {
+      val targets = unit.annotations.collect { case rt: ReferenceTargets => rt }
+      assert(targets.size == 1)
+      assert(targets.head.targetLocation == s"${uri}reference.json")
+      assert(targets.head.originRange == Range(Position(6, 5), Position(6, 28)))
+      succeed
+    }
+  }
+
+  test("test raml ReferenceTarget annotations - DataType") {
+    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/"
+    for {
+      unit <- build(s"${uri}root-2.raml", RamlYamlHint)
+    } yield {
+      val targets = unit.annotations.collect { case rt: ReferenceTargets => rt }
+      assert(targets.size == 1)
+      assert(targets.head.targetLocation == s"${uri}reference.raml")
+      assert(targets.head.originRange == Range(Position(6, 5), Position(6, 28)))
+      succeed
+    }
+  }
+
   private def assertRange(actual: amf.core.parser.Range, expected: amf.core.parser.Range) = {
     assert(actual.start.line == expected.start.line)
     assert(actual.start.column == expected.start.column)
@@ -192,9 +219,9 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
   private def findLexical(id: String, annotations: Annotations): Unit =
     if (!annotations.contains(classOf[LexicalInformation]))
-      fail(s"LexicalInformation annotation not found for name in respose $id")
+      fail(s"LexicalInformation annotation not found for name in response $id")
 
   private def findSourceAST(id: String, annotations: Annotations): Unit =
-    if (!annotations.contains(classOf[SourceAST])) fail(s"SourceAST annotation not found for name in respose $id")
+    if (!annotations.contains(classOf[SourceAST])) fail(s"SourceAST annotation not found for name in response $id")
 
 }
