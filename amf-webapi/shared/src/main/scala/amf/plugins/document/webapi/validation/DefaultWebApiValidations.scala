@@ -338,6 +338,24 @@ object JsCustomValidations {
         |function(shape) {
         |  return true;
         |}
+      """.stripMargin,
+    "validCallbackExpression" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
+      """.stripMargin,
+    "validLinkRequestBody" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
+      """.stripMargin,
+    "validLinkParameterExpressions" ->
+      """
+        |function(shape) {
+        |  return true;
+        |}
       """.stripMargin
   )
 

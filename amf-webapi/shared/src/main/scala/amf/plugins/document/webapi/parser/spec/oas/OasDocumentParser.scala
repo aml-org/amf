@@ -804,7 +804,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           callbackEntries.map { entry =>
             val expression = entry.key.as[YScalar].text
             val callback   = Callback().add(Annotations(entry))
-            callback.withExpression(expression)
+            callback.fields.setWithoutId(CallbackModel.Expression, AmfScalar(expression, Annotations(entry.key)))
             adopt(callback)
             val collector = mutable.ListBuffer[EndPoint]()
             EndpointParser(entry, callback.withEndpoint, collector).parse()

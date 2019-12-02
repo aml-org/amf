@@ -1794,6 +1794,45 @@ object AMFRawValidations {
       "'flows' field is mandatory in OAuth2 security scheme",
       "'flows' field is mandatory in OAuth2 security scheme",
       "Violation"
+    ),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "apiContract:Callback",
+      "apiContract:expression",
+      "PropertyShape",
+      "sh:path",
+      "raml-shapes:validCallbackExpression",
+      "0",
+      "Does not comply with runtime expression ABNF syntax",
+      "Does not comply with runtime expression ABNF syntax",
+      "Violation"
+    ),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "apiContract:TemplatedLink",
+      "apiContract:requestBody",
+      "PropertyShape",
+      "sh:path",
+      "raml-shapes:validLinkRequestBody",
+      "0",
+      "Does not comply with runtime expression ABNF syntax",
+      "Does not comply with runtime expression ABNF syntax",
+      "Violation"
+    ),
+    AMFValidation(
+      Oas30.name,
+      "Domain",
+      "apiContract:TemplatedLink",
+      "apiContract:mapping",
+      "PropertyShape",
+      "sh:path",
+      "raml-shapes:validLinkParameterExpressions",
+      "0",
+      "Does not comply with runtime expression ABNF syntax",
+      "Does not comply with runtime expression ABNF syntax",
+      "Violation"
     )
   )
 
