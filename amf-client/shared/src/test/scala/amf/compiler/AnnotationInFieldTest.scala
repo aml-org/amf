@@ -180,7 +180,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("test raml ReferenceTarget annotations - ExternalFragment") {
-    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/"
+    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
     for {
       unit <- build(s"${uri}root.raml", RamlYamlHint)
     } yield {
@@ -193,7 +193,7 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
   }
 
   test("test raml ReferenceTarget annotations - DataType") {
-    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/"
+    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
     for {
       unit <- build(s"${uri}root-2.raml", RamlYamlHint)
     } yield {
@@ -201,6 +201,26 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
       assert(targets.size == 1)
       assert(targets.head.targetLocation == s"${uri}reference.raml")
       assert(targets.head.originRange == Range(Position(6, 5), Position(6, 28)))
+      succeed
+    }
+  }
+
+  test("test raml ReferenceTarget annotations - double External") {
+    val uri = "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/"
+    for {
+      unit <- build(s"${uri}root-3.raml", RamlYamlHint)
+    } yield {
+      val targets    = unit.annotations.collect { case rt: ReferenceTargets                 => rt }
+      val reftargets = unit.references.head.annotations.collect { case rt: ReferenceTargets => rt }
+
+      assert(targets.size == 1)
+      assert(targets.head.targetLocation == s"${uri}reference-1.yaml")
+      assert(targets.head.originRange == Range(Position(6, 5), Position(6, 30)))
+
+      assert(reftargets.size == 1)
+      assert(reftargets.head.targetLocation == s"${uri}reference.json")
+      assert(reftargets.head.originRange == Range(Position(1, 6), Position(1, 29)))
+
       succeed
     }
   }
