@@ -184,6 +184,6 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
 }
 
 object DataNodeParser {
-  def parse(parent: Option[String])(node: YNode)(implicit ctx: WebApiContext): DataNode =
-    DataNodeParser(node, parent = parent).parse()
+  def parse(parent: Option[String], idCounter: IdCounter)(node: YNode)(implicit ctx: WebApiContext): DataNode =
+    DataNodeParser(node, parent = parent, idCounter = idCounter).parse()
 }
