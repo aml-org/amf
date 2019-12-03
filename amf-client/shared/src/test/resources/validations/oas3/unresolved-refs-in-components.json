@@ -1,0 +1,54 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "reduced",
+    "title": "test"
+  },
+  "components": {
+    "schemas": {
+      "someSchema": {
+        "$ref": "#/components/schemas/other"
+      }
+    },
+    "responses": {
+      "someResponse": {
+        "$ref": "#/components/schemas/other"
+      }
+    },
+    "parameters": {
+      "someParameter": {
+        "$ref": "#/components/schemas/other"
+      }
+    },
+    "examples": {
+      "someExample": {
+        "$ref": "#/components/schemas/other"
+      }
+    },
+    "requestBodies": {
+      "someRequest": {
+        "$ref": "#/components/schemas/other"
+      }
+    },
+    "headers": {
+      "someHeader": {
+        "$ref": "#/components/schemas/other"
+      }
+    },
+    "securitySchemes": {
+      "someScheme": {
+        "$ref": "#/components/schemas/other"
+      }
+    },
+    "links": {
+      "someLink": {
+        "$ref": "#/components/schemas/other"
+      }
+    },
+    "callbacks": {
+      "someCallback": {
+        "$ref": "#/components/schemas/other"
+      }
+    }
+  }
+}

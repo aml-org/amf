@@ -796,7 +796,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                                 "",
                                 s"Cannot find callback reference $fullRef",
                                 map)
-                  List(new ErrorCallback(label, map))
+                  val callback = new ErrorCallback(label, map)
+                  adopt(callback)
+                  List(callback)
               }
             }
         case Right(_) =>

@@ -166,5 +166,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("oas3/runtime-expressions.json", Some("runtime-expressions.report"), Oas30Profile)
   }
 
+  test("Unresolved refs defined in components") {
+    validate("oas3/unresolved-refs-in-components.json", Some("unresolved-refs-in-components.report"), Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }
