@@ -73,6 +73,11 @@ object TupleShapeModel extends DataArrangementShape with DomainElementModel {
     Bool,
     Shapes + "additionalItems",
     ModelDoc(ModelVocabularies.Shapes, "additional items", "Constraint allowing additional shapes in the collection"))
+
+  val AdditionalItemsSchema = Field(ShapeModel,
+                                    Shapes + "additionalItemsSchema",
+                                    ModelDoc(ModelVocabularies.Shapes, "additional items schema", ""))
+
   val TupleItems = Field(SortedArray(ShapeModel),
                          Shapes + "items",
                          ModelDoc(ModelVocabularies.Shapes, "items", "Shapes contained in the Tuple Shape"))
@@ -84,6 +89,7 @@ object TupleShapeModel extends DataArrangementShape with DomainElementModel {
                                           MaxItems,
                                           UniqueItems,
                                           AdditionalItems,
+                                          AdditionalItemsSchema,
                                           CollectionFormat) ++ AnyShapeModel.fields ++ DomainElementModel.fields
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Shapes,

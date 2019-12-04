@@ -26,5 +26,7 @@ case class TupleShape(private[amf] override val _internal: InternalTupleShape) e
     this
   }
 
+  def additionalItemsSchema: Shape = _internal.additionalItemsSchema
+
   override def linkCopy(): TupleShape = _internal.linkCopy()
 }

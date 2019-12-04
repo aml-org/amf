@@ -173,6 +173,11 @@ object ParserSideValidations extends Validations {
     "additionalProperties should be a boolean or a map"
   )
 
+  val InvalidAdditionalItemsType = validation(
+    "invalid-additional-items-type",
+    "additionalItems should be a boolean or a map"
+  )
+
   val InvalidTupleType = validation(
     "invalid-tuple-type",
     "Tuple should be a sequence"
@@ -585,6 +590,7 @@ object ParserSideValidations extends Validations {
     InvalidAndType,
     InvalidXoneType,
     InvalidAdditionalPropertiesType,
+    InvalidAdditionalItemsType,
     InvalidRequiredArrayForSchemaVersion,
     InvalidRequiredBooleanForSchemaVersion,
     InvalidSchemaType,
