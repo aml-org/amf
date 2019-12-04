@@ -60,6 +60,11 @@
         "@value": "2.0.0"
       }
     ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
     "http://a.ml/vocabularies/document#references": [
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/trait-fragment/trait.raml#",
@@ -330,6 +335,11 @@
         "http://a.ml/vocabularies/document#version": [
           {
             "@value": "2.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

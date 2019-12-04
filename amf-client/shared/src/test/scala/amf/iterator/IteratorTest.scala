@@ -23,7 +23,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Iterating api with complete iterator returns all element") {
     val elements = AmfElementStrategy.iterator(List(api)).toList
-    assert(elements.length == 22)
+    assert(elements.length == 23)
   }
 
   test("Iterating api with domain element iterator returns domain elements") {
@@ -62,7 +62,7 @@ class IteratorTest extends AsyncFunSuite with CompilerTestBuilder {
         baseUnit => {
           val iterator = AmfElementStrategy.iterator(List(baseUnit.asInstanceOf[Document]))
           val elements = iterator.toList
-          assert(elements.size == 332)
+          assert(elements.size == 333)
         }
     )
   }

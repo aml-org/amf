@@ -120,5 +120,5 @@ trait AMFUnitFixtureTest extends PlatformSecrets {
   }
 
   private def doc(api: WebApi): Document =
-    Document().withLocation("file:///tmp/test").adopted("file:///tmp/test").withEncodes(api)
+    Document().withLocation("file:///tmp/test").adopted("file:///tmp/test").withEncodes(api).withRoot(true)
 }

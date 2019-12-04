@@ -512,6 +512,11 @@
         "@value": "2.0.0"
       }
     ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
     "http://a.ml/vocabularies/document#references": [
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/Pet.json",
@@ -1194,6 +1199,11 @@
         "http://a.ml/vocabularies/document#version": [
           {
             "@value": "2.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ]
       }
