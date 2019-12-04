@@ -22,5 +22,13 @@ class OasExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("oas3/not-constraint.json", Some("not-constraint.report"), Oas30Profile)
   }
 
+  test("additionalItems in OAS 3.0 schema") {
+    validate("oas3/additional-items.json", Some("oas3-additional-items.report"), Oas30Profile)
+  }
+
+  test("additionalItems in OAS 2.0 schema") {
+    validate("/examples/additional-items.json", Some("oas2-additional-items.report"), OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

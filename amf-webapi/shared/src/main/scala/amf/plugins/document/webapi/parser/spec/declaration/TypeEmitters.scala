@@ -1752,6 +1752,13 @@ case class OasTupleShapeEmitter(shape: TupleShape,
 
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
 
+    fs.entry(TupleShapeModel.AdditionalItems) match {
+      case Some(f) => result += ValueEmitter("additionalItems", f)
+      case None =>
+        fs.entry(TupleShapeModel.AdditionalItemsSchema)
+          .map(f => result += OasEntryShapeEmitter("additionalItems", f, ordering, references))
+    }
+
     fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
       case Some(f) if f.value.annotations.contains(classOf[CollectionFormatFromItems]) =>
         result += OasTupleItemsShapeEmitter(shape,
