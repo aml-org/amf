@@ -88,14 +88,14 @@ case class Oas3ResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiCont
 
 case class Oas3ResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiContext) {
   def parse(): Example = {
-    val name    = yMapEntry.key.as[YScalar].text
-    val example = Example(yMapEntry).withName(name)
+    val name = yMapEntry.key.as[YScalar].text
     if (ctx.syntax == Oas3Syntax) {
       Oas3SingleExampleValueParser(yMapEntry, ex => {
         ex.add(Annotations(yMapEntry))
         ex.withName(name)
       }, ExampleOptions(strictDefault = true, quiet = true)).parse()
     } else {
+      val example = Example(yMapEntry).withName(name)
       RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = true, quiet = true))
         .populate()
     }
@@ -282,7 +282,9 @@ case class Oas3ExampleValueParser(map: YMap, adopt: Example => Unit, options: Ex
                 Oas3ExampleValueParser(exampleNode.as[YMap], adopt, options).parse()
               case None =>
                 ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
-                ErrorNamedExample(name, map)
+                val errorExample = ErrorNamedExample(name, map)
+                adopt(errorExample)
+                errorExample
             }
           }
       case Right(_) =>
