@@ -9,7 +9,7 @@
     ],
     "doc:encodes": [
       {
-        "@id": "#21",
+        "@id": "#19",
         "@type": [
           "apiContract:WebAPI",
           "doc:RootDomainElement",
@@ -32,7 +32,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#22",
+            "@id": "#20",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -44,7 +44,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#23",
+                "@id": "#21",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -56,14 +56,14 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#24",
+                    "@id": "#22",
                     "@type": [
                       "apiContract:Request",
                       "doc:DomainElement"
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#25",
+                        "@id": "#23",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -75,7 +75,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#26/link-1867780962",
+                            "@id": "#24/link-1609615524",
                             "@type": [
                               "raml-shapes:ArrayShape",
                               "raml-shapes:AnyShape",
@@ -85,7 +85,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#26"
+                                "@id": "#24"
                               }
                             ],
                             "doc:link-label": [
@@ -97,26 +97,26 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#25": "[(12,6)-(15,0)]"
+                            "#23": "[(12,6)-(15,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#24": "[(11,0)-(15,0)]"
+                        "#22": "[(11,0)-(15,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#23": "[(10,2)-(15,0)]"
+                    "#21": "[(10,2)-(15,0)]"
                   }
                 }
               },
               {
-                "@id": "#35",
+                "@id": "#33",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -128,79 +128,7 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#36",
-                    "@type": [
-                      "apiContract:Request",
-                      "doc:DomainElement"
-                    ],
-                    "apiContract:payload": [
-                      {
-                        "@id": "#15",
-                        "@type": [
-                          "apiContract:Payload",
-                          "doc:DomainElement"
-                        ],
-                        "core:mediaType": [
-                          {
-                            "@value": "application/json"
-                          }
-                        ],
-                        "raml-shapes:schema": [
-                          {
-                            "@id": "#6/link--1713457348",
-                            "@type": [
-                              "shacl:NodeShape",
-                              "raml-shapes:AnyShape",
-                              "shacl:Shape",
-                              "raml-shapes:Shape",
-                              "doc:DomainElement"
-                            ],
-                            "doc:link-target": [
-                              {
-                                "@id": "#6"
-                              }
-                            ],
-                            "doc:link-label": [
-                              {
-                                "@value": "Employee"
-                              }
-                            ]
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#15": "[(17,6)-(20,0)]"
-                          }
-                        }
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "#36": "[(16,0)-(20,0)]"
-                      }
-                    }
-                  }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#35": "[(15,2)-(20,0)]"
-                  }
-                }
-              },
-              {
-                "@id": "#37",
-                "@type": [
-                  "apiContract:Operation",
-                  "doc:DomainElement"
-                ],
-                "apiContract:method": [
-                  {
-                    "@value": "delete"
-                  }
-                ],
-                "apiContract:expects": [
-                  {
-                    "@id": "#38",
+                    "@id": "#34",
                     "@type": [
                       "apiContract:Request",
                       "doc:DomainElement"
@@ -219,7 +147,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#6/link--1713457348",
+                            "@id": "#11/link-1945335222",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -229,7 +157,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#6"
+                                "@id": "#11"
                               }
                             ],
                             "doc:link-label": [
@@ -241,38 +169,38 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#16": "[(22,6)-(25,0)]"
+                            "#16": "[(17,6)-(20,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#38": "[(21,0)-(25,0)]"
+                        "#34": "[(16,0)-(20,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#37": "[(20,2)-(25,0)]"
+                    "#33": "[(15,2)-(20,0)]"
                   }
                 }
               },
               {
-                "@id": "#39",
+                "@id": "#35",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
                 ],
                 "apiContract:method": [
                   {
-                    "@value": "head"
+                    "@value": "delete"
                   }
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#40",
+                    "@id": "#36",
                     "@type": [
                       "apiContract:Request",
                       "doc:DomainElement"
@@ -286,12 +214,12 @@
                         ],
                         "core:mediaType": [
                           {
-                            "@value": "application/xml"
+                            "@value": "application/json"
                           }
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#6/link--1713457348",
+                            "@id": "#11/link-1945335222",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -301,7 +229,7 @@
                             ],
                             "doc:link-target": [
                               {
-                                "@id": "#6"
+                                "@id": "#11"
                               }
                             ],
                             "doc:link-label": [
@@ -313,28 +241,100 @@
                         ],
                         "smaps": {
                           "lexical": {
-                            "#17": "[(26,4)-(28,47)]"
+                            "#17": "[(22,6)-(25,0)]"
                           }
                         }
                       }
                     ],
                     "smaps": {
                       "lexical": {
-                        "#40": "[(26,0)-(28,47)]"
+                        "#36": "[(21,0)-(25,0)]"
                       }
                     }
                   }
                 ],
                 "smaps": {
                   "lexical": {
-                    "#39": "[(25,2)-(28,47)]"
+                    "#35": "[(20,2)-(25,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "#37",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "head"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#38",
+                    "@type": [
+                      "apiContract:Request",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#18",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/xml"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#11/link-1945335222",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#11"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "Employee"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#18": "[(26,4)-(28,47)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#38": "[(26,0)-(28,47)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#37": "[(25,2)-(28,47)]"
                   }
                 }
               }
             ],
             "smaps": {
               "lexical": {
-                "#22": "[(9,0)-(28,47)]"
+                "#20": "[(9,0)-(28,47)]"
               }
             }
           }
@@ -347,11 +347,11 @@
           "lexical": {
             "apiContract:contentType": "[(4,0)-(6,0)]",
             "core:name": "[(2,0)-(4,0)]",
-            "#21": "[(2,0)-(28,47)]",
+            "#19": "[(2,0)-(28,47)]",
             "apiContract:accepts": "[(4,0)-(6,0)]"
           },
           "source-vendor": {
-            "#21": "RAML 1.0"
+            "#19": "RAML 1.0"
           }
         }
       }
@@ -599,136 +599,10 @@
             ],
             "shacl:name": [
               {
-                "@value": "Employee"
-              }
-            ],
-            "apiContract:examples": [
-              {
-                "@id": "#11",
-                "@type": [
-                  "apiContract:Example",
-                  "doc:DomainElement"
-                ],
-                "core:name": [
-                  {
-                    "@value": "employee"
-                  }
-                ],
-                "doc:strict": [
-                  {
-                    "@value": true
-                  }
-                ],
-                "doc:structuredValue": [
-                  {
-                    "@id": "#12",
-                    "@type": [
-                      "data:Object",
-                      "data:Node",
-                      "doc:DomainElement"
-                    ],
-                    "data:id": [
-                      {
-                        "@id": "#13",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "1"
-                          }
-                        ],
-                        "shacl:datatype": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                          }
-                        ],
-                        "core:name": [
-                          {
-                            "@value": "scalar_2"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#13": "[(3,6)-(3,7)]"
-                          }
-                        }
-                      }
-                    ],
-                    "data:name": [
-                      {
-                        "@id": "#14",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "Jhon"
-                          }
-                        ],
-                        "shacl:datatype": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "core:name": [
-                          {
-                            "@value": "scalar_3"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#14": "[(4,8)-(4,14)]"
-                          }
-                        }
-                      }
-                    ],
-                    "core:name": [
-                      {
-                        "@value": "object_1"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "data:name": "[(4,2)-(4,14)]",
-                        "#12": "[(3,0)-(4,14)]",
-                        "data:id": "[(3,2)-(4,0)]"
-                      }
-                    }
-                  }
-                ],
-                "doc:raw": [
-                  {
-                    "@value": "id: 1\nname: \"Jhon\""
-                  }
-                ],
-                "smaps": {
-                  "synthesized-field": {
-                    "doc:strict": "true"
-                  },
-                  "lexical": {
-                    "doc:raw": "[(3,0)-(4,14)]",
-                    "core:name": "[(2,0)-(4,14)]",
-                    "#11": "[(2,0)-(4,14)]",
-                    "doc:structuredValue": "[(2,9)-(4,14)]"
-                  },
-                  "local-element": {
-                    "#11": ""
-                  },
-                  "tracked-element": {
-                    "#11": "amf://id#15,amf://id#16,amf://id#17"
-                  }
-                }
+                "@value": "type"
               }
             ],
             "smaps": {
-              "resolved-link-target": {
-                "#6": "amf://id#19"
-              },
               "source-vendor": {
                 "#6": "RAML 1.0"
               },
@@ -737,12 +611,6 @@
               },
               "type-property-lexical-info": {
                 "#6": "[(2,0)-(2,4)]"
-              },
-              "declared-element": {
-                "#6": ""
-              },
-              "resolved-link": {
-                "#6": "amf://id#20"
               }
             }
           }
@@ -766,433 +634,7 @@
     ],
     "doc:declares": [
       {
-        "@id": "#19",
-        "@type": [
-          "shacl:NodeShape",
-          "raml-shapes:AnyShape",
-          "shacl:Shape",
-          "raml-shapes:Shape",
-          "doc:DomainElement"
-        ],
-        "shacl:closed": [
-          {
-            "@value": false
-          }
-        ],
-        "shacl:property": [
-          {
-            "@id": "#7",
-            "@type": [
-              "shacl:PropertyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "shacl:path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#id"
-              }
-            ],
-            "raml-shapes:range": [
-              {
-                "@id": "#8",
-                "@type": [
-                  "raml-shapes:ScalarShape",
-                  "raml-shapes:AnyShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "id"
-                  }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#8": "[(4,2)-(5,0)]"
-                  }
-                }
-              }
-            ],
-            "shacl:minCount": [
-              {
-                "@value": 1
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "id"
-              }
-            ],
-            "smaps": {
-              "lexical": {
-                "#7": "[(4,2)-(5,0)]"
-              }
-            }
-          },
-          {
-            "@id": "#9",
-            "@type": [
-              "shacl:PropertyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "shacl:path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#name"
-              }
-            ],
-            "raml-shapes:range": [
-              {
-                "@id": "#10",
-                "@type": [
-                  "raml-shapes:ScalarShape",
-                  "raml-shapes:AnyShape",
-                  "shacl:Shape",
-                  "raml-shapes:Shape",
-                  "doc:DomainElement"
-                ],
-                "shacl:datatype": [
-                  {
-                    "@id": "http://www.w3.org/2001/XMLSchema#string"
-                  }
-                ],
-                "shacl:name": [
-                  {
-                    "@value": "name"
-                  }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#10": "[(5,2)-(5,14)]"
-                  }
-                }
-              }
-            ],
-            "shacl:minCount": [
-              {
-                "@value": 1
-              }
-            ],
-            "shacl:name": [
-              {
-                "@value": "name"
-              }
-            ],
-            "smaps": {
-              "lexical": {
-                "#9": "[(5,2)-(5,14)]"
-              }
-            }
-          }
-        ],
-        "shacl:name": [
-          {
-            "@value": "Employee"
-          }
-        ],
-        "smaps": {
-          "declared-element": {
-            "#19": ""
-          },
-          "resolved-link": {
-            "#19": "amf://id#19"
-          },
-          "type-property-lexical-info": {
-            "#19": "[(2,0)-(2,4)]"
-          },
-          "lexical": {
-            "#19": "[(2,0)-(5,14)]"
-          },
-          "source-vendor": {
-            "#19": "RAML 1.0"
-          },
-          "resolved-link-target": {
-            "#19": "amf://id#6"
-          }
-        }
-      },
-      {
-        "@id": "#26",
-        "@type": [
-          "raml-shapes:ArrayShape",
-          "raml-shapes:AnyShape",
-          "shacl:Shape",
-          "raml-shapes:Shape",
-          "doc:DomainElement"
-        ],
-        "raml-shapes:items": [
-          {
-            "@id": "#6/link--1713457348",
-            "@type": [
-              "shacl:NodeShape",
-              "raml-shapes:AnyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "doc:link-target": [
-              {
-                "@id": "#6"
-              }
-            ],
-            "doc:link-label": [
-              {
-                "@value": "Employee"
-              }
-            ]
-          }
-        ],
-        "shacl:name": [
-          {
-            "@value": "inline-type"
-          }
-        ],
-        "apiContract:examples": [
-          {
-            "@id": "#27",
-            "@type": [
-              "apiContract:Example",
-              "doc:DomainElement"
-            ],
-            "core:name": [
-              {
-                "@value": "employees"
-              }
-            ],
-            "doc:strict": [
-              {
-                "@value": true
-              }
-            ],
-            "doc:structuredValue": [
-              {
-                "@id": "#28",
-                "@type": [
-                  "data:Array",
-                  "rdf:Seq",
-                  "data:Node",
-                  "doc:DomainElement"
-                ],
-                "rdfs:member": [
-                  {
-                    "@id": "#29",
-                    "@type": [
-                      "data:Object",
-                      "data:Node",
-                      "doc:DomainElement"
-                    ],
-                    "data:id": [
-                      {
-                        "@id": "#30",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "1"
-                          }
-                        ],
-                        "shacl:datatype": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                          }
-                        ],
-                        "core:name": [
-                          {
-                            "@value": "scalar_3"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#30": "[(4,8)-(4,9)]"
-                          }
-                        }
-                      }
-                    ],
-                    "data:name": [
-                      {
-                        "@id": "#31",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "Jhon"
-                          }
-                        ],
-                        "shacl:datatype": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "core:name": [
-                          {
-                            "@value": "scalar_4"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#31": "[(5,10)-(5,14)]"
-                          }
-                        }
-                      }
-                    ],
-                    "core:name": [
-                      {
-                        "@value": "object_2"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "data:name": "[(5,4)-(6,0)]",
-                        "#29": "[(4,0)-(6,0)]",
-                        "data:id": "[(4,4)-(5,0)]"
-                      }
-                    }
-                  },
-                  {
-                    "@id": "#32",
-                    "@type": [
-                      "data:Object",
-                      "data:Node",
-                      "doc:DomainElement"
-                    ],
-                    "data:id": [
-                      {
-                        "@id": "#33",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "2"
-                          }
-                        ],
-                        "shacl:datatype": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
-                          }
-                        ],
-                        "core:name": [
-                          {
-                            "@value": "scalar_6"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#33": "[(7,8)-(7,9)]"
-                          }
-                        }
-                      }
-                    ],
-                    "data:name": [
-                      {
-                        "@id": "#34",
-                        "@type": [
-                          "data:Scalar",
-                          "data:Node",
-                          "doc:DomainElement"
-                        ],
-                        "data:value": [
-                          {
-                            "@value": "Sam"
-                          }
-                        ],
-                        "shacl:datatype": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "core:name": [
-                          {
-                            "@value": "scalar_7"
-                          }
-                        ],
-                        "smaps": {
-                          "lexical": {
-                            "#34": "[(8,10)-(8,13)]"
-                          }
-                        }
-                      }
-                    ],
-                    "core:name": [
-                      {
-                        "@value": "object_5"
-                      }
-                    ],
-                    "smaps": {
-                      "lexical": {
-                        "data:name": "[(8,4)-(8,13)]",
-                        "#32": "[(7,0)-(8,13)]",
-                        "data:id": "[(7,4)-(8,0)]"
-                      }
-                    }
-                  }
-                ],
-                "core:name": [
-                  {
-                    "@value": "array_1"
-                  }
-                ],
-                "smaps": {
-                  "lexical": {
-                    "#28": "[(3,0)-(8,13)]"
-                  }
-                }
-              }
-            ],
-            "doc:raw": [
-              {
-                "@value": "-\n  id: 1\n  name: Jhon\n-\n  id: 2\n  name: Sam"
-              }
-            ],
-            "smaps": {
-              "synthesized-field": {
-                "doc:strict": "true"
-              },
-              "lexical": {
-                "doc:raw": "[(3,0)-(8,13)]",
-                "core:name": "[(2,0)-(8,13)]",
-                "#27": "[(2,0)-(8,13)]",
-                "doc:structuredValue": "[(2,10)-(8,13)]"
-              },
-              "local-element": {
-                "#27": ""
-              },
-              "tracked-element": {
-                "#27": "amf://id#25"
-              }
-            }
-          }
-        ],
-        "smaps": {
-          "inline-element": {
-            "#26": ""
-          },
-          "lexical": {
-            "#26": "[(13,8)-(14,0)]"
-          },
-          "auto-generated-name": {
-            "#26": ""
-          }
-        }
-      },
-      {
-        "@id": "#6",
+        "@id": "#11",
         "@type": [
           "shacl:NodeShape",
           "raml-shapes:AnyShape",
@@ -1326,7 +768,7 @@
         ],
         "apiContract:examples": [
           {
-            "@id": "#11",
+            "@id": "#12",
             "@type": [
               "apiContract:Example",
               "doc:DomainElement"
@@ -1343,7 +785,7 @@
             ],
             "doc:structuredValue": [
               {
-                "@id": "#12",
+                "@id": "#13",
                 "@type": [
                   "data:Object",
                   "data:Node",
@@ -1351,7 +793,7 @@
                 ],
                 "data:id": [
                   {
-                    "@id": "#13",
+                    "@id": "#14",
                     "@type": [
                       "data:Scalar",
                       "data:Node",
@@ -1374,14 +816,14 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#13": "[(3,6)-(3,7)]"
+                        "#14": "[(3,6)-(3,7)]"
                       }
                     }
                   }
                 ],
                 "data:name": [
                   {
-                    "@id": "#14",
+                    "@id": "#15",
                     "@type": [
                       "data:Scalar",
                       "data:Node",
@@ -1404,7 +846,7 @@
                     ],
                     "smaps": {
                       "lexical": {
-                        "#14": "[(4,8)-(4,14)]"
+                        "#15": "[(4,8)-(4,14)]"
                       }
                     }
                   }
@@ -1417,7 +859,7 @@
                 "smaps": {
                   "lexical": {
                     "data:name": "[(4,2)-(4,14)]",
-                    "#12": "[(3,0)-(4,14)]",
+                    "#13": "[(3,0)-(4,14)]",
                     "data:id": "[(3,2)-(4,0)]"
                   }
                 }
@@ -1435,36 +877,308 @@
               "lexical": {
                 "doc:raw": "[(3,0)-(4,14)]",
                 "core:name": "[(2,0)-(4,14)]",
-                "#11": "[(2,0)-(4,14)]",
+                "#12": "[(2,0)-(4,14)]",
                 "doc:structuredValue": "[(2,9)-(4,14)]"
               },
               "local-element": {
-                "#11": ""
+                "#12": ""
               },
               "tracked-element": {
-                "#11": "amf://id#15,amf://id#16,amf://id#17"
+                "#12": "amf://id#16,amf://id#17,amf://id#18"
               }
             }
           }
         ],
         "smaps": {
-          "resolved-link-target": {
-            "#6": "amf://id#19"
-          },
-          "source-vendor": {
-            "#6": "RAML 1.0"
-          },
-          "lexical": {
-            "#6": "[(2,0)-(5,14)]"
-          },
-          "type-property-lexical-info": {
-            "#6": "[(2,0)-(2,4)]"
-          },
           "declared-element": {
-            "#6": ""
+            "#11": ""
           },
           "resolved-link": {
-            "#6": "amf://id#20"
+            "#11": "amf://id#11"
+          },
+          "type-property-lexical-info": {
+            "#11": "[(2,0)-(2,4)]"
+          },
+          "lexical": {
+            "#11": "[(2,0)-(5,14)]"
+          },
+          "source-vendor": {
+            "#11": "RAML 1.0"
+          },
+          "resolved-link-target": {
+            "#11": "amf://id#6"
+          }
+        }
+      },
+      {
+        "@id": "#24",
+        "@type": [
+          "raml-shapes:ArrayShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "raml-shapes:items": [
+          {
+            "@id": "#11/link-1945335222",
+            "@type": [
+              "shacl:NodeShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "doc:link-target": [
+              {
+                "@id": "#11"
+              }
+            ],
+            "doc:link-label": [
+              {
+                "@value": "Employee"
+              }
+            ]
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "inline-type"
+          }
+        ],
+        "apiContract:examples": [
+          {
+            "@id": "#25",
+            "@type": [
+              "apiContract:Example",
+              "doc:DomainElement"
+            ],
+            "core:name": [
+              {
+                "@value": "employees"
+              }
+            ],
+            "doc:strict": [
+              {
+                "@value": true
+              }
+            ],
+            "doc:structuredValue": [
+              {
+                "@id": "#26",
+                "@type": [
+                  "data:Array",
+                  "rdf:Seq",
+                  "data:Node",
+                  "doc:DomainElement"
+                ],
+                "rdfs:member": [
+                  {
+                    "@id": "#27",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:id": [
+                      {
+                        "@id": "#28",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "1"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "scalar_3"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#28": "[(4,8)-(4,9)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:name": [
+                      {
+                        "@id": "#29",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "Jhon"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "scalar_4"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#29": "[(5,10)-(5,14)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "object_2"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:name": "[(5,4)-(6,0)]",
+                        "#27": "[(4,0)-(6,0)]",
+                        "data:id": "[(4,4)-(5,0)]"
+                      }
+                    }
+                  },
+                  {
+                    "@id": "#30",
+                    "@type": [
+                      "data:Object",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:id": [
+                      {
+                        "@id": "#31",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "2"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "scalar_6"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#31": "[(7,8)-(7,9)]"
+                          }
+                        }
+                      }
+                    ],
+                    "data:name": [
+                      {
+                        "@id": "#32",
+                        "@type": [
+                          "data:Scalar",
+                          "data:Node",
+                          "doc:DomainElement"
+                        ],
+                        "data:value": [
+                          {
+                            "@value": "Sam"
+                          }
+                        ],
+                        "shacl:datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "scalar_7"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#32": "[(8,10)-(8,13)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "object_5"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "data:name": "[(8,4)-(8,13)]",
+                        "#30": "[(7,0)-(8,13)]",
+                        "data:id": "[(7,4)-(8,0)]"
+                      }
+                    }
+                  }
+                ],
+                "core:name": [
+                  {
+                    "@value": "array_1"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#26": "[(3,0)-(8,13)]"
+                  }
+                }
+              }
+            ],
+            "doc:raw": [
+              {
+                "@value": "-\n  id: 1\n  name: Jhon\n-\n  id: 2\n  name: Sam"
+              }
+            ],
+            "smaps": {
+              "synthesized-field": {
+                "doc:strict": "true"
+              },
+              "lexical": {
+                "doc:raw": "[(3,0)-(8,13)]",
+                "core:name": "[(2,0)-(8,13)]",
+                "#25": "[(2,0)-(8,13)]",
+                "doc:structuredValue": "[(2,10)-(8,13)]"
+              },
+              "local-element": {
+                "#25": ""
+              },
+              "tracked-element": {
+                "#25": "amf://id#23"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "inline-element": {
+            "#24": ""
+          },
+          "lexical": {
+            "#24": "[(13,8)-(14,0)]"
+          },
+          "auto-generated-name": {
+            "#24": ""
           }
         }
       }

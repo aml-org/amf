@@ -1,0 +1,14 @@
+#%RAML 1.0
+version: v1
+title: American Flights API
+
+types:
+  AmericanFlight: !include dataType.raml
+/flights:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: AmericanFlight
+              
