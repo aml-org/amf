@@ -1,0 +1,10 @@
+#%RAML 1.0 Library
+types:
+  TooLongEmail:
+    type: string
+    maxLength: 7
+    example: きんぎょきんぎょ
+  TooShortEmail:
+    type: string
+    minLength: 10
+    example: きんぎょきんぎょ
