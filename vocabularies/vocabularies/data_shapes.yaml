@@ -4,6 +4,7 @@ usage: Vocabulary defining data shapes, used as an extension to SHACL
 uses:
   shacl: external/shacl.yaml
   doc: aml_doc.yaml
+  apiContract: api_contract.yaml
 classTerms:
   AnyShape:
     displayName: Any Shape
@@ -92,6 +93,10 @@ propertyTerms:
     displayName: discriminator
     description: Discriminator property
     range: string
+  discriminatorMapping:
+    displayName: discriminator mapping
+    description: Mappping of acceptable values for the ndoe discriminator
+    range: apiContract.IriTemplateMapping
   discriminatorValue:
     displayName: discriminator value
     description: Values for the discriminator property
