@@ -978,6 +978,11 @@
         "@value": "2.0.0"
       }
     ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
     "http://a.ml/vocabularies/document#references": [
       {
         "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/with_references/referred.raml",
@@ -1077,6 +1082,11 @@
         "http://a.ml/vocabularies/document#version": [
           {
             "@value": "2.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1265,6 +1275,11 @@
         "http://a.ml/vocabularies/document#version": [
           {
             "@value": "2.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -1944,6 +1959,11 @@
             "@value": "2.0.0"
           }
         ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/source-map",
@@ -2117,6 +2137,11 @@
         "http://a.ml/vocabularies/document#version": [
           {
             "@value": "2.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

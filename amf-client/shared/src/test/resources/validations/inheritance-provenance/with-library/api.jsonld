@@ -36,6 +36,11 @@
         "@value": "2.0.0"
       }
     ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
     "smaps": {
       "aliases-array": {
         "": "lib->amf://id#1::lib.raml"
@@ -154,6 +159,11 @@
         "doc:usage": [
           {
             "@value": "Library usage"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
           }
         ],
         "smaps": {

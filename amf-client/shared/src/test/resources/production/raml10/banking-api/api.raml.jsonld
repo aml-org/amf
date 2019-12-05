@@ -8234,6 +8234,11 @@
         "@value": "2.0.0"
       }
     ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
         "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/source-map",
@@ -9720,6 +9725,11 @@
             "@value": "Apply this trait to a GET method that supports content-based caching using ETags"
           }
         ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/source-map",
@@ -10345,6 +10355,11 @@
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this to a method that support sorting."
+              }
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -11428,6 +11443,11 @@
                 "@value": "Apply this trait to a GET method that supports pagination."
               }
             ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/pageable.raml#/source-map",
@@ -11856,6 +11876,11 @@
             "http://a.ml/vocabularies/document#usage": [
               {
                 "@value": "Apply this trait to a metheod that supports returning only specific attributes of the response"
+              }
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -13357,6 +13382,11 @@
                 "@value": "Apply this trait to a GET method that supports content-based caching using ETags"
               }
             ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/traits/content-cacheable.raml#/source-map",
@@ -13398,6 +13428,11 @@
         "http://a.ml/vocabularies/document#usage": [
           {
             "@value": "Common traits for the HTTP API"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -14150,6 +14185,11 @@
         "http://a.ml/vocabularies/document#version": [
           {
             "@value": "2.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -30772,6 +30812,11 @@
         "http://a.ml/vocabularies/document#usage": [
           {
             "@value": "Data shapes for the HTTP API"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
