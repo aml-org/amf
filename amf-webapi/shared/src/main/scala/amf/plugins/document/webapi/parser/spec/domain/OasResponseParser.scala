@@ -50,6 +50,8 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
         val res = Response()
         adopted(res)
 
+        ctx.closedShape(res.id, map, "response")
+
         map.key("description", ResponseModel.Description in res)
 
         map.key(
