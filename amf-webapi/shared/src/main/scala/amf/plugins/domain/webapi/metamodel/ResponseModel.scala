@@ -17,25 +17,22 @@ object ResponseModel
     extends DomainElementModel
     with KeyField
     with OptionalField
-    with ExamplesField
     with LinkableElementModel
     with NameFieldSchema
     with DescriptionField
-    with ParametersFieldModel {
+    with ParametersFieldModel
+    with MessageModel {
 
   val StatusCode = Field(
     Str,
     ApiContract + "statusCode",
     ModelDoc(ModelVocabularies.ApiContract, "status code", "HTTP status code returned by a response"))
 
-  val Payloads = Field(Array(PayloadModel),
-                       ApiContract + "payload",
-                       ModelDoc(ModelVocabularies.ApiContract, "payload", "Payload for a Request/Response"))
-
   val Links = Field(
     Array(TemplatedLinkModel),
     ApiContract + "link",
-    ModelDoc(ModelVocabularies.ApiContract, "links", "Structural definition of links on the source data shape AST"))
+    ModelDoc(ModelVocabularies.ApiContract, "links", "Structural definition of links on the source data shape AST")
+  )
 
   override val key: Field = StatusCode
 
@@ -43,7 +40,7 @@ object ResponseModel
 
   override val fields: List[Field] =
     LinkableElementModel.fields ++
-      List(Name, Description, StatusCode, Headers, Payloads, Links, Examples) ++ DomainElementModel.fields
+      List(Name, Description, StatusCode, Headers, Links) ++ MessageModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = Response()
 

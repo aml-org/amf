@@ -11,29 +11,24 @@ import amf.plugins.domain.webapi.models.Request
 /**
   * Request metaModel.
   */
-object RequestModel extends DomainElementModel with DescriptionField with ParametersFieldModel {
+object RequestModel
+    extends DomainElementModel
+    with NameFieldSchema
+    with DescriptionField
+    with ParametersFieldModel
+    with MessageModel {
 
   val Required = Field(Bool, ApiContract + "required", ModelDoc(ModelVocabularies.ApiContract, "required", ""))
 
-  val Payloads = Field(Array(PayloadModel),
-                       ApiContract + "payload",
-                       ModelDoc(ModelVocabularies.ApiContract, "payload", "Payload for the request"))
-
   val CookieParameters =
-    Field(Array(ParameterModel), ApiContract + "cookieParameter", ModelDoc(ModelVocabularies.ApiContract, "cookie parameter", ""))
+    Field(Array(ParameterModel),
+          ApiContract + "cookieParameter",
+          ModelDoc(ModelVocabularies.ApiContract, "cookie parameter", ""))
 
   override val `type`: List[ValueType] = ApiContract + "Request" :: DomainElementModel.`type`
 
   override def fields: List[Field] =
-    List(NameFieldSchema.Name,
-         Description,
-         Required,
-         QueryParameters,
-         Headers,
-         Payloads,
-         QueryString,
-         UriParameters,
-         CookieParameters) ++ DomainElementModel.fields
+    List(Name, Description, Required, QueryParameters, Headers, QueryString, UriParameters, CookieParameters) ++ MessageModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = Request()
 

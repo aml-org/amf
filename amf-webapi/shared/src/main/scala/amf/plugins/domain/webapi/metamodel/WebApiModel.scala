@@ -13,7 +13,7 @@ import amf.plugins.domain.webapi.models.WebApi
 /**
   * Web Api metamodel
   */
-object WebApiModel extends DomainElementModel with NameFieldSchema with DescriptionField {
+object WebApiModel extends DomainElementModel with NameFieldSchema with DescriptionField with TagsModel {
 
   val Servers =
     Field(Array(ServerModel),
@@ -28,6 +28,10 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
     Array(Str),
     ApiContract + "contentType",
     ModelDoc(ModelVocabularies.ApiContract, "content type", "Media types returned by a API response"))
+
+  val Identifier = Field(Str,
+                         ApiContract + "identifier",
+                         ModelDoc(ModelVocabularies.ApiContract, "identifier", "Specific api identifier"))
 
   val Schemes =
     Field(Array(Str),
@@ -64,10 +68,6 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
     ModelDoc(ModelVocabularies.Security, "security", "Textual indication of the kind of security scheme used")
   )
 
-  val Tags = Field(Array(TagModel),
-                   ApiContract + "tag",
-                   ModelDoc(ModelVocabularies.ApiContract, "tag", "Additionally custom tagged information"))
-
   override val `type`
     : List[ValueType] = ApiContract + "WebAPI" :: Document + "RootDomainElement" :: DomainElementModel.`type`
 
@@ -75,6 +75,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
     List(
       Name,
       Description,
+      Identifier,
       Servers,
       Accepts,
       ContentType,
