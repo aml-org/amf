@@ -1,0 +1,39 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Backlog API",
+    "version": "1.0.0-oas3"
+  },
+  "components": {
+    "schemas": {
+      "user": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/invalid reference in the document"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

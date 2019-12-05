@@ -35,6 +35,7 @@ case class OasContentParser(node: YNode, mediaType: String, producer: Option[Str
   def parse(): Payload = {
     val map     = node.as[YMap]
     val payload = producer(Some(mediaType)).add(Annotations.valueNode(map))
+    ctx.closedShape(payload.id, map, "content")
 
     // schema
     map.key(

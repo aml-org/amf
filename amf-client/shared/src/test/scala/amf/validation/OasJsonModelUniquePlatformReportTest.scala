@@ -170,5 +170,14 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("oas3/unresolved-refs-in-components.json", Some("unresolved-refs-in-components.report"), Oas30Profile)
   }
 
+  test("Unresolved ref in schema") {
+    validate("oas3/unresolved-ref-in-schema.json", Some("unresolved-ref-in-schema.report"), Oas30Profile)
+  }
+
+  test("Closed shape schema on response node") {
+    validate("oas3/schema-on-response-node.json", Some("schema-on-response-node.report"), Oas30Profile)
+  }
+
+
   override val hint: Hint = OasJsonHint
 }
