@@ -171,7 +171,7 @@ object CustomShaclFunctions {
     "requiredFlowsInOAuth2" -> ((element, violation) => {
       element.fields.getValueAsOption(SecuritySchemeModel.Settings).map(_.value) foreach {
         case OAuth2Settings(fields, _) =>
-          if (!fields.exists(OAuth2SettingsModel.Flow)) violation(None)
+          if (!fields.exists(OAuth2SettingsModel.Flows)) violation(None)
         case _ =>
       }
     }),

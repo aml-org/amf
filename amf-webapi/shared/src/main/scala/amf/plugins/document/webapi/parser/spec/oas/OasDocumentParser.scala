@@ -23,16 +23,9 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
-import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth2SettingsModel,
-  OpenIdConnectSettingsModel,
-  ParametrizedSecuritySchemeModel,
-  ScopeModel
-}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
@@ -366,70 +359,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     namesWithTag.foreach {
       case (name, tag) =>
         ctx.violation(DuplicatedTags, tag.id, s"Tag with name '$name' was found duplicated", tag.annotations)
-    }
-  }
-
-  case class ParametrizedSecuritySchemeParser(node: YNode, producer: String => ParametrizedSecurityScheme) {
-    def parse(): Option[ParametrizedSecurityScheme] = node.to[YMap] match {
-      case Right(map) if map.entries.nonEmpty =>
-        val schemeEntry = map.entries.head
-        val name        = schemeEntry.key.as[YScalar].text
-        val scheme      = producer(name).add(Annotations(map))
-
-        var declaration = parseTarget(name, scheme, schemeEntry)
-        declaration = declaration.linkTarget match {
-          case Some(d) => d.asInstanceOf[SecurityScheme]
-          case None    => declaration
-        }
-
-        parseScopes(scheme, declaration, schemeEntry)
-        Some(scheme)
-      case Right(map) if map.entries.isEmpty =>
-        None
-      case _ =>
-        val scheme = producer(node.toString)
-        ctx.violation(InvalidSecuredByType, scheme.id, s"Invalid type $node", node)
-        None
-    }
-
-    private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
-      def scopesForSettings(initial: Settings, field: Field) = {
-        val settings = initial.adopted(scheme.id)
-        val scopes = schemeEntry.value
-          .as[Seq[YNode]]
-          .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
-        scheme.set(ParametrizedSecuritySchemeModel.Settings,
-                   settings.setArray(field, scopes, Annotations(schemeEntry.value)))
-      }
-      if (declaration.`type`.is("OAuth 2.0")) scopesForSettings(OAuth2Settings(), OAuth2SettingsModel.Scopes)
-      else if (declaration.`type`.is("openIdConnect"))
-        scopesForSettings(OpenIdConnectSettings(), OpenIdConnectSettingsModel.Scopes)
-      else
-        schemeEntry.value.tag.tagType match {
-          case YType.Seq if schemeEntry.value.as[Seq[YNode]].nonEmpty =>
-            val msg = declaration.`type`.option() match {
-              case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
-              case None             => "Scopes array must be empty for given security scheme"
-            }
-            ctx.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
-          case _ =>
-        }
-    }
-
-    private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
-      ctx.declarations.findSecurityScheme(name, SearchScope.All) match {
-        case Some(declaration) =>
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration)
-          declaration
-        case None =>
-          val securityScheme = SecurityScheme()
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme)
-          ctx.violation(DeclarationNotFound,
-                        securityScheme.id,
-                        s"Security scheme '$name' not found in declarations.",
-                        part)
-          securityScheme
-      }
     }
   }
 
