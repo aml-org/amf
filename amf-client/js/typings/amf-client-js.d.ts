@@ -30,7 +30,7 @@ declare module 'amf-client-js' {
 
     static validateResolved(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: MessageStyle, env?: client.environment.Environment): Promise<client.validate.ValidationReport>
 
-    static loadValidationProfile(url: string): Promise<string>
+    static loadValidationProfile(url: string): Promise<ProfileName>
 
     static registerNamespace(alias: string, prefix: string): boolean
 
@@ -99,7 +99,7 @@ declare module 'amf-client-js' {
 
     static validate(model: model.document.BaseUnit, profileName: ProfileName, messageStyle: MessageStyle, env: client.environment.Environment): Promise<client.validate.ValidationReport>
 
-    static loadValidationProfile(url: string): Promise<string>
+    static loadValidationProfile(url: string): Promise<ProfileName>
 
     static registerNamespace(alias: string, prefix: string): boolean
 
