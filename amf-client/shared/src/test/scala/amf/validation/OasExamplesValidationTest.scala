@@ -30,5 +30,9 @@ class OasExamplesValidationTest extends MultiPlatformReportGenTest {
     validate("/examples/additional-items.json", Some("oas2-additional-items.report"), OasProfile)
   }
 
+  test("Multiple links ref in OAS 3.0") {
+    validate("/oas3/multiple-links.json", None, OasProfile)
+  }
+
   override val hint: Hint = OasJsonHint
 }
