@@ -1,0 +1,29 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2Type": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://example.com/api/oauth/dialog",
+            "refreshUrl": "https://example.com",
+            "scopes": {
+              "書く：ペット": "アカウント内のペットを変更します",
+              "読む：ペット": "あなたのペットを読む"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2Type": ["書く：ペット", "読む：ペット"]
+    }
+  ]
+}

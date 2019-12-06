@@ -16,6 +16,18 @@
       "description": "ゼロ以上でなければならない年数",
       "type": "integer",
       "minimum": 0
+    },
+    "住所": { "$ref":  "#/definitions/住所"}
+  },
+  "definitions": {
+    "住所": {
+      "type": "object",
+      "properties": {
+        "住所": { "type": "string" },
+        "シティ": { "type": "string" },
+        "状態": { "type": "string" }
+      },
+      "required": ["street_address", "city", "state"]
     }
   }
 }

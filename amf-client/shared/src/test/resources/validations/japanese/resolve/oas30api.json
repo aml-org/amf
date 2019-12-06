@@ -1,0 +1,545 @@
+{
+  "openapi" : "3.0.2",
+  "info" : {
+    "title" : "ローンマイクロサービス",
+    "version": "1"
+  },
+  "paths" : {
+    "/支店Details" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "BranchのDetailsを取得しました",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref" : "#/components/schemas/Branch"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ビスに保存します" : {
+      "post" : {
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "ローン申し込み",
+          "description" : "ローン申し込みオブジェクトを入力して、ローンのDetailsをサービスに保存します",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/components/schemas/LoanApplication"
+          }
+        }
+        ],
+        "responses" : {
+          "200" : {
+            "description": "説明",
+            "content" : {
+              "application/json": {
+                "schema": {
+                  "$ref" : "#/components/schemas/Application"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/常に取得しました" : {
+      "get" : {
+        "responses" : {
+          "200" : {
+            "description" : "VehicleのDetailsを正常に取得しました",
+            "content": {
+              "application/json": {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/VehicleDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Vehicle" : {
+        "type" : "object",
+        "properties" : {
+          "約マイル" : {
+            "type" : "string"
+          },
+          "シティ" : {
+            "type" : "string"
+          },
+          "推定値" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "登録州" : {
+            "type" : "string"
+          },
+          "売り手住所" : {
+            "type" : "string"
+          },
+          "売り手名" : {
+            "type" : "string"
+          },
+          "状態" : {
+            "type" : "string"
+          },
+          "通り状態" : {
+            "type" : "string"
+          },
+          "transactionType" : {
+            "type" : "string"
+          },
+          "ビーデン" : {
+            "type" : "string"
+          },
+          "VehicleId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "VehicleMake" : {
+            "type" : "string"
+          },
+          "VehicleModel" : {
+            "type" : "string"
+          },
+          "VehicleType" : {
+            "type" : "string"
+          },
+          "VehicleYear" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "zipCode" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "zipCode" : "zipCode",
+          "シティ" : "シティ",
+          "売り手名" : "売り手名",
+          "売り手住所" : "売り手住所",
+          "VehicleMake" : "VehicleMake",
+          "transactionType" : "transactionType",
+          "推定値" : 7,
+          "VehicleYear" : 1,
+          "通り状態" : "通り状態",
+          "約マイル" : "約マイル",
+          "VehicleModel" : "VehicleModel",
+          "ビーデン" : "ビーデン",
+          "登録州" : "登録州",
+          "状態" : "状態",
+          "VehicleId" : 1,
+          "VehicleType" : "VehicleType"
+        }
+      },
+      "VehicleDetails" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "ビーデン" : {
+            "type" : "string"
+          },
+          "VehicleDetailsId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "VehicleMake" : {
+            "type" : "string"
+          },
+          "VehicleModel" : {
+            "type" : "string"
+          },
+          "VehicleType" : {
+            "type" : "string"
+          },
+          "VehicleYear" : {
+            "type" : "integer",
+            "format" : "int32"
+          }
+        },
+        "example" : {
+          "VehicleYear" : 6,
+          "VehicleDetailsId" : 0,
+          "VehicleModel" : "VehicleModel",
+          "ビーデン" : "ビーデン",
+          "id" : "id",
+          "VehicleMake" : "VehicleMake",
+          "VehicleType" : "VehicleType"
+        }
+      },
+      "User" : {
+        "type" : "object",
+        "properties" : {
+          "addTypePrevious" : {
+            "type" : "string"
+          },
+          "addTypePrimary" : {
+            "type" : "string"
+          },
+          "annualIncome" : {
+            "type" : "integer"
+          },
+          "anyPoliticalRelationship" : {
+            "type" : "boolean"
+          },
+          "apartmentNo" : {
+            "type" : "string"
+          },
+          "citizenOf" : {
+            "type" : "boolean"
+          },
+          "シティ" : {
+            "type" : "string"
+          },
+          "dateOfBirth" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "housingStatus" : {
+            "type" : "string"
+          },
+          "initial" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "monthlyPayment" : {
+            "type" : "integer"
+          },
+          "monthsAtCurrAdd" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "otherIncome" : {
+            "type" : "string"
+          },
+          "permanentResidence" : {
+            "type" : "boolean"
+          },
+          "phoneNo" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "ssn" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "状態" : {
+            "type" : "string"
+          },
+          "通り状態" : {
+            "type" : "string"
+          },
+          "suffix" : {
+            "type" : "string"
+          },
+          "uid" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "userName" : {
+            "type" : "string"
+          },
+          "yearsAtCurrAdd" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "zipCode" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "apartmentNo" : "apartmentNo",
+          "lastName" : "lastName",
+          "zipCode" : "zipCode",
+          "annualIncome" : 5,
+          "housingStatus" : "housingStatus",
+          "シティ" : "シティ",
+          "permanentResidence" : true,
+          "suffix" : "suffix",
+          "phoneNo" : 1234,
+          "ssn" : 3,
+          "uid" : 2,
+          "yearsAtCurrAdd" : 4,
+          "monthlyPayment" : 2,
+          "通り状態" : "通り状態",
+          "状態" : "状態",
+          "addTypePrimary" : "addTypePrimary",
+          "email" : "email",
+          "initial" : "initial",
+          "citizenOf" : true,
+          "dateOfBirth" : "2000-01-23T04:56:07.000+00:00",
+          "userName" : "userName",
+          "otherIncome" : "otherIncome",
+          "firstName" : "firstName",
+          "addTypePrevious" : "addTypePrevious",
+          "anyPoliticalRelationship" : true,
+          "monthsAtCurrAdd" : 7
+        }
+      },
+      "Branch" : {
+        "type" : "object",
+        "properties" : {
+          "apartmentNo" : {
+            "type" : "string"
+          },
+          "BranchId" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "BranchName" : {
+            "type" : "string"
+          },
+          "シティ" : {
+            "type" : "string"
+          },
+          "contactPerson" : {
+            "type" : "string"
+          },
+          "phoneNo" : {
+            "type" : "string"
+          },
+          "状態" : {
+            "type" : "string"
+          },
+          "通り状態" : {
+            "type" : "string"
+          },
+          "zipCode" : {
+            "type" : "string"
+          }
+        },
+        "example" : {
+          "apartmentNo" : "apartmentNo",
+          "BranchId" : 0,
+          "zipCode" : "zipCode",
+          "シティ" : "シティ",
+          "通り状態" : "通り状態",
+          "BranchName" : "BranchName",
+          "contactPerson" : "contactPerson",
+          "状態" : "状態",
+          "phoneNo" : "phoneNo"
+        }
+      },
+      "Application" : {
+        "type" : "object",
+        "properties" : {
+          "ApplicationId" : {
+            "type" : "string"
+          },
+          "Application状態" : {
+            "type" : "string"
+          },
+          "ApplicationStatus" : {
+            "type" : "string"
+          },
+          "Branch" : {
+            "$ref" : "#/components/schemas/Branch"
+          },
+          "loanTerm" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "loanYearPeriod" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "ownerShip" : {
+            "type" : "string"
+          },
+          "pendingWith" : {
+            "type" : "string"
+          },
+          "requestedAmt" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "uid" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "userName" : {
+            "type" : "string"
+          },
+          "Vehicle" : {
+            "$ref" : "#/components/schemas/Vehicle"
+          }
+        },
+        "example" : {
+          "pendingWith" : "pendingWith",
+          "requestedAmt" : 1,
+          "Application状態" : "Application状態",
+          "ownerShip" : "ownerShip",
+          "userName" : "userName",
+          "Branch" : {
+            "apartmentNo" : "apartmentNo",
+            "BranchId" : 0,
+            "zipCode" : "zipCode",
+            "シティ" : "シティ",
+            "通り状態" : "通り状態",
+            "BranchName" : "BranchName",
+            "contactPerson" : "contactPerson",
+            "状態" : "状態",
+            "phoneNo" : "phoneNo"
+          },
+          "Vehicle" : {
+            "zipCode" : "zipCode",
+            "シティ" : "シティ",
+            "売り手名" : "売り手名",
+            "売り手住所" : "売り手住所",
+            "VehicleMake" : "VehicleMake",
+            "transactionType" : "transactionType",
+            "推定値" : 7,
+            "VehicleYear" : 1,
+            "通り状態" : "通り状態",
+            "約マイル" : "約マイル",
+            "VehicleModel" : "VehicleModel",
+            "ビーデン" : "ビーデン",
+            "登録州" : "登録州",
+            "状態" : "状態",
+            "VehicleId" : 1,
+            "VehicleType" : "VehicleType"
+          },
+          "loanYearPeriod" : 6,
+          "uid" : 5,
+          "loanTerm" : 0,
+          "ApplicationStatus" : "ApplicationStatus",
+          "ApplicationId" : "ApplicationId",
+          "user" : {
+            "apartmentNo" : "apartmentNo",
+            "lastName" : "lastName",
+            "zipCode" : "zipCode",
+            "annualIncome" : 5,
+            "housingStatus" : "housingStatus",
+            "シティ" : "シティ",
+            "permanentResidence" : true,
+            "suffix" : "suffix",
+            "phoneNo" : 9,
+            "ssn" : 3,
+            "uid" : 2,
+            "yearsAtCurrAdd" : 4,
+            "monthlyPayment" : 2,
+            "通り状態" : "通り状態",
+            "状態" : "状態",
+            "addTypePrimary" : "addTypePrimary",
+            "email" : "email",
+            "initial" : "initial",
+            "citizenOf" : true,
+            "dateOfBirth" : "2000-01-23T04:56:07.000+00:00",
+            "userName" : "userName",
+            "otherIncome" : "otherIncome",
+            "firstName" : "firstName",
+            "addTypePrevious" : "addTypePrevious",
+            "anyPoliticalRelationship" : true,
+            "monthsAtCurrAdd" : 7
+          }
+        }
+      },
+      "LoanApplication" : {
+        "type": "object",
+        "properties": {
+          "Application": {
+            "$ref": "#/components/schemas/Application"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        },
+        "example": {
+          "Application": {
+            "pendingWith": "pendingWith",
+            "requestedAmt": 1,
+            "Application状態": "Application状態",
+            "ownerShip": "ownerShip",
+            "userName": "userName",
+            "Branch": {
+              "apartmentNo": "apartmentNo",
+              "BranchId": 0,
+              "zipCode": "zipCode",
+              "シティ": "シティ",
+              "通り状態": "通り状態",
+              "BranchName": "BranchName",
+              "contactPerson": "contactPerson",
+              "状態": "状態",
+              "phoneNo": "phoneNo"
+            },
+            "Vehicle": {
+              "zipCode": "zipCode",
+              "シティ": "シティ",
+              "売り手名": "売り手名",
+              "売り手住所": "売り手住所",
+              "VehicleMake": "VehicleMake",
+              "transactionType": "transactionType",
+              "推定値": 7,
+              "VehicleYear": 1,
+              "通り状態": "通り状態",
+              "約マイル": "約マイル",
+              "VehicleModel": "VehicleModel",
+              "ビーデン": "ビーデン",
+              "登録州": "登録州",
+              "状態": "状態",
+              "VehicleId": 1,
+              "VehicleType": "VehicleType"
+            },
+            "loanYearPeriod": 6,
+            "uid": 5,
+            "loanTerm": 0,
+            "ApplicationStatus": "ApplicationStatus",
+            "ApplicationId": "ApplicationId",
+            "user": {
+              "apartmentNo": "apartmentNo",
+              "lastName": "lastName",
+              "zipCode": "zipCode",
+              "annualIncome": 5,
+              "housingStatus": "housingStatus",
+              "シティ": "シティ",
+              "permanentResidence": true,
+              "suffix": "suffix",
+              "phoneNo": 9,
+              "ssn": 3,
+              "uid": 2,
+              "yearsAtCurrAdd": 4,
+              "monthlyPayment": 2,
+              "通り状態": "通り状態",
+              "状態": "状態",
+              "addTypePrimary": "addTypePrimary",
+              "email": "email",
+              "initial": "initial",
+              "citizenOf": true,
+              "dateOfBirth": "2000-01-23T04:56:07.000+00:00",
+              "userName": "userName",
+              "otherIncome": "otherIncome",
+              "firstName": "firstName",
+              "addTypePrevious": "addTypePrevious",
+              "anyPoliticalRelationship": true,
+              "monthsAtCurrAdd": 7
+            }
+          }
+        }
+      }
+    }
+  }
+}
