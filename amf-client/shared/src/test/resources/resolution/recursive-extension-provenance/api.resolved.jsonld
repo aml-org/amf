@@ -65,7 +65,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#4/linked_1",
+                            "@id": "#4/link--70695019",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -267,6 +267,9 @@
                       "resolved-link-target": {
                         "#19": "amf://id#19"
                       },
+                      "declared-element": {
+                        "#19": ""
+                      },
                       "lexical": {
                         "#19": "[(21,2)-(27,0)]"
                       },
@@ -305,6 +308,11 @@
     "doc:version": [
       {
         "@value": "2.0.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
       }
     ],
     "doc:declares": [
@@ -1093,6 +1101,9 @@
         "smaps": {
           "resolved-link-target": {
             "#19": "amf://id#19"
+          },
+          "declared-element": {
+            "#19": ""
           },
           "lexical": {
             "#19": "[(21,2)-(27,0)]"

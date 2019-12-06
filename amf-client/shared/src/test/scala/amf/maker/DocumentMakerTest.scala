@@ -112,6 +112,7 @@ class DocumentMakerTest extends WebApiMakerTest {
 
     val document = Document()
       .withEncodes(api)
+      .withRoot(true)
     document
   }
 

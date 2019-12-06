@@ -164,7 +164,8 @@ object HttpSettings {
 case class OpenIdConnectSettings(override val fields: Fields, override val annotations: Annotations)
     extends Settings(fields, annotations) {
 
-  def url: StrField = fields.field(Url)
+  def url: StrField      = fields.field(Url)
+  def scopes: Seq[Scope] = fields.field(OpenIdConnectSettingsModel.Scopes)
 
   def withUrl(url: String): this.type = set(Url, url)
 

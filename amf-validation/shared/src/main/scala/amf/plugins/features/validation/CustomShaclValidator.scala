@@ -167,8 +167,12 @@ class CustomShaclValidator(model: BaseUnit,
       // depending if propertyInfo is provided, violation is thrown at a given property, or by default on element
       val onViolation = (propertyInfo: Option[PropertyInfo]) =>
         propertyInfo match {
-          case Some((annot, field)) =>
-            reportFailure(validationSpecification, functionConstraint, element.id, annot, Some(field.toString))
+          case Some((_, field)) =>
+            reportFailure(validationSpecification,
+                          functionConstraint,
+                          element.id,
+                          element.annotations,
+                          Some(field.toString))
           case _ => reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
       }
       validationFunction(element, onViolation)

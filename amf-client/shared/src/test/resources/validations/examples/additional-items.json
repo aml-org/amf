@@ -1,0 +1,64 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "Loan Microservice",
+    "version": "1"
+  },
+  "paths" : {},
+  "definitions" : {
+    "invalid-tuple-array-additional-items-boolean": {
+      "type": "array",
+      "items": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string",
+          "enum": ["NW"]
+        }
+      ],
+      "additionalItems": false,
+      "example": [
+        5,
+        "NW",
+        4
+      ]
+    },
+    "invalid-tuple-array-additional-items-object": {
+      "type": "array",
+      "items": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "string",
+          "enum": ["NW"]
+        }
+      ],
+      "additionalItems": {
+        "type": "string"
+      },
+      "example": [
+        5,
+        "NW",
+        4
+      ]
+    },
+    "valid-tuple-array-additional-items-object": {
+      "type": "array",
+      "items": [
+        {
+          "type": "number"
+        }
+      ],
+      "additionalItems": {
+        "type": "string"
+      },
+      "example": [
+        5,
+        "lala",
+        "other"
+      ]
+    }
+  }
+}

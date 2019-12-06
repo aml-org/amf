@@ -1,0 +1,492 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#8",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "American Flights API"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "v1"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#9",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/flights"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#10",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#11",
+                    "@type": [
+                      "apiContract:Response",
+                      "doc:DomainElement"
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#12",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#7/link-1935496447",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "doc:link-target": [
+                              {
+                                "@id": "#7"
+                              }
+                            ],
+                            "doc:link-label": [
+                              {
+                                "@value": "AmericanFlight"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "#12": "[(12,10)-(14,14)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(11,8)-(14,14)]",
+                        "#11": "[(10,6)-(14,14)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:returns": "[(9,4)-(14,14)]",
+                    "#10": "[(8,2)-(14,14)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#9": "[(7,0)-(14,14)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#8": "RAML 1.0"
+          },
+          "lexical": {
+            "core:version": "[(2,0)-(3,0)]",
+            "#8": "[(2,0)-(14,14)]",
+            "core:name": "[(3,0)-(5,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.0.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:references": [
+      {
+        "@id": "#1",
+        "@type": [
+          "raml-shapes:DataTypeFragment",
+          "doc:Fragment",
+          "doc:Unit"
+        ],
+        "doc:encodes": [
+          {
+            "@id": "#2",
+            "@type": [
+              "shacl:NodeShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:closed": [
+              {
+                "@value": false
+              }
+            ],
+            "shacl:property": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#ID"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "ID?"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#4": "[(5,2)-(6,0)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 0
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "ID"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#3": "[(5,2)-(6,0)]"
+                  }
+                }
+              },
+              {
+                "@id": "#5",
+                "@type": [
+                  "shacl:PropertyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:path": [
+                  {
+                    "@id": "http://a.ml/vocabularies/data#code"
+                  }
+                ],
+                "raml-shapes:range": [
+                  {
+                    "@id": "#6",
+                    "@type": [
+                      "raml-shapes:ScalarShape",
+                      "raml-shapes:AnyShape",
+                      "shacl:Shape",
+                      "raml-shapes:Shape",
+                      "doc:DomainElement"
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "shacl:name": [
+                      {
+                        "@value": "code"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#6": "[(6,2)-(6,14)]"
+                      }
+                    }
+                  }
+                ],
+                "shacl:minCount": [
+                  {
+                    "@value": 1
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "code"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#5": "[(6,2)-(6,14)]"
+                  }
+                }
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "type"
+              }
+            ],
+            "smaps": {
+              "source-vendor": {
+                "#2": "RAML 1.0"
+              },
+              "lexical": {
+                "#2": "[(3,0)-(6,14)]"
+              },
+              "type-property-lexical-info": {
+                "#2": "[(3,0)-(3,4)]"
+              }
+            }
+          }
+        ],
+        "doc:version": [
+          {
+            "@value": "2.0.0"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ],
+        "smaps": {
+          "lexical": {
+            "#1": "[(3,0)-(6,14)]"
+          }
+        }
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#7",
+        "@type": [
+          "shacl:NodeShape",
+          "raml-shapes:AnyShape",
+          "shacl:Shape",
+          "raml-shapes:Shape",
+          "doc:DomainElement"
+        ],
+        "shacl:closed": [
+          {
+            "@value": false
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#3",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#ID"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#4",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#integer"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "ID?"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#4": "[(5,2)-(6,0)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "ID"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#3": "[(5,2)-(6,0)]"
+              }
+            }
+          },
+          {
+            "@id": "#5",
+            "@type": [
+              "shacl:PropertyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#code"
+              }
+            ],
+            "raml-shapes:range": [
+              {
+                "@id": "#6",
+                "@type": [
+                  "raml-shapes:ScalarShape",
+                  "raml-shapes:AnyShape",
+                  "shacl:Shape",
+                  "raml-shapes:Shape",
+                  "doc:DomainElement"
+                ],
+                "shacl:datatype": [
+                  {
+                    "@id": "http://www.w3.org/2001/XMLSchema#string"
+                  }
+                ],
+                "shacl:name": [
+                  {
+                    "@value": "code"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "#6": "[(6,2)-(6,14)]"
+                  }
+                }
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "code"
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#5": "[(6,2)-(6,14)]"
+              }
+            }
+          }
+        ],
+        "shacl:name": [
+          {
+            "@value": "AmericanFlight"
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#7": ""
+          },
+          "resolved-link": {
+            "#7": "amf://id#7"
+          },
+          "type-property-lexical-info": {
+            "#7": "[(3,0)-(3,4)]"
+          },
+          "lexical": {
+            "#7": "[(3,0)-(6,14)]"
+          },
+          "source-vendor": {
+            "#7": "RAML 1.0"
+          },
+          "resolved-link-target": {
+            "#7": "amf://id#2"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

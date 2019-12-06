@@ -51,6 +51,20 @@
       }
     }
   },
+  "security": [
+    {
+      "valid-openIdConnectType": ["some:scope"]
+    },
+    {
+      "valid-apiKeyType": []
+    },
+    {
+      "valid-httpType": []
+    },
+    {
+      "valid-oauth2Type": ["write:pets"]
+    }
+  ],
   "paths": {}
 
 }

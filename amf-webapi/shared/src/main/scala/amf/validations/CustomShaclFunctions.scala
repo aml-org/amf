@@ -2,13 +2,27 @@ package amf.validations
 
 import java.util.regex.Pattern
 
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.utils.RegexConverter
+import amf.plugins.document.webapi.validation.Oas3ExpressionValidator
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.{FileShape, ScalarShape}
-import amf.plugins.domain.webapi.metamodel.{ParameterModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel.security.{
+  OAuth2SettingsModel,
+  OpenIdConnectSettingsModel,
+  SecuritySchemeModel
+}
+import amf.plugins.domain.webapi.metamodel.{
+  CallbackModel,
+  IriTemplateMappingModel,
+  ParameterModel,
+  TemplatedLinkModel,
+  WebApiModel
+}
+import amf.plugins.domain.webapi.models.IriTemplateMapping
+import amf.plugins.domain.webapi.models.security.{OAuth2Settings, OpenIdConnectSettings}
 
 object CustomShaclFunctions {
 
@@ -135,7 +149,7 @@ object CustomShaclFunctions {
         .map(_.value)
         .foreach {
           case AmfArray(elements, _) if elements.isEmpty =>
-            violation(Some(maybeValue.map(_.annotations).getOrElse(Annotations()), WebApiModel.Schemes))
+            violation(Some(Annotations(), WebApiModel.Schemes))
           case _ =>
         }
     }),
@@ -146,7 +160,49 @@ object CustomShaclFunctions {
       } yield {
         violation(None)
       }
+    }),
+    "requiredOpenIdConnectUrl" -> ((element, violation) => {
+      element.fields.getValueAsOption(SecuritySchemeModel.Settings).map(_.value) foreach {
+        case OpenIdConnectSettings(fields, _) =>
+          if (!fields.exists(OpenIdConnectSettingsModel.Url)) violation(None)
+        case _ =>
+      }
+    }),
+    "requiredFlowsInOAuth2" -> ((element, violation) => {
+      element.fields.getValueAsOption(SecuritySchemeModel.Settings).map(_.value) foreach {
+        case OAuth2Settings(fields, _) =>
+          if (!fields.exists(OAuth2SettingsModel.Flow)) violation(None)
+        case _ =>
+      }
+    }),
+    "validCallbackExpression" -> ((callback, violation) => {
+      val optExpression = callback.fields.getValueAsOption(CallbackModel.Expression).map(_.value)
+      validateExpression(optExpression, () => violation(Some(Annotations(), CallbackModel.Expression)))
+    }),
+    "validLinkRequestBody" -> ((link, violation) => {
+      val optExpression = link.fields.getValueAsOption(TemplatedLinkModel.RequestBody).map(_.value)
+      validateExpression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.RequestBody)))
+
+    }),
+    "validLinkParameterExpressions" -> ((link, violation) => {
+      val maybeArray = link.fields.?[AmfArray](TemplatedLinkModel.Mapping)
+      maybeArray foreach { array =>
+        array.values.foreach {
+          case link: IriTemplateMapping =>
+            val optExpression: Option[AmfElement] =
+              link.fields.getValueAsOption(IriTemplateMappingModel.LinkExpression).map(_.value)
+            validateExpression(optExpression, () => violation(Some(Annotations(), TemplatedLinkModel.Mapping)))
+          case _ =>
+        }
+      }
     })
   )
+
+  def validateExpression(exp: Option[AmfElement], throwValidation: () => Unit): Unit = exp foreach {
+    case exp: AmfScalar =>
+      if (!Oas3ExpressionValidator.validate(exp.toString))
+        throwValidation()
+    case _ =>
+  }
 
 }

@@ -117,9 +117,11 @@ object OpenIdConnectSettingsModel extends SettingsModel {
 
   val Url = Field(Str, Security + "openIdConnectUrl", ModelDoc(ModelVocabularies.Security, "OpenID connect URL", ""))
 
+  val Scopes = Field(Array(ScopeModel), Security + "scope", ModelDoc(ModelVocabularies.Security, "scope", ""))
+
   override val `type`: List[ValueType] = List(Security + "OpenIdConnectSettings") ++ SettingsModel.`type`
 
-  override def fields: List[Field] = List(Url) ++ SettingsModel.fields
+  override def fields: List[Field] = List(Url, Scopes) ++ SettingsModel.fields
 
   override def modelInstance = ApiKeySettings()
 

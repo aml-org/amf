@@ -7,7 +7,7 @@ import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.remote.Vendor
-import amf.core.utils.AmfStrings
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
 import amf.plugins.document.webapi.contexts._
@@ -719,7 +719,20 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key("minItems", ArrayShapeModel.MinItems in shape)
       map.key("maxItems", ArrayShapeModel.MaxItems in shape)
       map.key("uniqueItems", ArrayShapeModel.UniqueItems in shape)
-      map.key("additionalItems", TupleShapeModel.AdditionalItems in shape)
+      map.key("additionalItems").foreach { entry =>
+        entry.value.tagType match {
+          case YType.Bool => (TupleShapeModel.AdditionalItems in shape)(entry)
+          case YType.Map =>
+            OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
+              shape.set(TupleShapeModel.AdditionalItemsSchema, s, Annotations(entry))
+            }
+          case _ =>
+            ctx.violation(InvalidAdditionalItemsType,
+                          shape.id,
+                          "Invalid part type for additional items node. Should be a boolean or a map",
+                          entry)
+        }
+      }
       map.key(
         "items",
         entry => {
@@ -1044,7 +1057,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val shape: Shape
     val map: YMap
-    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id))
+    private val counter                        = new IdCounter()
+    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), counter)
 
     def parse(): Shape = {
 

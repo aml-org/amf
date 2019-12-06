@@ -53,6 +53,15 @@
             }
           }
         }
+      },
+      "invalid-binding": {
+        "in": "violationHandledInRawValidation",
+        "name": "searchString",
+        "description": "pass an optional search string for looking up inventory",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
       }
     }
   },

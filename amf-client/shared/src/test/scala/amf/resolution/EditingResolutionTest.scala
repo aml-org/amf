@@ -396,6 +396,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Test reference resolution with chained links") {
+    cycle(
+      "api.raml",
+      "api.jsonld",
+      RamlYamlHint,
+      Amf,
+      validationsPath + "links/"
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {
       case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)

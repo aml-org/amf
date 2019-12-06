@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Basic Callbacks",
+    "title": "Security objects and requirements",
     "version": "0.1"
   },
   "components": {
@@ -43,22 +43,17 @@
       }
     }
   },
-  "paths": {
-    "/test": {
-      "get": {
-        "summary": "this is a test",
-        "responses": {
-          "200": {
-            "description": "description"
-          }
-        }
-      }
-    }
-  },
-  "servers": [
+  "security": [
     {
-      "url": "https://test.com/",
-      "description": "The production API server"
+      "oauth2Type": [
+        "write:pets"
+      ]
+    },
+    {
+      "openIdConnectType": [
+        "some:scope"
+      ]
     }
-  ]
+  ],
+  "paths": {}
 }

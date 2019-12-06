@@ -8,7 +8,7 @@ import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.RamlSecuritySettingsValuesEmitters
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
-import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme}
+import amf.plugins.domain.webapi.models.security.{OAuth2Settings, OpenIdConnectSettings, ParametrizedSecurityScheme}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
 
@@ -76,6 +76,8 @@ case class OasParametrizedSecuritySchemeEmitter(parametrizedScheme: Parametrized
               .flatMap { flow =>
                 flow.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
               }
+          case settings: OpenIdConnectSettings =>
+            settings.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
           case _ => // we cant emit, if its not 2.0 isnt valid in oas.
             Nil
 

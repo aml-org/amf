@@ -24,6 +24,15 @@
         }
       }
     },
+    "/me": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Is not duplicate"
+          }
+        }
+      }
+    },
     "/books/{id}": {
       "parameters": [
         {
@@ -42,7 +51,17 @@
           }
         }
       }
-    },"/books/{id}/other": {
+    },
+    "/books/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Is not duplicate"
+          }
+        }
+      }
+    },
+    "/books/{id}/other": {
       "parameters": [
         {
           "in": "path",
@@ -95,6 +114,15 @@
         "responses": {
           "200": {
             "description": "Success"
+          }
+        }
+      }
+    },
+    "/path": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Is not duplicate"
           }
         }
       }

@@ -302,9 +302,9 @@ case class OasSecuritySchemeParser(node: YNode, adopt: SecurityScheme => Securit
           case None =>
             ctx.violation(CoreValidations.UnresolvedReference,
                           "",
-                          s"Cannot find link reference $parsedUrl",
+                          s"Cannot find security scheme reference $parsedUrl",
                           Annotations(node))
-            ErrorSecurityScheme(parsedUrl, node)
+            adopt(ErrorSecurityScheme(parsedUrl, node))
         }
       }
   }

@@ -269,6 +269,9 @@
                       "resolved-link-target": {
                         "#2": "amf://id#2"
                       },
+                      "declared-element": {
+                        "#2": ""
+                      },
                       "lexical": {
                         "#2": "[(3,2)-(6,12)]"
                       },
@@ -309,6 +312,16 @@
         "@value": "2.0.0"
       }
     ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "smaps": {
+      "aliases-array": {
+        "": "lib->amf://id#1::lib.raml"
+      }
+    },
     "doc:references": [
       {
         "@id": "#1",
@@ -426,6 +439,9 @@
               "resolved-link-target": {
                 "#2": "amf://id#2"
               },
+              "declared-element": {
+                "#2": ""
+              },
               "lexical": {
                 "#2": "[(3,2)-(6,12)]"
               },
@@ -440,6 +456,11 @@
             "@value": "2.0.0"
           }
         ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ],
         "smaps": {
           "source-vendor": {
             "#1": "RAML 1.0"
@@ -450,11 +471,6 @@
         }
       }
     ],
-    "smaps": {
-      "aliases-array": {
-        "": "lib->amf://id#1::lib.raml"
-      }
-    },
     "@context": {
       "@base": "amf://id",
       "shacl": "http://www.w3.org/ns/shacl#",

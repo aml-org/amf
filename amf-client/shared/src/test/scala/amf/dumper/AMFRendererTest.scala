@@ -138,9 +138,15 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |      {
         |        "@value": "2.0.0"
         |      }
+        |    ],
+        |    "http://a.ml/vocabularies/document#root": [
+        |      {
+        |        "@value": true
+        |      }
         |    ]
         |  }
-        |]""".stripMargin
+        |]
+        |""".stripMargin
 
     new AMFRenderer(`document/api/bare`, Amf, RenderOptions(), None).renderToString.map(assert(_, expected))
   }
@@ -417,9 +423,15 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |      {
         |        "@value": "2.0.0"
         |      }
+        |    ],
+        |    "http://a.ml/vocabularies/document#root": [
+        |      {
+        |        "@value": true
+        |      }
         |    ]
         |  }
-        |]""".stripMargin
+        |]
+        |""".stripMargin
 
     new AMFRenderer(`document/api/full`, Amf, RenderOptions(), None).renderToString.map(assert(_, expected))
   }

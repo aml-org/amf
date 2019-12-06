@@ -1,0 +1,8 @@
+#%RAML 1.0 Trait
+
+headers:
+  X-Date-Format?:
+    displayName: Date Format
+    description: |
+      Allows you to define the format in which date fields should be re-presented in both requests and responses for the API. This includes query parameters and request and response payloads. Formats must be specified using patterns defined in the "Patterns for Formatting and Parsing" section of the documentation at https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html
+    example: yyyy-MM-dd'T'HH:mm:ss

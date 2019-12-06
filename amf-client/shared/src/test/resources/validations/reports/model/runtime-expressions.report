@@ -1,0 +1,30 @@
+Model: file://amf-client/shared/src/test/resources/validations/oas3/runtime-expressions.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 3
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#TemplatedLink-mapping-validLinkParameterExpressions
+  Message: Does not comply with runtime expression ABNF syntax
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/runtime-expressions.json#/web-api/end-points/%2Ftest/get/200/templatedLink/invalid
+  Property: http://a.ml/vocabularies/apiContract#mapping
+  Position: Some(LexicalInformation([(25,30)-(28,17)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/runtime-expressions.json
+
+- Source: http://a.ml/vocabularies/amf/parser#TemplatedLink-requestBody-validLinkRequestBody
+  Message: Does not comply with runtime expression ABNF syntax
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/runtime-expressions.json#/web-api/end-points/%2Ftest/get/200/templatedLink/invalid
+  Property: http://a.ml/vocabularies/apiContract#requestBody
+  Position: Some(LexicalInformation([(29,31)-(29,47)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/runtime-expressions.json
+
+- Source: http://a.ml/vocabularies/amf/parser#Callback-expression-validCallbackExpression
+  Message: Does not comply with runtime expression ABNF syntax
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/runtime-expressions.json#/web-api/end-points/%2Ftest/get/invalidExpression/%7B%24request.payload.name%7D
+  Property: http://a.ml/vocabularies/apiContract#expression
+  Position: Some(LexicalInformation([(110,12)-(110,37)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/runtime-expressions.json

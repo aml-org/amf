@@ -617,9 +617,10 @@ object Oas3ParameterParser {
                                    AmfScalar(entry.value.as[String]),
                                    Annotations(entry) += ExplicitField())
       case None =>
-        val defValue: Option[String] = result.binding.option().map {
-          case "query" | "cookie" => "form"
-          case "path" | "header"  => "simple"
+        val defValue: Option[String] = result.binding.option() match {
+          case Some("query") | Some("cookie") => Some("form")
+          case Some("path") | Some("header")  => Some("simple")
+          case _                              => None
         }
         defValue.foreach(result.set(ParameterModel.Style, _))
     }
