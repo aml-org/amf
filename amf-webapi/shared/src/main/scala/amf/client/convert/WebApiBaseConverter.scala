@@ -27,7 +27,8 @@ import amf.client.model.domain.{
   Server => ClientServer,
   Settings => ClientSettings,
   TemplatedLink => ClientTemplatedLink,
-  Trait => ClientTrait
+  Trait => ClientTrait,
+  Tag => ClientTag
 }
 import amf.client.validate.{PayloadValidator => ClientInternalPayloadValidator}
 import amf.core.unsafe.PlatformSecrets
@@ -48,6 +49,7 @@ trait WebApiBaseConverter
     with RequestConverter
     with ResponseConverter
     with OperationConverter
+    with TagConverter
     with ParameterConverter
     with PayloadConverter
     with ParametrizedSecuritySchemeConverter
@@ -148,6 +150,15 @@ trait OperationConverter extends PlatformSecrets {
   implicit object OperationMatcher extends BidirectionalMatcher[Operation, ClientOperation] {
     override def asClient(from: Operation): ClientOperation   = platform.wrap[ClientOperation](from)
     override def asInternal(from: ClientOperation): Operation = from._internal
+  }
+
+}
+
+trait TagConverter extends PlatformSecrets {
+
+  implicit object TagMatcher extends BidirectionalMatcher[Tag, ClientTag] {
+    override def asClient(from: Tag): ClientTag   = platform.wrap[ClientTag](from)
+    override def asInternal(from: ClientTag): Tag = from._internal
   }
 
 }

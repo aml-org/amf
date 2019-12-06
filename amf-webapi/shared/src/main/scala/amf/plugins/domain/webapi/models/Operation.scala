@@ -27,10 +27,11 @@ case class Operation(fields: Fields, annotations: Annotations)
   def schemes: Seq[StrField]             = fields.field(Schemes)
   def accepts: Seq[StrField]             = fields.field(Accepts)
   def contentType: Seq[StrField]         = fields.field(ContentType)
-  def request: Request                   = fields.field(OperationRequest)
+  def request: Request                   = requests.headOption.orNull
+  def requests: Seq[Request]             = fields.field(OperationRequest)
   def responses: Seq[Response]           = fields.field(Responses)
   def security: Seq[SecurityRequirement] = fields.field(Security)
-  def tags: Seq[String]                  = fields(Tags)
+  def tags: Seq[Tag]                     = fields.field(Tags)
   def callbacks: Seq[Callback]           = fields.field(Callbacks)
   def servers: Seq[Server]               = fields.field(Servers)
 
@@ -44,10 +45,10 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withSchemes(schemes: Seq[String]): this.type                = set(Schemes, schemes.toList)
   def withAccepts(accepts: Seq[String]): this.type                = set(Accepts, accepts.toList)
   def withContentType(contentType: Seq[String]): this.type        = set(ContentType, contentType.toList)
-  def withRequest(request: Request): this.type                    = set(OperationRequest, request)
+  def withRequest(request: Request): this.type                    = setArray(OperationRequest, List(request))
   def withResponses(responses: Seq[Response]): this.type          = setArray(Responses, responses)
   def withSecurity(security: Seq[SecurityRequirement]): this.type = setArray(Security, security)
-  def withTags(tag: Seq[String]): this.type                       = set(Tags, tag.toList)
+  def withTags(tags: Seq[Tag]): this.type                         = setArray(Tags, tags)
   def withCallbacks(callbacks: Seq[Callback]): this.type          = setArray(Callbacks, callbacks)
   def withServers(servers: Seq[Server]): this.type                = setArray(Servers, servers)
 
@@ -61,7 +62,7 @@ case class Operation(fields: Fields, annotations: Annotations)
 
   def withRequest(): Request = {
     val request = Request()
-    set(OperationRequest, request)
+    setArray(OperationRequest, List(request))
     request
   }
 

@@ -6,12 +6,12 @@ import amf.core.model.domain.{AmfElement, AmfScalar}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
-import amf.plugins.domain.webapi.models.security.{OAuth2Settings, SecurityRequirement}
+import amf.plugins.domain.webapi.models.security.{OAuth2Settings, OpenIdConnectSettings, SecurityRequirement}
 import org.yaml.model.YDocument.PartBuilder
 
 case class SecurityRequirementsEmitter(key: String, f: FieldEntry, ordering: SpecOrdering)(
-  implicit spec: SpecEmitterContext)
-  extends SingleValueArrayEmitter {
+    implicit spec: SpecEmitterContext)
+    extends SingleValueArrayEmitter {
 
   override type Element = SecurityRequirement
 
@@ -41,13 +41,14 @@ case class OasSecurityRequirementEmitter(requirement: SecurityRequirement, order
                   .flatMap { flow =>
                     flow.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
                   }
+              case settings: OpenIdConnectSettings =>
+                settings.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
               case _ => // we cant emit, if its not 2.0 isnt valid in oas.
                 Nil
 
             }
 
             eb.entry(parametrizedScheme.name.value(), _.list(traverse(ordering.sorted(scopes), _)))
-
 
           case None =>
             eb.entry(parametrizedScheme.name.value(), _.list(_ => {}))
@@ -59,9 +60,9 @@ case class OasSecurityRequirementEmitter(requirement: SecurityRequirement, order
   override def position(): Position = pos(requirement.annotations)
 }
 
-case class RamlSecurityRequirementEmitter(requirement: SecurityRequirement,
-                                                 ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
-  extends SecurityRequirementEmitter(requirement, ordering) {
+case class RamlSecurityRequirementEmitter(requirement: SecurityRequirement, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends SecurityRequirementEmitter(requirement, ordering) {
   override def emit(b: PartBuilder): Unit = {
     requirement.schemes.foreach { scheme =>
       RamlParametrizedSecuritySchemeEmitter(scheme, ordering).emit(b)
@@ -70,4 +71,3 @@ case class RamlSecurityRequirementEmitter(requirement: SecurityRequirement,
 
   override def position(): Position = pos(requirement.annotations)
 }
-

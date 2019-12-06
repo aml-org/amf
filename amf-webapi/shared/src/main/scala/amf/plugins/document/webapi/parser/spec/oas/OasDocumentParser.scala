@@ -783,7 +783,18 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         map.key("produces", OperationModel.ContentType in operation)
       }
       // oas 3.0.0 / oas 2.0
-      map.key("tags", OperationModel.Tags in operation)
+      map.key(
+        "tags",
+        entry => {
+          val tags = mutable.ListBuffer[Tag]()
+          entry.value.as[YSequence].nodes.map(_.value).map {
+            case scalar: YScalar =>
+              tags += Tag(Annotations(scalar)).withName(scalar.text).adopted(operation.id)
+            case _ =>
+          }
+          operation.withTags(tags)
+        }
+      )
       // oas 3.0.0
       if (ctx.syntax == Oas3Syntax) {
         map.key(
@@ -846,7 +857,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       if (ctx.syntax == Oas2Syntax) {
         RequestParser(map, req => operation.withRequest(req))
           .parse()
-          .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
+          .map(req => operation setArray (OperationModel.Request, List(req), Annotations() += SynthesizedField()))
       }
 
       // oas 3.0.0 / oas 2.0

@@ -27,8 +27,10 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   def accepts: ClientList[StrField]             = _internal.accepts.asClient
   def contentType: ClientList[StrField]         = _internal.contentType.asClient
   def request: Request                          = _internal.request
+  def requests: ClientList[Request]             = _internal.requests.asClient
   def responses: ClientList[Response]           = _internal.responses.asClient
   def security: ClientList[SecurityRequirement] = _internal.security.asClient
+  def tags: ClientList[Tag]                     = _internal.tags.asClient
   def callbacks: ClientList[Callback]           = _internal.callbacks.asClient
   def servers: ClientList[Server]               = _internal.servers.asClient
 
@@ -113,6 +115,12 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   /** Set servers property of this Operation. */
   def withServers(servers: ClientList[Server]): this.type = {
     _internal.withServers(servers.asInternal)
+    this
+  }
+
+  /** Set tags property of this Operation. */
+  def withTags(tags: ClientList[Tag]): this.type = {
+    _internal.withTags(tags.asInternal)
     this
   }
 

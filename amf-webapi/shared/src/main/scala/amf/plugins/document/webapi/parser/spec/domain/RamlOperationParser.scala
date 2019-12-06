@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
-import amf.plugins.domain.webapi.models.{Operation, Response}
+import amf.plugins.domain.webapi.models.{Operation, Response, Tag}
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
@@ -64,14 +64,25 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
     map.key("consumes".asRamlAnnotation, OperationModel.Accepts in operation)
     map.key("produces".asRamlAnnotation, OperationModel.ContentType in operation)
-    map.key("tags".asRamlAnnotation, OperationModel.Tags in operation)
+    map.key(
+      "tags".asRamlAnnotation,
+      entry => {
+        val tags = mutable.ListBuffer[Tag]()
+        entry.value.as[YSequence].nodes.map(_.value).map {
+          case scalar: YScalar =>
+            tags += Tag(Annotations(scalar)).withName(scalar.text).adopted(operation.id)
+          case _ =>
+        }
+        operation.withTags(tags)
+      }
+    )
     val DeclarationParser = ParametrizedDeclarationParser.parse(operation.withTrait) _
     map.key("is", (DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue.optional)
 
     ctx.factory
       .requestParser(map, () => operation.withRequest(), parseOptional)
       .parse()
-      .foreach(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
+      .foreach(req => operation.setArray(OperationModel.Request, List(req), Annotations() += SynthesizedField()))
 
     map.key(
       "defaultResponse".asRamlAnnotation,

@@ -138,7 +138,8 @@ trait AccessibleOasDocumentEmitters {
             fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
             fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
             fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
-            fs.entry(OperationModel.Tags).map(f => result += ArrayEmitter("tags", f, ordering))
+            fs.entry(OperationModel.Tags)
+              .map(f => result += StringArrayTagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
             fs.entry(OperationModel.Documentation)
               .map(
                 f =>
@@ -659,6 +660,21 @@ case class TagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(impl
         traverse(ordering.sorted(result), b)
       }
     }
+  }
+}
+
+case class StringArrayTagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+
+  override def position(): Position = tags.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+
+  override def emit(b: EntryBuilder): Unit = {
+    val emitters = tags.flatMap(_.name.option()).map(name => ScalarEmitter(AmfScalar(name)))
+    b.entry(
+      key,
+      _.list(traverse(ordering.sorted(emitters), _))
+    )
   }
 }
 

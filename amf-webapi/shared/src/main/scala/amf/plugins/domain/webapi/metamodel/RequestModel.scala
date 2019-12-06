@@ -3,6 +3,7 @@ package amf.plugins.domain.webapi.metamodel
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Bool}
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.vocabulary.Namespace.ApiContract
 import amf.core.vocabulary.ValueType
@@ -16,7 +17,8 @@ object RequestModel
     with NameFieldSchema
     with DescriptionField
     with ParametersFieldModel
-    with MessageModel {
+    with MessageModel
+    with KeyField {
 
   val Required = Field(Bool, ApiContract + "required", ModelDoc(ModelVocabularies.ApiContract, "required", ""))
 
@@ -37,4 +39,5 @@ object RequestModel
     "Request",
     "Request information for an operation"
   )
+  override val key: Field = Name
 }
