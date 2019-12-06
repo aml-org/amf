@@ -32,7 +32,7 @@
           "200" : {
             "description": "説明",
             "schema" : {
-              "$ref" : "#/definitions/Application"
+              "$ref" : "#/definitions/応用"
             }
           }
         }
@@ -164,123 +164,6 @@
         "id" : "id",
         "車両Make" : "車両Make",
         "車両Type" : "車両Type"
-      }
-    },
-    "Application" : {
-      "type" : "object",
-      "properties" : {
-        "ApplicationId" : {
-          "type" : "string"
-        },
-        "Application状態" : {
-          "type" : "string"
-        },
-        "ApplicationStatus" : {
-          "type" : "string"
-        },
-        "ブランチ" : {
-          "$ref" : "#/definitions/ブランチ"
-        },
-        "loanTerm" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "loanYearPeriod" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "ownerShip" : {
-          "type" : "string"
-        },
-        "pendingWith" : {
-          "type" : "string"
-        },
-        "requestedAmt" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "uid" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "user" : {
-          "$ref" : "#/definitions/User"
-        },
-        "userName" : {
-          "type" : "string"
-        },
-        "車両" : {
-          "$ref" : "#/definitions/車両"
-        }
-      },
-      "example" : {
-        "pendingWith" : "pendingWith",
-        "requestedAmt" : 1,
-        "Application状態" : "Application状態",
-        "ownerShip" : "ownerShip",
-        "userName" : "userName",
-        "ブランチ" : {
-          "apartmentNo" : "apartmentNo",
-          "ブランチId" : 0,
-          "zipCode" : "zipCode",
-          "シティ" : "シティ",
-          "通り状態" : "通り状態",
-          "ブランチName" : "ブランチName",
-          "contactPerson" : "contactPerson",
-          "状態" : "状態",
-          "phoneNo" : "phoneNo"
-        },
-        "車両" : {
-          "zipCode" : "zipCode",
-          "シティ" : "シティ",
-          "売り手名" : "売り手名",
-          "売り手住所" : "売り手住所",
-          "車両Make" : "車両Make",
-          "transactionType" : "transactionType",
-          "推定値" : 7,
-          "車両Year" : 1,
-          "通り状態" : "通り状態",
-          "約マイル" : "約マイル",
-          "車両Model" : "車両Model",
-          "ビーデン" : "ビーデン",
-          "登録州" : "登録州",
-          "状態" : "状態",
-          "車両Id" : 1,
-          "車両Type" : "車両Type"
-        },
-        "loanYearPeriod" : 6,
-        "uid" : 5,
-        "loanTerm" : 0,
-        "ApplicationStatus" : "ApplicationStatus",
-        "ApplicationId" : "ApplicationId",
-        "user" : {
-          "apartmentNo" : "apartmentNo",
-          "lastName" : "lastName",
-          "zipCode" : "zipCode",
-          "annualIncome" : 5,
-          "housingStatus" : "housingStatus",
-          "シティ" : "シティ",
-          "permanentResidence" : true,
-          "suffix" : "suffix",
-          "phoneNo" : 9,
-          "ssn" : 3,
-          "uid" : 2,
-          "yearsAtCurrAdd" : 4,
-          "monthlyPayment" : 2,
-          "通り状態" : "通り状態",
-          "状態" : "状態",
-          "addTypePrimary" : "addTypePrimary",
-          "email" : "email",
-          "initial" : "initial",
-          "citizenOf" : true,
-          "dateOfBirth" : "2000-01-23T04:56:07.000+00:00",
-          "userName" : "userName",
-          "otherIncome" : "otherIncome",
-          "firstName" : "firstName",
-          "addTypePrevious" : "addTypePrevious",
-          "anyPoliticalRelationship" : true,
-          "monthsAtCurrAdd" : 7
-        }
       }
     },
     "User" : {
@@ -447,18 +330,18 @@
     "ローン申し込み" : {
       "type": "object",
       "properties": {
-        "Application": {
-          "$ref": "#/definitions/Application"
+        "応用": {
+          "$ref": "#/definitions/応用"
         },
         "user": {
           "$ref": "#/definitions/User"
         }
       },
       "example": {
-        "Application": {
+        "応用": {
           "pendingWith": "pendingWith",
           "requestedAmt": 1,
-          "Application状態": "Application状態",
+          "応用状態": "応用状態",
           "ownerShip": "ownerShip",
           "userName": "userName",
           "ブランチ": {
@@ -493,8 +376,8 @@
           "loanYearPeriod": 6,
           "uid": 5,
           "loanTerm": 0,
-          "ApplicationStatus": "ApplicationStatus",
-          "ApplicationId": "ApplicationId",
+          "応用Status": "応用Status",
+          "応用Id": "応用Id",
           "user": {
             "apartmentNo": "apartmentNo",
             "lastName": "lastName",
@@ -522,6 +405,123 @@
             "addTypePrevious": "addTypePrevious",
             "anyPoliticalRelationship": true,
             "monthsAtCurrAdd": 7
+          }
+        },
+        "応用" : {
+          "type" : "object",
+          "properties" : {
+            "応用Id" : {
+              "type" : "string"
+            },
+            "応用状態" : {
+              "type" : "string"
+            },
+            "応用Status" : {
+              "type" : "string"
+            },
+            "ブランチ" : {
+              "$ref" : "#/definitions/ブランチ"
+            },
+            "loanTerm" : {
+              "type" : "integer",
+              "format" : "int32"
+            },
+            "loanYearPeriod" : {
+              "type" : "integer",
+              "format" : "int32"
+            },
+            "ownerShip" : {
+              "type" : "string"
+            },
+            "pendingWith" : {
+              "type" : "string"
+            },
+            "requestedAmt" : {
+              "type" : "integer",
+              "format" : "int32"
+            },
+            "uid" : {
+              "type" : "integer",
+              "format" : "int32"
+            },
+            "user" : {
+              "$ref" : "#/definitions/User"
+            },
+            "userName" : {
+              "type" : "string"
+            },
+            "車両" : {
+              "$ref" : "#/definitions/車両"
+            }
+          },
+          "example" : {
+            "pendingWith" : "pendingWith",
+            "requestedAmt" : 1,
+            "応用状態" : "応用状態",
+            "ownerShip" : "ownerShip",
+            "userName" : "userName",
+            "ブランチ" : {
+              "apartmentNo" : "apartmentNo",
+              "ブランチId" : 0,
+              "zipCode" : "zipCode",
+              "シティ" : "シティ",
+              "通り状態" : "通り状態",
+              "ブランチName" : "ブランチName",
+              "contactPerson" : "contactPerson",
+              "状態" : "状態",
+              "phoneNo" : "phoneNo"
+            },
+            "車両" : {
+              "zipCode" : "zipCode",
+              "シティ" : "シティ",
+              "売り手名" : "売り手名",
+              "売り手住所" : "売り手住所",
+              "車両Make" : "車両Make",
+              "transactionType" : "transactionType",
+              "推定値" : 7,
+              "車両Year" : 1,
+              "通り状態" : "通り状態",
+              "約マイル" : "約マイル",
+              "車両Model" : "車両Model",
+              "ビーデン" : "ビーデン",
+              "登録州" : "登録州",
+              "状態" : "状態",
+              "車両Id" : 1,
+              "車両Type" : "車両Type"
+            },
+            "loanYearPeriod" : 6,
+            "uid" : 5,
+            "loanTerm" : 0,
+            "応用Status" : "応用Status",
+            "応用Id" : "応用Id",
+            "user" : {
+              "apartmentNo" : "apartmentNo",
+              "lastName" : "lastName",
+              "zipCode" : "zipCode",
+              "annualIncome" : 5,
+              "housingStatus" : "housingStatus",
+              "シティ" : "シティ",
+              "permanentResidence" : true,
+              "suffix" : "suffix",
+              "phoneNo" : 9,
+              "ssn" : 3,
+              "uid" : 2,
+              "yearsAtCurrAdd" : 4,
+              "monthlyPayment" : 2,
+              "通り状態" : "通り状態",
+              "状態" : "状態",
+              "addTypePrimary" : "addTypePrimary",
+              "email" : "email",
+              "initial" : "initial",
+              "citizenOf" : true,
+              "dateOfBirth" : "2000-01-23T04:56:07.000+00:00",
+              "userName" : "userName",
+              "otherIncome" : "otherIncome",
+              "firstName" : "firstName",
+              "addTypePrevious" : "addTypePrevious",
+              "anyPoliticalRelationship" : true,
+              "monthsAtCurrAdd" : 7
+            }
           }
         }
       }
