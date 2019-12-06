@@ -5,10 +5,10 @@ import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiContract
 import amf.core.vocabulary.ValueType
 
-trait ServerBindingModel extends DomainElementModel {
-  override def modelInstance: AmfObject = ???
-  override def fields: List[Field]      = DomainElementModel.fields
-  override val `type`: List[ValueType]  = ApiContract + "ServerBinding" :: DomainElementModel.`type`
-}
+trait ServerBindingModel extends DomainElementModel
 
-object ServerBindingModel extends ServerBindingModel
+object ServerBindingModel extends ServerBindingModel {
+  override def modelInstance           = throw new Exception("ServerBinding is an abstract class")
+  override def fields: List[Field]     = DomainElementModel.fields
+  override val `type`: List[ValueType] = ApiContract + "ServerBinding" :: DomainElementModel.`type`
+}
