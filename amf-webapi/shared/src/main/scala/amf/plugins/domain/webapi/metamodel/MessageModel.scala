@@ -3,7 +3,7 @@ package amf.plugins.domain.webapi.metamodel
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.{ApiContract, Core}
+import amf.core.vocabulary.Namespace.{ApiContract, Core, ApiBinding}
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
 import amf.plugins.domain.webapi.metamodel.bindings.MessageBindingModel
 
@@ -37,8 +37,8 @@ trait MessageModel extends TagsModel with ExamplesField with DocumentationField 
     ModelDoc(ModelVocabularies.Core, "summary", "Human readable short description of the request/response"))
 
   val Bindings = Field(Array(MessageBindingModel),
-                       ApiContract + "binding",
-                       ModelDoc(ModelVocabularies.ApiContract, "binding", "Bindings for this request/response"))
+                       ApiBinding + "binding",
+                       ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this request/response"))
 
 }
 

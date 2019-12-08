@@ -5,7 +5,7 @@ import amf.core.metamodel.Type.Str
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.Namespace.ApiContract
+import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
 
 object DynamicBindingModel
@@ -17,16 +17,16 @@ object DynamicBindingModel
 
   val Definition = Field(
     DataNodeModel,
-    ApiContract + "definition",
-    ModelDoc(ModelVocabularies.ApiContract, "definition", "definition of the unknown dynamic binding"))
+    ApiBinding + "definition",
+    ModelDoc(ModelVocabularies.ApiBinding, "definition", "definition of the unknown dynamic binding"))
 
   val Type = Field(Str,
-                   ApiContract + "type",
-                   ModelDoc(ModelVocabularies.ApiContract, "type", "type that the binding is defining"))
+                   ApiBinding + "type",
+                   ModelDoc(ModelVocabularies.ApiBinding, "type", "type that the binding is defining"))
 
   override def fields: List[Field] = List(Definition) ++ DomainElementModel.fields
 
-  override val `type`: List[ValueType] = ApiContract + "DynamicBinding" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiBinding + "DynamicBinding" :: DomainElementModel.`type`
 
   override val key: Field = Type
 
@@ -40,10 +40,10 @@ object EmptyBindingModel
     with OperationBindingModel
     with MessageBindingModel {
   val Type = Field(Str,
-                   ApiContract + "type",
-                   ModelDoc(ModelVocabularies.ApiContract, "type", "empty binding for a corresponding known type"))
+                   ApiBinding + "type",
+                   ModelDoc(ModelVocabularies.ApiBinding, "type", "empty binding for a corresponding known type"))
 
-  override val `type`: List[ValueType] = ApiContract + "EmptyBinding" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiBinding + "EmptyBinding" :: DomainElementModel.`type`
 
   override def fields: List[Field] = List(Type)
 

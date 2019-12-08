@@ -5,7 +5,7 @@ import amf.core.metamodel.Type._
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.KeyField
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.{ApiContract, Core}
+import amf.core.vocabulary.Namespace.{ApiContract, Core, ApiBinding}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.webapi.metamodel.bindings.ChannelBindingModel
 import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel
@@ -58,8 +58,8 @@ object EndPointModel extends DomainElementModel with KeyField with NameFieldSche
 
   val Bindings = Field(
     Array(ChannelBindingModel),
-    ApiContract + "binding",
-    ModelDoc(ModelVocabularies.ApiContract, "binding", "Bindings for this endpoint")
+    ApiBinding + "binding",
+    ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this endpoint")
   )
 
   override val key: Field = Path

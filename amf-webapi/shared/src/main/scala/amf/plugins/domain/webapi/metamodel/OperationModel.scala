@@ -5,7 +5,7 @@ import amf.core.metamodel.Type._
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.{ApiContract, Core}
+import amf.core.vocabulary.Namespace.{ApiContract, Core, ApiBinding}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.common.DocumentationField
 import amf.plugins.domain.webapi.metamodel.bindings.OperationBindingModel
@@ -82,8 +82,8 @@ object OperationModel
 
   val Bindings = Field(
     Array(OperationBindingModel),
-    ApiContract + "binding",
-    ModelDoc(ModelVocabularies.ApiContract, "binding", "Bindings for this operation")
+    ApiBinding + "binding",
+    ModelDoc(ModelVocabularies.ApiBinding, "binding", "Bindings for this operation")
   )
 
   override val key: Field = Method
