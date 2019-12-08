@@ -126,7 +126,8 @@
                     ],
                     "smaps": {
                       "extension-provenance": {
-                        "apiContract:parameter": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                        "apiContract:parameter": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                        "#12": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                       },
                       "lexical": {
                         "apiContract:parameter": "[(5,6)-(6,12)]",
@@ -136,12 +137,16 @@
                   }
                 ],
                 "smaps": {
-                  "extension-provenance": {
-                    "apiContract:method": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
-                    "#11": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
+                  "synthesized-field": {
+                    "apiContract:expects": "true"
                   },
                   "lexical": {
                     "#11": "[(4,4)-(6,12)]"
+                  },
+                  "extension-provenance": {
+                    "apiContract:expects": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                    "#11": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml",
+                    "apiContract:method": "id->amf://id#10,location->file://amf-client/shared/src/test/resources/production/lib-trait-location/lib.raml"
                   }
                 }
               }

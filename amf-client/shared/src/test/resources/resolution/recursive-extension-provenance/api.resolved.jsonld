@@ -98,7 +98,8 @@
                     ],
                     "smaps": {
                       "extension-provenance": {
-                        "apiContract:payload": "id->amf://id#2"
+                        "apiContract:payload": "id->amf://id#2",
+                        "#29": "id->amf://id#2"
                       },
                       "lexical": {
                         "apiContract:payload": "[(23,6)-(25,36)]",
@@ -108,12 +109,16 @@
                   }
                 ],
                 "smaps": {
-                  "extension-provenance": {
-                    "apiContract:method": "id->amf://id#2",
-                    "#28": "id->amf://id#2"
+                  "synthesized-field": {
+                    "apiContract:expects": "true"
                   },
                   "lexical": {
                     "#28": "[(22,4)-(25,36)]"
+                  },
+                  "extension-provenance": {
+                    "apiContract:expects": "id->amf://id#2",
+                    "#28": "id->amf://id#2",
+                    "apiContract:method": "id->amf://id#2"
                   }
                 }
               }

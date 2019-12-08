@@ -7986,21 +7986,16 @@
         ],
         "http://a.ml/vocabularies/security#security": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/oauth2_0",
+            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement",
             "@type": [
-              "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
+              "http://a.ml/vocabularies/security#SecurityRequirement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/core#name": [
+            "http://a.ml/vocabularies/security#schemes": [
               {
-                "@value": "oauth2_0"
-              }
-            ],
-            "http://a.ml/vocabularies/security#scheme": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0",
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/oauth2_0",
                 "@type": [
-                  "http://a.ml/vocabularies/security#SecurityScheme",
+                  "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -8008,48 +8003,85 @@
                     "@value": "oauth2_0"
                   }
                 ],
-                "http://a.ml/vocabularies/document#link-target": [
+                "http://a.ml/vocabularies/security#scheme": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#fragment"
-                  }
-                ],
-                "http://a.ml/vocabularies/document#link-label": [
-                  {
-                    "@value": "securitySchemes/oauth2_0.raml"
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#SecurityScheme",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "oauth2_0"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#fragment"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-label": [
+                      {
+                        "@value": "securitySchemes/oauth2_0.raml"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map/declared-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": ""
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(14,12)-(14,50)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/oauth2_0/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map/declared-element/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": ""
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/oauth2_0/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0"
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/oauth2_0"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(14,12)-(14,50)]"
+                            "@value": "[(19,11)-(19,19)]"
                           }
                         ]
                       }
@@ -8060,16 +8092,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/oauth2_0/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/oauth2_0/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/oauth2_0"
+                        "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -13985,19 +14017,77 @@
                   "http://a.ml/vocabularies/security#Settings",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/security#authorizationUri": [
-                  {
-                    "@value": "https://placeholder.com/oauth2/authorize"
-                  }
-                ],
-                "http://a.ml/vocabularies/security#accessTokenUri": [
-                  {
-                    "@value": "https://placeholder.com/oauth2/access_token"
-                  }
-                ],
                 "http://a.ml/vocabularies/security#authorizationGrant": [
                   {
                     "@value": "implicit"
+                  }
+                ],
+                "http://a.ml/vocabularies/security#flows": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#OAuth2Flow",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/security#authorizationUri": [
+                      {
+                        "@value": "https://placeholder.com/oauth2/authorize"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#accessTokenUri": [
+                      {
+                        "@value": "https://placeholder.com/oauth2/access_token"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow/source-map/lexical/element_2",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(23,2)-(24,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(24,2)-(25,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(23,0)-(26,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -14008,28 +14098,15 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/source-map/lexical/element_3",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/security#accessTokenUri"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(24,2)-(25,0)]"
-                          }
-                        ]
-                      },
-                      {
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(23,2)-(24,0)]"
+                            "@value": "[(23,0)-(26,0)]"
                           }
                         ]
                       },
@@ -14043,19 +14120,6 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(25,2)-(26,0)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/source-map/lexical/element_2",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(23,0)-(26,0)]"
                           }
                         ]
                       }
