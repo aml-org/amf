@@ -18,6 +18,7 @@ import org.yaml.model.{YMap, YNode}
 case class WebApi(fields: Fields, annotations: Annotations) extends NamedDomainElement with ServerContainer {
 
   def description: StrField              = fields.field(Description)
+  def identifier: StrField               = fields.field(Identifier)
   def schemes: Seq[StrField]             = fields.field(Schemes)
   def accepts: Seq[StrField]             = fields.field(Accepts)
   def contentType: Seq[StrField]         = fields.field(ContentType)
@@ -32,6 +33,7 @@ case class WebApi(fields: Fields, annotations: Annotations) extends NamedDomainE
   def tags: Seq[Tag]                     = fields(Tags)
 
   def withDescription(description: String): this.type                  = set(Description, description)
+  def withIdentifier(identifier: String): this.type                    = set(Identifier, identifier)
   def withSchemes(schemes: Seq[String]): this.type                     = set(Schemes, schemes)
   def withEndPoints(endPoints: Seq[EndPoint]): this.type               = setArray(EndPoints, endPoints)
   def withAccepts(accepts: Seq[String]): this.type                     = set(Accepts, accepts)

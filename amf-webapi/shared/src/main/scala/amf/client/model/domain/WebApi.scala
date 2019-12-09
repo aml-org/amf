@@ -18,6 +18,7 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
 
   def name: StrField                            = _internal.name
   def description: StrField                     = _internal.description
+  def identifier: StrField                      = _internal.identifier
   def schemes: ClientList[StrField]             = _internal.schemes.asClient
   def endPoints: ClientList[EndPoint]           = _internal.endPoints.asClient
   def accepts: ClientList[StrField]             = _internal.accepts.asClient
@@ -39,6 +40,12 @@ case class WebApi(override private[amf] val _internal: InternalWebApi) extends D
   /** Set description property of this WebApi. */
   def withDescription(description: String): this.type = {
     _internal.withDescription(description)
+    this
+  }
+
+  /** Set identifier property of this WebApi. */
+  def withIdentifier(identifier: String): this.type = {
+    _internal.withIdentifier(identifier)
     this
   }
 
