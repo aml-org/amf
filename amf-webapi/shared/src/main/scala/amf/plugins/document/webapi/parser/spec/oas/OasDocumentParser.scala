@@ -791,7 +791,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     override protected def parseVersionFacets(operation: Operation, map: YMap): Unit = {
       RequestParser(map, req => operation.withRequest(req))
         .parse()
-        .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
+        .map(r => operation.set(OperationModel.Request, AmfArray(Seq(r)), Annotations() += SynthesizedField()))
 
       map.key("schemes", OperationModel.Schemes in operation)
       map.key("consumes", OperationModel.Accepts in operation)
@@ -842,34 +842,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           operation.withTags(tags)
         }
       )
-      // oas 3.0.0
-      if (ctx.syntax == Oas3Syntax) {
-        map.key(
-          "requestBody",
-          entry => {
-            Oas3RequestParser(entry.value.as[YMap], req => operation.withRequest(req)).parse()
-          }
-        )
-
-        // parameters defined in endpoint are stored in the request
-        Oas3ParametersParser(map, Option(operation.request).map(() => _).getOrElse(operation.withRequest))
-          .parseParameters()
-
-        map.key(
-          "callbacks",
-          entry => {
-            val callbacks = entry.value
-              .as[YMap]
-              .entries
-              .flatMap { callbackEntry =>
-                val name = callbackEntry.key.as[YScalar].text
-                CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(operation.id)).parse()
-              }
-            operation.withCallbacks(callbacks)
-          }
-        )
-        ctx.factory.serversParser(map, operation).parse()
-      }
 
       // oas 3.0.0 / oas 2.0
       map.key(

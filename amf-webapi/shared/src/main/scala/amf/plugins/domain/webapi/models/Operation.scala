@@ -47,7 +47,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withSchemes(schemes: Seq[String]): this.type                = set(Schemes, schemes.toList)
   def withAccepts(accepts: Seq[String]): this.type                = set(Accepts, accepts.toList)
   def withContentType(contentType: Seq[String]): this.type        = set(ContentType, contentType.toList)
-  def withRequest(request: Request): this.type                    = setArray(OperationRequest, List(request))
+  def withRequest(request: Request): this.type                    = setArray(OperationRequest, Seq(request))
   def withResponses(responses: Seq[Response]): this.type          = setArray(Responses, responses)
   def withSecurity(security: Seq[SecurityRequirement]): this.type = setArray(Security, security)
   def withTags(tags: Seq[Tag]): this.type                         = setArray(Tags, tags)
@@ -65,7 +65,7 @@ case class Operation(fields: Fields, annotations: Annotations)
 
   def withRequest(): Request = {
     val request = Request()
-    setArray(OperationRequest, List(request))
+    setArray(OperationRequest, Seq(request))
     request
   }
 

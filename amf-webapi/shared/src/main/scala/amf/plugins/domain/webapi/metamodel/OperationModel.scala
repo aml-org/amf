@@ -56,11 +56,10 @@ object OperationModel
                           Core + "mediaType",
                           ModelDoc(ModelVocabularies.Core, "media type", "Media types returned by a API response"))
 
-  val Request = Field(Array(RequestModel),
-                      ApiContract + "expects",
-                      ModelDoc(ModelVocabularies.ApiContract,
-                               "expects",
-                               "Request information required by the operation")) // TODO promoted to array
+  val Request = Field(
+    Array(RequestModel),
+    ApiContract + "expects",
+    ModelDoc(ModelVocabularies.ApiContract, "expects", "Request information required by the operation"))
 
   val Responses = Field(Array(ResponseModel),
                         ApiContract + "returns",

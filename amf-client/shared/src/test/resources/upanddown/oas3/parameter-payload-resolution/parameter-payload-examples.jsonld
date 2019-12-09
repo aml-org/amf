@@ -54,7 +54,13 @@
                     "@id": "#10",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "core:name": [
                       {
@@ -64,11 +70,6 @@
                     "core:description": [
                       {
                         "@value": "description"
-                      }
-                    ],
-                    "apiContract:statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "apiContract:payload": [
