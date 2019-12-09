@@ -49,6 +49,7 @@
                     "@id": "#18",
                     "@type": [
                       "apiContract:Request",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
                     "apiContract:payload": [
@@ -101,6 +102,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "apiContract:expects": "true"
+                  },
                   "lexical": {
                     "#17": "[(12,2)-(16,0)]"
                   }

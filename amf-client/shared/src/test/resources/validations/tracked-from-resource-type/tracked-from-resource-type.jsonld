@@ -49,14 +49,15 @@
                     "@id": "#33",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "200"
                       }
@@ -152,9 +153,9 @@
                     "smaps": {
                       "extension-provenance": {
                         "apiContract:payload": "id->amf://id#4",
-                        "core:name": "id->amf://id#4",
+                        "apiContract:statusCode": "id->amf://id#4",
                         "#33": "id->amf://id#4",
-                        "apiContract:statusCode": "id->amf://id#4"
+                        "core:name": "id->amf://id#4"
                       },
                       "lexical": {
                         "apiContract:payload": "[(14,10)-(19,27)]",

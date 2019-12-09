@@ -54,7 +54,13 @@
                     "@id": "#14",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "core:name": [
                       {
@@ -64,11 +70,6 @@
                     "core:description": [
                       {
                         "@value": "ok"
-                      }
-                    ],
-                    "apiContract:statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "apiContract:payload": [
@@ -192,14 +193,15 @@
                     "@id": "#19",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "201"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "201"
                       }
@@ -250,14 +252,15 @@
                     "@id": "#21",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "202"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "202"
                       }
@@ -308,14 +311,15 @@
                     "@id": "#23",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "203"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "203"
                       }

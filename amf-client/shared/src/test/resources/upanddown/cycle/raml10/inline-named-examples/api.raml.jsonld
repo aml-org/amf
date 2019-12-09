@@ -49,6 +49,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations/put/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -1038,14 +1039,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -2085,14 +2087,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/inline-named-examples/api.raml#/web-api/end-points/%2Forganizations%2F%7Borganization_id%7D/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }

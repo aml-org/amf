@@ -872,6 +872,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#parameter": [
@@ -1706,17 +1707,8 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
-                    ],
-                    "http://a.ml/vocabularies/core#name": [
-                      {
-                        "@value": "200"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/core#description": [
-                      {
-                        "@value": "200 descr"
-                      }
                     ],
                     "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
@@ -1872,6 +1864,16 @@
                             ]
                           }
                         ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#description": [
+                      {
+                        "@value": "200 descr"
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -2086,12 +2088,12 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/200/source-map/lexical/element_3",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/apiContract#header"
+                                "@value": "http://a.ml/vocabularies/core#description"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(62,8)-(66,0)]"
+                                "@value": "[(61,8)-(62,0)]"
                               }
                             ]
                           },
@@ -2099,12 +2101,12 @@
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/200/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/core#description"
+                                "@value": "http://a.ml/vocabularies/apiContract#header"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(61,8)-(62,0)]"
+                                "@value": "[(62,8)-(66,0)]"
                               }
                             ]
                           },
@@ -2142,7 +2144,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/full-example/api.raml#/web-api/end-points/%2Flevelzero%2F%7Btwo%7D%2Flevel-one%2F%7Bthree%7D/get/404",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "404"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -2152,11 +2160,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "Not found!"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "404"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [

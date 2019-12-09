@@ -16,6 +16,8 @@ import amf.client.model.domain.{
   Organization => ClientOrganization,
   Parameter => ClientParameter,
   ParametrizedSecurityScheme => ClientParametrizedSecurityScheme,
+  OAuth2Flow => ClientOAuth2Flow,
+  SecurityRequirement => ClientSecurityRequirement,
   Payload => ClientPayload,
   Request => ClientRequest,
   ResourceType => ClientResourceType,
@@ -25,7 +27,9 @@ import amf.client.model.domain.{
   Server => ClientServer,
   Settings => ClientSettings,
   TemplatedLink => ClientTemplatedLink,
-  Trait => ClientTrait
+  Trait => ClientTrait,
+  Tag => ClientTag,
+  CorrelationId => ClientCorrelationId
 }
 import amf.client.validate.{PayloadValidator => ClientInternalPayloadValidator}
 import amf.core.unsafe.PlatformSecrets
@@ -46,6 +50,7 @@ trait WebApiBaseConverter
     with RequestConverter
     with ResponseConverter
     with OperationConverter
+    with TagConverter
     with ParameterConverter
     with PayloadConverter
     with ParametrizedSecuritySchemeConverter
@@ -58,6 +63,9 @@ trait WebApiBaseConverter
     with CallbackConverter
     with EncodingConverter
     with PayloadValidatorConverter
+    with OAuth2FlowConverter
+    with SecurityRequirementConverter
+    with CorrelationIdConverter
 
 trait EndPointConverter extends PlatformSecrets {
 
@@ -148,6 +156,24 @@ trait OperationConverter extends PlatformSecrets {
 
 }
 
+trait TagConverter extends PlatformSecrets {
+
+  implicit object TagMatcher extends BidirectionalMatcher[Tag, ClientTag] {
+    override def asClient(from: Tag): ClientTag   = platform.wrap[ClientTag](from)
+    override def asInternal(from: ClientTag): Tag = from._internal
+  }
+
+}
+
+trait CorrelationIdConverter extends PlatformSecrets {
+
+  implicit object CorrelationIdMatcher extends BidirectionalMatcher[CorrelationId, ClientCorrelationId] {
+    override def asClient(from: CorrelationId): ClientCorrelationId   = platform.wrap[ClientCorrelationId](from)
+    override def asInternal(from: ClientCorrelationId): CorrelationId = from._internal
+  }
+
+}
+
 trait RequestConverter extends PlatformSecrets {
 
   implicit object RequestMatcher extends BidirectionalMatcher[Request, ClientRequest] {
@@ -188,6 +214,24 @@ trait SecuritySchemeConverter extends PlatformSecrets {
   implicit object SecuritySchemeMatcher extends BidirectionalMatcher[SecurityScheme, ClientSecurityScheme] {
     override def asClient(from: SecurityScheme): ClientSecurityScheme   = platform.wrap[ClientSecurityScheme](from)
     override def asInternal(from: ClientSecurityScheme): SecurityScheme = from._internal
+  }
+}
+
+trait OAuth2FlowConverter extends PlatformSecrets {
+
+  implicit object OAuth2FlowMatcher extends BidirectionalMatcher[OAuth2Flow, ClientOAuth2Flow] {
+    override def asClient(from: OAuth2Flow): ClientOAuth2Flow   = platform.wrap[ClientOAuth2Flow](from)
+    override def asInternal(from: ClientOAuth2Flow): OAuth2Flow = from._internal
+  }
+}
+
+trait SecurityRequirementConverter extends PlatformSecrets {
+
+  implicit object SecurityRequirementMatcher
+      extends BidirectionalMatcher[SecurityRequirement, ClientSecurityRequirement] {
+    override def asClient(from: SecurityRequirement): ClientSecurityRequirement =
+      platform.wrap[ClientSecurityRequirement](from)
+    override def asInternal(from: ClientSecurityRequirement): SecurityRequirement = from._internal
   }
 }
 

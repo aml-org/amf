@@ -66,6 +66,7 @@
                     "@id": "#43",
                     "@type": [
                       "apiContract:Request",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
                     "apiContract:uriParameter": [
@@ -131,14 +132,15 @@
                     "@id": "#37",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "403"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "403"
                       }
@@ -191,9 +193,9 @@
                     "smaps": {
                       "extension-provenance": {
                         "apiContract:payload": "id->amf://id#2",
-                        "core:name": "id->amf://id#2",
+                        "apiContract:statusCode": "id->amf://id#2",
                         "#37": "id->amf://id#2",
-                        "apiContract:statusCode": "id->amf://id#2"
+                        "core:name": "id->amf://id#2"
                       },
                       "lexical": {
                         "apiContract:payload": "[(21,10)-(23,25)]",
@@ -205,14 +207,15 @@
                     "@id": "#39",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "404"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "404"
                       }
@@ -265,9 +268,9 @@
                     "smaps": {
                       "extension-provenance": {
                         "apiContract:payload": "id->amf://id#2",
-                        "core:name": "id->amf://id#2",
+                        "apiContract:statusCode": "id->amf://id#2",
                         "#39": "id->amf://id#2",
-                        "apiContract:statusCode": "id->amf://id#2"
+                        "core:name": "id->amf://id#2"
                       },
                       "lexical": {
                         "apiContract:payload": "[(25,10)-(27,25)]",
@@ -279,14 +282,15 @@
                     "@id": "#41",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "500"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "500"
                       }
@@ -339,9 +343,9 @@
                     "smaps": {
                       "extension-provenance": {
                         "apiContract:payload": "id->amf://id#2",
-                        "core:name": "id->amf://id#2",
+                        "apiContract:statusCode": "id->amf://id#2",
                         "#41": "id->amf://id#2",
-                        "apiContract:statusCode": "id->amf://id#2"
+                        "core:name": "id->amf://id#2"
                       },
                       "lexical": {
                         "apiContract:payload": "[(29,10)-(31,25)]",

@@ -363,6 +363,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Tracked examples from parameters and payloads") {
+    cycle(
+      "parameter-payload-examples.json",
+      "parameter-payload-examples.jsonld",
+      OasJsonHint,
+      Amf,
+      cyclePath + "oas3/parameter-payload-resolution/"
+    )
+  }
+
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")

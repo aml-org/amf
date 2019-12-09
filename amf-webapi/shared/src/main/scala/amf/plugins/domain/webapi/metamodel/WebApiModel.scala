@@ -7,27 +7,36 @@ import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularie
 import amf.core.vocabulary.Namespace._
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
-import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.security.SecurityRequirementModel
 import amf.plugins.domain.webapi.models.WebApi
 
 /**
   * Web Api metamodel
   */
-object WebApiModel extends DomainElementModel with NameFieldSchema with DescriptionField {
+object WebApiModel extends DomainElementModel with NameFieldSchema with DescriptionField with TagsModel {
 
   val Servers =
-    Field(Array(ServerModel), ApiContract + "server", ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
+    Field(Array(ServerModel),
+          ApiContract + "server",
+          ModelDoc(ModelVocabularies.ApiContract, "server", "server information"))
 
   val Accepts = Field(Array(Str),
                       ApiContract + "accepts",
                       ModelDoc(ModelVocabularies.ApiContract, "accepts", "Media-types accepted in a API request"))
 
-  val ContentType = Field(Array(Str),
-                          ApiContract + "contentType",
-                          ModelDoc(ModelVocabularies.ApiContract, "content type", "Media types returned by a API response"))
+  val ContentType = Field(
+    Array(Str),
+    ApiContract + "contentType",
+    ModelDoc(ModelVocabularies.ApiContract, "content type", "Media types returned by a API response"))
+
+  val Identifier = Field(Str,
+                         ApiContract + "identifier",
+                         ModelDoc(ModelVocabularies.ApiContract, "identifier", "Specific api identifier"))
 
   val Schemes =
-    Field(Array(Str), ApiContract + "scheme", ModelDoc(ModelVocabularies.ApiContract, "scheme", "URI scheme for the API protocol"))
+    Field(Array(Str),
+          ApiContract + "scheme",
+          ModelDoc(ModelVocabularies.ApiContract, "scheme", "URI scheme for the API protocol"))
 
   val Version =
     Field(Str, Core + "version", ModelDoc(ModelVocabularies.Core, "version", "Version of the API"))
@@ -37,32 +46,27 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
     Core + "termsOfService",
     ModelDoc(ModelVocabularies.Core, "terms of service", "Terms and conditions when using the API"))
 
-  val Provider = Field(OrganizationModel,
-                       Core + "provider",
-                       ModelDoc(ModelVocabularies.Core, "provider", "Organization providing some kind of asset or service"))
+  val Provider = Field(
+    OrganizationModel,
+    Core + "provider",
+    ModelDoc(ModelVocabularies.Core, "provider", "Organization providing some kind of asset or service"))
 
-  val License = Field(LicenseModel,
-                      Core + "license",
-                      ModelDoc(ModelVocabularies.Core, "license", "License for the API"))
+  val License =
+    Field(LicenseModel, Core + "license", ModelDoc(ModelVocabularies.Core, "license", "License for the API"))
 
-  val Documentations = Field(
-    Array(CreativeWorkModel),
-    Core + "documentation",
-    ModelDoc(ModelVocabularies.Core, "documentation", "Documentation associated to the API"))
+  val Documentations = Field(Array(CreativeWorkModel),
+                             Core + "documentation",
+                             ModelDoc(ModelVocabularies.Core, "documentation", "Documentation associated to the API"))
 
   val EndPoints = Field(Array(EndPointModel),
                         ApiContract + "endpoint",
                         ModelDoc(ModelVocabularies.ApiContract, "endpoint", "End points defined in the API"))
 
   val Security = Field(
-    Array(ParametrizedSecuritySchemeModel),
+    Array(SecurityRequirementModel),
     Namespace.Security + "security",
     ModelDoc(ModelVocabularies.Security, "security", "Textual indication of the kind of security scheme used")
   )
-
-  val Tags = Field(Array(TagModel),
-                   ApiContract + "tag",
-                   ModelDoc(ModelVocabularies.ApiContract, "tag", "Additionally custom tagged information"))
 
   override val `type`
     : List[ValueType] = ApiContract + "WebAPI" :: Document + "RootDomainElement" :: DomainElementModel.`type`
@@ -71,6 +75,7 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
     List(
       Name,
       Description,
+      Identifier,
       Servers,
       Accepts,
       ContentType,

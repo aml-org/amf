@@ -23,20 +23,14 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
-import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth2SettingsModel,
-  OpenIdConnectSettingsModel,
-  ParametrizedSecuritySchemeModel,
-  ScopeModel
-}
+import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
-import org.yaml.model.{YNode, _}
+import org.yaml.model.{YMapEntry, YNode, _}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -296,14 +290,17 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       entry => {
         entry.value.tagType match {
           case YType.Seq =>
+            val idCounter = new IdCounter()
             val securedBy =
               entry.value
                 .as[Seq[YNode]]
-                .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity).parse())
+                .map(s => OasSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
                 .collect { case Some(s) => s }
-
             api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-          case _ => // ignore
+          case _ =>
+            ctx.violation(InvalidSecurityRequirementsSeq,
+                          entry.value,
+                          "'security' must be an array of security requirement object")
         }
       }
     )
@@ -362,70 +359,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     namesWithTag.foreach {
       case (name, tag) =>
         ctx.violation(DuplicatedTags, tag.id, s"Tag with name '$name' was found duplicated", tag.annotations)
-    }
-  }
-
-  case class ParametrizedSecuritySchemeParser(node: YNode, producer: String => ParametrizedSecurityScheme) {
-    def parse(): Option[ParametrizedSecurityScheme] = node.to[YMap] match {
-      case Right(map) if map.entries.nonEmpty =>
-        val schemeEntry = map.entries.head
-        val name        = schemeEntry.key.as[YScalar].text
-        val scheme      = producer(name).add(Annotations(map))
-
-        var declaration = parseTarget(name, scheme, schemeEntry)
-        declaration = declaration.linkTarget match {
-          case Some(d) => d.asInstanceOf[SecurityScheme]
-          case None    => declaration
-        }
-
-        parseScopes(scheme, declaration, schemeEntry)
-        Some(scheme)
-      case Right(map) if map.entries.isEmpty =>
-        None
-      case _ =>
-        val scheme = producer(node.toString)
-        ctx.violation(InvalidSecuredByType, scheme.id, s"Invalid type $node", node)
-        None
-    }
-
-    private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
-      def scopesForSettings(initial: Settings, field: Field) = {
-        val settings = initial.adopted(scheme.id)
-        val scopes = schemeEntry.value
-          .as[Seq[YNode]]
-          .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
-        scheme.set(ParametrizedSecuritySchemeModel.Settings,
-                   settings.setArray(field, scopes, Annotations(schemeEntry.value)))
-      }
-      if (declaration.`type`.is("OAuth 2.0")) scopesForSettings(OAuth2Settings(), OAuth2SettingsModel.Scopes)
-      else if (declaration.`type`.is("openIdConnect"))
-        scopesForSettings(OpenIdConnectSettings(), OpenIdConnectSettingsModel.Scopes)
-      else
-        schemeEntry.value.tag.tagType match {
-          case YType.Seq if schemeEntry.value.as[Seq[YNode]].nonEmpty =>
-            val msg = declaration.`type`.option() match {
-              case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
-              case None             => "Scopes array must be empty for given security scheme"
-            }
-            ctx.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
-          case _ =>
-        }
-    }
-
-    private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
-      ctx.declarations.findSecurityScheme(name, SearchScope.All) match {
-        case Some(declaration) =>
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration)
-          declaration
-        case None =>
-          val securityScheme = SecurityScheme()
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme)
-          ctx.violation(DeclarationNotFound,
-                        securityScheme.id,
-                        s"Security scheme '$name' not found in declarations.",
-                        part)
-          securityScheme
-      }
     }
   }
 
@@ -545,9 +478,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         "security".asOasExtension,
         entry => {
           // TODO check for empty array for resolution ?
+          val idCounter = new IdCounter()
           val securedBy = entry.value
             .as[Seq[YNode]]
-            .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
+            .map(s => OasSecurityRequirementParser(s, endpoint.withSecurity, idCounter).parse())
             .collect { case Some(s) => s }
 
           if (securedBy.nonEmpty)
@@ -857,7 +791,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     override protected def parseVersionFacets(operation: Operation, map: YMap): Unit = {
       RequestParser(map, req => operation.withRequest(req))
         .parse()
-        .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
+        .map(r => operation.set(OperationModel.Request, AmfArray(Seq(r)), Annotations() += SynthesizedField()))
 
       map.key("schemes", OperationModel.Schemes in operation)
       map.key("consumes", OperationModel.Accepts in operation)
@@ -901,7 +835,13 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key("externalDocs", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
 
       // oas 3.0.0 / oas 2.0
-      map.key("tags", OperationModel.Tags in operation)
+      map.key(
+        "tags",
+        entry => {
+          val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
+          operation.withTags(tags)
+        }
+      )
 
       // oas 3.0.0 / oas 2.0
       map.key(
@@ -920,15 +860,23 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key(
         "security",
         entry => {
+          val idCounter = new IdCounter()
           // TODO check for empty array for resolution ?
           val securedBy = entry.value
             .as[Seq[YNode]]
-            .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity).parse())
+            .map(s => OasSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
             .collect { case Some(s) => s }
 
           operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
         }
       )
+
+      // oas 2.0
+      if (ctx.syntax == Oas2Syntax) {
+        RequestParser(map, req => operation.withRequest(req))
+          .parse()
+          .map(req => operation setArray (OperationModel.Request, List(req), Annotations() += SynthesizedField()))
+      }
 
       // oas 3.0.0 / oas 2.0
       map.key(

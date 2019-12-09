@@ -106,14 +106,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -384,6 +385,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/bells%20with%20spaces/api.raml#/web-api/end-points/%2Fbells/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [

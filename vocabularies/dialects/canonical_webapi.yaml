@@ -250,25 +250,13 @@ nodeMappings:
   OAuth2Settings:
     classTerm: security.OAuth2Settings
     mapping:
-      authorizationURI:
-        propertyTerm: security.authorizationUri
-        range: string
-      accessTokenURI:
-        propertyTerm: security.accessTokenUri
-        range: string
       authorizationGrant:
         propertyTerm: security.authorizationGrant
         range: string
         allowMultiple: true
-      flow:
-        propertyTerm: security.flow
-        range: string
-      refreshURI:
-        propertyTerm: security.refreshUri
-        range: string
-      scope:
-        propertyTerm: security.scope
-        range: Scope
+      flows:
+        propertyTerm: security.flows
+        range: OAuth2Flow
         allowMultiple: true
 
 
@@ -772,6 +760,27 @@ nodeMappings:
         allowMultiple: true
 
 
+  OAuth2Flow:
+    classTerm: security.OAuth2Flow
+    mapping:
+      authorizationURI:
+        propertyTerm: security.authorizationUri
+        range: string
+      accessTokenURI:
+        propertyTerm: security.accessTokenUri
+        range: string
+      flow:
+        propertyTerm: security.flow
+        range: string
+      refreshURI:
+        propertyTerm: security.refreshUri
+        range: string
+      scope:
+        propertyTerm: security.scope
+        range: Scope
+        allowMultiple: true
+
+
   TemplatedLink:
     classTerm: apiContract.TemplatedLink
     mapping:
@@ -1082,6 +1091,10 @@ nodeMappings:
       discriminatorValue:
         propertyTerm: raml-shapes.discriminatorValue
         range: string
+      discriminatorMapping:
+        propertyTerm: raml-shapes.discriminatorMapping
+        range: IriTemplate
+        allowMultiple: true
       property:
         propertyTerm: shacl.property
         range: PropertyShape

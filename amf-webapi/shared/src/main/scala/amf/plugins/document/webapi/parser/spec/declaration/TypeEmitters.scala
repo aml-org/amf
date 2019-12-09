@@ -1752,8 +1752,8 @@ case class OasTupleShapeEmitter(shape: TupleShape,
 
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
 
-    fs.entry(TupleShapeModel.AdditionalItems) match {
-      case Some(f) => result += ValueEmitter("additionalItems", f)
+    fs.entry(TupleShapeModel.ClosedItems) match {
+      case Some(f) => result += ValueEmitter("additionalItems", f.negated)
       case None =>
         fs.entry(TupleShapeModel.AdditionalItemsSchema)
           .map(f => result += OasEntryShapeEmitter("additionalItems", f, ordering, references))

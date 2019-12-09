@@ -185,6 +185,10 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Multiple link references 2") {
     validate("oas3/multiple-links3.json", profile = Oas30Profile)
   }
+  
+  test("Invalid type in operation tags") {
+    validate("oas3/invalid-tags-type.json", Some("invalid-tags-type.report"), Oas30Profile)
+  }
 
   override val hint: Hint = OasJsonHint
 }

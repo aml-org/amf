@@ -93,7 +93,7 @@ trait AccessibleOasDocumentEmitters {
               .map(f => result ++= operations(f, ordering, parameters.body.nonEmpty, references))
 
             fs.entry(EndPointModel.Security)
-              .map(f => result += ParametrizedSecuritiesSchemeEmitter("security".asOasExtension, f, ordering))
+              .map(f => result += SecurityRequirementsEmitter("security".asOasExtension, f, ordering))
 
             result ++= AnnotationsEmitter(endpoint, ordering).emitters
 
@@ -138,7 +138,8 @@ trait AccessibleOasDocumentEmitters {
             fs.entry(OperationModel.Description).map(f => result += ValueEmitter("description", f))
             fs.entry(OperationModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
             fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary", f))
-            fs.entry(OperationModel.Tags).map(f => result += ArrayEmitter("tags", f, ordering))
+            fs.entry(OperationModel.Tags)
+              .map(f => result += StringArrayTagsEmitter("tags", f.array.values.asInstanceOf[Seq[Tag]], ordering))
             fs.entry(OperationModel.Documentation)
               .map(
                 f =>
@@ -160,7 +161,7 @@ trait AccessibleOasDocumentEmitters {
                 result += ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
 
             fs.entry(OperationModel.Security)
-              .map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
+              .map(f => result += SecurityRequirementsEmitter("security", f, ordering))
 
             if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
               operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
@@ -374,7 +375,7 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
         .fold(result += EntryPartEmitter("paths", EmptyMapEmitter()))(f =>
           result += EndpointsEmitter("paths", f, ordering, references, orphanAnnotations))
 
-      fs.entry(WebApiModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter("security", f, ordering))
+      fs.entry(WebApiModel.Security).map(f => result += SecurityRequirementsEmitter("security", f, ordering))
 
       result ++= AnnotationsEmitter(api, ordering).emitters
 
@@ -659,6 +660,21 @@ case class TagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(impl
         traverse(ordering.sorted(result), b)
       }
     }
+  }
+}
+
+case class StringArrayTagsEmitter(key: String, tags: Seq[Tag], ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+
+  override def position(): Position = tags.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+
+  override def emit(b: EntryBuilder): Unit = {
+    val emitters = tags.flatMap(_.name.option()).map(name => ScalarEmitter(AmfScalar(name)))
+    b.entry(
+      key,
+      _.list(traverse(ordering.sorted(emitters), _))
+    )
   }
 }
 

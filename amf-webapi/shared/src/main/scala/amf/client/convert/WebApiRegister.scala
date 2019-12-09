@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.model
 import amf.plugins.domain.{shapes, webapi}
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.domain.webapi.metamodel.{IriTemplateMappingModel, TemplatedLinkModel, templates}
+import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, IriTemplateMappingModel, TemplatedLinkModel, templates}
 import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations
 import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
@@ -84,6 +84,9 @@ object WebApiRegister {
     platform.registerWrapper(webapi.metamodel.security.ParametrizedSecuritySchemeModel) {
       case s: webapi.models.security.ParametrizedSecurityScheme => ParametrizedSecurityScheme(s)
     }
+    platform.registerWrapper(webapi.metamodel.security.SecurityRequirementModel) {
+      case s: webapi.models.security.SecurityRequirement => SecurityRequirement(s)
+    }
     platform.registerWrapper(webapi.metamodel.security.SecuritySchemeModel) {
       case s: webapi.models.security.SecurityScheme => SecurityScheme(s)
     }
@@ -98,6 +101,9 @@ object WebApiRegister {
     }
     platform.registerWrapper(webapi.metamodel.security.ScopeModel) {
       case s: webapi.models.security.Scope => Scope(s)
+    }
+    platform.registerWrapper(webapi.metamodel.security.OAuth2FlowModel) {
+      case of: webapi.models.security.OAuth2Flow => OAuth2Flow(of)
     }
     platform.registerWrapper(webapi.metamodel.security.SettingsModel) {
       case s: webapi.models.security.Settings => new Settings(s)
@@ -163,6 +169,9 @@ object WebApiRegister {
     }
     platform.registerWrapper(IriTemplateMappingModel) {
       case s: webapi.models.IriTemplateMapping => IriTemplateMapping(s)
+    }
+    platform.registerWrapper(CorrelationIdModel) {
+      case s: webapi.models.CorrelationId => CorrelationId(s)
     }
 
     platform.registerValidations(CoreValidations.validations, CoreValidations.levels)

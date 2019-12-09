@@ -18,6 +18,10 @@ class DataArrangementShape extends AnyShapeModel {
                     Shapes + "items",
                     ModelDoc(ModelVocabularies.Shapes, "items", "Shapes inside the data arrangement"))
 
+  val Contains = Field(ShapeModel,
+                       Shapes + "contains",
+                       ModelDoc(ModelVocabularies.Shapes, "contains", "One of the shapes in the data arrangement"))
+
   val MinItems = Field(Int,
                        Shacl + "minCount",
                        ModelDoc(ExternalModelVocabularies.Shacl, "min count", "Minimum items count constraint"))
@@ -34,7 +38,7 @@ class DataArrangementShape extends AnyShapeModel {
     Shapes + "collectionFormat",
     ModelDoc(ModelVocabularies.Shapes, "collection format", "Input collection format information"))
 
-  val specificFields               = List(Items, MinItems, MaxItems, UniqueItems, CollectionFormat)
+  val specificFields               = List(Items, Contains, MinItems, MaxItems, UniqueItems, CollectionFormat)
   override val fields: List[Field] = specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
 
   override val doc: ModelDoc = ModelDoc(
@@ -69,10 +73,10 @@ object MatrixShapeModel extends DataArrangementShape with DomainElementModel {
 }
 
 object TupleShapeModel extends DataArrangementShape with DomainElementModel {
-  val AdditionalItems = Field(
+  val ClosedItems = Field(
     Bool,
-    Shapes + "additionalItems",
-    ModelDoc(ModelVocabularies.Shapes, "additional items", "Constraint allowing additional shapes in the collection"))
+    Shapes + "closedItems",
+    ModelDoc(ModelVocabularies.Shapes, "closed items", "Constraint limiting additional shapes in the collection"))
 
   val AdditionalItemsSchema = Field(ShapeModel,
                                     Shapes + "additionalItemsSchema",
@@ -88,7 +92,7 @@ object TupleShapeModel extends DataArrangementShape with DomainElementModel {
                                           MinItems,
                                           MaxItems,
                                           UniqueItems,
-                                          AdditionalItems,
+                                          ClosedItems,
                                           AdditionalItemsSchema,
                                           CollectionFormat) ++ AnyShapeModel.fields ++ DomainElementModel.fields
   override val doc: ModelDoc = ModelDoc(

@@ -8,7 +8,7 @@ import amf.core.utils.AmfStrings
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
-import amf.plugins.domain.webapi.models.security.ParametrizedSecurityScheme
+import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 
 /**
@@ -19,14 +19,14 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
     with ExtensibleWebApiDomainElement
     with ServerContainer {
 
-  def description: StrField                     = fields.field(Description)
-  def summary: StrField                         = fields.field(Summary)
-  def path: StrField                            = fields.field(Path)
-  def operations: Seq[Operation]                = fields.field(Operations)
-  def parameters: Seq[Parameter]                = fields.field(Parameters)
-  def payloads: Seq[Payload]                    = fields.field(Payloads)
-  def servers: Seq[Server]                      = fields.field(Servers)
-  def security: Seq[ParametrizedSecurityScheme] = fields.field(Security)
+  def description: StrField              = fields.field(Description)
+  def summary: StrField                  = fields.field(Summary)
+  def path: StrField                     = fields.field(Path)
+  def operations: Seq[Operation]         = fields.field(Operations)
+  def parameters: Seq[Parameter]         = fields.field(Parameters)
+  def payloads: Seq[Payload]             = fields.field(Payloads)
+  def servers: Seq[Server]               = fields.field(Servers)
+  def security: Seq[SecurityRequirement] = fields.field(Security)
 
   def parent: Option[EndPoint] = annotations.find(classOf[ParentEndPoint]).flatMap(_.parent)
 
@@ -36,14 +36,14 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
 
   def resourceType: Option[ParametrizedResourceType] = extend collectFirst { case r: ParametrizedResourceType => r }
 
-  def withDescription(description: String): this.type                    = set(Description, description)
-  def withSummary(summary: String): this.type                            = set(Summary, summary)
-  def withPath(path: String): this.type                                  = set(Path, path)
-  def withOperations(operations: Seq[Operation]): this.type              = setArray(Operations, operations)
-  def withParameters(parameters: Seq[Parameter]): this.type              = setArray(Parameters, parameters)
-  def withSecurity(security: Seq[ParametrizedSecurityScheme]): this.type = setArray(Security, security)
-  def withPayloads(payloads: Seq[Payload]): this.type                    = setArray(Payloads, payloads)
-  def withServers(servers: Seq[Server]): this.type                       = setArray(Servers, servers)
+  def withDescription(description: String): this.type             = set(Description, description)
+  def withSummary(summary: String): this.type                     = set(Summary, summary)
+  def withPath(path: String): this.type                           = set(Path, path)
+  def withOperations(operations: Seq[Operation]): this.type       = setArray(Operations, operations)
+  def withParameters(parameters: Seq[Parameter]): this.type       = setArray(Parameters, parameters)
+  def withSecurity(security: Seq[SecurityRequirement]): this.type = setArray(Security, security)
+  def withPayloads(payloads: Seq[Payload]): this.type             = setArray(Payloads, payloads)
+  def withServers(servers: Seq[Server]): this.type                = setArray(Servers, servers)
 
   override def removeServers(): Unit = fields.removeField(EndPointModel.Servers)
 
@@ -72,8 +72,8 @@ class EndPoint(override val fields: Fields, override val annotations: Annotation
     result
   }
 
-  def withSecurity(name: String): ParametrizedSecurityScheme = {
-    val result = ParametrizedSecurityScheme().withName(name)
+  def withSecurity(name: String): SecurityRequirement = {
+    val result = SecurityRequirement().withName(name)
     add(Security, result)
     result
   }

@@ -3,8 +3,7 @@ package amf.io
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
-import amf.core.parser.ParserContext
-import amf.core.rdf.{RdfModel, RdfModelParser}
+import amf.core.rdf.RdfModel
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor}
 import amf.emit.AMFRenderer

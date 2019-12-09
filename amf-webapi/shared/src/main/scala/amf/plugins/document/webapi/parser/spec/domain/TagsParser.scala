@@ -7,7 +7,10 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
 import amf.plugins.domain.webapi.metamodel.TagModel
 import amf.plugins.domain.webapi.models.Tag
-import org.yaml.model.{YMap, YNode}
+import amf.validations.ParserSideValidations
+import org.yaml.model.{YMap, YNode, YScalar, YSequence}
+
+import scala.collection.mutable
 
 /**
   *
@@ -32,5 +35,23 @@ class TagsParser(node: YNode, adopt: Tag => Tag)(implicit ctx: WebApiContext) ex
     ctx.closedShape(tag.id, map, "tag")
 
     tag
+  }
+}
+
+case class StringTagsParser(seq: YSequence, parentId: String)(implicit ctx: WebApiContext) {
+
+  def parse(): Seq[Tag] = {
+    val tags = mutable.ListBuffer[Tag]()
+    seq.nodes.foreach { node =>
+      node.value match {
+        case scalar: YScalar =>
+          val tag = Tag(Annotations(scalar)).withName(scalar.text)
+          tag.adopted(parentId)
+          tags += tag
+        case _ =>
+          ctx.violation(ParserSideValidations.InvalidTagType, parentId, s"Tag value must be of type string", node)
+      }
+    }
+    tags
   }
 }

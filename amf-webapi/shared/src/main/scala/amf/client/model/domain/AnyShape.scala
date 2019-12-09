@@ -2,6 +2,7 @@ package amf.client.model.domain
 
 import amf.client.convert.WebApiClientConverters._
 import amf.client.environment.Environment
+import amf.client.model.StrField
 import amf.client.model.document.PayloadFragment
 import amf.client.render.ShapeRenderOptions
 import amf.client.validate.{PayloadValidator, ValidationReport}
@@ -19,6 +20,7 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
   def documentation: CreativeWork     = _internal.documentation
   def xmlSerialization: XMLSerializer = _internal.xmlSerialization
   def examples: ClientList[Example]   = _internal.examples.asClient
+  def comment: StrField               = _internal.comment
 
   def withDocumentation(documentation: CreativeWork): this.type = {
     _internal.withDocumentation(documentation)
@@ -32,6 +34,11 @@ class AnyShape(override private[amf] val _internal: InternalAnyShape) extends Sh
 
   def withExamples(examples: ClientList[Example]): this.type = {
     _internal.withExamples(examples.asInternal)
+    this
+  }
+
+  def withComment(comment: String): this.type = {
+    _internal.withComment(comment)
     this
   }
 

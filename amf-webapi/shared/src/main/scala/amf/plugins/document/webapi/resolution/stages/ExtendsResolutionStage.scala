@@ -8,7 +8,12 @@ import amf.core.model.domain.{DomainElement, ElementTree, DataNode}
 import amf.core.parser.{ErrorHandler, YNodeLikeOps, ParserContext}
 import amf.core.resolution.stages.{ResolutionStage, ReferenceResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.contexts.{RamlWebApiContext, Raml10SpecEmitterContext, Raml08WebApiContext, Raml10WebApiContext}
+import amf.plugins.document.webapi.contexts.{
+  RamlWebApiContext,
+  Raml10SpecEmitterContext,
+  Raml08WebApiContext,
+  Raml10WebApiContext
+}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
 import amf.plugins.document.webapi.parser.spec.domain.{Raml10OperationEmitter, Raml10EndPointEmitter}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, ParametrizedTrait, Trait, ParametrizedResourceType}

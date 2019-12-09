@@ -662,7 +662,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/annotations-scalars/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -672,11 +678,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "Response description"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [

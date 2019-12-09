@@ -174,6 +174,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2Fcorporate/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -436,6 +437,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2Fcommercial/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -698,14 +700,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -1217,14 +1220,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -1683,6 +1687,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -2112,14 +2117,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Faccounts%2F%7Baccount_id%7D/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -2771,14 +2777,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Floans/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -3306,6 +3313,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Floans/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -3735,14 +3743,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Floans%2F%7Bloan_id%7D/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -4341,14 +4350,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Floans%2Fschedule/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -4839,14 +4849,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -5305,6 +5316,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -5734,14 +5746,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fdebit%2F%7Bcard_id%7D/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -6393,14 +6406,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fcredit/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -6928,6 +6942,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fcredit/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -7357,14 +7372,15 @@
                     "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/end-points/%2Fcustomers%2F%7Bcustomer_id%7D%2Fcards%2Fcredit%2F%7Bcard_id%7D/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/core#name": [
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                    "http://a.ml/vocabularies/core#name": [
                       {
                         "@value": "200"
                       }
@@ -7986,21 +8002,16 @@
         ],
         "http://a.ml/vocabularies/security#security": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/oauth2_0",
+            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement",
             "@type": [
-              "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
+              "http://a.ml/vocabularies/security#SecurityRequirement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/core#name": [
+            "http://a.ml/vocabularies/security#schemes": [
               {
-                "@value": "oauth2_0"
-              }
-            ],
-            "http://a.ml/vocabularies/security#scheme": [
-              {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0",
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/oauth2_0",
                 "@type": [
-                  "http://a.ml/vocabularies/security#SecurityScheme",
+                  "http://a.ml/vocabularies/security#ParametrizedSecurityScheme",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/core#name": [
@@ -8008,48 +8019,85 @@
                     "@value": "oauth2_0"
                   }
                 ],
-                "http://a.ml/vocabularies/document#link-target": [
+                "http://a.ml/vocabularies/security#scheme": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#fragment"
-                  }
-                ],
-                "http://a.ml/vocabularies/document#link-label": [
-                  {
-                    "@value": "securitySchemes/oauth2_0.raml"
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#SecurityScheme",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "oauth2_0"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-target": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#fragment"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document#link-label": [
+                      {
+                        "@value": "securitySchemes/oauth2_0.raml"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#declared-element": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map/declared-element/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": ""
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(14,12)-(14,50)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/oauth2_0/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#declared-element": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map/declared-element/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": ""
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0/source-map/lexical/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/oauth2_0/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/declarations/securitySchemes/oauth2_0"
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/oauth2_0"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(14,12)-(14,50)]"
+                            "@value": "[(19,11)-(19,19)]"
                           }
                         ]
                       }
@@ -8060,16 +8108,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/oauth2_0/source-map",
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/oauth2_0/source-map/lexical/element_0",
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/oauth2_0"
+                        "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml#/web-api/default-requirement"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -13864,7 +13912,13 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/401",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Response",
+                  "http://a.ml/vocabularies/apiContract#Message",
                   "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#statusCode": [
+                  {
+                    "@value": "401"
+                  }
                 ],
                 "http://a.ml/vocabularies/core#name": [
                   {
@@ -13874,11 +13928,6 @@
                 "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "Bad or expired token. This can happen if the API consumer uses a revoked or expired access token. To fix, you should re-authenticate the user.\n"
-                  }
-                ],
-                "http://a.ml/vocabularies/apiContract#statusCode": [
-                  {
-                    "@value": "401"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -13922,7 +13971,13 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/403",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Response",
+                  "http://a.ml/vocabularies/apiContract#Message",
                   "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#statusCode": [
+                  {
+                    "@value": "403"
+                  }
                 ],
                 "http://a.ml/vocabularies/core#name": [
                   {
@@ -13932,11 +13987,6 @@
                 "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...). Unfortunately, re-authenticating the user won't help here.\n"
-                  }
-                ],
-                "http://a.ml/vocabularies/apiContract#statusCode": [
-                  {
-                    "@value": "403"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -13985,19 +14035,77 @@
                   "http://a.ml/vocabularies/security#Settings",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/security#authorizationUri": [
-                  {
-                    "@value": "https://placeholder.com/oauth2/authorize"
-                  }
-                ],
-                "http://a.ml/vocabularies/security#accessTokenUri": [
-                  {
-                    "@value": "https://placeholder.com/oauth2/access_token"
-                  }
-                ],
                 "http://a.ml/vocabularies/security#authorizationGrant": [
                   {
                     "@value": "implicit"
+                  }
+                ],
+                "http://a.ml/vocabularies/security#flows": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow",
+                    "@type": [
+                      "http://a.ml/vocabularies/security#OAuth2Flow",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/security#authorizationUri": [
+                      {
+                        "@value": "https://placeholder.com/oauth2/authorize"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/security#accessTokenUri": [
+                      {
+                        "@value": "https://placeholder.com/oauth2/access_token"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#sources": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow/source-map",
+                        "@type": [
+                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#lexical": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow/source-map/lexical/element_2",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(23,2)-(24,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/security#accessTokenUri"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(24,2)-(25,0)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/default-flow"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(23,0)-(26,0)]"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -14008,28 +14116,15 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/source-map/lexical/element_3",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/security#accessTokenUri"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(24,2)-(25,0)]"
-                          }
-                        ]
-                      },
-                      {
                         "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://a.ml/vocabularies/security#authorizationUri"
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(23,2)-(24,0)]"
+                            "@value": "[(23,0)-(26,0)]"
                           }
                         ]
                       },
@@ -14043,19 +14138,6 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(25,2)-(26,0)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2/source-map/lexical/element_2",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml10/banking-api/securitySchemes/oauth2_0.raml#/fragment/settings/oauth2"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(23,0)-(26,0)]"
                           }
                         ]
                       }

@@ -196,6 +196,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -507,7 +508,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -517,11 +524,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "OK"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -565,7 +567,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/formdata-parameters-multiple.yaml#/web-api/end-points/%2Fupload/post/500",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "500"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -575,11 +583,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "Error"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "500"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [

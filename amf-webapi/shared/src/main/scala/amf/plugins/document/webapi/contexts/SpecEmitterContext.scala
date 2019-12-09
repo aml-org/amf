@@ -14,22 +14,13 @@ import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{
-  Raml08RootLevelEmitters,
-  Raml10RootLevelEmitters,
-  RamlRootLevelEmitters
-}
-import amf.plugins.document.webapi.parser.{
-  CommonOasTypeDefMatcher,
-  JsonSchemaTypeDefMatcher,
-  OasTypeDefStringValueMatcher,
-  RamlHeader
-}
+import amf.plugins.document.webapi.parser.spec.raml.{Raml08RootLevelEmitters, Raml10RootLevelEmitters, RamlRootLevelEmitters}
+import amf.plugins.document.webapi.parser.{CommonOasTypeDefMatcher, JsonSchemaTypeDefMatcher, OasTypeDefStringValueMatcher, RamlHeader}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, UnionShape}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityScheme}
+import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.validations.RenderSideValidations.RenderValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YNode, YScalar, YType}
@@ -118,6 +109,8 @@ trait SpecEmitterFactory {
 
   def parametrizedSecurityEmitter: (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter
 
+  def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => SecurityRequirementEmitter
+
   def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter
 
   def headerEmitter: (Parameter, SpecOrdering, Seq[BaseUnit]) => EntryEmitter
@@ -182,6 +175,9 @@ abstract class OasSpecEmitterFactory(implicit val spec: OasSpecEmitterContext) e
     OasFacetsInstanceEmitter.apply
 
   override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
+
+  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => SecurityRequirementEmitter =
+    OasSecurityRequirementEmitter.apply
 
   override def parametrizedSecurityEmitter
     : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
@@ -276,6 +272,9 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
   override def parametrizedSecurityEmitter
     : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
     RamlParametrizedSecuritySchemeEmitter.apply
+
+  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => SecurityRequirementEmitter =
+    RamlSecurityRequirementEmitter.apply
 
   def payloadsEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlPayloadsEmitter
 

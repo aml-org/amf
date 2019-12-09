@@ -3,13 +3,13 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.metamodel.security.OAuth2SettingsModel
+import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.models.security._
 
 class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
 
-  def fixOauth2(oauth2: OAuth2Settings): Unit = {
-    if (oauth2.flow.option().isEmpty) {
+  private def fixOauth2(oauth2: OAuth2Settings): Unit = {
+    if (oauth2.flows.isEmpty) {
       val flow = oauth2.authorizationGrants.head.option().getOrElse("implicit") match {
         case "authorization_code" => "accessCode"
         case "password"           => "password"
@@ -17,24 +17,26 @@ class SecuritySettingsMapper()(override implicit val errorHandler: ErrorHandler)
         case "client_credentials" => "application"
         case _                    => "implicit"
       }
-      oauth2.withFlow(flow)
+      oauth2.withFlow().withFlow(flow)
     }
-    oauth2.flow.value() match {
+    val flow = oauth2.flows.head
+
+    flow.flow.value() match {
       case "implicit" =>
-        if (oauth2.authorizationUri.option().isEmpty) oauth2.withAuthorizationUri("http://")
-        oauth2.fields.removeField(OAuth2SettingsModel.AccessTokenUri)
+        if (flow.authorizationUri.option().isEmpty) flow.withAuthorizationUri("http://")
+        flow.fields.removeField(OAuth2FlowModel.AccessTokenUri)
       case "accessCode" =>
-        if (oauth2.authorizationUri.option().isEmpty) oauth2.withAuthorizationUri("http://")
-        if (oauth2.accessTokenUri.option().isEmpty) oauth2.withAccessTokenUri("http://")
+        if (flow.authorizationUri.option().isEmpty) flow.withAuthorizationUri("http://")
+        if (flow.accessTokenUri.option().isEmpty) flow.withAccessTokenUri("http://")
       case "password" =>
-        if (oauth2.accessTokenUri.option().isEmpty) oauth2.withAccessTokenUri("http://")
-        oauth2.fields.removeField(OAuth2SettingsModel.AuthorizationUri)
+        if (flow.accessTokenUri.option().isEmpty) flow.withAccessTokenUri("http://")
+        flow.fields.removeField(OAuth2FlowModel.AuthorizationUri)
       case "application" =>
-        if (oauth2.accessTokenUri.option().isEmpty) oauth2.withAccessTokenUri("http://")
-        oauth2.fields.removeField(OAuth2SettingsModel.AuthorizationUri)
+        if (flow.accessTokenUri.option().isEmpty) flow.withAccessTokenUri("http://")
+        flow.fields.removeField(OAuth2FlowModel.AuthorizationUri)
       case _ => // ignore
     }
-    if (oauth2.scopes.isEmpty) oauth2.withScopes(Seq(Scope().withName("*").withDescription("")))
+    if (flow.scopes.isEmpty) flow.withScopes(Seq(Scope().withName("*").withDescription("")))
   }
 
   def fixApiKey(security: SecurityScheme, apiKey: ApiKeySettings): Unit = {

@@ -4,7 +4,16 @@ import amf.core.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{Shape, DomainElement, DataNode, ObjectNode}
-import amf.core.parser.{FragmentRef, ErrorHandler, Declarations, FutureDeclarations, SearchScope, Annotations, Fields, EmptyFutureDeclarations}
+import amf.core.parser.{
+  FragmentRef,
+  ErrorHandler,
+  Declarations,
+  FutureDeclarations,
+  SearchScope,
+  Annotations,
+  Fields,
+  EmptyFutureDeclarations
+}
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter

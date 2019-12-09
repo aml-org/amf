@@ -2,32 +2,21 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape}
+import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, TemplateUri}
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  RamlWebApiContextType
-}
+import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.annotations.ParentEndPoint
-import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
-import amf.validations.ParserSideValidations.{
-  DuplicatedEndpointPath,
-  InvalidEndpointPath,
-  SlashInUriParameterValues,
-  UnusedBaseUriParameter
-}
+import amf.validations.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, SlashInUriParameterValues, UnusedBaseUriParameter}
 import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
-import amf.core.model.domain.{AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 
 import scala.collection.mutable
 
@@ -141,8 +130,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       }
     )
 
-    val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(endpoint.withSecurity) _
-    map.key("securedBy", (EndPointModel.Security in endpoint using SchemeParser).allowingSingleValue)
+    val RequirementParser = RamlSecurityRequirementParser.parse(endpoint.withSecurity) _
+    map.key("securedBy", (EndPointModel.Security in endpoint using RequirementParser).allowingSingleValue)
 
     var parameters               = Parameters()
     var annotations: Annotations = Annotations()

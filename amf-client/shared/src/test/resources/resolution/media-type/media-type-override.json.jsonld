@@ -49,6 +49,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -425,7 +426,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/resolution/media-type/media-type-override.json#/web-api/end-points/%2Flevelzero%2Flevel-one/get/404",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "404"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -435,11 +442,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "Not found!"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "404"
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [

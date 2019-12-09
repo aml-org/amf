@@ -1,11 +1,13 @@
 package amf.plugins.domain.webapi.resolution.stages
 
+import amf.core.annotations.TrackedElement
 import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.domain.AmfObject
 import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.models._
-import amf.{Oas30Profile, ProfileName}
+import amf.{AmfProfile, Oas30Profile, ProfileName}
 
 /**
   * Propagate examples defined in parameters and payloads onto their corresponding shape so they are validated
@@ -15,10 +17,12 @@ import amf.{Oas30Profile, ProfileName}
 class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit val errorHandler: ErrorHandler)
     extends ResolutionStage() {
 
+  private type SchemaContainerWithId = SchemaContainer with AmfObject
+
   override def resolve[T <: BaseUnit](model: T): T = {
     profile match {
-      case Oas30Profile => resolveExamples(model).asInstanceOf[T]
-      case _            => model
+      case Oas30Profile | AmfProfile => resolveExamples(model).asInstanceOf[T]
+      case _                         => model
     }
   }
 
@@ -33,14 +37,14 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
     model
   }
 
-  private def searchDeclarations(doc: Document): Seq[SchemaContainer] =
+  private def searchDeclarations(doc: Document): Seq[SchemaContainerWithId] =
     doc.declares.collect {
       case param: Parameter => param.payloads :+ param
       case req: Request     => req.payloads
       case res: Response    => res.payloads
     }.flatten
 
-  def searchPayloadAndParams(webApi: WebApi): Seq[SchemaContainer] = {
+  def searchPayloadAndParams(webApi: WebApi): Seq[SchemaContainerWithId] = {
     webApi.endPoints.flatMap { endpoint =>
       val paramSchemas    = endpoint.parameters.flatMap(_.payloads)
       val endpointSchemas = traverseEndpoint(endpoint)
@@ -48,7 +52,7 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
     }
   }
 
-  private def traverseEndpoint(endpoint: EndPoint): Seq[SchemaContainer] = {
+  private def traverseEndpoint(endpoint: EndPoint): Seq[SchemaContainerWithId] = {
     endpoint.operations.flatMap { op =>
       val responseSchemas = op.responses.flatMap(_.payloads)
       val requestSchemas = Option(op.request) match {
@@ -59,16 +63,17 @@ class PayloadAndParameterResolutionStage(profile: ProfileName)(override implicit
     }
   }
 
-  private def reqSchemas(req: Request): Seq[SchemaContainer] = {
+  private def reqSchemas(req: Request): Seq[SchemaContainerWithId] = {
     val reqParams = req.uriParameters ++ req.queryParameters ++ req.cookieParameters
     req.payloads ++ reqParams.flatMap(_.payloads) ++ reqParams
   }
 
-  def setExamplesInSchema(payloadOrParam: SchemaContainer): Unit =
+  def setExamplesInSchema(payloadOrParam: SchemaContainerWithId): Unit =
     payloadOrParam.schema match {
       case shape: AnyShape =>
         payloadOrParam.examples.foreach { example =>
           if (!shape.examples.exists(_.id == example.id)) {
+            example.add(TrackedElement(payloadOrParam.id))
             shape.withExamples(shape.examples ++ Seq(example))
             payloadOrParam.removeExamples()
           }
