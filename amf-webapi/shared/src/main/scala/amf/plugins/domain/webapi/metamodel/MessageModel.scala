@@ -20,11 +20,6 @@ trait MessageModel extends TagsModel with ExamplesField with DocumentationField 
              "an identifier that can be used for message tracing and correlation")
   )
 
-  val SchemaFormat = Field(
-    Str,
-    ApiContract + "schemaFormat",
-    ModelDoc(ModelVocabularies.ApiContract, "schemaFormat", "defines the format of the defined payload schema"))
-
   val DisplayName = Field(Str,
                           Core + "displayName",
                           ModelDoc(ModelVocabularies.Core, "displayName", "a display name for the request/response"))
@@ -44,15 +39,5 @@ trait MessageModel extends TagsModel with ExamplesField with DocumentationField 
 
 object MessageModel extends MessageModel {
   val fields =
-    List(Payloads,
-         CorrelationId,
-         SchemaFormat,
-         DisplayName,
-         Title,
-         Summary,
-         Bindings,
-         Tags,
-         Examples,
-         Documentation,
-         IsAbstract)
+    List(Payloads, CorrelationId, DisplayName, Title, Summary, Bindings, Tags, Examples, Documentation, IsAbstract)
 }
