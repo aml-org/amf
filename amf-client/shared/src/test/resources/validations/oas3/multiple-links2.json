@@ -1,0 +1,33 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Test API",
+    "version": "1.0"
+  },
+  "components": {
+    "schemas": {
+      "A": {
+        "type": "object",
+        "properties": {
+          "a1": {
+            "$ref": "#/components/schemas/B"
+          }
+        }
+      },
+      "B": {
+        "type": "object",
+        "properties": {
+          "b1": {
+            "$ref": "#/components/schemas/C"
+          }
+        },
+        "required": [
+          "b1"
+        ]
+      },
+      "C": {
+        "type": "string"
+      }
+    }
+  }
+}

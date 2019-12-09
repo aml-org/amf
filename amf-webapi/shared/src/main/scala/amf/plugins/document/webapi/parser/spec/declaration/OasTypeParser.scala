@@ -401,7 +401,15 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  private def isDeclaration(ref: String): Boolean = ref.matches("^(\\#\\/definitions\\/){1}([^/\\n])+$")
+  private val oas2DeclarationRegex = "^(\\#\\/definitions\\/){1}([^/\\n])+$"
+  private val oas3DeclarationRegex =
+    "^(\\#\\/components\\/){1}((schemas|parameters|securitySchemes|requestBodies|responses|headers|examples|links|callbacks){1}\\/){1}([^/\\n])+"
+  private def isDeclaration(ref: String): Boolean =
+    ctx match {
+      case _: Oas2WebApiContext if ref.matches(oas2DeclarationRegex) => true
+      case _: Oas3WebApiContext if ref.matches(oas3DeclarationRegex) => true
+      case _                                                         => false
+    }
 
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
     val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
@@ -1057,7 +1065,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val shape: Shape
     val map: YMap
-    private val counter = new IdCounter()
+    private val counter                        = new IdCounter()
     lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), counter)
 
     def parse(): Shape = {

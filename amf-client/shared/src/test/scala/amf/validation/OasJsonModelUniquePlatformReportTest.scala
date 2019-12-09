@@ -178,6 +178,13 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("oas3/schema-on-response-node.json", Some("schema-on-response-node.report"), Oas30Profile)
   }
 
+  test("Multiple link references") {
+    validate("oas3/multiple-links2.json", profile = Oas30Profile)
+  }
+
+  test("Multiple link references 2") {
+    validate("oas3/multiple-links3.json", profile = Oas30Profile)
+  }
 
   override val hint: Hint = OasJsonHint
 }
