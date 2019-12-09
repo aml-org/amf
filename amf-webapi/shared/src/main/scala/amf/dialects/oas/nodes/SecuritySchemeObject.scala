@@ -54,13 +54,38 @@ object ApiKeySecuritySchemeObject extends DialectNode {
 
 object Oauth2SecuritySchemeObject extends DialectNode {
   override def name: String            = "Oauth2SecurityScheme"
-  override def nodeTypeMapping: String = OAuth2SettingsModel.`type`.head.iri()
+  override def nodeTypeMapping: String = OAuth2FlowModel.`type`.head.iri()
   override def properties: Seq[PropertyMapping] = Oas20SecuritySchemeObject.properties ++ Seq(
     PropertyMapping()
-      .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/flows")
-      .withName("flows")
-      .withNodePropertyMapping(OAuth2SettingsModel.Flows.value.iri())
-      .withObjectRange(Seq(Oas30FlowsObject.id)) // TODO pope verify that this is okay
+      .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/flow")
+      .withName("flow")
+      .withMinCount(1)
+      .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
+      .withEnum(
+        Seq(
+          "implicit",
+          "password",
+          "application",
+          "accessCode"
+        ))
+      .withLiteralRange(xsdString.iri()),
+    PropertyMapping()
+      .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/authorizationUrl")
+      .withName("authorizationUrl")
+      .withNodePropertyMapping(OAuth2FlowModel.AuthorizationUri.value.iri())
+      .withLiteralRange(xsdUri.iri()),
+    PropertyMapping()
+      .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/tokenUrl")
+      .withName("tokenUrl")
+      .withNodePropertyMapping(OAuth2FlowModel.AccessTokenUri.value.iri())
+      .withLiteralRange(xsdUri.iri()),
+    PropertyMapping()
+      .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/scopes")
+      .withName("scopes")
+      .withNodePropertyMapping(OAuth2FlowModel.Scopes.value.iri())
+      .withMapTermKeyProperty(ScopeModel.Name.value.iri())
+      .withMapTermValueProperty(ScopeModel.Description.value.iri())
+      .withObjectRange(Seq(Oas20ScopeObject.id))
   )
 }
 
@@ -141,7 +166,8 @@ object Oas30OAuth20SecurityObject extends DialectNode {
       .withName("flows")
       .withMinCount(1)
       .withNodePropertyMapping(OAuth2SettingsModel.Flows.value.iri())
-      .withObjectRange(Seq(Oas30FlowsObject.id))
+      .withMapTermKeyProperty(OAuth2FlowModel.Flow.value.iri())
+      .withObjectRange(Seq(Oas30FlowObject.id))
   )
 }
 
@@ -158,37 +184,9 @@ object Oas30OpenIdConnectUrl extends DialectNode {
   )
 }
 
-object Oas30FlowsObject extends DialectNode {
-
-  override def name: String            = "Oas30FlowsObject"
-  override def nodeTypeMapping: String = SecuritySchemeModel.`type`.head.iri()
-  override def properties: Seq[PropertyMapping] = Seq(
-    PropertyMapping()
-      .withId(OAS30Dialect.DialectLocation + "#/declarations/securityScheme/implicit")
-      .withName("implicit")
-      .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
-      .withObjectRange(Seq(Oas30FlowsObject.id)),
-    PropertyMapping()
-      .withId(OAS30Dialect.DialectLocation + "#/declarations/securityScheme/password")
-      .withName("password")
-      .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
-      .withObjectRange(Seq(Oas30FlowsObject.id)),
-    PropertyMapping()
-      .withId(OAS30Dialect.DialectLocation + "#/declarations/securityScheme/clientCredentials")
-      .withName("clientCredentials")
-      .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
-      .withObjectRange(Seq(Oas30FlowsObject.id)),
-    PropertyMapping()
-      .withId(OAS30Dialect.DialectLocation + "#/declarations/securityScheme/authorizationCode")
-      .withName("authorizationCode")
-      .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
-      .withObjectRange(Seq(Oas30FlowsObject.id))
-  )
-}
-
 object Oas30FlowObject extends DialectNode {
   override def name: String            = "Oas30FlowObject"
-  override def nodeTypeMapping: String = OAuth2FlowModel.Flow.value.iri()
+  override def nodeTypeMapping: String = OAuth2FlowModel.`type`.head.iri()
   override def properties: Seq[PropertyMapping] = Seq(
     PropertyMapping()
       .withId(OAS30Dialect.DialectLocation + "#/declarations/Oas20FlowObject/authorizationUrl")
@@ -211,6 +209,12 @@ object Oas30FlowObject extends DialectNode {
       .withNodePropertyMapping(OAuth2FlowModel.Scopes.value.iri())
       .withMapTermKeyProperty(ScopeModel.Name.value.iri())
       .withMapTermValueProperty(ScopeModel.Description.value.iri())
-      .withObjectRange(Seq(Oas20ScopeObject.id))
+      .withObjectRange(Seq(Oas20ScopeObject.id)),
+    PropertyMapping()
+      .withId(OAS30Dialect.DialectLocation + "#/declarations/Oas20FlowObject/flow")
+      .withName("flow")
+      .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
+      .withLiteralRange(xsdString.iri())
+      .withEnum(Seq())
   )
 }
