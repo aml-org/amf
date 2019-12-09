@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
-import amf.core.model.domain.AmfArray
+import amf.core.annotations.SynthesizedField
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -70,7 +71,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
       parseOas2Header(header, map)
       header
     }
-    header.withBinding("header") // we need to add the binding in order to conform all parameters validations
+    header.set(ParameterModel.Binding, AmfScalar("header"), Annotations() += SynthesizedField()) // we need to add the binding in order to conform all parameters validations
     header
   }
 
