@@ -12,7 +12,8 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Operation(override private[amf] val _internal: InternalOperation)
     extends DomainElement
-    with NamedDomainElement {
+    with NamedDomainElement
+    with Linkable {
 
   @JSExportTopLevel("model.domain.Operation")
   def this() = this(InternalOperation())
@@ -153,4 +154,6 @@ case class Operation(override private[amf] val _internal: InternalOperation)
     * Url property of the server is required.
     */
   def withServer(name: String): Server = _internal.withServer(name)
+
+  override def linkCopy(): Operation = _internal.linkCopy()
 }

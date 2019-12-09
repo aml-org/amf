@@ -9,6 +9,13 @@ pipeline {
     NEXUSIQ = credentials('nexus-iq')
   }
   stages {
+    stage('Test') {
+      steps {
+        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+          sh 'sbt -mem 4096 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
+        }
+      }
+    }
     stage('Coverage') {
       when {
         anyOf {
@@ -30,7 +37,6 @@ pipeline {
           branch 'master'
           branch 'develop'
           branch 'release/*'
-          branch 'new-security-model'
         }
       }
       steps {

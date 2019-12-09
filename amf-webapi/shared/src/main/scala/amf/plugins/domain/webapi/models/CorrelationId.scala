@@ -1,13 +1,16 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.CorrelationIdModel
 import org.yaml.model.YMap
 
-class CorrelationId(override val fields: Fields, override val annotations: Annotations) extends DomainElement {
+class CorrelationId(override val fields: Fields, override val annotations: Annotations)
+    extends NamedDomainElement
+    with Linkable {
+
   def description: StrField = fields.field(CorrelationIdModel.Description)
   def idLocation: StrField  = fields.field(CorrelationIdModel.Location)
 
@@ -16,6 +19,12 @@ class CorrelationId(override val fields: Fields, override val annotations: Annot
 
   override def meta: Obj           = CorrelationIdModel
   override def componentId: String = "/default-id"
+
+  override protected def nameField: Field = CorrelationIdModel.Name
+
+  override def linkCopy(): CorrelationId = CorrelationId().withId(id)
+
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = CorrelationId.apply
 }
 
 object CorrelationId {
@@ -25,4 +34,6 @@ object CorrelationId {
   def apply(ast: YMap): CorrelationId = apply(Annotations(ast))
 
   def apply(annotations: Annotations): CorrelationId = new CorrelationId(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): CorrelationId = new CorrelationId(fields, annotations)
 }

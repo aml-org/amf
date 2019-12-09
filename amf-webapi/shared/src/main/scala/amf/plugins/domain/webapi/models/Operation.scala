@@ -1,7 +1,7 @@
 package amf.plugins.domain.webapi.models
 
 import amf.core.metamodel.{Field, Obj}
-import amf.core.model.domain.NamedDomainElement
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.CreativeWork
@@ -17,7 +17,8 @@ import amf.core.utils.AmfStrings
 case class Operation(fields: Fields, annotations: Annotations)
     extends NamedDomainElement
     with ExtensibleWebApiDomainElement
-    with ServerContainer {
+    with ServerContainer
+    with Linkable {
 
   def method: StrField                   = fields.field(Method)
   def description: StrField              = fields.field(Description)
@@ -86,11 +87,15 @@ case class Operation(fields: Fields, annotations: Annotations)
     result
   }
 
+  override def linkCopy(): Operation = Operation().withId(id)
+
   override def meta: Obj = OperationModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String        = "/" + method.option().getOrElse("default-operation").urlComponentEncoded
   override protected def nameField: Field = Name
+
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Operation.apply
 }
 
 object Operation {

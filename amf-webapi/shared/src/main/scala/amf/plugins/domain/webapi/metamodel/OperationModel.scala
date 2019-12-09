@@ -4,8 +4,8 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type._
 import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.{ApiContract, Core, ApiBinding}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.domain.shapes.metamodel.common.DocumentationField
 import amf.plugins.domain.webapi.metamodel.bindings.OperationBindingModel
@@ -23,7 +23,8 @@ object OperationModel
     with DescriptionField
     with DocumentationField
     with TagsModel
-    with AbstractModel {
+    with AbstractModel
+    with LinkableElementModel {
 
   val Method = Field(Str,
                      ApiContract + "method",
@@ -108,7 +109,7 @@ object OperationModel
     Servers,
     Bindings,
     IsAbstract
-  ) ++ DomainElementModel.fields
+  ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = Operation()
 
