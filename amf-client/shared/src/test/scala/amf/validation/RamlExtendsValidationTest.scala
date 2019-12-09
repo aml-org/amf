@@ -284,6 +284,16 @@ class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest 
     validate("/extends/references/nonExistentIncludes.raml", Some("references/nonExistentIncludes.report"))
   }
 
+  test("Including and applying non existent resource type") {
+    validate("/resource_types/non-existent-include.raml",
+      Some("/resource-types/non-existent-include.report"))
+  }
+
+  test("Including and applying non existent traits") {
+    validate("/traits/non-existent-include.raml",
+      Some("/traits/non-existent-include.report"))
+  }
+
   // Examples validation
 
   test("Optional method as parameter value") {
