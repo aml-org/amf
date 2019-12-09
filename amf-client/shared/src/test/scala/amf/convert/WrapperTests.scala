@@ -1900,6 +1900,29 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test non existent resource types") {
+    val file = "file://amf-client/shared/src/test/resources/validations/resource_types/non-existent-include.raml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseFileAsync(file).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+    } yield {
+      assert(!report.conforms)
+    }
+  }
+
+  test("Test non existent traits") {
+    val file = "file://amf-client/shared/src/test/resources/validations/traits/non-existent-include.raml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseFileAsync(file).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+    } yield {
+      assert(!report.conforms)
+    }
+  }
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }
