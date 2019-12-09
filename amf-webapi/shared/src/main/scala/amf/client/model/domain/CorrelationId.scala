@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * CorrelationId model class.
   */
 @JSExportAll
-class CorrelationId(override private[amf] val _internal: InternalCorrelationId)
+case class CorrelationId(override private[amf] val _internal: InternalCorrelationId)
     extends DomainElement
     with Linkable
     with NamedDomainElement {

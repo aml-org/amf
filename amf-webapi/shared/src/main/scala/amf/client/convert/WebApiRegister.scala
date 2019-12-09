@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.model
 import amf.plugins.domain.{shapes, webapi}
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.domain.webapi.metamodel.{IriTemplateMappingModel, TemplatedLinkModel, templates}
+import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, IriTemplateMappingModel, TemplatedLinkModel, templates}
 import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations
 import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
@@ -169,6 +169,9 @@ object WebApiRegister {
     }
     platform.registerWrapper(IriTemplateMappingModel) {
       case s: webapi.models.IriTemplateMapping => IriTemplateMapping(s)
+    }
+    platform.registerWrapper(CorrelationIdModel) {
+      case s: webapi.models.CorrelationId => CorrelationId(s)
     }
 
     platform.registerValidations(CoreValidations.validations, CoreValidations.levels)
