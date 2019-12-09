@@ -136,11 +136,11 @@ object MatrixShape {
 case class TupleShape(override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
-  def items: Seq[Shape]                                   = fields.field(TupleItems)
-  def withItems(items: Seq[Shape]): this.type             = setArray(TupleItems, items)
-  def additionalItems: BoolField                          = fields.field(TupleShapeModel.AdditionalItems)
-  def additionalItemsSchema: Shape                        = fields.field(TupleShapeModel.AdditionalItemsSchema)
-  def withAdditionalItems(additional: Boolean): this.type = set(TupleShapeModel.AdditionalItems, additional)
+  def items: Seq[Shape]                                = fields.field(TupleItems)
+  def withItems(items: Seq[Shape]): this.type          = setArray(TupleItems, items)
+  def closedItems: BoolField                           = fields.field(TupleShapeModel.ClosedItems)
+  def additionalItemsSchema: Shape                     = fields.field(TupleShapeModel.AdditionalItemsSchema)
+  def withClosedItems(closedItems: Boolean): this.type = set(TupleShapeModel.ClosedItems, closedItems)
 
   override def linkCopy() = TupleShape().withId(id)
 
