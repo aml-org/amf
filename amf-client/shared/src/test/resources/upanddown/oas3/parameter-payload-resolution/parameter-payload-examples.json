@@ -1,0 +1,47 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic Callbacks",
+    "version": "0.1"
+  },
+  "components": {
+    "parameters": {
+      "simple": {
+        "name": "token",
+        "in": "header",
+        "description": "token to be passed as a header",
+        "schema": {
+          "type": "string",
+          "example": "Example defined in schema"
+        },
+        "examples": {
+          "a": {
+            "summary": "simple example",
+            "description": "description of the example",
+            "value": "Example defined in parameter examples"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                },
+                "example": "Example defined in payload"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

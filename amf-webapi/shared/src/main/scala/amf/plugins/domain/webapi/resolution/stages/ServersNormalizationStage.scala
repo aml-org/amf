@@ -46,7 +46,7 @@ class ServersNormalizationStage(profile: ProfileName)(override implicit val erro
     * moves servers defined in base to each child that has no servers defined.
     */
   private def propagateServers(base: ServerContainer, children: Seq[ServerContainer]): Unit =
-    if (children.nonEmpty) {
+    if (children.nonEmpty && base.servers.nonEmpty) {
       val servers: Seq[Server] = base.servers
       base.removeServers()
       children.foreach { child =>

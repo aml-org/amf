@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.core.annotations.{DeclaredElement, SingleValueArray, SourceVendor, SynthesizedField}
+import amf.core.annotations._
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -494,7 +494,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         entries => {
           val operations = mutable.ListBuffer[Operation]()
           entries.foreach { entry =>
-            operations += OperationParser(entry, endpoint.withOperation).parse()
+            operations += operationParser(entry, endpoint.withOperation).parse()
           }
           endpoint.set(EndPointModel.Operations, AmfArray(operations))
         }
@@ -753,7 +753,64 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
-  case class OperationParser(entry: YMapEntry, producer: String => Operation) {
+  case class Oas3OperationParser(entry: YMapEntry, producer: String => Operation)
+      extends OperationParser(entry, producer) {
+    override protected def parseVersionFacets(operation: Operation, map: YMap): Unit = {
+      map.key(
+        "requestBody",
+        entry => {
+          Oas3RequestParser(entry.value.as[YMap], req => operation.withRequest(req)).parse()
+        }
+      )
+
+      // parameters defined in endpoint are stored in the request
+      Oas3ParametersParser(map, Option(operation.request).map(() => _).getOrElse(operation.withRequest))
+        .parseParameters()
+
+      map.key(
+        "callbacks",
+        entry => {
+          val callbacks = entry.value
+            .as[YMap]
+            .entries
+            .flatMap { callbackEntry =>
+              val name = callbackEntry.key.as[YScalar].text
+              CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(operation.id)).parse()
+            }
+          operation.withCallbacks(callbacks)
+        }
+      )
+
+      if (operation.fields.exists(OperationModel.Request)) operation.request.annotations += VirtualObject()
+      ctx.factory.serversParser(map, operation).parse()
+    }
+  }
+
+  case class Oas2OperationParser(entry: YMapEntry, producer: String => Operation)
+      extends OperationParser(entry, producer) {
+    override protected def parseVersionFacets(operation: Operation, map: YMap): Unit = {
+      RequestParser(map, req => operation.withRequest(req))
+        .parse()
+        .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
+
+      map.key("schemes", OperationModel.Schemes in operation)
+      map.key("consumes", OperationModel.Accepts in operation)
+      map.key("produces", OperationModel.ContentType in operation)
+    }
+  }
+
+  // move to oas factory?? cannot access inners parsers from outside
+  private def operationParser: (YMapEntry, String => Operation) => OperationParser = {
+    ctx.syntax match {
+      case Oas3Syntax => Oas3OperationParser.apply
+      case _          => Oas2OperationParser.apply // default?
+    }
+  }
+
+  abstract class OperationParser(entry: YMapEntry, producer: String => Operation) {
+
+    protected def parseVersionFacets(operation: Operation, map: YMap)
+
     def parse(): Operation = {
 
       val operation = producer(ScalarNode(entry.key).string().value.toString).add(Annotations(entry))
@@ -776,12 +833,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key("summary", OperationModel.Summary in operation)
       // oas 3.0.0 / oas 2.0
       map.key("externalDocs", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
-      // oas 2.0
-      if (ctx.syntax == Oas2Syntax) {
-        map.key("schemes", OperationModel.Schemes in operation)
-        map.key("consumes", OperationModel.Accepts in operation)
-        map.key("produces", OperationModel.ContentType in operation)
-      }
+
       // oas 3.0.0 / oas 2.0
       map.key(
         "tags",
@@ -820,7 +872,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       }
 
       // oas 3.0.0 / oas 2.0
-
       map.key(
         "is".asOasExtension,
         entry => {
@@ -884,6 +935,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       ctx.closedShape(operation.id, map, "operation")
 
+      parseVersionFacets(operation, map)
       operation
     }
   }

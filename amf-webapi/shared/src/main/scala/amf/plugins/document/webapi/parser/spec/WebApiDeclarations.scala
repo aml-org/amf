@@ -1,27 +1,27 @@
 package amf.plugins.document.webapi.parser.spec
 
-import amf.core.annotations.{DeclaredElement, DeclaredHeader}
+import amf.core.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
+import amf.core.model.domain.{Shape, DomainElement, DataNode, ObjectNode}
 import amf.core.parser.{
-  Annotations,
-  Declarations,
-  EmptyFutureDeclarations,
-  ErrorHandler,
-  Fields,
   FragmentRef,
+  ErrorHandler,
+  Declarations,
   FutureDeclarations,
-  SearchScope
+  SearchScope,
+  Annotations,
+  Fields,
+  EmptyFutureDeclarations
 }
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+import amf.plugins.domain.shapes.models.{Example, AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Callback, EndPoint, Parameter, Payload, Request, Response, TemplatedLink}
-import org.yaml.model.{YNode, YPart}
+import amf.plugins.domain.webapi.models.{Request, EndPoint, Parameter, TemplatedLink, Callback, Payload, Response}
+import org.yaml.model.{YPart, YNode}
 
 /**
   * Declarations object.
@@ -348,12 +348,6 @@ object WebApiDeclarations {
     val result = new WebApiDeclarations(None, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     declarations.foreach(result += _)
     result
-  }
-
-  trait ErrorDeclaration extends DomainElement {
-    val namespace: String
-
-    override def withId(value: String): ErrorDeclaration.this.type = super.withId(namespace + value)
   }
 
   case class ErrorTrait(idPart: String, ast: YPart) extends Trait(Fields(), Annotations(ast)) with ErrorDeclaration {
