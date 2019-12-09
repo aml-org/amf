@@ -64,7 +64,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fsimple-case/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -74,11 +80,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "response description"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -343,7 +344,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Fonly-in-operation/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -353,11 +360,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "response description"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -648,7 +650,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/oas3/summary-description-in-path/description-applied-to-operations.json#/web-api/end-points/%2Foverriding-path-values/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -658,11 +666,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "response description"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [

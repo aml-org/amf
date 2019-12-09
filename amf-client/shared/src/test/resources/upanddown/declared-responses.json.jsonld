@@ -74,7 +74,18 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/web-api/end-points/%2Flevelzero/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/core#name": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "http://a.ml/vocabularies/document#link-target": [
                       {
@@ -84,16 +95,6 @@
                     "http://a.ml/vocabularies/document#link-label": [
                       {
                         "@value": "Default"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/core#name": [
-                      {
-                        "@value": "200"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -330,17 +331,8 @@
         "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default",
         "@type": [
           "http://a.ml/vocabularies/apiContract#Response",
+          "http://a.ml/vocabularies/apiContract#Message",
           "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://a.ml/vocabularies/core#name": [
-          {
-            "@value": "Default"
-          }
-        ],
-        "http://a.ml/vocabularies/core#description": [
-          {
-            "@value": "200 descr"
-          }
         ],
         "http://a.ml/vocabularies/apiContract#header": [
           {
@@ -488,6 +480,16 @@
             ]
           }
         ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "Default"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "200 descr"
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default/source-map",
@@ -499,12 +501,12 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/core#description"
+                    "@value": "http://a.ml/vocabularies/apiContract#header"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(24,6)-(24,32)]"
+                    "@value": "[(25,6)-(30,7)]"
                   }
                 ]
               },
@@ -512,12 +514,12 @@
                 "@id": "file://amf-client/shared/src/test/resources/upanddown/declared-responses.json#/declarations/responses/Default/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/apiContract#header"
+                    "@value": "http://a.ml/vocabularies/core#description"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(25,6)-(30,7)]"
+                    "@value": "[(24,6)-(24,32)]"
                   }
                 ]
               },

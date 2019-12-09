@@ -1,7 +1,5 @@
 package amf.plugins.domain.shapes.models
 
-import java.util.Optional
-
 import amf.core.model.domain.{AmfArray, DomainElement, Linkable, Shape}
 import amf.core.model.{BoolField, IntField}
 import amf.core.parser.{Annotations, Fields}
@@ -71,9 +69,14 @@ abstract class DataArrangementShape(fields: Fields, annotations: Annotations) ex
 case class ArrayShape(override val fields: Fields, override val annotations: Annotations)
     extends DataArrangementShape(fields, annotations) {
 
-  def items: Shape = fields.field(Items)
+  def items: Shape    = fields.field(Items)
+  def contains: Shape = fields.field(Contains)
   def withItems(items: Shape): this.type = {
     fields.set(id + "/items", Items, items, Annotations())
+    this
+  }
+  def withContains(contains: Shape): this.type = {
+    set(Contains, contains)
     this
   }
 

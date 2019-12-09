@@ -33,6 +33,7 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   def tags: ClientList[Tag]                     = _internal.tags.asClient
   def callbacks: ClientList[Callback]           = _internal.callbacks.asClient
   def servers: ClientList[Server]               = _internal.servers.asClient
+  def isAbstract: BoolField                     = _internal.isAbstract
 
   /** Set method property of this Operation. */
   def withMethod(method: String): this.type = {
@@ -121,6 +122,12 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   /** Set tags property of this Operation. */
   def withTags(tags: ClientList[Tag]): this.type = {
     _internal.withTags(tags.asInternal)
+    this
+  }
+
+  /** Set abstract property of this Operation. */
+  def withAbstract(abs: Boolean): this.type = {
+    _internal.withAbstract(abs)
     this
   }
 

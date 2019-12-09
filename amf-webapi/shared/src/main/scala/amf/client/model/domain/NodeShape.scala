@@ -21,6 +21,7 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def properties: ClientList[PropertyShape]                = _internal.properties.asClient
   def additionalPropertiesSchema: Shape                    = _internal.additionalPropertiesSchema
   def dependencies: ClientList[PropertyDependencies]       = _internal.dependencies.asClient
+  def propertyNames: Shape                                 = _internal.propertyNames
 
   def withMinProperties(min: Int): this.type = {
     _internal.withMinProperties(min)
@@ -63,6 +64,8 @@ case class NodeShape(override private[amf] val _internal: InternalNodeShape) ext
   def withInheritsObject(name: String): NodeShape = _internal.withInheritsObject(name)
 
   def withInheritsScalar(name: String): ScalarShape = _internal.withInheritsScalar(name)
+
+  def withPropertyNames(shape: Shape): _internal.type = _internal.withPropertyNames(shape)
 
   override def linkCopy(): NodeShape = _internal.linkCopy()
 }

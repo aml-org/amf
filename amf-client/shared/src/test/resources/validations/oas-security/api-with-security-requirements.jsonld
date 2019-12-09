@@ -54,7 +54,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/end-points/%2Fpets/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -64,11 +70,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "Success!"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [

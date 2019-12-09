@@ -5,6 +5,7 @@ import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.CorrelationIdModel
+import org.yaml.model.YMap
 
 class CorrelationId(override val fields: Fields, override val annotations: Annotations) extends DomainElement {
   def description: StrField = fields.field(CorrelationIdModel.Description)
@@ -15,4 +16,13 @@ class CorrelationId(override val fields: Fields, override val annotations: Annot
 
   override def meta: Obj           = CorrelationIdModel
   override def componentId: String = "/default-id"
+}
+
+object CorrelationId {
+
+  def apply(): CorrelationId = apply(Annotations())
+
+  def apply(ast: YMap): CorrelationId = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): CorrelationId = new CorrelationId(Fields(), annotations)
 }

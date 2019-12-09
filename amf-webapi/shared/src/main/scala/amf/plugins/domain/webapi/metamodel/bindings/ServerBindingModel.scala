@@ -1,7 +1,6 @@
 package amf.plugins.domain.webapi.metamodel.bindings
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
 

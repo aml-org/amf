@@ -28,7 +28,8 @@ import amf.client.model.domain.{
   Settings => ClientSettings,
   TemplatedLink => ClientTemplatedLink,
   Trait => ClientTrait,
-  Tag => ClientTag
+  Tag => ClientTag,
+  CorrelationId => ClientCorrelationId
 }
 import amf.client.validate.{PayloadValidator => ClientInternalPayloadValidator}
 import amf.core.unsafe.PlatformSecrets
@@ -64,6 +65,7 @@ trait WebApiBaseConverter
     with PayloadValidatorConverter
     with OAuth2FlowConverter
     with SecurityRequirementConverter
+    with CorrelationIdConverter
 
 trait EndPointConverter extends PlatformSecrets {
 
@@ -159,6 +161,15 @@ trait TagConverter extends PlatformSecrets {
   implicit object TagMatcher extends BidirectionalMatcher[Tag, ClientTag] {
     override def asClient(from: Tag): ClientTag   = platform.wrap[ClientTag](from)
     override def asInternal(from: ClientTag): Tag = from._internal
+  }
+
+}
+
+trait CorrelationIdConverter extends PlatformSecrets {
+
+  implicit object CorrelationIdMatcher extends BidirectionalMatcher[CorrelationId, ClientCorrelationId] {
+    override def asClient(from: CorrelationId): ClientCorrelationId   = platform.wrap[ClientCorrelationId](from)
+    override def asInternal(from: ClientCorrelationId): CorrelationId = from._internal
   }
 
 }

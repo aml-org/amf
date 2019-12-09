@@ -554,7 +554,13 @@
                                 "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/api.raml#/declarations/securitySchemes/oauth_1_0/401",
                                 "@type": [
                                   "http://a.ml/vocabularies/apiContract#Response",
+                                  "http://a.ml/vocabularies/apiContract#Message",
                                   "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/apiContract#statusCode": [
+                                  {
+                                    "@value": "401"
+                                  }
                                 ],
                                 "http://a.ml/vocabularies/core#name": [
                                   {
@@ -564,11 +570,6 @@
                                 "http://a.ml/vocabularies/core#description": [
                                   {
                                     "@value": "Authorization error."
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/apiContract#statusCode": [
-                                  {
-                                    "@value": "401"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/apiContract#payload": [
@@ -2330,7 +2331,13 @@
                 "@id": "file://amf-client/shared/src/test/resources/references/fragments/security-scheme.raml#/fragment/401",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Response",
+                  "http://a.ml/vocabularies/apiContract#Message",
                   "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://a.ml/vocabularies/apiContract#statusCode": [
+                  {
+                    "@value": "401"
+                  }
                 ],
                 "http://a.ml/vocabularies/core#name": [
                   {
@@ -2340,11 +2347,6 @@
                 "http://a.ml/vocabularies/core#description": [
                   {
                     "@value": "Authorization error."
-                  }
-                ],
-                "http://a.ml/vocabularies/apiContract#statusCode": [
-                  {
-                    "@value": "401"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -3108,7 +3110,13 @@
             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/secured-by/api.raml#/declarations/securitySchemes/oauth_1_0/401",
             "@type": [
               "http://a.ml/vocabularies/apiContract#Response",
+              "http://a.ml/vocabularies/apiContract#Message",
               "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiContract#statusCode": [
+              {
+                "@value": "401"
+              }
             ],
             "http://a.ml/vocabularies/core#name": [
               {
@@ -3118,11 +3126,6 @@
             "http://a.ml/vocabularies/core#description": [
               {
                 "@value": "Authorization error."
-              }
-            ],
-            "http://a.ml/vocabularies/apiContract#statusCode": [
-              {
-                "@value": "401"
               }
             ],
             "http://a.ml/vocabularies/apiContract#payload": [

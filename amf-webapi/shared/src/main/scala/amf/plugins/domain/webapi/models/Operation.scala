@@ -34,6 +34,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   def tags: Seq[Tag]                     = fields.field(Tags)
   def callbacks: Seq[Callback]           = fields.field(Callbacks)
   def servers: Seq[Server]               = fields.field(Servers)
+  def isAbstract: BoolField              = fields.field(IsAbstract)
 
   def traits: Seq[ParametrizedTrait] = extend collect { case t: ParametrizedTrait => t }
 
@@ -51,6 +52,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withTags(tags: Seq[Tag]): this.type                         = setArray(Tags, tags)
   def withCallbacks(callbacks: Seq[Callback]): this.type          = setArray(Callbacks, callbacks)
   def withServers(servers: Seq[Server]): this.type                = setArray(Servers, servers)
+  def withAbstract(abs: Boolean): this.type                       = set(IsAbstract, abs)
 
   override def removeServers(): Unit = fields.removeField(OperationModel.Servers)
 
