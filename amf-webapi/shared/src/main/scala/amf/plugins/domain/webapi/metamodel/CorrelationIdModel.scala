@@ -6,6 +6,7 @@ import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.core.vocabulary.Namespace.Core
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.webapi.models.CorrelationId
 
 object CorrelationIdModel
     extends DomainElementModel
@@ -23,7 +24,7 @@ object CorrelationIdModel
   override val fields
     : List[Field] = Name :: Description :: Location :: LinkableElementModel.fields ++ DomainElementModel.fields
 
-  override def modelInstance = ???
+  override def modelInstance = CorrelationId()
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Core,
