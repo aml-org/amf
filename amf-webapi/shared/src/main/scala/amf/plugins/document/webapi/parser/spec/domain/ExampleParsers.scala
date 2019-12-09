@@ -47,12 +47,8 @@ case class OasResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiConte
 case class OasExamplesParser(map: YMap, parentId: String)(implicit ctx: WebApiContext) {
   def parse(): Seq[Example] = {
     (map.key("example"), map.key("examples")) match {
-      case (Some(exampleEntry), None) =>
-        List(Oas3ResponseExampleParser(exampleEntry).parse())
-
-      case (None, Some(examplesEntry)) =>
-        Oas3ResponseExamplesParser(examplesEntry).parse()
-
+      case (Some(exampleEntry), None)  => List(parseExample(exampleEntry.value))
+      case (None, Some(examplesEntry)) => Oas3NamedExamplesParser(examplesEntry, parentId).parse()
       case (Some(_), Some(_)) =>
         ctx.violation(
           ExclusivePropertiesSpecification,
@@ -64,6 +60,20 @@ case class OasExamplesParser(map: YMap, parentId: String)(implicit ctx: WebApiCo
       case _ => Nil
     }
   }
+
+  private def parseExample(yNode: YNode) = {
+    val example = Example(yNode).adopted(parentId)
+    RamlExampleValueAsString(yNode, example, Oas3ExampleOptions).populate()
+  }
+}
+
+case class Oas3NamedExamplesParser(entry: YMapEntry, parentId: String)(implicit ctx: WebApiContext) {
+  def parse(): Seq[Example] = {
+    entry.value
+      .as[YMap]
+      .entries
+      .map(e => Oas3NameExampleParser(e, parentId, Oas3ExampleOptions).parse())
+  }
 }
 
 case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiContext) {
@@ -71,34 +81,6 @@ case class OasResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiCo
     val example = Example(yMapEntry)
       .set(ExampleModel.MediaType, yMapEntry.key.as[YScalar].text)
     RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = false, quiet = true)).populate()
-  }
-}
-
-case class Oas3ResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiContext) {
-  def parse(): Seq[Example] = {
-    val results = ListBuffer[Example]()
-    entry.value
-      .as[YMap]
-      .entries
-      .map(e => results += Oas3ResponseExampleParser(e).parse())
-
-    results
-  }
-}
-
-case class Oas3ResponseExampleParser(yMapEntry: YMapEntry)(implicit ctx: WebApiContext) {
-  def parse(): Example = {
-    val name = yMapEntry.key.as[YScalar].text
-    if (ctx.syntax == Oas3Syntax) {
-      Oas3SingleExampleValueParser(yMapEntry, ex => {
-        ex.add(Annotations(yMapEntry))
-        ex.withName(name)
-      }, ExampleOptions(strictDefault = true, quiet = true)).parse()
-    } else {
-      val example = Example(yMapEntry).withName(name)
-      RamlExampleValueAsString(yMapEntry.value, example, ExampleOptions(strictDefault = true, quiet = true))
-        .populate()
-    }
   }
 }
 
@@ -242,73 +224,62 @@ case class RamlSingleExampleValueParser(entry: YMapEntry, producer: () => Exampl
   }
 }
 
-case class Oas3SingleExampleValueParser(entry: YMapEntry, adopt: Example => Unit, options: ExampleOptions)(
+case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: ExampleOptions)(
     implicit ctx: WebApiContext)
     extends SpecParserOps {
   def parse(): Example = {
-    entry.value.tagType match {
-      case YType.Map =>
-        val map = entry.value.as[YMap]
-        Oas3ExampleValueParser(map, adopt, options).parse()
-      case YType.Null =>
-        val example = Example()
-        adopt(example)
-        example
-      case _ =>
-        val example = Example()
-        adopt(example)
-        RamlExampleValueAsString(entry.value, example, options).populate()
+    val map = entry.value.as[YMap]
+
+    ctx.link(map) match {
+      case Left(fullRef) => parseLink(fullRef, map)
+      case Right(_)      => Oas3ExampleValueParser(map, newExample(map), options).parse()
     }
+  }
+
+  private val keyName = ScalarNode(entry.key)
+
+  private def setName(e: Example): Example = e.set(ExampleModel.Name, keyName.string())
+
+  private def newExample(ast: YPart): Example =
+    setName(Example(entry)).adopted(parentId)
+
+  private def parseLink(fullRef: String, map: YMap) = {
+    val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
+    ctx.declarations
+      .findExample(name, SearchScope.All)
+      .map(found => setName(found.link(name)))
+      .getOrElse {
+        ctx.obtainRemoteYNode(fullRef) match {
+          case Some(exampleNode) =>
+            Oas3ExampleValueParser(exampleNode.as[YMap], newExample(exampleNode), options).parse()
+          case None =>
+            ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
+            val errorExample = setName(ErrorNamedExample(name, map)).adopted(parentId)
+            errorExample
+        }
+      }
   }
 }
 
-case class Oas3ExampleValueParser(map: YMap, adopt: Example => Unit, options: ExampleOptions)(
-    implicit ctx: WebApiContext)
+case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleOptions)(implicit ctx: WebApiContext)
     extends SpecParserOps {
   def parse(): Example = {
-    ctx.link(map) match {
-      case Left(fullRef) =>
-        val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "examples")
-        ctx.declarations
-          .findExample(name, SearchScope.All)
-          .map(found => {
-            val ex: Example = found.link(name)
-            adopt(ex)
-            ex
-          })
-          .getOrElse {
-            ctx.obtainRemoteYNode(fullRef) match {
-              case Some(exampleNode) =>
-                Oas3ExampleValueParser(exampleNode.as[YMap], adopt, options).parse()
-              case None =>
-                ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
-                val errorExample = ErrorNamedExample(name, map)
-                adopt(errorExample)
-                errorExample
-            }
-          }
-      case Right(_) =>
-        val example = Example()
-        adopt(example)
-        if (map.key("value").nonEmpty || map.key("externalValue").nonEmpty) {
-          map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
-          map.key("description", (ExampleModel.Description in example).allowingAnnotations)
-          map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
+    map.key("summary", (ExampleModel.Summary in example).allowingAnnotations)
+    map.key("description", (ExampleModel.Description in example).allowingAnnotations)
+    map.key("externalValue", (ExampleModel.ExternalValue in example).allowingAnnotations)
 
-          example.withStrict(options.strictDefault)
+    example.withStrict(options.strictDefault)
 
-          map
-            .key("value")
-            .foreach { entry =>
-              RamlExampleValueAsString(entry.value, example, options).populate()
-            }
+    map
+      .key("value")
+      .foreach { entry =>
+        RamlExampleValueAsString(entry.value, example, options).populate()
+      }
 
-          AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
+    AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
-          if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
-          example
-        } else RamlExampleValueAsString(map, example, options).populate()
-    }
+    if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
+    example
   }
 }
 
@@ -419,3 +390,5 @@ case class ExampleOptions(strictDefault: Boolean, quiet: Boolean, isScalar: Bool
 }
 
 object DefaultExampleOptions extends ExampleOptions(true, false, false)
+
+object Oas3ExampleOptions extends ExampleOptions(strictDefault = true, quiet = true)

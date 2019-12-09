@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.LexicalInformation
+import amf.core.annotations.{LexicalInformation, VirtualObject}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml}
@@ -392,7 +392,7 @@ case class Oas2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implici
           .key("settings".asOasExtension)
           .map(entry => dynamicSettings(entry.value.as[YMap], scheme.withDefaultSettings()))
     }
-
+    result.foreach(_.annotations += VirtualObject())
     parseAnnotations(result)
   }
 
