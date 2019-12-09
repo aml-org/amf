@@ -11,7 +11,9 @@ import amf.plugins.document.webapi.contexts._
 package object spec {
 
   object OasDefinitions {
-    val definitionsPrefix = "#/definitions/"
+    val oas2DefinitionsPrefix = "#/definitions/"
+
+    val oas3DefinitionsPrefix = "#/components/schemas/"
 
     val oas3ComponentsPrefix = "#/components/"
 
@@ -19,7 +21,10 @@ package object spec {
 
     val responsesDefinitionsPrefix = "#/responses/"
 
-    def stripDefinitionsPrefix(url: String): String = url.stripPrefix(definitionsPrefix)
+    def stripDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
+      if (ctx.vendor == Vendor.OAS30) url.stripPrefix(oas3DefinitionsPrefix)
+      else url.stripPrefix(oas2DefinitionsPrefix)
+    }
 
     def stripParameterDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
       if (ctx.vendor == Vendor.OAS30)
@@ -38,8 +43,12 @@ package object spec {
         url.stripPrefix(responsesDefinitionsPrefix)
     }
 
-    def appendDefinitionsPrefix(url: String): String =
-      if (!url.startsWith(definitionsPrefix)) appendPrefix(definitionsPrefix, url) else url
+    def appendDefinitionsPrefix(url: String, vendor: Option[Vendor] = None): String = vendor match {
+      case Some(Vendor.OAS30) =>
+        if (!url.startsWith(oas3DefinitionsPrefix)) appendPrefix(oas3DefinitionsPrefix, url) else url
+      case _ =>
+        if (!url.startsWith(oas2DefinitionsPrefix)) appendPrefix(oas2DefinitionsPrefix, url) else url
+    }
 
     def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
         implicit spec: OasSpecEmitterContext): String = {

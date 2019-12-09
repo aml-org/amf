@@ -24,7 +24,7 @@ case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String]
   def emit(b: PartBuilder): Unit = {
     follow() match {
       case s: Shape if s.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendDefinitionsPrefix(referenceLabel))
+        spec.ref(b, OasDefinitions.appendDefinitionsPrefix(referenceLabel, Some(spec.vendor)))
       case p: Parameter if p.annotations.contains(classOf[DeclaredElement]) =>
         spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(referenceLabel))
       case p: Payload if p.annotations.contains(classOf[DeclaredElement]) =>
