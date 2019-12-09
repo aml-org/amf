@@ -2,12 +2,10 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
-import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain._
+import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.vocabulary.Namespace._
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.shapes.metamodel.common.ExamplesField
 import amf.plugins.domain.webapi.models.Response
 
 /**
@@ -17,9 +15,6 @@ object ResponseModel
     extends DomainElementModel
     with KeyField
     with OptionalField
-    with LinkableElementModel
-    with NameFieldSchema
-    with DescriptionField
     with ParametersFieldModel
     with MessageModel {
 
@@ -36,11 +31,10 @@ object ResponseModel
 
   override val key: Field = StatusCode
 
-  override val `type`: List[ValueType] = ApiContract + "Response" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiContract + "Response" :: MessageModel.`type`
 
   override val fields: List[Field] =
-    LinkableElementModel.fields ++
-      List(Name, Description, StatusCode, Headers, Links) ++ MessageModel.fields ++ DomainElementModel.fields
+    List(StatusCode, Headers, Links) ++ MessageModel.fields
 
   override def modelInstance = Response()
 

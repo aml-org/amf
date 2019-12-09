@@ -2,12 +2,21 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace.{ApiContract, Core, ApiBinding}
+import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract, Core}
+import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
 import amf.plugins.domain.webapi.metamodel.bindings.MessageBindingModel
 
-trait MessageModel extends TagsModel with ExamplesField with DocumentationField with AbstractModel {
+trait MessageModel
+    extends TagsModel
+    with ExamplesField
+    with DocumentationField
+    with AbstractModel
+    with NameFieldSchema
+    with DescriptionField
+    with LinkableElementModel {
   val Payloads = Field(Array(PayloadModel),
                        ApiContract + "payload",
                        ModelDoc(ModelVocabularies.ApiContract, "payload", "Payload for a Request/Response"))
@@ -38,6 +47,19 @@ trait MessageModel extends TagsModel with ExamplesField with DocumentationField 
 }
 
 object MessageModel extends MessageModel {
-  val fields =
-    List(Payloads, CorrelationId, DisplayName, Title, Summary, Bindings, Tags, Examples, Documentation, IsAbstract)
+  val fields: List[Field] =
+    List(Name,
+         Description,
+         Payloads,
+         CorrelationId,
+         DisplayName,
+         Title,
+         Summary,
+         Bindings,
+         Tags,
+         Examples,
+         Documentation,
+         IsAbstract) ++ LinkableElementModel.fields ++ DomainElementModel.fields
+
+  override val `type`: List[ValueType] = ApiContract + "Message" :: DomainElementModel.`type`
 }
