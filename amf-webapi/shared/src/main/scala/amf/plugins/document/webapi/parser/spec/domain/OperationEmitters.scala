@@ -6,21 +6,16 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
-import amf.plugins.document.webapi.contexts.{
-  Oas3SpecEmitterFactory,
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext
-}
-import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.oas.{OasDocumentEmitter, StringArrayTagsEmitter}
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
-import amf.plugins.domain.webapi.models.{Callback, Operation}
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.parser.spec.oas.OasDocumentEmitter
+import amf.plugins.domain.webapi.models.{Callback, Operation, Tag}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 
 import scala.collection.mutable
@@ -88,7 +83,9 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
 
     fs.entry(OperationModel.Summary).map(f => result += ValueEmitter("summary".asRamlAnnotation, f))
 
-    fs.entry(OperationModel.Tags).map(f => result += ArrayEmitter("tags".asRamlAnnotation, f, ordering))
+    fs.entry(OperationModel.Tags)
+      .map(f =>
+        result += StringArrayTagsEmitter("tags".asRamlAnnotation, f.array.values.asInstanceOf[Seq[Tag]], ordering))
 
     fs.entry(OperationModel.Documentation)
       .map(
@@ -141,7 +138,7 @@ abstract class RamlOperationEmitter(operation: Operation, ordering: SpecOrdering
                                          defaultResponse = true))
 
     fs.entry(OperationModel.Security)
-      .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))
+      .map(f => result += SecurityRequirementsEmitter("securedBy", f, ordering))
 
     operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
       val callbacks: Seq[Callback] = f.arrayValues

@@ -721,7 +721,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key("uniqueItems", ArrayShapeModel.UniqueItems in shape)
       map.key("additionalItems").foreach { entry =>
         entry.value.tagType match {
-          case YType.Bool => (TupleShapeModel.AdditionalItems in shape)(entry)
+          case YType.Bool => (TupleShapeModel.ClosedItems in shape).negated(entry)
           case YType.Map =>
             OasTypeParser(entry, s => s.adopted(shape.id), version).parse().foreach { s =>
               shape.set(TupleShapeModel.AdditionalItemsSchema, s, Annotations(entry))
@@ -1057,7 +1057,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val shape: Shape
     val map: YMap
-    private val counter = new IdCounter()
+    private val counter                        = new IdCounter()
     lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), counter)
 
     def parse(): Shape = {

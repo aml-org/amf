@@ -694,6 +694,18 @@ class CompleteCycleTest extends FunSuiteCycleTests {
     cycle("nil-example.raml.raml", "nil-example.raml.raml", RamlYamlHint, Raml)
   }
 
+  test("Security requirement OAS to OAS") {
+    cycle("api-with-security-requirement.json", "api-with-security-requirement.json", OasJsonHint, Oas20, validationsPath + "oas-security/")
+  }
+
+  test("Security requirements OAS to OAS") {
+    cycle("api-with-security-requirements.json", "api-with-security-requirements.json", OasJsonHint, Oas20, validationsPath + "oas-security/")
+  }
+
+  test("Security requirements OAS to JSONLD") {
+    cycle("api-with-security-requirements.json", "api-with-security-requirements.jsonld", OasJsonHint, Amf, validationsPath + "oas-security/")
+  }
+
   /**
   * Please do not add more test for raml to raml or to jsonld in here. You can use Raml10CycleTestByDirectory or Raml08CycleTestByDirectory.
   * Check CycleTestByDirectory for information off how to use.

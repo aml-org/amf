@@ -1575,7 +1575,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val shape: Shape
     val map: YMap
-    private val counter = new IdCounter
+    private val counter                        = new IdCounter
     lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), counter)
 
     def parse(): Shape = {

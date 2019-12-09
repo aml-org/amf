@@ -15,9 +15,14 @@ case class Server(override private[amf] val _internal: InternalServer) extends D
   @JSExportTopLevel("model.domain.Server")
   def this() = this(InternalServer())
 
-  def url: StrField                    = _internal.url
-  def description: StrField            = _internal.description
-  def variables: ClientList[Parameter] = _internal.variables.asClient
+  def name: StrField                            = _internal.name
+  def url: StrField                             = _internal.url
+  def description: StrField                     = _internal.description
+  def variables: ClientList[Parameter]          = _internal.variables.asClient
+  def protocol: StrField                        = _internal.protocol
+  def protocolVersion: StrField                 = _internal.protocolVersion
+  def security: ClientList[SecurityRequirement] = _internal.security.asClient
+  //  def bindings: ClientList[ServerBinding]       = _internal.bindings.asClient
 
   /** Set url property of this Server. */
   def withUrl(url: String): this.type = {
@@ -36,6 +41,26 @@ case class Server(override private[amf] val _internal: InternalServer) extends D
     _internal.withVariables(variables.asInternal)
     this
   }
+
+  def withProtocol(protocol: String): this.type = {
+    _internal.withProtocol(protocol)
+    this
+  }
+
+  def withProtocolVersion(protocolVersion: String): this.type = {
+    _internal.withProtocolVersion(protocolVersion)
+    this
+  }
+
+  def withSecurity(security: ClientList[SecurityRequirement]): this.type = {
+    _internal.withSecurity(security.asInternal)
+    this
+  }
+
+//  def withBindings(bindings: ClientList[ServerBinding]): this.type = {
+//    _internal.withBinding(bindings.asInternal)
+//    this
+//  }
 
   /**
     * Adds one Parameter to the variables property of this Server and returns it for population.

@@ -106,7 +106,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/oas-fragment-ref/master/master.json#/web-api/end-points/%2Fbla/get/200",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "200"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -116,11 +122,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "Successful Contract response"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "200"
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [

@@ -199,6 +199,7 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [
@@ -671,7 +672,13 @@
                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/multiple-media-types/api.raml#/web-api/end-points/%2FQueue/post/201",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Response",
+                      "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://a.ml/vocabularies/apiContract#statusCode": [
+                      {
+                        "@value": "201"
+                      }
                     ],
                     "http://a.ml/vocabularies/core#name": [
                       {
@@ -681,11 +688,6 @@
                     "http://a.ml/vocabularies/core#description": [
                       {
                         "@value": "A new transaction was created on the queue."
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiContract#statusCode": [
-                      {
-                        "@value": "201"
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#payload": [

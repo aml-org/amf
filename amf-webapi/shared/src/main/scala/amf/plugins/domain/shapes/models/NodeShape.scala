@@ -25,6 +25,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def properties: Seq[PropertyShape]                = fields.field(Properties)
   def dependencies: Seq[PropertyDependencies]       = fields.field(Dependencies)
   def additionalPropertiesSchema: Shape             = fields.field(AdditionalPropertiesSchema)
+  def propertyNames: Shape                          = fields.field(PropertyNames)
 
   def withMinProperties(min: Int): this.type                                 = set(MinProperties, min)
   def withMaxProperties(max: Int): this.type                                 = set(MaxProperties, max)
@@ -34,6 +35,7 @@ case class NodeShape(override val fields: Fields, override val annotations: Anno
   def withDiscriminatorMapping(mappings: Seq[IriTemplateMapping]): this.type = setArray(DiscriminatorMapping, mappings)
   def withProperties(properties: Seq[PropertyShape]): this.type              = setArray(Properties, properties)
   def withDependencies(dependencies: Seq[PropertyDependencies]): this.type   = setArray(Dependencies, dependencies)
+  def withPropertyNames(shape: Shape): this.type                             = set(PropertyNames, shape)
 
   def withDependency(): PropertyDependencies = {
     val result = PropertyDependencies()

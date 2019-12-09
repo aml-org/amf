@@ -178,6 +178,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("oas3/schema-on-response-node.json", Some("schema-on-response-node.report"), Oas30Profile)
   }
 
+  test("Invalid type in operation tags") {
+    validate("oas3/invalid-tags-type.json", Some("invalid-tags-type.report"), Oas30Profile)
+  }
 
   override val hint: Hint = OasJsonHint
 }

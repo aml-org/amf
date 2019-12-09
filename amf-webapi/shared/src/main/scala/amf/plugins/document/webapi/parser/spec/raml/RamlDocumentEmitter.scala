@@ -326,7 +326,7 @@ case class RamlDocumentEmitter(document: BaseUnit)(implicit val spec: RamlSpecEm
 
       result ++= AnnotationsEmitter(api, ordering).emitters
 
-      fs.entry(WebApiModel.Security).map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))
+      fs.entry(WebApiModel.Security).map(f => result += SecurityRequirementsEmitter("securedBy", f, ordering))
 
       ordering.sorted(result)
     }

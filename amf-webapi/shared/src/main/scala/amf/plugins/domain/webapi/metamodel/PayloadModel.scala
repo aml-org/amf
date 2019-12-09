@@ -25,17 +25,25 @@ object PayloadModel
                         Core + "mediaType",
                         ModelDoc(ModelVocabularies.Core, "media type", "Media types supported in the payload"))
 
-  val Schema =
-    Field(ShapeModel, Shapes + "schema", ModelDoc(ModelVocabularies.Shapes, "schema", "Schema associated to this payload"))
+  val SchemaMediaType = Field(
+    Str,
+    ApiContract + "schemaMediaType",
+    ModelDoc(ModelVocabularies.ApiContract, "schemaMediaType", "defines the format of the defined payload schema"))
 
-  val Encoding = Field(Array(EncodingModel), ApiContract + "encoding", ModelDoc(ModelVocabularies.ApiContract, "encoding", ""))
+  val Schema =
+    Field(ShapeModel,
+          Shapes + "schema",
+          ModelDoc(ModelVocabularies.Shapes, "schema", "Schema associated to this payload"))
+
+  val Encoding =
+    Field(Array(EncodingModel), ApiContract + "encoding", ModelDoc(ModelVocabularies.ApiContract, "encoding", ""))
 
   override val key: Field = MediaType
 
   override val `type`: List[ValueType] = ApiContract + "Payload" :: DomainElementModel.`type`
 
   override val fields: List[Field] =
-    Name :: MediaType :: Schema :: Examples :: Encoding :: (DomainElementModel.fields ++ LinkableElementModel.fields)
+    Name :: MediaType :: SchemaMediaType :: Schema :: Examples :: Encoding :: (DomainElementModel.fields ++ LinkableElementModel.fields)
 
   override def modelInstance = Payload()
 

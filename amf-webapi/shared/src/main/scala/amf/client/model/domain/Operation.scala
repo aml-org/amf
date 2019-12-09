@@ -12,25 +12,29 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Operation(override private[amf] val _internal: InternalOperation)
     extends DomainElement
-    with NamedDomainElement {
+    with NamedDomainElement
+    with Linkable {
 
   @JSExportTopLevel("model.domain.Operation")
   def this() = this(InternalOperation())
 
-  def method: StrField                                 = _internal.method
-  override def name: StrField                          = _internal.name
-  def description: StrField                            = _internal.description
-  def deprecated: BoolField                            = _internal.deprecated
-  def summary: StrField                                = _internal.summary
-  def documentation: CreativeWork                      = _internal.documentation
-  def schemes: ClientList[StrField]                    = _internal.schemes.asClient
-  def accepts: ClientList[StrField]                    = _internal.accepts.asClient
-  def contentType: ClientList[StrField]                = _internal.contentType.asClient
-  def request: Request                                 = _internal.request
-  def responses: ClientList[Response]                  = _internal.responses.asClient
-  def security: ClientList[ParametrizedSecurityScheme] = _internal.security.asClient
-  def callbacks: ClientList[Callback]                  = _internal.callbacks.asClient
-  def servers: ClientList[Server]                      = _internal.servers.asClient
+  def method: StrField                          = _internal.method
+  override def name: StrField                   = _internal.name
+  def description: StrField                     = _internal.description
+  def deprecated: BoolField                     = _internal.deprecated
+  def summary: StrField                         = _internal.summary
+  def documentation: CreativeWork               = _internal.documentation
+  def schemes: ClientList[StrField]             = _internal.schemes.asClient
+  def accepts: ClientList[StrField]             = _internal.accepts.asClient
+  def contentType: ClientList[StrField]         = _internal.contentType.asClient
+  def request: Request                          = _internal.request
+  def requests: ClientList[Request]             = _internal.requests.asClient
+  def responses: ClientList[Response]           = _internal.responses.asClient
+  def security: ClientList[SecurityRequirement] = _internal.security.asClient
+  def tags: ClientList[Tag]                     = _internal.tags.asClient
+  def callbacks: ClientList[Callback]           = _internal.callbacks.asClient
+  def servers: ClientList[Server]               = _internal.servers.asClient
+  def isAbstract: BoolField                     = _internal.isAbstract
 
   /** Set method property of this Operation. */
   def withMethod(method: String): this.type = {
@@ -99,7 +103,7 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   }
 
   /** Set security property of this Operation. */
-  def withSecurity(security: ClientList[DomainElement]): this.type = {
+  def withSecurity(security: ClientList[SecurityRequirement]): this.type = {
     _internal.withSecurity(security.asInternal)
     this
   }
@@ -113,6 +117,18 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   /** Set servers property of this Operation. */
   def withServers(servers: ClientList[Server]): this.type = {
     _internal.withServers(servers.asInternal)
+    this
+  }
+
+  /** Set tags property of this Operation. */
+  def withTags(tags: ClientList[Tag]): this.type = {
+    _internal.withTags(tags.asInternal)
+    this
+  }
+
+  /** Set abstract property of this Operation. */
+  def withAbstract(abs: Boolean): this.type = {
+    _internal.withAbstract(abs)
     this
   }
 
@@ -138,4 +154,6 @@ case class Operation(override private[amf] val _internal: InternalOperation)
     * Url property of the server is required.
     */
   def withServer(name: String): Server = _internal.withServer(name)
+
+  override def linkCopy(): Operation = _internal.linkCopy()
 }

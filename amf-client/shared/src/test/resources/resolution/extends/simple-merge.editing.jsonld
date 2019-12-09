@@ -54,6 +54,7 @@
                     "@id": "#15",
                     "@type": [
                       "apiContract:Request",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
                     "apiContract:header": [
@@ -131,7 +132,8 @@
                     ],
                     "smaps": {
                       "extension-provenance": {
-                        "apiContract:header": "id->amf://id#10"
+                        "apiContract:header": "id->amf://id#10",
+                        "#15": "id->amf://id#10"
                       },
                       "lexical": {
                         "apiContract:header": "[(7,6)-(8,15)]",
@@ -145,14 +147,15 @@
                     "@id": "#12",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "200"
                       }

@@ -53,19 +53,26 @@ object NodeShapeModel extends AnyShapeModel {
                          Shacl + "property",
                          ModelDoc(ExternalModelVocabularies.Shacl, "property", "Properties associated to this node"))
 
+  val PropertyNames = Field(ShapeModel,
+                            Shacl + "propertyNames",
+                            ModelDoc(ExternalModelVocabularies.Shacl, "property", "property names schema"))
+
   val Dependencies = Field(Array(PropertyDependenciesModel),
                            Shapes + "dependencies",
                            ModelDoc(ModelVocabularies.Shapes, "dependencies", "Dependent properties constraint"))
 
-  val specificFields = List(MinProperties,
-                            MaxProperties,
-                            Closed,
-                            AdditionalPropertiesSchema,
-                            Discriminator,
-                            DiscriminatorValue,
-                            DiscriminatorMapping,
-                            Properties,
-                            Dependencies)
+  val specificFields = List(
+    MinProperties,
+    MaxProperties,
+    Closed,
+    AdditionalPropertiesSchema,
+    Discriminator,
+    DiscriminatorValue,
+    DiscriminatorMapping,
+    Properties,
+    PropertyNames,
+    Dependencies
+  )
 
   override val fields: List[Field] =
     specificFields ++ AnyShapeModel.fields ++ DomainElementModel.fields
