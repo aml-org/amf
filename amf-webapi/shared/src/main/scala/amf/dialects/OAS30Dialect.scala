@@ -36,7 +36,6 @@ object OAS30Dialect extends OasBaseDialect {
         XmlObject,
         Oas30FlowsObject,
         Oas30FlowObject,
-        AMLExampleObject,
         Oas30OperationObject,
         AMLContentObject,
         AMLExternalDocumentationObject,

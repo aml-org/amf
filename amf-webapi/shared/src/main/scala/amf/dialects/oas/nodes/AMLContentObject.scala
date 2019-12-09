@@ -9,7 +9,7 @@ object AMLContentObject extends DialectNode with Oas30ExampleProperty {
 
   override def location: String        = OAS30Dialect.DialectLocation
   override def name: String            = "ContentObject"
-  override def nodeTypeMapping: String = RequestModel.`type`.head.iri()
+  override def nodeTypeMapping: String = PayloadModel.`type`.head.iri()
   override def properties: Seq[PropertyMapping] = Seq(
     PropertyMapping()
       .withId(DialectLocation + "#/declarations/ContentObject/mediaType")
@@ -22,6 +22,11 @@ object AMLContentObject extends DialectNode with Oas30ExampleProperty {
       .withNodePropertyMapping(PayloadModel.Encoding.value.iri())
       .withMapTermKeyProperty(EncodingModel.PropertyName.value.iri())
       .withObjectRange(Seq(AMLEncodingObject.id)),
+    PropertyMapping()
+      .withId(DialectLocation + "#/declarations/ContentObject/schema")
+      .withName("schema")
+      .withNodePropertyMapping(PayloadModel.Schema.value.iri())
+      .withObjectRange(Seq(Oas30SchemaObject.id)),
     example,
     examples
   )

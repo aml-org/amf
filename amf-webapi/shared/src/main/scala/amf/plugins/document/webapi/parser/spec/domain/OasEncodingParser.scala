@@ -6,17 +6,22 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.domain.webapi.metamodel.EncodingModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
 import amf.plugins.domain.webapi.models.{Encoding, Parameter}
-import org.yaml.model.{YMap, YScalar}
+import org.yaml.model.{YMap, YMapEntry}
 
 case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 
+  private def newEncoding(entry: YMapEntry): Encoding = {
+    val keyNode  = ScalarNode(entry.key)
+    val encoding = producer(keyNode.text().toString).add(Annotations(entry))
+    encoding.set(EncodingModel.PropertyName, keyNode.string())
+  }
+
   def parse(): Seq[Encoding] = {
     map.entries
       .map { entry =>
-        val key: String = entry.key.as[YScalar].text
-        val m           = entry.value.as[YMap]
-        val encoding    = producer(key)
+        val m        = entry.value.as[YMap]
+        val encoding = newEncoding(entry)
         m.key("contentType", EncodingModel.ContentType in encoding)
 
         m.key(
