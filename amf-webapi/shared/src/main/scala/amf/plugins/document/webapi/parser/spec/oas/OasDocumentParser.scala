@@ -786,12 +786,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key(
         "tags",
         entry => {
-          val tags = mutable.ListBuffer[Tag]()
-          entry.value.as[YSequence].nodes.map(_.value).map {
-            case scalar: YScalar =>
-              tags += Tag(Annotations(scalar)).withName(scalar.text).adopted(operation.id)
-            case _ =>
-          }
+          val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
           operation.withTags(tags)
         }
       )

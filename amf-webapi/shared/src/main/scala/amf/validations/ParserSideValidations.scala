@@ -93,6 +93,11 @@ object ParserSideValidations extends Validations {
     "Invalid 'describedBy' type, map expected"
   )
 
+  val InvalidTagType = validation(
+    "invalid-tag-type",
+    "Tag values must be of type string"
+  )
+
   val InvalidSecuritySchemeObject = validation(
     "invalid-security-scheme-object",
     "Invalid security scheme"
@@ -670,6 +675,7 @@ object ParserSideValidations extends Validations {
     ServerVariableMissingDefault,
     SlashInUriParameterValues,
     InvalidDatetimeFormat,
-    ItemsFieldRequired
+    ItemsFieldRequired,
+    InvalidTagType
   )
 }
