@@ -8,7 +8,7 @@ import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.AbstractDeclarationsParser
 import amf.plugins.document.webapi.parser.spec.domain.{
-  Oas3ResponseExamplesParser,
+  Oas3NamedExamplesParser,
   OasHeaderParametersParser,
   OasLinkParser
 }
@@ -62,11 +62,9 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
     map.key(
       "examples",
       e => {
-        val examples = Oas3ResponseExamplesParser(e).parse()
-        examples.foreach(ex => {
-          ex.adopted(parent)
-          ctx.declarations += ex.add(DeclaredElement())
-        })
+        Oas3NamedExamplesParser(e, parent)
+          .parse()
+          .foreach(ex => ctx.declarations += ex.add(DeclaredElement()))
       }
     )
   }
@@ -78,10 +76,10 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
         e.value
           .as[YMap]
           .entries
-          .map(entry => {
+          .foreach(entry => {
             val typeName = entry.key.as[YScalar].text
             val requestBody =
-              Oas3RequestParser(entry.value.as[YMap], (req) => req.withName(typeName).adopted(parent)).parse()
+              Oas3RequestParser(entry.value.as[YMap], req => req.withName(typeName).adopted(parent)).parse()
             requestBody.foreach(ctx.declarations += _.add(DeclaredElement()))
           })
       }
@@ -111,7 +109,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .entries
           .foreach { entry =>
             val linkName = ScalarNode(entry.key).text().value.toString
-            OasLinkParser(entry.value, linkName, (link) => link.adopted(parent))
+            OasLinkParser(entry.value, linkName, link => link.adopted(parent))
               .parse()
               .foreach { link =>
                 link.add(DeclaredElement())
@@ -128,7 +126,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
         entry.value
           .as[YMap]
           .entries
-          .map { callbackEntry =>
+          .foreach { callbackEntry =>
             val name      = callbackEntry.key.as[YScalar].text
             val callbacks = CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent)).parse()
             callbacks.foreach { callback =>
