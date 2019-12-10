@@ -1,0 +1,29 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "version": "1.0.0",
+    "title": "garage",
+    "description": "Authentication API"
+  },
+  "components": {
+    "schemas": {
+      "LoginResponse": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/SuccessfulLoginResponse"
+          }
+        ]
+      },
+      "SuccessfulLoginResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/APIResponse"
+          }
+        ]
+      },
+      "APIResponse": {
+        "type": "object"
+      }
+    }
+  }
+}
