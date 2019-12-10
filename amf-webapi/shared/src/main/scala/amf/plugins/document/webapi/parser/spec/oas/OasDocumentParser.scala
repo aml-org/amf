@@ -571,7 +571,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   case class Oas2RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
       val request = new Lazy[Request](() => {
-        val req = Request()
+        val req = Request().add(VirtualObject())
         adopt(req)
         req
       })
@@ -839,7 +839,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         "tags",
         entry => {
           val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
-          operation.withTags(tags)
+          operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
         }
       )
 
