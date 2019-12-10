@@ -310,7 +310,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "externalDocs",
       entry => {
-        documentations += OasCreativeWorkParser(entry.value).parse()
+        documentations += OasCreativeWorkParser(entry.value, api.id).parse()
       }
     )
 
@@ -834,7 +834,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       // oas 3.0.0 / oas 2.0
       map.key("summary", OperationModel.Summary in operation)
       // oas 3.0.0 / oas 2.0
-      map.key("externalDocs", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
+      map.key("externalDocs",
+              OperationModel.Documentation in operation using (OasCreativeWorkParser.parse(_, operation.id)))
 
       // oas 3.0.0 / oas 2.0
       map.key(

@@ -94,7 +94,8 @@ object Oas3Syntax extends SpecSyntax {
       "variables"
     ),
     "externalDoc" -> Set(
-      "url"
+      "url",
+      "description"
     ),
     "example" -> Set(
       "summary",
@@ -311,7 +312,8 @@ object Oas2Syntax extends SpecSyntax {
       "security"
     ),
     "externalDoc" -> Set(
-      "url"
+      "url",
+      "description"
     ),
     "parameter" -> Set(
       "name",

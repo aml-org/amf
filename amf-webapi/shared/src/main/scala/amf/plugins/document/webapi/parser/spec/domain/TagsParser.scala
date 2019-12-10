@@ -28,7 +28,7 @@ class TagsParser(node: YNode, adopt: Tag => Tag)(implicit ctx: WebApiContext) ex
     map.key("name", TagModel.Name in tag)
     adopt(tag)
     map.key("description", TagModel.Description in tag)
-    map.key("externalDocs", TagModel.Documentation in tag using OasCreativeWorkParser.parse)
+    map.key("externalDocs", TagModel.Documentation in tag using (OasCreativeWorkParser.parse(_, tag.id)))
 
     AnnotationParser(tag, map).parse()
 
