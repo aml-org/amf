@@ -1019,10 +1019,8 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           }
         ))
 
-      if (version.isInstanceOf[OAS30SchemaVersion]) {
+      if (version.isInstanceOf[OAS30SchemaVersion])
         entry.value.toOption[YMap].foreach(_.key("writeOnly", PropertyShapeModel.WriteOnly in property))
-        entry.value.toOption[YMap].foreach(_.key("deprecated", PropertyShapeModel.Deprecated in property))
-      }
 
       // This comes from JSON Schema draft-3, we will parse it for backward compatibility but we will not generate it
       entry.value
@@ -1101,6 +1099,9 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       if (map.key("allOf").isDefined) AndConstraintParser(map, shape).parse()
       if (map.key("oneOf").isDefined) XoneConstraintParser(map, shape).parse()
       if (map.key("not").isDefined) NotConstraintParser(map, shape).parse()
+
+      if (version.isInstanceOf[OAS30SchemaVersion])
+        map.key("deprecated", ShapeModel.Deprecated in shape)
 
       // normal annotations
       AnnotationParser(shape, map).parse()
