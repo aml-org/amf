@@ -35,6 +35,12 @@
             }
           }
         },
+        "servers": [
+          {
+            "url": "https://test.com/operation",
+            "description": "The production API server for the operation"
+          }
+        ],
         "callbacks": {
           "myWebhook": {
             "http://notificationServer.com?transactionId={$request.body#/id}&email={$request.body}": {
@@ -57,13 +63,7 @@
               }
             }
           }
-        },
-        "servers": [
-          {
-            "url": "https://test.com/operation",
-            "description": "The production API server for the operation"
-          }
-        ]
+        }
       }
     }
   },

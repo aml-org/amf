@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 }
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Parameter, WebApi}
+import amf.plugins.domain.webapi.models.{Callback, Parameter, WebApi}
 import amf.validations.ParserSideValidations
 import org.yaml.model._
 
@@ -127,8 +127,10 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .as[YMap]
           .entries
           .foreach { callbackEntry =>
-            val name      = callbackEntry.key.as[YScalar].text
-            val callbacks = CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent)).parse()
+            val name = callbackEntry.key.as[YScalar].text
+            val callbacks =
+              CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent), name, callbackEntry)
+                .parse()
             callbacks.foreach { callback =>
               callback.add(DeclaredElement())
               ctx.declarations += callback
