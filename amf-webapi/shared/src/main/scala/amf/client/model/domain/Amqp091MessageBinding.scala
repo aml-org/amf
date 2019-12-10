@@ -6,7 +6,7 @@ import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
 import amf.plugins.domain.webapi.models.bindings.amqp.{Amqp091MessageBinding => InternalAmqp091MessageBinding}
 
 @JSExportAll
-class Amqp091MessageBinding(override private[amf] val _internal: InternalAmqp091MessageBinding)
+case class Amqp091MessageBinding(override private[amf] val _internal: InternalAmqp091MessageBinding)
     extends MessageBinding
     with BindingVersion {
 

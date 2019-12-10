@@ -10,7 +10,7 @@ import amf.plugins.domain.webapi.models.bindings.mqtt.{
 }
 
 @JSExportAll
-class MqttServerBinding(override private[amf] val _internal: InternalMqttServerBinding)
+case class MqttServerBinding(override private[amf] val _internal: InternalMqttServerBinding)
     extends ServerBinding
     with BindingVersion {
   @JSExportTopLevel("model.domain.MqttServerBinding")
@@ -47,7 +47,7 @@ class MqttServerBinding(override private[amf] val _internal: InternalMqttServerB
 }
 
 @JSExportAll
-class MqttServerLastWill(override private[amf] val _internal: InternalMqttServerLastWill) extends DomainElement {
+case class MqttServerLastWill(override private[amf] val _internal: InternalMqttServerLastWill) extends DomainElement {
   @JSExportTopLevel("model.domain.MqttServerLastWill")
   def this() = this(InternalMqttServerLastWill())
 

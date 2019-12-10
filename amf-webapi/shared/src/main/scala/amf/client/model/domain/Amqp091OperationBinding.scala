@@ -4,7 +4,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.plugins.domain.webapi.models.bindings.amqp.{Amqp091OperationBinding => InternalAmqp091OperationBinding}
 
 @JSExportAll
-class Amqp091OperationBinding(override private[amf] val _internal: InternalAmqp091OperationBinding)
+case class Amqp091OperationBinding(override private[amf] val _internal: InternalAmqp091OperationBinding)
     extends OperationBinding {
 
   @JSExportTopLevel("model.domain.Amqp091OperationBinding")

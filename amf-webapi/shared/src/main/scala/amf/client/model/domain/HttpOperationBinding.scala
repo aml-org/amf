@@ -7,7 +7,7 @@ import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
 import amf.plugins.domain.webapi.models.bindings.http.{HttpOperationBinding => InternalHttpOperationBinding}
 
 @JSExportAll
-class HttpOperationBinding(override private[amf] val _internal: InternalHttpOperationBinding)
+case class HttpOperationBinding(override private[amf] val _internal: InternalHttpOperationBinding)
     extends OperationBinding
     with BindingVersion {
   @JSExportTopLevel("model.domain.HttpOperationBinding")

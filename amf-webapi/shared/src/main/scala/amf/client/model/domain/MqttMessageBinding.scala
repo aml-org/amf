@@ -7,7 +7,7 @@ import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
 import amf.plugins.domain.webapi.models.bindings.mqtt.{MqttMessageBinding => InternalMqttMessageBinding}
 
 @JSExportAll
-class MqttMessageBinding(override private[amf] val _internal: InternalMqttMessageBinding) extends MessageBinding with BindingVersion {
+case class MqttMessageBinding(override private[amf] val _internal: InternalMqttMessageBinding) extends MessageBinding with BindingVersion {
   @JSExportTopLevel("model.domain.MqttMessageBinding")
   def this() = this(InternalMqttMessageBinding())
 

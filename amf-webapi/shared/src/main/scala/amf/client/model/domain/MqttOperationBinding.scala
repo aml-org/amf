@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
 import amf.plugins.domain.webapi.models.bindings.mqtt.{MqttOperationBinding => InternalMqttOperationBinding}
 
 @JSExportAll
-class MqttOperationBinding(override private[amf] val _internal: InternalMqttOperationBinding)
+case class MqttOperationBinding(override private[amf] val _internal: InternalMqttOperationBinding)
     extends OperationBinding
     with BindingVersion {
   @JSExportTopLevel("model.domain.MqttOperationBinding")

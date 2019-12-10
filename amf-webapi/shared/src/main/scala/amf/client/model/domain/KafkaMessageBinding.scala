@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
 import amf.plugins.domain.webapi.models.bindings.kafka.{KafkaMessageBinding => InternalKafkaMessageBinding}
 
 @JSExportAll
-class KafkaMessageBinding(override private[amf] val _internal: InternalKafkaMessageBinding) extends MessageBinding with BindingVersion {
+case class KafkaMessageBinding(override private[amf] val _internal: InternalKafkaMessageBinding) extends MessageBinding with BindingVersion {
   @JSExportTopLevel("model.domain.KafkaMessageBinding")
   def this() = this(InternalKafkaMessageBinding())
 

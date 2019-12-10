@@ -9,7 +9,7 @@ import amf.plugins.domain.webapi.models.bindings.websockets.{
 }
 
 @JSExportAll
-class WebSocketsChannelBinding(override private[amf] val _internal: InternalWebSocketsChannelBinding)
+case class WebSocketsChannelBinding(override private[amf] val _internal: InternalWebSocketsChannelBinding)
     extends ChannelBinding
     with BindingVersion {
   @JSExportTopLevel("model.domain.WebSocketsChannelBinding")

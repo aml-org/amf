@@ -6,7 +6,7 @@ import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
 import amf.plugins.domain.webapi.models.bindings.http.{HttpMessageBinding => InternalHttpMessageBinding}
 
 @JSExportAll
-class HttpMessageBinding(override private[amf] val _internal: InternalHttpMessageBinding)
+case class HttpMessageBinding(override private[amf] val _internal: InternalHttpMessageBinding)
     extends MessageBinding
     with BindingVersion {
   @JSExportTopLevel("model.domain.HttpMessageBinding")
