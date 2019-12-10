@@ -2,7 +2,7 @@ package amf.plugins.domain.webapi.metamodel
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.common.NameFieldSchema
+import amf.core.metamodel.domain.common.{DescriptionField, NameFieldSchema}
 import amf.core.metamodel.domain.templates.{KeyField, OptionalField}
 import amf.core.metamodel.domain._
 import amf.core.vocabulary.Namespace.{ApiContract, Core, Shapes}
@@ -18,6 +18,7 @@ object PayloadModel
     with KeyField
     with OptionalField
     with NameFieldSchema
+    with DescriptionField
     with LinkableElementModel
     with ExamplesField {
 
