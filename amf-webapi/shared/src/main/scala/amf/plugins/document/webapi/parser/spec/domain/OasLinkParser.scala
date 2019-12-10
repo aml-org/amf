@@ -68,7 +68,7 @@ case class OasLinkParser(node: YNode, name: String, adopt: TemplatedLink => Unit
               val expression = ScalarNode(entry.value).text().value.toString
               IriTemplateMapping(Annotations(entry)).withTemplateVariable(variable).withLinkExpression(expression)
             }
-            templatedLink.setArrayWithoutId(TemplatedLinkModel.Mapping, parameters, Annotations(entry.value))
+            templatedLink.setArray(TemplatedLinkModel.Mapping, parameters, Annotations(entry.value))
           }
         )
 
