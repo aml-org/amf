@@ -1,16 +1,13 @@
 package amf.plugins.domain.webapi.metamodel.bindings
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Bool, Int, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.metamodel.Type.{Bool, Str, Int}
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DomainElementModel}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.webapi.metamodel.bindings.Amqp091MessageBindingModel.{
-  BindingVersion,
-  ContentEncoding,
-  MessageType
-}
+import amf.plugins.domain.webapi.metamodel.bindings.Amqp091MessageBindingModel.{BindingVersion, ContentEncoding, MessageType}
+import amf.plugins.domain.webapi.models.bindings.mqtt.{MqttOperationBinding, MqttServerBinding, MqttServerLastWill, MqttMessageBinding}
 
 object MqttServerBindingModel extends ServerBindingModel with BindingVersion {
   val ClientId =
@@ -35,7 +32,7 @@ object MqttServerBindingModel extends ServerBindingModel with BindingVersion {
     )
   )
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = MqttServerBinding()
 
   override def fields: List[Field] =
     List(ClientId, ClientSession, LastWill, KeepAlive, BindingVersion) ++ ServerBindingModel.fields
@@ -72,7 +69,7 @@ object MqttServerLastWillModel extends DomainElementModel {
 
   override val `type`: List[ValueType] = ApiBinding + "MqttServerLastWill" :: DomainElementModel.`type`
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = MqttServerLastWill()
 }
 
 object MqttOperationBindingModel extends OperationBindingModel with BindingVersion {
@@ -90,17 +87,17 @@ object MqttOperationBindingModel extends OperationBindingModel with BindingVersi
           ApiBinding + "retain",
           ModelDoc(ModelVocabularies.ApiBinding, "retain", "Whether the broker should retain the message or not"))
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = MqttOperationBinding()
 
   override def fields: List[Field] = List(Qos, Retain, BindingVersion) ++ OperationBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "MqttOperationBinding" :: OperationBindingModel.`type`
 }
 
-object MqttMessageBindingModel extends MessageBindingModel {
-  override def modelInstance: AmfObject = ???
+object MqttMessageBindingModel extends MessageBindingModel with BindingVersion {
+  override def modelInstance: AmfObject = MqttMessageBinding()
 
-  override def fields: List[Field] = List(ContentEncoding, MessageType, BindingVersion) ++ MessageBindingModel.fields
+  override def fields: List[Field] = List(BindingVersion) ++ MessageBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "MqttMessageBinding" :: MessageBindingModel.`type`
 }

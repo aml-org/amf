@@ -2,10 +2,11 @@ package amf.plugins.domain.webapi.metamodel.bindings
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
+import amf.core.metamodel.domain.{ModelDoc, ShapeModel, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.webapi.models.bindings.http.{HttpOperationBinding, HttpMessageBinding}
 
 object HttpOperationBindingModel extends OperationBindingModel with BindingVersion {
   val Type =
@@ -21,14 +22,14 @@ object HttpOperationBindingModel extends OperationBindingModel with BindingVersi
                    "query",
                    "A Schema object containing the definitions for each query parameter"))
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = HttpOperationBinding()
 
   override def fields: List[Field] = List(Type, Method, Query, BindingVersion) ++ OperationBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "HttpOperationBinding" :: OperationBindingModel.`type`
 }
 
-object HttpMessageBindingModel extends OperationBindingModel with BindingVersion {
+object HttpMessageBindingModel extends MessageBindingModel with BindingVersion {
   val Headers =
     Field(
       ShapeModel,
@@ -38,7 +39,7 @@ object HttpMessageBindingModel extends OperationBindingModel with BindingVersion
                "A Schema object containing the definitions for HTTP-specific headers")
     )
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = HttpMessageBinding()
 
   override def fields: List[Field] = List(Headers, BindingVersion) ++ MessageBindingModel.fields
 
