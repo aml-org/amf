@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, AmfStrings}
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.{
   FormBodyParameter,
@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.annotations.{
   RequiredParamPayload
 }
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   Raml08TypeParser,
@@ -479,7 +480,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 oasParameter
               case _ =>
-                val parameter = Parameter(ref)
+                val parameter: Parameter = ErrorParameter(refUrl, ref).link(refUrl, Annotations(ref))
                 setName(parameter)
                 parameter.adopted(parentId)
                 ctx.violation(UnresolvedParameter,

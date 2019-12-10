@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 }
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Callback, Parameter, WebApi}
+import amf.plugins.domain.webapi.models.{Parameter, WebApi}
 import amf.validations.ParserSideValidations
 import org.yaml.model._
 
@@ -78,10 +78,9 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .as[YMap]
           .entries
           .foreach(entry => {
-            val typeName = entry.key.as[YScalar].text
             val requestBody =
-              Oas3RequestParser(entry.value.as[YMap], req => req.withName(typeName).adopted(parent)).parse()
-            requestBody.foreach(ctx.declarations += _.add(DeclaredElement()))
+              Oas3RequestParser(entry.value.as[YMap], parent, entry).parse()
+            ctx.declarations += requestBody.add(DeclaredElement())
           })
       }
     )
@@ -110,7 +109,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .entries
           .foreach { entry =>
             val linkName = ScalarNode(entry.key).text().value.toString
-            OasLinkParser(entry.value, linkName, link => link.adopted(parent))
+            OasLinkParser(entry.value, parent, entry)
               .parse()
               .foreach { link =>
                 link.add(DeclaredElement())

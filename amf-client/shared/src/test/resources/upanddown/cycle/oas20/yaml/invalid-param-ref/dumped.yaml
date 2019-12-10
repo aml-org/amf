@@ -7,7 +7,7 @@ paths:
     get:
       parameters:
         -
-          name: parameter_1
+          $ref: "#/parameters/#/para"
       responses: {}
 parameters:
   p1:

@@ -14,7 +14,7 @@ import amf.core.utils.{AmfStrings, IdCounter, Lazy, TemplateUri}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorCallback
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorCallback, ErrorRequest}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
@@ -502,24 +502,31 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
-  case class RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
+  case class RequestParser(map: YMap, parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
       if (ctx.syntax == Oas3Syntax) {
-        Oas3RequestParser(map, adopt).parse()
+        Some(Oas3RequestParser(map, parentId, definitionEntry).parse())
       } else {
-        Oas2RequestParser(map, adopt).parse()
+        Oas2RequestParser(map, (r: Request) => r.adopted(parentId)).parse()
       }
     }
   }
 
-  case class Oas3RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
-    def parse(): Option[Request] = {
+  case class Oas3RequestParser(map: YMap, parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext) {
+
+    private def adopt(request: Request) = {
+      request
+        .add(Annotations(definitionEntry))
+        .set(RequestModel.Name, ScalarNode(definitionEntry.key).string())
+        .adopted(parentId)
+    }
+
+    def parse(): Request = {
       ctx.link(map) match {
         case Left(fullRef) =>
           parseRef(fullRef)
         case Right(_) =>
-          val request = Request()
-          adopt(request)
+          val request = adopt(Request())
 
           map.key("description", RequestModel.Description in request)
           map.key("required", RequestModel.Required in request)
@@ -539,30 +546,25 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
           AnnotationParser(request, map).parse()
           ctx.closedShape(request.id, map, "request")
-          Some(request)
+          request
       }
     }
 
-    private def parseRef(fullRef: String): Option[Request] = {
+    private def parseRef(fullRef: String): Request = {
       val name = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "requestBodies")
       ctx.declarations
         .findRequestBody(name, SearchScope.Named)
-        .map { req =>
-          val linkReq: Request = req.link(name, Annotations(map))
-          linkReq.withName(name)
-          adopt(linkReq)
-          linkReq
-        }
-        .orElse {
+        .map(req => adopt(req.link(name, Annotations(map))))
+        .getOrElse {
           ctx.obtainRemoteYNode(fullRef) match {
             case Some(requestNode) =>
-              Oas3RequestParser(requestNode.as[YMap], adopt).parse()
+              Oas3RequestParser(requestNode.as[YMap], parentId, definitionEntry).parse()
             case None =>
               ctx.violation(CoreValidations.UnresolvedReference,
                             "",
                             s"Cannot find requestBody reference $fullRef",
                             map)
-              None
+              adopt(ErrorRequest(fullRef, map).link(name))
           }
         }
     }
@@ -760,7 +762,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key(
         "requestBody",
         entry => {
-          Oas3RequestParser(entry.value.as[YMap], req => operation.withRequest(req)).parse()
+          operation.withRequest(Oas3RequestParser(entry.value.as[YMap], operation.id, entry).parse())
         }
       )
 
@@ -791,7 +793,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   case class Oas2OperationParser(entry: YMapEntry, producer: String => Operation)
       extends OperationParser(entry, producer) {
     override protected def parseVersionFacets(operation: Operation, map: YMap): Unit = {
-      RequestParser(map, req => operation.withRequest(req))
+      RequestParser(map, operation.id, entry)
         .parse()
         .map(r => operation.set(OperationModel.Request, AmfArray(Seq(r)), Annotations() += SynthesizedField()))
 
@@ -873,13 +875,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
           operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
         }
       )
-
-      // oas 2.0
-      if (ctx.syntax == Oas2Syntax) {
-        RequestParser(map, req => operation.withRequest(req))
-          .parse()
-          .map(req => operation setArray (OperationModel.Request, List(req), Annotations() += SynthesizedField()))
-      }
 
       // oas 3.0.0 / oas 2.0
       map.key(
