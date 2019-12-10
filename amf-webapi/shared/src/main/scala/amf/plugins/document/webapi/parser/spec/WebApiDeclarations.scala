@@ -386,10 +386,12 @@ object WebApiDeclarations {
     override val namespace: String = "http://amferror.com/#errorParameter/"
     withId(idPart)
   }
+
   class ErrorLink(idPart: String, ast: YPart) extends TemplatedLink(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorTemplateLink/"
     withId(idPart)
   }
+
   class ErrorCallback(idPart: String, ast: YPart) extends Callback(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorCallback/"
     withId(idPart)
@@ -399,6 +401,13 @@ object WebApiDeclarations {
       with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorResponse/"
     withId(idPart).withStatusCode("200")
+  }
+
+  case class ErrorRequest(idPart: String, ast: YPart)
+      extends Request(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#errorRequest/"
+    withId(idPart)
   }
 }
 

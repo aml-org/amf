@@ -3,16 +3,23 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.parser.{Annotations, _}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorLink
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel
 import amf.plugins.domain.webapi.models.{IriTemplateMapping, TemplatedLink}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
-import org.yaml.model.{YMap, YNode}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
-case class OasLinkParser(node: YNode, name: String, adopt: TemplatedLink => Unit)(implicit ctx: OasWebApiContext)
+case class OasLinkParser(node: YNode, parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 
+  private def nameAndAdopt(templateLink: TemplatedLink): TemplatedLink = {
+    templateLink
+      .set(TemplatedLinkModel.Name, ScalarNode(definitionEntry.key).string())
+      .adopted(parentId)
+      .add(Annotations(definitionEntry))
+  }
   def parse(): Option[TemplatedLink] = {
     val map = node.as[YMap]
 
@@ -21,24 +28,19 @@ case class OasLinkParser(node: YNode, name: String, adopt: TemplatedLink => Unit
         val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "links")
         ctx.declarations
           .findTemplatedLink(label, SearchScope.Named)
-          .map(templatedLink => {
-            val link: TemplatedLink = templatedLink.link(label, Annotations(map))
-            link.withName(name)
-            adopt(link)
-            link
-          })
+          .map(templatedLink => nameAndAdopt(templatedLink.link(label)))
           .orElse {
             ctx.obtainRemoteYNode(fullRef) match {
               case Some(requestNode) =>
-                OasLinkParser(requestNode.as[YMap], name, adopt).parse()
+                OasLinkParser(requestNode.as[YMap], parentId, definitionEntry).parse()
               case None =>
                 ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
-                None
+                Some(nameAndAdopt(new ErrorLink(fullRef, map).link(fullRef)))
+
             }
           }
       case Right(_) =>
-        val templatedLink = TemplatedLink().withName(name).add(Annotations.valueNode(map))
-        adopt(templatedLink)
+        val templatedLink = nameAndAdopt(TemplatedLink())
 
         map.key("operationRef", TemplatedLinkModel.OperationRef in templatedLink)
         map.key("operationId", TemplatedLinkModel.OperationId in templatedLink)

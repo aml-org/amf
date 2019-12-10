@@ -11,7 +11,6 @@ import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSch
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorNamedExample
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
@@ -21,11 +20,11 @@ import amf.validations.ParserSideValidations.{
   ExclusivePropertiesSpecification,
   InvalidFragmentType
 }
+import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 import org.yaml.render.YamlRender
-import org.mulesoft.lexer.Position
 
 import scala.collection.mutable.ListBuffer
 
@@ -231,7 +230,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
     val map = entry.value.as[YMap]
 
     ctx.link(map) match {
-      case Left(fullRef) => parseLink(fullRef, map)
+      case Left(fullRef) => parseLink(fullRef, map).add(Annotations(entry))
       case Right(_)      => Oas3ExampleValueParser(map, newExample(map), options).parse()
     }
   }
@@ -254,7 +253,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
             Oas3ExampleValueParser(exampleNode.as[YMap], newExample(exampleNode), options).parse()
           case None =>
             ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
-            val errorExample = setName(ErrorNamedExample(name, map)).adopted(parentId)
+            val errorExample = setName(ErrorNamedExample(name, map).link(name)).adopted(parentId)
             errorExample
         }
       }
