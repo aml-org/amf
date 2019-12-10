@@ -900,6 +900,29 @@
                   }
                 ]
               }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_1"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(24,4)-(30,5)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           },
           {
@@ -1104,6 +1127,29 @@
                             "@value": "[(32,6)-(32,19)]"
                           }
                         ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-client/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-client/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-client/shared/src/test/resources/validations/oas-security/api-with-security-requirements.json#/web-api/requirement_2"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(31,4)-(33,5)]"
                       }
                     ]
                   }
