@@ -12,6 +12,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   val productionPath    = "amf-client/shared/src/test/resources/production/"
   val validationsPath   = "amf-client/shared/src/test/resources/validations/"
   val apiPath           = "amf-client/shared/src/test/resources/api/"
+  val parserResultPath  = "amf-client/shared/src/test/resources/parser-results/"
 
   test("Full oas to oas test") {
     cycle("full-example.json", OasJsonHint)
@@ -695,15 +696,35 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   }
 
   test("Security requirement OAS to OAS") {
-    cycle("api-with-security-requirement.json", "api-with-security-requirement.json", OasJsonHint, Oas20, validationsPath + "oas-security/")
+    cycle("api-with-security-requirement.json",
+          "api-with-security-requirement.json",
+          OasJsonHint,
+          Oas20,
+          validationsPath + "oas-security/")
   }
 
   test("Security requirements OAS to OAS") {
-    cycle("api-with-security-requirements.json", "api-with-security-requirements.json", OasJsonHint, Oas20, validationsPath + "oas-security/")
+    cycle("api-with-security-requirements.json",
+          "api-with-security-requirements.json",
+          OasJsonHint,
+          Oas20,
+          validationsPath + "oas-security/")
   }
 
   test("Security requirements OAS to JSONLD") {
-    cycle("api-with-security-requirements.json", "api-with-security-requirements.jsonld", OasJsonHint, Amf, validationsPath + "oas-security/")
+    cycle("api-with-security-requirements.json",
+          "api-with-security-requirements.jsonld",
+          OasJsonHint,
+          Amf,
+          validationsPath + "oas-security/")
+  }
+
+  test("Description parameters in OAS") {
+    cycle("api-with-param-description.json",
+          "api-with-param-description.json",
+          OasJsonHint,
+          Oas20,
+          s"${parserResultPath}oas/")
   }
 
   /**

@@ -390,7 +390,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
       val req: Boolean = entry.value.as[Boolean]
       payload.annotations += RequiredParamPayload(req, Range(entry.range))
     })
-
+    map.key("description", PayloadModel.Description in payload)
     AnnotationParser(payload, map).parse()
     payload
   }

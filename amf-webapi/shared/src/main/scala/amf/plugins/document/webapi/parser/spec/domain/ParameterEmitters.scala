@@ -517,13 +517,26 @@ case class PayloadAsParameterEmitter(payload: Payload, ordering: SpecOrdering, r
       payload.fields.entry(PayloadModel.MediaType).map(f => result += ValueEmitter("mediaType".asOasExtension, f))
       result += MapEntryEmitter("in", binding(), position = bindingPos(payload.schema))
       emitPayloadName(result)
-
+      emitPayloadDescription(result)
+      payload.annotations.find(classOf[RequiredParamPayload]) match {
+        case Some(a) => if (a.required) result += MapEntryEmitter("required", a.required.toString, YType.Bool)
+        case None    => // ignore
+      }
       payload.fields
         .entry(PayloadModel.Schema)
         .map(f => result += OasSchemaEmitter(f, ordering, references))
       result ++= AnnotationsEmitter(payload, ordering).emitters
 
       traverse(ordering.sorted(result), b)
+    }
+  }
+
+  private def emitPayloadDescription(result: mutable.ListBuffer[EntryEmitter]) = {
+    payload.fields
+      .entry(PayloadModel.Description)
+      .map(f => MapEntryEmitter("description", f.value.toString)) match {
+      case Some(e) => result += e
+      case None    =>
     }
   }
 
