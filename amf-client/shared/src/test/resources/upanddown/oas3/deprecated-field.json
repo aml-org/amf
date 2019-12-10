@@ -1,0 +1,22 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "some title",
+    "version": "0.1"
+  },
+  "components": {
+    "schemas": {
+      "testing": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "type": "string",
+            "deprecated": true
+          }
+        },
+        "deprecated": true
+      }
+    }
+  },
+  "paths": {}
+}
