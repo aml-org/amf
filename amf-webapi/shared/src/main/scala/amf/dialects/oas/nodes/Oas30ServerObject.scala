@@ -28,7 +28,7 @@ object Oas30ServerObject extends DialectNode {
         .withId(DialectLocation + "#/declarations/ServerObject/variables")
         .withName("variables")
         .withNodePropertyMapping(ServerModel.Variables.value.iri())
-        .withObjectRange(Seq(Oas30VariableObject.Obj.id))
+        .withObjectRange(Seq(Oas30VariableObject.id))
         .withMapTermKeyProperty(ParameterModel.Name.value.iri())
     )
 }
