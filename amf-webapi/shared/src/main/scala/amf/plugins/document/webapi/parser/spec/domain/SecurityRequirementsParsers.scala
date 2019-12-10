@@ -19,7 +19,7 @@ case class OasSecurityRequirementParser(node: YNode, producer: String => Securit
     implicit val ctx: OasWebApiContext) {
   def parse(): Option[SecurityRequirement] = node.to[YMap] match {
     case Right(map) if map.entries.nonEmpty =>
-      val securityRequirement = producer(idCounter.genId("requirement"))
+      val securityRequirement = producer(idCounter.genId("requirement")).add(Annotations(node))
 
       // Parse individual schemes
       map.entries.foreach { entry =>
