@@ -191,5 +191,9 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   }
 
+  test("Closed shape in components, servers, and example") {
+    validate("oas3/oas3-closed-shapes.json", Some("oas3-closed-shapes.report"), Oas30Profile)
+  }
+
   override val hint: Hint = OasJsonHint
 }

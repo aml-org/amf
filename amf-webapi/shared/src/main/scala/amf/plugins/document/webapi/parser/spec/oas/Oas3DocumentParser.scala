@@ -55,6 +55,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
                                  parent + "/resourceTypes").parse()
       AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent + "/traits")
         .parse()
+      ctx.closedShape(parent, map, "components")
       validateNames()
     }
 
