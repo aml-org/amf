@@ -22,6 +22,11 @@ object AMLRequestBodyObject extends DialectNode {
       .withName("content")
       .withNodePropertyMapping(RequestModel.Payloads.value.iri())
       .withMapTermKeyProperty(PayloadModel.MediaType.value.iri())
-      .withObjectRange(Seq(AMLContentObject.id))
+      .withObjectRange(Seq(AMLContentObject.id)),
+    PropertyMapping()
+      .withId(DialectLocation + "#/declarations/RequestBodyObject/required")
+      .withName("required")
+      .withNodePropertyMapping(RequestModel.Required.value.iri())
+      .withLiteralRange(xsdString.iri())
   )
 }

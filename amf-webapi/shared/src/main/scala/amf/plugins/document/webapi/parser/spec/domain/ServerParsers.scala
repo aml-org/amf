@@ -116,9 +116,9 @@ abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(im
 
   protected def parseServers(key: String): Unit =
     map.key(key).foreach { entry =>
-      entry.value.as[Seq[YMap]].map(OasServerParser(elem.id, _).parse()).foreach { server =>
-        elem.add(field, server)
-      }
+      val servers = entry.value.as[Seq[YMap]].map(OasServerParser(elem.id, _).parse())
+
+      elem.set(field, AmfArray(servers, Annotations(entry)), Annotations(entry))
     }
 }
 
@@ -179,7 +179,7 @@ case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: 
 private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: OasWebApiContext)
     extends SpecParserOps {
   def parse(): Server = {
-    val server = Server()
+    val server = Server(map)
 
     map.key("url", ServerModel.Url in server)
 
