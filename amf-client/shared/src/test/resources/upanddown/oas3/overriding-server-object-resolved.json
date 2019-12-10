@@ -7,32 +7,32 @@
   "paths": {
     "/with-no-overriding": {
       "get": {
-        "responses": {
-          "default": {
-            "description": "get in files path"
-          }
-        },
         "servers": [
           {
             "url": "https://api.example.com/v1",
             "description": "The production API server"
           }
-        ]
-      }
-    },
-    "/ping": {
-      "post": {
+        ],
         "responses": {
           "default": {
             "description": "get in files path"
           }
-        },
+        }
+      }
+    },
+    "/ping": {
+      "post": {
         "servers": [
           {
             "url": "https://ping.example.com",
             "description": "Override base path for all operations with the /ping path"
           }
-        ]
+        ],
+        "responses": {
+          "default": {
+            "description": "get in files path"
+          }
+        }
       },
       "get": {
         "responses": {

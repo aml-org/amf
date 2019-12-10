@@ -1452,6 +1452,9 @@ abstract class OasShapeEmitter(shape: Shape,
     if (Option(shape.not).isDefined)
       result += OasNotConstraintEmitter(shape, ordering, references, pointer, schemaPath)
 
+    if (spec.vendor == Vendor.OAS30)
+      fs.entry(ShapeModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
+
     result
   }
 

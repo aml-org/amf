@@ -707,7 +707,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     * A single named callback may be parsed into multiple Callback when multiple expressions are defined.
     * This is due to inconsistency in the model, pending refactor in APIMF-1771
     */
-  case class CallbackParser(map: YMap, adopt: Callback => Unit) {
+  case class CallbackParser(map: YMap, adopt: Callback => Unit, name: String, rootEntry: YMapEntry) {
     def parse(): List[Callback] = {
       ctx.link(map) match {
         case Left(fullRef) =>
@@ -724,13 +724,14 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             .getOrElse {
               ctx.obtainRemoteYNode(fullRef) match {
                 case Some(callbackNode) =>
-                  CallbackParser(callbackNode.as[YMap], adopt).parse()
+                  CallbackParser(callbackNode.as[YMap], adopt, name, rootEntry).parse()
                 case None =>
                   ctx.violation(CoreValidations.UnresolvedReference,
                                 "",
                                 s"Cannot find callback reference $fullRef",
                                 map)
-                  val callback = new ErrorCallback(label, map)
+                  val callback: Callback = new ErrorCallback(label, map).link(name, Annotations(rootEntry))
+
                   adopt(callback)
                   List(callback)
               }
@@ -775,7 +776,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             .entries
             .flatMap { callbackEntry =>
               val name = callbackEntry.key.as[YScalar].text
-              CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(operation.id)).parse()
+              CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(operation.id), name, callbackEntry)
+                .parse()
             }
           operation.withCallbacks(callbacks)
         }
