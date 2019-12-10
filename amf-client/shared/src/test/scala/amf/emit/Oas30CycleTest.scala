@@ -54,7 +54,8 @@ class Oas30CycleTest extends FunSuiteCycleTests {
     FixtureData("Basic components object", "components/basic-components.json", "components/components-output.json"),
     FixtureData("One subscription with multiple callbacks",
                 "one-subscription-multiple-callbacks.json",
-                "one-subscription-multiple-callbacks.json")
+                "one-subscription-multiple-callbacks.json"),
+    FixtureData("Deprecated field in schema object", "deprecated-field.json", "deprecated-field.json")
   )
 
   cyclesOas3.foreach { f =>
