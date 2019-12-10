@@ -2,10 +2,11 @@ package amf.plugins.domain.webapi.metamodel.bindings
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
+import amf.core.metamodel.domain.{ModelDoc, ShapeModel, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.webapi.models.bindings.websockets.WebSocketsChannelBinding
 
 object WebSocketsChannelBindingModel extends ChannelBindingModel with BindingVersion {
   val Method =
@@ -27,7 +28,7 @@ object WebSocketsChannelBindingModel extends ChannelBindingModel with BindingVer
              "A Schema object containing the definitions for each query parameter")
   )
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = WebSocketsChannelBinding()
 
   override def fields: List[Field] = List(Method, Query, Headers, BindingVersion) ++ ChannelBindingModel.fields
 

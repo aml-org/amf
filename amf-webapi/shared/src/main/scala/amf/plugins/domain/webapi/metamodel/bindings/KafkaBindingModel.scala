@@ -6,6 +6,7 @@ import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.webapi.models.bindings.kafka.{KafkaOperationBinding, KafkaMessageBinding}
 
 object KafkaOperationBindingModel extends OperationBindingModel with BindingVersion {
   val GroupId =
@@ -16,7 +17,7 @@ object KafkaOperationBindingModel extends OperationBindingModel with BindingVers
           ApiBinding + "clientId",
           ModelDoc(ModelVocabularies.ApiBinding, "clientId", "Id of the consumer inside a consumer group"))
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = KafkaOperationBinding()
 
   override def fields: List[Field] = List(GroupId, ClientId, BindingVersion) ++ OperationBindingModel.fields
 
@@ -27,7 +28,7 @@ object KafkaMessageBindingModel extends OperationBindingModel with BindingVersio
   val Key =
     Field(Str, ApiBinding + "key", ModelDoc(ModelVocabularies.ApiBinding, "key", "The message key"))
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = KafkaMessageBinding()
 
   override def fields: List[Field] = List(Key, BindingVersion) ++ MessageBindingModel.fields
 

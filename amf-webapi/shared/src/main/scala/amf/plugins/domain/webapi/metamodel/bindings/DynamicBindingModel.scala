@@ -3,10 +3,11 @@ package amf.plugins.domain.webapi.metamodel.bindings
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
 import amf.core.metamodel.domain.templates.KeyField
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DataNodeModel, DomainElementModel}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.webapi.models.bindings.{DynamicBinding, EmptyBinding}
 
 object DynamicBindingModel
     extends ServerBindingModel
@@ -30,7 +31,7 @@ object DynamicBindingModel
 
   override val key: Field = Type
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = DynamicBinding()
 }
 
 /** This model exists to express that this binding definition MUST be empty (have no definition) */
@@ -47,5 +48,5 @@ object EmptyBindingModel
 
   override def fields: List[Field] = List(Type)
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = EmptyBinding()
 }

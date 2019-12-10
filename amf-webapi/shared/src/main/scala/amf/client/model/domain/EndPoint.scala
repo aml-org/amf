@@ -26,6 +26,7 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
   def payloads: ClientList[Payload]             = _internal.payloads.asClient
   def servers: ClientList[Server]               = _internal.servers.asClient
   def security: ClientList[SecurityRequirement] = _internal.security.asClient
+  def bindings: ClientList[ChannelBinding]      = _internal.bindings.asClient
 
   def parent: ClientOption[EndPoint] = _internal.parent.asClient
 
@@ -109,4 +110,9 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
     * url property of the server is required.
     */
   def withServer(url: String): Server = _internal.withServer(url)
+
+  def withBindings(bindings: ClientList[ChannelBinding]): this.type = {
+    _internal.withBindings(bindings.asInternal)
+    this
+  }
 }

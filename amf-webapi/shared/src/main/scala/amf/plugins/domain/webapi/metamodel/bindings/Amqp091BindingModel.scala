@@ -1,12 +1,13 @@
 package amf.plugins.domain.webapi.metamodel.bindings
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Str, Bool, Int, Array}
+import amf.core.metamodel.Type.{Int, Str, Array, Bool}
 import amf.core.metamodel.domain.common.NameFieldSchema
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DomainElementModel}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
+import amf.plugins.domain.webapi.models.bindings.amqp.{Amqp091OperationBinding, Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091MessageBinding, Amqp091QueueExchange}
 
 object Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersion {
 
@@ -21,7 +22,7 @@ object Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersio
                     ApiBinding + "queue",
                     ModelDoc(ModelVocabularies.ApiBinding, "queue", "Defines the queue properties"))
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = Amqp091ChannelBinding()
 
   override def fields: List[Field] = List(Is, Exchange, Queue, BindingVersion) ++ ChannelBindingModel.fields
 
@@ -53,7 +54,7 @@ object Amqp091ChannelExchangeModel extends DomainElementModel with NameFieldSche
 
   override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelExchange" :: DomainElementModel.`type`
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = Amqp091ChannelExchange()
 }
 
 object Amqp091QueueExchangeModel extends DomainElementModel with NameFieldSchema {
@@ -84,7 +85,7 @@ object Amqp091QueueExchangeModel extends DomainElementModel with NameFieldSchema
 
   override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelQueue" :: DomainElementModel.`type`
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = Amqp091QueueExchange()
 }
 
 object Amqp091OperationBindingModel extends OperationBindingModel with BindingVersion {
@@ -142,7 +143,7 @@ object Amqp091OperationBindingModel extends OperationBindingModel with BindingVe
           ApiBinding + "ack",
           ModelDoc(ModelVocabularies.ApiBinding, "ack", "Whether the consumer should ack the message or not"))
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = Amqp091OperationBinding()
 
   override def fields: List[Field] =
     List(Expiration, UserId, CC, Priority, DeliveryMode, Mandatory, BCC, ReplyTo, Timestamp, Ack, BindingVersion) ++ OperationBindingModel.fields
@@ -161,7 +162,7 @@ object Amqp091MessageBindingModel extends MessageBindingModel with BindingVersio
           ApiBinding + "messageType",
           ModelDoc(ModelVocabularies.ApiBinding, "messageType", "Application-specific message type"))
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: AmfObject = Amqp091MessageBinding()
 
   override def fields: List[Field] = List(ContentEncoding, MessageType, BindingVersion) ++ MessageBindingModel.fields
 
