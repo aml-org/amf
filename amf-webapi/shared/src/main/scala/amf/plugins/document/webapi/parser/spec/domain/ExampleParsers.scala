@@ -278,7 +278,7 @@ case class Oas3ExampleValueParser(map: YMap, example: Example, options: ExampleO
 
     AnnotationParser(example, map, List(VocabularyMappings.example)).parse()
 
-    if (ctx.vendor.isRaml) ctx.closedShape(example.id, map, "example")
+    ctx.closedShape(example.id, map, "example")
     example
   }
 }

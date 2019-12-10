@@ -200,7 +200,7 @@ private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: 
     }
 
     AnnotationParser(server, map).parse()
-
+    ctx.closedShape(server.id, map, "server")
     server
   }
 

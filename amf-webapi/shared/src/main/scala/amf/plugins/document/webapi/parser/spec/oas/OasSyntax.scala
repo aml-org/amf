@@ -15,6 +15,17 @@ object Oas3Syntax extends SpecSyntax {
       "tags",
       "externalDocs"
     ),
+    "components" -> Set(
+      "schemas",
+      "responses",
+      "parameters",
+      "examples",
+      "requestBodies",
+      "headers",
+      "securitySchemes",
+      "links",
+      "callbacks"
+    ),
     "info" -> Set(
       "title",
       "description",
@@ -77,8 +88,19 @@ object Oas3Syntax extends SpecSyntax {
       "parameters",
       "requestBody"
     ),
+    "server" -> Set(
+      "url",
+      "description",
+      "variables"
+    ),
     "externalDoc" -> Set(
       "url"
+    ),
+    "example" -> Set(
+      "summary",
+      "description",
+      "value",
+      "externalValue"
     ),
     "parameter" -> Set(
       "name",
