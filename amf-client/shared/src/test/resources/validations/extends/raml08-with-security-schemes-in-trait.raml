@@ -1,0 +1,27 @@
+#%RAML 0.8
+title: api
+
+traits:
+  - secured:
+      securedBy: [oauth_2_0]
+      headers:
+        X-Api-Key:
+          description: Unique API key received when registered for API use
+          required: true
+securitySchemes:
+  - oauth_2_0:
+      type: OAuth 2.0
+      settings:
+        authorizationUri: N/A
+        accessTokenUri: https://oauth.com/auth/token
+        authorizationGrants: [client_credentials]
+      describedBy:
+        headers:
+          Authorization:
+            description: A valid bearer token from a previous access token query.
+            required: true
+/my-endpoint:
+  get:
+    is: [secured]
+    securedBy: [oauth_2_0]
+
