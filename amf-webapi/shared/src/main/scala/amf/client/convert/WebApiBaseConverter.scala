@@ -1,6 +1,6 @@
 package amf.client.convert
 
-import amf.client.model.domain.{Request => ClientRequest, Amqp091OperationBinding => ClientAmqp091OperationBinding, EndPoint => ClientEndPoint, Settings => ClientSettings, Parameter => ClientParameter, OpenIdConnectSettings => ClientOpenIdConnectSettings, SecurityScheme => ClientSecurityScheme, OperationBinding => ClientOperationBinding, Scope => ClientScope, MqttServerBinding => ClientMqttServerBinding, DynamicBinding => ClientDynamicBinding, ChannelBinding => ClientChannelBinding, Server => ClientServer, ApiKeySettings => ClientApiKeySettings, KafkaOperationBinding => ClientKafkaOperationBinding, HttpSettings => ClientHttpSettings, License => ClientLicense, TemplatedLink => ClientTemplatedLink, EmptyBinding => ClientEmptyBinding, Amqp091ChannelBinding => ClientAmqp091ChannelBinding, Encoding => ClientEncoding, ResourceType => ClientResourceType, MessageBinding => ClientMessageBinding, Amqp091ChannelExchange => ClientAmqp091ChannelExchange, CorrelationId => ClientCorrelationId, Operation => ClientOperation, HttpOperationBinding => ClientHttpOperationBinding, MqttMessageBinding => ClientMqttMessageBinding, Callback => ClientCallback, CreativeWork => ClientCreativeWork, Amqp091MessageBinding => ClientAmqp091MessageBinding, IriTemplateMapping => ClientIriTemplatedMaping, OAuth2Flow => ClientOAuth2Flow, WebSocketsChannelBinding => ClientWebSocketsChannelBinding, KafkaMessageBinding => ClientKafkaMessageBinding, Payload => ClientPayload, Tag => ClientTag, Response => ClientResponse, Trait => ClientTrait, OAuth1Settings => ClientOAuth1Settings, Amqp091QueueExchange => ClientAmqp091QueueExchange, Organization => ClientOrganization, HttpMessageBinding => ClientHttpMessageBinding, MqttOperationBinding => ClientMqttOperationBinding, SecurityRequirement => ClientSecurityRequirement, ServerBinding => ClientServerBinding, ParametrizedSecurityScheme => ClientParametrizedSecurityScheme, MqttServerLastWill => ClientMqttServerLastWill, OAuth2Settings => ClientOAuth2Settings}
+import amf.client.model.domain.{Request => ClientRequest, Amqp091OperationBinding => ClientAmqp091OperationBinding, EndPoint => ClientEndPoint, Settings => ClientSettings, Parameter => ClientParameter, OpenIdConnectSettings => ClientOpenIdConnectSettings, SecurityScheme => ClientSecurityScheme, OperationBinding => ClientOperationBinding, Scope => ClientScope, MqttServerBinding => ClientMqttServerBinding, DynamicBinding => ClientDynamicBinding, ChannelBinding => ClientChannelBinding, Server => ClientServer, ApiKeySettings => ClientApiKeySettings, KafkaOperationBinding => ClientKafkaOperationBinding, HttpSettings => ClientHttpSettings, License => ClientLicense, TemplatedLink => ClientTemplatedLink, EmptyBinding => ClientEmptyBinding, Amqp091ChannelBinding => ClientAmqp091ChannelBinding, Encoding => ClientEncoding, ResourceType => ClientResourceType, MessageBinding => ClientMessageBinding, Amqp091ChannelExchange => ClientAmqp091ChannelExchange, CorrelationId => ClientCorrelationId, Operation => ClientOperation, HttpOperationBinding => ClientHttpOperationBinding, MqttMessageBinding => ClientMqttMessageBinding, Callback => ClientCallback, CreativeWork => ClientCreativeWork, Amqp091MessageBinding => ClientAmqp091MessageBinding, IriTemplateMapping => ClientIriTemplatedMaping, OAuth2Flow => ClientOAuth2Flow, WebSocketsChannelBinding => ClientWebSocketsChannelBinding, KafkaMessageBinding => ClientKafkaMessageBinding, Payload => ClientPayload, Tag => ClientTag, Response => ClientResponse, Trait => ClientTrait, OAuth1Settings => ClientOAuth1Settings, Amqp091Queue => ClientAmqp091Queue, Organization => ClientOrganization, HttpMessageBinding => ClientHttpMessageBinding, MqttOperationBinding => ClientMqttOperationBinding, SecurityRequirement => ClientSecurityRequirement, ServerBinding => ClientServerBinding, ParametrizedSecurityScheme => ClientParametrizedSecurityScheme, MqttServerLastWill => ClientMqttServerLastWill, OAuth2Settings => ClientOAuth2Settings}
 import amf.client.validate.{PayloadValidator => ClientInternalPayloadValidator}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.PayloadValidator
@@ -57,7 +57,7 @@ trait WebApiBaseConverter
     with WebSocketsChannelBindingConverter
     with MqttServerLastWillConverter
     with Amqp091ChannelExchangeConverter
-    with Amqp091QueueExchangeConverter
+    with Amqp091QueueConverter
     with ChannelBindingConverter
     with OperationBindingConverter
     with MessageBindingConverter
@@ -214,12 +214,12 @@ trait Amqp091ChannelExchangeConverter extends PlatformSecrets {
   }
 }
 
-trait Amqp091QueueExchangeConverter extends PlatformSecrets {
-  implicit object Amqp091QueueExchangeMatcher
-      extends BidirectionalMatcher[Amqp091QueueExchange, ClientAmqp091QueueExchange] {
-    override def asClient(from: Amqp091QueueExchange): ClientAmqp091QueueExchange =
-      platform.wrap[ClientAmqp091QueueExchange](from)
-    override def asInternal(from: ClientAmqp091QueueExchange): Amqp091QueueExchange = from._internal
+trait Amqp091QueueConverter extends PlatformSecrets {
+  implicit object Amqp091QueueMatcher
+      extends BidirectionalMatcher[Amqp091Queue, ClientAmqp091Queue] {
+    override def asClient(from: Amqp091Queue): ClientAmqp091Queue =
+      platform.wrap[ClientAmqp091Queue](from)
+    override def asInternal(from: ClientAmqp091Queue): Amqp091Queue = from._internal
   }
 }
 

@@ -7,7 +7,7 @@ import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DomainElementMode
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.webapi.models.bindings.amqp.{Amqp091OperationBinding, Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091MessageBinding, Amqp091QueueExchange}
+import amf.plugins.domain.webapi.models.bindings.amqp.{Amqp091OperationBinding, Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091MessageBinding, Amqp091Queue}
 
 object Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersion {
 
@@ -18,7 +18,7 @@ object Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersio
                        ApiBinding + "exchange",
                        ModelDoc(ModelVocabularies.ApiBinding, "exchange", "Defines the exchange properties"))
 
-  val Queue = Field(Amqp091QueueExchangeModel,
+  val Queue = Field(Amqp091QueueModel,
                     ApiBinding + "queue",
                     ModelDoc(ModelVocabularies.ApiBinding, "queue", "Defines the queue properties"))
 
@@ -57,7 +57,7 @@ object Amqp091ChannelExchangeModel extends DomainElementModel with NameFieldSche
   override def modelInstance: AmfObject = Amqp091ChannelExchange()
 }
 
-object Amqp091QueueExchangeModel extends DomainElementModel with NameFieldSchema {
+object Amqp091QueueModel extends DomainElementModel with NameFieldSchema {
   val Durable = Field(
     Bool,
     ApiBinding + "durable",
@@ -85,7 +85,7 @@ object Amqp091QueueExchangeModel extends DomainElementModel with NameFieldSchema
 
   override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelQueue" :: DomainElementModel.`type`
 
-  override def modelInstance: AmfObject = Amqp091QueueExchange()
+  override def modelInstance: AmfObject = Amqp091Queue()
 }
 
 object Amqp091OperationBindingModel extends OperationBindingModel with BindingVersion {

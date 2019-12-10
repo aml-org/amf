@@ -5,7 +5,11 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.{DomainElement, NamedDomainElement, Linkable}
 import amf.plugins.domain.webapi.metamodel.bindings.Amqp091ChannelBindingModel._
-import amf.plugins.domain.webapi.metamodel.bindings.{Amqp091ChannelBindingModel, Amqp091QueueExchangeModel => QueueExchange, Amqp091ChannelExchangeModel => ChannelExchange}
+import amf.plugins.domain.webapi.metamodel.bindings.{
+  Amqp091ChannelBindingModel,
+  Amqp091QueueModel => QueueModel,
+  Amqp091ChannelExchangeModel => ChannelExchange
+}
 import amf.plugins.domain.webapi.models.bindings.{ChannelBinding, BindingVersion}
 
 class Amqp091ChannelBinding(override val fields: Fields, override val annotations: Annotations)
@@ -13,20 +17,21 @@ class Amqp091ChannelBinding(override val fields: Fields, override val annotation
     with BindingVersion {
   override def meta: Obj = Amqp091ChannelBindingModel
 
-  override def componentId: String = "Amqp091ChannelBinding"
+  override def componentId: String = "/amqp091-channel"
 
   override protected def bindingVersionField: Field = BindingVersion
 
-  def is: StrField = fields.field(Is)
-  def exchange: Amqp091ChannelExchange = fields.field(Exchange)
-  def queue: Amqp091QueueExchange = fields.field(Queue)
+  def is: StrField                                              = fields.field(Is)
+  def exchange: Amqp091ChannelExchange                          = fields.field(Exchange)
+  def queue: Amqp091Queue                                       = fields.field(Queue)
   def withIs(is: String): this.type                             = set(Is, is)
   def withExchange(exchange: Amqp091ChannelExchange): this.type = set(Exchange, exchange)
-  def withQueue(queue: Amqp091QueueExchange): this.type         = set(Queue, queue)
+  def withQueue(queue: Amqp091Queue): this.type                 = set(Queue, queue)
 
   override def linkCopy(): Amqp091ChannelBinding = Amqp091ChannelBinding().withId(id)
 
-  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Amqp091ChannelBinding.apply
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    Amqp091ChannelBinding.apply
 }
 
 object Amqp091ChannelBinding {
@@ -35,9 +40,9 @@ object Amqp091ChannelBinding {
 
   def apply(annotations: Annotations): Amqp091ChannelBinding = apply(Fields(), annotations)
 
-  def apply(fields: Fields, annotations: Annotations): Amqp091ChannelBinding = new Amqp091ChannelBinding(fields, annotations)
+  def apply(fields: Fields, annotations: Annotations): Amqp091ChannelBinding =
+    new Amqp091ChannelBinding(fields, annotations)
 }
-
 
 class Amqp091ChannelExchange(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
@@ -55,7 +60,7 @@ class Amqp091ChannelExchange(override val fields: Fields, override val annotatio
   def withAutoDelete(autoDelete: Boolean): this.type = set(ChannelExchange.AutoDelete, autoDelete)
   def withVHost(vHost: String): this.type            = set(ChannelExchange.VHost, vHost)
 
-  override def componentId: String = name.option().getOrElse("Amqp091ChannelExchange")
+  override def componentId: String = "/amqp091-exchange"
 }
 
 object Amqp091ChannelExchange {
@@ -64,34 +69,35 @@ object Amqp091ChannelExchange {
 
   def apply(annotations: Annotations): Amqp091ChannelExchange = apply(Fields(), annotations)
 
-  def apply(fields: Fields, annotations: Annotations): Amqp091ChannelExchange = new Amqp091ChannelExchange(fields, annotations)
+  def apply(fields: Fields, annotations: Annotations): Amqp091ChannelExchange =
+    new Amqp091ChannelExchange(fields, annotations)
 }
 
-class Amqp091QueueExchange(override val fields: Fields, override val annotations: Annotations)
+class Amqp091Queue(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
     with NamedDomainElement {
-  override def meta: Obj = QueueExchange
+  override def meta: Obj = QueueModel
 
-  override protected def nameField: Field = QueueExchange.Name
+  override protected def nameField: Field = QueueModel.Name
 
-  def durable: BoolField    = fields.field(QueueExchange.Durable)
-  def exclusive: BoolField  = fields.field(QueueExchange.Exclusive)
-  def autoDelete: BoolField = fields.field(QueueExchange.AutoDelete)
-  def vHost: StrField       = fields.field(QueueExchange.VHost)
+  def durable: BoolField    = fields.field(QueueModel.Durable)
+  def exclusive: BoolField  = fields.field(QueueModel.Exclusive)
+  def autoDelete: BoolField = fields.field(QueueModel.AutoDelete)
+  def vHost: StrField       = fields.field(QueueModel.VHost)
 
-  def withDurable(durable: Boolean): this.type       = set(QueueExchange.Durable, durable)
-  def withExclusive(exclusive: Boolean): this.type   = set(QueueExchange.Exclusive, exclusive)
-  def withAutoDelete(autoDelete: Boolean): this.type = set(QueueExchange.AutoDelete, autoDelete)
-  def withVHost(vHost: String): this.type            = set(QueueExchange.VHost, vHost)
+  def withDurable(durable: Boolean): this.type       = set(QueueModel.Durable, durable)
+  def withExclusive(exclusive: Boolean): this.type   = set(QueueModel.Exclusive, exclusive)
+  def withAutoDelete(autoDelete: Boolean): this.type = set(QueueModel.AutoDelete, autoDelete)
+  def withVHost(vHost: String): this.type            = set(QueueModel.VHost, vHost)
 
-  override def componentId: String = name.option().getOrElse("Amqp091QueueExchange")
+  override def componentId: String = "/amqp091-queue"
 }
 
-object Amqp091QueueExchange {
+object Amqp091Queue {
 
-  def apply(): Amqp091QueueExchange = apply(Annotations())
+  def apply(): Amqp091Queue = apply(Annotations())
 
-  def apply(annotations: Annotations): Amqp091QueueExchange = apply(Fields(), annotations)
+  def apply(annotations: Annotations): Amqp091Queue = apply(Fields(), annotations)
 
-  def apply(fields: Fields, annotations: Annotations): Amqp091QueueExchange = new Amqp091QueueExchange(fields, annotations)
+  def apply(fields: Fields, annotations: Annotations): Amqp091Queue = new Amqp091Queue(fields, annotations)
 }

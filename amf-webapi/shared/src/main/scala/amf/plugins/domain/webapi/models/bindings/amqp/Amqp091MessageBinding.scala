@@ -18,7 +18,7 @@ class Amqp091MessageBinding(override val fields: Fields, override val annotation
   def withContentEncoding(contentEncoding: String): this.type = set(ContentEncoding, contentEncoding)
   def withMessageType(messageType: String): this.type         = set(MessageType, messageType)
 
-  override def componentId: String = "Amqp091MessageBinding"
+  override def componentId: String = "/amqp091-message"
   override def linkCopy(): Amqp091MessageBinding = Amqp091MessageBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = Amqp091MessageBinding.apply

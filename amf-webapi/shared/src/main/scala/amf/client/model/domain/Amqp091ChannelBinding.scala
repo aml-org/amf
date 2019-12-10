@@ -5,7 +5,7 @@ import amf.client.model.{StrField, BoolField}
 import scala.scalajs.js.annotation.{JSExportTopLevel, JSExportAll}
 import amf.plugins.domain.webapi.models.bindings.amqp.{
   Amqp091ChannelExchange => InternalAmqp091ChannelExchange,
-  Amqp091QueueExchange => InternalAmqp091QueueExchange,
+  Amqp091Queue => InternalAmqp091Queue,
   Amqp091ChannelBinding => InternalAmqp091ChannelBinding
 }
 
@@ -24,7 +24,7 @@ case class Amqp091ChannelBinding(override private[amf] val _internal: InternalAm
 
   def is: StrField                     = _internal.is
   def exchange: Amqp091ChannelExchange = _internal.exchange
-  def queue: Amqp091QueueExchange      = _internal.queue
+  def queue: Amqp091Queue              = _internal.queue
   def withIs(is: String): this.type = {
     _internal.withIs(is)
     this
@@ -33,7 +33,7 @@ case class Amqp091ChannelBinding(override private[amf] val _internal: InternalAm
     _internal.withExchange(exchange)
     this
   }
-  def withQueue(queue: Amqp091QueueExchange): this.type = {
+  def withQueue(queue: Amqp091Queue): this.type = {
     _internal.withQueue(queue)
     this
   }
@@ -82,12 +82,12 @@ case class Amqp091ChannelExchange(override private[amf] val _internal: InternalA
 }
 
 @JSExportAll
-case class Amqp091QueueExchange(override private[amf] val _internal: InternalAmqp091QueueExchange)
+case class Amqp091Queue(override private[amf] val _internal: InternalAmqp091Queue)
     extends DomainElement
     with NamedDomainElement {
 
-  @JSExportTopLevel("model.domain.Amqp091QueueExchange")
-  def this() = this(InternalAmqp091QueueExchange())
+  @JSExportTopLevel("model.domain.Amqp091Queue")
+  def this() = this(InternalAmqp091Queue())
 
   def durable: BoolField    = _internal.durable
   def exclusive: BoolField  = _internal.exclusive

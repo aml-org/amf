@@ -19,7 +19,7 @@ class MqttOperationBinding(override val fields: Fields, override val annotations
   def withQos(qos: Int): this.type           = set(Qos, qos)
   def withRetain(retain: Boolean): this.type = set(Retain, retain)
 
-  override def componentId: String = "MqttOperationBinding"
+  override def componentId: String = "/mqtt-operation"
   override def linkCopy(): MqttOperationBinding = MqttOperationBinding().withId(id)
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = MqttOperationBinding.apply

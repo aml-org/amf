@@ -16,8 +16,7 @@ class KafkaOperationBinding(override val fields: Fields, override val annotation
 
   override def meta: Obj = KafkaOperationBindingModel
 
-  override def componentId: String =
-    s"${groupId.option().getOrElse("default-group")}/${clientId.option().getOrElse("default-client")}}"
+  override def componentId: String = "/kafka-operation"
 
   override protected def bindingVersionField: Field = BindingVersion
 

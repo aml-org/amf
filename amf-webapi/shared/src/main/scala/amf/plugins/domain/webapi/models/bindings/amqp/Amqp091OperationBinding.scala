@@ -13,7 +13,7 @@ class Amqp091OperationBinding(override val fields: Fields, override val annotati
   override protected def bindingVersionField: Field = BindingVersion
   override def meta: Obj                            = Amqp091OperationBindingModel
 
-  override def componentId: String = "Amqp091OperationBinding"
+  override def componentId: String = "/amqp091-operation"
   def expiration: IntField         = fields.field(Expiration)
   def userId: StrField             = fields.field(UserId)
   def cc: Seq[StrField]            = fields.field(CC)

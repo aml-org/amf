@@ -17,7 +17,7 @@ class KafkaMessageBinding(override val fields: Fields, override val annotations:
   def key: StrField                   = fields.field(Key)
   def withKey(key: String): this.type = set(Key, key)
 
-  override def componentId: String = key.option().getOrElse("KafkaMessageBinding")
+  override def componentId: String = "/kafka-message"
 
   override def linkCopy(): KafkaMessageBinding = KafkaMessageBinding()
 
