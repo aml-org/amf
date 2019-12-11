@@ -107,15 +107,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
         entry.value
           .as[YMap]
           .entries
-          .foreach { entry =>
-            val linkName = ScalarNode(entry.key).text().value.toString
-            OasLinkParser(entry.value, parent, entry)
-              .parse()
-              .foreach { link =>
-                link.add(DeclaredElement())
-                ctx.declarations += link
-              }
-        }
+          .foreach(entry => ctx.declarations += OasLinkParser(parent, entry).parse().add(DeclaredElement()))
     )
   }
 
