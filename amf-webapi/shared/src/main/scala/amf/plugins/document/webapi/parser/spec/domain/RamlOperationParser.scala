@@ -4,7 +4,7 @@ import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.AmfStrings
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -129,7 +129,8 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       }
     )
 
-    val RequirementParser = RamlSecurityRequirementParser.parse(operation.withSecurity) _
+    val idCounter         = new IdCounter()
+    val RequirementParser = RamlSecurityRequirementParser.parse(operation.withSecurity, idCounter) _
     map.key("securedBy", (OperationModel.Security in operation using RequirementParser).allowingSingleValue)
 
     map.key("description", (OperationModel.Description in operation).allowingAnnotations)

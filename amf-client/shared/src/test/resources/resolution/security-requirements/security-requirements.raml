@@ -1,0 +1,8 @@
+#%RAML 1.0
+title: Security Demo
+securitySchemes:
+  oauth_2_0: !include security/oauth_2_0.raml
+  oauth_1_0: !include security/oauth_1_0.raml
+securedBy: [oauth_2_0, oauth_1_0]
+/test:
+  get:
