@@ -11,7 +11,7 @@ import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-case class OasLinkParser(node: YNode, parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext)
+case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 
   private def nameAndAdopt(templateLink: TemplatedLink): TemplatedLink = {
@@ -20,8 +20,8 @@ case class OasLinkParser(node: YNode, parentId: String, definitionEntry: YMapEnt
       .adopted(parentId)
       .add(Annotations(definitionEntry))
   }
-  def parse(): Option[TemplatedLink] = {
-    val map = node.as[YMap]
+  def parse(): TemplatedLink = {
+    val map = definitionEntry.value.as[YMap]
 
     ctx.link(map) match {
       case Left(fullRef) =>
@@ -29,38 +29,49 @@ case class OasLinkParser(node: YNode, parentId: String, definitionEntry: YMapEnt
         ctx.declarations
           .findTemplatedLink(label, SearchScope.Named)
           .map(templatedLink => nameAndAdopt(templatedLink.link(label)))
-          .orElse {
-            ctx.obtainRemoteYNode(fullRef) match {
-              case Some(requestNode) =>
-                OasLinkParser(requestNode.as[YMap], parentId, definitionEntry).parse()
-              case None =>
-                ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
-                Some(nameAndAdopt(new ErrorLink(fullRef, map).link(fullRef)))
+          .getOrElse(remote(fullRef, map))
 
-            }
-          }
-      case Right(_) =>
-        val templatedLink = nameAndAdopt(TemplatedLink())
+      case Right(_) => buildAndPopulate(map)
+    }
+  }
 
-        map.key("operationRef", TemplatedLinkModel.OperationRef in templatedLink)
-        map.key("operationId", TemplatedLinkModel.OperationId in templatedLink)
+  private def remote(fullRef: String, map: YMap) = {
+    ctx.obtainRemoteYNode(fullRef) match {
+      case Some(requestNode) =>
+        buildAndPopulate(requestNode.as[YMap])
+      case None =>
+        ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
+        nameAndAdopt(new ErrorLink(fullRef, map).link(fullRef))
 
-        if (templatedLink.operationRef.option().isDefined && templatedLink.operationId.option().isDefined) {
-          ctx.violation(
-            ExclusiveLinkTargetError,
-            templatedLink.id,
-            ExclusiveLinkTargetError.message,
-            templatedLink.annotations
-          )
-        }
+    }
+  }
 
-        map.key("description", TemplatedLinkModel.Description in templatedLink)
+  private def buildAndPopulate(map: YMap) = OasLinkPopulator(map, nameAndAdopt(TemplatedLink())).populate()
 
-        map.key("server").foreach { entry =>
-          val m      = entry.value.as[YMap]
-          val server = OasServerParser(templatedLink.id, m)(ctx).parse()
-          templatedLink.withServer(server)
-        }
+}
+
+sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(implicit ctx: OasWebApiContext)
+    extends SpecParserOps {
+  def populate(): TemplatedLink = {
+    map.key("operationRef", TemplatedLinkModel.OperationRef in templatedLink)
+    map.key("operationId", TemplatedLinkModel.OperationId in templatedLink)
+
+    if (templatedLink.operationRef.option().isDefined && templatedLink.operationId.option().isDefined) {
+      ctx.violation(
+        ExclusiveLinkTargetError,
+        templatedLink.id,
+        ExclusiveLinkTargetError.message,
+        templatedLink.annotations
+      )
+    }
+
+    map.key("description", TemplatedLinkModel.Description in templatedLink)
+
+    map.key("server").foreach { entry =>
+      val m      = entry.value.as[YMap]
+      val server = OasServerParser(templatedLink.id, m)(ctx).parse()
+      templatedLink.withServer(server)
+    }
 
         map.key(
           "parameters",
@@ -74,15 +85,12 @@ case class OasLinkParser(node: YNode, parentId: String, definitionEntry: YMapEnt
           }
         )
 
-        map.key("requestBody", TemplatedLinkModel.RequestBody in templatedLink)
+    map.key("requestBody", TemplatedLinkModel.RequestBody in templatedLink)
 
-        AnnotationParser(templatedLink, map).parse()
+    AnnotationParser(templatedLink, map).parse()
 
-        ctx.closedShape(templatedLink.id, map, "link")
+    ctx.closedShape(templatedLink.id, map, "link")
 
-        Some(templatedLink)
-    }
-
+    templatedLink
   }
-
 }

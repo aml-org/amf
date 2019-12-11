@@ -109,7 +109,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
               val links = entry.value
                 .as[YMap]
                 .entries
-                .flatMap(e => OasLinkParser(e.value, res.id, e).parse())
+                .map(e => OasLinkParser(res.id, e).parse())
               res.set(ResponseModel.Links, AmfArray(links, Annotations(entry)))
             }
           )
