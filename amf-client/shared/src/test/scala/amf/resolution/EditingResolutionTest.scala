@@ -416,6 +416,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Security schemes with requirements") {
+    cycle(
+      "security-requirements.raml",
+      "security-requirements.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "security-requirements/"
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {
       case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)

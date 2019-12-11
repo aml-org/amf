@@ -1,36 +1,36 @@
 #%Vocabulary 1.0
 base: http://a.ml/vocabularies/apiContract#
-usage: API contract vocabulary
+usage: API binding vocabulary
 uses:
   doc: aml_doc.yaml
   core: core.yaml
   shacl: external/shacl.yaml
 classTerms:
-  AnnotationTypeDeclarationFragment:
+  apiContract.AnnotationTypeDeclarationFragment:
     displayName: Annotation Type Fragment
     description: Fragment encoding a RAML annotation type
     extends:
       - doc.Fragment
       - doc.Unit
-  Callback:
+  apiContract.Callback:
     displayName: Callback
     description: Model defining the information for a HTTP callback/ webhook
-  DomainExtension:
+  apiContract.DomainExtension:
     displayName: Domain Extension
     description: |-
       Extension to the model being parsed from RAML annotation or OpenAPI extensions
       They must be a DomainPropertySchema (only in RAML) defining them.
       The DomainPropertySchema might have an associated Data Shape that must validate the extension nested graph.
       They are parsed as RDF graphs using a default transformation from a set of nested records into RDF.
-  Encoding:
+  apiContract.Encoding:
     displayName: Encoding
-  EndPoint:
+  apiContract.EndPoint:
     displayName: EndPoint
     description: EndPoint in the API holding a number of executable operations
-  Example:
+  apiContract.Example:
     displayName: Example
     description: Example value for a schema inside an API
-  Extension:
+  apiContract.Extension:
     displayName: Extension
     description: API spec information designed to be applied and compelement the information of a base specification. RAML extensions and overlays are examples of extensions.
     extends:
@@ -39,20 +39,20 @@ classTerms:
       - doc.Module
       - doc.Unit
       - doc.DocumentExtension
-  IriTemplateMapping:
+  apiContract.IriTemplateMapping:
     displayName: Iri Template
-  Message:
+  apiContract.Message:
     displayName: Message
-  NamedExampleFragment:
+  apiContract.NamedExampleFragment:
     displayName: Named Example Fragment
     description: Fragment encoding a RAML named example
     extends:
       - doc.Fragment
       - doc.Unit
-  Operation:
+  apiContract.Operation:
     displayName: Operation
     description: Action that can be executed using a particular HTTP invocation
-  Overlay:
+  apiContract.Overlay:
     displayName: Overlay Model
     description: Model defining a RAML overlay
     extends:
@@ -61,246 +61,246 @@ classTerms:
       - doc.Module
       - doc.Unit
       - doc.DocumentExtension
-  Parameter:
+  apiContract.Parameter:
     displayName: Parameter
     description: Piece of data required or returned by an Operation
-  ParametrizedResourceType:
+  apiContract.ParametrizedResourceType:
     displayName: Parametrized Resource Type
     description: RAML resource type that can accept parameters
     extends: doc.ParametrizedDeclaration
-  ParametrizedTrait:
+  apiContract.ParametrizedTrait:
     displayName: Parametrized Trait
     description: RAML trait with declared parameters
     extends: doc.ParametrizedDeclaration
-  Payload:
+  apiContract.Payload:
     displayName: Payload
     description: Encoded payload using certain media-type
-  PayloadFragment:
+  apiContract.PayloadFragment:
     displayName: Payload Fragment
     description: Fragment encoding HTTP payload information
     extends:
       - doc.Fragment
       - doc.Unit
-  Request:
+  apiContract.Request:
     displayName: Request
     description: Request information for an operation
-    extends: Message
-  ResourceType:
+    extends: apiContract.Message
+  apiContract.ResourceType:
     displayName: Resource Type
     description: Type of document base unit encoding a RAML resource type
     extends: doc.AbstractDeclaration
-  ResourceTypeFragment:
+  apiContract.ResourceTypeFragment:
     displayName: Resource Type Fragment
     description: Fragment encoding a RAML resource type
     extends:
       - doc.Fragment
       - doc.Unit
-  Response:
+  apiContract.Response:
     displayName: Response
     description: Response information for an operation
-    extends: Message
-  Server:
+    extends: apiContract.Message
+  apiContract.Server:
     displayName: Server
     description: Information about the network accessible locations where the API is available
-  ShapeExtension:
+  apiContract.ShapeExtension:
     displayName: Shape Extension
     description: Custom extensions for a data shape definition inside an API definition
-  Tag:
+  apiContract.Tag:
     displayName: Tag
     description: Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format.
-  TemplatedLink:
+  apiContract.TemplatedLink:
     displayName: Templated Link
     description: Templated link containing URL template and variables mapping
-  Trait:
+  apiContract.Trait:
     displayName: Trait
     description: Type of document base unit encoding a RAML trait
     extends: doc.AbstractDeclaration
-  TraitFragment:
+  apiContract.TraitFragment:
     displayName: Trait Fragment
     description: Fragment encoding a RAML trait
     extends:
       - doc.Fragment
       - doc.Unit
-  UserDocumentationFragment:
+  apiContract.UserDocumentationFragment:
     displayName: Documentation Item Fragment
     description: Fragment encoding a RAML documentation item
     extends:
       - doc.Fragment
       - doc.Unit
-  WebAPI:
+  apiContract.WebAPI:
     displayName: Web API
     description: Top level element describing a HTTP API
 propertyTerms:
-  accepts:
+  apiContract.accepts:
     displayName: accepts
     description: Media-types accepted in a API request
     range: string
-  allowEmptyValue:
+  apiContract.allowEmptyValue:
     displayName: allow empty value
     description: Parameter can be passed without value
     range: boolean
-  allowReserved:
+  apiContract.allowReserved:
     displayName: allow reserved
     range: boolean
-  binding:
+  apiContract.binding:
     displayName: binding
     description: Part of the Request model where the parameter can be encoded (header, path, query param, etc.)
     range: string
-  callback:
+  apiContract.callback:
     displayName: callback
     description: associated callbacks
-    range: Callback
-  contentType:
+    range: apiContract.Callback
+  apiContract.contentType:
     displayName: content type
     description: Media types returned by a API response
     range: string
-  cookieParameter:
+  apiContract.cookieParameter:
     displayName: cookie parameter
-    range: Parameter
-  encoding:
+    range: apiContract.Parameter
+  apiContract.encoding:
     displayName: encoding
-    range: Encoding
-  endpoint:
+    range: apiContract.Encoding
+  apiContract.endpoint:
     displayName: endpoint
     description: End points defined in the API
-    range: EndPoint
-  examples:
+    range: apiContract.EndPoint
+  apiContract.examples:
     displayName: examples
     description: Examples for a particular domain element
-    range: Example
-  expects:
+    range: apiContract.Example
+  apiContract.expects:
     displayName: expects
     description: Request information required by the operation
-    range: Request
-  explode:
+    range: apiContract.Request
+  apiContract.explode:
     displayName: explode
     range: boolean
-  expression:
+  apiContract.expression:
     displayName: expression
     description: structural location of the information to fulfill the callback
     range: string
-  guiSummary:
+  apiContract.guiSummary:
     displayName: gui summary
     description: Human readable description of the operation
     extends: core.description
     range: string
-  header:
+  apiContract.header:
     displayName: header
     description: Parameter passed as a header to an operation for communication models
-    range: Parameter
-  identifier:
+    range: apiContract.Parameter
+  apiContract.identifier:
     displayName: identifier
     description: Specific api identifier
     range: string
-  isAbstract:
+  apiContract.isAbstract:
     displayName: isAbstract
     description: Defines a model as abstract
     range: boolean
-  link:
+  apiContract.link:
     displayName: links
     description: Structural definition of links on the source data shape AST
-    range: TemplatedLink
-  linkExpression:
+    range: apiContract.TemplatedLink
+  apiContract.linkExpression:
     displayName: link expression
     description: OAS 3 link expression
     range: string
-  mapping:
+  apiContract.mapping:
     displayName: mapping
     description: Variable mapping for the URL template
-    range: IriTemplateMapping
-  method:
+    range: apiContract.IriTemplateMapping
+  apiContract.method:
     displayName: method
     description: HTTP method required to invoke the operation
     range: string
-  operationId:
+  apiContract.operationId:
     displayName: operation ID
     description: Identifier of the target operation
     range: string
-  paramName:
+  apiContract.paramName:
     displayName: param name
     description: Name of a parameter
     extends: core.name
     range: string
-  parameter:
+  apiContract.parameter:
     displayName: parameter
     description: Additional data required or returned by an operation
-    range: Parameter
-  path:
+    range: apiContract.Parameter
+  apiContract.path:
     displayName: path
     description: Path template for an endpoint
     range: string
-  payload:
+  apiContract.payload:
     displayName: payload
     description: Main payload data required or returned by an operation
-    range: Payload
-  propertyName:
+    range: apiContract.Payload
+  apiContract.propertyName:
     displayName: property name
     range: string
-  protocol:
+  apiContract.protocol:
     displayName: protocol
     description: The protocol this URL supports for connection
     range: string
-  protocolVersion:
+  apiContract.protocolVersion:
     displayName: protocolVersion
     description: The version of the protocol used for connection
     range: string
-  queryString:
+  apiContract.queryString:
     displayName: query string
     description: Query string for the communication model
     range: shacl.Shape
-  requestBody:
+  apiContract.requestBody:
     displayName: request body
     range: string
-  required:
+  apiContract.required:
     displayName: required
     range: boolean
-  response:
+  apiContract.response:
     displayName: response
     description: Response associated to this security scheme
-    range: Response
-  returns:
+    range: apiContract.Response
+  apiContract.returns:
     displayName: returns
     description: Response data returned by the operation
-    range: Response
-  schemaMediaType:
+    range: apiContract.Response
+  apiContract.schemaMediaType:
     displayName: schemaMediaType
     description: defines the format of the defined payload schema
     range: string
-  scheme:
+  apiContract.scheme:
     displayName: scheme
     description: URI scheme for the API protocol
     range: string
-  server:
+  apiContract.server:
     displayName: servers
     description: Specific information about the server where the endpoint is accessible
-    range: Server
-  statusCode:
+    range: apiContract.Server
+  apiContract.statusCode:
     displayName: status code
     description: HTTP status code returned by a response
     range: string
-  style:
+  apiContract.style:
     displayName: style
     range: string
-  supportedOperation:
+  apiContract.supportedOperation:
     displayName: supported operation
     description: Operations supported by an endpoint
-    range: Operation
-  tag:
+    range: apiContract.Operation
+  apiContract.tag:
     displayName: tag
     description: Additionally custom tagged information
-    range: Tag
-  template:
+    range: apiContract.Tag
+  apiContract.template:
     displayName: template
     description: URL template for a templated link
     range: string
-  uriParameter:
+  apiContract.uriParameter:
     displayName: uri parameter
-    range: Parameter
-  uriTemplate:
+    range: apiContract.Parameter
+  apiContract.uriTemplate:
     displayName: uriTemplate
     description: URI template that will be used to generate the URI of the parsed nodeds in the graph
     range: string
-  variable:
+  apiContract.variable:
     displayName: variable
     description: Variables in the URL for the server
-    range: Parameter
+    range: apiContract.Parameter

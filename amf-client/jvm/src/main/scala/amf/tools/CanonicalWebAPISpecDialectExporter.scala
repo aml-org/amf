@@ -76,6 +76,7 @@ object CanonicalWebAPISpecDialectExporter  {
   val WELL_KNOWN_VOCABULARIES: Map[String, String] = Map[String,String](
     "http://a.ml/vocabularies/document#" -> "../vocabularies/aml_doc.yaml",
     "http://a.ml/vocabularies/data#" -> "../vocabularies/data_model.yaml",
+    "http://a.ml/vocabularies/apiBinding#" -> "../vocabularies/api_binding.yaml",
     "http://a.ml/vocabularies/apiContract#" -> "../vocabularies/api_contract.yaml",
     "http://a.ml/vocabularies/core#" -> "../vocabularies/core.yaml",
     "http://a.ml/vocabularies/meta#" -> "../vocabularies/aml_meta.yaml",

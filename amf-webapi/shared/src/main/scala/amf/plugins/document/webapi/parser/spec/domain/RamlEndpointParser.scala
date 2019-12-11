@@ -4,8 +4,13 @@ import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DataNode, Shape, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, TemplateUri}
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
+import amf.core.utils.{AmfStrings, IdCounter, TemplateUri}
+import amf.plugins.document.webapi.contexts.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  RamlWebApiContextType
+}
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -14,7 +19,12 @@ import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, ParameterModel}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
-import amf.validations.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, SlashInUriParameterValues, UnusedBaseUriParameter}
+import amf.validations.ParserSideValidations.{
+  DuplicatedEndpointPath,
+  InvalidEndpointPath,
+  SlashInUriParameterValues,
+  UnusedBaseUriParameter
+}
 import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
 
@@ -130,7 +140,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
       }
     )
 
-    val RequirementParser = RamlSecurityRequirementParser.parse(endpoint.withSecurity) _
+    val idCounter         = new IdCounter()
+    val RequirementParser = RamlSecurityRequirementParser.parse(endpoint.withSecurity, idCounter) _
     map.key("securedBy", (EndPointModel.Security in endpoint using RequirementParser).allowingSingleValue)
 
     var parameters               = Parameters()

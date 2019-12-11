@@ -6,6 +6,7 @@ version: 1.0
 uses:
   raml-shapes: ../vocabularies/data_shapes.yaml
   security: ../vocabularies/security.yaml
+  apiBinding: ../vocabularies/api_binding.yaml
   doc: ../vocabularies/aml_doc.yaml
   data: ../vocabularies/data_model.yaml
   apiContract: ../vocabularies/api_contract.yaml
@@ -81,9 +82,6 @@ nodeMappings:
   Request:
     classTerm: apiContract.Request
     mapping:
-      description:
-        propertyTerm: core.description
-        range: string
       required:
         propertyTerm: apiContract.required
         range: boolean
@@ -94,10 +92,6 @@ nodeMappings:
       header:
         propertyTerm: apiContract.header
         range: Parameter
-        allowMultiple: true
-      payload:
-        propertyTerm: apiContract.payload
-        range: Payload
         allowMultiple: true
       queryString:
         propertyTerm: apiContract.queryString
@@ -110,6 +104,62 @@ nodeMappings:
         propertyTerm: apiContract.cookieParameter
         range: Parameter
         allowMultiple: true
+      name:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      payload:
+        propertyTerm: apiContract.payload
+        range: Payload
+        allowMultiple: true
+      correlationId:
+        propertyTerm: core.correlationId
+        range: CorrelationId
+      displayName:
+        propertyTerm: core.displayName
+        range: string
+      title:
+        propertyTerm: core.title
+        range: string
+      summary:
+        propertyTerm: core.summary
+        range: string
+      binding:
+        propertyTerm: apiBinding.binding
+        range: MessageBinding
+        allowMultiple: true
+      tag:
+        propertyTerm: apiContract.tag
+        range: Tag
+        allowMultiple: true
+      examples:
+        propertyTerm: apiContract.examples
+        range: Example
+        allowMultiple: true
+      documentation:
+        propertyTerm: core.documentation
+        range: CreativeWork
+      isAbstract:
+        propertyTerm: apiContract.isAbstract
+        range: boolean
+
+
+  EmptyBinding:
+    classTerm: apiBinding.EmptyBinding
+    mapping:
+      type:
+        propertyTerm: apiBinding.type
+        range: string
+
+
+  MqttMessageBinding:
+    classTerm: apiBinding.MqttMessageBinding
+    mapping:
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
+        range: string
 
 
   Operation:
@@ -157,17 +207,18 @@ nodeMappings:
       expects:
         propertyTerm: apiContract.expects
         range: Request
+        allowMultiple: true
       returns:
         propertyTerm: apiContract.returns
         range: Response
         allowMultiple: true
       security:
         propertyTerm: security.security
-        range: ParametrizedSecurityScheme
+        range: SecurityRequirement
         allowMultiple: true
       tag:
         propertyTerm: apiContract.tag
-        range: string
+        range: Tag
         allowMultiple: true
       callback:
         propertyTerm: apiContract.callback
@@ -177,6 +228,13 @@ nodeMappings:
         propertyTerm: apiContract.server
         range: Server
         allowMultiple: true
+      binding:
+        propertyTerm: apiBinding.binding
+        range: OperationBinding
+        allowMultiple: true
+      isAbstract:
+        propertyTerm: apiContract.isAbstract
+        range: boolean
 
 
   LinkNode:
@@ -283,6 +341,71 @@ nodeMappings:
         allowMultiple: true
 
 
+  Message:
+    classTerm: apiContract.Message
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      payload:
+        propertyTerm: apiContract.payload
+        range: Payload
+        allowMultiple: true
+      correlationId:
+        propertyTerm: core.correlationId
+        range: CorrelationId
+      displayName:
+        propertyTerm: core.displayName
+        range: string
+      title:
+        propertyTerm: core.title
+        range: string
+      summary:
+        propertyTerm: core.summary
+        range: string
+      binding:
+        propertyTerm: apiBinding.binding
+        range: MessageBinding
+        allowMultiple: true
+      tag:
+        propertyTerm: apiContract.tag
+        range: Tag
+        allowMultiple: true
+      examples:
+        propertyTerm: apiContract.examples
+        range: Example
+        allowMultiple: true
+      documentation:
+        propertyTerm: core.documentation
+        range: CreativeWork
+      isAbstract:
+        propertyTerm: apiContract.isAbstract
+        range: boolean
+
+
+  MqttServerBinding:
+    classTerm: apiBinding.MqttServerBinding
+    mapping:
+      clientId:
+        propertyTerm: apiBinding.clientId
+        range: string
+      cleanSession:
+        propertyTerm: apiBinding.cleanSession
+        range: boolean
+      lastWill:
+        propertyTerm: apiBinding.lastWill
+        range: MqttServerLastWill
+      keepAlive:
+        propertyTerm: apiBinding.keepAlive
+        range: integer
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
+        range: string
+
+
   ParametrizedTrait:
     classTerm: apiContract.ParametrizedTrait
     mapping:
@@ -353,6 +476,17 @@ nodeMappings:
         allowMultiple: true
 
 
+  HttpMessageBinding:
+    classTerm: apiBinding.HttpMessageBinding
+    mapping:
+      headers:
+        propertyTerm: apiBinding.headers
+        range: DataShapesUnion
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
+        range: string
+
+
   FileShape:
     classTerm: raml-shapes.FileShape
     extends: AnyShape
@@ -406,9 +540,6 @@ nodeMappings:
       max.Count:
         propertyTerm: shacl.maxCount
         range: integer
-      readOnly:
-        propertyTerm: raml-shapes.readOnly
-        range: boolean
       patternName:
         propertyTerm: raml-shapes.patternName
         range: string
@@ -449,6 +580,9 @@ nodeMappings:
     mapping:
       items:
         propertyTerm: raml-shapes.items
+        range: DataShapesUnion
+      contains:
+        propertyTerm: raml-shapes.contains
         range: DataShapesUnion
       minCount:
         propertyTerm: shacl.minCount
@@ -506,6 +640,9 @@ nodeMappings:
       description:
         propertyTerm: core.description
         range: string
+      identifier:
+        propertyTerm: apiContract.identifier
+        range: string
       server:
         propertyTerm: apiContract.server
         range: Server
@@ -544,12 +681,52 @@ nodeMappings:
         allowMultiple: true
       security:
         propertyTerm: security.security
-        range: ParametrizedSecurityScheme
+        range: SecurityRequirement
         allowMultiple: true
       tag:
         propertyTerm: apiContract.tag
         range: Tag
         allowMultiple: true
+
+
+  Amqp091ChannelExchange:
+    classTerm: apiBinding.Amqp091ChannelExchange
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      type:
+        propertyTerm: apiBinding.type
+        range: string
+      durable:
+        propertyTerm: apiBinding.durable
+        range: boolean
+      autoDelete:
+        propertyTerm: apiBinding.autoDelete
+        range: boolean
+      vhost:
+        propertyTerm: apiBinding.vhost
+        range: string
+
+
+  Amqp091Queue:
+    classTerm: apiBinding.Amqp091ChannelQueue
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      durable:
+        propertyTerm: apiBinding.durable
+        range: boolean
+      exclusive:
+        propertyTerm: apiBinding.exclusive
+        range: boolean
+      autoDelete:
+        propertyTerm: apiBinding.autoDelete
+        range: boolean
+      vhost:
+        propertyTerm: apiBinding.vhost
+        range: string
 
 
   ScalarShape:
@@ -651,6 +828,9 @@ nodeMappings:
       XMLSerialization:
         propertyTerm: raml-shapes.xmlSerialization
         range: XMLSerializer
+      comment:
+        propertyTerm: core.comment
+        range: string
       examples:
         propertyTerm: apiContract.examples
         range: Example
@@ -663,6 +843,37 @@ nodeMappings:
         range: link
       location:
         propertyTerm: doc.location
+        range: string
+
+
+  CorrelationId:
+    classTerm: core.CorrelationId
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      location:
+        propertyTerm: core.location
+        range: string
+
+
+  WebSocketsChannelBinding:
+    classTerm: apiBinding.WebSocketsChannelBinding
+    mapping:
+      method:
+        propertyTerm: apiBinding.method
+        range: string
+      query:
+        propertyTerm: apiBinding.query
+        range: DataShapesUnion
+      query1:
+        propertyTerm: apiBinding.headers
+        range: DataShapesUnion
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
         range: string
 
 
@@ -679,6 +890,63 @@ nodeMappings:
       name:
         propertyTerm: core.name
         range: string
+
+
+  SecurityRequirement:
+    classTerm: security.SecurityRequirement
+    mapping:
+      schemes:
+        propertyTerm: security.schemes
+        range: ParametrizedSecurityScheme
+        allowMultiple: true
+
+
+  OperationBinding:
+    classTerm: apiBinding.OperationBinding
+
+
+  Amqp091OperationBinding:
+    classTerm: apiBinding.Amqp091OperationBinding
+    mapping:
+      expiration:
+        propertyTerm: apiBinding.expiration
+        range: integer
+      userId:
+        propertyTerm: apiBinding.userId
+        range: string
+      cc:
+        propertyTerm: apiBinding.cc
+        range: string
+        allowMultiple: true
+      priority:
+        propertyTerm: apiBinding.priority
+        range: integer
+      deliveryMode:
+        propertyTerm: apiBinding.deliveryMode
+        range: integer
+      mandatory:
+        propertyTerm: apiBinding.mandatory
+        range: boolean
+      bcc:
+        propertyTerm: apiBinding.bcc
+        range: string
+        allowMultiple: true
+      replyTo:
+        propertyTerm: apiBinding.replyTo
+        range: string
+      timestamp:
+        propertyTerm: apiBinding.timestamp
+        range: boolean
+      ack:
+        propertyTerm: apiBinding.ack
+        range: boolean
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
+        range: string
+
+
+  DynamicBinding:
+    classTerm: apiBinding.DynamicBinding
 
 
   Tag:
@@ -714,6 +982,51 @@ nodeMappings:
         range: string
 
 
+  Amqp091MessageBinding:
+    classTerm: apiBinding.Amqp091MessageBinding
+    mapping:
+      contentEncoding:
+        propertyTerm: apiBinding.contentEncoding
+        range: string
+      messageType:
+        propertyTerm: apiBinding.messageType
+        range: string
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
+        range: string
+
+
+  Amqp091ChannelBinding:
+    classTerm: apiBinding.Amqp091ChannelBinding
+    mapping:
+      is:
+        propertyTerm: apiBinding.is
+        range: string
+      exchange:
+        propertyTerm: apiBinding.exchange
+        range: Amqp091ChannelExchange
+      queue:
+        propertyTerm: apiBinding.queue
+        range: Amqp091Queue
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
+        range: string
+
+
+  MqttServerLastWill:
+    classTerm: apiBinding.MqttServerLastWill
+    mapping:
+      topic:
+        propertyTerm: apiBinding.topic
+        range: string
+      qos:
+        propertyTerm: apiBinding.qos
+        range: integer
+      retain:
+        propertyTerm: apiBinding.retain
+        range: boolean
+
+
   ExternalSourceElement:
     classTerm: doc.ExternalSource
     mapping:
@@ -726,6 +1039,10 @@ nodeMappings:
       location:
         propertyTerm: doc.location
         range: string
+
+
+  ChannelBinding:
+    classTerm: apiBinding.ChannelBinding
 
 
   ShapeExtension:
@@ -758,6 +1075,10 @@ nodeMappings:
         propertyTerm: raml-shapes.anyOf
         range: DataShapesUnion
         allowMultiple: true
+
+
+  MessageBinding:
+    classTerm: apiBinding.MessageBinding
 
 
   OAuth2Flow:
@@ -825,6 +1146,10 @@ nodeMappings:
       OpenIDConnectURL:
         propertyTerm: security.openIdConnectUrl
         range: string
+      scope:
+        propertyTerm: security.scope
+        range: Scope
+        allowMultiple: true
 
 
   ParametrizedSecurityScheme:
@@ -844,6 +1169,9 @@ nodeMappings:
   Server:
     classTerm: apiContract.Server
     mapping:
+      name:
+        propertyTerm: core.name
+        range: string
       urlTemplate:
         propertyTerm: core.urlTemplate
         range: string
@@ -854,6 +1182,45 @@ nodeMappings:
         propertyTerm: apiContract.variable
         range: Parameter
         allowMultiple: true
+      protocol:
+        propertyTerm: apiContract.protocol
+        range: string
+      protocolVersion:
+        propertyTerm: apiContract.protocolVersion
+        range: string
+      security:
+        propertyTerm: security.security
+        range: SecurityRequirement
+        allowMultiple: true
+      binding:
+        propertyTerm: apiBinding.binding
+        range: ServerBinding
+        allowMultiple: true
+
+
+  MqttOperationBinding:
+    classTerm: apiBinding.MqttOperationBinding
+    mapping:
+      qos:
+        propertyTerm: apiBinding.qos
+        range: integer
+      retain:
+        propertyTerm: apiBinding.retain
+        range: boolean
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
+        range: string
+
+
+  KafkaMessageBinding:
+    classTerm: apiBinding.KafkaMessageBinding
+    mapping:
+      key:
+        propertyTerm: apiBinding.key
+        range: string
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
+        range: string
 
 
   CreativeWork:
@@ -914,7 +1281,11 @@ nodeMappings:
         allowMultiple: true
       security:
         propertyTerm: security.security
-        range: ParametrizedSecurityScheme
+        range: SecurityRequirement
+        allowMultiple: true
+      binding:
+        propertyTerm: apiBinding.binding
+        range: ChannelBinding
         allowMultiple: true
 
 
@@ -935,11 +1306,31 @@ nodeMappings:
       uinqueItems:
         propertyTerm: raml-shapes.uniqueItems
         range: boolean
-      additionalItems:
-        propertyTerm: raml-shapes.additionalItems
+      closedItems:
+        propertyTerm: raml-shapes.closedItems
         range: boolean
+      additionalItemsSchema:
+        propertyTerm: raml-shapes.additionalItemsSchema
+        range: DataShapesUnion
       collectionFormat:
         propertyTerm: raml-shapes.collectionFormat
+        range: string
+
+
+  HttpOperationBinding:
+    classTerm: apiBinding.HttpOperationBinding
+    mapping:
+      type:
+        propertyTerm: apiBinding.type
+        range: string
+      method:
+        propertyTerm: apiBinding.method
+        range: string
+      query:
+        propertyTerm: apiBinding.query
+        range: DataShapesUnion
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
         range: string
 
 
@@ -957,12 +1348,6 @@ nodeMappings:
   Response:
     classTerm: apiContract.Response
     mapping:
-      name:
-        propertyTerm: core.name
-        range: string
-      description:
-        propertyTerm: core.description
-        range: string
       statusCode:
         propertyTerm: apiContract.statusCode
         range: string
@@ -970,18 +1355,50 @@ nodeMappings:
         propertyTerm: apiContract.header
         range: Parameter
         allowMultiple: true
+      links:
+        propertyTerm: apiContract.link
+        range: TemplatedLink
+        allowMultiple: true
+      name:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
       payload:
         propertyTerm: apiContract.payload
         range: Payload
         allowMultiple: true
-      links:
-        propertyTerm: apiContract.link
-        range: TemplatedLink
+      correlationId:
+        propertyTerm: core.correlationId
+        range: CorrelationId
+      displayName:
+        propertyTerm: core.displayName
+        range: string
+      title:
+        propertyTerm: core.title
+        range: string
+      summary:
+        propertyTerm: core.summary
+        range: string
+      binding:
+        propertyTerm: apiBinding.binding
+        range: MessageBinding
+        allowMultiple: true
+      tag:
+        propertyTerm: apiContract.tag
+        range: Tag
         allowMultiple: true
       examples:
         propertyTerm: apiContract.examples
         range: Example
         allowMultiple: true
+      documentation:
+        propertyTerm: core.documentation
+        range: CreativeWork
+      isAbstract:
+        propertyTerm: apiContract.isAbstract
+        range: boolean
 
 
   Organization:
@@ -1033,6 +1450,10 @@ nodeMappings:
         range: string
 
 
+  ServerBinding:
+    classTerm: apiBinding.ServerBinding
+
+
   Payload:
     classTerm: apiContract.Payload
     mapping:
@@ -1041,6 +1462,9 @@ nodeMappings:
         range: string
       mediaType:
         propertyTerm: core.mediaType
+        range: string
+      schemaMediaType:
+        propertyTerm: apiContract.schemaMediaType
         range: string
       schema:
         propertyTerm: raml-shapes.schema
@@ -1059,13 +1483,27 @@ nodeMappings:
     classTerm: apiContract.DomainExtension
     mapping:
       name:
-        propertyTerm: core.name
+        propertyTerm: core.extensionName
         range: string
       definedBy:
         propertyTerm: doc.definedBy
         range: CustomDomainProperty
       element:
         propertyTerm: doc.element
+        range: string
+
+
+  KafkaOperationBinding:
+    classTerm: apiBinding.KafkaOperationBinding
+    mapping:
+      groupId:
+        propertyTerm: apiBinding.groupId
+        range: string
+      clientId:
+        propertyTerm: apiBinding.clientId
+        range: string
+      bindingVersion:
+        propertyTerm: apiBinding.bindingVersion
         range: string
 
 
@@ -1099,6 +1537,9 @@ nodeMappings:
         propertyTerm: shacl.property
         range: PropertyShape
         allowMultiple: true
+      property1:
+        propertyTerm: shacl.propertyNames
+        range: DataShapesUnion
       dependencies:
         propertyTerm: raml-shapes.dependencies
         range: PropertyDependencies
@@ -1143,6 +1584,24 @@ nodeMappings:
         propertyTerm: raml-shapes.closure
         range: link
         allowMultiple: true
+      if:
+        propertyTerm: shacl.if
+        range: DataShapesUnion
+      then:
+        propertyTerm: shacl.then
+        range: DataShapesUnion
+      else:
+        propertyTerm: shacl.else
+        range: DataShapesUnion
+      readOnly:
+        propertyTerm: raml-shapes.readOnly
+        range: boolean
+      writeOnly:
+        propertyTerm: raml-shapes.writeOnly
+        range: boolean
+      deprecated:
+        propertyTerm: raml-shapes.deprecated
+        range: boolean
 
 
   Trait:
@@ -1198,6 +1657,9 @@ nodeMappings:
     mapping:
       items:
         propertyTerm: raml-shapes.items
+        range: DataShapesUnion
+      contains:
+        propertyTerm: raml-shapes.contains
         range: DataShapesUnion
       minCount:
         propertyTerm: shacl.minCount

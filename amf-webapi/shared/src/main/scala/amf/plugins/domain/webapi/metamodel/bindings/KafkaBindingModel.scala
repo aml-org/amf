@@ -22,6 +22,12 @@ object KafkaOperationBindingModel extends OperationBindingModel with BindingVers
   override def fields: List[Field] = List(GroupId, ClientId, BindingVersion) ++ OperationBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "KafkaOperationBinding" :: OperationBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "KafkaOperationBinding",
+    ""
+  )
 }
 
 object KafkaMessageBindingModel extends OperationBindingModel with BindingVersion {
@@ -33,4 +39,10 @@ object KafkaMessageBindingModel extends OperationBindingModel with BindingVersio
   override def fields: List[Field] = List(Key, BindingVersion) ++ MessageBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "KafkaMessageBinding" :: MessageBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "KafkaMessageBinding",
+    ""
+  )
 }

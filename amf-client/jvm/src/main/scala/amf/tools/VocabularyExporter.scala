@@ -500,7 +500,8 @@ object VocabularyExporter {
         classTerm.id
       }
 
-      var finalSuperclasses = (superClassesInDoc ++ superClassesInInhertiance).distinct.filter(!conflictive.contains(_))
+      var finalSuperclasses =
+        (superClassesInDoc ++ superClassesInInhertiance).distinct.filter(!conflictive.contains(_))
       // We need to solve a problem with the main class for the ShapeModel
       var classTerm = if (klassName == "amf.core.metamodel.domain.ShapeModel$") {
         val shapesShape = (Namespace.Shapes + "Shape").iri()
@@ -589,6 +590,7 @@ object VocabularyExporter {
 
     (Seq(
       ModelVocabularies.AmlDoc,
+      ModelVocabularies.ApiBinding,
       ModelVocabularies.ApiContract,
       ModelVocabularies.Core,
       ModelVocabularies.Data,

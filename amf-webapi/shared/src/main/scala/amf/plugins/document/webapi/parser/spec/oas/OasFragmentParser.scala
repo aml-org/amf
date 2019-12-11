@@ -78,7 +78,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
       val item = DocumentationItemFragment().adopted(root.location + "#/")
 
-      item.withEncodes(OasCreativeWorkParser(map).parse())
+      item.withEncodes(OasCreativeWorkParser(map, item.id).parse())
 
       item
     }

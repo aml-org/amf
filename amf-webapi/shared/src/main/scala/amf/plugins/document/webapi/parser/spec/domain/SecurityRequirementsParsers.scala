@@ -114,14 +114,15 @@ case class OasSecurityRequirementParser(node: YNode, producer: String => Securit
 }
 
 object RamlSecurityRequirementParser {
-  def parse(producer: String => SecurityRequirement)(node: YNode)(implicit ctx: WebApiContext): SecurityRequirement = {
-    RamlSecurityRequirementParser(node, producer).parse()
+  def parse(producer: String => SecurityRequirement, idCounter: IdCounter)(node: YNode)(
+      implicit ctx: WebApiContext): SecurityRequirement = {
+    RamlSecurityRequirementParser(node, producer, idCounter).parse()
   }
 }
-case class RamlSecurityRequirementParser(node: YNode, producer: String => SecurityRequirement)(
+case class RamlSecurityRequirementParser(node: YNode, producer: String => SecurityRequirement, idCounter: IdCounter)(
     implicit val ctx: WebApiContext) {
   def parse(): SecurityRequirement = {
-    val requirement = producer("default-requirement").add(Annotations(node))
+    val requirement = producer(idCounter.genId("default-requirement")).add(Annotations(node))
     RamlParametrizedSecuritySchemeParser(node, requirement.withScheme).parse()
     requirement
   }

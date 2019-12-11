@@ -1,16 +1,24 @@
 Model: file://amf-client/shared/src/test/resources/validations/oas3/oas3-closed-shapes.json
 Profile: OAS 3.0
 Conforms? false
-Number of results: 3
+Number of results: 4
 
 Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/aml#closed-shape
+  Message: Property 'other' not supported in a OAS 3.0 externalDoc node
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/oas3-closed-shapes.json#/web-api/creative-work/https%3A%2F%2Fgithub.com%2FOAI%2FOpenAPI-Specification%2Fblob%2Fmaster%2Fversions%2F3.0.0.md%23external-documentation-object
+  Property: 
+  Position: Some(LexicalInformation([(10,4)-(10,19)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas3/oas3-closed-shapes.json
 
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
   Message: Property 'other' not supported in a OAS 3.0 server node
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/oas3/oas3-closed-shapes.json#/web-api/other.com
   Property: 
-  Position: Some(LexicalInformation([(10,6)-(10,21)]))
+  Position: Some(LexicalInformation([(15,6)-(15,21)]))
   Location: file://amf-client/shared/src/test/resources/validations/oas3/oas3-closed-shapes.json
 
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
@@ -18,7 +26,7 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/oas3/oas3-closed-shapes.json#/declarations
   Property: 
-  Position: Some(LexicalInformation([(15,4)-(17,5)]))
+  Position: Some(LexicalInformation([(20,4)-(22,5)]))
   Location: file://amf-client/shared/src/test/resources/validations/oas3/oas3-closed-shapes.json
 
 - Source: http://a.ml/vocabularies/amf/aml#closed-shape
@@ -26,5 +34,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/validations/oas3/oas3-closed-shapes.json#/declarations/examples/example/someExample
   Property: 
-  Position: Some(LexicalInformation([(21,8)-(21,22)]))
+  Position: Some(LexicalInformation([(26,8)-(26,22)]))
   Location: file://amf-client/shared/src/test/resources/validations/oas3/oas3-closed-shapes.json

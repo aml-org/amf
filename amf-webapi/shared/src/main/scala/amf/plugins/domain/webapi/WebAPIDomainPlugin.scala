@@ -6,6 +6,27 @@ import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.webapi.annotations._
 import amf.plugins.domain.webapi.metamodel._
+import amf.plugins.domain.webapi.metamodel.bindings.{
+  Amqp091ChannelBindingModel,
+  Amqp091ChannelExchangeModel,
+  Amqp091MessageBindingModel,
+  Amqp091QueueModel,
+  ChannelBindingModel,
+  DynamicBindingModel,
+  EmptyBindingModel,
+  HttpMessageBindingModel,
+  HttpOperationBindingModel,
+  KafkaMessageBindingModel,
+  KafkaOperationBindingModel,
+  MessageBindingModel,
+  MqttMessageBindingModel,
+  MqttOperationBindingModel,
+  MqttServerBindingModel,
+  MqttServerLastWillModel,
+  OperationBindingModel,
+  ServerBindingModel,
+  WebSocketsChannelBindingModel
+}
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.metamodel.templates.{
   ParametrizedResourceTypeModel,
@@ -50,7 +71,31 @@ object WebAPIDomainPlugin extends AMFDomainPlugin {
     ResourceTypeModel,
     ParametrizedResourceTypeModel,
     ParametrizedTraitModel,
-    TagModel
+    TagModel,
+    TemplatedLinkModel,
+    IriTemplateMappingModel,
+    EncodingModel,
+    CorrelationIdModel,
+    CallbackModel,
+    Amqp091ChannelBindingModel,
+    Amqp091MessageBindingModel,
+    Amqp091QueueModel,
+    OperationBindingModel,
+    Amqp091ChannelExchangeModel,
+    ChannelBindingModel,
+    DynamicBindingModel,
+    EmptyBindingModel,
+    HttpOperationBindingModel,
+    HttpMessageBindingModel,
+    KafkaOperationBindingModel,
+    KafkaMessageBindingModel,
+    MessageBindingModel,
+    MqttServerBindingModel,
+    MqttServerLastWillModel,
+    MqttOperationBindingModel,
+    MqttMessageBindingModel,
+    ServerBindingModel,
+    WebSocketsChannelBindingModel
   )
 
   override def serializableAnnotations() = Map(

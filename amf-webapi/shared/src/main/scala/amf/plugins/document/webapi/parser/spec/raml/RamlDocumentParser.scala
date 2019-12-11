@@ -213,7 +213,8 @@ abstract class RamlDocumentParser(root: Root)(implicit val ctx: RamlWebApiContex
 
     RamlServersParser(map, api).parse()
 
-    val RequirementParser = RamlSecurityRequirementParser.parse(api.withSecurity) _
+    val idCounter         = new IdCounter()
+    val RequirementParser = RamlSecurityRequirementParser.parse(api.withSecurity, idCounter) _
     map.key("securedBy", (WebApiModel.Security in api using RequirementParser).allowingSingleValue)
 
     map.key(

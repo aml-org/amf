@@ -1,13 +1,14 @@
 package amf.plugins.domain.webapi.metamodel.security
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.metamodel.Type.{Str, Array}
+import amf.core.metamodel.domain.templates.KeyField
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DomainElementModel}
 import amf.core.vocabulary.Namespace.Security
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.webapi.models.security.OAuth2Flow
 
-object OAuth2FlowModel extends DomainElementModel {
+object OAuth2FlowModel extends DomainElementModel with KeyField{
 
   val AuthorizationUri =
     Field(Str, Security + "authorizationUri", ModelDoc(ModelVocabularies.Security, "authorization URI", ""))
@@ -33,4 +34,6 @@ object OAuth2FlowModel extends DomainElementModel {
     "OAuth2 Flow",
     "Flow for an OAuth2 security scheme setting"
   )
+
+  override  val key: Field = Flow
 }

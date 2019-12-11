@@ -161,6 +161,10 @@ propertyTerms:
     displayName: references
     description: references across base units
     range: Unit
+  root:
+    displayName: root
+    description: Indicates if the base unit represents the root of the document model obtained from parsing
+    range: boolean
   strict:
     displayName: strict
     description: Indicates if this example should be validated against an associated schema

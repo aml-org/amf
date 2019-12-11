@@ -2,6 +2,9 @@
 base: http://a.ml/vocabularies/core#
 usage: Core vocabulary with common classes and properties
 classTerms:
+  CorrelationId:
+    displayName: CorrelationId
+    description: Model defining an identifier that can used for message tracing and correlation
   CreativeWork:
     displayName: Creative Work
     description: The most generic kind of creative work, including books, movies, photographs, software programs, etc.
@@ -12,6 +15,14 @@ classTerms:
     displayName: Organization
     description: Organization providing an good or service
 propertyTerms:
+  comment:
+    displayName: comment
+    description: Comment associated to schema
+    range: string
+  correlationId:
+    displayName: correlationId
+    description: an identifier that can be used for message tracing and correlation
+    range: CorrelationId
   deprecated:
     displayName: deprecated
     description: Marks the operation as deprecated
@@ -32,10 +43,18 @@ propertyTerms:
     displayName: email
     description: Contact email for the organization
     range: string
+  extensionName:
+    displayName: name
+    description: Name of an entity
+    range: string
   license:
     displayName: license
     description: License for the API
     range: License
+  location:
+    displayName: location
+    description: structural location of the information where the id is located
+    range: string
   mediaType:
     displayName: mediaType
     description: HTTP Media type associated to the encoded fragment information
@@ -58,7 +77,7 @@ propertyTerms:
     range: string
   title:
     displayName: title
-    description: Title of the creative work
+    description: a title for the request/response
     range: string
   url:
     displayName: url

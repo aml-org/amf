@@ -1604,7 +1604,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
       map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
-      map.key("externalDocs".asRamlAnnotation, AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
+      map.key("externalDocs".asRamlAnnotation,
+              AnyShapeModel.Documentation in shape using (OasCreativeWorkParser.parse(_, shape.id)))
 
       map.key(
         "xml",
