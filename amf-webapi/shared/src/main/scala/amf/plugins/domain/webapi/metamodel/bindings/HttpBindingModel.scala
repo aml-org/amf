@@ -27,6 +27,12 @@ object HttpOperationBindingModel extends OperationBindingModel with BindingVersi
   override def fields: List[Field] = List(Type, Method, Query, BindingVersion) ++ OperationBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "HttpOperationBinding" :: OperationBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "HttpOperationBinding",
+    ""
+  )
 }
 
 object HttpMessageBindingModel extends MessageBindingModel with BindingVersion {
@@ -44,4 +50,10 @@ object HttpMessageBindingModel extends MessageBindingModel with BindingVersion {
   override def fields: List[Field] = List(Headers, BindingVersion) ++ MessageBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "HttpMessageBinding" :: MessageBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "HttpMessageBinding",
+    ""
+  )
 }

@@ -32,6 +32,12 @@ object DynamicBindingModel
   override val key: Field = Type
 
   override def modelInstance: AmfObject = DynamicBinding()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "DynamicBinding",
+    ""
+  )
 }
 
 /** This model exists to express that this binding definition MUST be empty (have no definition) */
@@ -49,4 +55,10 @@ object EmptyBindingModel
   override def fields: List[Field] = List(Type)
 
   override def modelInstance: AmfObject = EmptyBinding()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "EmptyBinding",
+    ""
+  )
 }

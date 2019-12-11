@@ -42,6 +42,14 @@ propertyTerms:
     displayName: default value String
     description: Textual representation of the parsed default value for the shape property
     range: string
+  else:
+    displayName: else
+    description: Composition of data shape when if data shape is invalid
+    range: Shape
+  if:
+    displayName: if
+    description: Condition for applying composition of data shapes
+    range: Shape
   in:
     displayName: in
     description: Enumeration of possible values for a data shape property
@@ -106,10 +114,18 @@ propertyTerms:
     displayName: property
     description: Properties associated to this node
     range: PropertyShape
+  propertyNames:
+    displayName: property
+    description: property names schema
+    range: Shape
   targetClass:
     displayName: target class
     description: Target class whose instances will need to match the constraint described for the node
     range: uri
+  then:
+    displayName: then
+    description: Composition of data shape when if data shape is valid
+    range: Shape
   xone:
     displayName: exclusive or
     description: Logical exclusive or composition of data shapes

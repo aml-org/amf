@@ -62,4 +62,10 @@ object MessageModel extends MessageModel {
          IsAbstract) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override val `type`: List[ValueType] = ApiContract + "Message" :: DomainElementModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiContract,
+    "Message",
+    ""
+  )
 }

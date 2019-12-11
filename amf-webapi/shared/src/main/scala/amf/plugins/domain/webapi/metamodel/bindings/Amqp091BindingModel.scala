@@ -7,7 +7,13 @@ import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DomainElementMode
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.webapi.models.bindings.amqp.{Amqp091OperationBinding, Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091MessageBinding, Amqp091Queue}
+import amf.plugins.domain.webapi.models.bindings.amqp.{
+  Amqp091OperationBinding,
+  Amqp091ChannelBinding,
+  Amqp091ChannelExchange,
+  Amqp091MessageBinding,
+  Amqp091Queue
+}
 
 object Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersion {
 
@@ -27,6 +33,12 @@ object Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersio
   override def fields: List[Field] = List(Is, Exchange, Queue, BindingVersion) ++ ChannelBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelBinding" :: ChannelBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "Amqp091ChannelBinding",
+    ""
+  )
 }
 
 object Amqp091ChannelExchangeModel extends DomainElementModel with NameFieldSchema {
@@ -55,6 +67,12 @@ object Amqp091ChannelExchangeModel extends DomainElementModel with NameFieldSche
   override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelExchange" :: DomainElementModel.`type`
 
   override def modelInstance: AmfObject = Amqp091ChannelExchange()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "Amqp091ChannelExchange",
+    ""
+  )
 }
 
 object Amqp091QueueModel extends DomainElementModel with NameFieldSchema {
@@ -86,6 +104,12 @@ object Amqp091QueueModel extends DomainElementModel with NameFieldSchema {
   override val `type`: List[ValueType] = ApiBinding + "Amqp091ChannelQueue" :: DomainElementModel.`type`
 
   override def modelInstance: AmfObject = Amqp091Queue()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "Amqp091Queue",
+    ""
+  )
 }
 
 object Amqp091OperationBindingModel extends OperationBindingModel with BindingVersion {
@@ -149,6 +173,12 @@ object Amqp091OperationBindingModel extends OperationBindingModel with BindingVe
     List(Expiration, UserId, CC, Priority, DeliveryMode, Mandatory, BCC, ReplyTo, Timestamp, Ack, BindingVersion) ++ OperationBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "Amqp091OperationBinding" :: OperationBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "Amqp091OperationBinding",
+    ""
+  )
 }
 
 object Amqp091MessageBindingModel extends MessageBindingModel with BindingVersion {
@@ -167,4 +197,10 @@ object Amqp091MessageBindingModel extends MessageBindingModel with BindingVersio
   override def fields: List[Field] = List(ContentEncoding, MessageType, BindingVersion) ++ MessageBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "Amqp091MessageBinding" :: MessageBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "Amqp091MessageBinding",
+    ""
+  )
 }

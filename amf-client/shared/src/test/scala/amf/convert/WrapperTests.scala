@@ -490,7 +490,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
    */
 
   test("Vocabularies parsing aml_doc") {
-    testVocabulary(aml_doc, 14, 29)
+    testVocabulary(aml_doc, 14, 30)
   }
 
   test("Vocabularies parsing aml_meta") {
@@ -498,11 +498,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing api_contract") {
-    testVocabulary(api_contract, 28, 40)
+    testVocabulary(api_contract, 29, 45)
   }
 
   test("Vocabularies parsing core") {
-    testVocabulary(core, 3, 15)
+    testVocabulary(core, 4, 19)
   }
 
   test("Vocabularies parsing data_model") {
@@ -510,11 +510,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing data_shapes") {
-    testVocabulary(data_shapes, 14, 28)
+    testVocabulary(data_shapes, 14, 33)
   }
 
   test("Vocabularies parsing security_model") {
-    testVocabulary(security_model, 10, 17)
+    testVocabulary(security_model, 12, 19)
   }
 
   test("Parsing text document with base url") {

@@ -33,4 +33,10 @@ object WebSocketsChannelBindingModel extends ChannelBindingModel with BindingVer
   override def fields: List[Field] = List(Method, Query, Headers, BindingVersion) ++ ChannelBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "WebSocketsChannelBinding" :: ChannelBindingModel.`type`
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.ApiBinding,
+    "WebSocketsChannelBinding",
+    ""
+  )
 }

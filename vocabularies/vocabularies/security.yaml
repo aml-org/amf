@@ -17,6 +17,9 @@ classTerms:
     displayName: OAuth1 Settings
     description: Settings for an OAuth1 security scheme
     extends: Settings
+  OAuth2Flow:
+    displayName: OAuth2 Flow
+    description: Flow for an OAuth2 security scheme setting
   OAuth2Settings:
     displayName: OAuth2 Settings
     description: Settings for an OAuth2 security scheme
@@ -29,6 +32,9 @@ classTerms:
     displayName: Parametrized Security Scheme
   Scope:
     displayName: Scope
+  SecurityRequirement:
+    displayName: Security Requirement
+    description: Flow for an OAuth2 security scheme setting
   SecurityScheme:
     displayName: Security Scheme
     description: Authentication and access control mechanism defined in an API
@@ -60,6 +66,9 @@ propertyTerms:
   flow:
     displayName: flow
     range: string
+  flows:
+    displayName: flows
+    range: OAuth2Flow
   in:
     displayName: in
     range: string
@@ -75,13 +84,16 @@ propertyTerms:
   scheme:
     displayName: scheme
     range: SecurityScheme
+  schemes:
+    displayName: schemes
+    range: ParametrizedSecurityScheme
   scope:
     displayName: scope
     range: Scope
   security:
     displayName: security
-    description: Security information associated to the endpoint
-    range: ParametrizedSecurityScheme
+    description: Textual indication of the kind of security scheme used
+    range: SecurityRequirement
   settings:
     displayName: settings
     description: Security scheme settings
