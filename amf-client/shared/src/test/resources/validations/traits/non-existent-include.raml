@@ -1,0 +1,7 @@
+#%RAML 1.0
+title: api
+traits:
+  nonexistent: !include traits/nonexistent.raml
+/customer:
+  get:
+    is: [nonexistent]

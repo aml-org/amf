@@ -25,12 +25,8 @@ object RamlHeader {
 
   def apply(root: Root): Option[RamlHeader] = {
     root.parsed match {
-      case parsed: SyamlParsedDocument =>
-        parsed.comment.flatMap(c => fromText(c.metaText)) match {
-          case Some(header) => Option(header)
-          case _            => RamlFragmentHeader(root)
-        }
-      case _ => None
+      case parsed: SyamlParsedDocument => parsed.comment.flatMap(fromText).orElse(RamlFragmentHeader(root))
+      case _                           => None
     }
   }
 
@@ -56,12 +52,8 @@ object RamlFragmentHeader {
   object Raml10SecurityScheme            extends RamlHeader("%RAML 1.0 SecurityScheme") with RamlFragment
 
   def fromRoot(root: Root): Option[RamlHeader] = root.parsed match {
-    case parsed: SyamlParsedDocument =>
-      parsed.comment.flatMap(c => fromText(c.metaText)) match {
-        case Some(header) => Option(header)
-        case _            => None
-      }
-    case _ => None
+    case parsed: SyamlParsedDocument => parsed.comment.flatMap(fromText)
+    case _                           => None
   }
 
   def unapply(root: Root): Option[RamlHeader] = fromRoot(root)

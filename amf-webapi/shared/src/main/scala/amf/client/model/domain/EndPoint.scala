@@ -17,15 +17,16 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
   @JSExportTopLevel("model.domain.EndPoint")
   def this() = this(InternalEndPoint())
 
-  override def name: StrField                          = _internal.name
-  def description: StrField                            = _internal.description
-  def summary: StrField                                = _internal.summary
-  def path: StrField                                   = _internal.path
-  def operations: ClientList[Operation]                = _internal.operations.asClient
-  def parameters: ClientList[Parameter]                = _internal.parameters.asClient
-  def payloads: ClientList[Payload]                    = _internal.payloads.asClient
-  def servers: ClientList[Server]                      = _internal.servers.asClient
-  def security: ClientList[ParametrizedSecurityScheme] = _internal.security.asClient
+  override def name: StrField                   = _internal.name
+  def description: StrField                     = _internal.description
+  def summary: StrField                         = _internal.summary
+  def path: StrField                            = _internal.path
+  def operations: ClientList[Operation]         = _internal.operations.asClient
+  def parameters: ClientList[Parameter]         = _internal.parameters.asClient
+  def payloads: ClientList[Payload]             = _internal.payloads.asClient
+  def servers: ClientList[Server]               = _internal.servers.asClient
+  def security: ClientList[SecurityRequirement] = _internal.security.asClient
+  def bindings: ClientList[ChannelBinding]      = _internal.bindings.asClient
 
   def parent: ClientOption[EndPoint] = _internal.parent.asClient
 
@@ -80,8 +81,8 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
     this
   }
 
-  /** Set security property of this EndPoint using a list of ParametrizedSecurityScheme. */
-  def withSecurity(security: ClientList[ParametrizedSecurityScheme]): this.type = {
+  /** Set security property of this EndPoint using a list of SecurityRequirement. */
+  def withSecurity(security: ClientList[SecurityRequirement]): this.type = {
     _internal.withSecurity(security.asInternal)
     this
   }
@@ -109,4 +110,9 @@ case class EndPoint(override private[amf] val _internal: InternalEndPoint)
     * url property of the server is required.
     */
   def withServer(url: String): Server = _internal.withServer(url)
+
+  def withBindings(bindings: ClientList[ChannelBinding]): this.type = {
+    _internal.withBindings(bindings.asInternal)
+    this
+  }
 }

@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/upanddown/oas3/schema-definitions.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#items-field-required
+  Message: 'items' field is required when schema type is array
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/schema-definitions.json#/declarations/types/array/invalid-array-type
+  Property: 
+  Position: Some(LexicalInformation([(15,28)-(17,7)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/schema-definitions.json
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-json-schema-type
+  Message: Value of field 'type' must be a string, multiple types are not supported
+  Level: Violation
+  Target: 
+  Property: 
+  Position: Some(LexicalInformation([(19,8)-(19,34)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/schema-definitions.json

@@ -1,0 +1,71 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic content",
+    "version": "0.1"
+  },
+  "paths": {
+    "/simple-case": {
+      "description": "some description",
+      "summary": "some summary",
+      "get": {
+        "responses": {
+          "200": {
+            "description": "response description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "description": "some description",
+        "summary": "some summary"
+      }
+    },
+    "/only-in-operation": {
+      "get": {
+        "description": "in operation",
+        "summary": "in operation",
+        "responses": {
+          "200": {
+            "description": "response description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/overriding-path-values": {
+      "description": "defined in path",
+      "summary": "defined in path",
+      "get": {
+        "description": "overrided operation",
+        "summary": "overrided operation",
+        "responses": {
+          "200": {
+            "description": "response description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/path-with-no-operation": {
+      "description": "defined in path",
+      "summary": "defined in path"
+    }
+  }
+}

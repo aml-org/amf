@@ -167,8 +167,12 @@ class CustomShaclValidator(model: BaseUnit,
       // depending if propertyInfo is provided, violation is thrown at a given property, or by default on element
       val onViolation = (propertyInfo: Option[PropertyInfo]) =>
         propertyInfo match {
-          case Some((annot, field)) =>
-            reportFailure(validationSpecification, functionConstraint, element.id, annot, Some(field.toString))
+          case Some((_, field)) =>
+            reportFailure(validationSpecification,
+                          functionConstraint,
+                          element.id,
+                          element.annotations,
+                          Some(field.toString))
           case _ => reportFailure(validationSpecification, functionConstraint, element.id, element.annotations)
       }
       validationFunction(element, onViolation)
@@ -328,24 +332,21 @@ class CustomShaclValidator(model: BaseUnit,
   def validateMaxCount(validationSpecification: ValidationSpecification,
                        propertyConstraint: PropertyConstraint,
                        parentElement: DomainElement): Unit = {
-    /*
     extractPropertyValue(propertyConstraint, parentElement) match {
 
-      case Some((_, arr: AmfArray, _))  =>
-        if (! (arr.values.length <= propertyConstraint.maxCount.get.toInt)) {
+      case Some((_, arr: AmfArray, _)) =>
+        if (!(arr.values.length <= propertyConstraint.maxCount.get.toInt)) {
           reportFailure(validationSpecification, propertyConstraint, parentElement.id, arr.annotations)
         }
 
-
-      case Some((_, x: AmfElement, _))  =>
-        if (! (1 <= propertyConstraint.maxCount.get.toInt)) {
+      case Some((_, x: AmfElement, _)) =>
+        if (!(1 <= propertyConstraint.maxCount.get.toInt)) {
           reportFailure(validationSpecification, propertyConstraint, parentElement.id, x.annotations)
         }
 
       case _ =>
-        // ignore
+      // ignore
     }
-   */
   }
 
   def validateMinLength(validationSpecification: ValidationSpecification,

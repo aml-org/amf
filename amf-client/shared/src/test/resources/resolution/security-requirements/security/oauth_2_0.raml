@@ -1,0 +1,30 @@
+#%RAML 1.0 SecurityScheme
+type: OAuth 2.0
+description: This API supports OAuth 2.0 for authenticating all API requests.
+displayName: OAuth2 (simple)
+describedBy:
+  queryParameters:
+    access_token:
+      type: string
+      description: Used to send a valid OAuth 2 access token. Do not use with the "Authorization" header.
+      required: false
+  headers:
+    authorization:
+      type: string
+      example: ya.2453vfDb3cJHisdf.*&H
+      description: Used to send a valid OAuth 2 access token. Do not use with the "access_token" query string parameter.
+      required: false
+  responses:
+    401:
+      description: Bad or expired token. This can happen if the user or the service revoked or expired an access token. To fix, re-authenticate the user.
+      body:
+        application/json:
+    403:
+      description: Bad OAuth request (wrong consumer key, bad nonce, expired timestamp...). Unfortunately, re-authenticating the user won't help here.
+      body:
+        application/json:
+settings:
+  accessTokenUri: http://api.domain.com/oauth2/token
+  authorizationUri: http://api.domain.com/oauth2/auth
+  authorizationGrants: ["authorization_code", "implicit", "https://schema.org/auth"]
+  scopes: ["profile", "email"]

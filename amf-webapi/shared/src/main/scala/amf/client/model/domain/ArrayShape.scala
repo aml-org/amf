@@ -11,10 +11,15 @@ case class ArrayShape(private[amf] override val _internal: InternalArrayShape) e
   @JSExportTopLevel("model.domain.ArrayShape")
   def this() = this(InternalArrayShape())
 
-  def items: Shape = _internal.items
+  def items: Shape    = _internal.items
+  def contains: Shape = _internal.contains
 
   def withItems(items: Shape): this.type = {
     _internal.withItems(items)
+    this
+  }
+  def withContains(contains: Shape): this.type = {
+    _internal.withContains(contains)
     this
   }
 

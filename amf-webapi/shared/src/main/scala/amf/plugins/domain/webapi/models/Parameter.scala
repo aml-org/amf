@@ -8,14 +8,15 @@ import amf.plugins.domain.shapes.models.{Example, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.metamodel.ParameterModel._
 import org.yaml.model.YPart
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 /**
   * Parameter internal model.
   */
 class Parameter(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
-    with Linkable {
+    with Linkable
+    with SchemaContainer {
 
   def parameterName: StrField    = fields.field(ParameterName)
   def description: StrField      = fields.field(Description)
@@ -42,6 +43,8 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withSchema(schema: Shape): this.type                     = set(Schema, schema)
   def withPayloads(payloads: Seq[Payload]): this.type          = setArray(Payloads, payloads)
   def withExamples(examples: Seq[Example]): this.type          = setArray(Examples, examples)
+
+  override def removeExamples(): Unit = fields.removeField(Examples)
 
   def isHeader: Boolean = binding.is("header")
   def isQuery: Boolean  = binding.is("query")
@@ -78,7 +81,8 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   override def linkCopy(): Parameter = Parameter().withBinding(binding.value()).withId(id)
 
   def cloneParameter(parent: String): Parameter = {
-    val cloned = Parameter(Annotations(annotations)).withName(name.value()).adopted(parent)
+    val parameter: Parameter = Parameter(Annotations(annotations))
+    val cloned               = parameter.withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

@@ -1,27 +1,18 @@
 package amf.plugins.document.webapi.parser.spec
 
-import amf.core.annotations.{DeclaredElement, DeclaredHeader}
+import amf.core.annotations.{DeclaredElement, DeclaredHeader, ErrorDeclaration}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{DataNode, DomainElement, ObjectNode, Shape}
-import amf.core.parser.{
-  Annotations,
-  Declarations,
-  EmptyFutureDeclarations,
-  ErrorHandler,
-  Fields,
-  FragmentRef,
-  FutureDeclarations,
-  SearchScope
-}
+import amf.core.model.domain.{Shape, DomainElement, DataNode, ObjectNode}
+import amf.core.parser.{FragmentRef, ErrorHandler, Declarations, FutureDeclarations, SearchScope, Annotations, Fields, EmptyFutureDeclarations}
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
-import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+import amf.plugins.domain.shapes.models.{Example, AnyShape, CreativeWork}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Callback, EndPoint, Parameter, Payload, Request, Response, TemplatedLink}
-import org.yaml.model.{YNode, YPart}
+import amf.plugins.domain.webapi.models.{Request, EndPoint, Parameter, TemplatedLink, Callback, Payload, Response}
+import org.yaml.model.{YPart, YNode}
 
 /**
   * Declarations object.
@@ -41,7 +32,7 @@ class WebApiDeclarations(val alias: Option[String],
                          var requests: Map[String, Request] = Map(),
                          var headers: Map[String, Parameter] = Map(),
                          var links: Map[String, TemplatedLink] = Map(),
-                         var callbacks: Map[String, Callback] = Map(),
+                         var callbacks: Map[String, List[Callback]] = Map(),
                          val errorHandler: Option[ErrorHandler],
                          val futureDeclarations: FutureDeclarations,
                          var others: Map[String, BaseUnit] = Map())
@@ -131,7 +122,11 @@ class WebApiDeclarations(val alias: Option[String],
       case l: TemplatedLink =>
         links = links + (l.name.value() -> l)
       case c: Callback =>
-        callbacks = callbacks + (c.name.value() -> c)
+        val name = c.name.value()
+        callbacks.get(name) match {
+          case Some(prev) => callbacks = callbacks + (name -> (c :: prev))
+          case None       => callbacks = callbacks + (name -> List(c))
+        }
       case _ => super.+=(element)
     }
     this
@@ -180,7 +175,7 @@ class WebApiDeclarations(val alias: Option[String],
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values ++ headers.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -225,10 +220,7 @@ class WebApiDeclarations(val alias: Option[String],
       case p: Parameter => p
     }
 
-  def findCallback(key: String, scope: SearchScope.Scope): Option[Callback] =
-    findForType(key, _.asInstanceOf[WebApiDeclarations].callbacks, scope) collect {
-      case c: Callback => c
-    }
+  def findCallbackInDeclarations(key: String): Option[List[Callback]] = callbacks.get(key)
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
     findResourceType(key, scope) match {
@@ -347,12 +339,6 @@ object WebApiDeclarations {
     val result = new WebApiDeclarations(None, errorHandler = errorHandler, futureDeclarations = futureDeclarations)
     declarations.foreach(result += _)
     result
-  }
-
-  trait ErrorDeclaration extends DomainElement {
-    val namespace: String
-
-    override def withId(value: String): ErrorDeclaration.this.type = super.withId(namespace + value)
   }
 
   case class ErrorTrait(idPart: String, ast: YPart) extends Trait(Fields(), Annotations(ast)) with ErrorDeclaration {

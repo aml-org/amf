@@ -7,20 +7,32 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.ServerModel
 import amf.plugins.domain.webapi.metamodel.ServerModel._
 import org.yaml.model.YMap
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
+import amf.plugins.domain.webapi.models.bindings.ServerBinding
+import amf.plugins.domain.webapi.models.security.SecurityRequirement
 
 /**
   * Server internal model
   */
 case class Server(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  def url: StrField             = fields.field(Url)
-  def description: StrField     = fields.field(Description)
-  def variables: Seq[Parameter] = fields.field(Variables)
+  def name: StrField                     = fields.field(Name)
+  def url: StrField                      = fields.field(Url)
+  def description: StrField              = fields.field(Description)
+  def variables: Seq[Parameter]          = fields.field(Variables)
+  def protocol: StrField                 = fields.field(Protocol)
+  def protocolVersion: StrField          = fields.field(ProtocolVersion)
+  def security: Seq[SecurityRequirement] = fields.field(Security)
+  def bindings: Seq[ServerBinding]       = fields.field(Bindings)
 
-  def withUrl(url: String): this.type                     = set(Url, url)
-  def withDescription(description: String): this.type     = set(Description, description)
-  def withVariables(variables: Seq[Parameter]): this.type = setArray(Variables, variables)
+  def withName(name: String): this.type                           = set(Name, name)
+  def withUrl(url: String): this.type                             = set(Url, url)
+  def withDescription(description: String): this.type             = set(Description, description)
+  def withVariables(variables: Seq[Parameter]): this.type         = setArray(Variables, variables)
+  def withProtocol(protocol: String): this.type                   = set(Protocol, protocol)
+  def withProtocolVersion(protocolVersion: String): this.type     = set(ProtocolVersion, protocolVersion)
+  def withSecurity(security: Seq[SecurityRequirement]): this.type = setArray(Security, security)
+  def withBindings(bindings: Seq[ServerBinding]): this.type       = setArray(Bindings, bindings)
 
   def withVariable(name: String): Parameter = {
     val result = Parameter().withName(name)

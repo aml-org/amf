@@ -28,6 +28,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/web-api/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/web-api"
@@ -42,18 +43,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://a.ml/vocabularies/core#name"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(2,0)-(4,0)]"
-                  }
-                ]
-              },
-              {
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/web-api/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/web-api"
@@ -62,6 +52,19 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(6,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonschema-apiwithfragmentref/api.raml#/web-api/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(4,0)]"
                   }
                 ]
               }
@@ -73,6 +76,11 @@
     "http://a.ml/vocabularies/document#version": [
       {
         "@value": "2.0.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
       }
     ],
     "http://a.ml/vocabularies/document#references": [
@@ -105,6 +113,11 @@
         "http://a.ml/vocabularies/document#version": [
           {
             "@value": "2.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ]
       }
@@ -166,6 +179,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                       {
+                        "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/street/scalar/street/source-map/type-property-lexical-info/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/street/scalar/street"
@@ -180,18 +194,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://www.w3.org/ns/shacl#datatype"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(16,10)-(16,26)]"
-                          }
-                        ]
-                      },
-                      {
+                        "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/street/scalar/street/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/street/scalar/street"
@@ -200,6 +203,19 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(15,8)-(17,9)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/street/scalar/street/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(16,10)-(16,26)]"
                           }
                         ]
                       }
@@ -226,6 +242,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/street/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/street"
@@ -282,6 +299,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                       {
+                        "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/number/scalar/number/source-map/type-property-lexical-info/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/number/scalar/number"
@@ -296,18 +314,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://www.w3.org/ns/shacl#datatype"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(19,10)-(19,26)]"
-                          }
-                        ]
-                      },
-                      {
+                        "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/number/scalar/number/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/number/scalar/number"
@@ -316,6 +323,19 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(18,8)-(20,9)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/number/scalar/number/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(19,10)-(19,26)]"
                           }
                         ]
                       }
@@ -342,6 +362,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/number/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/number"
@@ -427,6 +448,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                               {
+                                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/state/scalar/state/source-map/type-property-lexical-info/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/state/scalar/state"
@@ -441,18 +463,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://www.w3.org/ns/shacl#datatype"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(30,10)-(30,26)]"
-                                  }
-                                ]
-                              },
-                              {
+                                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/state/scalar/state/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/state/scalar/state"
@@ -461,6 +472,19 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(29,8)-(31,9)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/state/scalar/state/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(30,10)-(30,26)]"
                                   }
                                 ]
                               }
@@ -487,6 +511,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
+                            "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/state/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/state"
@@ -543,6 +568,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                               {
+                                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/country/scalar/country/source-map/type-property-lexical-info/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/country/scalar/country"
@@ -557,18 +583,7 @@
                             ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://www.w3.org/ns/shacl#datatype"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(33,10)-(33,26)]"
-                                  }
-                                ]
-                              },
-                              {
+                                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/country/scalar/country/source-map/lexical/element_1",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/country/scalar/country"
@@ -577,6 +592,19 @@
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
                                     "@value": "[(32,8)-(34,9)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/country/scalar/country/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://www.w3.org/ns/shacl#datatype"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(33,10)-(33,26)]"
                                   }
                                 ]
                               }
@@ -603,6 +631,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
+                            "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/country/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/property/country"
@@ -632,6 +661,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
                       {
+                        "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/source-map/type-property-lexical-info/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location"
@@ -646,18 +676,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://www.w3.org/ns/shacl#property"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(28,6)-(35,7)]"
-                          }
-                        ]
-                      },
-                      {
+                        "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location"
@@ -666,6 +685,19 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(26,16)-(36,5)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/location/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#property"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(28,6)-(35,7)]"
                           }
                         ]
                       }
@@ -692,6 +724,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://../jsonschema/schema-lib.json/#/definitions/address/property/location"
@@ -726,6 +759,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#declared-element": [
               {
+                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/source-map/declared-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://../jsonschema/schema-lib.json/#/definitions/address"
@@ -740,18 +774,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://www.w3.org/ns/shacl#property"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(14,6)-(24,7)]"
-                  }
-                ]
-              },
-              {
+                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://../jsonschema/schema-lib.json/#/definitions/address"
@@ -762,10 +785,24 @@
                     "@value": "[(12,4)-(25,5)]"
                   }
                 ]
+              },
+              {
+                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#property"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(14,6)-(24,7)]"
+                  }
+                ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
               {
+                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/source-map/type-property-lexical-info/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://../jsonschema/schema-lib.json/#/definitions/address"
@@ -780,6 +817,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
               {
+                "@id": "file://../jsonschema/schema-lib.json/#/definitions/address/source-map/external-fragment-ref/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://../jsonschema/schema-lib.json/#/definitions/address"

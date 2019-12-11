@@ -1,22 +1,22 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.SourceAST
+import amf.core.annotations.{SourceAST, ErrorDeclaration}
 import amf.core.emitter.SpecOrdering
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
-import amf.core.parser.{ErrorHandler, ParserContext, YNodeLikeOps}
-import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
+import amf.core.model.domain.{DomainElement, ElementTree, DataNode}
+import amf.core.parser.{ErrorHandler, YNodeLikeOps, ParserContext}
+import amf.core.resolution.stages.{ResolutionStage, ReferenceResolutionStage}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
+  RamlWebApiContext,
   Raml10SpecEmitterContext,
-  Raml10WebApiContext,
-  RamlWebApiContext
+  Raml08WebApiContext,
+  Raml10WebApiContext
 }
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorDeclaration, ErrorEndPoint, ErrorTrait}
-import amf.plugins.document.webapi.parser.spec.domain.{Raml10EndPointEmitter, Raml10OperationEmitter}
-import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
+import amf.plugins.document.webapi.parser.spec.domain.{Raml10OperationEmitter, Raml10EndPointEmitter}
+import amf.plugins.domain.webapi.models.templates.{ResourceType, ParametrizedTrait, Trait, ParametrizedResourceType}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
@@ -58,7 +58,7 @@ class ExtendsResolutionStage(
                  tree: ElementTree): EndPoint = {
     Option(r.target) match {
       case Some(rt: ResourceType) =>
-        val node = rt.dataNode.cloneNode()
+        val node = rt.dataNode.copyNode()
         node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
           apiContext.violation(ResolutionValidation, r.id, None, message, r.position(), r.location()))
 
@@ -281,7 +281,7 @@ class ExtendsResolutionStage(
             case err: ErrorTrait =>
               Some(TraitBranch(key, Operation().withId(err.id + "_op"), Nil))
             case t: Trait =>
-              val node: DataNode = t.dataNode.cloneNode()
+              val node: DataNode = t.dataNode.copyNode()
               node.replaceVariables(local.variables, subTree)((message: String) => {
                 apiContext.violation(ResolutionValidation,
                                      t.id,

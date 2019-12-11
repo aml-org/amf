@@ -15,8 +15,7 @@ trait SchemaShapeModel extends AnyShapeModel with ExternalSourceElementModel {
   val specificFields = List(MediaType)
   override val fields: List[Field] = specificFields ++
     AnyShapeModel.fields ++
-    DomainElementModel.fields ++
-    LinkableElementModel.fields
+    DomainElementModel.fields
 
   override val `type`: List[ValueType] = List(Shapes + "SchemaShape") ++ AnyShapeModel.`type`
 

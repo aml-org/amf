@@ -9,7 +9,7 @@ import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel.{Settings => SettingsField, _}
 import amf.plugins.domain.webapi.models.{Parameter, Response}
 import org.yaml.model.YPart
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 class SecurityScheme(override val fields: Fields, override val annotations: Annotations)
     extends DomainElement
@@ -127,7 +127,8 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
   }
 
   def cloneScheme(parent: String): SecurityScheme = {
-    val cloned = SecurityScheme(annotations).withName(name.value()).adopted(parent)
+    val scheme: SecurityScheme = SecurityScheme(annotations)
+    val cloned                 = scheme.withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>

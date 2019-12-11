@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.NullSecurity
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.Strings
+import amf.core.utils.{Lazy, AmfStrings}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common._
@@ -122,10 +122,12 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
 
   private def oauth2() = {
     val settings = scheme.withOAuth2Settings()
+    val flow     = new Lazy[OAuth2Flow](() => OAuth2Flow(map).adopted(settings.id))
 
-    map.key("authorizationUri", OAuth2SettingsModel.AuthorizationUri in settings)
-    map.key("accessTokenUri", (OAuth2SettingsModel.AccessTokenUri in settings).allowingAnnotations)
-    map.key("flow".asRamlAnnotation, OAuth2SettingsModel.Flow in settings)
+    map.key("authorizationUri", entry => (OAuth2FlowModel.AuthorizationUri in flow.getOrCreate).apply(entry))
+    map.key("accessTokenUri",
+            entry => (OAuth2FlowModel.AccessTokenUri in flow.getOrCreate).allowingAnnotations.apply(entry))
+    map.key("flow".asRamlAnnotation, entry => (OAuth2FlowModel.Flow in flow.getOrCreate).apply(entry))
     map.key("authorizationGrants", (OAuth2SettingsModel.AuthorizationGrants in settings).allowingSingleValue)
 
     val ScopeParser = (n: YNode) => {
@@ -133,10 +135,11 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
       scheme match {
         case ss: ParametrizedSecurityScheme =>
           ss.scheme.settings match {
-            case se: OAuth2Settings if se.scopes.map(_.name.value()).contains(element.toString) =>
-              Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
+            case se: OAuth2Settings
+                if se.flows.headOption.exists(_.scopes.map(_.name.value()).contains(element.toString)) =>
+              Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
             case _: OAuth2Settings =>
-              val scope = Scope().adopted(scheme.id)
+              val scope = Scope().adopted(flow.getOrCreate.id)
               ctx.violation(
                 UnknownScopeErrorSpecification,
                 scope.id,
@@ -145,14 +148,18 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
               )
               scope
             case _ =>
-              Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
+              Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
           }
         case _ =>
-          Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(scheme.id)
+          Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
       }
     }
 
-    map.key("scopes", (OAuth2SettingsModel.Scopes in settings using ScopeParser).allowingSingleValue)
+    map.key("scopes").foreach { entry =>
+      (OAuth2FlowModel.Scopes in flow.getOrCreate using ScopeParser).allowingSingleValue.apply(entry)
+    }
+
+    flow.option.foreach(f => settings.setArray(OAuth2SettingsModel.Flows, Seq(f)))
 
     dynamicSettings(settings, "authorizationUri", "accessTokenUri", "authorizationGrants", "scopes")
   }

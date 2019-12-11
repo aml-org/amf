@@ -13,7 +13,7 @@ import amf.core.parser.{ErrorHandler, FieldEntry, Value}
 import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.{EmptyPayload, Inferred}
 import amf.plugins.document.webapi.contexts.RamlWebApiContext
-import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, NodeShapeModel, ScalarShapeModel, UnionShapeModel}
+import amf.plugins.domain.shapes.metamodel.{NodeShapeModel, ScalarShapeModel, UnionShapeModel}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{AnyShape, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
@@ -126,8 +126,9 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
             * Overwrite default-generated Any shapes by shapes coming from overlays/extensions
             * e.g. default value of a payload
             */
-          val target = mainFieldEntry.value.value.asInstanceOf[AnyShape]
-          val cloned = otherValue.value.asInstanceOf[AnyShape].cloneShape(None).withName(target.name.value())
+          val target: AnyShape = mainFieldEntry.value.value.asInstanceOf[AnyShape]
+          val shape: AnyShape = otherValue.value.asInstanceOf[AnyShape]
+          val cloned = shape.cloneShape(None).withName(target.name.value())
 
           if (target.examples.nonEmpty) cloned.withExamples(target.examples)
           main.set(otherField, adoptInner(main.id, cloned))

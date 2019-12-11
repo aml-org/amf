@@ -5,7 +5,7 @@ import amf.core.metamodel.Field
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{Strings, TemplateUri}
+import amf.core.utils.{AmfStrings, TemplateUri}
 import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
@@ -110,14 +110,15 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   }
 }
 
-abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(implicit val ctx: OasWebApiContext) extends SpecParserOps {
+abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(implicit val ctx: OasWebApiContext)
+    extends SpecParserOps {
   def parse(): Unit
 
   protected def parseServers(key: String): Unit =
     map.key(key).foreach { entry =>
-      entry.value.as[Seq[YMap]].map(OasServerParser(elem.id, _).parse()).foreach { server =>
-        elem.add(field, server)
-      }
+      val servers = entry.value.as[Seq[YMap]].map(OasServerParser(elem.id, _).parse())
+
+      elem.set(field, AmfArray(servers, Annotations(entry)), Annotations(entry))
     }
 }
 
@@ -178,7 +179,7 @@ case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: 
 private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: OasWebApiContext)
     extends SpecParserOps {
   def parse(): Server = {
-    val server = Server()
+    val server = Server(map)
 
     map.key("url", ServerModel.Url in server)
 
@@ -186,17 +187,25 @@ private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: 
 
     map.key("description", ServerModel.Description in server)
 
-    map.key("parameters".asOasExtension).orElse(map.key("variables")).foreach { entry =>
-      val variables = entry.value
-        .as[YMap]
-        .entries
-        .map(Raml10ParameterParser(_, (p: Parameter) => p.adopted(server.id))(toRaml(ctx)).parse())
-
+    map.key("variables").foreach { entry =>
+      val variables = entry.value.as[YMap].entries.map { varEntry =>
+        val serverVariable =
+          Raml10ParameterParser(varEntry, (p: Parameter) => p.adopted(server.id))(toRaml(ctx)).parse()
+        serverVariable.withBinding("path")
+        // required field is validated in parsing as there is no way to differentiate a server variable from a parameter
+        requiredDefaultField(serverVariable, varEntry.value.as[YMap])
+        serverVariable
+      }
       server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
     }
 
     AnnotationParser(server, map).parse()
-
+    ctx.closedShape(server.id, map, "server")
     server
   }
+
+  private def requiredDefaultField(serverVar: Parameter, map: YMap): Unit =
+    if (map.key("default").isEmpty)
+      ctx.violation(ServerVariableMissingDefault, serverVar.id, "Server variable must define a 'default' field", map)
+
 }

@@ -2,9 +2,9 @@ package amf.tools
 
 import java.io.{File, FileWriter}
 
-import amf.core.metamodel.Type.{Iri, Scalar, Str, Array => MetaArray}
-import amf.core.metamodel.domain.extensions.DomainExtensionModel
+import amf.core.metamodel.Type.{Iri, Scalar, Array => MetaArray}
 import amf.core.metamodel.domain._
+import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -73,9 +73,10 @@ object CanonicalWebAPISpecDialectExporter  {
   )
 
   val DIALECT_FILE = "canonical_webapi_spec.yaml"
-  val WELL_KNOWN_VOCABULARIES = Map[String,String](
+  val WELL_KNOWN_VOCABULARIES: Map[String, String] = Map[String,String](
     "http://a.ml/vocabularies/document#" -> "../vocabularies/aml_doc.yaml",
     "http://a.ml/vocabularies/data#" -> "../vocabularies/data_model.yaml",
+    "http://a.ml/vocabularies/apiBinding#" -> "../vocabularies/api_binding.yaml",
     "http://a.ml/vocabularies/apiContract#" -> "../vocabularies/api_contract.yaml",
     "http://a.ml/vocabularies/core#" -> "../vocabularies/core.yaml",
     "http://a.ml/vocabularies/meta#" -> "../vocabularies/aml_meta.yaml",
@@ -144,7 +145,7 @@ object CanonicalWebAPISpecDialectExporter  {
 
 
     // index fields
-    val fields = if (types.contains((DomainElementModel.`type`.head.iri())) && displayName != "CustomDomainProperty") {
+    val fields = if (types.contains(DomainElementModel.`type`.head.iri()) && displayName != "CustomDomainProperty") {
       if (modelObject == ObjectNodeModel) {
         modelObject.fields ++ Seq(DataPropertiesField, DomainElementModel.CustomDomainProperties) // add the missing properties field for object node models
       } else {
@@ -297,7 +298,7 @@ object CanonicalWebAPISpecDialectExporter  {
 
   val shapeUnionDeclaration = "DataShapesUnion"
 
-  val shapeTypeDiscriminator =
+  val shapeTypeDiscriminator: String =
     """    typeDiscriminatorName: shapeType
       |    typeDiscriminator:
       |      Union: UnionShape
@@ -312,7 +313,7 @@ object CanonicalWebAPISpecDialectExporter  {
       |      Recursive: RecursiveShape
     """.stripMargin
 
-  val shapeUnionRange =
+  val shapeUnionRange: String =
     """      - UnionShape
       |      - TupleShape
       |      - NodeShape
@@ -329,7 +330,7 @@ object CanonicalWebAPISpecDialectExporter  {
 
   val settingsUnionDeclaration = "SecuritySettingsUnion"
 
-  val settingsTypeDiscriminator =
+  val settingsTypeDiscriminator: String =
     """    typeDiscriminatorName: settingsType
       |    typeDiscriminator:
       |      OAuth2: OAuth2Settings
@@ -339,7 +340,7 @@ object CanonicalWebAPISpecDialectExporter  {
       |      OpenID: OpenIDSettings
     """.stripMargin
 
-  val settingsUnionRange =
+  val settingsUnionRange: String =
     """      - OAuth2Settings
       |      - OAuth1Settings
       |      - APIKeySettings
@@ -347,26 +348,26 @@ object CanonicalWebAPISpecDialectExporter  {
       |      - OpenIDSettings
     """.stripMargin
 
-  val abstractDeclarationsRange =
+  val abstractDeclarationsRange: String =
     """          - ResourceType
       |          - Trait
     """.stripMargin
 
-  val declarations =
+  val declarations: String =
     s"""    declares:
        |      dataShapes: $shapeUnionDeclaration
        |      resourceTypes: ResourceType
        |      traits: Trait
   """.stripMargin
 
-  val customDomainProperty =
+  val customDomainProperty: String =
     """
       |      customDomainProperties:
       |        propertyTerm: doc.customDomainProperties
       |        range: CustomDomainProperty
       |""".stripMargin
 
-  val endPointExtends =
+  val endPointExtends: String =
     """      extends:
       |        propertyTerm: doc.extends
       |        typeDiscriminatorName: type
@@ -379,7 +380,7 @@ object CanonicalWebAPISpecDialectExporter  {
       |        allowMultiple: true
     """.stripMargin
 
-  val operationExtends =
+  val operationExtends: String =
     """      extends:
       |        propertyTerm: doc.extends
       |        typeDiscriminatorName: type
@@ -391,7 +392,7 @@ object CanonicalWebAPISpecDialectExporter  {
     """.stripMargin
 
   val dataNodeUnionDeclaration = "DataNodeUnion"
-  val dataNodeUnion =
+  val dataNodeUnion: String =
     s"""
        |  $dataNodeUnionDeclaration:
        |    typeDiscriminatorName: elementType
@@ -409,7 +410,7 @@ object CanonicalWebAPISpecDialectExporter  {
        |""".stripMargin
 
   val domainElementUnionDeclaration = "DomainElementUnion"
-  val domainElementUnion =
+  val domainElementUnion: String =
     s"""
       |  $domainElementUnionDeclaration:
       |    typeDiscriminatorName: elementType
@@ -465,7 +466,7 @@ object CanonicalWebAPISpecDialectExporter  {
       |""".stripMargin
 
   val parsedUnitUnionDeclaration = "ParsedUnitUnion"
-  val parsedUnitUnion =
+  val parsedUnitUnion: String =
     s"""  $parsedUnitUnionDeclaration:
       |    typeDiscriminatorName: unitType
       |    typeDiscriminator:
@@ -624,13 +625,14 @@ object CanonicalWebAPISpecDialectExporter  {
             }
             stringBuilder.append("\n\n")
           }
+        case _ =>
       }
     }
 
     stringBuilder.append("\n\n")
     stringBuilder.append("documents:\n")
     stringBuilder.append("  root:\n")
-    stringBuilder.append(s"    encodes: ${parsedUnitUnionDeclaration}\n")
+    stringBuilder.append(s"    encodes: $parsedUnitUnionDeclaration\n")
     // TODO: union of declarations
     // stringBuilder.append(declarations)
 

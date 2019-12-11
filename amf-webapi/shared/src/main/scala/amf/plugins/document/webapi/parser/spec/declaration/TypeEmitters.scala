@@ -14,7 +14,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
 import amf.core.remote.Vendor
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts._
@@ -1452,6 +1452,9 @@ abstract class OasShapeEmitter(shape: Shape,
     if (Option(shape.not).isDefined)
       result += OasNotConstraintEmitter(shape, ordering, references, pointer, schemaPath)
 
+    if (spec.vendor == Vendor.OAS30)
+      fs.entry(ShapeModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
+
     result
   }
 
@@ -1752,6 +1755,13 @@ case class OasTupleShapeEmitter(shape: TupleShape,
 
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
 
+    fs.entry(TupleShapeModel.ClosedItems) match {
+      case Some(f) => result += ValueEmitter("additionalItems", f.negated)
+      case None =>
+        fs.entry(TupleShapeModel.AdditionalItemsSchema)
+          .map(f => result += OasEntryShapeEmitter("additionalItems", f, ordering, references))
+    }
+
     fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
       case Some(f) if f.value.annotations.contains(classOf[CollectionFormatFromItems]) =>
         result += OasTupleItemsShapeEmitter(shape,
@@ -1986,9 +1996,9 @@ case class OasShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, refere
       _.list(b =>
         inherits.foreach { s =>
           if (s.annotations.contains(classOf[DeclaredElement]))
-            spec.ref(b, OasDefinitions.appendDefinitionsPrefix(s.name.value()))
+            spec.ref(b, OasDefinitions.appendDefinitionsPrefix(s.name.value(), Some(spec.vendor)))
           else if (s.linkTarget.isDefined)
-            spec.ref(b, OasDefinitions.appendDefinitionsPrefix(s.name.value()))
+            spec.ref(b, OasDefinitions.appendDefinitionsPrefix(s.name.value(), Some(spec.vendor)))
           else OasTypePartEmitter(s, ordering, references = references).emit(b)
       })
     )

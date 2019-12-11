@@ -4,7 +4,7 @@ import amf.core.annotations.LexicalInformation
 import amf.core.model.DataType
 import amf.core.model.domain.{AmfArray, Shape}
 import amf.core.parser.{Annotations, Range, SearchScope}
-import amf.core.utils.{SimpleCounter, Strings}
+import amf.core.utils.{SimpleCounter, AmfStrings}
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
 import amf.plugins.domain.shapes.metamodel.UnionShapeModel

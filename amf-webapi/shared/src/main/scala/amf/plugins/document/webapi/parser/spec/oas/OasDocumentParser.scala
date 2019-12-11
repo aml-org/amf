@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
-import amf.core.annotations.{DeclaredElement, SingleValueArray, SourceVendor, SynthesizedField}
+import amf.core.annotations._
 import amf.core.metamodel.Field
 import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
@@ -10,7 +10,7 @@ import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, Lazy, Strings, TemplateUri}
+import amf.core.utils.{AmfStrings, IdCounter, Lazy, TemplateUri}
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
@@ -23,15 +23,14 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
-import amf.plugins.domain.webapi.metamodel.security.{OAuth2SettingsModel, ParametrizedSecuritySchemeModel, ScopeModel}
+import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.webapi.models.security._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
-import org.yaml.model.{YNode, _}
+import org.yaml.model.{YMapEntry, YNode, _}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -278,6 +277,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         entry.value.tagType match {
           case YType.Seq =>
             val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
+            validateDuplicated(tags, entry)
             api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
           case _ => // ignore
         }
@@ -290,14 +290,17 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       entry => {
         entry.value.tagType match {
           case YType.Seq =>
+            val idCounter = new IdCounter()
             val securedBy =
               entry.value
                 .as[Seq[YNode]]
-                .map(s => ParametrizedSecuritySchemeParser(s, api.withSecurity).parse())
+                .map(s => OasSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
                 .collect { case Some(s) => s }
-
             api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-          case _ => // ignore
+          case _ =>
+            ctx.violation(InvalidSecurityRequirementsSeq,
+                          entry.value,
+                          "'security' must be an array of security requirement object")
         }
       }
     )
@@ -307,7 +310,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "externalDocs",
       entry => {
-        documentations += OasCreativeWorkParser(entry.value).parse()
+        documentations += OasCreativeWorkParser(entry.value, api.id).parse()
       }
     )
 
@@ -346,52 +349,16 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     api
   }
 
-  case class ParametrizedSecuritySchemeParser(node: YNode, producer: String => ParametrizedSecurityScheme) {
-    def parse(): Option[ParametrizedSecurityScheme] = node.to[YMap] match {
-      case Right(map) if map.entries.nonEmpty =>
-        val schemeEntry = map.entries.head
-        val name        = schemeEntry.key.as[YScalar].text
-        val scheme      = producer(name).add(Annotations(map))
-
-        var declaration = parseTarget(name, scheme, schemeEntry)
-        declaration = declaration.linkTarget match {
-          case Some(d) => d.asInstanceOf[SecurityScheme]
-          case None    => declaration
-        }
-
-        if (declaration.`type`.is("OAuth 2.0")) {
-          val settings = OAuth2Settings().adopted(scheme.id)
-          val scopes = schemeEntry.value
-            .as[Seq[YNode]]
-            .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
-
-          scheme.set(ParametrizedSecuritySchemeModel.Settings,
-                     settings.setArray(OAuth2SettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
-        }
-
-        Some(scheme)
-      case Right(map) if map.entries.isEmpty =>
-        None
-      case _ =>
-        val scheme = producer(node.toString)
-        ctx.violation(InvalidSecuredByType, scheme.id, s"Invalid type $node", node)
-        None
-    }
-
-    private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
-      ctx.declarations.findSecurityScheme(name, SearchScope.All) match {
-        case Some(declaration) =>
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, declaration)
-          declaration
-        case None =>
-          val securityScheme = SecurityScheme()
-          scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme)
-          ctx.violation(DeclarationNotFound,
-                        securityScheme.id,
-                        s"Security scheme '$name' not found in declarations.",
-                        part)
-          securityScheme
+  private def validateDuplicated(tags: Seq[Tag], entry: YMapEntry): Unit = {
+    val groupedByName = tags
+      .flatMap { tag =>
+        tag.name.option().map(_ -> tag)
       }
+      .groupBy { case (name, _) => name }
+    val namesWithTag = groupedByName.collect { case (_, ys) if ys.lengthCompare(1) > 0 => ys.tail }.flatten
+    namesWithTag.foreach {
+      case (name, tag) =>
+        ctx.violation(DuplicatedTags, tag.id, s"Tag with name '$name' was found duplicated", tag.annotations)
     }
   }
 
@@ -408,17 +375,30 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       if (!TemplateUri.isValid(path))
         ctx.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
-      if (collector.exists(e => e.path.is(path)))
+      if (collector.exists(other => other.path.option() exists (identicalPaths(_, path))))
         ctx.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
       else parseEndpoint(endpoint)
+    }
+
+    /**
+      * Verify if two paths are identical. In the case of OAS 3.0, paths with the same hierarchy but different templated
+      * names are considered identical.
+      */
+    private def identicalPaths(first: String, second: String): Boolean = {
+      def stripPathParams(s: String): String = {
+        val trimmed = if (s.endsWith("/")) s.init else s
+        trimmed.replaceAll("\\{.*?\\}", "")
+      }
+      if (ctx.syntax == Oas3Syntax) stripPathParams(first) == stripPathParams(second)
+      else first == second
     }
 
     private def parseEndpoint(endpoint: EndPoint) =
       ctx.link(entry.value) match {
         case Left(value) =>
-          ctx.declarations.asts.get(value) match {
-            case Some(n) if n.tagType == YType.Map =>
-              parseEndpointMap(endpoint, n.as[YMap])
+          ctx.obtainRemoteYNode(value).orElse(ctx.declarations.asts.get(value)) match {
+            case Some(map) if map.tagType == YType.Map =>
+              parseEndpointMap(endpoint, map.as[YMap])
             case Some(n) =>
               ctx.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
             case None =>
@@ -438,8 +418,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       map.key("displayName".asOasExtension, EndPointModel.Name in endpoint)
       map.key("description".asOasExtension, EndPointModel.Description in endpoint)
-      map.key("summary", EndPointModel.Summary in endpoint)
-
+      if (ctx.syntax == Oas3Syntax) {
+        map.key("summary", EndPointModel.Summary in endpoint)
+        map.key("description", EndPointModel.Description in endpoint)
+      }
       var parameters = Parameters()
       val entries    = ListBuffer[YMapEntry]()
 
@@ -496,9 +478,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         "security".asOasExtension,
         entry => {
           // TODO check for empty array for resolution ?
+          val idCounter = new IdCounter()
           val securedBy = entry.value
             .as[Seq[YNode]]
-            .map(s => ParametrizedSecuritySchemeParser(s, endpoint.withSecurity).parse())
+            .map(s => OasSecurityRequirementParser(s, endpoint.withSecurity, idCounter).parse())
             .collect { case Some(s) => s }
 
           if (securedBy.nonEmpty)
@@ -511,7 +494,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
         entries => {
           val operations = mutable.ListBuffer[Operation]()
           entries.foreach { entry =>
-            operations += OperationParser(entry, endpoint.withOperation).parse()
+            operations += operationParser(entry, endpoint.withOperation).parse()
           }
           endpoint.set(EndPointModel.Operations, AmfArray(operations))
         }
@@ -543,17 +526,15 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
           val payloads = mutable.ListBuffer[Payload]()
 
-          map.key(
-            "content",
-            entry =>
-              entry.value
-                .as[YMap]
-                .entries
-                .foreach { entry =>
-                  val mediaType = ScalarNode(entry.key).text().value.toString
-                  payloads += OasContentParser(entry.value, mediaType, request.withPayload).parse()
-              }
-          )
+          map.key("content") match {
+            case Some(entry) =>
+              payloads ++= OasContentsParser(entry, request.withPayload).parse()
+            case None =>
+              ctx.violation(RequestBodyContentRequired,
+                            request.id,
+                            s"Request body must have a 'content' field defined",
+                            map)
+          }
           request.set(ResponseModel.Payloads, AmfArray(payloads))
 
           AnnotationParser(request, map).parse()
@@ -590,7 +571,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   case class Oas2RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
     def parse(): Option[Request] = {
       val request = new Lazy[Request](() => {
-        val req = Request()
+        val req = Request().add(VirtualObject())
         adopt(req)
         req
       })
@@ -722,46 +703,116 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
-  case class CallbackParser(map: YMap, adopt: Callback => Unit) {
-    def parse(): Callback = {
+  /**
+    * A single named callback may be parsed into multiple Callback when multiple expressions are defined.
+    * This is due to inconsistency in the model, pending refactor in APIMF-1771
+    */
+  case class CallbackParser(map: YMap, adopt: Callback => Unit, name: String, rootEntry: YMapEntry) {
+    def parse(): List[Callback] = {
       ctx.link(map) match {
         case Left(fullRef) =>
           val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "callbacks")
           ctx.declarations
-            .findCallback(label, SearchScope.Named)
-            .map { callback =>
-              val linkCallback: Callback = callback.link(label, Annotations(map))
-              adopt(linkCallback)
-              linkCallback
+            .findCallbackInDeclarations(label)
+            .map { callbacks =>
+              callbacks.map { callback =>
+                val linkCallback: Callback = callback.link(label, Annotations(map))
+                adopt(linkCallback)
+                linkCallback
+              }
             }
             .getOrElse {
               ctx.obtainRemoteYNode(fullRef) match {
                 case Some(callbackNode) =>
-                  CallbackParser(callbackNode.as[YMap], adopt).parse()
+                  CallbackParser(callbackNode.as[YMap], adopt, name, rootEntry).parse()
                 case None =>
                   ctx.violation(CoreValidations.UnresolvedReference,
                                 "",
                                 s"Cannot find callback reference $fullRef",
                                 map)
-                  new ErrorCallback(label, map)
+                  val callback: Callback = new ErrorCallback(label, map).link(name, Annotations(rootEntry))
+
+                  adopt(callback)
+                  List(callback)
               }
             }
         case Right(_) =>
-          val callbackOperations = map.entries
-          val callback           = Callback().add(Annotations(map))
-          adopt(callback)
-          if (callbackOperations.size != 1) {
-            // TODO throw violation here
-          } else {
-            EndpointParser(callbackOperations.head, callback.withEndpoint, mutable.ListBuffer.empty).parse()
-          }
-          callback
+          val callbackEntries = map.entries
+          callbackEntries.map { entry =>
+            val expression = entry.key.as[YScalar].text
+            val callback   = Callback().add(Annotations(entry))
+            callback.fields.setWithoutId(CallbackModel.Expression, AmfScalar(expression, Annotations(entry.key)))
+            adopt(callback)
+            val collector = mutable.ListBuffer[EndPoint]()
+            EndpointParser(entry, callback.withEndpoint, collector).parse()
+            collector.foreach(_.withPath(s"/$expression")) // rename path to avoid endpoint validations
+            callback
+          }.toList
+
       }
 
     }
   }
 
-  case class OperationParser(entry: YMapEntry, producer: String => Operation) {
+  case class Oas3OperationParser(entry: YMapEntry, producer: String => Operation)
+      extends OperationParser(entry, producer) {
+    override protected def parseVersionFacets(operation: Operation, map: YMap): Unit = {
+      map.key(
+        "requestBody",
+        entry => {
+          Oas3RequestParser(entry.value.as[YMap], req => operation.withRequest(req)).parse()
+        }
+      )
+
+      // parameters defined in endpoint are stored in the request
+      Oas3ParametersParser(map, Option(operation.request).map(() => _).getOrElse(operation.withRequest))
+        .parseParameters()
+
+      map.key(
+        "callbacks",
+        entry => {
+          val callbacks = entry.value
+            .as[YMap]
+            .entries
+            .flatMap { callbackEntry =>
+              val name = callbackEntry.key.as[YScalar].text
+              CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(operation.id), name, callbackEntry)
+                .parse()
+            }
+          operation.withCallbacks(callbacks)
+        }
+      )
+
+      if (operation.fields.exists(OperationModel.Request)) operation.request.annotations += VirtualObject()
+      ctx.factory.serversParser(map, operation).parse()
+    }
+  }
+
+  case class Oas2OperationParser(entry: YMapEntry, producer: String => Operation)
+      extends OperationParser(entry, producer) {
+    override protected def parseVersionFacets(operation: Operation, map: YMap): Unit = {
+      RequestParser(map, req => operation.withRequest(req))
+        .parse()
+        .map(r => operation.set(OperationModel.Request, AmfArray(Seq(r)), Annotations() += SynthesizedField()))
+
+      map.key("schemes", OperationModel.Schemes in operation)
+      map.key("consumes", OperationModel.Accepts in operation)
+      map.key("produces", OperationModel.ContentType in operation)
+    }
+  }
+
+  // move to oas factory?? cannot access inners parsers from outside
+  private def operationParser: (YMapEntry, String => Operation) => OperationParser = {
+    ctx.syntax match {
+      case Oas3Syntax => Oas3OperationParser.apply
+      case _          => Oas2OperationParser.apply // default?
+    }
+  }
+
+  abstract class OperationParser(entry: YMapEntry, producer: String => Operation) {
+
+    protected def parseVersionFacets(operation: Operation, map: YMap)
+
     def parse(): Operation = {
 
       val operation = producer(ScalarNode(entry.key).string().value.toString).add(Annotations(entry))
@@ -783,46 +834,19 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       // oas 3.0.0 / oas 2.0
       map.key("summary", OperationModel.Summary in operation)
       // oas 3.0.0 / oas 2.0
-      map.key("externalDocs", OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
-      // oas 2.0
-      if (ctx.syntax == Oas2Syntax) {
-        map.key("schemes", OperationModel.Schemes in operation)
-        map.key("consumes", OperationModel.Accepts in operation)
-        map.key("produces", OperationModel.ContentType in operation)
-      }
-      // oas 3.0.0 / oas 2.0
-      map.key("tags", OperationModel.Tags in operation)
-      // oas 3.0.0
-      if (ctx.syntax == Oas3Syntax) {
-        map.key(
-          "requestBody",
-          entry => {
-            Oas3RequestParser(entry.value.as[YMap], req => operation.withRequest(req)).parse()
-          }
-        )
-
-        // parameters defined in endpoint are stored in the request
-        Oas3ParametersParser(map, Option(operation.request).map(() => _).getOrElse(operation.withRequest))
-          .parseParameters()
-
-        map.key(
-          "callbacks",
-          entry => {
-            val callbacks = entry.value
-              .as[YMap]
-              .entries
-              .map { callbackEntry =>
-                val name = callbackEntry.key.as[YScalar].text
-                CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(operation.id)).parse()
-              }
-            operation.withCallbacks(callbacks)
-          }
-        )
-        ctx.factory.serversParser(map, operation).parse()
-      }
+      map.key("externalDocs",
+              OperationModel.Documentation in operation using (OasCreativeWorkParser.parse(_, operation.id)))
 
       // oas 3.0.0 / oas 2.0
+      map.key(
+        "tags",
+        entry => {
+          val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
+          operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+        }
+      )
 
+      // oas 3.0.0 / oas 2.0
       map.key(
         "is".asOasExtension,
         entry => {
@@ -839,10 +863,11 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key(
         "security",
         entry => {
+          val idCounter = new IdCounter()
           // TODO check for empty array for resolution ?
           val securedBy = entry.value
             .as[Seq[YNode]]
-            .map(s => ParametrizedSecuritySchemeParser(s, operation.withSecurity).parse())
+            .map(s => OasSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
             .collect { case Some(s) => s }
 
           operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
@@ -853,7 +878,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       if (ctx.syntax == Oas2Syntax) {
         RequestParser(map, req => operation.withRequest(req))
           .parse()
-          .map(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
+          .map(req => operation setArray (OperationModel.Request, List(req), Annotations() += SynthesizedField()))
       }
 
       // oas 3.0.0 / oas 2.0
@@ -885,6 +910,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
       ctx.closedShape(operation.id, map, "operation")
 
+      parseVersionFacets(operation, map)
       operation
     }
   }

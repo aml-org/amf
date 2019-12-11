@@ -8,7 +8,7 @@ import amf.core.model.DataType
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.rdf.RdfModel
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.core.validation.core._
 import amf.core.vocabulary.Namespace
 import amf.plugins.domain.shapes.metamodel.{ArrayShapeModel, NodeShapeModel, ScalarShapeModel, UnionShapeModel}

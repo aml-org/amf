@@ -15,6 +15,17 @@ object Oas3Syntax extends SpecSyntax {
       "tags",
       "externalDocs"
     ),
+    "components" -> Set(
+      "schemas",
+      "responses",
+      "parameters",
+      "examples",
+      "requestBodies",
+      "headers",
+      "securitySchemes",
+      "links",
+      "callbacks"
+    ),
     "info" -> Set(
       "title",
       "description",
@@ -52,6 +63,7 @@ object Oas3Syntax extends SpecSyntax {
       "parameters",
       "servers",
       "summary",
+      "description",
       "\\$ref"
     ),
     "operation" -> Set(
@@ -76,8 +88,20 @@ object Oas3Syntax extends SpecSyntax {
       "parameters",
       "requestBody"
     ),
+    "server" -> Set(
+      "url",
+      "description",
+      "variables"
+    ),
     "externalDoc" -> Set(
-      "url"
+      "url",
+      "description"
+    ),
+    "example" -> Set(
+      "summary",
+      "description",
+      "value",
+      "externalValue"
     ),
     "parameter" -> Set(
       "name",
@@ -97,27 +121,15 @@ object Oas3Syntax extends SpecSyntax {
     "header" -> Set(
       "description",
       "required",
-      "schema",
-      "format",
+      "deprecated",
       "allowEmptyValue",
-      "items",
-      "collectionFormat",
-      "default",
-      "maximum",
-      "exclusiveMaximum",
-      "minimum",
-      "exclusiveMinimum",
-      "maxLength",
-      "minLength",
-      "pattern",
-      "maxItems",
-      "minItems",
-      "multipleOf",
-      "uniqueItems",
-      "enum",
-      "multipleOf",
-      "items",
-      "example"
+      "style",
+      "explode",
+      "allowReserved",
+      "schema",
+      "example",
+      "examples",
+      "content"
     ),
     "request" -> Set(
       "description",
@@ -201,6 +213,7 @@ object Oas3Syntax extends SpecSyntax {
       "enum",
       "type",
       "items",
+      "additionalItems",
       "collectionFormat",
       "allOf",
       "properties",
@@ -214,6 +227,7 @@ object Oas3Syntax extends SpecSyntax {
       "allOf",
       "anyOf",
       "oneOf",
+      "not",
       "dependencies",
       "multipleOf",
       "default",
@@ -298,7 +312,8 @@ object Oas2Syntax extends SpecSyntax {
       "security"
     ),
     "externalDoc" -> Set(
-      "url"
+      "url",
+      "description"
     ),
     "parameter" -> Set(
       "name",
@@ -385,6 +400,7 @@ object Oas2Syntax extends SpecSyntax {
       "enum",
       "type",
       "items",
+      "additionalItems",
       "collectionFormat",
       "allOf",
       "properties",
@@ -395,6 +411,7 @@ object Oas2Syntax extends SpecSyntax {
       "externalDocs",
       "allOf",
       "anyOf",
+      "not",
       "dependencies",
       "multipleOf",
       "default",

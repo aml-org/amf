@@ -1,0 +1,469 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#7",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "Basic Callbacks"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "0.1"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#8",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/test"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#9",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "get"
+                  }
+                ],
+                "apiContract:returns": [
+                  {
+                    "@id": "#10",
+                    "@type": [
+                      "apiContract:Response",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:statusCode": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "200"
+                      }
+                    ],
+                    "core:description": [
+                      {
+                        "@value": "description"
+                      }
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#11",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#12",
+                            "@type": [
+                              "raml-shapes:ScalarShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:datatype": [
+                              {
+                                "@id": "http://www.w3.org/2001/XMLSchema#string"
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "apiContract:examples": [
+                              {
+                                "@id": "#13",
+                                "@type": [
+                                  "apiContract:Example",
+                                  "doc:DomainElement"
+                                ],
+                                "doc:strict": [
+                                  {
+                                    "@value": true
+                                  }
+                                ],
+                                "core:mediaType": [
+                                  {
+                                    "@value": "application/json"
+                                  }
+                                ],
+                                "doc:structuredValue": [
+                                  {
+                                    "@id": "#14",
+                                    "@type": [
+                                      "data:Scalar",
+                                      "data:Node",
+                                      "doc:DomainElement"
+                                    ],
+                                    "data:value": [
+                                      {
+                                        "@value": "Example defined in payload"
+                                      }
+                                    ],
+                                    "shacl:datatype": [
+                                      {
+                                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                                      }
+                                    ],
+                                    "core:name": [
+                                      {
+                                        "@value": "scalar_1"
+                                      }
+                                    ],
+                                    "smaps": {
+                                      "lexical": {
+                                        "#14": "[(38,27)-(38,55)]"
+                                      }
+                                    }
+                                  }
+                                ],
+                                "doc:raw": [
+                                  {
+                                    "@value": "Example defined in payload"
+                                  }
+                                ],
+                                "smaps": {
+                                  "synthesized-field": {
+                                    "doc:strict": "true"
+                                  },
+                                  "lexical": {
+                                    "doc:raw": "[(38,27)-(38,55)]",
+                                    "#13": "[(38,27)-(38,55)]",
+                                    "doc:structuredValue": "[(38,27)-(38,55)]"
+                                  },
+                                  "tracked-element": {
+                                    "#13": "amf://id#11"
+                                  }
+                                }
+                              }
+                            ],
+                            "smaps": {
+                              "type-property-lexical-info": {
+                                "#12": "[(36,18)-(36,24)]"
+                              },
+                              "lexical": {
+                                "shacl:datatype": "[(36,18)-(36,34)]",
+                                "#12": "[(35,16)-(37,17)]"
+                              }
+                            }
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "raml-shapes:schema": "[(35,16)-(37,17)]",
+                            "#11": "[(34,14)-(39,15)]"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "core:description": "[(32,12)-(32,40)]",
+                        "#10": "[(31,10)-(41,11)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:returns": "[(30,8)-(42,9)]",
+                    "#9": "[(29,6)-(43,7)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#8": "[(28,4)-(44,5)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#7": "OAS 3.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(27,11)-(45,3)]",
+            "core:name": "[(4,4)-(4,30)]",
+            "#7": "[(1,0)-(47,1)]",
+            "core:version": "[(5,4)-(5,20)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.0.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "apiContract:Parameter",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "simple"
+          }
+        ],
+        "apiContract:paramName": [
+          {
+            "@value": "token"
+          }
+        ],
+        "core:description": [
+          {
+            "@value": "token to be passed as a header"
+          }
+        ],
+        "apiContract:required": [
+          {
+            "@value": false
+          }
+        ],
+        "apiContract:style": [
+          {
+            "@value": "simple"
+          }
+        ],
+        "apiContract:explode": [
+          {
+            "@value": false
+          }
+        ],
+        "apiContract:binding": [
+          {
+            "@value": "header"
+          }
+        ],
+        "raml-shapes:schema": [
+          {
+            "@id": "#2",
+            "@type": [
+              "raml-shapes:ScalarShape",
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:name": [
+              {
+                "@value": "simple"
+              }
+            ],
+            "apiContract:examples": [
+              {
+                "@id": "#3",
+                "@type": [
+                  "apiContract:Example",
+                  "doc:DomainElement"
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
+                  {
+                    "@id": "#4",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "Example defined in schema"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#4": "[(15,21)-(15,48)]"
+                      }
+                    }
+                  }
+                ],
+                "doc:raw": [
+                  {
+                    "@value": "Example defined in schema"
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "doc:strict": "true"
+                  },
+                  "lexical": {
+                    "doc:raw": "[(15,21)-(15,48)]",
+                    "#3": "[(15,21)-(15,48)]",
+                    "doc:structuredValue": "[(15,21)-(15,48)]"
+                  }
+                }
+              },
+              {
+                "@id": "#5",
+                "@type": [
+                  "apiContract:Example",
+                  "doc:DomainElement"
+                ],
+                "core:name": [
+                  {
+                    "@value": "a"
+                  }
+                ],
+                "apiContract:guiSummary": [
+                  {
+                    "@value": "simple example"
+                  }
+                ],
+                "core:description": [
+                  {
+                    "@value": "description of the example"
+                  }
+                ],
+                "doc:strict": [
+                  {
+                    "@value": true
+                  }
+                ],
+                "doc:structuredValue": [
+                  {
+                    "@id": "#6",
+                    "@type": [
+                      "data:Scalar",
+                      "data:Node",
+                      "doc:DomainElement"
+                    ],
+                    "data:value": [
+                      {
+                        "@value": "Example defined in parameter examples"
+                      }
+                    ],
+                    "shacl:datatype": [
+                      {
+                        "@id": "http://www.w3.org/2001/XMLSchema#string"
+                      }
+                    ],
+                    "core:name": [
+                      {
+                        "@value": "scalar_1"
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "#6": "[(21,21)-(21,60)]"
+                      }
+                    }
+                  }
+                ],
+                "doc:raw": [
+                  {
+                    "@value": "Example defined in parameter examples"
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "doc:raw": "[(21,21)-(21,60)]",
+                    "core:description": "[(20,12)-(20,55)]",
+                    "#5": "[(18,10)-(22,11)]",
+                    "apiContract:guiSummary": "[(19,12)-(19,39)]",
+                    "doc:structuredValue": "[(21,21)-(21,60)]"
+                  },
+                  "tracked-element": {
+                    "#5": "amf://id#1"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "type-property-lexical-info": {
+                "#2": "[(14,10)-(14,16)]"
+              },
+              "lexical": {
+                "shacl:datatype": "[(14,10)-(14,26)]",
+                "#2": "[(13,8)-(16,9)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "declared-element": {
+            "#1": ""
+          },
+          "lexical": {
+            "raml-shapes:schema": "[(13,8)-(16,9)]",
+            "core:description": "[(12,8)-(12,55)]",
+            "#1": "[(9,6)-(24,7)]",
+            "apiContract:paramName": "[(10,8)-(10,23)]",
+            "apiContract:binding": "[(11,8)-(11,22)]"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "data": "http://a.ml/vocabularies/data#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

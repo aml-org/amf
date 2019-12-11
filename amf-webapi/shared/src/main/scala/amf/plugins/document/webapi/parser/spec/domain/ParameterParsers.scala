@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, Strings}
+import amf.core.utils.{IdCounter, AmfStrings}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.{
   FormBodyParameter,
@@ -30,6 +30,7 @@ import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingIn
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
+import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
@@ -117,17 +118,16 @@ case class Raml10ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
                   .asInstanceOf[Parameter]
                   .set(ParameterModel.Name, name.text())
               case Right(ref) if ctx.declarations.findType(ref.text, scope).isDefined =>
-                val schema = ctx.declarations
+                val shape: Shape = ctx.declarations
                   .findType(ref.text,
                             scope,
                             Some((s: String) => ctx.violation(InvalidFragmentType, parameter.id, s, entry.value)))
                   .get
                   .link[Shape](ref.text, Annotations(entry))
-                  .withName("schema")
-                  .adopted(parameter.id)
-                parameter.withSchema(schema)
+                parameter.withSchema(shape.withName("schema").adopted(parameter.id))
               case Right(ref) if wellKnownType(ref.text, isRef = true) =>
-                val schema = parseWellKnownTypeRef(ref.text).withName("schema").adopted(parameter.id)
+                val shape: Shape = parseWellKnownTypeRef(ref.text)
+                val schema       = shape.withName("schema").adopted(parameter.id)
                 parameter.withSchema(schema)
 
               case Right(ref) if isTypeExpression(ref.text) =>
@@ -512,9 +512,10 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     parseExamples(result)
     parseContent(result)
     parseQueryFields(result)
-    parseStyleField(result)
-    parseExplodeField(result)
+    Oas3ParameterParser.parseStyleField(map, result)
+    Oas3ParameterParser.parseExplodeField(map, result)
     map.key("deprecated", ParameterModel.Deprecated in result)
+    Oas3ParameterParser.validateSchemaOrContent(map, result)
     OasParameter(result)
   }
 
@@ -570,26 +571,21 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
       }
     )
 
-  private def parseExamples(param: Parameter): Unit =
-    param.set(PayloadModel.Examples, AmfArray(OasExamplesParser(map, param.id).parse()))
+  private def parseExamples(param: Parameter): Unit = {
+    val examples = OasExamplesParser(map, param.id).parse()
+    if (examples.nonEmpty) param.set(PayloadModel.Examples, AmfArray(examples))
+  }
 
   private def parseContent(param: Parameter): Unit = {
     val payloadProducer: Option[String] => Payload = mediaType => {
       val res = Payload()
       mediaType.map(res.withMediaType)
-      res
+      res.adopted(param.id)
     }
     map.key(
       "content",
       entry => {
-        val payloads = mutable.ListBuffer[Payload]()
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach { entry =>
-            val mediaType = ScalarNode(entry.key).text().value.toString
-            payloads += OasContentParser(entry.value, mediaType, payloadProducer)(toOas(ctx)).parse()
-          }
+        val payloads = OasContentsParser(entry, payloadProducer)(toOas(ctx)).parse()
         if (payloads.nonEmpty) param.set(ResponseModel.Payloads, AmfArray(payloads), Annotations(entry))
       }
     )
@@ -597,12 +593,60 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
 
 }
 
+object Oas3ParameterParser {
+
+  def parseExplodeField(map: YMap, result: Parameter): Unit = {
+    map.key("explode") match {
+      case Some(entry) =>
+        result.fields.setWithoutId(ParameterModel.Explode,
+                                   AmfScalar(entry.value.as[Boolean]),
+                                   Annotations(entry) += ExplicitField())
+      case None =>
+        val defValue: Option[Boolean] = result.style.option().map {
+          case "form" => true
+          case _      => false
+        }
+        defValue.foreach(result.set(ParameterModel.Explode, _))
+    }
+  }
+
+  def parseStyleField(map: YMap, result: Parameter): Unit = {
+    map.key("style") match {
+      case Some(entry) =>
+        result.fields.setWithoutId(ParameterModel.Style,
+                                   AmfScalar(entry.value.as[String]),
+                                   Annotations(entry) += ExplicitField())
+      case None =>
+        val defValue: Option[String] = result.binding.option() match {
+          case Some("query") | Some("cookie") => Some("form")
+          case Some("path") | Some("header")  => Some("simple")
+          case _                              => None
+        }
+        defValue.foreach(result.set(ParameterModel.Style, _))
+    }
+  }
+
+  def validateSchemaOrContent(map: YMap, param: Parameter)(implicit ctx: WebApiContext): Unit = {
+    (map.key("schema"), map.key("content")) match {
+      case (Some(_), Some(_)) | (None, None) =>
+        ctx.violation(
+          ParserSideValidations.ParameterMissingSchemaOrContent,
+          param.id,
+          s"Parameter must define a 'schema' or 'content' field, but not both",
+          param.annotations
+        )
+      case _ =>
+    }
+  }
+}
+
 case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ctx: OasWebApiContext) {
 
   def formDataPayload(formData: Seq[Payload]): Option[Payload] =
     if (formData.isEmpty) None
     else {
-      val schema = NodeShape().withName("formData").adopted(parentId)
+      val shape: NodeShape = NodeShape()
+      val schema           = shape.withName("formData").adopted(parentId)
 
       formData.foreach { p =>
         val payload = if (p.isLink) p.effectiveLinkTarget().asInstanceOf[Payload] else p

@@ -1,7 +1,6 @@
 package amf.plugins.domain.webapi.resolution
 
 import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
-import amf.core.emitter.BaseEmitters.yscalarWithRange
 import amf.core.emitter.SpecOrdering
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain._
@@ -48,13 +47,13 @@ object ExtendsHelper {
         _.obj {
           _.entry(
             YNode(
-              yscalarWithRange(name,
+              YScalar.withLocation(name,
                                YType.Str,
                                trAnnotations
                                  .find(classOf[SourceAST])
                                  .map(_.ast)
                                  .collectFirst({ case e: YMapEntry => Annotations(e.key) })
-                                 .getOrElse(trAnnotations)),
+                                 .getOrElse(trAnnotations).sourceLocation),
               YType.Str
             ),
             DataNodeEmitter(node,
@@ -136,13 +135,13 @@ object ExtendsHelper {
         _.obj {
           _.entry(
             YNode(
-              yscalarWithRange(name,
+              YScalar.withLocation(name,
                                YType.Str,
                                rtAnnotations
                                  .find(classOf[SourceAST])
                                  .map(_.ast)
                                  .collectFirst({ case e: YMapEntry => Annotations(e.key) })
-                                 .getOrElse(rtAnnotations)),
+                                 .getOrElse(rtAnnotations).sourceLocation),
               YType.Str
             ),
             DataNodeEmitter(node,

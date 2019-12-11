@@ -4,7 +4,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.facades.Validation
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
-import amf.{AmfProfile, OasProfile, RamlProfile}
+import amf.{AmfProfile, Oas30Profile, OasProfile, RamlProfile}
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
@@ -21,7 +21,7 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "operation/amf.jsonld"                                  -> ExpectedReport(conforms = false, 1, AmfProfile),
     "operation/valid.jsonld"                                -> ExpectedReport(conforms = true, 0, AmfProfile),
     "parameters/amf_properties.jsonld"                      -> ExpectedReport(conforms = false, 3, AmfProfile),
-    "parameters/amf_empty.jsonld"                           -> ExpectedReport(conforms = false, 3, AmfProfile),
+    "parameters/amf_empty.jsonld"                           -> ExpectedReport(conforms = false, 2, AmfProfile),
     "parameters/amf_valid.jsonld"                           -> ExpectedReport(conforms = true, 0, AmfProfile),
     "shapes/enum_amf.jsonld"                                -> ExpectedReport(conforms = false, 1, OasProfile),
     "shapes/enum_valid.jsonld"                              -> ExpectedReport(conforms = true, 0, OasProfile),
@@ -31,7 +31,7 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "webapi/bad_protocol.jsonld"                            -> ExpectedReport(conforms = false, 1, RamlProfile),
     "types/scalars/missing_type.jsonld"                     -> ExpectedReport(conforms = false, 1, RamlProfile),
     "types/scalars/missing_type_valid.jsonld"               -> ExpectedReport(conforms = true, 0, RamlProfile),
-    "types/scalars/wrong_facet.jsonld"                      -> ExpectedReport(conforms = false, 2, RamlProfile),
+    "types/scalars/wrong_facet.jsonld"                      -> ExpectedReport(conforms = false, 1, RamlProfile),
     "types/scalars/valid_facet.jsonld"                      -> ExpectedReport(conforms = true, 0, RamlProfile),
     "types/scalars/invalid_xml_attribute_non_scalar.jsonld" -> ExpectedReport(conforms = false, 1, RamlProfile),
     "types/scalars/invalid_xml_wrapped_scalar.jsonld"       -> ExpectedReport(conforms = false, 1, RamlProfile),
@@ -46,6 +46,7 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
     "path-parameter-required/required-set-to-true.jsonld"    -> ExpectedReport(conforms = true, 0, OasProfile),
     "file-parameter/invalid.jsonld"                          -> ExpectedReport(conforms = false, 1, OasProfile),
 //  "file-parameter/valid.jsonld"                            -> ExpectedReport(conforms = true, 0, OasProfile) fails in clientJVM with unkown error
+    "../upanddown/oas3/basic-content.jsonld" -> ExpectedReport(conforms = false, 1, Oas30Profile)
   )
 
   for {

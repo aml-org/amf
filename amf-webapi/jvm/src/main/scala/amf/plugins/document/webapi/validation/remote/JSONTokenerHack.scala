@@ -1,7 +1,9 @@
 package amf.plugins.document.webapi.validation.remote
 
 import java.lang
+
 import org.json.{JSONArray, JSONObject, JSONTokener}
+
 import scala.util.matching.Regex
 
 class JSONTokenerHack(text: String) extends JSONTokener(text) {
@@ -79,9 +81,10 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
   private def hackDouble(d: java.lang.Double): Object = {
     val pattern = "[0-9]+(\\.0+)".r
-    d.toString match {
-      case pattern(group) =>
-        new lang.Integer(d.toString.stripSuffix(group))
+    val str = d.toString
+
+    str match {
+      case pattern(group) => Integer.valueOf(str.stripSuffix(group))
       case _ => d
     }
   }

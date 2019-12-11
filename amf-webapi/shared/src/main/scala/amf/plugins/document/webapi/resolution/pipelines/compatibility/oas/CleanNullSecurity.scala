@@ -15,22 +15,26 @@ class CleanNullSecurity()(override implicit val errorHandler: ErrorHandler) exte
     try {
       model.iterator().foreach {
         case op: Operation =>
-          // filte null security schemas not supported in OAS
+          // filter null security schemas not supported in OAS
           var isNull = false
-          val security = op.security.filter { securityScheme =>
-            if (securityScheme.annotations.contains(classOf[NullSecurity])) {
-              isNull = true
-              false
-            } else true
+          op.security.foreach { requirement =>
+            val schemes = requirement.schemes.filter { securityScheme =>
+              if (securityScheme.annotations.contains(classOf[NullSecurity])) {
+                isNull = true
+                false
+              } else true
+            }
+            // Update and mark with an annotation if security is optional
+            requirement.withSchemes(schemes)
           }
-          // Update and mark with an annotation if security is optional
-          op.withSecurity(security)
           if (isNull) {
             op.withCustomDomainProperty(
               DomainExtension()
                 .withName("optionalSecurity")
                 .withExtension(ScalarNode("true", Some(DataType.Boolean))))
           }
+
+
         case _ => // ignore
       }
       model

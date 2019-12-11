@@ -4,7 +4,7 @@ import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.Strings
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -12,7 +12,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
-import amf.plugins.domain.webapi.models.{Operation, Response}
+import amf.plugins.domain.webapi.models.{Operation, Response, Tag}
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
@@ -60,18 +60,24 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
     map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)
     map.key("summary".asRamlAnnotation, OperationModel.Summary in operation)
     map.key("externalDocs".asRamlAnnotation,
-            OperationModel.Documentation in operation using OasCreativeWorkParser.parse)
+            OperationModel.Documentation in operation using (OasCreativeWorkParser.parse(_, operation.id)))
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
     map.key("consumes".asRamlAnnotation, OperationModel.Accepts in operation)
     map.key("produces".asRamlAnnotation, OperationModel.ContentType in operation)
-    map.key("tags".asRamlAnnotation, OperationModel.Tags in operation)
+    map.key(
+      "tags".asRamlAnnotation,
+      entry => {
+        val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
+        operation.withTags(tags)
+      }
+    )
     val DeclarationParser = ParametrizedDeclarationParser.parse(operation.withTrait) _
     map.key("is", (DomainElementModel.Extends in operation using DeclarationParser).allowingSingleValue.optional)
 
     ctx.factory
       .requestParser(map, () => operation.withRequest(), parseOptional)
       .parse()
-      .foreach(operation.set(OperationModel.Request, _, Annotations() += SynthesizedField()))
+      .foreach(req => operation.setArray(OperationModel.Request, List(req), Annotations() += SynthesizedField()))
 
     map.key(
       "defaultResponse".asRamlAnnotation,
@@ -123,8 +129,9 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       }
     )
 
-    val SchemeParser = RamlParametrizedSecuritySchemeParser.parse(operation.withSecurity) _
-    map.key("securedBy", (OperationModel.Security in operation using SchemeParser).allowingSingleValue)
+    val idCounter         = new IdCounter()
+    val RequirementParser = RamlSecurityRequirementParser.parse(operation.withSecurity, idCounter) _
+    map.key("securedBy", (OperationModel.Security in operation using RequirementParser).allowingSingleValue)
 
     map.key("description", (OperationModel.Description in operation).allowingAnnotations)
 

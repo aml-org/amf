@@ -76,14 +76,15 @@
                     "@id": "#6",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "200"
                       }
@@ -283,6 +284,11 @@
         "@value": "2.0.0"
       }
     ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
     "doc:references": [
       {
         "@id": "#1",
@@ -313,6 +319,11 @@
         "doc:version": [
           {
             "@value": "2.0.0"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
           }
         ]
       }

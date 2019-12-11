@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: api
+types:
+  mySchema: |
+    {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "title": "My schema",
+      "description": "My description",
+      "type": "object",
+      "properties": {
+        "myProperty": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "default": null
+        }
+      }
+    }

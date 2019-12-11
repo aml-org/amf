@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
+import amf.core.annotations.DeclaredElement
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.templates.AbstractDeclaration
@@ -26,9 +27,11 @@ case class AbstractDeclarationsParser(key: String,
             e.value
               .as[YMap]
               .entries
-              .map(entry =>
-                ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
-                  .parse())
+              .map(
+                entry =>
+                  ctx.declarations += AbstractDeclarationParser(producer(entry), customProperties, entry)
+                    .parse()
+                    .add(DeclaredElement()))
           case YType.Null =>
           case t =>
             ctx.violation(InvalidAbstractDeclarationType,

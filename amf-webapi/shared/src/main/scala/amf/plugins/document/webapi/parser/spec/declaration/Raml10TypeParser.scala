@@ -8,7 +8,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
 import amf.core.remote.{Oas, Raml08}
-import amf.core.utils.Strings
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Shapes
 import amf.plugins.document.webapi.annotations._
@@ -394,7 +394,9 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
 
     map.key("displayName", ShapeModel.DisplayName in shape)
     map.key("description", ShapeModel.Description in shape)
-    map.key("enum", ShapeModel.Values in shape using DataNodeParser.parse(Some(shape.id)))
+
+    val counter = new IdCounter
+    map.key("enum", ShapeModel.Values in shape using DataNodeParser.parse(Some(shape.id), counter))
 
     map.key(
       "pattern",
@@ -1573,7 +1575,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     val shape: Shape
     val map: YMap
-    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id))
+    private val counter                        = new IdCounter
+    lazy val dataNodeParser: YNode => DataNode = DataNodeParser.parse(Some(shape.id), counter)
 
     def parse(): Shape = {
 
@@ -1601,7 +1604,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
       map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
-      map.key("externalDocs".asRamlAnnotation, AnyShapeModel.Documentation in shape using OasCreativeWorkParser.parse)
+      map.key("externalDocs".asRamlAnnotation,
+              AnyShapeModel.Documentation in shape using (OasCreativeWorkParser.parse(_, shape.id)))
 
       map.key(
         "xml",

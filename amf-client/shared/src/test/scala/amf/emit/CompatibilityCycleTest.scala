@@ -67,6 +67,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
           hint match {
             case RamlYamlHint => validation.validate(unit, ProfileNames.RAML10)
             case OasYamlHint  => validation.validate(unit, ProfileNames.OAS20)
+            case _            => Future.never
           }
 
         }
@@ -75,5 +76,6 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
     case Raml | Raml08 | Raml10 => CompatibilityPipeline.unhandled().resolve(unit)
     case Oas | Oas20 | Oas30    => CompatibilityPipeline.unhandled(OasProfile).resolve(unit)
+    case _ => throw new IllegalArgumentException
   }
 }

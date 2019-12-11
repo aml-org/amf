@@ -39,6 +39,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
   private val banking       = "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml"
   private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
+  private val oas3          = "file://amf-client/shared/src/test/resources/api/oas3.json"
   private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
   private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
@@ -50,12 +51,12 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val defaultValue = "file://amf-client/shared/src/test/resources/api/shape-default.raml"
   private val profile      = "file://amf-client/shared/src/test/resources/api/validation/custom-profile.raml"
   //  private val banking       = "file://amf-client/shared/src/test/resources/api/banking.raml"
-  private val aml_doc = "file://vocabularies/vocabularies/aml_doc.yaml"
-  private val aml_meta = "file://vocabularies/vocabularies/aml_meta.yaml"
-  private val api_contract = "file://vocabularies/vocabularies/api_contract.yaml"
-  private val core = "file://vocabularies/vocabularies/core.yaml"
-  private val data_model = "file://vocabularies/vocabularies/data_model.yaml"
-  private val data_shapes = "file://vocabularies/vocabularies/data_shapes.yaml"
+  private val aml_doc        = "file://vocabularies/vocabularies/aml_doc.yaml"
+  private val aml_meta       = "file://vocabularies/vocabularies/aml_meta.yaml"
+  private val api_contract   = "file://vocabularies/vocabularies/api_contract.yaml"
+  private val core           = "file://vocabularies/vocabularies/core.yaml"
+  private val data_model     = "file://vocabularies/vocabularies/data_model.yaml"
+  private val data_shapes    = "file://vocabularies/vocabularies/data_shapes.yaml"
   private val security_model = "file://vocabularies/vocabularies/security.yaml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
@@ -120,10 +121,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       assert(declares.size == 1)
       assert(declares.head.isInstanceOf[NodeShape])
       val shape = declares.head.asInstanceOf[NodeShape]
-      assert(
-        shape.defaultValueStr
-          .value()
-          .equals("\n      name: roman\n      lastname: riquelme\n      age: 39".stripMargin))
+
+      shape.defaultValueStr.value() shouldBe "name: roman\nlastname: riquelme\nage: 39"
       assert(shape.defaultValue.isInstanceOf[ObjectNode])
     }
   }
@@ -167,6 +166,16 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       result <- new Oas20Parser().parseStringAsync(output).asFuture
     } yield {
       assertBaseUnit(result, "http://a.ml/amf/default_document")
+    }
+  }
+
+  test("Render / parse test OAS 3.0") {
+    for {
+      _      <- AMF.init().asFuture
+      unit   <- new Oas30Parser().parseFileAsync(oas3).asFuture
+      output <- new Oas30Renderer().generateString(unit).asFuture
+    } yield {
+      output should include("openIdConnectUrl")
     }
   }
 
@@ -481,7 +490,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
    */
 
   test("Vocabularies parsing aml_doc") {
-    testVocabulary(aml_doc, 14, 29)
+    testVocabulary(aml_doc, 14, 30)
   }
 
   test("Vocabularies parsing aml_meta") {
@@ -489,11 +498,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing api_contract") {
-    testVocabulary(api_contract, 28, 40)
+    testVocabulary(api_contract, 29, 45)
   }
 
   test("Vocabularies parsing core") {
-    testVocabulary(core, 3, 15)
+    testVocabulary(core, 4, 19)
   }
 
   test("Vocabularies parsing data_model") {
@@ -501,11 +510,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing data_shapes") {
-    testVocabulary(data_shapes, 14, 28)
+    testVocabulary(data_shapes, 14, 33)
   }
 
   test("Vocabularies parsing security_model") {
-    testVocabulary(security_model, 10, 17)
+    testVocabulary(security_model, 12, 19)
   }
 
   test("Parsing text document with base url") {
@@ -1891,6 +1900,29 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test non existent resource types") {
+    val file = "file://amf-client/shared/src/test/resources/validations/resource_types/non-existent-include.raml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseFileAsync(file).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+    } yield {
+      assert(!report.conforms)
+    }
+  }
+
+  test("Test non existent traits") {
+    val file = "file://amf-client/shared/src/test/resources/validations/traits/non-existent-include.raml"
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseFileAsync(file).asFuture
+      resolved <- Future.successful(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, RamlProfile, AMFStyle).asFuture
+    } yield {
+      assert(!report.conforms)
+    }
+  }
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }

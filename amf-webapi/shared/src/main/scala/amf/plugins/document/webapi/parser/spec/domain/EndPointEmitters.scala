@@ -138,7 +138,7 @@ abstract class RamlEndPointEmitter(ordering: SpecOrdering,
     fs.entry(EndPointModel.Operations).map(f => result ++= operations(f, ordering))
 
     fs.entry(EndPointModel.Security)
-      .map(f => result += ParametrizedSecuritiesSchemeEmitter("securedBy", f, ordering))
+      .map(f => result += SecurityRequirementsEmitter("securedBy", f, ordering))
 
     result ++= AnnotationsEmitter(endpoint, ordering).emitters
 

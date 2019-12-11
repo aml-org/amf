@@ -22,7 +22,7 @@
         ],
         "apiContract:endpoint": [
           {
-            "@id": "#22/end-points/%2Fendpoint1",
+            "@id": "#21/end-points/%2Fendpoint1",
             "@type": [
               "apiContract:EndPoint",
               "doc:DomainElement"
@@ -34,7 +34,7 @@
             ],
             "apiContract:supportedOperation": [
               {
-                "@id": "#23/get",
+                "@id": "#22/get",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -46,14 +46,15 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#24/request",
+                    "@id": "#23/request",
                     "@type": [
                       "apiContract:Request",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#25/application%2Fjson",
+                        "@id": "#24/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -65,7 +66,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/linked_1",
+                            "@id": "#1/link-379818744",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -91,7 +92,7 @@
                 ]
               },
               {
-                "@id": "#23/post",
+                "@id": "#22/post",
                 "@type": [
                   "apiContract:Operation",
                   "doc:DomainElement"
@@ -103,14 +104,15 @@
                 ],
                 "apiContract:expects": [
                   {
-                    "@id": "#26/request",
+                    "@id": "#25/request",
                     "@type": [
                       "apiContract:Request",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
                     "apiContract:payload": [
                       {
-                        "@id": "#27/application%2Fjson",
+                        "@id": "#26/application%2Fjson",
                         "@type": [
                           "apiContract:Payload",
                           "doc:DomainElement"
@@ -122,7 +124,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/linked_2",
+                            "@id": "#1/link-379818744",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -155,6 +157,11 @@
     "doc:version": [
       {
         "@value": "2.0.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
       }
     ],
     "doc:declares": [
@@ -355,7 +362,7 @@
             ],
             "doc:raw": [
               {
-                "@value": "\n        a: cristian\n        b: pavon\n"
+                "@value": "a: cristian\nb: pavon"
               }
             ]
           },
@@ -442,7 +449,7 @@
             ],
             "doc:raw": [
               {
-                "@value": "\n            a: roman\n            b: riquelme\n"
+                "@value": "a: roman\nb: riquelme"
               }
             ]
           },
@@ -529,7 +536,7 @@
             ],
             "doc:raw": [
               {
-                "@value": "\n            a: leonardo\n            b: jara"
+                "@value": "a: leonardo\nb: jara"
               }
             ]
           }

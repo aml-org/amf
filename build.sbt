@@ -86,7 +86,8 @@ lazy val webapi = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-webapi-module.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations"
   ).disablePlugins(SonarPlugin)
 
 lazy val webapiJVM = webapi.jvm.in(file("./amf-webapi/jvm")).sourceDependency(amfAmlJVMRef, amfAmlLibJVM)
@@ -105,7 +106,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
-    libraryDependencies += "org.topbraid"           % "shacl"                   % "1.2.0-INTERNAL",
+    libraryDependencies += "org.topbraid"           % "shacl"                   % "1.3.0",
     libraryDependencies += "org.slf4j"              % "slf4j-simple"            % "1.7.12",
     libraryDependencies += "org.apache.commons" % "commons-compress" % "1.19",
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
@@ -134,7 +135,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.reflections" % "reflections" % "0.9.11",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
-    libraryDependencies += "org.topbraid"           % "shacl"                   % "1.2.0-INTERNAL",
+    libraryDependencies += "org.topbraid"           % "shacl"                   % "1.3.0",
     libraryDependencies += "org.apache.commons" % "commons-compress" % "1.18",
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.9.8",
     mainClass in Compile := Some("amf.Main"),

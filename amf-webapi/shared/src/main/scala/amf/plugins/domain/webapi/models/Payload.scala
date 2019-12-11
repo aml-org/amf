@@ -4,7 +4,7 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.domain.shapes.models.{ArrayShape, Example, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.metamodel.PayloadModel.{Encoding => EncodingModel, _}
@@ -13,7 +13,10 @@ import org.yaml.model.YPart
 /**
   * Payload internal model.
   */
-case class Payload(fields: Fields, annotations: Annotations) extends NamedDomainElement with Linkable {
+case class Payload(fields: Fields, annotations: Annotations)
+    extends NamedDomainElement
+    with Linkable
+    with SchemaContainer {
 
   def mediaType: StrField      = fields.field(MediaType)
   def schema: Shape            = fields.field(Schema)
@@ -24,6 +27,8 @@ case class Payload(fields: Fields, annotations: Annotations) extends NamedDomain
   def withSchema(schema: Shape): this.type              = set(Schema, schema)
   def withExamples(examples: Seq[Example]): this.type   = setArray(Examples, examples)
   def withEncodings(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
+
+  override def removeExamples(): Unit = fields.removeField(Examples)
 
   def withObjectSchema(name: String): NodeShape = {
     val node = NodeShape().withName(name)

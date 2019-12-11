@@ -1,0 +1,169 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic paths object",
+    "version": "0.1"
+  },
+  "paths": {
+    "/{entity}/me": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "entity",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/me": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Is not duplicate"
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/books/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Is not duplicate"
+          }
+        }
+      }
+    },
+    "/books/{id}/other": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "id",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/path/{someParam}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "someParam",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/path/{other}": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "other",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/path": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Is not duplicate"
+          }
+        }
+      }
+    },
+    "/path/{name}/other": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "name",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/path/{otherDuplicated}/other": {
+      "parameters": [
+        {
+          "in": "path",
+          "name": "otherDuplicated",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    }
+  }
+}

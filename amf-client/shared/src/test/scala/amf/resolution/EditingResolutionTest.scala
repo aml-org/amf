@@ -353,6 +353,26 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Summary and description from path applied to operations") {
+    cycle(
+      "description-applied-to-operations.json",
+      "description-applied-to-operations-editing.json",
+      OasJsonHint,
+      Oas30,
+      cyclePath + "oas3/summary-description-in-path/"
+    )
+  }
+
+  test("Tracked examples from parameters and payloads") {
+    cycle(
+      "parameter-payload-examples.json",
+      "parameter-payload-examples.jsonld",
+      OasJsonHint,
+      Amf,
+      cyclePath + "oas3/parameter-payload-resolution/"
+    )
+  }
+
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")
@@ -383,6 +403,26 @@ class EditingResolutionTest extends FunSuiteCycleTests {
       OasYamlHint,
       Amf,
       validationsPath + "tracked-oas-param-body/"
+    )
+  }
+
+  test("Test reference resolution with chained links") {
+    cycle(
+      "api.raml",
+      "api.jsonld",
+      RamlYamlHint,
+      Amf,
+      validationsPath + "links/"
+    )
+  }
+
+  test("Security schemes with requirements") {
+    cycle(
+      "security-requirements.raml",
+      "security-requirements.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "security-requirements/"
     )
   }
 

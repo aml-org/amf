@@ -8,7 +8,7 @@ import amf.core.parser.{ErrorHandler, FieldEntry, Position}
 import amf.plugins.document.webapi.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import org.yaml.model.YMap
 
 import scala.collection.mutable.ListBuffer

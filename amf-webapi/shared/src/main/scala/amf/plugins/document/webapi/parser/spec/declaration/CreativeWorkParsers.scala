@@ -7,18 +7,21 @@ import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecPar
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.{YMap, YNode}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.validations.ParserSideValidations.UnexpectedVendor
 
 object OasCreativeWorkParser {
-  def parse(node: YNode)(implicit ctx: WebApiContext): CreativeWork = OasCreativeWorkParser(node.as[YMap]).parse()
+  def parse(node: YNode, parentId: String)(implicit ctx: WebApiContext): CreativeWork =
+    OasCreativeWorkParser(node.as[YMap], parentId).parse()
 }
 
 /**
   *
   */
-case class OasCreativeWorkParser(node: YNode)(implicit val ctx: WebApiContext) extends SpecParserOps {
+case class OasCreativeWorkParser(node: YNode, parentId: String)(implicit val ctx: WebApiContext)
+    extends SpecParserOps {
   def parse(): CreativeWork = {
 
     val map          = node.as[YMap]
@@ -28,8 +31,10 @@ case class OasCreativeWorkParser(node: YNode)(implicit val ctx: WebApiContext) e
     map.key("description", CreativeWorkModel.Description in creativeWork)
     map.key("title".asOasExtension, CreativeWorkModel.Title in creativeWork)
 
+    creativeWork.adopted(parentId)
     AnnotationParser(creativeWork, map).parse()
-
+    if (ctx.syntax == Oas2Syntax || ctx.syntax == Oas3Syntax)
+      ctx.closedShape(creativeWork.id, map, "externalDoc")
     creativeWork
   }
 }

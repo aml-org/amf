@@ -7,7 +7,7 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{ExternalDomainElement, Shape}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument}
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.ExternalJsonRefsPlugin
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.model._
@@ -78,7 +78,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
       val item = DocumentationItemFragment().adopted(root.location + "#/")
 
-      item.withEncodes(OasCreativeWorkParser(map).parse())
+      item.withEncodes(OasCreativeWorkParser(map, item.id).parse())
 
       item
     }

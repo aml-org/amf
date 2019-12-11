@@ -9,10 +9,10 @@ object Common {
   val releases: MavenRepository  = "MuleSoft releases" at s"$nexus/releases"
 
   val settings: Seq[Def.Setting[_]] = Seq(
-    scalaVersion := "2.12.8",
+    scalaVersion := "2.12.10",
     parallelExecution in Test := false,
     fork in Test := false,
-    scalacOptions ++= Seq("-unchecked", "-target:jvm-1.8" /* , "-deprecation", "-Xfatal-warnings" */ ),
+    scalacOptions ++= Seq("-unchecked", "-target:jvm-1.8", "-feature", "-deprecation", "-Xfatal-warnings"),
     scalacOptions ++= Seq("-encoding", "utf-8"),
     javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
   )

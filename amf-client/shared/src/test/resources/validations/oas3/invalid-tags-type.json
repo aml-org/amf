@@ -1,0 +1,60 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Basic content",
+    "version": "0.1"
+  },
+  "tags": [
+    {
+      "name": "tag1",
+      "description": "tag1 description"
+    },
+    {
+      "name": "tag2",
+      "description": "tag2 description"
+    }
+  ],
+  "paths": {
+    "/test": {
+      "get": {
+        "tags": ["tag1"],
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          {
+            "name": "tag3",
+            "description": "this definition is invalid"
+          },
+          {
+            "name": "tag4",
+            "description": "this definition is invalid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "description",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

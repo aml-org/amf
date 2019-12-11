@@ -44,7 +44,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
       List(
         ErrorContainer(
           UnknownSecuritySchemeErrorSpecification.id,
-          "file://amf-client/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection/applied/get/oauth_2_0",
+          "file://amf-client/shared/src/test/resources/resolution/error-apis/bad-variable-replace/api.raml#/web-api/end-points/%2Fcatalogs/collection/applied/get/default-requirement_1/oauth_2_0",
           None,
           "Security scheme 'oauth_2_0' not found in declarations.",
           None,

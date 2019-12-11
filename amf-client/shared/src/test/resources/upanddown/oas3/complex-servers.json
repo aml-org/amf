@@ -19,25 +19,6 @@
         "object": {
           "default": ""
         }
-      },
-      "x-amf-parameters": {
-        "basic": {
-          "description": "The name of the bucket"
-        },
-        "withPattern": {
-          "description": "The name of the bucket",
-          "pattern": "[0-9|-]+"
-        },
-        "object": {
-          "properties": {
-            "base": {
-              "type": "string"
-            },
-            "path": {
-              "type": "string"
-            }
-          }
-        }
       }
     }
   ],

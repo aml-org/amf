@@ -7,17 +7,20 @@ import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage, Ur
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages.{
-  ExamplesResolutionStage,
   MediaTypeResolutionStage,
   ParametersNormalizationStage,
+  PathDescriptionNormalizationStage,
+  PayloadAndParameterResolutionStage,
+  ResponseExamplesResolutionStage,
   SecurityResolutionStage,
   ServersNormalizationStage
 }
 import amf.{AmfProfile, ProfileName}
 
-class AmfEditingPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
+class AmfEditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean = true) extends ResolutionPipeline(eh) {
 
-  protected def references = new ReferenceResolutionStage(keepEditingInfo = true)
+  protected def references                   = new ReferenceResolutionStage(keepEditingInfo = true)
+  private def url: Option[UrlShortenerStage] = if (urlShortening) Some(new UrlShortenerStage()) else None
 
   override lazy val steps: Seq[ResolutionStage] = Seq(
     references,
@@ -26,10 +29,11 @@ class AmfEditingPipeline(override val eh: ErrorHandler) extends ResolutionPipeli
     new SecurityResolutionStage(),
     new ParametersNormalizationStage(profileName),
     new ServersNormalizationStage(profileName),
+    new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
     new MediaTypeResolutionStage(profileName, keepEditingInfo = true),
-    new ExamplesResolutionStage(),
-    new UrlShortenerStage()
-  )
+    new ResponseExamplesResolutionStage(),
+    new PayloadAndParameterResolutionStage(profileName)
+  ) ++ url
 
   val ID: String                        = EDITING_PIPELINE
   override def profileName: ProfileName = AmfProfile

@@ -1,6 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.annotations.DeclaredHeader
 import amf.core.emitter.BaseEmitters.{EntryPartEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
@@ -9,8 +8,8 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.Strings
-import amf.plugins.document.webapi.contexts.{Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -69,7 +68,7 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
       result += Oas3LinkDeclarationEmitter(declarations.links.values.toSeq, ordering, references)
 
     if (declarations.callbacks.nonEmpty) {
-      val callbacks   = declarations.callbacks.values.toSeq
+      val callbacks   = declarations.callbacks.values.flatten.toSeq
       val annotations = callbacks.headOption.map(_.annotations).getOrElse(Annotations())
       result += EntryPartEmitter("callbacks",
                                  OasCallbacksEmitter(callbacks, ordering, references, annotations),

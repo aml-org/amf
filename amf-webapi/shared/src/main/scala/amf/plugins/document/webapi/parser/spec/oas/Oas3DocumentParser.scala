@@ -2,18 +2,20 @@ package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.Root
 import amf.core.annotations.{DeclaredElement, DeclaredHeader}
+import amf.core.model.domain.NamedDomainElement
 import amf.core.parser._
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.AbstractDeclarationsParser
 import amf.plugins.document.webapi.parser.spec.domain.{
-  Oas3ResponseExamplesParser,
+  Oas3NamedExamplesParser,
   OasHeaderParametersParser,
   OasLinkParser
 }
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Parameter, WebApi}
+import amf.plugins.domain.webapi.models.{Callback, Parameter, WebApi}
+import amf.validations.ParserSideValidations
 import org.yaml.model._
 
 case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiContext)
@@ -53,17 +55,17 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
                                  parent + "/resourceTypes").parse()
       AbstractDeclarationsParser("traits".asOasExtension, (entry: YMapEntry) => Trait(entry), map, parent + "/traits")
         .parse()
+      ctx.closedShape(parent, map, "components")
+      validateNames()
     }
 
   def parseExamplesDeclaration(map: YMap, parent: String): Unit = {
     map.key(
       "examples",
       e => {
-        val examples = Oas3ResponseExamplesParser(e).parse()
-        examples.foreach(ex => {
-          ex.adopted(parent)
-          ctx.declarations += ex.add(DeclaredElement())
-        })
+        Oas3NamedExamplesParser(e, parent)
+          .parse()
+          .foreach(ex => ctx.declarations += ex.add(DeclaredElement()))
       }
     )
   }
@@ -75,10 +77,10 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
         e.value
           .as[YMap]
           .entries
-          .map(entry => {
+          .foreach(entry => {
             val typeName = entry.key.as[YScalar].text
             val requestBody =
-              Oas3RequestParser(entry.value.as[YMap], (req) => req.withName(typeName).adopted(parent)).parse()
+              Oas3RequestParser(entry.value.as[YMap], req => req.withName(typeName).adopted(parent)).parse()
             requestBody.foreach(ctx.declarations += _.add(DeclaredElement()))
           })
       }
@@ -108,7 +110,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .entries
           .foreach { entry =>
             val linkName = ScalarNode(entry.key).text().value.toString
-            OasLinkParser(entry.value, linkName, (link) => link.adopted(parent))
+            OasLinkParser(entry.value, linkName, link => link.adopted(parent))
               .parse()
               .foreach { link =>
                 link.add(DeclaredElement())
@@ -125,14 +127,44 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
         entry.value
           .as[YMap]
           .entries
-          .map { callbackEntry =>
-            val name     = callbackEntry.key.as[YScalar].text
-            val callback = CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent)).parse()
-            callback.add(DeclaredElement())
-            ctx.declarations += callback
+          .foreach { callbackEntry =>
+            val name = callbackEntry.key.as[YScalar].text
+            val callbacks =
+              CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent), name, callbackEntry)
+                .parse()
+            callbacks.foreach { callback =>
+              callback.add(DeclaredElement())
+              ctx.declarations += callback
+            }
           }
       }
     )
+  }
+
+  def validateNames(): Unit = {
+    val declarations = ctx.declarations.declarables()
+    val keyRegex     = """^[a-zA-Z0-9\.\-_]+$""".r
+    declarations.foreach {
+      case elem: NamedDomainElement =>
+        elem.name.option() match {
+          case Some(name) =>
+            if (!keyRegex.pattern.matcher(name).matches())
+              violation(
+                elem,
+                s"Name $name does not match regular expression ${keyRegex.toString()} for component declarations")
+          case None =>
+            violation(elem, "No name is defined for given component declaration")
+        }
+      case _ =>
+    }
+    def violation(elem: NamedDomainElement, msg: String): Unit = {
+      ctx.violation(
+        ParserSideValidations.InvalidFieldNameInComponents,
+        elem.id,
+        msg,
+        elem.annotations
+      )
+    }
   }
 
 }

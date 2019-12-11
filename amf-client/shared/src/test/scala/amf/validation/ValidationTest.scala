@@ -226,7 +226,7 @@ class ValidationTest extends AsyncFunSuite with PlatformSecrets {
       report    <- validation.validate(doc, OasProfile)
     } yield {
       assert(!report.conforms)
-      assert(report.results.length == 1)
+      assert(report.results.length == 2)
     }
   }
 

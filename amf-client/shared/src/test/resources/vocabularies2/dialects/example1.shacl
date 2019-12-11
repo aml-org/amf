@@ -112,15 +112,24 @@
 <http://a.ml/vocabularies/amf/parser#chained-reference-error> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#chained-reference-error> <http://www.w3.org/ns/shacl#message> "References cannot be chained" .
 <http://a.ml/vocabularies/amf/parser#chained-reference-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#content-required> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#content-required> <http://www.w3.org/ns/shacl#message> "Request body content is required" .
+<http://a.ml/vocabularies/amf/parser#content-required> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#cross-security-warning> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#cross-security-warning> <http://www.w3.org/ns/shacl#message> "Using a security scheme type from raml in oas or from oas in raml" .
 <http://a.ml/vocabularies/amf/parser#cross-security-warning> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#discriminator-name-required> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#discriminator-name-required> <http://www.w3.org/ns/shacl#message> "Discriminator property name is required" .
+<http://a.ml/vocabularies/amf/parser#discriminator-name-required> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#message> "Property 'discriminator' not supported in a node extending a unionShape" .
 <http://a.ml/vocabularies/amf/parser#discriminator-on-extended-union> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/ns/shacl#message> "Sibling parameters must have unique 'name' and 'in' values" .
 <http://a.ml/vocabularies/amf/parser#duplicate-parameters> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#duplicate-tags> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#duplicate-tags> <http://www.w3.org/ns/shacl#message> "Sibling tags must have unique names" .
+<http://a.ml/vocabularies/amf/parser#duplicate-tags> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path> <http://www.w3.org/ns/shacl#message> "Duplicated endpoint path" .
 <http://a.ml/vocabularies/amf/parser#duplicated-endpoint-path> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -151,6 +160,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-abstract-declaration-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-abstract-declaration-type> <http://www.w3.org/ns/shacl#message> "Invalid type for declaration node" .
 <http://a.ml/vocabularies/amf/parser#invalid-abstract-declaration-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-additional-items-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-additional-items-type> <http://www.w3.org/ns/shacl#message> "additionalItems should be a boolean or a map" .
+<http://a.ml/vocabularies/amf/parser#invalid-additional-items-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-additional-properties-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-additional-properties-type> <http://www.w3.org/ns/shacl#message> "additionalProperties should be a boolean or a map" .
 <http://a.ml/vocabularies/amf/parser#invalid-additional-properties-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -196,6 +208,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-external-type-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-external-type-type> <http://www.w3.org/ns/shacl#message> "Invalid external type type" .
 <http://a.ml/vocabularies/amf/parser#invalid-external-type-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components> <http://www.w3.org/ns/shacl#message> "Field name in components must match the following expression: ^[a-zA-Z0-9\\.\\-_]+$" .
+<http://a.ml/vocabularies/amf/parser#invalid-field-name-in-components> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-fragment-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-fragment-type> <http://www.w3.org/ns/shacl#message> "Invalid fragment type" .
 <http://a.ml/vocabularies/amf/parser#invalid-fragment-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -247,6 +262,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-shape-format> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-shape-format> <http://www.w3.org/ns/shacl#message> "Invalid shape format" .
 <http://a.ml/vocabularies/amf/parser#invalid-shape-format> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-tag-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-tag-type> <http://www.w3.org/ns/shacl#message> "Tag values must be of type string" .
+<http://a.ml/vocabularies/amf/parser#invalid-tag-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-tuple-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-tuple-type> <http://www.w3.org/ns/shacl#message> "Tuple should be a sequence" .
 <http://a.ml/vocabularies/amf/parser#invalid-tuple-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -271,6 +289,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-xone-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-xone-type> <http://www.w3.org/ns/shacl#message> "Xone should be a sequence" .
 <http://a.ml/vocabularies/amf/parser#invalid-xone-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#items-field-required> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#items-field-required> <http://www.w3.org/ns/shacl#message> "'items' field is required when type is array" .
+<http://a.ml/vocabularies/amf/parser#items-field-required> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#json-schema-fragment-not-found> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#json-schema-fragment-not-found> <http://www.w3.org/ns/shacl#message> "Json schema fragment not found" .
 <http://a.ml/vocabularies/amf/parser#json-schema-fragment-not-found> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -304,6 +325,9 @@
 <http://a.ml/vocabularies/amf/parser#oas-not-body-and-form-data-parameters> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#oas-not-body-and-form-data-parameters> <http://www.w3.org/ns/shacl#message> "Operation cannot have a body parameter and a formData parameter" .
 <http://a.ml/vocabularies/amf/parser#oas-not-body-and-form-data-parameters> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#parameter-missing-schema-or-content> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#parameter-missing-schema-or-content> <http://www.w3.org/ns/shacl#message> "Parameter must define a 'schema' or 'content' field, but not both" .
+<http://a.ml/vocabularies/amf/parser#parameter-missing-schema-or-content> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#parameter-name-required> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#parameter-name-required> <http://www.w3.org/ns/shacl#message> "Parameter name is required" .
 <http://a.ml/vocabularies/amf/parser#parameter-name-required> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -325,6 +349,12 @@
 <http://a.ml/vocabularies/amf/parser#schemas-deprecated> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#schemas-deprecated> <http://www.w3.org/ns/shacl#message> "'schemas' keyword it's deprecated for 1.0 version, should use 'types' instead" .
 <http://a.ml/vocabularies/amf/parser#schemas-deprecated> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#scope-names-must-be-empty> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#scope-names-must-be-empty> <http://www.w3.org/ns/shacl#message> "Scope names must be an empty array" .
+<http://a.ml/vocabularies/amf/parser#scope-names-must-be-empty> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#server-variable-missing-default> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#server-variable-missing-default> <http://www.w3.org/ns/shacl#message> "Server variable must define a 'default' field" .
+<http://a.ml/vocabularies/amf/parser#server-variable-missing-default> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value> <http://www.w3.org/ns/shacl#message> "Values of uri parameter must not contain '/' character" .
 <http://a.ml/vocabularies/amf/parser#slash-in-uri-parameter-value> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

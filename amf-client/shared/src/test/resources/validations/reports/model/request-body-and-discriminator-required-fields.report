@@ -1,0 +1,22 @@
+Model: file://amf-client/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 2
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#content-required
+  Message: Request body must have a 'content' field defined
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json#/web-api/end-points/%2Ftest/get/request
+  Property: 
+  Position: Some(LexicalInformation([(12,23)-(15,9)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json
+
+- Source: http://a.ml/vocabularies/amf/parser#discriminator-name-required
+  Message: Discriminator must have a propertyName defined
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json#/web-api/end-points/%2Ftest/get/200/application%2Fjson/schema
+  Property: 
+  Position: Some(LexicalInformation([(23,35)-(24,19)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/request-body-and-discriminator-required-fields.json

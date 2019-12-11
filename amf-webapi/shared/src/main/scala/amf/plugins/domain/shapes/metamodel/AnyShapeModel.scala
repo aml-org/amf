@@ -1,8 +1,9 @@
 package amf.plugins.domain.shapes.metamodel
 
 import amf.core.metamodel.Field
+import amf.core.metamodel.Type.Str
 import amf.core.metamodel.domain._
-import amf.core.vocabulary.Namespace.{Shacl, Shapes}
+import amf.core.vocabulary.Namespace.{Core, Shapes}
 import amf.core.vocabulary.ValueType
 import amf.plugins.domain.shapes.metamodel.common.{DocumentationField, ExamplesField}
 import amf.plugins.domain.shapes.models.AnyShape
@@ -13,6 +14,9 @@ trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with Exam
     XMLSerializerModel,
     Shapes + "xmlSerialization",
     ModelDoc(ModelVocabularies.Shapes, "XML serialization", "information about how to serialize"))
+
+  val Comment =
+    Field(Str, Core + "comment", ModelDoc(ModelVocabularies.Core, "comment", "Comment associated to schema"))
 
   override val `type`: List[ValueType] =
     List(Shapes + "AnyShape") ++ ShapeModel.`type`
@@ -30,5 +34,5 @@ object AnyShapeModel extends AnyShapeModel {
   )
 
   override val fields: List[Field] =
-    ShapeModel.fields ++ List(Documentation, XMLSerialization, Examples) ++ ExternalSourceElementModel.fields
+    ShapeModel.fields ++ List(Documentation, XMLSerialization, Comment, Examples) ++ ExternalSourceElementModel.fields
 }

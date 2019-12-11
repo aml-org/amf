@@ -7,22 +7,18 @@ import amf.core.model.domain.DataNode
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.Vendor
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext
-}
+import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
 import amf.plugins.domain.shapes.models.AnyShape
+import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.security._
 import amf.plugins.domain.webapi.models.security._
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.domain.webapi.annotations.OrphanOasExtension
-import amf.core.utils.Strings
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
+import org.yaml.model.YNode
 
 import scala.collection.mutable.ListBuffer
 
@@ -36,7 +32,7 @@ case class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], orde
     val securityTypes: Map[OasSecuritySchemeType, SecurityScheme] =
       securitySchemes.map(s => OasSecuritySchemeTypeMapping.fromText(s.`type`.value()) -> s).toMap
     val (oasSecurityDefinitions, extensionDefinitions) = securityTypes.partition(m => m._1.isOas)
-    val isOas3                                         = spec.vendor == Vendor.OAS30;
+    val isOas3                                         = spec.vendor == Vendor.OAS30
     if (oasSecurityDefinitions.nonEmpty)
       b.entry(
         if (isOas3) "securitySchemes" else "securityDefinitions",
@@ -359,24 +355,13 @@ case class RamlOAuth1SettingsEmitters(o1: OAuth1Settings, ordering: SpecOrdering
   }
 }
 
-case class OasOAuth2SettingsEmitters(settings: Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
+case class OasOAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
     val fs        = settings.fields
     val externals = ListBuffer[EntryEmitter]()
 
-    fs.entry(OAuth2SettingsModel.AuthorizationUri).map(f => externals += ValueEmitter("authorizationUrl", f))
-
-    fs.entry(OAuth2SettingsModel.AccessTokenUri).map(f => externals += ValueEmitter("tokenUrl", f))
-
-    fs.entry(OAuth2SettingsModel.Flow).map(f => externals += ValueEmitter("flow", f))
-
-    // Annotations collected from the "paths" element that has no direct representation in any model element
-    // They will be passed to the EndpointsEmitter
-    val orphanAnnotations =
-      settings.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
-
-    fs.entry(OAuth2SettingsModel.Scopes)
-      .foreach(f => externals += OasOAuth2ScopeEmitter("scopes", f, ordering, orphanAnnotations))
+    settings.flows.headOption.foreach(flowEmitters(_, externals))
 
     val internals = ListBuffer[EntryEmitter]()
     fs.entry(OAuth2SettingsModel.AuthorizationGrants)
@@ -394,63 +379,110 @@ case class OasOAuth2SettingsEmitters(settings: Settings, ordering: SpecOrdering)
     externals
   }
 
+  def flowEmitters(flow: OAuth2Flow, externals: ListBuffer[EntryEmitter]): Unit = {
+    val fs = flow.fields
+
+    fs.entry(OAuth2FlowModel.AuthorizationUri).map(f => externals += ValueEmitter("authorizationUrl", f))
+
+    fs.entry(OAuth2FlowModel.AccessTokenUri).map(f => externals += ValueEmitter("tokenUrl", f))
+
+    fs.entry(OAuth2FlowModel.Flow).map(f => externals += ValueEmitter("flow", f))
+
+    // Annotations collected from the "scopes" element that has no direct representation in any model element
+    // They will be passed to the EndpointsEmitter
+    val orphanAnnotations =
+      settings.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+
+    fs.entry(OAuth2FlowModel.Scopes)
+      .foreach(f => externals += OasOAuth2ScopeEmitter("scopes", f, ordering, orphanAnnotations))
+  }
 }
 
 case class Oas3OAuth2SettingsEmitters(settings: OAuth2Settings, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext) {
+
   def emitters(): Seq[EntryEmitter] = {
     val externals = ListBuffer[EntryEmitter]()
+
     externals += Oas3OAuth2FlowEmitter(settings, ordering)
-    externals ++= AnnotationsEmitter(settings, ordering).emitters
 
     externals
   }
 }
 
-case class Oas3OAuth2FlowEmitter(settings: OAuth2Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+private case class Oas3OAuth2FlowEmitter(settings: OAuth2Settings, ordering: SpecOrdering)(
+    implicit spec: SpecEmitterContext)
     extends EntryEmitter {
 
   override def emit(b: EntryBuilder): Unit = {
-    val fs = settings.fields
+    val fs                               = settings.fields
+    val result: ListBuffer[EntryEmitter] = ListBuffer()
 
-    settings.flow.option() match {
-      case Some(flowValue) =>
-        b.entry(
-          "flows",
-          _.obj { b =>
-            // TODO setting may have multiple flows
-            b.entry(
-              flowValue,
-              _.obj {
-                flowBuilder =>
-                  val builders = ListBuffer[EntryEmitter]()
+    val orphanAnnotations =
+      settings.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
 
-                  fs.entry(OAuth2SettingsModel.AuthorizationUri)
-                    .map(f => builders += ValueEmitter("authorizationUrl", f))
+    fs.entry(OAuth2SettingsModel.Flows).foreach(f => result += Oas3OAuthFlowsEmitter(f, ordering, orphanAnnotations))
 
-                  fs.entry(OAuth2SettingsModel.AccessTokenUri).map(f => builders += ValueEmitter("tokenUrl", f))
+    result ++= AnnotationsEmitter(settings, ordering).emitters
 
-                  fs.entry(OAuth2SettingsModel.RefreshUri).map(f => builders += ValueEmitter("refreshUrl", f))
-
-                  val orphanAnnotations =
-                    settings.customDomainProperties.filter(
-                      _.extension.annotations.contains(classOf[OrphanOasExtension]))
-
-                  fs.entry(OAuth2SettingsModel.Scopes)
-                    .foreach(f => builders += OasOAuth2ScopeEmitter("scopes", f, ordering, orphanAnnotations))
-
-                  traverse(ordering.sorted(builders), flowBuilder)
-              }
-            )
-          }
-        )
-      case None =>
-    }
-
+    traverse(ordering.sorted(result), b)
   }
 
   override def position(): Position =
-    settings.scopes.headOption.map(scope => pos(scope.annotations)).getOrElse(Position.ZERO)
+    settings.flows.headOption.map(flow => pos(flow.annotations)).getOrElse(Position.ZERO)
+}
+
+private case class Oas3OAuthFlowsEmitter(f: FieldEntry,
+                                         ordering: SpecOrdering,
+                                         orphanAnnotations: Seq[DomainExtension])(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+
+    val flows: Seq[OAuth2Flow] = f.arrayValues
+
+    val emitters = flows.map(flow => Oas3OAuthFlowEmitter(flow, ordering)) ++ flowsElementAnnotations()
+    b.entry("flows", _.obj(traverse(ordering.sorted(emitters), _)))
+  }
+
+  private def flowsElementAnnotations(): Seq[EntryEmitter] =
+    OrphanAnnotationsEmitter(orphanAnnotations, ordering).emitters
+
+  override def position(): Position = pos(f.value.annotations)
+}
+
+private case class Oas3OAuthFlowEmitter(flow: OAuth2Flow, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)
+    extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    val fs = flow.fields
+
+    b.entry(
+      YNode(flow.flow.value()),
+      builder => {
+        builder.obj {
+          mapBuilder =>
+            val builders = ListBuffer[EntryEmitter]()
+
+            fs.entry(OAuth2FlowModel.AuthorizationUri)
+              .map(f => builders += ValueEmitter("authorizationUrl", f))
+
+            fs.entry(OAuth2FlowModel.AccessTokenUri).map(f => builders += ValueEmitter("tokenUrl", f))
+
+            fs.entry(OAuth2FlowModel.RefreshUri).map(f => builders += ValueEmitter("refreshUrl", f))
+
+            val orphanAnnotations =
+              flow.customDomainProperties.filter(_.extension.annotations.contains(classOf[OrphanOasExtension]))
+
+            fs.entry(OAuth2FlowModel.Scopes)
+              .foreach(f => builders += OasOAuth2ScopeEmitter("scopes", f, ordering, orphanAnnotations))
+
+            traverse(ordering.sorted(builders), mapBuilder)
+        }
+      }
+    )
+  }
+
+  override def position(): Position = pos(flow.annotations)
 }
 
 case class RamlOAuth2SettingsEmitters(o2: OAuth2Settings, ordering: SpecOrdering)(implicit spec: SpecEmitterContext) {
@@ -459,13 +491,20 @@ case class RamlOAuth2SettingsEmitters(o2: OAuth2Settings, ordering: SpecOrdering
     val fs      = o2.fields
     val results = ListBuffer[EntryEmitter]()
 
-    fs.entry(OAuth2SettingsModel.AuthorizationUri).map(f => results += ValueEmitter("authorizationUri", f))
-    fs.entry(OAuth2SettingsModel.AccessTokenUri).map(f => results += RamlScalarEmitter("accessTokenUri", f))
+    o2.flows.headOption.foreach(flowEmitters(_, results))
+
     fs.entry(OAuth2SettingsModel.AuthorizationGrants)
       .map(f => results += ArrayEmitter("authorizationGrants", f, ordering))
-    fs.entry(OAuth2SettingsModel.Scopes).map(f => { results += RamlOAuth2ScopeEmitter("scopes", f, ordering) })
 
     results
+  }
+
+  def flowEmitters(flow: OAuth2Flow, results: ListBuffer[EntryEmitter]): Unit = {
+    val fs = flow.fields
+
+    fs.entry(OAuth2FlowModel.AuthorizationUri).map(f => results += ValueEmitter("authorizationUri", f))
+    fs.entry(OAuth2FlowModel.AccessTokenUri).map(f => results += RamlScalarEmitter("accessTokenUri", f))
+    fs.entry(OAuth2FlowModel.Scopes).map(f => { results += RamlOAuth2ScopeEmitter("scopes", f, ordering) })
   }
 }
 

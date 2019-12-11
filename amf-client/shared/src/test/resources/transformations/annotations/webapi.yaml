@@ -77,6 +77,7 @@ declares:
       name: schema
       closed: false
 version: 2.0.0
+root: true
 encodes:
   elementType: WebAPI
   $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/web-api
@@ -129,7 +130,7 @@ encodes:
                     inherits:
                       -
                         shapeType: Node
-                        $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/linked_1
+                        $id: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A/link-859413225
                         designLink: file://amf-client/shared/src/test/resources/transformations/annotations/api.raml#/declarations/types/A
                         name: A
                     name: schema

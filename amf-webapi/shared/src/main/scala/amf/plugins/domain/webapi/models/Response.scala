@@ -7,40 +7,25 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.metamodel.ResponseModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel._
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import org.yaml.model.YMapEntry
 
 /**
   * Response internal model.
   */
-class Response(override val fields: Fields, override val annotations: Annotations)
-    extends NamedDomainElement
-    with Linkable {
+class Response(override val fields: Fields, override val annotations: Annotations) extends Message {
 
-  def description: StrField     = fields.field(Description)
   def statusCode: StrField      = fields.field(StatusCode)
   def headers: Seq[Parameter]   = fields.field(Headers)
-  def payloads: Seq[Payload]    = fields.field(Payloads)
-  def examples: Seq[Example]    = fields.field(Examples)
   def links: Seq[TemplatedLink] = fields.field(Links)
 
-  def withDescription(description: String): this.type = set(Description, description)
   def withStatusCode(statusCode: String): this.type   = set(StatusCode, statusCode)
   def withHeaders(headers: Seq[Parameter]): this.type = setArray(Headers, headers)
-  def withPayloads(payloads: Seq[Payload]): this.type = setArray(Payloads, payloads)
-  def withExamples(examples: Seq[Example]): this.type = setArray(Examples, examples)
   def withLinks(links: Seq[TemplatedLink]): this.type = setArray(Links, links)
 
   def withHeader(name: String): Parameter = {
     val result = Parameter().withName(name)
     add(Headers, result)
-    result
-  }
-
-  def withPayload(mediaType: Option[String] = None): Payload = {
-    val result = Payload()
-    mediaType.map(result.withMediaType)
-    add(Payloads, result)
     result
   }
 
@@ -58,7 +43,8 @@ class Response(override val fields: Fields, override val annotations: Annotation
   }
 
   def cloneResponse(parent: String): Response = {
-    val cloned = Response(annotations).withName(name.value()).adopted(parent)
+    val response: Response = Response(annotations)
+    val cloned             = response.withName(name.value()).adopted(parent)
 
     this.fields.foreach {
       case (f, v) =>
@@ -80,7 +66,7 @@ class Response(override val fields: Fields, override val annotations: Annotation
 
   override def meta: Obj = ResponseModel
 
-  override def linkCopy(): Linkable = Response().withId(id)
+  override def linkCopy(): Response = Response().withId(id)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/" + name.option().getOrElse("default-response").urlComponentEncoded

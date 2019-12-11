@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
 import org.yaml.model.{YDocument, YNode, YScalar, YType}
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 
 /**
   *

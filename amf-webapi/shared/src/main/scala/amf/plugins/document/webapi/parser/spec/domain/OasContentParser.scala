@@ -10,15 +10,39 @@ import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
-import org.yaml.model.{YMap, YNode}
+import org.yaml.model.{YMap, YMapEntry}
 
-case class OasContentParser(node: YNode, mediaType: String, producer: Option[String] => Payload)(
-    implicit ctx: OasWebApiContext)
+import scala.collection.mutable
+
+case class OasContentsParser(entry: YMapEntry, producer: Option[String] => Payload)(implicit ctx: OasWebApiContext) {
+  def parse(): List[Payload] = {
+    val payloads = mutable.ListBuffer[Payload]()
+    entry.value
+      .as[YMap]
+      .entries
+      .foreach { entry =>
+        payloads += OasContentParser(entry, producer)(ctx).parse()
+      }
+    payloads.toList
+  }
+}
+
+case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payload)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {
 
+  private def buildPayload(): Payload = {
+    val mediaTypeNode         = ScalarNode(entry.key)
+    val mediaTypeText: String = mediaTypeNode.text().toString
+
+    val payload = producer(Some(mediaTypeText)).add(Annotations(entry))
+    payload.set(PayloadModel.MediaType, mediaTypeNode.string())
+  }
+
   def parse(): Payload = {
-    val map     = node.as[YMap]
-    val payload = producer(Some(mediaType)).add(Annotations.valueNode(map))
+    val map     = entry.value.as[YMap]
+    val payload = buildPayload()
+
+    ctx.closedShape(payload.id, map, "content")
 
     // schema
     map.key(
@@ -32,7 +56,7 @@ case class OasContentParser(node: YNode, mediaType: String, producer: Option[Str
     val examples: Seq[Example] = OasExamplesParser(map, payload.id).parse()
     if (examples.nonEmpty) {
       examples.foreach { ex =>
-        ex.withMediaType(mediaType)
+        payload.mediaType.option().foreach(ex.withMediaType)
         ex.annotations += TrackedElement(payload.id)
       }
       payload.set(PayloadModel.Examples, AmfArray(examples))

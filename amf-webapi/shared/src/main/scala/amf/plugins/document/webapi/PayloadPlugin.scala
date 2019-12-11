@@ -60,7 +60,7 @@ object PayloadPlugin extends AMFDocumentPlugin {
   override def referenceHandler(eh: ErrorHandler): SimpleReferenceHandler.type = SimpleReferenceHandler
 
   private def notRAML(root: Root) = root.parsed match {
-    case parsed: SyamlParsedDocument => parsed.comment.isEmpty || !parsed.comment.get.metaText.startsWith("%")
+    case parsed: SyamlParsedDocument => parsed.comment.isEmpty || !parsed.comment.exists(_.startsWith("%"))
     case _                           => false
   }
 

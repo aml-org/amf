@@ -4,7 +4,7 @@ import amf.plugins.domain.shapes.models.TypeDef
 import amf.plugins.domain.shapes.models.TypeDef._
 
 /**
-  * Raml type to [[TypeDef]] matcher
+  * Raml type to TypeDef matcher
   */
 object RamlTypeDefMatcher {
 

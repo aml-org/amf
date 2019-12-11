@@ -19,12 +19,14 @@ case class TupleShape(private[amf] override val _internal: InternalTupleShape) e
     this
   }
 
-  def additionalItems: BoolField = _internal.additionalItems
+  def closedItems: BoolField = _internal.closedItems
 
-  def withAdditionalItems(additionalItems: Boolean): this.type = {
-    _internal.withAdditionalItems(additionalItems)
+  def withClosedItems(closedItems: Boolean): this.type = {
+    _internal.withClosedItems(closedItems)
     this
   }
+
+  def additionalItemsSchema: Shape = _internal.additionalItemsSchema
 
   override def linkCopy(): TupleShape = _internal.linkCopy()
 }

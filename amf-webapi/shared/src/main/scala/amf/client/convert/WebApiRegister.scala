@@ -8,7 +8,8 @@ import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.model
 import amf.plugins.domain.{shapes, webapi}
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.domain.webapi.metamodel.{IriTemplateMappingModel, TemplatedLinkModel, templates}
+import amf.plugins.domain.webapi.metamodel.bindings._
+import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, IriTemplateMappingModel, TemplatedLinkModel, templates}
 import amf.plugins.features.validation.CoreValidations
 import amf.validation.DialectValidations
 import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
@@ -84,6 +85,9 @@ object WebApiRegister {
     platform.registerWrapper(webapi.metamodel.security.ParametrizedSecuritySchemeModel) {
       case s: webapi.models.security.ParametrizedSecurityScheme => ParametrizedSecurityScheme(s)
     }
+    platform.registerWrapper(webapi.metamodel.security.SecurityRequirementModel) {
+      case s: webapi.models.security.SecurityRequirement => SecurityRequirement(s)
+    }
     platform.registerWrapper(webapi.metamodel.security.SecuritySchemeModel) {
       case s: webapi.models.security.SecurityScheme => SecurityScheme(s)
     }
@@ -98,6 +102,9 @@ object WebApiRegister {
     }
     platform.registerWrapper(webapi.metamodel.security.ScopeModel) {
       case s: webapi.models.security.Scope => Scope(s)
+    }
+    platform.registerWrapper(webapi.metamodel.security.OAuth2FlowModel) {
+      case of: webapi.models.security.OAuth2Flow => OAuth2Flow(of)
     }
     platform.registerWrapper(webapi.metamodel.security.SettingsModel) {
       case s: webapi.models.security.Settings => new Settings(s)
@@ -163,6 +170,57 @@ object WebApiRegister {
     }
     platform.registerWrapper(IriTemplateMappingModel) {
       case s: webapi.models.IriTemplateMapping => IriTemplateMapping(s)
+    }
+    platform.registerWrapper(CorrelationIdModel) {
+      case s: webapi.models.CorrelationId => CorrelationId(s)
+    }
+    platform.registerWrapper(Amqp091ChannelBindingModel) {
+      case s: webapi.models.bindings.amqp.Amqp091ChannelBinding => Amqp091ChannelBinding(s)
+    }
+    platform.registerWrapper(Amqp091ChannelExchangeModel) {
+      case s: webapi.models.bindings.amqp.Amqp091ChannelExchange => Amqp091ChannelExchange(s)
+    }
+    platform.registerWrapper(Amqp091QueueModel) {
+      case s: webapi.models.bindings.amqp.Amqp091Queue => Amqp091Queue(s)
+    }
+    platform.registerWrapper(Amqp091MessageBindingModel) {
+      case s: webapi.models.bindings.amqp.Amqp091MessageBinding => Amqp091MessageBinding(s)
+    }
+    platform.registerWrapper(Amqp091OperationBindingModel) {
+      case s: webapi.models.bindings.amqp.Amqp091OperationBinding => Amqp091OperationBinding(s)
+    }
+    platform.registerWrapper(HttpMessageBindingModel) {
+      case s: webapi.models.bindings.http.HttpMessageBinding => HttpMessageBinding(s)
+    }
+    platform.registerWrapper(HttpOperationBindingModel) {
+      case s: webapi.models.bindings.http.HttpOperationBinding => HttpOperationBinding(s)
+    }
+    platform.registerWrapper(KafkaMessageBindingModel) {
+      case s: webapi.models.bindings.kafka.KafkaMessageBinding => KafkaMessageBinding(s)
+    }
+    platform.registerWrapper(KafkaOperationBindingModel) {
+      case s: webapi.models.bindings.kafka.KafkaOperationBinding => KafkaOperationBinding(s)
+    }
+    platform.registerWrapper(MqttMessageBindingModel) {
+      case s: webapi.models.bindings.mqtt.MqttMessageBinding => MqttMessageBinding(s)
+    }
+    platform.registerWrapper(MqttOperationBindingModel) {
+      case s: webapi.models.bindings.mqtt.MqttOperationBinding => MqttOperationBinding(s)
+    }
+    platform.registerWrapper(MqttServerBindingModel) {
+      case s: webapi.models.bindings.mqtt.MqttServerBinding => MqttServerBinding(s)
+    }
+    platform.registerWrapper(MqttServerLastWillModel) {
+      case s: webapi.models.bindings.mqtt.MqttServerLastWill => MqttServerLastWill(s)
+    }
+    platform.registerWrapper(WebSocketsChannelBindingModel) {
+      case s: webapi.models.bindings.websockets.WebSocketsChannelBinding => WebSocketsChannelBinding(s)
+    }
+    platform.registerWrapper(DynamicBindingModel) {
+      case s: webapi.models.bindings.DynamicBinding => DynamicBinding(s)
+    }
+    platform.registerWrapper(EmptyBindingModel) {
+      case s: webapi.models.bindings.EmptyBinding => EmptyBinding(s)
     }
 
     platform.registerValidations(CoreValidations.validations, CoreValidations.levels)

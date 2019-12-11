@@ -58,6 +58,16 @@ object ParserSideValidations extends Validations {
     "Parameter name is required"
   )
 
+  val RequestBodyContentRequired = validation(
+    "content-required",
+    "Request body content is required"
+  )
+
+  val DiscriminatorNameRequired = validation(
+    "discriminator-name-required",
+    "Discriminator property name is required"
+  )
+
   val InvalidServerPath = validation(
     "invalid-server-path",
     "Invalid server path"
@@ -73,9 +83,34 @@ object ParserSideValidations extends Validations {
     "Invalid 'securedBy' type"
   )
 
+  val ScopeNamesMustBeEmpty = validation(
+    "scope-names-must-be-empty",
+    "Scope names must be an empty array"
+  )
+
   val InvalidSecuritySchemeDescribedByType = validation(
     "invalid-security-scheme-described-by-type",
     "Invalid 'describedBy' type, map expected"
+  )
+
+  val InvalidTagType = validation(
+    "invalid-tag-type",
+    "Tag values must be of type string"
+  )
+
+  val InvalidSecuritySchemeObject = validation(
+    "invalid-security-scheme-object",
+    "Invalid security scheme"
+  )
+
+  val InvalidSecurityRequirementObject = validation(
+    "invalid-security-requirement-object",
+    "Invalid security requirement object"
+  )
+
+  val InvalidSecurityRequirementsSeq = validation(
+    "invalid-security-requirements-sequence",
+    "'security' must be an array of security requirements object"
   )
 
   val InvalidEndpointPath = validation(
@@ -156,6 +191,11 @@ object ParserSideValidations extends Validations {
   val InvalidAdditionalPropertiesType = validation(
     "invalid-additional-properties-type",
     "additionalProperties should be a boolean or a map"
+  )
+
+  val InvalidAdditionalItemsType = validation(
+    "invalid-additional-items-type",
+    "additionalItems should be a boolean or a map"
   )
 
   val InvalidTupleType = validation(
@@ -276,6 +316,11 @@ object ParserSideValidations extends Validations {
   val DuplicatedParameters = validation(
     "duplicate-parameters",
     "Sibling parameters must have unique 'name' and 'in' values"
+  )
+
+  val DuplicatedTags = validation(
+    "duplicate-tags",
+    "Sibling tags must have unique names"
   )
 
   val OasInvalidParameterBinding = validation(
@@ -449,9 +494,24 @@ object ParserSideValidations extends Validations {
     "User defined facets must not begin with open parenthesis"
   )
 
+  val InvalidFieldNameInComponents = validation(
+    "invalid-field-name-in-components",
+    "Field name in components must match the following expression: ^[a-zA-Z0-9\\.\\-_]+$"
+  )
+
   val MissingRequiredUserDefinedFacet = validation(
     "missing-user-defined-facet",
     "Type is missing required user defined facet"
+  )
+
+  val ParameterMissingSchemaOrContent = validation(
+    "parameter-missing-schema-or-content",
+    "Parameter must define a 'schema' or 'content' field, but not both"
+  )
+
+  val ServerVariableMissingDefault = validation(
+    "server-variable-missing-default",
+    "Server variable must define a 'default' field"
   )
 
   val UserDefinedFacetMatchesBuiltInFacets = validation(
@@ -469,6 +529,11 @@ object ParserSideValidations extends Validations {
   val SlashInUriParameterValues = validation(
     "slash-in-uri-parameter-value",
     "Values of uri parameter must not contain '/' character"
+  )
+
+  val ItemsFieldRequired = validation(
+    "items-field-required",
+    "'items' field is required when type is array"
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
@@ -528,6 +593,7 @@ object ParserSideValidations extends Validations {
     UnsupportedExampleMediaTypeErrorSpecification,
     OasInvalidBodyParameter,
     DuplicatedParameters,
+    DuplicatedTags,
     PatternPropertiesOnClosedNodeSpecification,
     DiscriminatorOnExtendedUnionSpecification,
     OasFormDataNotFileSpecification,
@@ -544,6 +610,7 @@ object ParserSideValidations extends Validations {
     InvalidAndType,
     InvalidXoneType,
     InvalidAdditionalPropertiesType,
+    InvalidAdditionalItemsType,
     InvalidRequiredArrayForSchemaVersion,
     InvalidRequiredBooleanForSchemaVersion,
     InvalidSchemaType,
@@ -562,7 +629,10 @@ object ParserSideValidations extends Validations {
     SchemaDeprecated,
     UnresolvedParameter,
     ParameterNameRequired,
+    RequestBodyContentRequired,
+    DiscriminatorNameRequired,
     InvalidSecuredByType,
+    ScopeNamesMustBeEmpty,
     InvalidSecuritySchemeDescribedByType,
     InvalidEndpointPath,
     DuplicatedEndpointPath,
@@ -599,8 +669,13 @@ object ParserSideValidations extends Validations {
     InvalidPayload,
     InvalidValueInPropertiesFacet,
     InvalidUserDefinedFacetName,
+    InvalidFieldNameInComponents,
     MissingRequiredUserDefinedFacet,
+    ParameterMissingSchemaOrContent,
+    ServerVariableMissingDefault,
     SlashInUriParameterValues,
-    InvalidDatetimeFormat
+    InvalidDatetimeFormat,
+    ItemsFieldRequired,
+    InvalidTagType
   )
 }

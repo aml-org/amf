@@ -254,6 +254,16 @@ class RamlUniquePlatformExtendsValidationTest extends UniquePlatformReportGenTes
     validate("/extends/uri-parameters/multi-level-endpoints.raml",
              Some("uri-parameters-in-multilevel-rt-with-multilevel-endpoints.report"))
   }
+
+  // Merging security schemes
+  test("Merging security schemes in RAML 0.8"){
+    validate("extends/raml08-with-security-schemes-in-trait.raml")
+  }
+
+  test("Merging security schemes in RAML 1.0"){
+    validate("extends/raml10-with-security-schemes-in-trait.raml")
+  }
+
 }
 
 class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest {
@@ -282,6 +292,14 @@ class RamlMultiPlatformExtendsValidationTest extends MultiPlatformReportGenTest 
 
   test("Inexistent includes") {
     validate("/extends/references/nonExistentIncludes.raml", Some("references/nonExistentIncludes.report"))
+  }
+
+  test("Including and applying non existent resource type") {
+    validate("/resource_types/non-existent-include.raml", Some("/resource-types/non-existent-include.report"))
+  }
+
+  test("Including and applying non existent traits") {
+    validate("/traits/non-existent-include.raml", Some("/traits/non-existent-include.report"))
   }
 
   // Examples validation

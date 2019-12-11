@@ -14,7 +14,7 @@ import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
 import org.yaml.model.YMap
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorResponse
 import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
 import amf.plugins.features.validation.CoreValidations
@@ -49,6 +49,8 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
       case Right(_) =>
         val res = Response()
         adopted(res)
+
+        ctx.closedShape(res.id, map, "response")
 
         map.key("description", ResponseModel.Description in res)
 
@@ -98,14 +100,7 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
         if (ctx.syntax == Oas3Syntax) {
           map.key(
             "content",
-            entry =>
-              entry.value
-                .as[YMap]
-                .entries
-                .foreach { entry =>
-                  val mediaType = ScalarNode(entry.key).text().value.toString
-                  payloads += OasContentParser(entry.value, mediaType, res.withPayload).parse()
-              }
+            entry => payloads ++= OasContentsParser(entry, res.withPayload).parse()
           )
 
           map.key(

@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/upanddown/oas3/invalid-email-address.json
+Profile: OAS 3.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#Organization-email-pattern
+  Message: Field 'email' must be in the format of an email address
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/upanddown/oas3/invalid-email-address.json#/web-api/organization
+  Property: http://a.ml/vocabularies/core#email
+  Position: Some(LexicalInformation([(7,15)-(7,25)]))
+  Location: file://amf-client/shared/src/test/resources/upanddown/oas3/invalid-email-address.json

@@ -22,7 +22,7 @@ declare module 'amf-client-js' {
 
     static oas20Generator(): Oas20Renderer
 
-    // static amfGraphParser(): AmfGraphParser
+    static amfGraphParser(): parse.AmfGraphParser
 
     static amfGraphGenerator(): AmfGraphRenderer
 
@@ -73,8 +73,6 @@ declare module 'amf-client-js' {
     static OAS: MessageStyle
     static AMF: MessageStyle
   }
-
-  export class AmfGraphParser {}
 
   export class AmfGraphRenderer extends render.Renderer {
     constructor()
@@ -127,7 +125,19 @@ declare module 'amf-client-js' {
     constructor(env: client.environment.Environment)
   }
 
+  export class Oas30Parser extends parse.Parser {
+    constructor()
+    constructor(env: client.environment.Environment)
+  }
+
+  export class Oas30YamlParser extends parse.Parser {
+    constructor()
+    constructor(env: client.environment.Environment)
+  }
+
   export class Oas20Renderer extends render.Renderer {}
+
+  export class Oas30Renderer extends render.Renderer {}
 
   export class Oas20Resolver extends resolve.Resolver {}
 
@@ -252,6 +262,8 @@ declare module 'amf-client-js' {
 
         withLoaders(loaders: resource.ResourceLoader[]): Environment
 
+        withClientResolver(clientResolver: remote.ClientReferenceResolver): Environment
+
         static empty(): Environment
 
         static apply(loader: resource.ResourceLoader): Environment
@@ -266,6 +278,18 @@ declare module 'amf-client-js' {
         constructor(stream: string, url: string)
 
         constructor(stream: string, url: string, mime: string)
+      }
+
+      export interface ClientReferenceResolver {
+        fetch(url: string): Promise<CachedReference>
+      }
+
+      export class CachedReference {
+        constructor(url: String, content: model.document.BaseUnit, resolved: Boolean)
+
+        url: string
+        content: model.document.BaseUnit
+        resolved: boolean
       }
     }
 
@@ -378,7 +402,7 @@ declare module 'amf-client-js' {
 
       nonNull: boolean
 
-      toString: string
+      toString(): string
 
       abstract remove(): void
     }
@@ -731,8 +755,11 @@ declare module 'amf-client-js' {
         description: StrField
         defaultValue: DataNode
         defaultValueStr: StrField
+        readOnly: BoolField
+        writeOnly: BoolField
+        deprecated: BoolField
 
-        values: ScalarNode[]
+        values: DataNode[]
         location: string
         inherits: Shape[]
         or: Shape[]
@@ -741,6 +768,12 @@ declare module 'amf-client-js' {
         not: Shape
 
         withName(name: string): this
+
+        withReadOnly(readOnly: boolean): this
+
+        withWriteOnly(writeOnly: boolean): this
+
+        withDeprecated(deprecated: boolean): this
 
         withDisplayName(name: string): this
 
@@ -783,9 +816,6 @@ declare module 'amf-client-js' {
         range: Shape
         minCount: IntField
         maxCount: IntField
-        readOnly: BoolField
-        writeOnly: BoolField
-        deprecated: BoolField
         patternName: StrField
 
         withPath(path: string): this
@@ -795,12 +825,6 @@ declare module 'amf-client-js' {
         withMinCount(min: number): this
 
         withMaxCount(max: number): this
-
-        withReadOnly(readOnly: boolean): this
-
-        withWriteOnly(writeOnly: boolean): this
-
-        withDeprecated(deprecated: boolean): this
 
         withPatternName(pattern: string): this
       }
@@ -995,7 +1019,7 @@ declare module 'amf-client-js' {
         parameters: Parameter[]
         payloads: Payload[]
         servers: Server[]
-        security: ParametrizedSecurityScheme[]
+        security: SecurityRequirement[]
 
         relativePath: string
 
@@ -1015,7 +1039,7 @@ declare module 'amf-client-js' {
 
         withServers(servers: Server[]): this
 
-        withSecurity(security: ParametrizedSecurityScheme[]): this
+        withSecurity(security: SecurityRequirement[]): this
 
         withOperation(method: string): Operation
 
@@ -1024,6 +1048,15 @@ declare module 'amf-client-js' {
         withPayload(name: string): Payload
 
         withServer(url: string): Server
+      }
+
+      export class SecurityRequirement extends DomainElement {
+        name: StrField
+        schemes: ParametrizedSecurityScheme[]
+
+        withName(name: string): this
+        withSchemes(schemes: ParametrizedSecurityScheme[]): this
+        withScheme(): ParametrizedSecurityScheme
       }
 
       export class ParametrizedSecurityScheme extends DomainElement {
@@ -1249,10 +1282,11 @@ declare module 'amf-client-js' {
         minProperties: IntField
         maxProperties: IntField
         closed: BoolField
+        customShapeProperties: PropertyShape[]
+        customShapePropertyDefinitions: PropertyShape[]
         discriminator: StrField
         discriminatorValue: StrField
         properties: PropertyShape[]
-        additionalPropertiesSchema: Shape
         dependencies: PropertyDependencies[]
 
         withMinProperties(min: number): this
@@ -1260,6 +1294,14 @@ declare module 'amf-client-js' {
         withMaxProperties(max: number): this
 
         withClosed(closed: boolean): this
+
+        withCustomShapeProperty(name: string): PropertyShape
+
+        withCustomShapeProperties(properties: PropertyShape[]): this
+
+        withCustomShapePropertyDefinition(name: string): PropertyShape
+
+        withCustomShapePropertyDefinitions(properties: PropertyShape[]): this
 
         withDiscriminator(discriminator: string): this
 
@@ -1349,9 +1391,17 @@ declare module 'amf-client-js' {
       }
 
       export class OAuth2Settings extends Settings {
+        authorizationGrants: StrField[]
+        flows: OAuth2Flow[]
+
+        withAuthorizationGrants(grants: string[]): this
+
+        withFlows(flows: OAuth2Flow[]): this
+      }
+
+      export class OAuth2Flow extends Settings {
         authorizationUri: StrField
         accessTokenUri: StrField
-        authorizationGrants: StrField[]
         flow: StrField
         refreshUri: StrField
         scopes: Scope[]
@@ -1359,8 +1409,6 @@ declare module 'amf-client-js' {
         withAuthorizationUri(uri: string): this
 
         withAccessTokenUri(token: string): this
-
-        withAuthorizationGrants(grants: string[]): this
 
         withFlow(flow: string): this
 
@@ -1427,8 +1475,9 @@ declare module 'amf-client-js' {
         accepts: StrField[]
         contentType: StrField[]
         request: Request
+        requests: Request[]
         responses: Response[]
-        security: ParametrizedSecurityScheme[]
+        security: SecurityRequirement[]
         callbacks: Callback[]
         servers: Server[]
 
@@ -1450,11 +1499,13 @@ declare module 'amf-client-js' {
 
         withContentType(contentType: string[]): this
 
+        withRequests(requests: Request[]): this
+
         withRequest(request: Request): this
 
         withResponses(responses: Response[]): this
 
-        withSecurity(security: ParametrizedSecurityScheme[]): this
+        withSecurity(security: SecurityRequirement[]): this
 
         withCallbacks(callbacks: Callback[]): this
 
@@ -1659,8 +1710,8 @@ declare module 'amf-client-js' {
 
         constructor(value: string, dataType: string)
 
-        value: string
-        dataType: string
+        value: StrField
+        dataType: StrField
 
         toString(): string
 
@@ -1687,7 +1738,7 @@ declare module 'amf-client-js' {
         license: License
         documentations: CreativeWork[]
         servers: Server[]
-        security: ParametrizedSecurityScheme[]
+        security: SecurityRequirement[]
 
         withName(name: string): this
 
@@ -1713,7 +1764,7 @@ declare module 'amf-client-js' {
 
         withServers(servers: Server[]): this
 
-        withSecurity(security: ParametrizedSecurityScheme[]): this
+        withSecurity(security: SecurityRequirement[]): this
 
         withDocumentationTitle(title: string): CreativeWork
 
@@ -1835,6 +1886,11 @@ declare module 'amf-client-js' {
       reportValidation(profileName: string, messageStyle: string): Promise<client.validate.ValidationReport>
 
       reportCustomValidation(profileName: string, customProfilePath: string): Promise<client.validate.ValidationReport>
+    }
+
+    export class AmfGraphParser extends parse.Parser {
+      constructor()
+      constructor(env: client.environment.Environment)
     }
   }
 

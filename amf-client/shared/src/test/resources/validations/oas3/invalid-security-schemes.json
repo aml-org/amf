@@ -1,0 +1,70 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "security schemes validations",
+    "version": "0.1"
+  },
+  "components": {
+    "securitySchemes": {
+      "invalid-noType": {
+        "openIdConnectUrl": "https://test.com/"
+      },
+      "invalid-httpType": {
+        "type": "http",
+        "bearerFormat": "JWT"
+      },
+      "invalid-apiKeyType": {
+        "type": "apiKey"
+      },
+      "invalid-openIdConnectType": {
+        "type": "openIdConnect"
+      },
+      "invalid-oauth2Type": {
+        "type": "oauth2"
+      },
+      "valid-openIdConnectType": {
+        "type": "openIdConnect",
+        "openIdConnectUrl": "https://test.com/"
+      },
+      "valid-apiKeyType": {
+        "type": "apiKey",
+        "name": "example",
+        "in": "query"
+      },
+      "valid-httpType": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "valid-oauth2Type": {
+        "type": "oauth2",
+        "flows": {
+          "implicit": {
+            "authorizationUrl": "https://example.com/api/oauth/dialog",
+            "refreshUrl": "https://example.com",
+            "scopes": {
+              "write:pets": "modify pets in your account",
+              "read:pets": "read your pets"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "valid-openIdConnectType": ["some:scope"]
+    },
+    {
+      "valid-apiKeyType": []
+    },
+    {
+      "valid-httpType": []
+    },
+    {
+      "valid-oauth2Type": ["write:pets"]
+    }
+  ],
+  "paths": {}
+
+}

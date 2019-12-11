@@ -59,14 +59,15 @@
                     "@id": "#14",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "200"
                       }
@@ -85,7 +86,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/linked_4",
+                            "@id": "#1/link--796710469",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -167,14 +168,15 @@
                     "@id": "#27",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "200"
                       }
@@ -193,7 +195,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/linked_5",
+                            "@id": "#1/link--796710469",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -275,14 +277,15 @@
                     "@id": "#17",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "200"
                       }
@@ -301,7 +304,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#1/linked_6",
+                            "@id": "#1/link--796710469",
                             "@type": [
                               "shacl:NodeShape",
                               "raml-shapes:AnyShape",
@@ -383,14 +386,15 @@
                     "@id": "#33",
                     "@type": [
                       "apiContract:Response",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
-                    "core:name": [
+                    "apiContract:statusCode": [
                       {
                         "@value": "200"
                       }
                     ],
-                    "apiContract:statusCode": [
+                    "core:name": [
                       {
                         "@value": "200"
                       }
@@ -645,7 +649,7 @@
                                 ],
                                 "doc:raw": [
                                   {
-                                    "@value": "{\n                \"prop1\": \"something\",\n                \"prop2\": 20\n              }"
+                                    "@value": "\"prop1\": \"something\"\n\"prop2\": 20"
                                   }
                                 ],
                                 "smaps": {
@@ -722,6 +726,11 @@
     "doc:version": [
       {
         "@value": "2.0.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
       }
     ],
     "doc:declares": [
@@ -967,7 +976,7 @@
             ],
             "doc:raw": [
               {
-                "@value": "{\n        \"prop1\": \"John Doe\",\n        \"prop2\": 1\n      }"
+                "@value": "\"prop1\": \"John Doe\"\n\"prop2\": 1"
               }
             ],
             "smaps": {
@@ -1086,7 +1095,7 @@
             ],
             "doc:raw": [
               {
-                "@value": "{\n                \"prop1\": \"example5\",\n                \"prop2\": 5\n              }"
+                "@value": "\"prop1\": \"example5\"\n\"prop2\": 5"
               }
             ],
             "smaps": {
@@ -1208,7 +1217,7 @@
             ],
             "doc:raw": [
               {
-                "@value": "{\n                \"prop1\": \"resource example\",\n                \"prop2\": 10\n              }"
+                "@value": "\"prop1\": \"resource example\"\n\"prop2\": 10"
               }
             ],
             "smaps": {

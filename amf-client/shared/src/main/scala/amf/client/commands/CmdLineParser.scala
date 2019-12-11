@@ -20,7 +20,7 @@ object CmdLineParser {
   }
 
   val parser: OptionParser[ParserConfig] = new scopt.OptionParser[ParserConfig]("amf") {
-    head("Anything Modeling Framework", "3.X")
+    head("Anything Modeling Framework", "4.X")
 
     arg[String]("<file_in> [<file_out>]")
       .unbounded()

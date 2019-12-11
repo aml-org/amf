@@ -11,6 +11,8 @@ import scala.compat.java8.FutureConverters._
 import scala.compat.java8.OptionConverters._
 import scala.concurrent.Future
 
+import scala.language.implicitConversions
+
 private[amf] trait NativeOpsFromJvm extends NativeOps {
 
   override implicit def toNativeOption[E](client: ClientOption[E]): NativeOption[E]    = new JvmNativeOption[E](client)

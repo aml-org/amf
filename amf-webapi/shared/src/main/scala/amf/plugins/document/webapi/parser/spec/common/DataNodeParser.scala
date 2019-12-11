@@ -131,10 +131,9 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
     s"[(${range.lineFrom},${range.columnFrom})-(${range.lineTo},${range.columnTo})]"
 
   def parseIncludedAST(raw: String, node: YNode): DataNode = {
-    YamlParser(raw, node.sourceName).withIncludeTag("!include").parse().find(_.isInstanceOf[YNode]) match {
-      case Some(node: YNode) => DataNodeParser(node, parameters, parent, idCounter).parse()
-      case _                 => ScalarNode(raw, Some(DataType.String)).withId(parent.getOrElse("") + "/included")
-    }
+    val n = YamlParser(raw, node.sourceName).withIncludeTag("!include").document().node
+    if (n.isNull) ScalarNode(raw, Some(DataType.String)).withId(parent.getOrElse("") + "/included")
+    else DataNodeParser(n, parameters, parent, idCounter).parse()
   }
 
   /**
@@ -185,6 +184,6 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
 }
 
 object DataNodeParser {
-  def parse(parent: Option[String])(node: YNode)(implicit ctx: WebApiContext): DataNode =
-    DataNodeParser(node, parent = parent).parse()
+  def parse(parent: Option[String], idCounter: IdCounter)(node: YNode)(implicit ctx: WebApiContext): DataNode =
+    DataNodeParser(node, parent = parent, idCounter = idCounter).parse()
 }

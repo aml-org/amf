@@ -41,7 +41,7 @@
         "allowEmptyValue": true,
         "allowReserved": true,
         "examples": {
-          "example": {
+          "default": {
             "value": {
               "lat": 5,
               "long": 4
@@ -64,6 +64,37 @@
                   "type": "number"
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "headers": {
+      "Other-Header": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "required": [
+                "lat",
+                "long"
+              ],
+              "properties": {
+                "lat": {
+                  "type": "number"
+                },
+                "long": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "examples": {
+          "default": {
+            "value": {
+              "lat": 5,
+              "long": 4
             }
           }
         }

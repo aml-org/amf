@@ -45,7 +45,7 @@ class JsonSchemaWebApiContext(loc: String,
                               parserCount: Option[Int] = None,
                               override val eh: Option[ErrorHandler] = None)
     extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
-  override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
+  override val factory: OasSpecVersionFactory = Oas3VersionFactory(this)
   override val syntax: SpecSyntax             = Oas3Syntax
   override val vendor: Vendor                 = JsonSchema
   override val linkTypes: Boolean = wrapped match {
@@ -120,26 +120,16 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   private def getYNode(inputFragment: Fragment, ctx: WebApiContext): YNode = {
     inputFragment match {
       case fragment: ExternalFragment =>
-        fragment.encodes.parsed.getOrElse {
+        fragment.encodes.parsed.getOrElse(
           JsonParser
             .withSource(fragment.encodes.raw.value(), fragment.location().getOrElse(""))(ctx)
-            .parse(keepTokens = true)
-            .head match {
-            case doc: YDocument => doc.node
-            case _ =>
-              ctx.violation(UnableToParseJsonSchema,
-                            inputFragment,
-                            None,
-                            "Cannot parse JSON Schema from unit with missing syntax information")
-              YNode(YMap(IndexedSeq(), ""))
-          }
-        }
+            .document()
+            .node)
+
       case fragment: RecursiveUnit if fragment.raw.isDefined =>
         JsonParser
           .withSource(fragment.raw.get, fragment.location().getOrElse(""))(ctx)
-          .parse(keepTokens = true)
-          .head
-          .asInstanceOf[YDocument]
+          .document()
           .node
       case _ =>
         ctx.violation(UnableToParseJsonSchema,

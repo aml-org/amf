@@ -54,6 +54,7 @@
                     "@id": "#17",
                     "@type": [
                       "apiContract:Request",
+                      "apiContract:Message",
                       "doc:DomainElement"
                     ],
                     "apiContract:payload": [
@@ -70,7 +71,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#9/linked_1",
+                            "@id": "#9/link--2121985213",
                             "@type": [
                               "raml-shapes:UnionShape",
                               "raml-shapes:AnyShape",
@@ -106,6 +107,9 @@
                   }
                 ],
                 "smaps": {
+                  "synthesized-field": {
+                    "apiContract:expects": "true"
+                  },
                   "lexical": {
                     "#16": "[(24,2)-(27,24)]"
                   }
@@ -134,6 +138,11 @@
     "doc:version": [
       {
         "@value": "2.0.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
       }
     ],
     "doc:declares": [

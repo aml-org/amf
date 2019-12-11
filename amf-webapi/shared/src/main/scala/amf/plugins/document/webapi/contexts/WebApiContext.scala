@@ -5,7 +5,7 @@ import amf.core.model.domain.Shape
 import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.contexts.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
@@ -316,7 +316,7 @@ class Oas2WebApiContext(loc: String,
                         parserCount: Option[Int] = None,
                         override val eh: Option[ErrorHandler] = None)
     extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
-  override val factory: Oas2VersionFactory = Oas2VersionFactory()(this)
+  override val factory: Oas2VersionFactory = Oas2VersionFactory(this)
   override val vendor: Vendor              = Oas20
   override val syntax: SpecSyntax          = Oas2Syntax
 }
@@ -328,7 +328,7 @@ class Oas3WebApiContext(loc: String,
                         parserCount: Option[Int] = None,
                         override val eh: Option[ErrorHandler] = None)
     extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
-  override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
+  override val factory: Oas3VersionFactory = Oas3VersionFactory(this)
   override val vendor: Vendor              = Oas30
   override val syntax: SpecSyntax          = Oas3Syntax
 }
