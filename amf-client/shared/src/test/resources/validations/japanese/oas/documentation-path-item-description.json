@@ -1,0 +1,21 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "AnAPI",
+    "version": "1.0.1"
+  },
+  "paths": {
+    "/ペット": {
+      "get": {
+        "description": "IDに基づいてペットを返します",
+        "summary": "IDでペットを見つける",
+        "operationId": "IDでペットを取得する",
+        "responses": {
+          "200": {
+            "description": "ペットのリスト。"
+          }
+        }
+      }
+    }
+  }
+}

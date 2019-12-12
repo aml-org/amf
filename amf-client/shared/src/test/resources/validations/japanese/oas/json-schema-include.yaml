@@ -1,0 +1,29 @@
+openapi: 3.0.0
+info:
+  version: 0.0.0
+  title: Links example
+paths:
+  /users:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID of the created user.
+components:
+  schemas:
+    User:
+      $ref: ../jsonスキーマ/人.json

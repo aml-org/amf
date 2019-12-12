@@ -1,0 +1,29 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "サンプルペットストアアプリ",
+    "version": "1.0.1"
+  },
+  "servers": [
+    {
+      "url": "https://{ユーザー名}.gigantic-server.com:{port}/{ベースパス}",
+      "description": "実稼働APIサーバー",
+      "variables": {
+        "ユーザー名": {
+          "default": "デモ",
+          "description": "この値は、サービスプロバイダー、この例では「gigantic-server.com」によって割り当てられます"
+        },
+        "port": {
+          "enum": [
+            "8443",
+            "443"
+          ],
+          "default": "8443"
+        },
+        "ベースパス": {
+          "default": "v2"
+        }
+      }
+    }
+  ]
+}

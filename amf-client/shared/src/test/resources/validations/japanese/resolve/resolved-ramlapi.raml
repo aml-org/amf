@@ -1,0 +1,150 @@
+#%RAML 1.0
+title: エンドツーエンドのテスト日本サポート
+documentation:
+  -
+    title: 法的通知
+    content: |
+      # 契約の一般条件：
+      **ユーザー条件**
+      _ユーザーは以下を引き受け、コミットします。_
+      1. 違法な目的または効果のために、サイトまたはサイトを通じて提供されるサービスを使用しないでください。
+      2. サイトで見つかったデータを破壊、変更、または損傷しないでください。
+      **外部リンク**
+      このWebサイトは、次のような他の自社およびサードパーティのWebサイトへのリンクを提供します。
+      - ブログ
+      - 道具
+      - 資源
+types:
+  File:
+    type: file
+    fileTypes:
+      - "*/*"
+      - 画像/png
+      - 画像/jpeg
+      - 画像/gif
+  ユーザーID:
+    type: string
+    example: ジョン.ドウ
+  ユーザーアカウント:
+    type: string
+    enum:
+      - 個人的な
+      - 会社
+      - グルパル
+    example: 個人的な
+  ユーザー:
+    example:
+      画像:
+        - ファイル名
+      メンバーシップ: 個人的な
+    additionalProperties: true
+    properties:
+      画像:
+        items:
+          type: file
+          fileTypes:
+            - "*/*"
+            - 画像/png
+            - 画像/jpeg
+            - 画像/gif
+        required: true
+      メンバーシップ:
+        anyOf:
+          -
+            type: string
+            enum:
+              - 個人的な
+              - 会社
+              - グルパル
+            example: 個人的な
+          -
+            type: object
+            (amf-recursive): amf://id#14
+        required: true
+securitySchemes:
+  基本的な:
+    description: このAPIは基本認証をサポートしています。
+    type: OAuth 1.0
+    settings:
+      requestTokenUri: https://api.dropbox.com/1/oauth/request_token
+      authorizationUri: https://www.dropbox.com/1/oauth/authorize
+      tokenCredentialsUri: https://www.dropbox.com/1/oauth/authorize
+/ユーザー:
+  post:
+    headers:
+      認可:
+        example: 無記名 f7f7bffc-01af-4d40
+        type: string
+    body:
+      application/json:
+        example:
+          画像:
+            - ファイル名
+          メンバーシップ: 個人的な
+        additionalProperties: true
+        properties:
+          画像:
+            items:
+              type: file
+              fileTypes:
+                - "*/*"
+                - 画像/png
+                - 画像/jpeg
+                - 画像/gif
+            required: true
+          メンバーシップ:
+            anyOf:
+              -
+                type: string
+                enum:
+                  - 個人的な
+                  - 会社
+                  - グルパル
+                example: 個人的な
+              -
+                type: object
+                (amf-recursive): amf://id#14
+            required: true
+    securedBy:
+      - 基本的な
+/ユーザー/{ユーザーID}:
+  get:
+    responses:
+      "201":
+        body:
+          application/json:
+            example:
+              画像:
+                - ファイル名
+              メンバーシップ: 個人的な
+            additionalProperties: true
+            properties:
+              画像:
+                items:
+                  type: file
+                  fileTypes:
+                    - "*/*"
+                    - 画像/png
+                    - 画像/jpeg
+                    - 画像/gif
+                required: true
+              メンバーシップ:
+                anyOf:
+                  -
+                    type: string
+                    enum:
+                      - 個人的な
+                      - 会社
+                      - グルパル
+                    example: 個人的な
+                  -
+                    type: object
+                    (amf-recursive): amf://id#14
+                required: true
+    (amf-baseUriParameters):
+      ユーザーID?:
+        default: ジョン.ドウ
+        type: string
+        example: ジョン.ドウ
+    securedBy:
+      - 基本的な

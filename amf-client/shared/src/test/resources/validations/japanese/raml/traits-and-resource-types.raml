@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  コレクション:
+    usage: このresourceTypeは、アイテムのコレクションに使用する必要があります
+    description: のコレクション <<resourcePathName>>
+    get:
+      description: すべて取得 <<resourcePathName>>, オプションでフィルタリング
+    post:
+      description: オプションでフィルタリング <<resourcePathName | !singularize>>
+traits:
+  安全な:
+    usage: セキュリティで保護する必要がある任意の方法にこれを適用します
+    description: 一部の要求には認証が必要です。
+    headers:
+      アクセストークン:
+        description: アクセストークン
+        example: 5757gh76
+        required: true
+/ユーザー:
+  type: コレクション
+  is: [ 安全な ]
+  post:  # this method is also secured
