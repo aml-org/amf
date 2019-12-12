@@ -12,6 +12,13 @@ trait AMLResponseObject extends DialectNode {
 
   def versionProperties: Seq[PropertyMapping]
 
+  val statusCodeProperty: PropertyMapping = PropertyMapping()
+    .withId(OasBaseDialect.DialectLocation + "#/declarations/ResponseObject/statusCode")
+    .withName("statusCode")
+    .withMinCount(1)
+    .withNodePropertyMapping(ResponseModel.StatusCode.value.iri())
+    .withLiteralRange(xsdString.iri())
+
   override def properties: Seq[PropertyMapping] = versionProperties ++ Seq(
     PropertyMapping()
       .withId(OasBaseDialect.DialectLocation + "#/declarations/ResponseObject/description")
@@ -19,12 +26,7 @@ trait AMLResponseObject extends DialectNode {
       .withMinCount(1)
       .withNodePropertyMapping(ResponseModel.Description.value.iri())
       .withLiteralRange(xsdString.iri()),
-    PropertyMapping()
-      .withId(OasBaseDialect.DialectLocation + "#/declarations/ResponseObject/statusCode")
-      .withName("statusCode")
-      .withMinCount(1)
-      .withNodePropertyMapping(ResponseModel.StatusCode.value.iri())
-      .withLiteralRange(xsdString.iri())
+    statusCodeProperty
   )
 }
 
