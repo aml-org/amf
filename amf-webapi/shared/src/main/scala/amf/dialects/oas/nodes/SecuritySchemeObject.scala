@@ -28,16 +28,22 @@ object Oas20SecuritySchemeObject extends DialectNode {
   )
 }
 
-object ApiKeySecuritySchemeObject extends DialectNode {
+trait ApiKeySecuritySchemeObject extends DialectNode {
   override def name: String            = "ApiKeySecurityScheme"
   override def nodeTypeMapping: String = ApiKeySettingsModel.`type`.head.iri()
-  override def properties: Seq[PropertyMapping] = Oas20SecuritySchemeObject.properties ++ Seq(
+  def specProperties: Seq[PropertyMapping]
+  override def properties: Seq[PropertyMapping] = Oas20SecuritySchemeObject.properties ++ specProperties ++ Seq(
     PropertyMapping()
       .withId(OAS20Dialect.DialectLocation + "#/declarations/ApiKeySecurityScheme/Settings/Name")
       .withName("name")
       .withMinCount(1)
       .withNodePropertyMapping(ApiKeySettingsModel.Name.value.iri())
-      .withLiteralRange(xsdString.iri()),
+      .withLiteralRange(xsdString.iri())
+  )
+}
+
+object Oas20ApiKeySecuritySchemeObject extends ApiKeySecuritySchemeObject {
+  override def specProperties: Seq[PropertyMapping] = Seq(
     PropertyMapping()
       .withId(OAS20Dialect.DialectLocation + "#/declarations/ApiKeySecurityScheme/Settings/In")
       .withName("in")
@@ -52,22 +58,28 @@ object ApiKeySecuritySchemeObject extends DialectNode {
   )
 }
 
+object Oas30ApiKeySecuritySchemeObject extends ApiKeySecuritySchemeObject {
+  override def specProperties: Seq[PropertyMapping] = Seq(
+    PropertyMapping()
+      .withId(OAS30Dialect.DialectLocation + "#/declarations/ApiKeySecurityScheme/Settings/In")
+      .withName("in")
+      .withMinCount(1)
+      .withEnum(
+        Seq(
+          "query",
+          "header",
+          "cookie"
+        ))
+      .withNodePropertyMapping(ApiKeySettingsModel.In.value.iri())
+      .withLiteralRange(xsdString.iri())
+  )
+}
+
 trait Oauth2Properties {
-  val oauth2Properties: Seq[PropertyMapping] = {
+  def flowProperty: PropertyMapping
+  def oauth2Properties: Seq[PropertyMapping] = {
     Oas20SecuritySchemeObject.properties ++ Seq(
-      PropertyMapping()
-        .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/flow")
-        .withName("flow")
-        .withMinCount(1)
-        .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
-        .withEnum(
-          Seq(
-            "implicit",
-            "password",
-            "application",
-            "accessCode"
-          ))
-        .withLiteralRange(xsdString.iri()),
+      flowProperty,
       PropertyMapping()
         .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/authorizationUrl")
         .withName("authorizationUrl")
@@ -93,12 +105,42 @@ object Oauth2SecuritySchemeObject extends DialectNode with Oauth2Properties {
   override def name: String                     = "Oauth2SecurityScheme"
   override def nodeTypeMapping: String          = OAuth2SettingsModel.`type`.head.iri()
   override def properties: Seq[PropertyMapping] = oauth2Properties
+
+  override def flowProperty: PropertyMapping =
+    PropertyMapping()
+      .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/flow")
+      .withName("flow")
+      .withMinCount(1)
+      .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
+      .withEnum(
+        Seq(
+          "implicit",
+          "password",
+          "application",
+          "accessCode"
+        ))
+      .withLiteralRange(xsdString.iri())
 }
 
 object Oauth2FlowObject extends DialectNode with Oauth2Properties {
   override def name: String                     = "Oauth2FlowScheme"
   override def nodeTypeMapping: String          = OAuth2FlowModel.`type`.head.iri()
   override def properties: Seq[PropertyMapping] = oauth2Properties
+
+  override def flowProperty: PropertyMapping =
+    PropertyMapping()
+      .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/flow")
+      .withName("flow")
+      .withMinCount(1)
+      .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
+      .withEnum(
+        Seq(
+          "implicit",
+          "password",
+          "clientCredentials",
+          "authorizationCode"
+        ))
+      .withLiteralRange(xsdString.iri())
 }
 
 object Oas30SecuritySchemeObject extends DialectNode {

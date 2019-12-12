@@ -34,7 +34,7 @@ object OAS20Dialect extends OasBaseDialect {
         Oauth2SecuritySchemeObject,
         Oauth2FlowObject,
         Oas20ScopeObject,
-        ApiKeySecuritySchemeObject,
+        Oas20ApiKeySecuritySchemeObject,
         AMLContactObject,
         AMLExampleObject,
         AMLExternalDocumentationObject,

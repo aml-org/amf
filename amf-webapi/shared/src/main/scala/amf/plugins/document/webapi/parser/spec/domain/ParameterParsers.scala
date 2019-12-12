@@ -615,7 +615,7 @@ object Oas3ParameterParser {
     map.key("style") match {
       case Some(entry) =>
         result.fields.setWithoutId(ParameterModel.Style,
-                                   AmfScalar(entry.value.as[String]),
+                                   AmfScalar(entry.value.asScalar.map(_.text).getOrElse(""), Annotations(entry.value)),
                                    Annotations(entry) += ExplicitField())
       case None =>
         val defValue: Option[String] = result.binding.option() match {
