@@ -322,7 +322,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       .key("$ref")
       .flatMap { e =>
         e.value.tagType match {
-          case YType.Null => None // we dont have to register violation because web api reference handler already do it
+          case YType.Null => Some(AnyShape(e))
           case _ =>
             val ref: String = e.value
             val text        = OasDefinitions.stripDefinitionsPrefix(ref)

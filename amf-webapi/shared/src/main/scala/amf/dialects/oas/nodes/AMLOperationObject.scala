@@ -55,7 +55,7 @@ trait AMLOperationObject extends DialectNode {
       .withObjectRange(
         Seq(
           Oas20SecuritySchemeObject.id,
-          ApiKeySecuritySchemeObject.id,
+          Oas20ApiKeySecuritySchemeObject.id,
           Oauth2SecuritySchemeObject.id
         ))
   )
