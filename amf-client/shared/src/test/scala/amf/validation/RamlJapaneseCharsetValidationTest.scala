@@ -7,71 +7,71 @@ class RamlJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   override val hint: Hint          = RamlYamlHint
 
   test("Documentation title and content") {
-    validate("documentation_title_content.raml")
+    validate("documentation-title-content.raml")
   }
 
   test("Documentation baseUriParameters description") {
-    validate("documentation_base_uri_params.raml")
+    validate("documentation-base-uri-params.raml")
   }
 
   test("Documentation resource description") {
-    validate("documentation_resource_description.raml")
+    validate("documentation-resource-description.raml")
   }
 
   test("Documentation resource display names") {
-    validate("documentation_resource_display_names.raml")
+    validate("documentation-resource-display-names.raml")
   }
 
   test("Documentation security schemes description") {
-    validate("documentation_security_schemes.raml")
+    validate("documentation-security-schemes.raml")
   }
 
   test("Documentation security schemes header description") {
-    validate("documentation_security_schemes_headers.raml")
+    validate("documentation-security-schemes-headers.raml")
   }
 
   test("Documentation security schemes query params") {
-    validate("documentation_security_schemes_query_params.raml")
+    validate("documentation-security-schemes-query-params.raml")
   }
 
   test("Documentation comment inline") {
-    validate("documentation_comment_inline.raml")
+    validate("documentation-comment-inline.raml")
   }
 
   test("Documentation comment single line") {
-    validate("documentation_comment_single_line.raml")
+    validate("documentation-comment-single-line.raml")
   }
 
   test("Documentation library usage") {
-    validate("documentation_library_usage.raml")
+    validate("documentation-library-usage.raml")
   }
 
   test("Facet string pattern valid") {
-    validate("facet_string_pattern_valid.raml")
+    validate("facet-string-pattern-valid.raml")
   }
 
   test("Facet string pattern invalid") {
-    validate("facet_string_pattern_invalid.raml", Some("facet_string_pattern_invalid.report"))
+    validate("facet-string-pattern-invalid.raml", Some("facet-string-pattern-invalid.report"))
   }
 
   test("Facet string min length valid") {
-    validate("facet_string_length_valid.raml")
+    validate("facet-string-length-valid.raml")
   }
 
   test("Facet string min length invalid") {
-    validate("facet_string_length_invalid.raml", Some("facet_string_length_invalid.report"))
+    validate("facet-string-length-invalid.raml", Some("facet-string-length-invalid.report"))
   }
 
   test("Complex type with object type") {
-    validate("complex_type.raml")
+    validate("complex-type.raml")
   }
 
   test("JSON Schema include") {
-    validate("json_schema_include.raml")
+    validate("json-schema-include.raml")
   }
 
   test("Full API check") {
-    validate("full_check.raml")
+    validate("full-check.raml")
   }
 
   test("Annotations") {
@@ -79,6 +79,14 @@ class RamlJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Root title") {
-    validate("root_title.raml")
+    validate("root-title.raml")
+  }
+
+  test("Optional parameters") {
+    validate("optional-parameters.raml")
+  }
+
+  test("Declaring traits and resource types") {
+    validate("traits-and-resource-types.raml")
   }
 }

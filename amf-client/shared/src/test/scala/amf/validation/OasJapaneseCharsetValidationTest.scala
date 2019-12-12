@@ -10,31 +10,31 @@ class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   override val hint: Hint          = OasYamlHint
 
   test("Documentation server params") {
-    validate("documentation_server_params.json")
+    validate("documentation-server-params.json")
   }
 
   test("Documentation path and response description") {
-    validate("documentation_path_and_response_description.json")
+    validate("documentation-path-and-response-description.json")
   }
 
   test("Documentation path item description") {
-    validate("documentation_path_item_description.json")
+    validate("documentation-path-item-description.json")
   }
 
   test("Documentation security schemes") {
-    validate("documentation_security_schemes.json")
+    validate("documentation-security-schemes.json")
   }
 
   test("Facet string pattern valid") {
-    validate("facet_string_pattern_valid.yaml")
+    validate("facet-string-pattern-valid.yaml")
   }
 
   test("Facet string pattern invalid") {
-    validate("facet_string_pattern_invalid.yaml", Some("facet_string_pattern_invalid.report"))
+    validate("facet-string-pattern-invalid.yaml", Some("facet-string-pattern-invalid.report"))
   }
 
   test("Facet string length valid") {
-    validate("facet_string_length_valid.yaml")
+    validate("facet-string-length-valid.yaml")
   }
 
   test("Extensions") {
@@ -42,18 +42,18 @@ class OasJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   }
 
   test("Security definitions") {
-    validate("security_definitions.yaml")
+    validate("security-definitions.yaml")
   }
 
   test("Full API check") {
-    validate("full_check.json")
+    validate("full-check.json")
   }
 
   test("JSON Schema include") {
-    validate("json_schema_include.yaml")
+    validate("json-schema-include.yaml")
   }
 
   test("Documentation info") {
-    validate("documentation_info.json")
+    validate("documentation-info.json")
   }
 }
