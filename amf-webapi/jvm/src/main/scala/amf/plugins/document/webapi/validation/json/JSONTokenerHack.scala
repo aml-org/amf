@@ -1,8 +1,8 @@
-package amf.plugins.document.webapi.validation.remote
+package amf.plugins.document.webapi.validation.json
 
 import java.lang
 
-import org.json.{JSONArray, JSONObject, JSONTokener}
+import org.json.JSONTokener
 
 import scala.util.matching.Regex
 
@@ -63,7 +63,7 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
   private def stringToValue(string: String): Object = string match {
     case ci"true"  => java.lang.Boolean.TRUE
     case ci"false" => java.lang.Boolean.FALSE
-    case ci"null"  => JSONObject.NULL
+    case ci"null"  => org.json.JSONObject.NULL
     case _ =>
       numberOption(string) match {
         case Some(o) => o

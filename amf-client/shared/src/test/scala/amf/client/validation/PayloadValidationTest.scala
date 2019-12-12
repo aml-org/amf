@@ -2,7 +2,7 @@ package amf.client.validation
 
 import amf.client.convert.NativeOps
 import amf.client.model.DataTypes
-import amf.client.model.domain.ScalarShape
+import amf.client.model.domain.{ArrayShape, NodeShape, ScalarShape}
 import amf.core.AMF
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import org.scalatest.AsyncFunSuite
@@ -40,6 +40,54 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps {
         .validate("application/yaml", "true")
         .asFuture
         .map(r => assert(r.conforms))
+    }
+  }
+
+  test("Invalid trailing coma in json object payload") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+
+      val s     = new ScalarShape().withDataType(DataTypes.String)
+      val shape = new NodeShape().withName("person")
+      shape.withProperty("someString").withRange(s)
+
+      val payload =
+        """
+          |{
+          |  "someString": "invalid string value",
+          |}
+        """.stripMargin
+
+      shape
+        .payloadValidator("application/json")
+        .asOption
+        .get
+        .validate("application/json", payload)
+        .asFuture
+        .map(r => assert(!r.conforms))
+    }
+  }
+
+  test("Invalid trailing coma in json array payload") {
+    amf.Core.init().asFuture.flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+
+      val s     = new ScalarShape().withDataType(DataTypes.String)
+      val array = new ArrayShape().withName("person")
+      array.withItems(s)
+
+      val payload =
+        """
+          |["trailing", "comma",]
+        """.stripMargin
+
+      array
+        .payloadValidator("application/json")
+        .asOption
+        .get
+        .validate("application/json", payload)
+        .asFuture
+        .map(r => assert(!r.conforms))
     }
   }
 
