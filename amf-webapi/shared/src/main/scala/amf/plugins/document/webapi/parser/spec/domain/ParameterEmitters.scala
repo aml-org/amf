@@ -20,6 +20,7 @@ import amf.plugins.document.webapi.contexts.{
   _
 }
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
@@ -313,16 +314,24 @@ case class ParameterEmitter(parameter: Parameter,
                             asHeader: Boolean)(implicit val spec: OasSpecEmitterContext)
     extends PartEmitter {
 
+  private def emitLink(b: PartBuilder): Unit = {
+    val label = parameter.linkTarget match {
+      case Some(e: ErrorParameter) => parameter.linkLabel.value()
+      case _ =>
+        if (asHeader) OasDefinitions.appendOas3ComponentsPrefix(parameter.linkLabel.value(), "headers")
+        else OasDefinitions.appendParameterDefinitionsPrefix(parameter.linkLabel.value())
+    }
+    spec.ref(
+      b,
+      label
+    )
+  }
+
   override def emit(b: PartBuilder): Unit = {
     sourceOr(
       parameter.annotations,
-      if (parameter.isLink) {
-        spec.ref(
-          b,
-          if (asHeader) OasDefinitions.appendOas3ComponentsPrefix(parameter.linkLabel.value(), "headers")
-          else OasDefinitions.appendParameterDefinitionsPrefix(parameter.linkLabel.value())
-        )
-      } else {
+      if (parameter.isLink) emitLink(b)
+      else {
         val result = mutable.ListBuffer[EntryEmitter]()
         val fs     = parameter.fields
 
