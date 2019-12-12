@@ -1,0 +1,99 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "ローンマイクロサービス",
+    "version": "1"
+  },
+  "paths": {
+    "/支店詳細": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "ブランチの詳細を取得しました",
+            "schema": {
+              "$ref": "#/definitions/車両"
+            }
+          }
+        }
+      }
+    },
+    "/ローン申し込み": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ローン申し込み",
+            "description": "ローン申し込みオブジェクトを入力して、ローンの詳細をサービスに保存します",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/車両"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "説明",
+            "schema": {
+              "$ref": "#/definitions/車両"
+            }
+          }
+        }
+      }
+    },
+    "/車両詳細": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "車両の詳細を正常に取得しました",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/車両詳細"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "車両": {
+      "type": "object",
+      "properties": {
+        "約マイル": {
+          "type": "string"
+        },
+        "シティ": {
+          "type": "string"
+        },
+        "推定値": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "車両詳細": {
+          "$ref": "#/definitions/車両詳細"
+        }
+      },
+      "example": {
+        "約マイル": "約マイル",
+        "シティ": "シティ",
+        "推定値": 7
+      }
+    },
+    "車両詳細": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "ビーデン": {
+          "type": "string"
+        }
+      },
+      "example": {
+        "id": "id",
+        "ビーデン": "ビーデン"
+      }
+    }
+  }
+}

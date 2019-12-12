@@ -1,0 +1,125 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "ローンマイクロサービス",
+    "version": "1"
+  },
+  "paths": {
+    "/ビスに保存します": {
+      "post": {
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ローン申し込み",
+            "description": "ローン申し込みオブジェクトを入力して、ローンのDetailsをサービスに保存します",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/LoanApplication"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "説明",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Application"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/常に取得しました": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "VehicleのDetailsを正常に取得しました",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleDetails"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "VehicleDetails": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "ビーデン": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "ビーデン": "ビーデン",
+          "id": "id"
+        }
+      },
+      "Branch": {
+        "type": "object",
+        "properties": {
+          "シティ": {
+            "type": "string"
+          },
+          "状態": {
+            "type": "string"
+          },
+          "通り状態": {
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "シティ": "シティ",
+          "状態": "状態",
+          "通り状態": "通り状態",
+          "zipCode": "zipCode"
+        }
+      },
+      "Application": {
+        "type": "object",
+        "properties": {
+          "ApplicationId": {
+            "type": "string"
+          },
+          "Application状態": {
+            "type": "string"
+          },
+          "ApplicationStatus": {
+            "type": "string"
+          },
+          "Branch": {
+            "$ref": "#/components/schemas/Branch"
+          }
+        },
+        "example": {
+          "Application状態": "Application状態",
+          "Branch": {
+            "zipCode": "zipCode",
+            "シティ": "シティ",
+            "通り状態": "通り状態",
+            "状態": "状態"
+          },
+          "ApplicationStatus": "ApplicationStatus",
+          "ApplicationId": "ApplicationId"
+        }
+      }
+    }
+  }
+}

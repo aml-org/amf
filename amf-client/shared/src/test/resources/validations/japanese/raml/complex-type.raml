@@ -1,0 +1,33 @@
+#%RAML 1.0 Library
+types:
+  ユーザーID:
+    type: string
+    pattern: "([\u30a0-\u30ff])*.([\u30a0-\u30ff])*"
+    example: ジョン.ドウ
+  ユーザーアカウント:
+    type: string
+    enum:
+      - 個人的な
+      - 会社
+      - グルパル
+    example: 個人的な
+  ユーザー:
+    properties:
+      名前:
+        type: string[]
+      画像:
+        type: file
+        fileTypes:
+          - "*/*"
+          - 画像/png
+          - 画像/jpeg
+          - 画像/gif
+      メンバーシップ:
+        type: ユーザー | ユーザーアカウント
+    example:
+      value:
+        名前:
+          - トム
+          - エール
+        画像: ファイル名
+        メンバーシップ: 個人的な

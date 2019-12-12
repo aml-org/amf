@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: Example API
+version: v1
+resourceTypes:
+  コレクション:
+    usage: このresourceTypeは、アイテムのコレクションに <<resourcePathName | !lowercamelcase>>
+    description: のコレクション <<resourcePathName | !lowerunderscorecase>>
+    get:
+      description: すべて取得 <<resourcePathName | !pluralize>>, オプションでフィルタリング
+      queryParameters:
+        limit:
+          type: integer
+          description: このresourceTypeは、アイテムのコレクションに <<resourcePathName | !uppercamelcase>>
+        page:
+          type: string
+          description: このresourceTypeは、アイテムのコレクションに <<resourcePathName | !upperunderscorecase>>
+        from:
+          type: string
+          description: このresourceTypeは、アイテムのコレクションに <<resourcePathName | !lowerhyphencase>>
+        to:
+          type: string
+          description: このresourceTypeは、アイテムのコレクションに <<resourcePathName | !upperhyphencase>>
+    post:
+      description: オプションでフィルタリング <<resourcePathName | !singularize>>
+    put:
+      description: オプションでフィルタリング <<resourcePathName | !uppercase>>
+    delete:
+      description: オプションでフィルタリング <<resourcePathName | !lowercase>>
+/ユーザー:
+  type: コレクション
