@@ -60,6 +60,22 @@ object Oas20ParamObject extends AMLOasParamBaseObject {
 }
 
 trait AMLOas30BaseParamProps extends Oas30ExampleProperty {
+  def styleProp: PropertyMapping =
+    PropertyMapping()
+      .withId(OAS30Dialect.DialectLocation + "#/declarations/ParameterObject/style")
+      .withName("style")
+      .withNodePropertyMapping(ParameterModel.Style.value.iri())
+      .withLiteralRange(xsdString.iri())
+      .withEnum(
+        Seq(
+          "matrix",
+          "label",
+          "form",
+          "simple",
+          "spaceDelimited",
+          "pipeDelimited",
+          "deepObject"
+        )) // todo: handle enum values in custom plugin?
   def specialProps: Seq[PropertyMapping] = Seq(
     PropertyMapping()
       .withId(OAS30Dialect.DialectLocation + "#/declarations/ParameterObject/required")
@@ -77,21 +93,7 @@ trait AMLOas30BaseParamProps extends Oas30ExampleProperty {
       .withName("allowEmptyValue")
       .withNodePropertyMapping(ParameterModel.AllowEmptyValue.value.iri())
       .withLiteralRange(xsdBoolean.iri()),
-    PropertyMapping()
-      .withId(OAS30Dialect.DialectLocation + "#/declarations/ParameterObject/style")
-      .withName("style")
-      .withNodePropertyMapping(ParameterModel.Style.value.iri())
-      .withLiteralRange(xsdString.iri())
-      .withEnum(
-        Seq(
-          "matrix",
-          "label",
-          "form",
-          "simple",
-          "spaceDelimited",
-          "pipeDelimited",
-          "deepObject"
-        )), // todo: handle enum values in custom plugin?
+    styleProp,
     PropertyMapping()
       .withId(OAS30Dialect.DialectLocation + "#/declarations/ParameterObject/explode")
       .withName("explode")

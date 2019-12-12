@@ -105,15 +105,13 @@ case class OasResponseParser(map: YMap, adopted: Response => Unit)(implicit ctx:
 
           map.key(
             "links",
-            entry =>
-              entry.value
+            entry => {
+              val links = entry.value
                 .as[YMap]
                 .entries
-                .foreach { entry =>
-                  val linkName = ScalarNode(entry.key).text().value.toString
-                  OasLinkParser(entry.value, linkName, link => res.add(ResponseModel.Links, link).adopted(res.id))
-                    .parse()
-              }
+                .map(e => OasLinkParser(res.id, e).parse())
+              res.set(ResponseModel.Links, AmfArray(links, Annotations(entry)))
+            }
           )
         }
 
