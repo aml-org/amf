@@ -1,5 +1,6 @@
 package amf.dialects.oas.nodes
 import amf.core.vocabulary.Namespace.XsdTypes.{xsdString, xsdUri}
+import amf.dialects.oas.nodes.Oauth2SecuritySchemeObject.oauth2Properties
 import amf.dialects.{OAS20Dialect, OAS30Dialect}
 import amf.plugins.document.vocabularies.model.domain.{NodeMapping, PropertyMapping}
 import amf.plugins.domain.webapi.metamodel.security._
@@ -109,6 +110,27 @@ object Oauth2SecuritySchemeObject extends DialectNode with Oauth2Properties {
   override def flowProperty: PropertyMapping =
     PropertyMapping()
       .withId(OAS20Dialect.DialectLocation + "#/declarations/Oauth2SecurityScheme/flow")
+      .withName("flow")
+      .withMinCount(1)
+      .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
+      .withEnum(
+        Seq(
+          "implicit",
+          "password",
+          "application",
+          "accessCode"
+        ))
+      .withLiteralRange(xsdString.iri())
+}
+
+object Oas2Oauth2FlowSchemeObject extends DialectNode with Oauth2Properties {
+  override def name: String                     = "Oas2Oauth2FlowSchemeObject"
+  override def nodeTypeMapping: String          = OAuth2FlowModel.`type`.head.iri()
+  override def properties: Seq[PropertyMapping] = oauth2Properties
+
+  override def flowProperty: PropertyMapping =
+    PropertyMapping()
+      .withId(OAS20Dialect.DialectLocation + "#/declarations/Oas2Oauth2FlowSchemeObject/flow")
       .withName("flow")
       .withMinCount(1)
       .withNodePropertyMapping(OAuth2FlowModel.Flow.value.iri())
