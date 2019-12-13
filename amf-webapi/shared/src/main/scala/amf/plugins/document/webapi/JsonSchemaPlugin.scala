@@ -3,57 +3,32 @@ package amf.plugins.document.webapi
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.emitter.{ShapeRenderOptions, RenderOptions}
 import amf.core.metamodel.Obj
 import amf.core.model.document._
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{
-  EmptyFutureDeclarations,
-  ErrorHandler,
-  ParsedReference,
-  ParserContext,
-  Reference,
-  ReferenceHandler,
-  SchemaReference,
-  SimpleReferenceHandler,
-  SyamlParsedDocument
-}
-import amf.core.remote.{JsonSchema, Platform, Vendor}
+import amf.core.parser.{ErrorHandler, SchemaReference, ParsedReference, Reference, ParserContext, ReferenceHandler, SyamlParsedDocument, SimpleReferenceHandler, EmptyFutureDeclarations}
+import amf.core.remote.{JsonSchema, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.annotations.JSONSchemaRoot
 import amf.plugins.document.webapi.contexts._
+import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaWebApiContext, OasWebApiContext}
+import amf.plugins.document.webapi.contexts.parser.raml.Raml08WebApiContext
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.JsonSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
-import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
-import amf.plugins.document.webapi.parser.spec.{OasWebApiDeclarations, SpecSyntax, _}
+import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
-import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
+import amf.plugins.domain.shapes.models.{SchemaShape, AnyShape}
 import amf.validations.ParserSideValidations.UnableToParseJsonSchema
 import org.yaml.model._
 import org.yaml.parser.JsonParser
 
 import scala.concurrent.Future
 
-class JsonSchemaWebApiContext(loc: String,
-                              refs: Seq[ParsedReference],
-                              private val wrapped: ParserContext,
-                              private val ds: Option[OasWebApiDeclarations],
-                              parserCount: Option[Int] = None,
-                              override val eh: Option[ErrorHandler] = None)
-    extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
-  override val factory: OasSpecVersionFactory = Oas3VersionFactory(this)
-  override val syntax: SpecSyntax             = Oas3Syntax
-  override val vendor: Vendor                 = JsonSchema
-  override val linkTypes: Boolean = wrapped match {
-    case _: RamlWebApiContext => false
-    case _: OasWebApiContext  => true // definitions tag
-    case _                    => false
-  } // oas definitions
-}
 
 class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
   override val vendors: Seq[String] = Seq(JsonSchema.name)

@@ -3,17 +3,18 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
 import amf.core.metamodel.Field
 import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.model.domain.{DomainElement, AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, TemplateUri}
-import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, RamlScalarNode}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
-import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
-import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
+import amf.plugins.document.webapi.parser.spec.{toRaml, toOas}
+import amf.plugins.domain.webapi.metamodel.{WebApiModel, ServerModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
 import amf.validations.ParserSideValidations._
-import org.yaml.model.{YMap, YType}
+import org.yaml.model.{YType, YMap}
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
   def parse(): Unit = {

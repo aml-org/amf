@@ -6,31 +6,33 @@ import amf.core.emitter._
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Bool
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, ShapeModel}
+import amf.core.metamodel.domain.{ModelDoc, ShapeModel, ModelVocabularies}
 import amf.core.model.DataType
-import amf.core.model.document.{BaseUnit, EncodesModel, ExternalFragment}
+import amf.core.model.document.{EncodesModel, ExternalFragment, BaseUnit}
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{Annotations, FieldEntry, Fields, Position, Value}
+import amf.core.parser.{Position, Value, FieldEntry, Annotations, Fields}
 import amf.core.remote.Vendor
 import amf.core.utils.AmfStrings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts._
+import amf.plugins.document.webapi.contexts.emitter.oas.{JsonSchemaEmitterContext, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.{RamlTypeDefStringValueMatcher, OasTypeDefMatcher, RamlTypeDefMatcher}
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.shapes.parser.{TypeDefXsdMapping, TypeDefYTypeMapping, XsdTypeDefMapping}
+import amf.plugins.domain.shapes.parser.{TypeDefYTypeMapping, TypeDefXsdMapping, XsdTypeDefMapping}
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.metamodel.IriTemplateMappingModel
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YScalar, YType}
+import org.yaml.model.{YType, YScalar, YNode}
 
 import scala.collection.immutable.ListMap
 import scala.collection.mutable

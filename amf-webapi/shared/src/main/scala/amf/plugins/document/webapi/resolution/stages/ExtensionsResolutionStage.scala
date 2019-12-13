@@ -1,22 +1,22 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.{Aliases, LexicalInformation, SourceLocation, SynthesizedField}
+import amf.core.annotations.{LexicalInformation, Aliases, SourceLocation, SynthesizedField}
 import amf.core.metamodel.Type.Scalar
-import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.metamodel.document.{ExtensionLikeModel, BaseUnitModel}
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.common._
 import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.metamodel.domain.templates.KeyField
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ShapeModel}
+import amf.core.metamodel.domain.{ShapeModel, DataNodeModel, DomainElementModel}
 import amf.core.metamodel.{Field, Type}
 import amf.core.model.document._
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, ErrorHandler, FieldEntry, ParserContext, Value}
-import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
+import amf.core.parser.{ErrorHandler, Value, FieldEntry, ParserContext, Annotations, EmptyFutureDeclarations}
+import amf.core.resolution.stages.{ResolutionStage, ReferenceResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.annotations.{ExtensionProvenance, Inferred}
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
+import amf.plugins.document.webapi.annotations.{Inferred, ExtensionProvenance}
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml08WebApiContext, Raml10WebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.domain.shapes.metamodel.common._

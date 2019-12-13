@@ -3,18 +3,18 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.core.Root
 import amf.core.annotations._
 import amf.core.metamodel.Field
-import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.metamodel.document.{ExtensionLikeModel, BaseUnitModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
-import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
+import amf.core.metamodel.domain.{ShapeModel, DomainElementModel}
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, IdCounter, Lazy, TemplateUri}
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.core.utils.{IdCounter, Lazy, AmfStrings, TemplateUri}
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorCallback, ErrorRequest}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorRequest, ErrorCallback}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
@@ -22,7 +22,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarations
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
+import amf.plugins.domain.shapes.models.{NodeShape, CreativeWork}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
@@ -30,7 +30,7 @@ import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
-import org.yaml.model.{YMapEntry, YNode, _}
+import org.yaml.model.{YNode, YMapEntry, _}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

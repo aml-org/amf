@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.stages
 
-import amf.core.annotations.{SourceAST, ErrorDeclaration}
+import amf.core.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.emitter.SpecOrdering
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
@@ -8,12 +8,8 @@ import amf.core.model.domain.{DomainElement, ElementTree, DataNode}
 import amf.core.parser.{ErrorHandler, YNodeLikeOps, ParserContext}
 import amf.core.resolution.stages.{ResolutionStage, ReferenceResolutionStage}
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.webapi.contexts.{
-  RamlWebApiContext,
-  Raml10SpecEmitterContext,
-  Raml08WebApiContext,
-  Raml10WebApiContext
-}
+import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml08WebApiContext, Raml10WebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
 import amf.plugins.document.webapi.parser.spec.domain.{Raml10OperationEmitter, Raml10EndPointEmitter}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, ParametrizedTrait, Trait, ParametrizedResourceType}

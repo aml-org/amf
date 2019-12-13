@@ -1,15 +1,15 @@
 package amf.plugins.domain.webapi.resolution
 
-import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
+import amf.core.annotations.{LexicalInformation, Aliases, SourceAST, SourceLocation => AmfSourceLocation}
 import amf.core.emitter.SpecOrdering
-import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
+import amf.core.model.document.{Fragment, Module, BaseUnit, DeclaresModel}
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, ErrorHandler, FragmentRef, ParserContext}
+import amf.core.parser.{Annotations, FragmentRef, ErrorHandler, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
 import amf.core.services.{AllValidationsMerger, RuntimeValidator}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType, Raml10WebApiContext, Raml08WebApiContext}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter

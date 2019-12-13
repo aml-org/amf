@@ -3,16 +3,12 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.utils.IdCounter
-import amf.plugins.document.webapi.contexts.{OasWebApiContext, WebApiContext}
-import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth2FlowModel,
-  OpenIdConnectSettingsModel,
-  ParametrizedSecuritySchemeModel,
-  ScopeModel
-}
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.domain.webapi.metamodel.security.{ParametrizedSecuritySchemeModel, ScopeModel, OAuth2FlowModel, OpenIdConnectSettingsModel}
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
-import amf.validations.ParserSideValidations.{InvalidSecurityRequirementObject, ScopeNamesMustBeEmpty}
+import amf.validations.ParserSideValidations.{ScopeNamesMustBeEmpty, InvalidSecurityRequirementObject}
 import org.yaml.model._
 
 case class OasSecurityRequirementParser(node: YNode, producer: String => SecurityRequirement, idCounter: IdCounter)(

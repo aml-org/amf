@@ -5,10 +5,12 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.{Oas, Raml}
 import amf.core.utils.{Lazy, AmfStrings}
-import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorSecurityScheme
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.{isOasAnnotation, isRamlAnnotation}
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.{isRamlAnnotation, isOasAnnotation}
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -215,8 +217,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
   }
 }
 
-case class OasSecuritySchemeParser(node: YNode, adopt: SecurityScheme => SecurityScheme)(
-    implicit ctx: OasWebApiContext)
+case class OasSecuritySchemeParser(node: YNode, adopt: SecurityScheme => SecurityScheme)(implicit ctx: OasWebApiContext)
     extends SecuritySchemeParser {
   def parse(): SecurityScheme = {
     ctx.link(node) match {

@@ -1,20 +1,20 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
-import amf.core.emitter.BaseEmitters.{EntryPartEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.BaseEmitters.{pos, traverse, EntryPartEmitter}
+import amf.core.emitter.{SpecOrdering, EntryEmitter}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Position}
+import amf.core.parser.{Annotations, Position, FieldEntry, EmptyFutureDeclarations}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.shapes.models.CreativeWork
-import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
+import amf.plugins.domain.webapi.models.{Parameter, Response, Payload}
 import amf.plugins.features.validation.CoreValidations._
 import org.yaml.model.YDocument.EntryBuilder
 

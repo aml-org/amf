@@ -1,7 +1,7 @@
 package amf.resolution.stages
 
-import amf.core.parser.{ParserContext, UnhandledErrorHandler}
-import amf.plugins.document.webapi.contexts.Raml10WebApiContext
+import amf.core.parser.{UnhandledErrorHandler, ParserContext}
+import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.models.templates.{ParametrizedTrait, Trait}

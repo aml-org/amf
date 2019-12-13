@@ -5,11 +5,12 @@ import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
-import amf.core.parser.{DefaultParserSideErrorHandler, ParserContext, RuntimeErrorHandler, SyamlParsedDocument}
+import amf.core.parser.{SyamlParsedDocument, RuntimeErrorHandler, ParserContext, DefaultParserSideErrorHandler}
 import amf.core.validation._
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
-import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, PayloadContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
+import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
@@ -22,7 +23,7 @@ import amf.{ProfileName, ProfileNames}
 import org.mulesoft.lexer.SourceLocation
 import org.yaml.builder.YDocumentBuilder
 import org.yaml.model._
-import org.yaml.parser.{JsonParser, YamlParser}
+import org.yaml.parser.{YamlParser, JsonParser}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

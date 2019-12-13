@@ -5,10 +5,10 @@ import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, matchType, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
-import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.{RamlTypeDefStringValueMatcher, RamlTypeDefMatcher}
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping

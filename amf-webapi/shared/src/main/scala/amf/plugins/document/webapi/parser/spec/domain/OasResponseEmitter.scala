@@ -2,18 +2,17 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import amf.core.parser.{Annotations, Position, FieldEntry, Value}
 import amf.plugins.document.webapi.annotations.{DefaultPayload, EndPointBodyParameter}
-import amf.plugins.document.webapi.contexts.{Oas2SpecEmitterFactory, Oas3SpecEmitterFactory, OasSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasSchemaEmitter}
-import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
 import amf.plugins.domain.webapi.metamodel.{PayloadModel, RequestModel, ResponseModel}
-import amf.plugins.domain.webapi.models.{Payload, Response, TemplatedLink}
+import amf.plugins.domain.webapi.models.{TemplatedLink, Response, Payload}
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext, Oas2SpecEmitterFactory}
 
 import scala.collection.mutable
 

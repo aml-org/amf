@@ -5,13 +5,9 @@ import amf.core.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser._
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.AbstractDeclarationsParser
-import amf.plugins.document.webapi.parser.spec.domain.{
-  Oas3NamedExamplesParser,
-  OasHeaderParametersParser,
-  OasLinkParser
-}
+import amf.plugins.document.webapi.parser.spec.domain.{OasLinkParser, OasHeaderParametersParser, Oas3NamedExamplesParser}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, WebApi}

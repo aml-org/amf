@@ -1,16 +1,11 @@
-package amf.plugins.document.webapi.contexts
+package amf.plugins.document.webapi.contexts.parser.raml
 
 import amf.core.Root
 import amf.core.model.domain.Shape
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  DefaultType,
-  Raml08TypeParser,
-  Raml10TypeParser,
-  RamlTypeParser,
-  TypeInfo
-}
+import amf.plugins.document.webapi.contexts.{SpecVersionFactory, SpecAwareContext}
+import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.raml.{Raml08DocumentParser, Raml10DocumentParser, RamlDocumentParser}
+import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentParser, Raml10DocumentParser, Raml08DocumentParser}
 import amf.plugins.domain.webapi.models._
 import org.yaml.model._
 
@@ -18,8 +13,6 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
 trait RamlSpecAwareContext extends SpecAwareContext {}
-
-trait SpecVersionFactory {}
 
 trait RamlSpecVersionFactory extends SpecVersionFactory {
 

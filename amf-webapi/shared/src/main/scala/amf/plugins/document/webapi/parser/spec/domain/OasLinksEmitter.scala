@@ -1,14 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter, PartEmitter}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, Position}
-import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration.OasTagToReferenceEmitter
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel
-import amf.plugins.domain.webapi.models.{IriTemplateMapping, TemplatedLink}
+import amf.plugins.domain.webapi.models.{TemplatedLink, IriTemplateMapping}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType
 

@@ -5,15 +5,15 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.annotations.EmptyPayload
-import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{AnyDefaultType, DefaultType}
+import amf.plugins.document.webapi.parser.spec.declaration.{DefaultType, AnyDefaultType}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.{RequestModel, ResponseModel}
-import amf.plugins.domain.webapi.models.{Parameter, Payload, Response}
+import amf.plugins.domain.webapi.models.{Parameter, Response, Payload}
 import amf.validations.ParserSideValidations.UnsupportedExampleMediaTypeErrorSpecification
-import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
+import org.yaml.model.{YType, YMap, YScalar, YMapEntry}
 
 import scala.collection.mutable
 

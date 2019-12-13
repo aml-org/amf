@@ -1,13 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter, PartEmitter}
 import amf.core.parser.Position
-import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
 import amf.plugins.domain.shapes.models.CreativeWork
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
 
 import scala.collection.mutable.ListBuffer
 

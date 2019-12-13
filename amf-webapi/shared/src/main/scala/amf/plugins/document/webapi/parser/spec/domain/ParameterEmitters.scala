@@ -2,36 +2,32 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{ExplicitField, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter, PartEmitter}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.model.domain.{AmfScalar, Shape}
-import amf.core.parser.{FieldEntry, Fields, Position, Value}
+import amf.core.model.domain.{Shape, AmfScalar}
+import amf.core.parser.{Position, FieldEntry, Value, Fields}
 import amf.core.remote.Vendor
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.annotations.{FormBodyParameter, ParameterNameForPayload, RequiredParamPayload}
-import amf.plugins.document.webapi.contexts.{
-  OasSpecEmitterContext,
-  RamlScalarEmitter,
-  RamlSpecEmitterContext,
-  SpecEmitterContext,
-  _
-}
+import amf.plugins.document.webapi.annotations.{ParameterNameForPayload, RequiredParamPayload, FormBodyParameter}
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.oas.{OasSpecEmitterContext, Oas3SpecEmitterFactory}
+import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext, XRaml10SpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, FileShapeModel}
 import amf.plugins.domain.shapes.models._
-import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
-import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
+import amf.plugins.domain.webapi.annotations.{ParameterBindingInBodyLexicalInfo, InvalidBinding}
+import amf.plugins.domain.webapi.metamodel.{PayloadModel, ParameterModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.YType.Bool
-import org.yaml.model.{YNode, YType}
+import org.yaml.model.{YType, YNode}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

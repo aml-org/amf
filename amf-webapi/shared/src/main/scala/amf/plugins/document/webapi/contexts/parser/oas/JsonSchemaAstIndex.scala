@@ -1,6 +1,8 @@
-package amf.plugins.document.webapi.contexts
+package amf.plugins.document.webapi.contexts.parser.oas
+
 import org.yaml.model._
 import amf.core.parser._
+import amf.plugins.document.webapi.contexts.WebApiContext
 
 import scala.collection.mutable
 

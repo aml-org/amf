@@ -3,12 +3,12 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.Root
 import amf.core.annotations.SourceVendor
 import amf.core.metamodel.document.FragmentModel
-import amf.core.model.document.{ExternalFragment, Fragment}
+import amf.core.model.document.{Fragment, ExternalFragment}
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfScalar, ExternalDomainElement, Shape}
+import amf.core.model.domain.{Shape, AmfScalar, ExternalDomainElement}
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.Raml10
-import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._

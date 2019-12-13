@@ -4,23 +4,20 @@ import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{AmfStrings, IdCounter}
-import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
+import amf.core.utils.{IdCounter, AmfStrings}
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
-import amf.plugins.domain.webapi.models.{Operation, Response, Tag}
+import amf.plugins.domain.webapi.models.{Response, Operation, Tag}
 import amf.validations.ParserSideValidations._
 import org.yaml.model._
 
 import scala.collection.mutable
 
-/**
-  *
-  */
 case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext)
     extends SpecParserOps {

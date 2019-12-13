@@ -1,21 +1,20 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter}
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.{ErrorHandler, Position}
-import amf.core.parser.Position.ZERO
+import amf.core.parser.{Position, ErrorHandler}
 import amf.core.remote.Oas
-import amf.plugins.document.webapi.contexts.{JsonSchemaEmitterContext, OasSpecEmitterContext, SpecEmitterContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
-import org.yaml.model.{YDocument, YNode, YScalar, YType}
+import org.yaml.model.{YType, YScalar, YDocument, YNode}
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.emitter.oas.{JsonSchemaEmitterContext, OasSpecEmitterContext}
 
 /**
   *

@@ -5,14 +5,14 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.Module
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
-import amf.core.services.{DefaultValidationOptions, RuntimeValidator}
+import amf.core.services.{RuntimeValidator, DefaultValidationOptions}
 import amf.core.validation.SeverityLevels._
 import amf.core.validation._
-import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
+import amf.core.validation.core.{ValidationProfile, ValidationSpecification, PropertyConstraint}
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.contexts.PayloadContext
-import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
+import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
+import amf.plugins.domain.shapes.models.{SchemaShape, AnyShape}
 import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
 import amf.validations.CustomShaclFunctions
 

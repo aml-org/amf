@@ -2,15 +2,15 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{FieldEntry, Fields, Position, Value}
+import amf.core.parser.{Position, FieldEntry, Value, Fields}
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, ExtendsEmitter}
 import amf.plugins.domain.webapi.metamodel.EndPointModel
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
+import amf.plugins.domain.webapi.models.{Parameter, EndPoint, Operation}
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable

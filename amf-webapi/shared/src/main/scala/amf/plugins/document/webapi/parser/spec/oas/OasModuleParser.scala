@@ -6,7 +6,7 @@ import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.Module
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.ReferencesParser
 import org.yaml.model._
 
