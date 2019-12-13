@@ -1,13 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.{FieldEntry, Position}
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.core.parser.{Position, FieldEntry}
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 
 case class RamlCustomFacetsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: RamlSpecEmitterContext)

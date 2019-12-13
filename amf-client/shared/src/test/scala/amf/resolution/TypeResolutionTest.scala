@@ -3,14 +3,14 @@ package amf.resolution
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
-import amf.core.parser.{DefaultParserSideErrorHandler, ParserContext, UnhandledErrorHandler}
-import amf.core.remote.{Raml, RamlYamlHint}
+import amf.core.parser.{ParserContext, DefaultParserSideErrorHandler}
+import amf.core.remote.{RamlYamlHint, Raml}
 import amf.core.services.RuntimeValidator
 import amf.core.vocabulary.Namespace
 import amf.facades.Validation
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.Raml10Plugin
-import amf.plugins.document.webapi.contexts.Raml10WebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models._
 

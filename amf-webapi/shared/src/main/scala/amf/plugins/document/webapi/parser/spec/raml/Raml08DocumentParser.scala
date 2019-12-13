@@ -6,22 +6,12 @@ import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.parser.YMapOps
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  AbstractDeclarationParser,
-  Raml08TypeParser,
-  SecuritySchemeParser,
-  _
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, SecuritySchemeParser, _}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.validations.ParserSideValidations.{
-  InvalidAbstractDeclarationType,
-  InvalidSecuredByType,
-  InvalidTypeDefinition,
-  InvalidTypesType
-}
-import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
+import amf.validations.ParserSideValidations.{InvalidAbstractDeclarationType, InvalidSecuredByType, InvalidTypesType, InvalidTypeDefinition}
+import org.yaml.model.{YType, YMap, YScalar, YMapEntry}
 
 /**
   * Raml 0.8 spec parser

@@ -1,10 +1,10 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{PartEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, PartEmitter}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{Annotations, Position}
-import amf.plugins.document.webapi.contexts.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.domain.webapi.models.Payload
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType

@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.Root
 import amf.core.annotations._
 import amf.core.metamodel.Field
-import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
+import amf.core.metamodel.document.{ExtensionLikeModel, BaseUnitModel}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.document._
@@ -11,8 +11,8 @@ import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.RamlWebApiContextType.RamlWebApiContextType
-import amf.plugins.document.webapi.contexts.{ExtensionLikeWebApiContext, RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, ExtensionLikeWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
@@ -21,7 +21,7 @@ import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.webapi.metamodel.{ResponseModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel.{WebApiModel, ResponseModel}
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}

@@ -1,20 +1,22 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.Root
-import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
+import amf.core.annotations.{LexicalInformation, ExternalFragmentRef}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
+import amf.core.parser.{ParsedReference, InferredLinkReference, Reference, ReferenceFragmentPartition, Annotations, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
-import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.annotations.{ParsedJSONSchema, JSONSchemaId, SchemaIsJsonSchema}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.toJsonSchema
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
-import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
+import amf.plugins.domain.shapes.models.{SchemaShape, AnyShape, UnresolvedShape}
 import amf.validations.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._

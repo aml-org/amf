@@ -2,8 +2,11 @@ package amf.plugins.document.webapi.parser
 
 import amf.core.parser.ParsedReference
 import amf.core.remote.Vendor
-import amf.plugins.document.webapi.JsonSchemaWebApiContext
 import amf.plugins.document.webapi.contexts._
+import amf.plugins.document.webapi.contexts.emitter.oas.{Oas2SpecEmitterContext, Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.raml.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext, OasWebApiContext, JsonSchemaWebApiContext}
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml10WebApiContext}
 
 /**
   * Oas package object

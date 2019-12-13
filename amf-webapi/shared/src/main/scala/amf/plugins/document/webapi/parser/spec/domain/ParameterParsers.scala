@@ -13,7 +13,9 @@ import amf.plugins.document.webapi.annotations.{
   ParameterNameForPayload,
   RequiredParamPayload
 }
-import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{
@@ -35,11 +37,6 @@ import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
-import scala.collection.mutable
-
-/**
-  *
-  */
 case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext) {
 

@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.TrackedElement
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.shapes.models.Example

@@ -2,24 +2,20 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ExternalSourceElementModel
-import amf.core.model.domain.{AmfScalar, Annotation, DataNode}
+import amf.core.model.domain.{DataNode, AmfScalar, Annotation}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.ParsedJSONExample
-import amf.plugins.document.webapi.contexts.RamlWebApiContextType.DEFAULT
-import amf.plugins.document.webapi.contexts.{RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorNamedExample
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, DataNodeParser}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
-import amf.plugins.domain.shapes.models.{AnyShape, Example, ScalarShape}
+import amf.plugins.domain.shapes.models.{ScalarShape, Example, AnyShape}
 import amf.plugins.features.validation.CoreValidations
-import amf.validations.ParserSideValidations.{
-  ExamplesMustBeAMap,
-  ExclusivePropertiesSpecification,
-  InvalidFragmentType
-}
+import amf.validations.ParserSideValidations.{ExclusivePropertiesSpecification, ExamplesMustBeAMap, InvalidFragmentType}
 import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
@@ -123,7 +119,7 @@ case class RamlMultipleExampleParser(key: String,
             case YType.Str
                 if node.toString().matches("<<.*>>") && ctx
                   .asInstanceOf[RamlWebApiContext]
-                  .contextType != DEFAULT => // Ignore
+                  .contextType != RamlWebApiContextType.DEFAULT => // Ignore
             case _ =>
               ctx.violation(
                 ExamplesMustBeAMap,

@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.metamodel.EncodingModel
 import amf.plugins.domain.webapi.metamodel.ResponseModel.Headers
-import amf.plugins.domain.webapi.models.{Encoding, Parameter}
+import amf.plugins.domain.webapi.models.{Parameter, Encoding}
 import org.yaml.model.{YMap, YMapEntry}
 
 case class OasEncodingParser(map: YMap, producer: String => Encoding)(implicit ctx: OasWebApiContext)

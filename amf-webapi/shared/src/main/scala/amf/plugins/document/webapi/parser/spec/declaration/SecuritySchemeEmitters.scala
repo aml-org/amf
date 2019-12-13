@@ -1,17 +1,19 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DataNode
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.{FieldEntry, Fields, Position}
+import amf.core.parser.{Position, FieldEntry, Fields}
 import amf.core.remote.Vendor
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
+import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeTypeMapping, OasSecuritySchemeType}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.security._

@@ -1,15 +1,15 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.parser.{Annotations, _}
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorLink
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel
-import amf.plugins.domain.webapi.models.{IriTemplateMapping, TemplatedLink}
+import amf.plugins.domain.webapi.models.{TemplatedLink, IriTemplateMapping}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
-import org.yaml.model.{YMap, YMapEntry, YNode}
+import org.yaml.model.{YMap, YMapEntry}
 
 case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext)
     extends SpecParserOps {

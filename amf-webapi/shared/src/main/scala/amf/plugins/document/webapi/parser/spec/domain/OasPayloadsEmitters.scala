@@ -2,12 +2,12 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter, PartEmitter}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.webapi.annotations.ParameterNameForPayload
-import amf.plugins.document.webapi.contexts.{Oas2SpecEmitterFactory, Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext, Oas2SpecEmitterFactory}
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, OasSchemaEmitter}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload

@@ -2,33 +2,28 @@ package amf.plugins.document.webapi
 
 import amf._
 import amf.core.Root
-import amf.core.annotations.SourceAST
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.emitter.{ShapeRenderOptions, RenderOptions}
 import amf.core.model.document._
 import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{EmptyFutureDeclarations, ErrorHandler, LinkReference, ParserContext, RefContainer}
-import amf.core.remote.{Platform, Raml, Vendor}
+import amf.core.parser.{ErrorHandler, RefContainer, LinkReference, ParserContext, EmptyFutureDeclarations}
+import amf.core.remote.{Platform, Vendor, Raml}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
-import amf.plugins.document.webapi.contexts._
+import amf.plugins.document.webapi.contexts.emitter.raml.{Raml08SpecEmitterContext, Raml10SpecEmitterContext, RamlSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml08WebApiContext, Raml10WebApiContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
-import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay, _}
+import amf.plugins.document.webapi.parser.RamlHeader.{Raml10Extension, Raml10Library, Raml10, Raml10Overlay, _}
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentEmitter, RamlFragmentEmitter, RamlModuleEmitter, _}
-import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, WebApiDeclarations}
+import amf.plugins.document.webapi.parser.spec.{WebApiDeclarations, RamlWebApiDeclarations}
 import amf.plugins.document.webapi.parser.{RamlFragment, RamlHeader}
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
-import amf.plugins.document.webapi.resolution.pipelines.{
-  Raml08EditingPipeline,
-  Raml08ResolutionPipeline,
-  Raml10EditingPipeline,
-  Raml10ResolutionPipeline
-}
+import amf.plugins.document.webapi.resolution.pipelines.{Raml10EditingPipeline, Raml08EditingPipeline, Raml08ResolutionPipeline, Raml10ResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
-import org.yaml.model.{YDocument, YMap, YNode}
+import org.yaml.model.{YDocument, YNode}
 
 sealed trait RamlPlugin extends BaseWebApiPlugin {
 

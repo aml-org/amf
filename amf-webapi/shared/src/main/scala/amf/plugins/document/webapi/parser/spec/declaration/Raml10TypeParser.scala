@@ -1,26 +1,21 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations._
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
+import amf.core.metamodel.domain.{ShapeModel, LinkableElementModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.DataType
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
-import amf.core.remote.{Oas, Raml08}
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.remote.{Raml08, Oas}
+import amf.core.utils.{IdCounter, AmfStrings}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Shapes
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  WebApiContext,
-  _
-}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml08WebApiContext, Raml10WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, matchType, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._

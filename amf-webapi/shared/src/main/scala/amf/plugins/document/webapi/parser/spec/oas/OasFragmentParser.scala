@@ -4,21 +4,21 @@ import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{ExternalDomainElement, Shape}
+import amf.core.model.domain.{Shape, ExternalDomainElement}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.ExternalJsonRefsPlugin
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
+import amf.plugins.document.webapi.parser.spec.domain.{RamlNamedExampleParser, ExampleOptions}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.InvalidFragmentType
-import org.yaml.model.{YMap, YMapEntry, YScalar}
+import org.yaml.model.{YMap, YScalar, YMapEntry}
 
 /**
   *

@@ -2,14 +2,14 @@ package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.AMFSerializer
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, ShapeRenderOptions, SpecOrdering}
+import amf.core.emitter.{ShapeRenderOptions, SpecOrdering, EntryEmitter}
 import amf.core.model.document.Document
 import amf.core.model.domain.DomainElement
 import amf.core.parser.Position
 import amf.core.remote.JsonSchema
 import amf.core.services.RuntimeSerializer
-import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
-import amf.plugins.document.webapi.contexts.JsonSchemaEmitterContext
+import amf.plugins.document.webapi.annotations.{JSONSchemaRoot, ParsedJSONSchema, GeneratedJSONSchema}
+import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasDeclarationsEmitter
 import amf.plugins.domain.shapes.models.AnyShape

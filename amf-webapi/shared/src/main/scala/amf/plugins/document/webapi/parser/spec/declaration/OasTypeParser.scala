@@ -7,14 +7,15 @@ import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.core.remote.Vendor
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.utils.{IdCounter, AmfStrings}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
+import amf.plugins.document.webapi.annotations.{JSONSchemaId, CollectionFormatFromItems}
 import amf.plugins.document.webapi.contexts._
+import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, OasWebApiContext, Oas3WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser}
-import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, NodeDataNodeParser, RamlExamplesParser}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, ScalarNodeParser, DataNodeParser}
+import amf.plugins.document.webapi.parser.spec.domain.{NodeDataNodeParser, RamlExamplesParser, ExampleOptions}
 import amf.plugins.document.webapi.parser.spec.oas.OasSpecParser
 import amf.plugins.domain.shapes.metamodel._
 import amf.plugins.domain.shapes.models.TypeDef._
