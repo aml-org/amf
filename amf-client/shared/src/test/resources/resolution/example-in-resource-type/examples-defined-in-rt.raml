@@ -1,0 +1,28 @@
+#%RAML 1.0
+title: PC Billing System API
+
+types:
+  message:
+    properties:
+      message: string
+
+
+resourceTypes:
+  readOnlyCollection:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: message
+              examples:
+                search yielded nothing:
+                  message: Matching <<resourcePathName>> not found
+
+/applying-rt:
+  type: readOnlyCollection
+  get:
+    responses:
+      200:
+        body:
+          application/json:

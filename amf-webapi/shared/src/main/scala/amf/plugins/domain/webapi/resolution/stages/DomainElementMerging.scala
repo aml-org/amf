@@ -127,8 +127,8 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
             * e.g. default value of a payload
             */
           val target: AnyShape = mainFieldEntry.value.value.asInstanceOf[AnyShape]
-          val shape: AnyShape = otherValue.value.asInstanceOf[AnyShape]
-          val cloned = shape.cloneShape(None).withName(target.name.value())
+          val shape: AnyShape  = otherValue.value.asInstanceOf[AnyShape]
+          val cloned           = shape.cloneShape(None).withName(target.name.value())
 
           if (target.examples.nonEmpty) cloned.withExamples(target.examples)
           main.set(otherField, adoptInner(main.id, cloned))
@@ -266,7 +266,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         }
 
         element match {
-          case p: Payload => tracking(p.schema, element.id, Some(previousId))
+          case p: Payload => tracking(p.schema, element.id, if (element.id != previousId) Some(previousId) else None)
           case _          =>
         }
 
@@ -376,7 +376,8 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
             if (field == EndPointModel.Operations) {
               ctx.mergeOperationContext(otherObj.id)
             }
-            merge(existing(value.scalar.value), otherObj.adopted(target.id), errorHandler)
+            val adopted = adoptInner(target.id, otherObj).asInstanceOf[DomainElement]
+            merge(existing(value.scalar.value), adopted, errorHandler)
           } else if (!isOptional(element, otherObj)) { // Case (2) -> If node is undefined in 'main' but is optional in 'other'.
             if (field == EndPointModel.Operations) {
               ctx.mergeOperationContext(otherObj.id)
