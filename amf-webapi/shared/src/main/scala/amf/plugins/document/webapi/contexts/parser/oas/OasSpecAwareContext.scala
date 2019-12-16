@@ -1,17 +1,22 @@
 package amf.plugins.document.webapi.contexts.parser.oas
 
 import amf.core.utils.IdCounter
-import amf.plugins.document.webapi.contexts.{SpecVersionFactory, SpecAwareContext}
-import amf.plugins.document.webapi.parser.spec.declaration.{OasSecuritySettingsParser, Oas2SecuritySettingsParser, Oas3SecuritySettingsParser}
+import amf.plugins.document.webapi.contexts.SpecAwareContext
+import amf.plugins.document.webapi.contexts.parser.OasLikeSpecVersionFactory
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  Oas2SecuritySettingsParser,
+  Oas3SecuritySettingsParser,
+  OasSecuritySettingsParser
+}
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.domain.webapi.metamodel.{WebApiModel, OperationModel, EndPointModel}
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.plugins.domain.webapi.models.{EndPoint, WebApi, Operation}
-import org.yaml.model.{YMap, YNode, YMapEntry}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, WebApi}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
 trait OasSpecAwareContext extends SpecAwareContext {}
 
-trait OasSpecVersionFactory extends SpecVersionFactory {
+trait OasSpecVersionFactory extends OasLikeSpecVersionFactory {
   def serversParser(map: YMap, api: WebApi): OasServersParser
   def serversParser(map: YMap, endpoint: EndPoint): OasServersParser
   def serversParser(map: YMap, operation: Operation): OasServersParser
