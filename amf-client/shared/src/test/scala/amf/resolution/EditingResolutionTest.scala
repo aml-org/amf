@@ -426,6 +426,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("tracked element in example defined in resource type") {
+    cycle(
+      "examples-defined-in-rt.raml",
+      "examples-defined-in-rt.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "example-in-resource-type/"
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {
       case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
