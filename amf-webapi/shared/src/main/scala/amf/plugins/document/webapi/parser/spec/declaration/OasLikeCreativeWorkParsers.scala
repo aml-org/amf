@@ -12,15 +12,12 @@ import amf.plugins.document.webapi.parser.spec.oas.{Oas2Syntax, Oas3Syntax}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.validations.ParserSideValidations.UnexpectedVendor
 
-object OasCreativeWorkParser {
+object OasLikeCreativeWorkParser {
   def parse(node: YNode, parentId: String)(implicit ctx: WebApiContext): CreativeWork =
-    OasCreativeWorkParser(node.as[YMap], parentId).parse()
+    OasLikeCreativeWorkParser(node.as[YMap], parentId).parse()
 }
 
-/**
-  *
-  */
-case class OasCreativeWorkParser(node: YNode, parentId: String)(implicit val ctx: WebApiContext)
+case class OasLikeCreativeWorkParser(node: YNode, parentId: String)(implicit val ctx: WebApiContext)
     extends SpecParserOps {
   def parse(): CreativeWork = {
 

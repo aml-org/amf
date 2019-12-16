@@ -56,7 +56,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     }
 
     map.key("servers".asRamlAnnotation).foreach { entry =>
-      entry.value.as[Seq[YMap]].map(OasServerParser(api.id, _)(toOas(ctx)).parse()).foreach { server =>
+      entry.value.as[Seq[YMap]].map(OasLikeServerParser(api.id, _)(toOas(ctx)).parse()).foreach { server =>
         api.add(WebApiModel.Servers, server)
       }
     }
@@ -111,26 +111,14 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
   }
 }
 
-abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(implicit val ctx: OasWebApiContext)
-    extends SpecParserOps {
-  def parse(): Unit
-
-  protected def parseServers(key: String): Unit =
-    map.key(key).foreach { entry =>
-      val servers = entry.value.as[Seq[YMap]].map(OasServerParser(elem.id, _).parse())
-
-      elem.set(field, AmfArray(servers, Annotations(entry)), Annotations(entry))
-    }
-}
-
 case class Oas3ServersParser(map: YMap, elem: DomainElement, field: Field)(implicit override val ctx: OasWebApiContext)
-    extends OasServersParser(map, elem, field) {
+    extends OasLikeServersParser(map, elem, field) {
 
   override def parse(): Unit = if (ctx.syntax == Oas3Syntax) parseServers("servers")
 }
 
 case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: OasWebApiContext)
-    extends OasServersParser(map, api, WebApiModel.Servers) {
+    extends OasLikeServersParser(map, api, WebApiModel.Servers) {
   override def parse(): Unit = {
     if (baseUriExists(map)) {
       var host     = ""
@@ -175,38 +163,4 @@ case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: 
   }
 
   def baseUriExists(map: YMap): Boolean = map.key("host").orElse(map.key("basePath")).isDefined
-}
-
-private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: OasWebApiContext)
-    extends SpecParserOps {
-  def parse(): Server = {
-    val server = Server(map)
-
-    map.key("url", ServerModel.Url in server)
-
-    server.adopted(parent)
-
-    map.key("description", ServerModel.Description in server)
-
-    map.key("variables").foreach { entry =>
-      val variables = entry.value.as[YMap].entries.map { varEntry =>
-        val serverVariable =
-          Raml10ParameterParser(varEntry, (p: Parameter) => p.adopted(server.id))(toRaml(ctx)).parse()
-        serverVariable.withBinding("path")
-        // required field is validated in parsing as there is no way to differentiate a server variable from a parameter
-        requiredDefaultField(serverVariable, varEntry.value.as[YMap])
-        serverVariable
-      }
-      server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
-    }
-
-    AnnotationParser(server, map).parse()
-    ctx.closedShape(server.id, map, "server")
-    server
-  }
-
-  private def requiredDefaultField(serverVar: Parameter, map: YMap): Unit =
-    if (map.key("default").isEmpty)
-      ctx.violation(ServerVariableMissingDefault, serverVar.id, "Server variable must define a 'default' field", map)
-
 }

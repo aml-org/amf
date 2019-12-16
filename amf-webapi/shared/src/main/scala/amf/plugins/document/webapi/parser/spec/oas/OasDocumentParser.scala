@@ -15,7 +15,7 @@ import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorRequest, ErrorCallback}
-import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.{domain, _}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
 import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
@@ -253,37 +253,11 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
 
-    map.key(
-      "info",
-      entry => {
-        val info = entry.value.as[YMap]
-
-        ctx.closedShape(api.id, info, "info")
-
-        info.key("title", WebApiModel.Name in api)
-        info.key("description", WebApiModel.Description in api)
-        info.key("termsOfService", WebApiModel.TermsOfService in api)
-        info.key("version", WebApiModel.Version in api)
-        info.key("contact", WebApiModel.Provider in api using OrganizationParser.parse)
-        info.key("license", WebApiModel.License in api using LicenseParser.parse)
-      }
-    )
+    map.key("info", entry => OasLikeInformationParser(entry, api, ctx).parse())
 
     ctx.factory.serversParser(map, api).parse()
 
-    map.key(
-      "tags",
-      entry => {
-        entry.value.tagType match {
-          case YType.Seq =>
-            val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
-            validateDuplicated(tags, entry)
-            api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
-          case _ => // ignore
-        }
-
-      }
-    )
+    map.key("tags", entry => { OasLikeTagsParser(entry, api).parse() })
 
     map.key(
       "security",
@@ -310,7 +284,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     map.key(
       "externalDocs",
       entry => {
-        documentations += OasCreativeWorkParser(entry.value, api.id).parse()
+        documentations += OasLikeCreativeWorkParser(entry.value, api.id).parse()
       }
     )
 
@@ -347,19 +321,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     ctx.closedShape(api.id, map, "webApi")
 
     api
-  }
-
-  private def validateDuplicated(tags: Seq[Tag], entry: YMapEntry): Unit = {
-    val groupedByName = tags
-      .flatMap { tag =>
-        tag.name.option().map(_ -> tag)
-      }
-      .groupBy { case (name, _) => name }
-    val namesWithTag = groupedByName.collect { case (_, ys) if ys.lengthCompare(1) > 0 => ys.tail }.flatten
-    namesWithTag.foreach {
-      case (name, tag) =>
-        ctx.violation(DuplicatedTags, tag.id, s"Tag with name '$name' was found duplicated", tag.annotations)
-    }
   }
 
   case class EndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: mutable.ListBuffer[EndPoint]) {
@@ -402,10 +363,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case Some(n) =>
               ctx.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
             case None =>
-              ctx.violation(InvalidEndpointPath,
-                            endpoint.id,
-                            s"Cannot find fragment path item ref $value",
-                            entry.value)
+              ctx.violation(InvalidEndpointPath, endpoint.id, s"Cannot find fragment path item ref $value", entry.value)
           }
         case Right(node) if node.tagType == YType.Map =>
           parseEndpointMap(endpoint, node.as[YMap])
@@ -512,7 +470,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
-  case class Oas3RequestParser(map: YMap, parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext) {
+  case class Oas3RequestParser(map: YMap, parentId: String, definitionEntry: YMapEntry)(
+      implicit ctx: OasWebApiContext) {
 
     private def adopt(request: Request) = {
       request
@@ -560,10 +519,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case Some(requestNode) =>
               Oas3RequestParser(requestNode.as[YMap], parentId, definitionEntry).parse()
             case None =>
-              ctx.violation(CoreValidations.UnresolvedReference,
-                            "",
-                            s"Cannot find requestBody reference $fullRef",
-                            map)
+              ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find requestBody reference $fullRef", map)
               adopt(ErrorRequest(fullRef, map).link(name))
           }
         }
@@ -837,7 +793,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       map.key("summary", OperationModel.Summary in operation)
       // oas 3.0.0 / oas 2.0
       map.key("externalDocs",
-              OperationModel.Documentation in operation using (OasCreativeWorkParser.parse(_, operation.id)))
+              OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)))
 
       // oas 3.0.0 / oas 2.0
       map.key(

@@ -20,9 +20,6 @@ import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.InvalidFragmentType
 import org.yaml.model.{YMap, YScalar, YMapEntry}
 
-/**
-  *
-  */
 case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser
     with PlatformSecrets {
@@ -78,7 +75,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
       val item = DocumentationItemFragment().adopted(root.location + "#/")
 
-      item.withEncodes(OasCreativeWorkParser(map, item.id).parse())
+      item.withEncodes(OasLikeCreativeWorkParser(map, item.id).parse())
 
       item
     }

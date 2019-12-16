@@ -536,6 +536,11 @@ object ParserSideValidations extends Validations {
     "'items' field is required when type is array"
   )
 
+  val InvalidIdentifier = validation(
+    "invalid-identifier",
+    "'id' must be a string"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -676,6 +681,7 @@ object ParserSideValidations extends Validations {
     SlashInUriParameterValues,
     InvalidDatetimeFormat,
     ItemsFieldRequired,
-    InvalidTagType
+    InvalidTagType,
+    InvalidIdentifier
   )
 }

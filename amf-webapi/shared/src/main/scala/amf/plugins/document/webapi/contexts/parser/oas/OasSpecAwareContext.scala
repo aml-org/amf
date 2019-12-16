@@ -17,9 +17,9 @@ import org.yaml.model.{YMap, YMapEntry, YNode}
 trait OasSpecAwareContext extends SpecAwareContext {}
 
 trait OasSpecVersionFactory extends OasLikeSpecVersionFactory {
-  def serversParser(map: YMap, api: WebApi): OasServersParser
-  def serversParser(map: YMap, endpoint: EndPoint): OasServersParser
-  def serversParser(map: YMap, operation: Operation): OasServersParser
+  def serversParser(map: YMap, api: WebApi): OasLikeServersParser
+  def serversParser(map: YMap, endpoint: EndPoint): OasLikeServersParser
+  def serversParser(map: YMap, operation: Operation): OasLikeServersParser
   def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasSecuritySettingsParser
   def parameterParser(entryOrNode: Either[YMapEntry, YNode],
                       parentId: String,
@@ -30,10 +30,10 @@ trait OasSpecVersionFactory extends OasLikeSpecVersionFactory {
 case class Oas2VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFactory {
   override def serversParser(map: YMap, api: WebApi): Oas2ServersParser = Oas2ServersParser(map, api)(ctx)
 
-  override def serversParser(map: YMap, operation: Operation): OasServersParser =
+  override def serversParser(map: YMap, operation: Operation): OasLikeServersParser =
     Oas3ServersParser(map, operation, OperationModel.Servers)(ctx)
 
-  override def serversParser(map: YMap, endpoint: EndPoint): OasServersParser =
+  override def serversParser(map: YMap, endpoint: EndPoint): OasLikeServersParser =
     Oas3ServersParser(map, endpoint, EndPointModel.Servers)(ctx)
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasSecuritySettingsParser =
     Oas2SecuritySettingsParser(map, scheme)(ctx)
@@ -52,7 +52,7 @@ case class Oas3VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFacto
   override def serversParser(map: YMap, operation: Operation): Oas3ServersParser =
     Oas3ServersParser(map, operation, OperationModel.Servers)(ctx)
 
-  override def serversParser(map: YMap, endpoint: EndPoint): OasServersParser =
+  override def serversParser(map: YMap, endpoint: EndPoint): OasLikeServersParser =
     Oas3ServersParser(map, endpoint, EndPointModel.Servers)(ctx)
 
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasSecuritySettingsParser =
