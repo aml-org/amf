@@ -8,7 +8,7 @@ import amf.plugins.document.webapi.parser.spec.common.{SpecParserOps, WebApiBase
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.{YType, YMap, YMapEntry}
-import amf.plugins.document.webapi.parser.spec.domain.OasLikeInformationParser
+import amf.plugins.document.webapi.parser.spec.domain.{OasLikeInformationParser, AsyncServersParser}
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.validations.ParserSideValidations.InvalidIdentifier
 
@@ -35,6 +35,11 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     map.key("id", entry => IdentifierParser(entry, api, ctx))
 //    map.key("channels", entry => ChannelsParser(entry, api, ctx))
     map.key("externalDocs", WebApiModel.Documentations in api using (OasLikeCreativeWorkParser.parse(_, api.id)))
+    map.key("servers", entry => {
+      val servers = AsyncServersParser(entry.value.as[YMap], api).parse()
+      api.withServers(servers)
+
+    })
     map.key("tags", entry => OasLikeTagsParser(entry, api).parse())
     api
   }

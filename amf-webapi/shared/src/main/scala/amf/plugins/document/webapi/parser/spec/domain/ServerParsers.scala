@@ -56,7 +56,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     }
 
     map.key("servers".asRamlAnnotation).foreach { entry =>
-      entry.value.as[Seq[YMap]].map(OasLikeServerParser(api.id, _)(toOas(ctx)).parse()).foreach { server =>
+      entry.value.as[Seq[YMap]].map(new OasLikeServerParser(api.id, _)(toOas(ctx)).parse()).foreach { server =>
         api.add(WebApiModel.Servers, server)
       }
     }
@@ -112,13 +112,13 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 }
 
 case class Oas3ServersParser(map: YMap, elem: DomainElement, field: Field)(implicit override val ctx: OasWebApiContext)
-    extends OasLikeServersParser(map, elem, field) {
+    extends OasServersParser(map, elem, field) {
 
   override def parse(): Unit = if (ctx.syntax == Oas3Syntax) parseServers("servers")
 }
 
 case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: OasWebApiContext)
-    extends OasLikeServersParser(map, api, WebApiModel.Servers) {
+    extends OasServersParser(map, api, WebApiModel.Servers) {
   override def parse(): Unit = {
     if (baseUriExists(map)) {
       var host     = ""

@@ -4,22 +4,22 @@ import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeSpecVersionFactory
 import amf.plugins.document.webapi.parser.spec.declaration.{
+  OasSecuritySettingsParser,
   Oas2SecuritySettingsParser,
-  Oas3SecuritySettingsParser,
-  OasSecuritySettingsParser
+  Oas3SecuritySettingsParser
 }
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
+import amf.plugins.domain.webapi.metamodel.{WebApiModel, OperationModel, EndPointModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.plugins.domain.webapi.models.{EndPoint, Operation, WebApi}
-import org.yaml.model.{YMap, YMapEntry, YNode}
+import amf.plugins.domain.webapi.models.{EndPoint, WebApi, Operation, Server}
+import org.yaml.model.{YMap, YNode, YMapEntry}
 
 trait OasSpecAwareContext extends SpecAwareContext {}
 
 trait OasSpecVersionFactory extends OasLikeSpecVersionFactory {
-  def serversParser(map: YMap, api: WebApi): OasLikeServersParser
-  def serversParser(map: YMap, endpoint: EndPoint): OasLikeServersParser
-  def serversParser(map: YMap, operation: Operation): OasLikeServersParser
+  def serversParser(map: YMap, api: WebApi): OasServersParser
+  def serversParser(map: YMap, endpoint: EndPoint): OasServersParser
+  def serversParser(map: YMap, operation: Operation): OasServersParser
   def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasSecuritySettingsParser
   def parameterParser(entryOrNode: Either[YMapEntry, YNode],
                       parentId: String,
@@ -30,11 +30,12 @@ trait OasSpecVersionFactory extends OasLikeSpecVersionFactory {
 case class Oas2VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFactory {
   override def serversParser(map: YMap, api: WebApi): Oas2ServersParser = Oas2ServersParser(map, api)(ctx)
 
-  override def serversParser(map: YMap, operation: Operation): OasLikeServersParser =
+  override def serversParser(map: YMap, operation: Operation): OasServersParser =
     Oas3ServersParser(map, operation, OperationModel.Servers)(ctx)
 
-  override def serversParser(map: YMap, endpoint: EndPoint): OasLikeServersParser =
+  override def serversParser(map: YMap, endpoint: EndPoint): OasServersParser =
     Oas3ServersParser(map, endpoint, EndPointModel.Servers)(ctx)
+
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasSecuritySettingsParser =
     Oas2SecuritySettingsParser(map, scheme)(ctx)
 
@@ -43,6 +44,9 @@ case class Oas2VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFacto
                                nameNode: Option[YNode],
                                nameGenerator: IdCounter): OasParameterParser =
     Oas2ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
+
+  override def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser =
+    new OasLikeServerVariableParser(entry, server)(ctx)
 }
 
 case class Oas3VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFactory {
@@ -52,7 +56,7 @@ case class Oas3VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFacto
   override def serversParser(map: YMap, operation: Operation): Oas3ServersParser =
     Oas3ServersParser(map, operation, OperationModel.Servers)(ctx)
 
-  override def serversParser(map: YMap, endpoint: EndPoint): OasLikeServersParser =
+  override def serversParser(map: YMap, endpoint: EndPoint): OasServersParser =
     Oas3ServersParser(map, endpoint, EndPointModel.Servers)(ctx)
 
   override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasSecuritySettingsParser =
@@ -63,4 +67,7 @@ case class Oas3VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFacto
                                nameNode: Option[YNode],
                                nameGenerator: IdCounter): OasParameterParser =
     new Oas3ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
+
+  override def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser =
+    new OasLikeServerVariableParser(entry, server)(ctx)
 }

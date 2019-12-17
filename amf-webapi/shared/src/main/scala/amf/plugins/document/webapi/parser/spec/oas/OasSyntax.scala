@@ -93,6 +93,11 @@ object Oas3Syntax extends SpecSyntax {
       "description",
       "variables"
     ),
+    "serverVariable" -> Set(
+      "enum",
+      "default",
+      "description"
+    ),
     "externalDoc" -> Set(
       "url",
       "description"

@@ -298,6 +298,11 @@ object ParserSideValidations extends Validations {
     "Examples value should be a map"
   )
 
+  val ExamplesMustBeASeq = validation(
+    "examples-must-be-seq",
+    "Examples value should be an array of strings"
+  )
+
   val PathTemplateUnbalancedParameters = validation(
     "path-template-unbalanced-parameters",
     "Nested parameters are not allowed in path templates"
@@ -595,6 +600,7 @@ object ParserSideValidations extends Validations {
     XmlSchemaInheratinaceWarningSpecification,
     DuplicatedPropertySpecification,
     ExamplesMustBeAMap,
+    ExamplesMustBeASeq,
     UnsupportedExampleMediaTypeErrorSpecification,
     OasInvalidBodyParameter,
     DuplicatedParameters,

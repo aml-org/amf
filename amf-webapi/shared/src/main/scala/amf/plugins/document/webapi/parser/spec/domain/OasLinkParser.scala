@@ -69,21 +69,21 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
 
     map.key("server").foreach { entry =>
       val m      = entry.value.as[YMap]
-      val server = OasLikeServerParser(templatedLink.id, m)(ctx).parse()
+      val server = new OasLikeServerParser(templatedLink.id, m)(ctx).parse()
       templatedLink.withServer(server)
     }
 
-        map.key(
-          "parameters",
-          entry => {
-            val parameters: Seq[IriTemplateMapping] = entry.value.as[YMap].entries.map { entry =>
-              val variable   = ScalarNode(entry.key).text().value.toString
-              val expression = ScalarNode(entry.value).text().value.toString
-              IriTemplateMapping(Annotations(entry)).withTemplateVariable(variable).withLinkExpression(expression)
-            }
-            templatedLink.setArray(TemplatedLinkModel.Mapping, parameters, Annotations(entry.value))
-          }
-        )
+    map.key(
+      "parameters",
+      entry => {
+        val parameters: Seq[IriTemplateMapping] = entry.value.as[YMap].entries.map { entry =>
+          val variable   = ScalarNode(entry.key).text().value.toString
+          val expression = ScalarNode(entry.value).text().value.toString
+          IriTemplateMapping(Annotations(entry)).withTemplateVariable(variable).withLinkExpression(expression)
+        }
+        templatedLink.setArray(TemplatedLinkModel.Mapping, parameters, Annotations(entry.value))
+      }
+    )
 
     map.key("requestBody", TemplatedLinkModel.RequestBody in templatedLink)
 

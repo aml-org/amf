@@ -1,15 +1,17 @@
 package amf.plugins.document.webapi.contexts.parser
 
-import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
+import amf.core.parser.{YMapOps, ErrorHandler, ParserContext, ParsedReference}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.contexts.{SpecVersionFactory, WebApiContext}
+import amf.plugins.document.webapi.contexts.{WebApiContext, SpecVersionFactory}
 import amf.plugins.document.webapi.parser.spec.OasLikeWebApiDeclarations
-import org.yaml.model.{YMap, YNode, YScalar}
+import amf.plugins.document.webapi.parser.spec.domain.OasLikeServerVariableParser
+import amf.plugins.domain.webapi.models.Server
+import org.yaml.model.{YMap, YScalar, YNode, YMapEntry}
 
 import scala.collection.mutable
 
 trait OasLikeSpecVersionFactory extends SpecVersionFactory {
-  // TODO ASYNC complete this
+  def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser
 }
 
 abstract class OasLikeWebApiContext(loc: String,
