@@ -1,0 +1,113 @@
+{
+  "asyncapi": "2.0.0",
+  "info": {
+    "title": "async schema definitions",
+    "version": "1.0.0"
+  },
+  "components": {
+    "schemas": {
+      "const-keyword": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "const": "Fixed value"
+          }
+        },
+        "examples": [
+          {
+            "a": "Fixed value"
+          }
+        ]
+      },
+      "conditional-subschemas": {
+        "type": "object",
+        "properties": {
+          "country": {
+            "enum": ["United States of America", "Canada"]
+          }
+        },
+        "if": {
+          "properties": { "country": { "const": "United States of America" } }
+        },
+        "then": {
+          "properties": { "postal_code": { "pattern": "[0-9]{5}(-[0-9]{4})?" } }
+        },
+        "else": {
+          "properties": { "postal_code": { "pattern": "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]" } }
+        },
+        "examples": [
+          {
+            "country": "United States of America",
+            "postal_code": "20500"
+          },
+          {
+            "country": "Canada",
+            "postal_code": "K1M 1M4"
+          }
+        ]
+      },
+      "property-names-restriction": {
+        "type": "object",
+        "propertyNames": {
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "examples": [
+          { "valid-key": 5 }
+        ]
+      },
+      "contains-key": {
+        "type": "array",
+        "contains": {
+          "type": "number"
+        }
+      },
+      "additional-items": {
+        "type": "array",
+        "items": [
+          {
+            "type": "number"
+          },
+          {
+            "type": "string",
+            "enum": ["Street", "Avenue", "Boulevard"]
+          }
+        ],
+        "additionalItems": {
+          "type": "string"
+        }
+      },
+      "using-comment": {
+        "type": "object",
+        "$comment":"some comment"
+      },
+      "readOnly-writeOnly-schema-level": {
+        "type": "object",
+        "writeOnly": true,
+        "readOnly": true,
+        "properties": {
+          "a": {
+            "type": "string",
+            "writeOnly": true,
+            "readOnly": true
+          }
+        }
+      },
+      "exclusives-with-values": {
+        "type": "object",
+        "properties": {
+          "a": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMaximum": 100
+          },
+          "b": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 100
+          }
+        }
+      }
+    }
+  },
+  "channels": {}
+}

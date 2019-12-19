@@ -284,6 +284,8 @@ abstract class RamlShapeEmitter(shape: Shape, ordering: SpecOrdering, references
                                                 f.value.value.asInstanceOf[CreativeWork],
                                                 ordering))
 
+    fs.entry(PropertyShapeModel.ReadOnly).map(fe => result += ValueEmitter("readOnly".asRamlAnnotation, fe))
+
     fs.entry(AnyShapeModel.XMLSerialization).map(f => result += XMLSerializerEmitter("xml", f, ordering))
 
     fs.entry(ShapeModel.CustomShapePropertyDefinitions)
@@ -1198,12 +1200,9 @@ case class RamlPropertyShapeEmitter(property: PropertyShape, ordering: SpecOrder
     } else {
 
       val additionalEmitters: Seq[EntryEmitter] =
-        (property.fields
-          .entry(PropertyShapeModel.ReadOnly)
-          .map(fe => ValueEmitter("readOnly".asRamlAnnotation, fe)) ++ RequiredShapeEmitter(
-          shape = property.range,
-          property.fields.entry(PropertyShapeModel.MinCount))
-          .emitter()).toSeq
+        (RequiredShapeEmitter(shape = property.range, property.fields.entry(PropertyShapeModel.MinCount))
+          .emitter())
+          .toSeq
 
       property.range match {
         case range: AnyShape =>
@@ -1454,8 +1453,12 @@ abstract class OasShapeEmitter(shape: Shape,
     if (Option(shape.not).isDefined)
       result += OasNotConstraintEmitter(shape, ordering, references, pointer, schemaPath)
 
-    if (spec.vendor == Vendor.OAS30)
+    fs.entry(ShapeModel.ReadOnly).map(fe => result += ValueEmitter("readOnly", fe))
+
+    if (spec.vendor == Vendor.OAS30) {
       fs.entry(ShapeModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
+      fs.entry(ShapeModel.WriteOnly).map(fe => result += ValueEmitter("writeOnly", fe))
+    }
 
     result
   }
@@ -2298,9 +2301,6 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
     extends OasTypePartCollector(property.range, ordering, Nil, references)
     with EntryEmitter {
 
-  val readOnlyEmitter: Option[ValueEmitter] =
-    property.fields.entry(PropertyShapeModel.ReadOnly).map(fe => ValueEmitter("readOnly", fe))
-
   val propertyName: String = property.patternName.option().getOrElse(property.name.value())
   val propertyKey          = YNode(YScalar(propertyName), YType.Str)
 
@@ -2315,12 +2315,11 @@ case class OasPropertyShapeEmitter(property: PropertyShape,
           pb => {
             computedEmitters match {
               case Left(p)        => p.emit(pb)
-              case Right(entries) => pb.obj(traverse(ordering.sorted(entries ++ readOnlyEmitter), _))
+              case Right(entries) => pb.obj(traverse(ordering.sorted(entries), _))
             }
           }
         )
       case _ => // ignore
-        b.entry(propertyKey, _.obj(e => traverse(readOnlyEmitter.toSeq, e)))
     }
   }
 
