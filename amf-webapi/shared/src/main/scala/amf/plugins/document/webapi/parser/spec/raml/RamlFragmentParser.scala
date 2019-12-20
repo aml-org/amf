@@ -159,9 +159,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
       security.withEncodes(
         RamlSecuritySchemeParser(map,
-                                 "securityDefinitions",
-                                 map,
-                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme, _) =>
+                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme) =>
                                    security.adopted(root.location + "#/"))
           .parse())
     }

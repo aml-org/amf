@@ -8,9 +8,19 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationParser, Raml08TypeParser, SecuritySchemeParser, _}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  AbstractDeclarationParser,
+  Raml08TypeParser,
+  SecuritySchemeParser,
+  _
+}
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.validations.ParserSideValidations.{InvalidAbstractDeclarationType, InvalidSecuredByType, InvalidTypesType, InvalidTypeDefinition}
+import amf.validations.ParserSideValidations.{
+  InvalidAbstractDeclarationType,
+  InvalidSecuredByType,
+  InvalidTypesType,
+  InvalidTypeDefinition
+}
 import org.yaml.model.{YType, YMap, YScalar, YMapEntry}
 
 /**
@@ -84,8 +94,10 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
   }
 
   private def parseEntries(entries: Seq[YMapEntry], parent: String): Unit = entries.foreach { entry =>
-    ctx.declarations += SecuritySchemeParser(entry, (scheme, name) => scheme.withName(name).adopted(parent))
-      .parse()
+    ctx.declarations += SecuritySchemeParser(entry, scheme => {
+      val name = entry.key.as[String]
+      scheme.withName(name).adopted(parent)
+    }).parse()
       .add(DeclaredElement())
   }
 
