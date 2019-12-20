@@ -175,16 +175,18 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       key,
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += SecuritySchemeParser(
-            entry,
-            (scheme) => {
-              val name = entry.key.as[String]
-              scheme.set(ParametrizedSecuritySchemeModel.Name,
-                         AmfScalar(name, Annotations(entry.key.value)),
-                         Annotations(entry.key))
-              scheme.adopted(parent)
-            }
-          ).parse()
+          ctx.declarations += ctx.factory
+            .securitySchemeParser(
+              entry,
+              (scheme) => {
+                val name = entry.key.as[String]
+                scheme.set(ParametrizedSecuritySchemeModel.Name,
+                           AmfScalar(name, Annotations(entry.key.value)),
+                           Annotations(entry.key))
+                scheme.adopted(parent)
+              }
+            )
+            .parse()
             .add(DeclaredElement())
         }
       }

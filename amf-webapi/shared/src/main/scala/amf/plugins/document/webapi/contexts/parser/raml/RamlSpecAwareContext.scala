@@ -7,6 +7,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentParser, Raml10DocumentParser, Raml08DocumentParser}
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.security.SecurityScheme
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -15,6 +16,9 @@ import scala.collection.mutable.ListBuffer
 trait RamlSpecAwareContext extends SpecAwareContext {}
 
 abstract class RamlSpecVersionFactory(implicit val ctx: RamlWebApiContext) extends SpecVersionFactory {
+
+  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+    RamlSecuritySchemeParser.apply
 
   def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser = RamlOperationParser.apply
 
