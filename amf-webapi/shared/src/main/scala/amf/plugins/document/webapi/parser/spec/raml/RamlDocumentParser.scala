@@ -12,7 +12,11 @@ import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, ExtensionLikeWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.parser.raml.{
+  RamlWebApiContext,
+  ExtensionLikeWebApiContext,
+  RamlWebApiContextType
+}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
@@ -73,7 +77,8 @@ case class ExtensionLikeParser(root: Root)(implicit override val ctx: ExtensionL
     root.references.map(_.unit).collectFirst { case u @ (_: ExtensionLike[_] | _: Document) => u }
   }
 
-  private def collectAncestorsDeclarationsAndReferences(reference: BaseUnit, collector: RamlWebApiDeclarations): Unit = {
+  private def collectAncestorsDeclarationsAndReferences(reference: BaseUnit,
+                                                        collector: RamlWebApiDeclarations): Unit = {
 
     reference.asInstanceOf[Document].declares.foreach(collector += _)
 
@@ -253,7 +258,8 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
             e.value.as[YMap].entries.foreach { entry =>
               ctx.declarations += SecuritySchemeParser(
                 entry,
-                (scheme, name) => {
+                scheme => {
+                  val name = entry.key.as[YScalar].text
                   scheme.set(SecuritySchemeModel.Name,
                              AmfScalar(name, Annotations(entry.key.value)),
                              Annotations(entry.key))

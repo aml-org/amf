@@ -10,9 +10,8 @@ class Oas3WebApiContext(loc: String,
                         private val ds: Option[OasWebApiDeclarations] = None,
                         parserCount: Option[Int] = None,
                         override val eh: Option[ErrorHandler] = None)
-  extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
-  override val factory: Oas3VersionFactory = Oas3VersionFactory(this)
+    extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
+  override val factory: Oas3VersionFactory = Oas3VersionFactory()(this)
   override val vendor: Vendor              = Oas30
   override val syntax: SpecSyntax          = Oas3Syntax
 }
-

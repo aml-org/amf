@@ -11,8 +11,8 @@ class JsonSchemaWebApiContext(loc: String,
                               private val ds: Option[OasWebApiDeclarations],
                               parserCount: Option[Int] = None,
                               override val eh: Option[ErrorHandler] = None)
-  extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
-  override val factory: OasSpecVersionFactory = Oas3VersionFactory(this)
+    extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
+  override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax
   override val vendor: Vendor                 = JsonSchema
   override val linkTypes: Boolean = wrapped match {
@@ -21,4 +21,3 @@ class JsonSchemaWebApiContext(loc: String,
     case _                    => false
   } // oas definitions
 }
-

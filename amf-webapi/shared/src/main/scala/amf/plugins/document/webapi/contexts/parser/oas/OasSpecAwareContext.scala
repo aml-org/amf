@@ -2,7 +2,11 @@ package amf.plugins.document.webapi.contexts.parser.oas
 
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.{SpecVersionFactory, SpecAwareContext}
-import amf.plugins.document.webapi.parser.spec.declaration.{OasSecuritySettingsParser, Oas2SecuritySettingsParser, Oas3SecuritySettingsParser}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  OasSecuritySettingsParser,
+  Oas2SecuritySettingsParser,
+  Oas3SecuritySettingsParser
+}
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.metamodel.{WebApiModel, OperationModel, EndPointModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
@@ -11,7 +15,7 @@ import org.yaml.model.{YMap, YNode, YMapEntry}
 
 trait OasSpecAwareContext extends SpecAwareContext {}
 
-trait OasSpecVersionFactory extends SpecVersionFactory {
+abstract class OasSpecVersionFactory(implicit val ctx: OasWebApiContext) extends SpecVersionFactory {
   def serversParser(map: YMap, api: WebApi): OasServersParser
   def serversParser(map: YMap, endpoint: EndPoint): OasServersParser
   def serversParser(map: YMap, operation: Operation): OasServersParser
@@ -22,7 +26,7 @@ trait OasSpecVersionFactory extends SpecVersionFactory {
                       nameGenerator: IdCounter): OasParameterParser
 }
 
-case class Oas2VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFactory {
+case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) extends OasSpecVersionFactory {
   override def serversParser(map: YMap, api: WebApi): Oas2ServersParser = Oas2ServersParser(map, api)(ctx)
 
   override def serversParser(map: YMap, operation: Operation): OasServersParser =
@@ -40,7 +44,7 @@ case class Oas2VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFacto
     Oas2ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 }
 
-case class Oas3VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFactory {
+case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) extends OasSpecVersionFactory {
   override def serversParser(map: YMap, api: WebApi): Oas3ServersParser =
     Oas3ServersParser(map, api, WebApiModel.Servers)(ctx)
 
