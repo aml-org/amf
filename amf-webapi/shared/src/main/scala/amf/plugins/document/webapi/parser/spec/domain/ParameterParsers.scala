@@ -191,6 +191,7 @@ case class Raml08ParameterParser(entry: YMapEntry, adopted: Parameter => Unit, p
     entry.value.toOption[YMap] match {
       case Some(map) =>
         map.key("required", (ParameterModel.Required in parameter).explicit)
+        map.key("description", (ParameterModel.Description in parameter).allowingAnnotations)
       case _ =>
     }
 
