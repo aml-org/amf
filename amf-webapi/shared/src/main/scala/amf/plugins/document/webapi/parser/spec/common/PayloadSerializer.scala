@@ -2,9 +2,9 @@ package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.AMFSerializer
 import amf.core.emitter.SpecOrdering
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.DataNode
-import amf.core.parser.ErrorHandler
 import amf.core.remote.Payload
 import amf.core.services.RuntimeSerializer
 import amf.core.utils._

@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ReferenceResolutionStage
-import amf.core.resolution.stages.elements.resolution.ElementStageTransformer
 import amf.plugins.domain.webapi.models.Response
 
 class WebApiReferenceResolutionStage(keepEditingInfo: Boolean = false)(

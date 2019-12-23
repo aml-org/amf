@@ -1,10 +1,14 @@
 package amf.plugins.document.webapi
 
+import amf._
 import amf.core.Root
 import amf.core.client.ParsingOptions
+import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.emitter.{ShapeRenderOptions, RenderOptions}
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
+import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.parser.{ErrorHandler, ParsedReference, LinkReference, ParserContext, LibraryReference}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -14,6 +18,13 @@ import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas30Header, Oas20Overlay, Oas20Extension, Oas20Header}
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
+import amf.plugins.document.webapi.resolution.pipelines.{
+  Oas30EditingPipeline,
+  Oas30ResolutionPipeline,
+  OasEditingPipeline,
+  OasResolutionPipeline
+}
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{Oas30EditingPipeline, OasEditingPipeline, Oas30ResolutionPipeline, OasResolutionPipeline}
 import amf.plugins.domain.webapi.models.WebApi

@@ -8,9 +8,13 @@ import amf.core.model.document._
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.parser.{Position, FieldEntry, EmptyFutureDeclarations}
 import amf.core.remote._
 import amf.core.utils.TSort.tsort
+import amf.core.utils.{AmfStrings, IdCounter}
+import amf.plugins.document.webapi.contexts.{RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
 import amf.core.utils.{IdCounter, AmfStrings}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
@@ -37,7 +41,7 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
   override def declarationsEmitter(): Seq[EntryEmitter] = {
 
-    val declarations = WebApiDeclarations(document.declares, None, EmptyFutureDeclarations())
+    val declarations = WebApiDeclarations(document.declares, UnhandledParserErrorHandler, EmptyFutureDeclarations())
 
     val result = ListBuffer[EntryEmitter]()
 
@@ -146,7 +150,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
   override def declarationsEmitter(): Seq[EntryEmitter] = {
 
-    val declarations = WebApiDeclarations(document.declares, None, EmptyFutureDeclarations())
+    val declarations = WebApiDeclarations(document.declares, UnhandledParserErrorHandler, EmptyFutureDeclarations())
 
     val result = ListBuffer[EntryEmitter]()
 

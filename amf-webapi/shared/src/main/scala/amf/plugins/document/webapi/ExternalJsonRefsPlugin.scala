@@ -1,11 +1,13 @@
 package amf.plugins.document.webapi
 
+import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
 import amf.core.Root
+import amf.core.client.ParsingOptions
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, ExternalFragment}
 import amf.core.model.domain.{AnnotationGraphLoader, ExternalDomainElement}
 import amf.core.parser.{
-  ErrorHandler,
   InferredLinkReference,
   LinkReference,
   ParsedDocument,
@@ -14,8 +16,6 @@ import amf.core.parser.{
   ReferenceHandler,
   SyamlParsedDocument
 }
-import amf.client.plugins.{AMFDocumentPluginSettings, AMFPlugin}
-import amf.core.client.ParsingOptions
 import amf.core.remote.Platform
 import amf.core.utils._
 import amf.plugins.features.validation.CoreValidations.UnresolvedReference
@@ -60,7 +60,7 @@ class JsonRefsReferenceHandler extends ReferenceHandler {
       case YType.Str =>
         val refValue = ref.as[String]
         if (!refValue.startsWith("#")) refUrls += refValue.split("#").head
-      case _ => ctx.violation(UnresolvedReference, "", s"Unexpected $$ref with $ref", ref.value)
+      case _ => ctx.eh.violation(UnresolvedReference, "", s"Unexpected $$ref with $ref", ref.value)
     }
   }
 }

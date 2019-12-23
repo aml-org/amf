@@ -1,7 +1,8 @@
 package amf.cycle
+import amf.client.parse.DefaultParserErrorHandler
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.Syntax
-import amf.core.remote.{Amf, AmfJsonHint, Hint, Vendor}
-import amf.facades.Validation
+import amf.core.remote.{AmfJsonHint, Hint}
 import amf.io.BuildCycleTests
 import org.mulesoft.common.io.{Fs, SyncFile}
 import org.scalatest.{Assertion, AsyncFreeSpec}
@@ -128,10 +129,11 @@ trait CycleTestByDirectory extends AsyncFreeSpec with BuildCycleTests {
                        hint: Hint,
                        target: Hint,
                        syntax: Option[Syntax]): Future[Assertion] = {
-    val shouldValidate = withEnableValidations.contains(source.split("/").head)
-    Validation(platform).flatMap { v =>
-      v.withEnabledValidation(shouldValidate)
-      cycle(source, golden, hint, target.vendor, syntax = Some(target.syntax), validation = Some(v))
-    }
+    cycle(source,
+          golden,
+          hint,
+          target.vendor,
+          syntax = Some(target.syntax),
+          eh = Some(DefaultParserErrorHandler.withRun()))
   }
 }

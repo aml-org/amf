@@ -3,9 +3,13 @@ package amf.plugins.document.webapi
 import amf._
 import amf.core.Root
 import amf.core.client.ParsingOptions
+import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.emitter.{ShapeRenderOptions, RenderOptions}
 import amf.core.model.document._
 import amf.core.model.domain.ExternalDomainElement
+import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParserContext, RefContainer}
+import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.parser.{ErrorHandler, RefContainer, LinkReference, ParserContext, EmptyFutureDeclarations}
 import amf.core.remote.{Platform, Vendor, Raml}
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -34,7 +38,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
   // context that opens a new context for declarations and copies the global JSON Schema declarations
   def cleanContext(wrapped: ParserContext, root: Root): RamlWebApiContext = {
     val cleanNested =
-      ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = wrapped.parserCount)
+      ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.eh)
     val clean = context(cleanNested, root)
     clean.globalSpace = wrapped.globalSpace
     clean.reportDisambiguation = wrapped.reportDisambiguation

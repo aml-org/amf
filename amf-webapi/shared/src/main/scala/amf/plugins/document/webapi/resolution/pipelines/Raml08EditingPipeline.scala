@@ -1,5 +1,5 @@
 package amf.plugins.document.webapi.resolution.pipelines
-import amf.core.parser.ErrorHandler
+import amf.core.errorhandling.ErrorHandler
 import amf.{ProfileName, Raml08Profile}
 
 class Raml08EditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean = true)

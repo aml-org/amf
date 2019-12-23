@@ -2,9 +2,10 @@ package amf.resolution.element
 import amf.ProfileNames
 import amf.client.model.DataTypes
 import amf.core.annotations.SourceLocation
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.domain.Shape
 import amf.core.model.domain.extensions.PropertyShape
-import amf.core.parser.{Annotations, UnhandledErrorHandler}
+import amf.core.parser.Annotations
 import amf.plugins.domain.shapes.models.{NodeShape, ScalarShape}
 import amf.plugins.domain.shapes.resolution.stages.elements.ShapeTransformationPipeline
 import org.scalatest.FunSuite

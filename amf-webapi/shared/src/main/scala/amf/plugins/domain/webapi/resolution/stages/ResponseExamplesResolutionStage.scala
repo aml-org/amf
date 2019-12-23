@@ -1,8 +1,8 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.core.annotations.TrackedElement
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.{AnyShape, Example}
 import amf.plugins.domain.webapi.metamodel.ResponseModel

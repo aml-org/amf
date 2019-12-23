@@ -39,10 +39,10 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
       // Empty operation
       case _ if entry.value.toOption[YScalar].map(_.text).exists(s => s == "" || s == "null") => operation
       case _ =>
-        ctx.violation(InvalidOperationType,
-                      operation.id,
-                      s"Invalid node ${entry.value} for method $method",
-                      entry.value)
+        ctx.eh.violation(InvalidOperationType,
+                         operation.id,
+                         s"Invalid node ${entry.value} for method $method",
+                         entry.value)
         operation
     }
   }
@@ -105,11 +105,11 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
             val keys   = entries.map(_.key.as[YScalar].text)
             val keySet = keys.toSet
             if (keys.size > keySet.size) {
-              ctx.violation(DuplicatedOperationStatusCodeSpecification,
-                            operation.id,
-                            None,
-                            "RAML Responses must not have duplicated status codes",
-                            entry.value)
+              ctx.eh.violation(DuplicatedOperationStatusCodeSpecification,
+                               operation.id,
+                               None,
+                               "RAML Responses must not have duplicated status codes",
+                               entry.value)
             }
 
             entries.foreach { entry =>

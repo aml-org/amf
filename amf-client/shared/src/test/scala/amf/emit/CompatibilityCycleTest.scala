@@ -1,5 +1,6 @@
 package amf.emit
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.{OasProfile, ProfileNames}
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -26,7 +27,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
     test(s"Test $path") {
       val c = CycleConfig(path, path, OasJsonHint, Raml, basePath, None, None)
       for {
-        origin   <- build(c, None, useAmfJsonldSerialisation = true)
+        origin   <- build(c, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true)
         resolved <- successful(transform(origin, c))
         rendered <- render(resolved, c, useAmfJsonldSerialization = true)
         tmp      <- writeTemporaryFile(path)(rendered)
@@ -47,7 +48,7 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
     test(s"Test $path") {
       val c = CycleConfig(path, path, RamlYamlHint, Oas, basePath, None, None)
       for {
-        origin   <- build(c, None, useAmfJsonldSerialisation = true)
+        origin   <- build(c, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true)
         resolved <- successful(transform(origin, c))
         rendered <- render(resolved, c, useAmfJsonldSerialization = true)
         tmp      <- writeTemporaryFile(path)(rendered)
@@ -60,10 +61,9 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
 
   private def validate(source: AsyncFile, hint: Hint): Future[AMFValidationReport] =
     Validation(platform)
-      .map(_.withEnabledValidation(false))
       .flatMap { validation =>
         val config = CycleConfig(source.path, source.path, hint, hint.vendor, "", None, None)
-        build(config, Some(validation), useAmfJsonldSerialisation = true).flatMap { unit =>
+        build(config, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true).flatMap { unit =>
           hint match {
             case RamlYamlHint => validation.validate(unit, ProfileNames.RAML10)
             case OasYamlHint  => validation.validate(unit, ProfileNames.OAS20)
@@ -76,6 +76,6 @@ class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
     case Raml | Raml08 | Raml10 => CompatibilityPipeline.unhandled().resolve(unit)
     case Oas | Oas20 | Oas30    => CompatibilityPipeline.unhandled(OasProfile).resolve(unit)
-    case _ => throw new IllegalArgumentException
+    case _                      => throw new IllegalArgumentException
   }
 }

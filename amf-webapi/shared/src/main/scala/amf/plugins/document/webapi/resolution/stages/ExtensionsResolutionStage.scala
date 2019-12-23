@@ -1,5 +1,8 @@
 package amf.plugins.document.webapi.resolution.stages
 
+import amf.client.parse.DefaultParserErrorHandler
+import amf.core.annotations.{Aliases, LexicalInformation, SourceLocation, SynthesizedField}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.annotations.{LexicalInformation, Aliases, SourceLocation, SynthesizedField}
 import amf.core.metamodel.Type.Scalar
 import amf.core.metamodel.document.{ExtensionLikeModel, BaseUnitModel}
@@ -12,6 +15,8 @@ import amf.core.metamodel.{Field, Type}
 import amf.core.model.document._
 import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
+import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, ParserContext, Value}
+import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.parser.{ErrorHandler, Value, FieldEntry, ParserContext, Annotations, EmptyFutureDeclarations}
 import amf.core.resolution.stages.{ResolutionStage, ReferenceResolutionStage}
 import amf.core.unsafe.PlatformSecrets
@@ -77,10 +82,12 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
 
   val restrictions: MergingRestrictions
 
+  private val parserEH = DefaultParserErrorHandler.fromErrorHandler(errorHandler)
+
   /** Default to raml10 context. */
   implicit val ctx: RamlWebApiContext = profile match {
-    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(), eh = Some(errorHandler))
-    case _             => new Raml10WebApiContext("", Nil, ParserContext(), eh = Some(errorHandler))
+    case Raml08Profile => new Raml08WebApiContext("", Nil, ParserContext(eh = parserEH))
+    case _             => new Raml10WebApiContext("", Nil, ParserContext(eh = parserEH))
   }
 
   def removeExtends(document: Document): BaseUnit = {
@@ -228,16 +235,21 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
             // If the overlay field is a datatype and the type is inferred it must be a type that add only an example
             // Nothing to do
             case None => // not allowed insert a new obj node. Not exists node in master.
-              val node = value.value match {
-                case amfObject: AmfObject => amfObject.id
-                case _                    => field.value.toString
+              val (node, annotations) = value.value match {
+                case amfObject: AmfObject => (amfObject.id, amfObject.annotations)
+                case array: AmfArray =>
+                  val ann =
+                    if (value.annotations.nonEmpty) value.annotations
+                    else array.values.headOption.map(_.annotations).getOrElse(Annotations())
+                  (field.value.toString, ann)
+                case _ => (field.value.toString, value.value.annotations)
               }
 
               errorHandler.violation(
                 ResolutionValidation,
                 node,
                 s"Property '$node' of type '${value.value.getClass.getSimpleName}' is not allowed to be overriden or added in overlays",
-                value.annotations
+                annotations
               )
 
             case Some(existing) if restrictions allowsOverride field =>
@@ -321,7 +333,7 @@ abstract class ExtensionLikeResolutionStage[T <: ExtensionLike[_ <: DomainElemen
                         iriMerger: IriMerger,
                         extensionId: String,
                         extensionLocation: Option[String]): Unit = {
-    val declarations = WebApiDeclarations(master.declares, Some(ctx), EmptyFutureDeclarations())
+    val declarations = WebApiDeclarations(master.declares, ctx.eh, EmptyFutureDeclarations())
 
     // Extension declarations will be added to master document. The ones with the same name will be merged.
     val mergingTracker = IdTracker()

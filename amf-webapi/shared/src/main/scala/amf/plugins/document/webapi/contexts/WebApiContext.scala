@@ -1,13 +1,18 @@
 package amf.plugins.document.webapi.contexts
 
+import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
+import amf.core.model.domain.Shape
+import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
 import amf.core.model.document.{Fragment, ExternalFragment, RecursiveUnit}
 import amf.core.parser.{ErrorHandler, ParserContext, ParsedReference}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
+import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.JsonSchemaPlugin
 import amf.plugins.document.webapi.contexts.parser.oas.{OasWebApiContext, JsonSchemaAstIndex}
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaDraft3SchemaVersion}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.domain.shapes.models.AnyShape
@@ -18,14 +23,8 @@ import org.yaml.model._
 abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
                              private val wrapped: ParserContext,
-                             private val ds: Option[WebApiDeclarations] = None,
-                             parserCount: Option[Int] = None,
-                             override val eh: Option[ErrorHandler])
-    extends ParserContext(loc,
-                          refs,
-                          wrapped.futureDeclarations,
-                          parserCount = parserCount.getOrElse(wrapped.parserCount),
-                          eh.orElse(wrapped.eh))
+                             private val ds: Option[WebApiDeclarations] = None)
+    extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
     with SpecAwareContext
     with PlatformSecrets {
 
@@ -33,7 +32,7 @@ abstract class WebApiContext(val loc: String,
   val vendor: Vendor
 
   val declarations: WebApiDeclarations =
-    ds.getOrElse(new WebApiDeclarations(None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
+    ds.getOrElse(new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
@@ -138,7 +137,7 @@ abstract class WebApiContext(val loc: String,
                   case _                                                             => JSONSchemaDraft4SchemaVersion // we upgrade anything else to 4
                 }
               case _ =>
-                violation(InvalidJsonSchemaVersion, "", "JSON Schema version value must be a string", node)
+                eh.violation(InvalidJsonSchemaVersion, "", "JSON Schema version value must be a string", node)
                 JSONSchemaDraft4SchemaVersion
             }
           case _ => JSONSchemaUnspecifiedVersion
@@ -189,10 +188,13 @@ abstract class WebApiContext(val loc: String,
           if (ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {
-            violation(ClosedShapeSpecification, node, s"Property '$key' not supported in a $vendor $shape node", entry)
+            eh.violation(ClosedShapeSpecification,
+                         node,
+                         s"Property '$key' not supported in a $vendor $shape node",
+                         entry)
           }
         }
       case None =>
-        violation(ClosedShapeSpecification, node, s"Cannot validate unknown node type $shape for $vendor", ast)
+        eh.violation(ClosedShapeSpecification, node, s"Cannot validate unknown node type $shape for $vendor", ast)
     }
 }

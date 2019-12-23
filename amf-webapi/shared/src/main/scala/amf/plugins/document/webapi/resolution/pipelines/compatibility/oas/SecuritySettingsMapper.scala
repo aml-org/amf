@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.models.security._

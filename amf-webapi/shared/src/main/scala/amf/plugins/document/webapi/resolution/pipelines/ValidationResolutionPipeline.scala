@@ -1,16 +1,16 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
 import amf.ProfileName
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{DefaultParserSideErrorHandler, ErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.{ExternalSourceRemovalStage, ReferenceResolutionStage, ResolutionStage}
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage
 import amf.plugins.domain.shapes.resolution.stages.ShapeNormalizationStage
 import amf.plugins.domain.webapi.resolution.stages.{
-  ResponseExamplesResolutionStage,
+  MediaTypeResolutionStage,
   PayloadAndParameterResolutionStage,
-  MediaTypeResolutionStage
+  ResponseExamplesResolutionStage
 }
 
 class ValidationResolutionPipeline(profile: ProfileName, override val eh: ErrorHandler)
@@ -31,7 +31,6 @@ class ValidationResolutionPipeline(profile: ProfileName, override val eh: ErrorH
 
 object ValidationResolutionPipeline {
   def apply(profile: ProfileName, unit: BaseUnit): BaseUnit = {
-    val handler = DefaultParserSideErrorHandler(unit)
-    new ValidationResolutionPipeline(profile, handler).resolve(unit)
+    new ValidationResolutionPipeline(profile, unit.errorHandler()).resolve(unit)
   }
 }

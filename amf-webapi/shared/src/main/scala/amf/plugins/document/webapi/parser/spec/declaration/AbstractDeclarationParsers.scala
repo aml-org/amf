@@ -34,10 +34,10 @@ case class AbstractDeclarationsParser(key: String,
                     .add(DeclaredElement()))
           case YType.Null =>
           case t =>
-            ctx.violation(InvalidAbstractDeclarationType,
-                          customProperties,
-                          s"Invalid type $t for '$key' node.",
-                          e.value)
+            ctx.eh.violation(InvalidAbstractDeclarationType,
+                             customProperties,
+                             s"Invalid type $t for '$key' node.",
+                             e.value)
         }
       }
     )
@@ -56,10 +56,10 @@ case class AbstractDeclarationParser(declaration: AbstractDeclaration, parent: S
   def parse(): AbstractDeclaration = {
 
     if (entryValue.tagType == YType.Null)
-      ctx.warning(NullAbstractDeclaration,
-                  parent,
-                  "Generating abstract declaration (resource type / trait)  with null value",
-                  entryValue)
+      ctx.eh.warning(NullAbstractDeclaration,
+                     parent,
+                     "Generating abstract declaration (resource type / trait)  with null value",
+                     entryValue)
 
     ctx.link(entryValue) match {
       case Left(link) => parseReferenced(declaration, link, entryValue).adopted(parent)

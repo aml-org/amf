@@ -5,11 +5,10 @@ import amf.core.rdf.RdfModel
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
-import amf.facades.Validation
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -41,13 +40,12 @@ class DialectSHACLTest extends FunSuiteCycleTests with PlatformSecrets {
                         hint: Hint = VocabularyYamlHint,
                         target: Vendor = Amf,
                         directory: String = basePath,
-                        validation: Option[Validation] = None,
                         syntax: Option[Syntax] = None,
                         pipeline: Option[String] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
-    build(config, validation, useAmfJsonldSerialisation = true)
+    build(config, None, useAmfJsonldSerialisation = true)
       .map(transformRdf(_, config))
       .flatMap(renderRdf(_, config))
       .flatMap(writeTemporaryFile(golden))

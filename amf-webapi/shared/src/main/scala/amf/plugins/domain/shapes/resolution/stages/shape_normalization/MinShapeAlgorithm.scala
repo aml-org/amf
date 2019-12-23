@@ -1,5 +1,6 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
 
+import amf.core.AMFCompilerRunCount
 import amf.core.annotations.{InheritanceProvenance, LexicalInformation}
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.ShapeModel
@@ -7,7 +8,8 @@ import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.DataType
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
-import amf.core.parser.{Annotations, RuntimeErrorHandler, Value}
+import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.parser.{Annotations, Value}
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
@@ -362,9 +364,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
     clonedProp
   }
 
-  object UnionErrorHandler extends RuntimeErrorHandler {
-    override val parserCount: Int    = 0
-    override val currentFile: String = ""
+  object UnionErrorHandler extends ParserErrorHandler {
 
     override def handle[T](error: YError, defaultValue: T): T = {
       throw new Exception("raising exceptions in union processing")
@@ -388,6 +388,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         ctx.cache
       )
     }
+    override val parserRun: Int = AMFCompilerRunCount.NONE
   }
   protected def computeMinUnion(baseUnion: UnionShape, superUnion: UnionShape): Shape = {
 

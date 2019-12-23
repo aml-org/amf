@@ -2,6 +2,7 @@ package amf.client.commands
 
 import amf.ProfileName
 import amf.core.client.{ExitCodes, ParserConfig}
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
@@ -36,10 +37,11 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     res
   }
 
-  def report(model: BaseUnit, config: ParserConfig) = {
+  def report(model: BaseUnit, config: ParserConfig): Future[AMFValidationReport] = {
     val customProfileLoaded: Future[ProfileName] = if (config.customProfile.isDefined) {
-      RuntimeValidator.loadValidationProfile(config.customProfile.get) map { profileName =>
-        profileName
+      RuntimeValidator.loadValidationProfile(config.customProfile.get, errorHandler = UnhandledErrorHandler) map {
+        profileName =>
+          profileName
       }
     } else {
       Future {
@@ -48,7 +50,7 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
             AMLPlugin.registry.dialectFor(dialectInstance) match {
               case Some(dialect) =>
                 ProfileName(dialect.nameAndVersion())
-              case _             =>
+              case _ =>
                 config.profile
             }
           case _ =>
@@ -61,15 +63,11 @@ class ValidateCommand(override val platform: Platform) extends CommandHelper {
     }
   }
 
-  def processOutput(report: AMFValidationReport, config: ParserConfig) = {
+  def processOutput(report: AMFValidationReport, config: ParserConfig): Unit = {
     val json = ValidationReportJSONLDEmitter.emitJSON(report)
     config.output match {
-      case Some(f) => {
-        platform.write(f, json)
-      }
-      case None => {
-        config.stdout.print(json)
-      }
+      case Some(f) => platform.write(f, json)
+      case None    => config.stdout.print(json)
     }
     if (!report.conforms) {
       config.proc.exit(ExitCodes.FailingValidation)

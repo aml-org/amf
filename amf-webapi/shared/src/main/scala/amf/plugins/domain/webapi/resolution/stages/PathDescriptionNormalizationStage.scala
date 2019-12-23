@@ -1,10 +1,10 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf._
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfScalar
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, WebApi}

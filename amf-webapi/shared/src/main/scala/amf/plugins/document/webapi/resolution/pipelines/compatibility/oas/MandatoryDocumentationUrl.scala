@@ -1,10 +1,9 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.shapes.metamodel.CreativeWorkModel
-import amf.plugins.domain.webapi.models.{Tag, WebApi}
+import amf.plugins.domain.webapi.models.WebApi
 
 class MandatoryDocumentationUrl()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
 

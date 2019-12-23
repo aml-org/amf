@@ -3,8 +3,11 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.core.annotations.SourceAST
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain._
+import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
+import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.core.model.domain.extensions.{ShapeExtension, CustomDomainProperty, DomainExtension}
 import amf.core.parser.{ErrorHandler, Position, Value, FieldEntry, Annotations}
 import amf.core.utils._

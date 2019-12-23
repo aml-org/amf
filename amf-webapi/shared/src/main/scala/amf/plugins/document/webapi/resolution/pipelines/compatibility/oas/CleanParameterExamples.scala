@@ -1,10 +1,9 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.metamodel.AnyShapeModel
-import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
 
 class CleanParameterExamples()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {

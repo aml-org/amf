@@ -29,7 +29,7 @@ class CompatibilityTest extends AsyncFunSuite with FileAssertionTest {
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   private def compatibility(source: String, l: Hint, r: Hint): Future[Assertion] = {
     for {
-      _      <- Validation(platform).map(_.withEnabledValidation(false))
+      _      <- Validation(platform)
       input  <- fs.asyncFile(basePath + source).read()
       left   <- parseBaseUnit(input.toString, l)
       target <- new AMFRenderer(left, r.vendor, RenderOptions(), Some(r.syntax)).renderToString

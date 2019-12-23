@@ -1,7 +1,7 @@
 package amf.validation
 
 import amf.core.model.document.{BaseUnit, Module}
-import amf.core.parser.UnhandledErrorHandler
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.RamlYamlHint
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
@@ -28,7 +28,10 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
   test("Validation logic, standard shape") {
     for {
       validation <- Validation(platform)
-      library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
+      library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
+                             platform,
+                             RamlYamlHint,
+                             eh = UnhandledParserErrorHandler).build()
       validator <- Future {
         val shape = findShape(library, "A")
         shape.payloadValidator("application/json").get
@@ -44,7 +47,10 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
   test("Validation logic, file shape always validate") {
     for {
       validation <- Validation(platform)
-      library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
+      library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
+                             platform,
+                             RamlYamlHint,
+                             eh = UnhandledParserErrorHandler).build()
       validator <- Future {
         val shape = findShape(library, "B")
         shape.payloadValidator("application/json").get
@@ -58,7 +64,10 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
   test("Validation logic, polymorphic shapes") {
     for {
       validation <- Validation(platform)
-      library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
+      library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
+                             platform,
+                             RamlYamlHint,
+                             eh = UnhandledParserErrorHandler).build()
       validator <- Future {
         val resolved = AmfResolutionPipeline.unhandled.resolve(library)
         val shape    = findShape(resolved, "D")
@@ -73,7 +82,10 @@ class PlatformPayloadValidationPluginsHandlerTest extends AsyncFunSuite with Pla
   test("Exception if unsupported media type") {
     for {
       validation <- Validation(platform)
-      library    <- AMFCompiler(basePath + "payload_validation_shapes.raml", platform, RamlYamlHint, validation).build()
+      library <- AMFCompiler(basePath + "payload_validation_shapes.raml",
+                             platform,
+                             RamlYamlHint,
+                             eh = UnhandledParserErrorHandler).build()
       validator <- Future {
         val resolved = AmfResolutionPipeline.unhandled.resolve(library)
         val shape    = findShape(resolved, "D")

@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation
 
+import amf._
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.validation._
@@ -7,8 +8,6 @@ import amf.core.validation.core.{ValidationProfile, ValidationResult, Validation
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
-import amf._
-import amf.core.parser.DefaultParserSideErrorHandler
 
 import scala.concurrent.Future
 

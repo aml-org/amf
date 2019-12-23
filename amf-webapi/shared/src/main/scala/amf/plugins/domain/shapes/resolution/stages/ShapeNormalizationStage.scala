@@ -1,10 +1,10 @@
 package amf.plugins.domain.shapes.resolution.stages
 
 import amf.ProfileName
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.MetaModelTypeMapping
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.core.resolution.stages.elements.resolution.{ElementResolutionStage, ElementStageTransformer}
 import amf.core.resolution.stages.selectors.ShapeSelector

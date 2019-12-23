@@ -609,23 +609,15 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   test("Invalid parameter binding oas to oas") {
     Validation(platform)
-      .flatMap { validation =>
-        cycle("invalid-parameter-binding.json",
-              "invalid-parameter-binding.json.json",
-              OasYamlHint,
-              Oas,
-              validation = Some(validation.withEnabledValidation(true)))
+      .flatMap { _ =>
+        cycle("invalid-parameter-binding.json", "invalid-parameter-binding.json.json", OasYamlHint, Oas)
       }
   }
 
   test("Invalid parameter binding oas to amf") {
     Validation(platform)
-      .flatMap { validation =>
-        cycle("invalid-parameter-binding.json",
-              "invalid-parameter-binding.jsonld",
-              OasYamlHint,
-              Amf,
-              validation = Some(validation.withEnabledValidation(true)))
+      .flatMap { _ =>
+        cycle("invalid-parameter-binding.json", "invalid-parameter-binding.jsonld", OasYamlHint, Amf)
       }
   }
 
@@ -635,23 +627,15 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   test("Invalid body parameter oas to oas") {
     Validation(platform)
-      .flatMap { validation =>
-        cycle("invalid-body-parameter.json",
-              "invalid-body-parameter.json.json",
-              OasYamlHint,
-              Oas,
-              validation = Some(validation.withEnabledValidation(true)))
+      .flatMap { _ =>
+        cycle("invalid-body-parameter.json", "invalid-body-parameter.json.json", OasYamlHint, Oas)
       }
   }
 
   test("Invalid baseUriParameters without baseUri") {
     Validation(platform)
-      .flatMap { validation =>
-        cycle("no-base-uri.raml",
-              "no-base-uri.raml",
-              RamlYamlHint,
-              Raml,
-              validation = Some(validation.withEnabledValidation(true)))
+      .flatMap { _ =>
+        cycle("no-base-uri.raml", "no-base-uri.raml", RamlYamlHint, Raml)
       }
   }
 

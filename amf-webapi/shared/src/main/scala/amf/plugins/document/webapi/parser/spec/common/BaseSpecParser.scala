@@ -29,7 +29,7 @@ trait SpecParserOps {
     val pattern1 = "\\{[^\\}]*\\{".r
     val pattern2 = "\\}[^\\{]*\\}".r
     if (pattern1.findFirstMatchIn(path).nonEmpty || pattern2.findFirstMatchIn(path).nonEmpty) {
-      ctx.violation(
+      ctx.eh.violation(
         PathTemplateUnbalancedParameters,
         node,
         Some(property),
@@ -228,7 +228,7 @@ case class MapEntriesArrayNode(obj: YMap)(override implicit val iv: IllegalTypeH
 }
 
 object MapArrayNode {
-  def apply(node: YNode)(implicit iv: WebApiContext): ArrayNode = MapEntriesArrayNode(node.as[YMap])(iv)
+  def apply(node: YNode)(implicit iv: WebApiContext): ArrayNode = MapEntriesArrayNode(node.as[YMap])(iv.eh)
 }
 
 object RamlScalarNode {
@@ -255,7 +255,7 @@ object RamlScalarNode {
     }
 
     if (values.nonEmpty) {
-      values.tail.foreach(d => iv.violation(DuplicatedPropertySpecification, "", s"Duplicated key 'value'.", d))
+      values.tail.foreach(d => iv.eh.violation(DuplicatedPropertySpecification, "", s"Duplicated key 'value'.", d))
     }
 
     // When an annotated scalar node has no value, the default is an empty node (null).
@@ -264,8 +264,8 @@ object RamlScalarNode {
   }
 
   private def unexpected(key: YNode)(implicit iv: WebApiContext): Unit =
-    iv.violation(UnexpectedRamlScalarKey,
-                 "",
-                 s"Unexpected key '$key'. Options are 'value' or annotations \\(.+\\)",
-                 key)
+    iv.eh.violation(UnexpectedRamlScalarKey,
+                    "",
+                    s"Unexpected key '$key'. Options are 'value' or annotations \\(.+\\)",
+                    key)
 }

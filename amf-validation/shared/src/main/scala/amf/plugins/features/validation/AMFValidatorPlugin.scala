@@ -1,10 +1,13 @@
 package amf.plugins.features.validation
 
 import amf._
-import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.client.parse.DefaultParserErrorHandler
+import amf.client.plugins.{AMFDocumentPlugin, AMFFeaturePlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.annotations.SourceVendor
 import amf.core.benchmark.ExecutionLog
+import amf.core.errorhandling.{AmfStaticReportBuilder, ErrorHandler, StaticErrorCollector}
 import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
+import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
@@ -12,7 +15,7 @@ import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.services.{RuntimeCompiler, RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
-import amf.core.validation.{AMFValidationReport, EffectiveValidations}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, ValidationResultProcessor}
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -25,7 +28,11 @@ import amf.plugins.syntax.SYamlSyntaxPlugin
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecrets {
+object AMFValidatorPlugin
+    extends AMFFeaturePlugin
+    with RuntimeValidator
+    with ValidationResultProcessor
+    with PlatformSecrets {
 
   override val ID = "AMF Validation"
 
@@ -67,15 +74,21 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
   var customValidationProfiles: Map[String, () => ValidationProfile]  = Map.empty
   var customValidationProfilesPlugins: Map[String, AMFDocumentPlugin] = Map.empty
 
+  private def errorHandlerToParser(eh: ErrorHandler): AmfParserErrorHandler =
+    DefaultParserErrorHandler.fromErrorHandler(eh)
+
   override def loadValidationProfile(validationProfilePath: String,
-                                     env: Environment = Environment()): Future[ProfileName] = {
+                                     env: Environment = Environment(),
+                                     errorHandler: ErrorHandler): Future[ProfileName] = {
+
     RuntimeCompiler(
       validationProfilePath,
       Some("application/yaml"),
       Some(AMLPlugin.ID),
       Context(platform),
       cache = Cache(),
-      env = env
+      env = env,
+      errorHandler = errorHandlerToParser(errorHandler)
     ).map {
         case parsed: DialectInstance if parsed.definedBy().is(url) =>
           parsed.encodes
@@ -130,7 +143,7 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
                                validations: EffectiveValidations,
                                customFunctions: CustomShaclFunctions,
                                options: ValidationOptions): Future[ValidationReport] =
-    if (options.isPartialValidation()) partialShaclValidation(model, validations, customFunctions, options)
+    if (options.isPartialValidation) partialShaclValidation(model, validations, customFunctions, options)
     else fullShaclValidation(model, validations, options)
 
   def partialShaclValidation(model: BaseUnit,
@@ -203,11 +216,10 @@ object AMFValidatorPlugin extends ParserSideValidationPlugin with PlatformSecret
                         resolved: Boolean = false): Future[AMFValidationReport] = {
 
     val profileName = profileForUnit(model, given)
-    super.validate(model, profileName, messageStyle, env, resolved) flatMap {
-      case parseSideValidation if !parseSideValidation.conforms => Future.successful(parseSideValidation)
-      case _                                                    => modelValidation(model, profileName, messageStyle, env, resolved)
-    }
+    val report      = new AmfStaticReportBuilder(model, profileName).buildFromStatic()
 
+    if (!report.conforms) Future.successful(report)
+    else modelValidation(model, profileName, messageStyle, env, resolved)
   }
 
   private def modelValidation(model: BaseUnit,

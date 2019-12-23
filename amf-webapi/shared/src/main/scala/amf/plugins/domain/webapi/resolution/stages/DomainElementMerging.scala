@@ -1,6 +1,7 @@
 package amf.plugins.domain.webapi.resolution.stages
 
 import amf.core.annotations.{DefaultNode, ExplicitField}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.DomainElementModel._
 import amf.core.metamodel.domain.templates.{OptionalField, KeyField}
 import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, LinkableElementModel}
@@ -10,6 +11,7 @@ import amf.core.model.domain.DataNodeOps.adoptTree
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.parser.{FieldEntry, Value, ErrorHandler}
+import amf.core.parser.{FieldEntry, Value}
 import amf.core.utils.TemplateUri
 import amf.plugins.document.webapi.annotations.{Inferred, EmptyPayload}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
@@ -35,8 +37,8 @@ import scala.collection.mutable
   */
 case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
 
-  def merge[T <: DomainElement](main: T, other: T, errorHandler: ErrorHandler): T = {
-    MergingValidator.validate(main, other, errorHandler)
+  def merge[T <: DomainElement](main: T, other: T): T = {
+    MergingValidator.validate(main, other, ctx.eh)
     var merged = false
 
     other.fields.fields().filter(ignored).foreach {
@@ -44,10 +46,10 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         main.fields.entry(otherField) match {
           case None =>
             // Case 2
-            handleNewFieldEntry(main, otherFieldEntry, errorHandler)
+            handleNewFieldEntry(main, otherFieldEntry, ctx.eh)
           case Some(mainFieldEntry) =>
             // Cases 2 & 3 (check for some special conditions of case 2 where main field entry actually exists)
-            merged = handleExistingFieldEntries(main, mainFieldEntry, otherFieldEntry, errorHandler)
+            merged = handleExistingFieldEntries(main, mainFieldEntry, otherFieldEntry, ctx.eh)
         }
     }
 
@@ -151,11 +153,11 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
                   otherValue.value match {
                     // if both parts are scalar strings, then just merge the dataNodes
                     case sc: ScalarShape if sc.dataType.value() == DataType.String =>
-                      merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
+                      merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
                     // if other is an scalar with a different datatype
                     case sc: ScalarShape =>
                       s.set(ScalarShapeModel.DataType, sc.dataType.value())
-                      merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
+                      merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
                     // if other is an array or an object
                     case a: AnyShape =>
                       val examples = s.examples
@@ -168,7 +170,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
                     case x => main.set(otherField, adoptInner(main.id, x))
                   }
                 // This case is for default type AnyShape (in payload in an endpoint)
-                case _: AnyShape => merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
+                case _: AnyShape => merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
                 case _           => main.set(otherField, adoptInner(main.id, otherValue.value))
               }
             case _ => main.set(otherField, adoptInner(main.id, otherValue.value))
@@ -185,9 +187,9 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
         case Type.Scalar(_) =>
         // Do nothing (3.a)
         case Type.ArrayLike(element) =>
-          mergeByValue(main, otherField, element, mainValue, otherValue, errorHandler)
+          mergeByValue(main, otherField, element, mainValue, otherValue)
         case _: DomainElementModel =>
-          merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement, errorHandler)
+          merge(mainFieldEntry.domainElement, otherFieldEntry.domainElement)
         case _ =>
           errorHandler.violation(CoreValidations.ResolutionValidation,
                                  main.id,
@@ -306,24 +308,19 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
     }
   }
 
-  private def mergeByValue(target: DomainElement,
-                           field: Field,
-                           element: Type,
-                           main: Value,
-                           other: Value,
-                           errorHandler: ErrorHandler): Unit = {
+  private def mergeByValue(target: DomainElement, field: Field, element: Type, main: Value, other: Value): Unit = {
     val m = main.value.asInstanceOf[AmfArray]
     val o = other.value.asInstanceOf[AmfArray]
 
     element match {
       case _: Type.Scalar => mergeByValue(target, field, m, o)
-      case key: KeyField  => mergeByKeyValue(target, field, element, key, m, o, errorHandler)
+      case key: KeyField  => mergeByKeyValue(target, field, element, key, m, o)
       case DataNodeModel  => mergeDataNodes(target, field, m, o)
       case _ =>
-        errorHandler.violation(CoreValidations.ResolutionValidation,
-                               target.id,
-                               s"Cannot merge '$element': not a KeyField nor a Scalar",
-                               target.annotations)
+        ctx.eh.violation(CoreValidations.ResolutionValidation,
+                         target.id,
+                         s"Cannot merge '$element': not a KeyField nor a Scalar",
+                         target.annotations)
 
     }
   }
@@ -360,8 +357,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
                               element: Type,
                               key: KeyField,
                               main: AmfArray,
-                              other: AmfArray,
-                              errorHandler: ErrorHandler): Unit = {
+                              other: AmfArray): Unit = {
 
     val existing = main.values.map { m =>
       val obj = m.asInstanceOf[DomainElement]
@@ -377,7 +373,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
               ctx.mergeOperationContext(otherObj.id)
             }
             val adopted = adoptInner(target.id, otherObj).asInstanceOf[DomainElement]
-            merge(existing(value.scalar.value), adopted, errorHandler)
+            merge(existing(value.scalar.value), adopted)
           } else if (!isOptional(element, otherObj)) { // Case (2) -> If node is undefined in 'main' but is optional in 'other'.
             if (field == EndPointModel.Operations) {
               ctx.mergeOperationContext(otherObj.id)
@@ -386,7 +382,7 @@ case class DomainElementMerging()(implicit ctx: RamlWebApiContext) {
           }
         case None if !existing.forall(_._1 != None) =>
           if (existing.contains(None)) {
-            merge(existing(None), otherObj.adopted(target.id), errorHandler)
+            merge(existing(None), otherObj.adopted(target.id))
           } else if (!isOptional(element, otherObj)) { // Case (2) -> If node is undefined in 'main' but is optional in 'other'.
             target.add(field, adoptInner(target.id, o))
           }

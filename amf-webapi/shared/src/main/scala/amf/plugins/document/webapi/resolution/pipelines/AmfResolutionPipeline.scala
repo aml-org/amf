@@ -1,6 +1,6 @@
 package amf.plugins.document.webapi.resolution.pipelines
 
-import amf.core.parser.{ErrorHandler, UnhandledErrorHandler}
+import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages._
 import amf.plugins.document.webapi.resolution.stages.ExtensionsResolutionStage

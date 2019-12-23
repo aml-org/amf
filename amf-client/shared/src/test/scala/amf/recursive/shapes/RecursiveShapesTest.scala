@@ -2,7 +2,6 @@ package amf.recursive.shapes
 
 import amf.core.model.document.BaseUnit
 import amf.core.remote.{Hint, Oas20, RamlYamlHint}
-import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.validation.MultiPlatformReportGenTest
@@ -43,15 +42,11 @@ class RecursiveShapesTest extends FunSuiteCycleTests with MultiPlatformReportGen
   }
 
   def cycle(source: String, golden: String): Future[Assertion] = {
-    Validation(platform).flatMap { v =>
-      v.withEnabledValidation(true)
       super.cycle(source,
                   "oas/" + golden,
                   RamlYamlHint,
                   Oas20,
-                  validation = Some(v),
                   directory = basePath.replace("file://", ""))
-    }
   }
 
   /** Method for transforming parsed unit. Override if necessary. */

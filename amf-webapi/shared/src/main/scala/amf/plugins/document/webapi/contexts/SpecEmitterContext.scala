@@ -2,6 +2,12 @@ package amf.plugins.document.webapi.contexts
 
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
+import amf.core.errorhandling.ErrorHandler
+import amf.core.metamodel.Field
+import amf.core.model.document.{BaseUnit, DeclaresModel, Document, EncodesModel}
+import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, PropertyShape, ShapeExtension}
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.parser.{FieldEntry, Position}
 import amf.core.model.document.{EncodesModel, BaseUnit, DeclaresModel}
 import amf.core.model.domain.extensions.{ShapeExtension, CustomDomainProperty, DomainExtension}
 import amf.core.model.domain.{Shape, DomainElement, Linkable}
@@ -9,6 +15,17 @@ import amf.core.parser.{FieldEntry, ErrorHandler}
 import amf.core.remote._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.spec.raml.{
+  Raml08RootLevelEmitters,
+  Raml10RootLevelEmitters,
+  RamlRootLevelEmitters
+}
+import amf.plugins.document.webapi.parser.{
+  CommonOasTypeDefMatcher,
+  JsonSchemaTypeDefMatcher,
+  OasTypeDefStringValueMatcher,
+  RamlHeader
+}
 import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.UnionShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo

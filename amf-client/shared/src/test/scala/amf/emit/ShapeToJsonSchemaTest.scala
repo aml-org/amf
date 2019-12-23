@@ -1,7 +1,8 @@
 package amf.emit
 
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document, Module}
-import amf.core.parser.UnhandledErrorHandler
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{Hint, OasJsonHint, RamlYamlHint}
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
@@ -127,8 +128,8 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
 
   private def parse(file: String): Future[BaseUnit] = {
     for {
-      v    <- Validation(platform)
-      unit <- AMFCompiler(basePath + file, platform, RamlYamlHint, v).build()
+      _    <- Validation(platform)
+      unit <- AMFCompiler(basePath + file, platform, RamlYamlHint, eh = UnhandledParserErrorHandler).build()
     } yield {
       unit
     }
@@ -140,8 +141,8 @@ class ShapeToJsonSchemaTest extends AsyncFunSuite with FileAssertionTest {
                     renderFn: AnyShape => String = (a: AnyShape) => a.toJsonSchema,
                     hint: Hint = RamlYamlHint): Future[Assertion] = {
     val jsonSchema: Future[String] = for {
-      v    <- Validation(platform)
-      unit <- AMFCompiler(basePath + file, platform, hint, v).build()
+      _    <- Validation(platform)
+      unit <- AMFCompiler(basePath + file, platform, hint, eh = UnhandledParserErrorHandler).build()
     } yield {
       findShapeFunc(Oas20Plugin.resolve(unit, UnhandledErrorHandler)).map(_.toJsonSchema).getOrElse("")
     }

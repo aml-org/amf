@@ -55,7 +55,10 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
                 case Some(requestNode) =>
                   OasHeaderParameterParser(requestNode.as[YMap], adopt).parse()
                 case None =>
-                  ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find header reference $fullRef", map)
+                  ctx.eh.violation(CoreValidations.UnresolvedReference,
+                                   "",
+                                   s"Cannot find header reference $fullRef",
+                                   map)
                   val error = ErrorParameter(label, map)
                   adopt(error)
                   error

@@ -100,7 +100,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
 
       case other =>
         val parsed = parseScalar(YScalar(other.toString()), "string")
-        ctx.violation(SyamlError, parsed.id, None, s"Cannot parse scalar node from AST structure '$other'", node)
+        ctx.eh.violation(SyamlError, parsed.id, None, s"Cannot parse scalar node from AST structure '$other'", node)
         parsed
     }
   }

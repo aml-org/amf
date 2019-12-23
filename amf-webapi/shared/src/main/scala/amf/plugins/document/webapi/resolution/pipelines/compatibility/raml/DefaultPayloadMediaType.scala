@@ -1,9 +1,8 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 
 class DefaultPayloadMediaType()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
