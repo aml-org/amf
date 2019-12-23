@@ -40,7 +40,7 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
       case Some(requestNode) =>
         buildAndPopulate(requestNode.as[YMap])
       case None =>
-        ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
+        ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
         nameAndAdopt(new ErrorLink(fullRef, map).link(fullRef))
 
     }
@@ -57,7 +57,7 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
     map.key("operationId", TemplatedLinkModel.OperationId in templatedLink)
 
     if (templatedLink.operationRef.option().isDefined && templatedLink.operationId.option().isDefined) {
-      ctx.violation(
+      ctx.eh.violation(
         ExclusiveLinkTargetError,
         templatedLink.id,
         ExclusiveLinkTargetError.message,

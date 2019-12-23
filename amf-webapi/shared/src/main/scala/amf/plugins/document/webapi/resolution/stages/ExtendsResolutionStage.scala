@@ -1,18 +1,20 @@
 package amf.plugins.document.webapi.resolution.stages
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.annotations.{ErrorDeclaration, SourceAST}
 import amf.core.emitter.SpecOrdering
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DomainElement, ElementTree, DataNode}
-import amf.core.parser.{ErrorHandler, YNodeLikeOps, ParserContext}
-import amf.core.resolution.stages.{ResolutionStage, ReferenceResolutionStage}
+import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
+import amf.core.parser.{ParserContext, YNodeLikeOps}
+import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml08WebApiContext, Raml10WebApiContext}
+import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
-import amf.plugins.document.webapi.parser.spec.domain.{Raml10OperationEmitter, Raml10EndPointEmitter}
-import amf.plugins.domain.webapi.models.templates.{ResourceType, ParametrizedTrait, Trait, ParametrizedResourceType}
+import amf.plugins.document.webapi.parser.spec.domain.{Raml10EndPointEmitter, Raml10OperationEmitter}
+import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
@@ -39,10 +41,11 @@ class ExtendsResolutionStage(
     with PlatformSecrets {
 
   /** Default to raml10 context. */
+  private val parserErrorHandler = DefaultParserErrorHandler.fromErrorHandler(errorHandler)
   def ctx(parserRun: Int): RamlWebApiContext = profile match {
     case Raml08Profile =>
-      new Raml08WebApiContext("", Nil, ParserContext(parserCount = parserRun), eh = Some(errorHandler))
-    case _ => new Raml10WebApiContext("", Nil, ParserContext(parserCount = parserRun), eh = Some(errorHandler))
+      new Raml08WebApiContext("", Nil, ParserContext(eh = parserErrorHandler))
+    case _ => new Raml10WebApiContext("", Nil, ParserContext(eh = parserErrorHandler))
   }
 
   override def resolve[T <: BaseUnit](model: T): T =
@@ -56,7 +59,7 @@ class ExtendsResolutionStage(
       case Some(rt: ResourceType) =>
         val node = rt.dataNode.copyNode()
         node.replaceVariables(context.variables, tree.subtrees)((message: String) =>
-          apiContext.violation(ResolutionValidation, r.id, None, message, r.position(), r.location()))
+          apiContext.eh.violation(ResolutionValidation, r.id, None, message, r.position(), r.location()))
 
         ExtendsHelper.asEndpoint(
           context.model,
@@ -72,12 +75,12 @@ class ExtendsResolutionStage(
         )
 
       case _ =>
-        apiContext.violation(ResolutionValidation,
-                             r.id,
-                             None,
-                             s"Cannot find target for parametrized resource type ${r.id}",
-                             r.position(),
-                             r.location())
+        apiContext.eh.violation(ResolutionValidation,
+                                r.id,
+                                None,
+                                s"Cannot find target for parametrized resource type ${r.id}",
+                                r.position(),
+                                r.location())
         ErrorEndPoint(r.id, r.annotations.find(classOf[SourceAST]).map(_.ast).getOrElse(YNode.Null))
     }
   }
@@ -116,7 +119,7 @@ class ExtendsResolutionStage(
   /** Apply specified ResourceTypes to given EndPoint. */
   def apply(endpoint: EndPoint, resourceTypes: ListBuffer[EndPoint])(implicit ctx: RamlWebApiContext): EndPoint = {
     resourceTypes.foldLeft(endpoint) {
-      case (current, resourceType) => DomainElementMerging()(ctx).merge(current, resourceType, errorHandler)
+      case (current, resourceType) => DomainElementMerging()(ctx).merge(current, resourceType)
     }
   }
 
@@ -161,7 +164,7 @@ class ExtendsResolutionStage(
 
       // Merge traits into operation
       traits.foldLeft(operation) {
-        case (current, branch) => DomainElementMerging()(extendsContext).merge(current, branch.operation, errorHandler)
+        case (current, branch) => DomainElementMerging()(extendsContext).merge(current, branch.operation)
       }
 
       // This is required in the case where the extension comes from an overlay/extension
@@ -279,12 +282,12 @@ class ExtendsResolutionStage(
             case t: Trait =>
               val node: DataNode = t.dataNode.copyNode()
               node.replaceVariables(local.variables, subTree)((message: String) => {
-                apiContext.violation(ResolutionValidation,
-                                     t.id,
-                                     None,
-                                     message,
-                                     parameterized.position(),
-                                     parameterized.location())
+                apiContext.eh.violation(ResolutionValidation,
+                                        t.id,
+                                        None,
+                                        message,
+                                        parameterized.position(),
+                                        parameterized.location())
               })
 
               val op = ExtendsHelper.asOperation(

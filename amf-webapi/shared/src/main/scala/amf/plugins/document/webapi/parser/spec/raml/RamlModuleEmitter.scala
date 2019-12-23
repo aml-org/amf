@@ -1,11 +1,12 @@
 package amf.plugins.document.webapi.parser.spec.raml
 
 import amf.core.emitter.BaseEmitters._
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.emitter.{SpecOrdering, EntryEmitter}
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, BaseUnit, _}
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.ErrorHandler
 import amf.core.remote.Raml
 import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.model._

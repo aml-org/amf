@@ -145,7 +145,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
       case _ =>
     }
     def violation(elem: NamedDomainElement, msg: String): Unit = {
-      ctx.violation(
+      ctx.eh.violation(
         ParserSideValidations.InvalidFieldNameInComponents,
         elem.id,
         msg,

@@ -1,20 +1,21 @@
 package amf.plugins.document.webapi.parser.spec.oas
 
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
-import amf.core.emitter.{SpecOrdering, EntryEmitter}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.BaseUnitModel
 import amf.core.model.document.{Module, _}
 import amf.core.model.domain.templates.AbstractDeclaration
-import amf.core.parser.{Position, ErrorHandler}
+import amf.core.parser.Position
 import amf.core.remote.Oas
+import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.emitter.oas.{JsonSchemaEmitterContext, OasSpecEmitterContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain.NamedExampleEmitter
-import org.yaml.model.{YType, YScalar, YDocument, YNode}
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.emitter.oas.{JsonSchemaEmitterContext, OasSpecEmitterContext}
+import org.yaml.model.{YDocument, YNode, YScalar, YType}
 
 /**
   *
@@ -78,7 +79,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class DocumentationItemFragmentEmitter(documentationItem: DocumentationItemFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    override val header = OasHeaderEmitter(OasHeader.Oas20DocumentationItem)
+    override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20DocumentationItem)
 
     val emitters: Seq[EntryEmitter] = OasCreativeWorkItemsEmitter(documentationItem.encodes, ordering).emitters()
   }
@@ -95,7 +96,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class AnnotationFragmentEmitter(annotation: AnnotationTypeDeclarationFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    override val header = OasHeaderEmitter(OasHeader.Oas20AnnotationTypeDeclaration)
+    override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20AnnotationTypeDeclaration)
 
     val emitters: Seq[EntryEmitter] =
       spec.factory.annotationTypeEmitter(annotation.encodes, ordering).emitters() match {
@@ -108,7 +109,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
       implicit eh: ErrorHandler)
       extends OasFragmentTypeEmitter {
 
-    override val header = OasHeaderEmitter(OasHeader.Oas20ResourceType)
+    override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20ResourceType)
 
     val emitters: Seq[EntryEmitter] =
       DataNodeEmitter(resourceTypeFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)(eh)
@@ -121,7 +122,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class TraitFragmentEmitter(traitFragment: TraitFragment, ordering: SpecOrdering)(implicit eh: ErrorHandler)
       extends OasFragmentTypeEmitter {
 
-    override val header = OasHeaderEmitter(OasHeader.Oas20Trait)
+    override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20Trait)
 
     val emitters: Seq[EntryEmitter] =
       DataNodeEmitter(traitFragment.encodes.asInstanceOf[AbstractDeclaration].dataNode, ordering)(eh)
@@ -134,7 +135,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class SecuritySchemeFragmentEmitter(securityScheme: SecuritySchemeFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    override val header = OasHeaderEmitter(OasHeader.Oas20SecurityScheme)
+    override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20SecurityScheme)
 
     val emitters: Seq[EntryEmitter] =
       OasSecuritySchemeEmitter(securityScheme.encodes,
@@ -145,7 +146,7 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
   case class NamedExampleFragmentEmitter(namedExample: NamedExampleFragment, ordering: SpecOrdering)
       extends OasFragmentTypeEmitter {
 
-    override val header = OasHeaderEmitter(OasHeader.Oas20NamedExample)
+    override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20NamedExample)
 
     val emitters: Seq[EntryEmitter] = Seq(NamedExampleEmitter(namedExample.encodes, ordering))
   }

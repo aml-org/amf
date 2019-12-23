@@ -1,7 +1,7 @@
 package amf.dialects
 
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote.{Aml, VocabularyYamlHint}
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin

@@ -1,6 +1,8 @@
 package amf.error
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.model.document.BaseUnit
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationResult
 import amf.facades.Validation
@@ -14,20 +16,21 @@ trait ParserErrorTest extends AsyncFunSuite with PlatformSecrets with Matchers {
 
   protected val basePath: String
 
-  protected def build(validation: Validation, file: String): Future[BaseUnit]
+  protected def build(eh: ParserErrorHandler, file: String): Future[BaseUnit]
 
-  protected def validate(file: String, fixture: (AMFValidationResult => Unit)*): Future[Assertion] = {
+  protected def validate(file: String, fixture: AMFValidationResult => Unit*): Future[Assertion] = {
     validateWithUnit(file, (_: BaseUnit) => Unit, fixture)
   }
 
   protected def validateWithUnit(file: String,
-                                 unitAssertion: (BaseUnit) => Unit,
+                                 unitAssertion: BaseUnit => Unit,
                                  fixture: Seq[AMFValidationResult => Unit]): Future[Assertion] = {
-    Validation(platform).flatMap { validation =>
-      build(validation, basePath + file)
+    val eh = DefaultParserErrorHandler.withRun()
+    Validation(platform).flatMap { _ =>
+      build(eh, basePath + file)
         .map { u =>
           unitAssertion(u)
-          val report = validation.aggregatedReport
+          val report = eh.getErrors
           if (report.size != fixture.size) {
             report.foreach(println)
             fail(s"Expected results has lenght of ${fixture.size} while actual results are ${report.size}")

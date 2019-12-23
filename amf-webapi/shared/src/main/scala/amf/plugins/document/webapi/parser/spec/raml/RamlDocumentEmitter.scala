@@ -3,21 +3,26 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.annotations._
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
 import amf.core.emitter._
-import amf.core.metamodel.document.{ExtensionLikeModel, BaseUnitModel}
+import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.model.document._
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{Position, FieldEntry, EmptyFutureDeclarations}
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.parser.{EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.remote._
 import amf.core.utils.TSort.tsort
-import amf.core.utils.{IdCounter, AmfStrings}
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.oas.{OasDeclaredResponsesEmitter, OasDeclaredParametersEmitter, TagsEmitter}
+import amf.plugins.document.webapi.parser.spec.oas.{
+  OasDeclaredParametersEmitter,
+  OasDeclaredResponsesEmitter,
+  TagsEmitter
+}
 import amf.plugins.domain.shapes.models.CreativeWork
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models._
@@ -37,7 +42,7 @@ case class Raml08RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
   override def declarationsEmitter(): Seq[EntryEmitter] = {
 
-    val declarations = WebApiDeclarations(document.declares, None, EmptyFutureDeclarations())
+    val declarations = WebApiDeclarations(document.declares, UnhandledParserErrorHandler, EmptyFutureDeclarations())
 
     val result = ListBuffer[EntryEmitter]()
 
@@ -146,7 +151,7 @@ case class Raml10RootLevelEmitters(document: BaseUnit with DeclaresModel, orderi
 
   override def declarationsEmitter(): Seq[EntryEmitter] = {
 
-    val declarations = WebApiDeclarations(document.declares, None, EmptyFutureDeclarations())
+    val declarations = WebApiDeclarations(document.declares, UnhandledParserErrorHandler, EmptyFutureDeclarations())
 
     val result = ListBuffer[EntryEmitter]()
 

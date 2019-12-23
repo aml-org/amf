@@ -1,7 +1,10 @@
 package amf.resolution
+import amf.client.parse.DefaultParserErrorHandler
+import amf.core.AMFCompilerRunCount
 import amf.core.annotations.LexicalInformation
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.ErrorHandler
+import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote._
 import amf.core.validation.SeverityLevels
 import amf.facades.Validation
@@ -61,10 +64,9 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
     val eh     = TestErrorHandler()
 
     for {
-      v <- Validation(platform).map(_.withEnabledValidation(true))
-      u <- build(config, Some(v), useAmfJsonldSerialisation = true)
+      _ <- Validation(platform)
+      u <- build(config, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true)
       _ <- {
-        v.withEnabledValidation(false)
         Future { transform(u, config, eh) }
       }
     } yield {
@@ -107,7 +109,7 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
                             level: String,
                             location: Option[String])
 
-  case class TestErrorHandler() extends ErrorHandler {
+  case class TestErrorHandler() extends ParserErrorHandler {
     val errors: ListBuffer[ErrorContainer] = ListBuffer()
 
     override def reportConstraint(id: String,
@@ -119,5 +121,6 @@ class ErrorHandlingResolutionTest extends FunSuiteCycleTests {
                                   location: Option[String]): Unit = {
       errors += ErrorContainer(id, node, property, message, lexical, level, location)
     }
+    override private[amf] val parserRun = AMFCompilerRunCount.nextRun()
   }
 }

@@ -20,7 +20,7 @@ object SecuritySchemeParser {
           adopt(scheme)
         })(toOas(ctx))
       case other =>
-        ctx.violation(UnexpectedVendor, "", s"Unsupported vendor $other in security scheme parsers", entry)
+        ctx.eh.violation(UnexpectedVendor, "", s"Unsupported vendor $other in security scheme parsers", entry)
         RamlSecuritySchemeParser(entry, adopt)(toRaml(ctx)) // use raml as default?
     }
 }

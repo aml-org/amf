@@ -1,6 +1,7 @@
 package amf.maker
 
 import amf.core.model.document.Document
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.domain.shapes.models.DomainExtensions._
@@ -40,8 +41,8 @@ class DocumentMakerTest extends WebApiMakerTest {
   }
 
   private def assertFixture(expected: Document, file: String, hint: Hint): Future[Assertion] = {
-    Validation(platform).map(_.withEnabledValidation(false)).flatMap { v =>
-      AMFCompiler(basePath + file, platform, hint, v)
+    Validation(platform).flatMap { v =>
+      AMFCompiler(basePath + file, platform, hint, eh = UnhandledParserErrorHandler)
         .build()
         .map { unit =>
           val actual = unit.asInstanceOf[Document]

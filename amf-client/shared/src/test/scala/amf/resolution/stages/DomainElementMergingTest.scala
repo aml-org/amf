@@ -1,6 +1,7 @@
 package amf.resolution.stages
 
-import amf.core.parser.{UnhandledErrorHandler, ParserContext}
+import amf.core.parser.ParserContext
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.domain.shapes.models.ScalarShape
 import amf.plugins.domain.webapi.models.EndPoint
@@ -48,7 +49,7 @@ class DomainElementMergingTest extends FunSuite {
     other.withOperation("put").withSummary("Put other operation")
     other.withOperation("head").withSummary("Head other operation")
 
-    DomainElementMerging()(ctx).merge(main, other, UnhandledErrorHandler)
+    DomainElementMerging()(ctx).merge(main, other)
 
     main.operations.size should be(4)
 
@@ -96,13 +97,13 @@ class DomainElementMergingTest extends FunSuite {
       .withPath("/other")
       .withExtends(Seq(b))
 
-    DomainElementMerging()(ctx).merge(main, other, UnhandledErrorHandler)
+    DomainElementMerging()(ctx).merge(main, other)
 
     main.extend.size should be(1)
     main.extend.head should be(a)
   }
 
   private def ctx = {
-    new Raml10WebApiContext("", Nil, ParserContext())
+    new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledParserErrorHandler))
   }
 }

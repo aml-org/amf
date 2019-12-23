@@ -2,6 +2,7 @@ package amf.tools.canonical
 
 import amf.core.metamodel.Obj
 import amf.core.metamodel.document.{DocumentModel, ExternalFragmentModel, ModuleModel}
+import amf.core.metamodel.domain._
 import amf.core.metamodel.domain.extensions.{
   CustomDomainPropertyModel,
   DomainExtensionModel,
@@ -9,9 +10,9 @@ import amf.core.metamodel.domain.extensions.{
   ShapeExtensionModel
 }
 import amf.core.metamodel.domain.templates.VariableValueModel
-import amf.core.metamodel.domain._
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.rdf.RdfModelParser
 import amf.core.registries.{AMFDomainRegistry, AMFPluginsRegistry}
 import amf.core.unsafe.PlatformSecrets
@@ -20,15 +21,7 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
-import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.{
-  AnnotationTypeDeclarationFragmentModel,
-  DataTypeFragmentModel,
-  DocumentationItemFragmentModel,
-  NamedExampleFragmentModel,
-  ResourceTypeFragmentModel,
-  SecuritySchemeFragmentModel,
-  TraitFragmentModel
-}
+import amf.plugins.document.webapi.metamodel.FragmentsTypesModels._
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -175,7 +168,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
           nativeModel.createResource(nodeMapping.id)
         )
       case _ =>
-        println(s"Couldn't find node mapping for ${mappedDocumentType}")
+        println(s"Couldn't find node mapping for $mappedDocumentType")
     }
 
     // now is a dialect domain element
@@ -304,7 +297,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
     topLevelUnit
   }
 
-  protected def transformDataNodes(mapping: Map[String, String], nativeModel: Model) = {
+  protected def transformDataNodes(mapping: Map[String, String], nativeModel: Model): Unit = {
     // we first remove the name from al ldata nodes
     // we first list all the data nodes
     val toCleanIt = nativeModel.listSubjectsWithProperty(
@@ -352,14 +345,14 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
           // link parent node and the reified property
           nativeModel.add(
             nextDataNode,
-            nativeModel.createProperty((CanonicalWebAPISpecDialectExporter.DataPropertiesField.value.iri())),
+            nativeModel.createProperty(CanonicalWebAPISpecDialectExporter.DataPropertiesField.value.iri()),
             pReif
           )
 
           // name
           nativeModel.add(
             pReif,
-            nativeModel.createProperty((DataNodeModel.Name.value.iri())),
+            nativeModel.createProperty(DataNodeModel.Name.value.iri()),
             nativeModel.createLiteral(name)
           )
 
@@ -426,7 +419,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
       nativeModel.createResource((Namespace.Document + "DomainElement").iri())
     )
     val domainElements: mutable.ListBuffer[String] = mutable.ListBuffer()
-    while (it.hasNext()) {
+    while (it.hasNext) {
       domainElements += it.next().getURI
     }
 
@@ -435,7 +428,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
       nativeModel.createProperty((Namespace.Rdf + "type").iri()),
       nativeModel.createResource((Namespace.Shapes + "Shape").iri())
     )
-    while (it.hasNext()) {
+    while (it.hasNext) {
       domainElements += it.next().getURI
     }
 
@@ -543,7 +536,8 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
     // now we generate the unit
     customTransform(nativeModel)
 
-    val parsedUnit = new RdfModelParser(platform)(ParserContext()).parse(model, baseUnitId)
+    val parsedUnit =
+      new RdfModelParser(platform)(ParserContext(eh = UnhandledParserErrorHandler)).parse(model, baseUnitId)
 
     // we put default objects back
     unregisteredModels.foreach(m => AMFDomainRegistry.metadataRegistry.put(defaultIri(m), m))
@@ -596,7 +590,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
       val nextAnnotationValue = nextAnnotationValueIt.next()
 
       // autogen URI for the reified annotation
-      val reifiedAnnotationUri = nativeModel.createResource(domainElement + s"_annotations_${c}")
+      val reifiedAnnotationUri = nativeModel.createResource(domainElement + s"_annotations_$c")
       c += 1
 
       nativeModel.add(
@@ -642,7 +636,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
       // We try to also add the name of the annotation to the annotation link
       val maybeAnnotationNameIt = nativeModel.listObjectsOfProperty(
         nextAnnotation.asResource(),
-        nativeModel.createProperty((CustomDomainPropertyModel.Name.value.iri()))
+        nativeModel.createProperty(CustomDomainPropertyModel.Name.value.iri())
       )
       if (maybeAnnotationNameIt.hasNext) {
         nativeModel.add(

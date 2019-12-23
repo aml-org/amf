@@ -55,7 +55,7 @@ case class OasSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securit
 
         scheme.`type`.option() match {
           case Some(s) if s.startsWith("x-") =>
-            ctx.warning(
+            ctx.eh.warning(
               CrossSecurityWarningSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
@@ -64,7 +64,7 @@ case class OasSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securit
               Some(ctx.rootContextDocument)
             )
           case Some("OAuth 1.0" | "OAuth 2.0" | "Basic Authentication" | "Digest Authentication" | "Pass Through") =>
-            ctx.warning(
+            ctx.eh.warning(
               CrossSecurityWarningSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
@@ -80,7 +80,7 @@ case class OasSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securit
           value => {
             // we need to check this because of the problem parsing nulls like empty strings of value null
             if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
-              ctx.violation(
+              ctx.eh.violation(
                 MissingSecuritySchemeErrorSpecification,
                 scheme.id,
                 Some(SecuritySchemeModel.Type.value.iri()),
@@ -123,10 +123,10 @@ case class OasSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securit
           case Some(schemeNode) =>
             OasSecuritySchemeParser(schemeNode, adopt).parse()
           case None =>
-            ctx.violation(CoreValidations.UnresolvedReference,
-                          "",
-                          s"Cannot find security scheme reference $parsedUrl",
-                          Annotations(node))
+            ctx.eh.violation(CoreValidations.UnresolvedReference,
+                             "",
+                             s"Cannot find security scheme reference $parsedUrl",
+                             Annotations(node))
             adopt(ErrorSecurityScheme(parsedUrl, node))
         }
       }

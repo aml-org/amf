@@ -58,10 +58,10 @@ case class RamlJsonSchemaExpression(key: YNode,
               case _ =>
                 val empty = AnyShape()
                 adopt(empty)
-                ctx.violation(JsonSchemaFragmentNotFound,
-                              empty.id,
-                              s"could not find json schema fragment ${extFragment.get} in file $path",
-                              origin.valueAST)
+                ctx.eh.violation(JsonSchemaFragmentNotFound,
+                                 empty.id,
+                                 s"could not find json schema fragment ${extFragment.get} in file $path",
+                                 origin.valueAST)
                 empty
 
             }
@@ -113,7 +113,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       val url               = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
-      val schemaEntry       = JsonParser.withSource(text, valueAST.sourceName)(ctx).document()
+      val schemaEntry       = JsonParser.withSource(text, valueAST.sourceName)(ctx.eh).document()
       val jsonSchemaContext = toSchemaContext(ctx, valueAST)
       jsonSchemaContext.localJSONSchemaContext = Some(schemaEntry.node)
       jsonSchemaContext.setJsonSchemaAST(schemaEntry.node)
@@ -123,7 +123,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         jsonSchemaContext)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = jsonSchemaContext.declarations.shapes
-      val resolvedShapes = new ReferenceResolutionStage(false)(ctx)
+      val resolvedShapes = new ReferenceResolutionStage(false)(ctx.eh)
         .resolveDomainElementSet[Shape](libraryShapes.values.toSeq)
 
       val shapesMap = mutable.Map[String, AnyShape]()
@@ -150,11 +150,11 @@ case class RamlJsonSchemaExpression(key: YNode,
 
     val parser =
       if (url.isDefined)
-        JsonParser.withSource(text, url.get)(ctx)
+        JsonParser.withSource(text, url.get)(ctx.eh)
       else
         JsonParser.withSource(text,
                               valueAST.value.sourceName,
-                              Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
+                              Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx.eh)
 
     val schemaEntry = YMapEntry(key, parser.document().node)
 
@@ -182,7 +182,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         case None =>
           val shape = SchemaShape()
           adopt(shape)
-          ctx.violation(UnableToParseJsonSchema, shape.id, "Cannot parse JSON Schema", value)
+          ctx.eh.violation(UnableToParseJsonSchema, shape.id, "Cannot parse JSON Schema", value)
           shape
       }
     // we clean from globalSpace the local references
@@ -255,10 +255,10 @@ case class RamlXmlSchemaExpression(key: YNode,
           case _ =>
             val shape = SchemaShape()
             adopt(shape)
-            ctx.violation(InvalidXmlSchemaType,
-                          shape.id,
-                          "Cannot parse XML Schema expression out of a non string value",
-                          value)
+            ctx.eh.violation(InvalidXmlSchemaType,
+                             shape.id,
+                             "Cannot parse XML Schema expression out of a non string value",
+                             value)
             shape
         }
         map.key("displayName", (ShapeModel.DisplayName in parsedSchema).allowingAnnotations)
@@ -279,10 +279,10 @@ case class RamlXmlSchemaExpression(key: YNode,
       case YType.Seq =>
         val shape = SchemaShape()
         adopt(shape)
-        ctx.violation(InvalidXmlSchemaType,
-                      shape.id,
-                      "Cannot parse XML Schema expression out of a non string value",
-                      value)
+        ctx.eh.violation(InvalidXmlSchemaType,
+                         shape.id,
+                         "Cannot parse XML Schema expression out of a non string value",
+                         value)
         shape
       case _ =>
         val raw   = value.as[YScalar].text
@@ -347,10 +347,10 @@ trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with Ram
   private def failSchemaExpressionParser = {
     val shape = SchemaShape()
     adopt(shape)
-    ctx.violation(InvalidExternalTypeType,
-                  shape.id,
-                  s"Cannot parse $externalType Schema expression out of a non string value",
-                  value)
+    ctx.eh.violation(InvalidExternalTypeType,
+                     shape.id,
+                     s"Cannot parse $externalType Schema expression out of a non string value",
+                     value)
     ValueAndOrigin("", value, None, Some(shape))
   }
 }

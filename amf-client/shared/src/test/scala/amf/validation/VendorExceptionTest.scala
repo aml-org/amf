@@ -1,6 +1,7 @@
 package amf.validation
 
 import amf.core.exception.UnsupportedMediaTypeException
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
@@ -17,7 +18,7 @@ class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
   test("Empty RAML master API file to test vendor exception") {
     recoverToSucceededIf[UnsupportedMediaTypeException] {
       Validation(platform).flatMap { validation =>
-        AMFCompiler(basePath + "/empty-raml.raml", platform, RamlYamlHint, validation).build()
+        AMFCompiler(basePath + "/empty-raml.raml", platform, RamlYamlHint, eh = UnhandledParserErrorHandler).build()
       }
     }
   }
@@ -25,7 +26,7 @@ class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
   test("Empty OAS json master API file to test vendor exception") {
     recoverToSucceededIf[UnsupportedMediaTypeException] {
       Validation(platform).flatMap { validation =>
-        AMFCompiler(basePath + "/empty-oas.json", platform, OasJsonHint, validation).build()
+        AMFCompiler(basePath + "/empty-oas.json", platform, OasJsonHint, eh = UnhandledParserErrorHandler).build()
       }
     }
   }
@@ -33,7 +34,7 @@ class VendorExceptionTest extends AsyncFunSuite with PlatformSecrets {
   test("Empty OAS yaml master API file to test vendor exception") {
     recoverToSucceededIf[UnsupportedMediaTypeException] {
       Validation(platform).flatMap { validation =>
-        AMFCompiler(basePath + "/empty-oas.yaml", platform, OasYamlHint, validation).build()
+        AMFCompiler(basePath + "/empty-oas.yaml", platform, OasYamlHint, eh = UnhandledParserErrorHandler).build()
       }
     }
   }

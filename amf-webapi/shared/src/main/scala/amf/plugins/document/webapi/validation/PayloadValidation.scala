@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins._
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.Module
@@ -176,7 +177,7 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin with JsonSchema
 
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 
-  val defaultCtx = new PayloadContext("", Nil, ParserContext())
+  val defaultCtx = new PayloadContext("", Nil, ParserContext(eh = DefaultParserErrorHandler.withRun()))
 
   override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator =
     payloadValidator(s, validationMode)

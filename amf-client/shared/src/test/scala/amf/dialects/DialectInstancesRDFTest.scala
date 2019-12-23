@@ -1,5 +1,6 @@
 package amf.dialects
 
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.facades.{AMFCompiler, Validation}
@@ -91,8 +92,9 @@ class DialectInstancesRDFTest extends FunSuiteCycleTests with PlatformSecrets {
                           target: Vendor,
                           directory: String = basePath) = {
     for {
-      v   <- Validation(platform).map(_.withEnabledValidation(false))
-      _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
+      _ <- Validation(platform)
+      _ <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, eh = UnhandledParserErrorHandler)
+        .build()
       res <- cycleRdf(source, golden, hint, target)
     } yield {
       res
@@ -106,8 +108,9 @@ class DialectInstancesRDFTest extends FunSuiteCycleTests with PlatformSecrets {
                               target: Vendor,
                               directory: String = basePath) = {
     for {
-      v   <- Validation(platform).map(_.withEnabledValidation(false))
-      _   <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, v).build()
+      _ <- Validation(platform)
+      _ <- AMFCompiler(s"file://$directory/$dialect", platform, VocabularyYamlHint, eh = UnhandledParserErrorHandler)
+        .build()
       res <- cycleFullRdf(source, golden, hint, target, directory)
     } yield {
       res

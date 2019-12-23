@@ -1,27 +1,20 @@
 package amf.plugins.document.webapi.parser.spec.declaration
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.core.annotations.LexicalInformation
+import amf.core.model.domain.AmfArray
+import amf.core.parser.{Annotations, Range, SearchScope, YMapOps}
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
+import amf.plugins.document.webapi.parser.spec.domain.{RamlParametersParser, RamlSecuritySettingsParser}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
+import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
+import amf.plugins.domain.webapi.models.security.SecurityScheme
+import amf.plugins.domain.webapi.models.{Parameter, Response}
+import amf.validations.ParserSideValidations._
+import org.yaml.model.{YMap, YPart, YScalar, YType}
 
 import scala.collection.mutable
-import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
-import amf.core.parser.{Range, Annotations, SearchScope}
-import amf.plugins.document.webapi.parser.spec.domain.{RamlSecuritySettingsParser, RamlParametersParser}
-import org.yaml.model.{YNode, YScalar, YPart, YType, YMap}
-import amf.plugins.domain.webapi.models.{Response, Parameter}
-import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
-import amf.validations.ParserSideValidations.{
-  InvalidSecuritySchemeDescribedByType,
-  MissingSecuritySchemeErrorSpecification,
-  DuplicatedOperationStatusCodeSpecification,
-  ExclusivePropertiesSpecification,
-  CrossSecurityWarningSpecification
-}
-import amf.core.model.domain.AmfArray
-import amf.core.parser.YMapOps
 
 case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
     implicit ctx: RamlWebApiContext)
@@ -42,7 +35,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
 
         scheme.`type`.option() match {
           case Some("oauth2" | "basic" | "apiKey") =>
-            ctx.warning(
+            ctx.eh.warning(
               CrossSecurityWarningSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
@@ -57,7 +50,7 @@ case class RamlSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securi
           value => {
             // we need to check this because of the problem parsing nulls like empty strings of value null
             if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
-              ctx.violation(
+              ctx.eh.violation(
                 MissingSecuritySchemeErrorSpecification,
                 scheme.id,
                 Some(SecuritySchemeModel.Type.value.iri()),
@@ -120,7 +113,7 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
             )
 
             if (value.key("queryParameters").isDefined && value.key("queryString").isDefined) {
-              ctx.violation(
+              ctx.eh.violation(
                 ExclusivePropertiesSpecification,
                 scheme.id,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
@@ -164,11 +157,11 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
                     val keys   = entries.map(_.key.as[YScalar].text)
                     val keySet = keys.toSet
                     if (keys.size > keySet.size) {
-                      ctx.violation(DuplicatedOperationStatusCodeSpecification,
-                                    scheme.id,
-                                    None,
-                                    "RAML Responses must not have duplicated status codes",
-                                    entry.value)
+                      ctx.eh.violation(DuplicatedOperationStatusCodeSpecification,
+                                       scheme.id,
+                                       None,
+                                       "RAML Responses must not have duplicated status codes",
+                                       entry.value)
                     }
 
                     entries.foreach(entry => {
@@ -185,10 +178,10 @@ case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)
             AnnotationParser(scheme, value).parse()
           case YType.Null =>
           case _ =>
-            ctx.violation(InvalidSecuritySchemeDescribedByType,
-                          scheme.id,
-                          s"Invalid 'describedBy' type, map expected",
-                          entry.value)
+            ctx.eh.violation(InvalidSecuritySchemeDescribedByType,
+                             scheme.id,
+                             s"Invalid 'describedBy' type, map expected",
+                             entry.value)
         }
       }
     )

@@ -38,7 +38,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
 
           scheme.set(ParametrizedSecuritySchemeModel.Settings, settings)
         case None =>
-          ctx.violation(
+          ctx.eh.violation(
             UnknownSecuritySchemeErrorSpecification,
             scheme.id,
             s"Security scheme '$name' not found in declarations (and name cannot be 'null').",
@@ -48,7 +48,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
 
       scheme
     case YType.Include =>
-      ctx.violation(
+      ctx.eh.violation(
         UnknownSecuritySchemeErrorSpecification,
         "",
         "'securedBy' property doesn't accept !include tag, only references to security schemes.",
@@ -64,7 +64,7 @@ case class RamlParametrizedSecuritySchemeParser(node: YNode, producer: String =>
           scheme.fields.setWithoutId(ParametrizedSecuritySchemeModel.Scheme, declaration, Annotations())
           scheme
         case None =>
-          ctx.violation(
+          ctx.eh.violation(
             UnknownSecuritySchemeErrorSpecification,
             scheme.id,
             s"Security scheme '$name' not found in declarations.",
@@ -140,7 +140,7 @@ case class RamlSecuritySettingsParser(map: YMap, `type`: String, scheme: DomainE
               Scope().set(ScopeModel.Name, ScalarNode(n).text()).adopted(flow.getOrCreate.id)
             case _: OAuth2Settings =>
               val scope = Scope().adopted(flow.getOrCreate.id)
-              ctx.violation(
+              ctx.eh.violation(
                 UnknownScopeErrorSpecification,
                 scope.id,
                 s"Scope '${element.toString}' not found in settings of declared secured by ${ss.scheme.name.value()}.",

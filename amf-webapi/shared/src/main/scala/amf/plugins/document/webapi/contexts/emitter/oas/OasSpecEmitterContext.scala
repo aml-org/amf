@@ -1,21 +1,26 @@
 package amf.plugins.document.webapi.contexts.emitter.oas
 import amf.core.emitter.BaseEmitters.MapEntryEmitter
+import amf.core.emitter.{EntryEmitter, PartEmitter, ShapeRenderOptions, SpecOrdering}
+import amf.core.errorhandling.ErrorHandler
+import amf.core.model.document.BaseUnit
+import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.parser.FieldEntry
+import amf.core.remote.{Oas20, Oas30, Vendor}
+import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.{RefEmitter, SpecEmitterContext, SpecEmitterFactory, TagToReferenceEmitter}
+import amf.plugins.document.webapi.parser.spec.declaration._
+import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.document.webapi.parser.{
+  CommonOasTypeDefMatcher,
+  JsonSchemaTypeDefMatcher,
+  OasTypeDefStringValueMatcher
+}
+import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, WebApi}
+import org.yaml.model.YDocument.PartBuilder
 
 import scala.collection.mutable
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{Shape, DomainElement, Linkable}
-import amf.core.parser.{FieldEntry, ErrorHandler}
-import amf.plugins.domain.webapi.models.security.{SecurityRequirement, ParametrizedSecurityScheme}
-import amf.plugins.domain.webapi.models.{Parameter, EndPoint, WebApi, Operation}
-import amf.plugins.document.webapi.parser.{OasTypeDefStringValueMatcher, JsonSchemaTypeDefMatcher, CommonOasTypeDefMatcher}
-import amf.plugins.document.webapi.parser.spec.domain.{Oas2ServersEmitter, Oas3EndPointServersEmitter, Oas3WebApiServersEmitter, ParametrizedSecuritySchemeEmitter, SecurityRequirementEmitter, OasParametrizedSecuritySchemeEmitter, Oas3OperationServersEmitter, OasHeaderEmitter, OasSecurityRequirementEmitter, OasServersEmitter}
-import amf.plugins.document.webapi.contexts.{TagToReferenceEmitter, RefEmitter, SpecEmitterContext, SpecEmitterFactory}
-import amf.core.model.domain.extensions.{ShapeExtension, CustomDomainProperty, DomainExtension}
-import amf.core.emitter.{ShapeRenderOptions, SpecOrdering, EntryEmitter, PartEmitter}
-import amf.core.remote.{Oas30, Oas20, Vendor}
-import amf.plugins.document.webapi.parser.spec.declaration.{FacetsInstanceEmitter, OasFacetsInstanceEmitter, OasAnnotationTypeEmitter, OasDeclaredTypesEmitters, OasTagToReferenceEmitter, OasAnnotationEmitter, OasCustomFacetsEmitter, AnnotationTypeEmitter, AnnotationEmitter, CustomFacetsEmitter}
-import org.yaml.model.YDocument.PartBuilder
-import amf.core.utils.AmfStrings
 
 abstract class OasSpecEmitterFactory(implicit val spec: OasSpecEmitterContext) extends SpecEmitterFactory {
   override def tagToReferenceEmitter: (DomainElement, Option[String], Seq[BaseUnit]) => TagToReferenceEmitter =
@@ -33,7 +38,7 @@ abstract class OasSpecEmitterFactory(implicit val spec: OasSpecEmitterContext) e
     OasSecurityRequirementEmitter.apply
 
   override def parametrizedSecurityEmitter
-  : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
+    : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
     OasParametrizedSecuritySchemeEmitter.apply
 
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter =
@@ -100,7 +105,7 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) exte
 abstract class OasSpecEmitterContext(eh: ErrorHandler,
                                      refEmitter: RefEmitter = OasRefEmitter,
                                      options: ShapeRenderOptions = ShapeRenderOptions())
-  extends SpecEmitterContext(eh, refEmitter, options) {
+    extends SpecEmitterContext(eh, refEmitter, options) {
 
   def schemasDeclarationsPath: String
 
@@ -116,7 +121,7 @@ abstract class OasSpecEmitterContext(eh: ErrorHandler,
 }
 final case class JsonSchemaEmitterContext(override val eh: ErrorHandler,
                                           override val options: ShapeRenderOptions = ShapeRenderOptions())
-  extends Oas2SpecEmitterContext(eh = eh, options = options) {
+    extends Oas2SpecEmitterContext(eh = eh, options = options) {
   override val typeDefMatcher: OasTypeDefStringValueMatcher = JsonSchemaTypeDefMatcher
 
   override val anyOfKey: String = "anyOf"
@@ -127,7 +132,7 @@ final case class JsonSchemaEmitterContext(override val eh: ErrorHandler,
 class Oas3SpecEmitterContext(eh: ErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
                              options: ShapeRenderOptions = ShapeRenderOptions())
-  extends OasSpecEmitterContext(eh, refEmitter, options) {
+    extends OasSpecEmitterContext(eh, refEmitter, options) {
   override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory(this)
   override val vendor: Vendor                  = Oas30
   override def schemasDeclarationsPath: String = "/components/schemas/"
@@ -136,7 +141,7 @@ class Oas3SpecEmitterContext(eh: ErrorHandler,
 class Oas2SpecEmitterContext(eh: ErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
                              options: ShapeRenderOptions = ShapeRenderOptions())
-  extends OasSpecEmitterContext(eh, refEmitter, options) {
+    extends OasSpecEmitterContext(eh, refEmitter, options) {
   override val factory: OasSpecEmitterFactory  = Oas2SpecEmitterFactory(this)
   override val vendor: Vendor                  = Oas20
   override def schemasDeclarationsPath: String = "/definitions/"

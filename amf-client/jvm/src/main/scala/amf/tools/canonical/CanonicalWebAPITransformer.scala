@@ -1,6 +1,7 @@
 package amf.tools.canonical
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.rdf.RdfModelParser
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.unsafe.PlatformSecrets
@@ -121,19 +122,18 @@ object CanonicalWebAPITransformer extends PlatformSecrets {
         nativeModel.createProperty((Namespace.Rdf + "type").iri())
       )
 
-
       // We need to deal with node shape inheritance
       // These flags allow us to track if we found anyshape or shape in case
       // we cannot find a more specific shape
-      var foundShape: Option[String] = None
-      var foundAnyShape:Option[String] = None
-      var found = false
+      var foundShape: Option[String]    = None
+      var foundAnyShape: Option[String] = None
+      var found                         = false
       while (nodeIt.hasNext) {
         val nextType = nodeIt.next().asResource().getURI
         mapping.get(nextType) match {
           case Some(dialectNode) =>
             // dealing with inheritance here
-            if (! dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape")) {
+            if (!dialectNode.endsWith("#/declarations/Shape") && !dialectNode.endsWith("#/declarations/AnyShape")) {
               found = true
               domainElementsMapping += (domainElement -> dialectNode)
             } else if (dialectNode.endsWith("#/declarations/Shape")) {
@@ -141,7 +141,7 @@ object CanonicalWebAPITransformer extends PlatformSecrets {
             } else if (dialectNode.endsWith("#/declarations/AnyShape")) {
               foundAnyShape = Some(dialectNode)
             }
-          case _                 => // ignore
+          case _ => // ignore
         }
       }
 
@@ -171,7 +171,7 @@ object CanonicalWebAPITransformer extends PlatformSecrets {
         )
     }
 
-    new RdfModelParser(platform)(ParserContext()).parse(model, unit.id)
+    new RdfModelParser(platform)(ParserContext(eh = UnhandledParserErrorHandler)).parse(model, unit.id)
   }
 
   /**

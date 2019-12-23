@@ -6,6 +6,8 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.parser.Position.ZERO
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.parser.{Annotations, EmptyFutureDeclarations, FieldEntry, Position}
 import amf.core.parser.{Annotations, Position, FieldEntry, EmptyFutureDeclarations}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
@@ -25,7 +27,7 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
     extends PlatformSecrets {
   val emitters: Seq[EntryEmitter] = {
 
-    val declarations = WebApiDeclarations(declares, None, EmptyFutureDeclarations())
+    val declarations = WebApiDeclarations(declares, UnhandledParserErrorHandler, EmptyFutureDeclarations())
 
     val result = ListBuffer[EntryEmitter]()
 

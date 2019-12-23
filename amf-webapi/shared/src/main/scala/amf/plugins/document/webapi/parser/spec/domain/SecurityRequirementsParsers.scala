@@ -26,7 +26,7 @@ case class OasSecurityRequirementParser(node: YNode, producer: String => Securit
       None
     case _ =>
       val requirement = producer(node.toString)
-      ctx.violation(InvalidSecurityRequirementObject, requirement.id, s"Invalid security requirement $node", node)
+      ctx.eh.violation(InvalidSecurityRequirementObject, requirement.id, s"Invalid security requirement $node", node)
       None
   }
 
@@ -86,7 +86,7 @@ case class OasSecurityRequirementParser(node: YNode, producer: String => Securit
               case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
               case None             => "Scopes array must be empty for given security scheme"
             }
-            ctx.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
+            ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
           case _ =>
         }
     }
@@ -99,10 +99,10 @@ case class OasSecurityRequirementParser(node: YNode, producer: String => Securit
         case None =>
           val securityScheme = SecurityScheme()
           scheme.set(ParametrizedSecuritySchemeModel.Scheme, securityScheme)
-          ctx.violation(DeclarationNotFound,
-                        securityScheme.id,
-                        s"Security scheme '$name' not found in declarations.",
-                        part)
+          ctx.eh.violation(DeclarationNotFound,
+                           securityScheme.id,
+                           s"Security scheme '$name' not found in declarations.",
+                           part)
           securityScheme
       }
     }

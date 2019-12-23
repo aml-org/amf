@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.validation
 
 import amf._
 import amf.core.benchmark.ExecutionLog
+import amf.core.errorhandling.StaticErrorCollector
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DataNodeModel
 import amf.core.model.document.BaseUnit
@@ -108,9 +109,7 @@ case class ExamplesValidationStep(override val validationContext: ValidationCont
 
 case class ParserValidationStep(override val validationContext: ValidationContext) extends ValidationStep {
   override protected def validate(): Future[Seq[AMFValidationResult]] =
-    RuntimeValidator
-      .aggregateReport(validationContext.baseUnit, validationContext.profile, validationContext.messageStyle)
-      .map(_.results)
+    Future.successful(validationContext.baseUnit.parserRun.map(StaticErrorCollector.getRun).getOrElse(Nil))
 
   override def endStep: Boolean = true
 }

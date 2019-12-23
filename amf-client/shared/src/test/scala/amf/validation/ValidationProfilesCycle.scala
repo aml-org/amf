@@ -2,6 +2,7 @@ package amf.validation
 
 import amf.common.Tests.checkDiff
 import amf.core.emitter.RenderOptions
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
@@ -18,10 +19,11 @@ class ValidationProfilesCycle extends AsyncFunSuite with PlatformSecrets {
   val basePath = "file://amf-client/shared/src/test/resources/vocabularies2/production/validation/"
 
   private def cycle(exampleFile: String, hint: Hint, syntax: Syntax, target: Vendor): Future[String] = {
+
     for {
       v  <- Validation(platform)
       _  <- v.loadValidationDialect()
-      bu <- AMFCompiler(basePath + exampleFile, platform, hint, v, None, None).build()
+      bu <- AMFCompiler(basePath + exampleFile, platform, hint, None, None, eh = UnhandledParserErrorHandler).build()
       r  <- AMFRenderer(bu, target, RenderOptions(), Some(syntax)).renderToString
     } yield r
   }
