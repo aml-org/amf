@@ -46,7 +46,7 @@ case class Oas2VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFacto
     Oas2ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 
   override def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser =
-    new OasLikeServerVariableParser(entry, server)(ctx)
+    OasServerVariableParser(entry, server)(ctx)
 }
 
 case class Oas3VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFactory {
@@ -69,5 +69,5 @@ case class Oas3VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFacto
     new Oas3ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 
   override def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser =
-    new OasLikeServerVariableParser(entry, server)(ctx)
+    OasServerVariableParser(entry, server)(ctx)
 }

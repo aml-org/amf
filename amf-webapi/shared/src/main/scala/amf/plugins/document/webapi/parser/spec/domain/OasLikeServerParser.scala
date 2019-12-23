@@ -1,16 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.domain
-import org.yaml.model.{YType, YMap, YMapEntry}
-import amf.core.metamodel.Field
+import org.yaml.model.{YMap, YMapEntry}
 import amf.core.metamodel.domain.ShapeModel
-import amf.plugins.document.webapi.parser.spec.common.{SpecParserOps, AnnotationParser, DataNodeParser}
+import amf.core.model.DataType
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, SpecParserOps}
 import amf.core.parser.{Annotations, YMapOps}
-import amf.core.model.domain.{DomainElement, AmfArray}
+import amf.core.model.domain.AmfArray
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.domain.webapi.metamodel.ServerModel
 import amf.plugins.domain.webapi.models.{Parameter, Server}
-import amf.validations.ParserSideValidations.ServerVariableMissingDefault
 
 /**
   * Single server OAS-like parser
@@ -22,18 +20,16 @@ class OasLikeServerParser(parent: String, map: YMap)(implicit val ctx: OasLikeWe
 
   def parse(): Server = {
     val server = Server(map)
-
+    map.key("url", ServerModel.Url in server)
     server.adopted(parent)
 
-    ctx.closedShape(server.id, map, "server")
-
-    map.key("url", ServerModel.Url in server)
     map.key("description", ServerModel.Description in server)
     map.key("variables").foreach { entry =>
       val variables = entry.value.as[YMap].entries.map(ctx.factory.serverVariableParser(_, server).parse())
       server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
     }
     AnnotationParser(server, map).parse()
+    ctx.closedShape(server.id, map, "server")
     server
   }
 }
@@ -46,12 +42,10 @@ class OasLikeServerVariableParser(entry: YMapEntry, server: Server)(implicit val
       .withVariable(entry.key)
       .withParameterName(entry.key)
       .withBinding("path")
+      .withRequired(true) // default value of path parameter to avoid raw validation
 
-    // Parse map
-    entry.value.tagType match {
-      case YType.Map =>
-        parseMap(variable, entry.value.as[YMap])
-    }
+    val map = entry.value.as[YMap]
+    parseMap(variable, map)
 
     variable
   }
@@ -59,7 +53,7 @@ class OasLikeServerVariableParser(entry: YMapEntry, server: Server)(implicit val
   protected def parseMap(variable: Parameter, map: YMap): Unit = {
     ctx.closedShape(variable.id, map, "serverVariable")
 
-    val schema  = variable.withScalarSchema(entry.key)
+    val schema  = variable.withScalarSchema(entry.key).withDataType(DataType.String)
     val counter = new IdCounter()
     map.key("enum", ShapeModel.Values in schema using DataNodeParser.parse(Some(schema.id), counter))
     map.key("default", entry => {
