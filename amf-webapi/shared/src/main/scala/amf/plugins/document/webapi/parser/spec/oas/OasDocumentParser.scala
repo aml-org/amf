@@ -166,31 +166,19 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   }
 
   protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
-    map.key(
-      securityKey,
-      e => {
-        e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += SecuritySchemeParser(
-            entry,
-            (scheme, name) => {
-              scheme.set(ParametrizedSecuritySchemeModel.Name,
-                         AmfScalar(name, Annotations(entry.key.value)),
-                         Annotations(entry.key))
-              scheme.adopted(parent)
-            }
-          ).parse()
-            .add(DeclaredElement())
-        }
-      }
-    )
+    parseSecuritySchemeDeclarationsFromKey(securityKey, map, parent)
+    parseSecuritySchemeDeclarationsFromKey("securitySchemes".asOasExtension, map, parent)
+  }
 
+  protected def parseSecuritySchemeDeclarationsFromKey(key: String, map: YMap, parent: String): Unit = {
     map.key(
-      "securitySchemes".asOasExtension,
+      key,
       e => {
         e.value.as[YMap].entries.foreach { entry =>
           ctx.declarations += SecuritySchemeParser(
             entry,
-            (scheme, name) => {
+            (scheme) => {
+              val name = entry.key.as[String]
               scheme.set(ParametrizedSecuritySchemeModel.Name,
                          AmfScalar(name, Annotations(entry.key.value)),
                          Annotations(entry.key))
@@ -402,10 +390,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case Some(n) =>
               ctx.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
             case None =>
-              ctx.violation(InvalidEndpointPath,
-                            endpoint.id,
-                            s"Cannot find fragment path item ref $value",
-                            entry.value)
+              ctx.violation(InvalidEndpointPath, endpoint.id, s"Cannot find fragment path item ref $value", entry.value)
           }
         case Right(node) if node.tagType == YType.Map =>
           parseEndpointMap(endpoint, node.as[YMap])
@@ -512,7 +497,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
-  case class Oas3RequestParser(map: YMap, parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext) {
+  case class Oas3RequestParser(map: YMap, parentId: String, definitionEntry: YMapEntry)(
+      implicit ctx: OasWebApiContext) {
 
     private def adopt(request: Request) = {
       request
@@ -560,10 +546,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case Some(requestNode) =>
               Oas3RequestParser(requestNode.as[YMap], parentId, definitionEntry).parse()
             case None =>
-              ctx.violation(CoreValidations.UnresolvedReference,
-                            "",
-                            s"Cannot find requestBody reference $fullRef",
-                            map)
+              ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find requestBody reference $fullRef", map)
               adopt(ErrorRequest(fullRef, map).link(name))
           }
         }
