@@ -5,13 +5,15 @@ import amf.plugins.document.webapi.contexts.{SpecVersionFactory, SpecAwareContex
 import amf.plugins.document.webapi.parser.spec.declaration.{
   OasSecuritySettingsParser,
   Oas2SecuritySettingsParser,
-  Oas3SecuritySettingsParser
+  Oas3SecuritySettingsParser,
+  SecuritySchemeParser,
+  OasSecuritySchemeParser
 }
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.metamodel.{WebApiModel, OperationModel, EndPointModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{EndPoint, WebApi, Operation}
-import org.yaml.model.{YMap, YNode, YMapEntry}
+import org.yaml.model.{YMap, YPart, YNode, YMapEntry}
 
 trait OasSpecAwareContext extends SpecAwareContext {}
 
@@ -24,6 +26,9 @@ abstract class OasSpecVersionFactory(implicit val ctx: OasWebApiContext) extends
                       parentId: String,
                       nameNode: Option[YNode],
                       nameGenerator: IdCounter): OasParameterParser
+
+  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+    OasSecuritySchemeParser.apply
 }
 
 case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) extends OasSpecVersionFactory {

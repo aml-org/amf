@@ -256,16 +256,18 @@ trait Raml10BaseSpecParser extends RamlBaseDocumentParser {
         e.value.tagType match {
           case YType.Map =>
             e.value.as[YMap].entries.foreach { entry =>
-              ctx.declarations += SecuritySchemeParser(
-                entry,
-                scheme => {
-                  val name = entry.key.as[YScalar].text
-                  scheme.set(SecuritySchemeModel.Name,
-                             AmfScalar(name, Annotations(entry.key.value)),
-                             Annotations(entry.key))
-                  scheme.adopted(parent)
-                }
-              ).parse()
+              ctx.declarations += ctx.factory
+                .securitySchemeParser(
+                  entry,
+                  scheme => {
+                    val name = entry.key.as[YScalar].text
+                    scheme.set(SecuritySchemeModel.Name,
+                               AmfScalar(name, Annotations(entry.key.value)),
+                               Annotations(entry.key))
+                    scheme.adopted(parent)
+                  }
+                )
+                .parse()
                 .add(DeclaredElement())
             }
           case YType.Null =>

@@ -94,10 +94,12 @@ case class Raml08DocumentParser(root: Root)(implicit override val ctx: RamlWebAp
   }
 
   private def parseEntries(entries: Seq[YMapEntry], parent: String): Unit = entries.foreach { entry =>
-    ctx.declarations += SecuritySchemeParser(entry, scheme => {
-      val name = entry.key.as[String]
-      scheme.withName(name).adopted(parent)
-    }).parse()
+    ctx.declarations += ctx.factory
+      .securitySchemeParser(entry, scheme => {
+        val name = entry.key.as[String]
+        scheme.withName(name).adopted(parent)
+      })
+      .parse()
       .add(DeclaredElement())
   }
 

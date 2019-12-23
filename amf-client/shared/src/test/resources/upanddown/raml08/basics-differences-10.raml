@@ -8,13 +8,13 @@ securitySchemes:
     type: OAuth 2.0
     describedBy:
       headers:
-        Authorization:
+        Authorization?:
           description: |
             Used to send a valid OAuth 2 access token. Do not use
             with the "access_token" query string parameter.
           type: string
       queryParameters:
-        access_token:
+        access_token?:
           description: |
             Used to send a valid OAuth 2 access token. Do not use with
             the "Authorization" header.

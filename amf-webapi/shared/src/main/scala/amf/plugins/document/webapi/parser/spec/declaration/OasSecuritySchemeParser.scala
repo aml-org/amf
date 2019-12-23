@@ -45,7 +45,7 @@ case class OasSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securit
     ctx.link(node) match {
       case Left(link) => parseReferenced(link, node, adopt)
       case Right(value) =>
-        val scheme = adopt(SecurityScheme())
+        val scheme = adopt(SecurityScheme(part))
         val map    = value.as[YMap]
 
         // 3 stages
