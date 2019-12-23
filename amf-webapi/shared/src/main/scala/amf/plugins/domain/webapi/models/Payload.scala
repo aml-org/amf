@@ -18,12 +18,14 @@ case class Payload(fields: Fields, annotations: Annotations)
     with Linkable
     with SchemaContainer {
 
-  def mediaType: StrField      = fields.field(MediaType)
-  def schema: Shape            = fields.field(Schema)
-  def examples: Seq[Example]   = fields.field(Examples)
-  def encodings: Seq[Encoding] = fields.field(EncodingModel)
+  def mediaType: StrField       = fields.field(MediaType)
+  def schemaMediaType: StrField = fields.field(SchemaMediaType)
+  def schema: Shape             = fields.field(Schema)
+  def examples: Seq[Example]    = fields.field(Examples)
+  def encodings: Seq[Encoding]  = fields.field(EncodingModel)
 
   def withMediaType(mediaType: String): this.type       = set(MediaType, mediaType)
+  def withSchemaMediaType(mediaType: String): this.type = set(SchemaMediaType, mediaType)
   def withSchema(schema: Shape): this.type              = set(Schema, schema)
   def withExamples(examples: Seq[Example]): this.type   = setArray(Examples, examples)
   def withEncodings(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)

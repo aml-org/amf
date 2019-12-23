@@ -12,7 +12,8 @@ import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations.{CollectionFormatFromItems, JSONSchemaId}
 import amf.plugins.document.webapi.contexts._
-import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext, OasWebApiContext}
+import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext}
 import amf.plugins.document.webapi.parser.OasTypeDefMatcher.matchType
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, DataNodeParser, ScalarNodeParser}
@@ -64,10 +65,10 @@ object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
 object OasTypeParser {
 
   def apply(entry: YMapEntry, adopt: Shape => Unit, version: JSONSchemaVersion)(
-      implicit ctx: OasWebApiContext): OasTypeParser =
+      implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(Left(entry), entry.key.as[String], entry.value.as[YMap], adopt, version)
 
-  def apply(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: OasWebApiContext): OasTypeParser =
+  def apply(entry: YMapEntry, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(
       Left(entry),
       entry.key.as[YScalar].text,
@@ -78,10 +79,10 @@ object OasTypeParser {
     )
 
   def apply(node: YNode, name: String, adopt: Shape => Unit, version: JSONSchemaVersion)(
-      implicit ctx: OasWebApiContext): OasTypeParser =
+      implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(Right(node), name, node.as[YMap], adopt, version)
 
-  def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasWebApiContext): OasTypeParser =
+  def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(Right(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx))
 
 }
@@ -90,7 +91,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                          name: String,
                          map: YMap,
                          adopt: Shape => Unit,
-                         version: JSONSchemaVersion)(implicit val ctx: OasWebApiContext)
+                         version: JSONSchemaVersion)(implicit val ctx: OasLikeWebApiContext)
     extends OasSpecParser {
 
   private val ast: YPart = entryOrNode match {
@@ -886,7 +887,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   }
 
-  case class NodeShapeParser(shape: NodeShape, map: YMap)(implicit val ctx: OasWebApiContext)
+  case class NodeShapeParser(shape: NodeShape, map: YMap)(implicit val ctx: OasLikeWebApiContext)
       extends AnyShapeParser() {
     override def parse(): NodeShape = {
 

@@ -23,7 +23,7 @@ object RequestModel extends DomainElementModel with ParametersFieldModel with Me
   override val `type`: List[ValueType] = ApiContract + "Request" :: MessageModel.`type`
 
   override def fields: List[Field] =
-    List(Required, QueryParameters, Headers, QueryString, UriParameters, CookieParameters) ++ MessageModel.fields
+    List(Required, QueryParameters, QueryString, UriParameters, CookieParameters) ++ MessageModel.fields
 
   override def modelInstance = Request()
 

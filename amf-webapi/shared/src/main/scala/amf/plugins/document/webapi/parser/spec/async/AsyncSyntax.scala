@@ -62,6 +62,26 @@ object Async20Syntax extends SpecSyntax {
       "contains",
       "name",
       "patternProperties"
+    ),
+    "message" -> Set(
+      "headers",
+      "payload",
+      "correlationId",
+      "schemaFormat",
+      "contentType",
+      "name",
+      "title",
+      "summary",
+      "description",
+      "tags",
+      "externalDocs",
+      "bindings",
+      "examples",
+      "traits"
+    ),
+    "correlationId" -> Set(
+      "description",
+      "location"
     )
   )
 }

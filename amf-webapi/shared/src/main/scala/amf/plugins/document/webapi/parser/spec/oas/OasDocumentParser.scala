@@ -3,18 +3,19 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.core.Root
 import amf.core.annotations._
 import amf.core.metamodel.Field
-import amf.core.metamodel.document.{ExtensionLikeModel, BaseUnitModel}
+import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
-import amf.core.metamodel.domain.{ShapeModel, DomainElementModel}
+import amf.core.metamodel.domain.{DomainElementModel, ShapeModel}
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.CustomDomainProperty
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
-import amf.core.utils.{IdCounter, Lazy, AmfStrings, TemplateUri}
+import amf.core.utils.{AmfStrings, IdCounter, Lazy, TemplateUri}
+import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec
-import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorRequest, ErrorCallback}
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorCallback, ErrorRequest}
 import amf.plugins.document.webapi.parser.spec.{domain, _}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
@@ -22,7 +23,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarations
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.shapes.models.{NodeShape, CreativeWork}
+import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, _}
 import amf.plugins.domain.webapi.models._
@@ -30,7 +31,7 @@ import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
-import org.yaml.model.{YNode, YMapEntry, _}
+import org.yaml.model.{YMapEntry, YNode, _}
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -257,7 +258,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     ctx.factory.serversParser(map, api).parse()
 
-    map.key("tags", entry => { OasLikeTagsParser(entry, api).parse() })
+    map.key("tags", entry => {
+      val tags = OasLikeTagsParser(api.id, entry).parse()
+      api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+    })
 
     map.key(
       "security",
@@ -363,7 +367,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case Some(n) =>
               ctx.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
             case None =>
-              ctx.violation(InvalidEndpointPath, endpoint.id, s"Cannot find fragment path item ref $value", entry.value)
+              ctx.violation(InvalidEndpointPath,
+                            endpoint.id,
+                            s"Cannot find fragment path item ref $value",
+                            entry.value)
           }
         case Right(node) if node.tagType == YType.Map =>
           parseEndpointMap(endpoint, node.as[YMap])
@@ -470,8 +477,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     }
   }
 
-  case class Oas3RequestParser(map: YMap, parentId: String, definitionEntry: YMapEntry)(
-      implicit ctx: OasWebApiContext) {
+  case class Oas3RequestParser(map: YMap, parentId: String, definitionEntry: YMapEntry)(implicit ctx: OasWebApiContext) {
 
     private def adopt(request: Request) = {
       request
@@ -519,7 +525,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             case Some(requestNode) =>
               Oas3RequestParser(requestNode.as[YMap], parentId, definitionEntry).parse()
             case None =>
-              ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find requestBody reference $fullRef", map)
+              ctx.violation(CoreValidations.UnresolvedReference,
+                            "",
+                            s"Cannot find requestBody reference $fullRef",
+                            map)
               adopt(ErrorRequest(fullRef, map).link(name))
           }
         }
@@ -867,7 +876,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   }
 }
 
-abstract class OasSpecParser(implicit ctx: OasWebApiContext) extends WebApiBaseSpecParser with SpecParserOps {
+abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiBaseSpecParser with SpecParserOps {
 
   case class UsageParser(map: YMap, baseUnit: BaseUnit) {
     def parse(): Unit = {

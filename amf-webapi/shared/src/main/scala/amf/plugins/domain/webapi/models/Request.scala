@@ -15,14 +15,12 @@ class Request(override val fields: Fields, override val annotations: Annotations
 
   def required: BoolField              = fields.field(Required)
   def queryParameters: Seq[Parameter]  = fields.field(QueryParameters)
-  def headers: Seq[Parameter]          = fields.field(Headers)
   def queryString: Shape               = fields.field(QueryString)
   def uriParameters: Seq[Parameter]    = fields.field(UriParameters)
   def cookieParameters: Seq[Parameter] = fields.field(CookieParameters)
 
   def withRequired(required: Boolean): this.type                        = set(Required, required)
   def withQueryParameters(parameters: Seq[Parameter]): this.type        = setArray(QueryParameters, parameters)
-  def withHeaders(headers: Seq[Parameter]): this.type                   = setArray(Headers, headers)
   def withQueryString(queryString: Shape): this.type                    = set(QueryString, queryString)
   def withUriParameters(uriParameters: Seq[Parameter]): this.type       = setArray(UriParameters, uriParameters)
   def withCookieParameters(cookieParameters: Seq[Parameter]): this.type = setArray(CookieParameters, cookieParameters)

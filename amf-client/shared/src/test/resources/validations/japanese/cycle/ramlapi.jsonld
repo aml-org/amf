@@ -120,6 +120,181 @@
                       "http://a.ml/vocabularies/apiContract#Message",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
+                    "http://a.ml/vocabularies/apiContract#payload": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiContract#Payload",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/core#mediaType": [
+                          {
+                            "@value": "application/json"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/shapes#schema": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema",
+                            "@type": [
+                              "http://www.w3.org/ns/shacl#NodeShape",
+                              "http://a.ml/vocabularies/shapes#AnyShape",
+                              "http://www.w3.org/ns/shacl#Shape",
+                              "http://a.ml/vocabularies/shapes#Shape",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://www.w3.org/ns/shacl#closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "http://www.w3.org/ns/shacl#name": [
+                              {
+                                "@value": "schema"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/shapes#inherits": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831",
+                                "@type": [
+                                  "http://www.w3.org/ns/shacl#NodeShape",
+                                  "http://a.ml/vocabularies/shapes#AnyShape",
+                                  "http://www.w3.org/ns/shacl#Shape",
+                                  "http://a.ml/vocabularies/shapes#Shape",
+                                  "http://a.ml/vocabularies/document#DomainElement"
+                                ],
+                                "http://a.ml/vocabularies/document#link-target": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document#link-label": [
+                                  {
+                                    "@value": "\u30E6\u30FC\u30B6\u30FC"
+                                  }
+                                ],
+                                "http://www.w3.org/ns/shacl#name": [
+                                  {
+                                    "@value": "\u30E6\u30FC\u30B6\u30FC"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#sources": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831/source-map",
+                                    "@type": [
+                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831/source-map/auto-generated-name/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": ""
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831/source-map/lexical/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "[(64,14)-(64,18)]"
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema/source-map/type-property-lexical-info/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(64,8)-(64,12)]"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema/source-map/lexical/element_1",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(63,6)-(65,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/shapes#inherits"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(64,8)-(65,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(63,6)-(65,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
                     "http://a.ml/vocabularies/apiContract#header": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/parameter/%E8%AA%8D%E5%8F%AF",
@@ -404,181 +579,6 @@
                         ]
                       }
                     ],
-                    "http://a.ml/vocabularies/apiContract#payload": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson",
-                        "@type": [
-                          "http://a.ml/vocabularies/apiContract#Payload",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/core#mediaType": [
-                          {
-                            "@value": "application/json"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/shapes#schema": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema",
-                            "@type": [
-                              "http://www.w3.org/ns/shacl#NodeShape",
-                              "http://a.ml/vocabularies/shapes#AnyShape",
-                              "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://www.w3.org/ns/shacl#closed": [
-                              {
-                                "@value": false
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#name": [
-                              {
-                                "@value": "schema"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/shapes#inherits": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831",
-                                "@type": [
-                                  "http://www.w3.org/ns/shacl#NodeShape",
-                                  "http://a.ml/vocabularies/shapes#AnyShape",
-                                  "http://www.w3.org/ns/shacl#Shape",
-                                  "http://a.ml/vocabularies/shapes#Shape",
-                                  "http://a.ml/vocabularies/document#DomainElement"
-                                ],
-                                "http://a.ml/vocabularies/document#link-target": [
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document#link-label": [
-                                  {
-                                    "@value": "\u30E6\u30FC\u30B6\u30FC"
-                                  }
-                                ],
-                                "http://www.w3.org/ns/shacl#name": [
-                                  {
-                                    "@value": "\u30E6\u30FC\u30B6\u30FC"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#sources": [
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831/source-map",
-                                    "@type": [
-                                      "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831/source-map/auto-generated-name/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": ""
-                                          }
-                                        ]
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                      {
-                                        "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831/source-map/lexical/element_0",
-                                        "http://a.ml/vocabularies/document-source-maps#element": [
-                                          {
-                                            "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/declarations/types/%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/link-1476975831"
-                                          }
-                                        ],
-                                        "http://a.ml/vocabularies/document-source-maps#value": [
-                                          {
-                                            "@value": "[(64,14)-(64,18)]"
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema/source-map/type-property-lexical-info/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(64,8)-(64,12)]"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema/source-map/lexical/element_1",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(63,6)-(65,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/schema/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/shapes#inherits"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(64,8)-(65,0)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/application%2Fjson"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(63,6)-(65,0)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
                         "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/source-map",
@@ -590,12 +590,12 @@
                             "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/source-map/lexical/element_2",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/apiContract#header"
+                                "@value": "http://a.ml/vocabularies/apiContract#payload"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(58,4)-(62,0)]"
+                                "@value": "[(62,4)-(65,0)]"
                               }
                             ]
                           },
@@ -603,12 +603,12 @@
                             "@id": "file://amf-client/shared/src/test/resources/validations/japanese/cycle/ramlapi.raml#/web-api/end-points/%2F%E3%83%A6%E3%83%BC%E3%82%B6%E3%83%BC/post/request/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/apiContract#payload"
+                                "@value": "http://a.ml/vocabularies/apiContract#header"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(62,4)-(65,0)]"
+                                "@value": "[(58,4)-(62,0)]"
                               }
                             ]
                           },

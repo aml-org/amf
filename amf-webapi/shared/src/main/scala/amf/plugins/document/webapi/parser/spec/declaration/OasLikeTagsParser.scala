@@ -1,26 +1,25 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.model.domain.AmfArray
-import amf.core.parser.Annotations
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.SpecParserOps
 import amf.plugins.document.webapi.parser.spec.domain.TagsParser
-import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.domain.webapi.models.{WebApi, Tag}
+import amf.plugins.domain.webapi.models.Tag
 import amf.validations.ParserSideValidations.DuplicatedTags
-import org.yaml.model.{YType, YMap, YMapEntry}
+import org.yaml.model.{YMap, YMapEntry, YType}
 
-case class OasLikeTagsParser(entry: YMapEntry, api: WebApi)(implicit val ctx: OasLikeWebApiContext)
+case class OasLikeTagsParser(parentId: String, entry: YMapEntry)(implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {
 
-  def parse(): Unit = {
-    entry.value.tagType match {
+  def parse(): Seq[Tag] = {
+    val tags = entry.value.tagType match {
       case YType.Seq =>
-        val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(api.id)).parse())
+        val tags = entry.value.as[Seq[YMap]].map(tag => TagsParser(tag, (tag: Tag) => tag.adopted(parentId)).parse())
         validateDuplicated(tags, entry)
-        api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
-      case _ => // ignore
+        tags
+      case _ => Nil // ignore
     }
+    validateDuplicated(tags, entry)
+    tags
   }
 
   private def validateDuplicated(tags: Seq[Tag], entry: YMapEntry): Unit = {

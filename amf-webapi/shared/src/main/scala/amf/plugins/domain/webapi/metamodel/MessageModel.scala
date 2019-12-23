@@ -16,7 +16,8 @@ trait MessageModel
     with AbstractModel
     with NameFieldSchema
     with DescriptionField
-    with LinkableElementModel {
+    with LinkableElementModel
+    with ParametersFieldModel {
   val Payloads = Field(Array(PayloadModel),
                        ApiContract + "payload",
                        ModelDoc(ModelVocabularies.ApiContract, "payload", "Payload for a Request/Response"))
@@ -55,6 +56,7 @@ object MessageModel extends MessageModel {
          DisplayName,
          Title,
          Summary,
+         Headers,
          Bindings,
          Tags,
          Examples,

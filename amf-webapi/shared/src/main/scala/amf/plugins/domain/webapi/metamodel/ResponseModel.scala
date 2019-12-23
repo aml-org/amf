@@ -11,12 +11,7 @@ import amf.plugins.domain.webapi.models.Response
 /**
   * Response metamodel.
   */
-object ResponseModel
-    extends DomainElementModel
-    with KeyField
-    with OptionalField
-    with ParametersFieldModel
-    with MessageModel {
+object ResponseModel extends DomainElementModel with KeyField with OptionalField with MessageModel {
 
   val StatusCode = Field(
     Str,
@@ -34,7 +29,7 @@ object ResponseModel
   override val `type`: List[ValueType] = ApiContract + "Response" :: MessageModel.`type`
 
   override val fields: List[Field] =
-    List(StatusCode, Headers, Links) ++ MessageModel.fields
+    List(StatusCode, Links) ++ MessageModel.fields
 
   override def modelInstance = Response()
 
