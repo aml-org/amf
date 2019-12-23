@@ -1,26 +1,24 @@
 package amf.plugins.document.webapi.contexts.parser.raml
 import amf.core.model.domain.Shape
-import amf.validation.DialectValidations.ClosedShapeSpecification
-import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
+import amf.core.parser.{ParsedReference, ParserContext}
+import amf.core.remote.{Payload, Vendor}
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.{SpecSyntax, RamlWebApiDeclarations}
-
-import scala.collection.mutable
-import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
-import amf.core.parser.{ErrorHandler, ParserContext, ParsedReference}
-import amf.core.remote.{Vendor, Payload}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContextType.RamlWebApiContextType
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
-import org.yaml.model.{YNode, YScalar, YMapEntry, YType, YMap}
+import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
+import amf.plugins.document.webapi.parser.spec.{RamlWebApiDeclarations, SpecSyntax}
+import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
+import amf.validation.DialectValidations.ClosedShapeSpecification
+import org.yaml.model._
+
+import scala.collection.mutable
 
 abstract class RamlWebApiContext(override val loc: String,
                                  refs: Seq[ParsedReference],
                                  val wrapped: ParserContext,
                                  private val ds: Option[RamlWebApiDeclarations] = None,
-                                 parserCount: Option[Int] = None,
-                                 override val eh: Option[ErrorHandler] = None,
                                  var contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
-    extends WebApiContext(loc, refs, wrapped, ds, parserCount, eh)
+    extends WebApiContext(loc, refs, wrapped, ds)
     with RamlSpecAwareContext {
 
   var globalMediatype: Boolean                                  = false
@@ -42,8 +40,8 @@ abstract class RamlWebApiContext(override val loc: String,
     subContext.futureDeclarations.promises.foreach(fd => futureDeclarations.promises += fd)
   }
 
-  override val declarations: RamlWebApiDeclarations = ds.getOrElse(
-    new RamlWebApiDeclarations(alias = None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
+  override val declarations: RamlWebApiDeclarations =
+    ds.getOrElse(new RamlWebApiDeclarations(alias = None, futureDeclarations = futureDeclarations, errorHandler = eh))
   protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext
 
   /**
@@ -65,12 +63,7 @@ abstract class RamlWebApiContext(override val loc: String,
         case Some(library: RamlWebApiDeclarations) =>
           findDeclarations(path.tail, library)
         case _ =>
-          violation(DeclarationNotFound,
-                    "",
-                    None,
-                    s"Cannot find declarations in context '${path.mkString(".")}",
-                    None,
-                    None)
+          violation(DeclarationNotFound, "", s"Cannot find declarations in context '${path.mkString(".")}")
           declarations
       }
     }
@@ -145,7 +138,7 @@ abstract class RamlWebApiContext(override val loc: String,
           case None => // at least we found a solution, this is a valid shape
           case Some(errors: Seq[YMapEntry]) =>
             val subject = if (errors.size > 1) "Properties" else "Property"
-            violation(
+            eh.violation(
               ClosedShapeSpecification,
               node,
               s"$subject ${errors.map(_.key.as[YScalar].text).map(e => s"'$e'").mkString(",")} not supported in a $vendor $shapeLabel node",
@@ -154,7 +147,7 @@ abstract class RamlWebApiContext(override val loc: String,
         }
 
       case None =>
-        violation(
+        eh.violation(
           ClosedShapeSpecification,
           node,
           s"Cannot validate unknown node type $shapeType for $vendor",
@@ -168,12 +161,10 @@ class PayloadContext(loc: String,
                      refs: Seq[ParsedReference],
                      override val wrapped: ParserContext,
                      private val ds: Option[RamlWebApiDeclarations] = None,
-                     override val eh: Option[ErrorHandler] = None,
-                     parserCount: Option[Int] = None,
                      contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
-  extends RamlWebApiContext(loc, refs, wrapped, ds, parserCount, eh, contextType = contextType) {
+    extends RamlWebApiContext(loc, refs, wrapped, ds, contextType = contextType) {
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext = {
-    new PayloadContext(loc, refs, wrapped, Some(declarations), eh)
+    new PayloadContext(loc, refs, wrapped, Some(declarations))
   }
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val syntax: SpecSyntax = new SpecSyntax {

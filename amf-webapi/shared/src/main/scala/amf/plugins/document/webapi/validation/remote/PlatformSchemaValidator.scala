@@ -8,7 +8,6 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
 import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.parser.{ParserContext, SyamlParsedDocument}
-import amf.core.parser.{SyamlParsedDocument, RuntimeErrorHandler, ParserContext, DefaultParserSideErrorHandler}
 import amf.core.validation._
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
@@ -25,7 +24,7 @@ import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 import amf.{ProfileName, ProfileNames}
 import org.yaml.builder.YDocumentBuilder
 import org.yaml.model._
-import org.yaml.parser.{YamlParser, JsonParser}
+import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -60,7 +59,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
 
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
 
-  val env = Environment()
+  val env: Environment = Environment()
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 

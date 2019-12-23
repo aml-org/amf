@@ -8,8 +8,6 @@ import amf.core.metamodel.domain.extensions.CustomDomainPropertyModel
 import amf.core.model.domain._
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
-import amf.core.model.domain.extensions.{ShapeExtension, CustomDomainProperty, DomainExtension}
-import amf.core.parser.{ErrorHandler, Position, Value, FieldEntry, Annotations}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.contexts.SpecEmitterContext

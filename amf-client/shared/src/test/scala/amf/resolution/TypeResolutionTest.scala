@@ -6,9 +6,6 @@ import amf.core.model.domain.Shape
 import amf.core.parser.ParserContext
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{Raml, RamlYamlHint}
-import amf.core.parser.{ParserContext, DefaultParserSideErrorHandler}
-import amf.core.remote.{RamlYamlHint, Raml}
-import amf.core.services.RuntimeValidator
 import amf.core.vocabulary.Namespace
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests

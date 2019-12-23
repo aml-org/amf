@@ -9,10 +9,6 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, PayloadFragment}
 import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.{Payload, Platform}
-import amf.core.emitter.{ShapeRenderOptions, RenderOptions}
-import amf.core.model.document.{PayloadFragment, BaseUnit}
-import amf.core.parser.{SyamlParsedDocument, SimpleReferenceHandler, ErrorHandler, ParserContext}
-import amf.core.remote.{Platform, Payload}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.parser.PayloadParser
@@ -20,8 +16,8 @@ import amf.plugins.document.webapi.parser.spec.common.PayloadEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import org.yaml.builder.{YDocumentBuilder, DocBuilder}
-import org.yaml.model.{YMap, YScalar, YDocument}
+import org.yaml.builder.{DocBuilder, YDocumentBuilder}
+import org.yaml.model.{YDocument, YMap, YScalar}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future

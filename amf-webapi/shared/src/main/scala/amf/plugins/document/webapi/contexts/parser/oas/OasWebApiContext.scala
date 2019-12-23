@@ -1,22 +1,19 @@
 package amf.plugins.document.webapi.contexts.parser.oas
+import amf.core.model.document.ExternalFragment
+import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
+import org.yaml.model.{YMap, YNode, YScalar}
 
 import scala.collection.mutable
-import org.yaml.model.{YMap, YScalar, YNode}
-import amf.core.model.document.ExternalFragment
-import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.core.parser.{ErrorHandler, ParserContext, ParsedReference}
-import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.core.parser.YMapOps
 
 abstract class OasWebApiContext(loc: String,
                                 refs: Seq[ParsedReference],
                                 private val wrapped: ParserContext,
                                 private val ds: Option[OasWebApiDeclarations] = None,
-                                parserCount: Option[Int] = None,
-                                override val eh: Option[ErrorHandler] = None,
                                 private val operationIds: mutable.Set[String] = mutable.HashSet())
-  extends WebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
+    extends WebApiContext(loc, refs, wrapped, ds) {
 
   override val declarations: OasWebApiDeclarations =
     ds.getOrElse(
@@ -29,7 +26,7 @@ abstract class OasWebApiContext(loc: String,
               else None)
           .toMap,
         None,
-        errorHandler = Some(this),
+        errorHandler = eh,
         futureDeclarations = futureDeclarations
       ))
   val factory: OasSpecVersionFactory
@@ -54,6 +51,6 @@ abstract class OasWebApiContext(loc: String,
     property.startsWith("x-") || property == "$ref" || (property.startsWith("/") && (shape == "webApi" || shape == "paths"))
 
   /** Used for accumulating operation ids.
-   * returns true if id was not present, and false if operation being added is already present. */
+    * returns true if id was not present, and false if operation being added is already present. */
   def registerOperationId(id: String): Boolean = operationIds.add(id)
 }

@@ -1,19 +1,19 @@
 package amf.plugins.document.webapi.contexts
 
 import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
-import amf.core.model.domain.Shape
-import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
-import amf.core.model.document.{Fragment, ExternalFragment, RecursiveUnit}
-import amf.core.parser.{ErrorHandler, ParserContext, ParsedReference}
+import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
-import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.JsonSchemaPlugin
-import amf.plugins.document.webapi.contexts.parser.oas.{OasWebApiContext, JsonSchemaAstIndex}
+import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaAstIndex, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft4SchemaVersion, JSONSchemaVersion, JSONSchemaUnspecifiedVersion, JSONSchemaDraft3SchemaVersion}
+import amf.plugins.document.webapi.parser.spec.declaration.{
+  JSONSchemaDraft3SchemaVersion,
+  JSONSchemaDraft4SchemaVersion,
+  JSONSchemaUnspecifiedVersion,
+  JSONSchemaVersion
+}
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.validation.DialectValidations.ClosedShapeSpecification
