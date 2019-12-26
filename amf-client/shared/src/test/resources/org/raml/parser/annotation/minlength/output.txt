@@ -1,0 +1,52 @@
+#%RAML 1.0
+title: "22"
+types:
+  Pet:
+    additionalProperties: true
+    properties:
+      name:
+        type: string
+        required: true
+  Person:
+    properties:
+      //:
+        additionalProperties: true
+        properties:
+          name:
+            type: string
+            required: true
+        required: false
+  MapOfPerson:
+    properties:
+      //:
+        properties:
+          //:
+            additionalProperties: true
+            properties:
+              name:
+                type: string
+                required: true
+            required: false
+        required: false
+annotationTypes:
+  hello:
+    additionalProperties: true
+    properties:
+      persons:
+        properties:
+          //:
+            properties:
+              //:
+                additionalProperties: true
+                properties:
+                  name:
+                    type: string
+                    required: true
+                required: false
+            required: false
+        required: true
+(hello):
+  persons:
+    "156798654":
+      Alice:
+        name: stringValue

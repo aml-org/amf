@@ -1,0 +1,68 @@
+#%RAML 1.0
+title: My API With Types
+types:
+  Person:
+    type: object
+    discriminator: kind
+    additionalProperties: true
+    properties:
+      kind:
+        type: string
+        required: true
+      name:
+        type: string
+        required: true
+  Employee:
+    discriminator: kind
+    type: object
+    additionalProperties: true
+    properties:
+      kind:
+        type: string
+        required: true
+      name:
+        type: string
+        required: true
+      employeeId:
+        type: integer
+        required: true
+  User:
+    discriminator: kind
+    type: object
+    discriminatorValue: user
+    additionalProperties: true
+    properties:
+      kind:
+        type: string
+        required: true
+      name:
+        type: string
+        required: true
+      userId:
+        type: integer
+        required: true
+/resource:
+  get:
+    responses:
+      "200":
+        body:
+          application/json:
+            type: object
+            discriminator: kind
+            examples:
+              bad1:
+                kind: Empleado
+                employeeId: 1
+                name: Santiago
+              bad2:
+                kind: user
+                userId: Pepe
+                name: Leandro
+            additionalProperties: true
+            properties:
+              kind:
+                type: string
+                required: true
+              name:
+                type: string
+                required: true

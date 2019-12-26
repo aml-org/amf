@@ -7,7 +7,6 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.core.annotations.SourceVendor
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.{BaseUnit, Document, EncodesModel, Module}
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline.EDITING_PIPELINE
 import amf.core.validation.AMFValidationReport
@@ -15,6 +14,7 @@ import amf.emit.AMFRenderer
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
+import amf.plugins.features.validation.CoreValidations.UnresolvedReference
 import amf.resolution.ResolutionTest
 import amf.validations.PayloadValidations.ExampleValidationErrorSpecification
 
@@ -36,8 +36,8 @@ trait ModelValidationTest extends DirectoryTest {
     } yield {
       // we only need to use the platform if there are errors in examples, this is what causes differences due to
       // the different JSON-Schema libraries used in JS and the JVM
-      val usePlatform = !report.conforms && report.results.exists(
-        _.validationId == ExampleValidationErrorSpecification.id)
+      val usePlatform = !report.conforms && report.results.exists(result =>
+        result.validationId == ExampleValidationErrorSpecification.id || result.validationId == UnresolvedReference.id)
       (output, usePlatform)
     }
   }
