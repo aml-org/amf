@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "name0": {
+      "$ref": "name-schema.json"
+    },
+    "name1": {
+      "$ref": "../schemas/name-schema.json"
+    },
+    "name2": {
+      "$ref": "./../schemas/name-schema.json"
+    },
+    "name3": {
+      "$ref": "./../schemas/../schemas/././././../schemas/name-schema.json"
+    }
+  }
+}
