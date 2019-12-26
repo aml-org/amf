@@ -1923,6 +1923,26 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       assert(!report.conforms)
     }
   }
+
+  test("Test resolution error with resolve stage") {
+    val api = """#%RAML 1.0
+                |title: API
+                |
+                |types:
+                |  SomeType:
+                |    type: SomeType
+                |""".stripMargin
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
+    } yield {
+      println(report.toString())
+      assert(!report.conforms)
+    }
+  }
+
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }
