@@ -287,8 +287,7 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Missing discriminator property") {
-    validate("discriminator/invalid/missing-discriminator-property.raml",
-             Some("missing-discriminator-property.report"))
+    validate("discriminator/invalid/missing-discriminator-property.raml", Some("missing-discriminator-property.report"))
   }
 
   test("Invalid payload in RAML 08") {
@@ -414,5 +413,9 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("Resource Type - Plain text - Libraries with same name in a merged context") {
     validate("resource_types/plain-text/multi-lib-same-name/api.raml")
+  }
+
+  test("JSON Schema relative references") {
+    validate("json-schema-relative-references/api.raml")
   }
 }

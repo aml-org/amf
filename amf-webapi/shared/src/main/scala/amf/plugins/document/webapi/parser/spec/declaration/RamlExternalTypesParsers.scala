@@ -199,8 +199,10 @@ case class RamlJsonSchemaExpression(key: YNode,
       case inlined: MutRef =>
         if (inlined.origTag.tagType == YType.Include) {
           // JSON schema file we need to update the context
-          val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
-          ctx.refs.find(r => r.unit.location().exists(_.endsWith(fileHint))) match {
+          val rawFilePath        = inlined.origValue.asInstanceOf[YScalar].text.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
+          val root               = ctx.rootContextDocument
+          val normalizedFilePath = ctx.resolvedPath(root, rawFilePath)
+          ctx.refs.find(r => r.unit.location().contains(normalizedFilePath)) match {
             case Some(ref) =>
               toJsonSchema(
                 ref.unit.location().get,
