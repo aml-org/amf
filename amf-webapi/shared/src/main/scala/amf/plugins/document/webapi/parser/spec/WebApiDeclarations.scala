@@ -420,10 +420,10 @@ object WebApiDeclarations {
   }
 }
 
-abstract class OasLikeWebApiDeclarations(val asts: Map[String, YNode],
-                                         override val alias: Option[String],
-                                         override val errorHandler: Option[ErrorHandler],
-                                         override val futureDeclarations: FutureDeclarations)
+class OasLikeWebApiDeclarations(val asts: Map[String, YNode],
+                                override val alias: Option[String],
+                                override val errorHandler: Option[ErrorHandler],
+                                override val futureDeclarations: FutureDeclarations)
     extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
 
 class OasWebApiDeclarations(override val asts: Map[String, YNode],

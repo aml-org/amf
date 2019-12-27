@@ -4,15 +4,17 @@ import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeSpecVersionFactory
 import amf.plugins.document.webapi.parser.spec.declaration.{
-  OasSecuritySettingsParser,
   Oas2SecuritySettingsParser,
-  Oas3SecuritySettingsParser
+  Oas3SecuritySettingsParser,
+  OasSecuritySettingsParser
 }
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.domain.webapi.metamodel.{WebApiModel, OperationModel, EndPointModel}
+import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.plugins.domain.webapi.models.{EndPoint, WebApi, Operation, Server}
-import org.yaml.model.{YMap, YNode, YMapEntry}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Server, WebApi}
+import org.yaml.model.{YMap, YMapEntry, YNode}
+
+import scala.collection.mutable.ListBuffer
 
 trait OasSpecAwareContext extends SpecAwareContext {}
 
@@ -47,6 +49,13 @@ case class Oas2VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFacto
 
   override def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser =
     OasServerVariableParser(entry, server)(ctx)
+
+  override def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser =
+    Oas20OperationParser(entry, producer)(ctx)
+  override def endPointParser(entry: YMapEntry,
+                              producer: String => EndPoint,
+                              collector: ListBuffer[EndPoint]): OasLikeEndpointParser =
+    Oas20EndpointParser(entry, producer, collector)(ctx)
 }
 
 case class Oas3VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFactory {
@@ -70,4 +79,11 @@ case class Oas3VersionFactory(ctx: OasWebApiContext) extends OasSpecVersionFacto
 
   override def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser =
     OasServerVariableParser(entry, server)(ctx)
+
+  override def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser =
+    new Oas30OperationParser(entry, producer)(ctx)
+  override def endPointParser(entry: YMapEntry,
+                              producer: String => EndPoint,
+                              collector: ListBuffer[EndPoint]): OasLikeEndpointParser =
+    Oas30EndpointParser(entry, producer, collector)(ctx)
 }

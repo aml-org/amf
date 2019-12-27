@@ -1,17 +1,27 @@
 package amf.plugins.document.webapi.contexts.parser
 
-import amf.core.parser.{YMapOps, ErrorHandler, ParserContext, ParsedReference}
+import amf.core.model.document.ExternalFragment
+import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.contexts.{WebApiContext, SpecVersionFactory}
+import amf.plugins.document.webapi.contexts.{SpecVersionFactory, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasLikeWebApiDeclarations
-import amf.plugins.document.webapi.parser.spec.domain.OasLikeServerVariableParser
-import amf.plugins.domain.webapi.models.Server
-import org.yaml.model.{YMap, YScalar, YNode, YMapEntry}
+import amf.plugins.document.webapi.parser.spec.domain.{
+  OasLikeEndpointParser,
+  OasLikeOperationParser,
+  OasLikeServerVariableParser
+}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Server, WebApi}
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 import scala.collection.mutable
 
 trait OasLikeSpecVersionFactory extends SpecVersionFactory {
   def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser
+  // TODO ASYNC complete this
+  def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser
+  def endPointParser(entry: YMapEntry,
+                     producer: String => EndPoint,
+                     collector: mutable.ListBuffer[EndPoint]): OasLikeEndpointParser
 }
 
 abstract class OasLikeWebApiContext(loc: String,
@@ -24,6 +34,21 @@ abstract class OasLikeWebApiContext(loc: String,
     extends WebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
 
   val factory: OasLikeSpecVersionFactory
+
+  override val declarations: OasLikeWebApiDeclarations =
+    ds.getOrElse(
+      new OasLikeWebApiDeclarations(
+        refs
+          .flatMap(
+            r =>
+              if (r.isExternalFragment)
+                r.unit.asInstanceOf[ExternalFragment].encodes.parsed.map(node => r.origin.url -> node)
+              else None)
+          .toMap,
+        None,
+        errorHandler = Some(this),
+        futureDeclarations = futureDeclarations
+      ))
 
   override def link(node: YNode): Either[String, YNode] = {
     node.to[YMap] match {

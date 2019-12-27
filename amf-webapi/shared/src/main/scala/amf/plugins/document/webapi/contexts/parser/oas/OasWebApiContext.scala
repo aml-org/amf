@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.contexts.parser.oas
 import amf.core.model.document.ExternalFragment
 import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
-import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
+import amf.plugins.document.webapi.parser.spec.{AsyncWebApiDeclarations, OasWebApiDeclarations}
 
 import scala.collection.mutable
 
