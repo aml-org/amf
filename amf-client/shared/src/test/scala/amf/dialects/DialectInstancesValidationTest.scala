@@ -14,7 +14,7 @@ import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.ExecutionContext
 
-class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets {
+class DialectInstancesValidationTest extends DialectInstanceValidation {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -133,37 +133,37 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   }
 
   test("custom validation profile for dialect") {
-    customValidationProfile("eng_demos_dialect1.raml",
-                            "eng_demos_instance1.raml",
-                            ProfileName("eng_demos_profile.raml"),
-                            "Custom Eng-Demos Validation",
-                            6)
+    withCustomValidationProfile("eng_demos_dialect1.raml",
+                                "eng_demos_instance1.raml",
+                                ProfileName("eng_demos_profile.raml"),
+                                "Custom Eng-Demos Validation",
+                                6)
   }
 
   test("custom validation profile for dialect default profile") {
-    customValidationProfile("eng_demos_dialect1.raml",
-                            "eng_demos_instance1.raml",
-                            ProfileName("eng_demos_profile.raml"),
-                            "Eng Demos 0.1",
-                            0)
+    withCustomValidationProfile("eng_demos_dialect1.raml",
+                                "eng_demos_instance1.raml",
+                                ProfileName("eng_demos_profile.raml"),
+                                "Eng Demos 0.1",
+                                0)
   }
 
   test("custom validation profile for ABOUT dialect default profile") {
-    customValidationProfile("ABOUT-dialect.raml",
-                            "ABOUT.yaml",
-                            ProfileName("ABOUT-validation.raml"),
-                            "ABOUT-validation",
-                            2,
-                            productionPath + "ABOUT/")
+    withCustomValidationProfile("ABOUT-dialect.raml",
+                                "ABOUT.yaml",
+                                ProfileName("ABOUT-validation.raml"),
+                                "ABOUT-validation",
+                                2,
+                                productionPath + "ABOUT/")
   }
 
   test("Custom validation profile for ABOUT dialect default profile negative case") {
-    customValidationProfile("ABOUT-dialect.raml",
-                            "ABOUT.custom.errors.yaml",
-                            ProfileName("ABOUT-validation.raml"),
-                            "ABOUT-validation",
-                            4,
-                            productionPath + "ABOUT/")
+    withCustomValidationProfile("ABOUT-dialect.raml",
+                                "ABOUT.custom.errors.yaml",
+                                ProfileName("ABOUT-validation.raml"),
+                                "ABOUT-validation",
+                                4,
+                                productionPath + "ABOUT/")
   }
 
   test("Can validate asyncapi 0.1 error") {
@@ -183,102 +183,15 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   }
 
   test("Can validate container configurations") {
-    validate("dialect.raml", "system.raml", numErrors = 0, productionPath + "system/")
+    validate("dialect.raml", "system.raml", expectedErrorCount = 0, productionPath + "system/")
   }
 
   test("Can validate oas 2.0 dialect instances") {
-    validate("oas20_dialect1.yaml", "oas20_instance1.yaml", numErrors = 0, productionPath)
+    validate("oas20_dialect1.yaml", "oas20_instance1.yaml", expectedErrorCount = 0, productionPath)
   }
 
   test("Can validate multiple property values with mapTermKey property") {
-    validate("map-term-key.yaml", "map-term-key-instance.yaml", numErrors = 0)
+    validate("map-term-key.yaml", "map-term-key-instance.yaml", expectedErrorCount = 0)
   }
-
-  protected def validate(dialect: String, instance: String, numErrors: Int, path: String = basePath) = {
-    amf.core.AMF.registerPlugin(AMLPlugin)
-    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-    val dialectContext  = compilerContext(path + dialect)
-    val instanceContext = compilerContext(path + instance)
-
-    for {
-      _ <- amf.core.AMF.init()
-      dialect <- {
-        new AMFCompiler(
-          dialectContext,
-          Some("application/yaml"),
-          None
-        ).build()
-      }
-      instance <- {
-        new AMFCompiler(
-          instanceContext,
-          Some("application/yaml"),
-          None
-        ).build()
-      }
-      report <- {
-        RuntimeValidator(
-          instance,
-          ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion())
-        )
-      }
-    } yield {
-      if (numErrors == 0) {
-        if (!report.conforms)
-          println(report)
-        assert(report.conforms)
-      } else assert(report.results.length == numErrors)
-    }
-  }
-
-  protected def customValidationProfile(dialect: String,
-                                        instance: String,
-                                        profile: ProfileName,
-                                        name: String,
-                                        numErrors: Int,
-                                        directory: String = basePath) = {
-    amf.core.AMF.registerPlugin(AMLPlugin)
-    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-    val dialectContext  = compilerContext(directory + dialect)
-    val instanceContext = compilerContext(directory + instance)
-
-    for {
-      _ <- amf.core.AMF.init()
-      dialect <- {
-        new AMFCompiler(
-          dialectContext,
-          Some("application/yaml"),
-          None
-        ).build()
-      }
-      profile <- {
-        AMFValidatorPlugin.loadValidationProfile(directory + profile.profile,
-                                                 errorHandler = dialectContext.parserContext.eh)
-      }
-      instance <- {
-
-        new AMFCompiler(
-          instanceContext,
-          Some("application/yaml"),
-          None
-        ).build()
-      }
-      report <- {
-        RuntimeValidator(
-          instance,
-          ProfileName(name)
-        )
-      }
-    } yield {
-      if (numErrors == 0) {
-        if (!report.conforms)
-          println(report)
-        assert(report.conforms)
-      } else assert(report.results.length == numErrors)
-    }
-  }
-
-  private def compilerContext(url: String) =
-    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
 
 }
