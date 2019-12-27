@@ -4,9 +4,10 @@ import amf._
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{ErrorHandler, LibraryReference, LinkReference, ParsedReference, ParserContext}
+import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile

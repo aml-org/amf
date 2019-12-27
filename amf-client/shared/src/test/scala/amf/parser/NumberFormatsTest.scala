@@ -4,6 +4,7 @@ import amf.common.Diff
 import amf.common.Diff.makeString
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.Fragment
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{Raml10, RamlYamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.emit.AMFRenderer
@@ -26,7 +27,7 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
     FormatCases("number", IntType, "int16"),
     FormatCases("number", IntType, "int32"),
     FormatCases("number", LongType, "int64"),
-    FormatCases("number", LongType, "long"),
+//    FormatCases("number", LongType, "long"),
     FormatCases("number", DoubleType, "double"),
     FormatCases("number", FloatType, "float"),
     FormatCases("number", NumberType, "")
@@ -35,8 +36,8 @@ class NumberFormatsTest extends AsyncFunSuite with PlatformSecrets {
   cases.foreach { ex =>
     test(s"Test data type ${ex.literalType} format ${ex.format}") {
       for {
-        validation <- Validation(platform).map(_.withEnabledValidation(false))
-        unit       <- AMFCompiler("", TrunkPlatform(ex.api), RamlYamlHint, validation).build()
+        validation <- Validation(platform)
+        unit       <- AMFCompiler("", TrunkPlatform(ex.api), RamlYamlHint, eh = UnhandledParserErrorHandler).build()
         dumped     <- AMFRenderer(unit, Raml10, RenderOptions()).renderToString
       } yield {
         unit match {

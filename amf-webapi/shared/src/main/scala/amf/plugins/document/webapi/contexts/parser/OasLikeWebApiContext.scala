@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.contexts.parser
 
 import amf.core.model.document.ExternalFragment
-import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext, YMapOps}
+import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.contexts.{SpecVersionFactory, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasLikeWebApiDeclarations
@@ -28,10 +28,8 @@ abstract class OasLikeWebApiContext(loc: String,
                                     refs: Seq[ParsedReference],
                                     private val wrapped: ParserContext,
                                     private val ds: Option[OasLikeWebApiDeclarations] = None,
-                                    parserCount: Option[Int] = None,
-                                    override val eh: Option[ErrorHandler] = None,
                                     private val operationIds: mutable.Set[String] = mutable.HashSet())
-    extends WebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
+    extends WebApiContext(loc, refs, wrapped, ds) {
 
   val factory: OasLikeSpecVersionFactory
 
@@ -46,7 +44,7 @@ abstract class OasLikeWebApiContext(loc: String,
               else None)
           .toMap,
         None,
-        errorHandler = Some(this),
+        errorHandler = eh,
         futureDeclarations = futureDeclarations
       ))
 

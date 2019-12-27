@@ -53,12 +53,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
           parseInput(result.remaining)
         case '|' =>
           if (acc == "" && this.parsedShape.isEmpty) {
-            ctx.violation(InvalidTypeExpression,
-                          "",
-                          None,
-                          "Syntax error, cannot parse Union with empty values",
-                          lexical,
-                          location)
+            ctx.eh.violation(InvalidTypeExpression,
+                             "",
+                             None,
+                             "Syntax error, cannot parse Union with empty values",
+                             lexical,
+                             location)
           }
           processChars()
           parsedShape = Some(toUnion)
@@ -68,13 +68,13 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
         case '[' =>
           processChars()
           if (parsingArray) {
-            ctx.violation(InvalidTypeExpression, "", None, "Syntax error, duplicated [", lexical, location)
+            ctx.eh.violation(InvalidTypeExpression, "", None, "Syntax error, duplicated [", lexical, location)
           }
           parsingArray = true
           parseInput(input.tail)
         case ']' =>
           if (!parsingArray) {
-            ctx.violation(InvalidTypeExpression, "", None, "Syntax error, Not matching ]", lexical, location)
+            ctx.eh.violation(InvalidTypeExpression, "", None, "Syntax error, Not matching ]", lexical, location)
           }
           parsingArray = false
           parsedShape = Some(toArray)
@@ -134,12 +134,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
       case None =>
         val union = UnionShape()
         adopt(union)
-        ctx.violation(InvalidTypeExpression,
-                      union.id,
-                      None,
-                      "Syntax error, cannot create empty Union",
-                      lexical,
-                      location)
+        ctx.eh.violation(InvalidTypeExpression,
+                         union.id,
+                         None,
+                         "Syntax error, cannot create empty Union",
+                         lexical,
+                         location)
         union
       case Some(u: UnionShape) => u
       case Some(shape) =>
@@ -184,12 +184,12 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
                 union.fields.setWithoutId(UnionShapeModel.AnyOf, AmfArray(newAnyOf))
             }
           case _ =>
-            ctx.violation(InvalidTypeExpression,
-                          shape.id,
-                          None,
-                          s"Error parsing type expression, cannot accept type $shape",
-                          lexical,
-                          location)
+            ctx.eh.violation(InvalidTypeExpression,
+                             shape.id,
+                             None,
+                             s"Error parsing type expression, cannot accept type $shape",
+                             lexical,
+                             location)
             Some(shape)
         }
     }
@@ -255,7 +255,7 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
       case _              => false
     }
     if (empty)
-      ctx.violation(InvalidTypeExpression, t.id, None, "Syntax error, generating empty array", lexical, location)
+      ctx.eh.violation(InvalidTypeExpression, t.id, None, "Syntax error, generating empty array", lexical, location)
   }
 
   private val (lexical, location) = part match {

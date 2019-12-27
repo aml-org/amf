@@ -58,7 +58,7 @@ case class IdentifierParser(entry: YMapEntry, webApi: WebApi, override implicit 
         val id = entry.value.toString
         webApi.withIdentifier(id)
       case _ =>
-        ctx.violation(InvalidIdentifier, webApi.id, "'id' must be a string", entry.location)
+        ctx.eh.violation(InvalidIdentifier, webApi.id, "'id' must be a string", entry.location)
     }
   }
 }

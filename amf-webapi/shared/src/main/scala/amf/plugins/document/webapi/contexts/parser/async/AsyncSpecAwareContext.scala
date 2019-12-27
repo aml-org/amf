@@ -2,10 +2,12 @@ package amf.plugins.document.webapi.contexts.parser.async
 
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeSpecVersionFactory
+import amf.plugins.document.webapi.parser.spec.declaration.SecuritySchemeParser
 import amf.plugins.document.webapi.parser.spec.domain
 import amf.plugins.document.webapi.parser.spec.domain._
+import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Server}
-import org.yaml.model.YMapEntry
+import org.yaml.model.{YMapEntry, YPart}
 
 import scala.collection.mutable.ListBuffer
 
@@ -24,4 +26,6 @@ case class Async20VersionFactory(ctx: AsyncWebApiContext) extends AsyncSpecVersi
                               producer: String => EndPoint,
                               collector: ListBuffer[EndPoint]): OasLikeEndpointParser =
     AsyncEndpointParser(entry, producer, collector)(ctx)
+
+  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser = ???
 }

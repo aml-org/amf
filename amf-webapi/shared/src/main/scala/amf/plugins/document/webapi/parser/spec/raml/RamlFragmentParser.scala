@@ -31,10 +31,10 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       case _          =>
         // we need to check if named example fragment in order to support invalid structures as external fragment
         if (fragmentType != Raml10NamedExample)
-          ctx.violation(InvalidFragmentType,
-                        root.location,
-                        "Cannot parse empty map",
-                        root.parsed.asInstanceOf[SyamlParsedDocument].document)
+          ctx.eh.violation(InvalidFragmentType,
+                           root.location,
+                           "Cannot parse empty map",
+                           root.parsed.asInstanceOf[SyamlParsedDocument].document)
         YMap.empty
     }
 
@@ -159,9 +159,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
       security.withEncodes(
         RamlSecuritySchemeParser(map,
-                                 "securityDefinitions",
-                                 map,
-                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme, _) =>
+                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme) =>
                                    security.adopted(root.location + "#/"))
           .parse())
     }

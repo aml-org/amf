@@ -2,6 +2,8 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.{LexicalInformation, SynthesizedField}
 import amf.core.metamodel.domain.ExternalSourceElementModel
+import amf.core.model.domain.{AmfScalar, Annotation, DataNode}
+import amf.core.parser.errorhandler.WarningOnlyHandler
 import amf.core.model.domain.{DataNode, AmfScalar, Annotation}
 import amf.core.parser.{Annotations, ScalarNode, _}
 import amf.plugins.document.webapi.annotations.ParsedJSONExample
@@ -15,7 +17,11 @@ import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{ScalarShape, Example, AnyShape}
 import amf.plugins.features.validation.CoreValidations
-import amf.validations.ParserSideValidations.{ExclusivePropertiesSpecification, ExamplesMustBeAMap, InvalidFragmentType}
+import amf.validations.ParserSideValidations.{
+  ExclusivePropertiesSpecification,
+  ExamplesMustBeAMap,
+  InvalidFragmentType
+}
 import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
@@ -45,7 +51,7 @@ case class OasExamplesParser(map: YMap, parentId: String)(implicit ctx: WebApiCo
       case (Some(exampleEntry), None)  => List(parseExample(exampleEntry.value))
       case (None, Some(examplesEntry)) => Oas3NamedExamplesParser(examplesEntry, parentId).parse()
       case (Some(_), Some(_)) =>
-        ctx.violation(
+        ctx.eh.violation(
           ExclusivePropertiesSpecification,
           parentId,
           s"Properties 'example' and 'examples' are exclusive and cannot be declared together",
@@ -87,7 +93,7 @@ case class RamlExamplesParser(map: YMap,
                               options: ExampleOptions)(implicit ctx: WebApiContext) {
   def parse(): Seq[Example] = {
     if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && parentId.isDefined) {
-      ctx.violation(
+      ctx.eh.violation(
         ExclusivePropertiesSpecification,
         parentId.get,
         s"Properties '$singleExampleKey' and '$multipleExamplesKey' are exclusive and cannot be declared together",
@@ -121,7 +127,7 @@ case class RamlMultipleExampleParser(key: String,
                   .asInstanceOf[RamlWebApiContext]
                   .contextType != RamlWebApiContextType.DEFAULT => // Ignore
             case _ =>
-              ctx.violation(
+              ctx.eh.violation(
                 ExamplesMustBeAMap,
                 "",
                 s"Property '$key' should be a map",
@@ -164,7 +170,7 @@ case class RamlSingleExampleParser(key: String,
             .findNamedExample(s,
                               Some(
                                 errMsg =>
-                                  ctx.violation(
+                                  ctx.eh.violation(
                                     InvalidFragmentType,
                                     s,
                                     errMsg,
@@ -248,7 +254,7 @@ case class Oas3NameExampleParser(entry: YMapEntry, parentId: String, options: Ex
           case Some(exampleNode) =>
             Oas3ExampleValueParser(exampleNode.as[YMap], newExample(exampleNode), options).parse()
           case None =>
-            ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
+            ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find example reference $fullRef", map)
             val errorExample = setName(ErrorNamedExample(name, map).link(name)).adopted(parentId)
             errorExample
         }
@@ -328,7 +334,7 @@ case class NodeDataNodeParser(node: YNode,
                               fromExternal: Boolean = false,
                               isScalar: Boolean = false)(implicit ctx: WebApiContext) {
   def parse(): DataNodeParserResult = {
-    val errorHandler             = if (quiet) WarningOnlyHandler(ctx.rootContextDocument) else ctx
+    val errorHandler             = if (quiet) WarningOnlyHandler(ctx.eh) else ctx.eh
     var jsonText: Option[String] = None
     val exampleNode: Option[YNode] = node.toOption[YScalar] match {
       case Some(scalar) if scalar.mark.isInstanceOf[QuotedMark] => Some(node)

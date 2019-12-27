@@ -3,9 +3,18 @@ package amf.plugins.document.webapi.parser
 import amf.core.parser.ParsedReference
 import amf.core.remote.Vendor
 import amf.plugins.document.webapi.contexts._
-import amf.plugins.document.webapi.contexts.emitter.oas.{Oas2SpecEmitterContext, Oas3SpecEmitterFactory, OasSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.{
+  Oas2SpecEmitterContext,
+  Oas3SpecEmitterFactory,
+  OasSpecEmitterContext
+}
 import amf.plugins.document.webapi.contexts.emitter.raml.{Raml10SpecEmitterContext, RamlSpecEmitterContext}
-import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext, OasWebApiContext, JsonSchemaWebApiContext}
+import amf.plugins.document.webapi.contexts.parser.oas.{
+  Oas2WebApiContext,
+  Oas3WebApiContext,
+  OasWebApiContext,
+  JsonSchemaWebApiContext
+}
 import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml10WebApiContext}
 
 /**
@@ -79,34 +88,19 @@ package object spec {
   def toOas(ctx: WebApiContext): OasWebApiContext = {
     ctx.vendor match {
       case Vendor.OAS30 =>
-        new Oas3WebApiContext(ctx.rootContextDocument,
-                              ctx.refs,
-                              ctx,
-                              Some(toOasDeclarations(ctx.declarations)),
-                              Some(ctx.parserCount),
-                              ctx.eh)
+        new Oas3WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
       case _ =>
-        new Oas2WebApiContext(ctx.rootContextDocument,
-                              ctx.refs,
-                              ctx,
-                              Some(toOasDeclarations(ctx.declarations)),
-                              Some(ctx.parserCount),
-                              ctx.eh)
+        new Oas2WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
     }
 
   }
 
   def toOas(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), Some(ctx.parserCount), ctx.eh)
+    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)))
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
-    new Raml10WebApiContext(ctx.rootContextDocument,
-                            ctx.refs,
-                            ctx,
-                            Some(toRamlDeclarations(ctx.declarations)),
-                            Some(ctx.parserCount),
-                            ctx.eh)
+    new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toRamlDeclarations(ctx.declarations)))
   }
 
   private def toRamlDeclarations(ds: WebApiDeclarations) = {
@@ -132,20 +126,10 @@ package object spec {
   }
 
   def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {
-    new JsonSchemaWebApiContext(ctx.rootContextDocument,
-                                ctx.refs,
-                                ctx,
-                                Some(toOasDeclarations(ctx.declarations)),
-                                Some(ctx.parserCount),
-                                ctx.eh)
+    new JsonSchemaWebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
   }
 
   def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new JsonSchemaWebApiContext(root,
-                                refs,
-                                ctx,
-                                Some(toOasDeclarations(ctx.declarations)),
-                                Some(ctx.parserCount),
-                                ctx.eh)
+    new JsonSchemaWebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)))
   }
 }

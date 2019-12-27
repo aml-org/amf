@@ -7,6 +7,7 @@ import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{RamlDocumentParser, Raml10DocumentParser, Raml08DocumentParser}
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.security.SecurityScheme
 import org.yaml.model._
 
 import scala.collection.mutable
@@ -14,15 +15,20 @@ import scala.collection.mutable.ListBuffer
 
 trait RamlSpecAwareContext extends SpecAwareContext {}
 
-trait RamlSpecVersionFactory extends SpecVersionFactory {
+abstract class RamlSpecVersionFactory(implicit val ctx: RamlWebApiContext) extends SpecVersionFactory {
 
-  def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser
+  override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =
+    RamlSecuritySchemeParser.apply
+
+  def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser = RamlOperationParser.apply
 
   def endPointParser
     : (YMapEntry, (String) => EndPoint, Option[EndPoint], ListBuffer[EndPoint], Boolean) => RamlEndpointParser
+
   def parameterParser: (YMapEntry, Parameter => Unit, Boolean) => RamlParameterParser
 
   def responseParser: (YMapEntry, Response => Unit, Boolean) => RamlResponseParser
+
   def requestParser: (YMap, () => Request, Boolean) => RamlRequestParser
 
   def documentParser: (Root) => RamlDocumentParser
@@ -32,10 +38,7 @@ trait RamlSpecVersionFactory extends SpecVersionFactory {
   def payloadParser: (YMapEntry, Option[String] => Payload, Boolean) => RamlPayloadParser
 }
 
-class Raml10VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpecVersionFactory {
-
-  override def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser =
-    RamlOperationParser.apply
+class Raml10VersionFactory(implicit override val ctx: RamlWebApiContext) extends RamlSpecVersionFactory {
 
   override def endPointParser
     : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =
@@ -58,10 +61,7 @@ class Raml10VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpec
     Raml10PayloadParser.apply
 }
 
-class Raml08VersionFactory(implicit val ctx: RamlWebApiContext) extends RamlSpecVersionFactory {
-
-  override def operationParser: (YMapEntry, (String) => Operation, Boolean) => RamlOperationParser =
-    RamlOperationParser.apply
+class Raml08VersionFactory(implicit override val ctx: RamlWebApiContext) extends RamlSpecVersionFactory {
 
   override def endPointParser
     : (YMapEntry, String => EndPoint, Option[EndPoint], mutable.ListBuffer[EndPoint], Boolean) => RamlEndpointParser =

@@ -1,32 +1,29 @@
 package amf.facades
 
-import amf.core
 import amf.core.client.ParsingOptions
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParsedReference, ParserContext}
+import amf.core.parser.ParserContext
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote.Syntax.{Json, PlainText, Yaml}
 import amf.core.remote._
-import amf.core.{Root, AMFCompiler => ModularCompiler}
+import amf.core.{CompilerContext, CompilerContextBuilder, Root, AMFCompiler => ModularCompiler}
 import amf.plugins.document.vocabularies.RamlHeaderExtractor
 
-import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
 class AMFCompiler private (val url: String,
                            val remote: Platform,
                            val base: Option[Context],
                            hint: Hint,
-                           val currentValidation: Validation,
                            private val cache: Cache,
-                           private val baseContext: Option[ParserContext] = None,
+                           eh: ParserErrorHandler,
                            private val parsingOptions: ParsingOptions = ParsingOptions())
     extends RamlHeaderExtractor {
 
-  implicit val ctx: ParserContext                             = baseContext.getOrElse(ParserContext(url, Seq.empty))
-  private lazy val context: Context                           = base.map(_.update(url)).getOrElse(core.remote.Context(remote, url))
-  private lazy val location                                   = context.current
-  private val references: ListBuffer[Future[ParsedReference]] = ListBuffer()
-
+  private val compilerContext: CompilerContext = {
+    val builder = new CompilerContextBuilder(url, remote, eh).withCache(cache)
+    base.foreach(builder.withFileContext)
+    builder.build()
+  }
   def build(): Future[BaseUnit] = {
 
     val mediaType = hint.syntax match {
@@ -37,14 +34,9 @@ class AMFCompiler private (val url: String,
     }
 
     new ModularCompiler(
-      url,
-      remote,
-      base,
+      compilerContext,
       mediaType,
       Some(hint.vendor.name),
-      hint.kind,
-      cache,
-      baseContext,
       parsingOptions = parsingOptions
     ).build()
   }
@@ -59,14 +51,9 @@ class AMFCompiler private (val url: String,
     }
 
     new ModularCompiler(
-      url,
-      remote,
-      base,
+      compilerContext,
       mediaType,
-      Some(hint.vendor.name),
-      hint.kind,
-      cache,
-      Some(ctx)
+      Some(hint.vendor.name)
     ).root()
   }
 
@@ -76,18 +63,12 @@ object AMFCompiler {
   def apply(url: String,
             remote: Platform,
             hint: Hint,
-            currentValidation: Validation,
             context: Option[Context] = None,
             cache: Option[Cache] = None,
             ctx: Option[ParserContext] = None,
+            eh: ParserErrorHandler,
             parsingOptions: ParsingOptions = ParsingOptions()) =
-    new AMFCompiler(url,
-                    remote,
-                    context,
-                    hint,
-                    currentValidation,
-                    cache.getOrElse(Cache()),
-                    parsingOptions = parsingOptions)
+    new AMFCompiler(url, remote, context, hint, cache.getOrElse(Cache()), eh, parsingOptions = parsingOptions)
 
   val RAML_10 = "#%RAML 1.0\n"
 }

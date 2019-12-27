@@ -10,7 +10,10 @@ import amf.plugins.document.webapi.parser.spec.declaration.{Raml10TypeParser, De
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Request, Payload}
-import amf.validations.ParserSideValidations.{ExclusivePropertiesSpecification, UnsupportedExampleMediaTypeErrorSpecification}
+import amf.validations.ParserSideValidations.{
+  ExclusivePropertiesSpecification,
+  UnsupportedExampleMediaTypeErrorSpecification
+}
 import org.yaml.model.{YType, YMap, YScalar, YNode}
 
 import scala.collection.mutable
@@ -31,7 +34,7 @@ case class Raml10RequestParser(map: YMap, producer: () => Request, parseOptional
           .map(q => {
             val finalRequest = request.getOrCreate
             if (map.key("queryParameters").isDefined) {
-              ctx.violation(
+              ctx.eh.violation(
                 ExclusivePropertiesSpecification,
                 finalRequest.id,
                 s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
@@ -174,10 +177,10 @@ abstract class RamlRequestParser(map: YMap, producer: () => Request, parseOption
                   } else {
                     others.entries.foreach(
                       e =>
-                        ctx.violation(UnsupportedExampleMediaTypeErrorSpecification,
-                                      request.getOrCreate.id,
-                                      s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
-                                      e))
+                        ctx.eh.violation(UnsupportedExampleMediaTypeErrorSpecification,
+                                         request.getOrCreate.id,
+                                         s"Unexpected key '${e.key.as[YScalar].text}'. Expecting valid media types.",
+                                         e))
                   }
                 }
               case _ =>

@@ -5,8 +5,8 @@ import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorLink
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.domain.webapi.metamodel.TemplatedLinkModel
-import amf.plugins.domain.webapi.models.{TemplatedLink, IriTemplateMapping}
+import amf.plugins.domain.webapi.metamodel.{IriTemplateMappingModel, TemplatedLinkModel}
+import amf.plugins.domain.webapi.models.{IriTemplateMapping, TemplatedLink}
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry}
@@ -40,7 +40,7 @@ case class OasLinkParser(parentId: String, definitionEntry: YMapEntry)(implicit 
       case Some(requestNode) =>
         buildAndPopulate(requestNode.as[YMap])
       case None =>
-        ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
+        ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
         nameAndAdopt(new ErrorLink(fullRef, map).link(fullRef))
 
     }
@@ -57,7 +57,7 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
     map.key("operationId", TemplatedLinkModel.OperationId in templatedLink)
 
     if (templatedLink.operationRef.option().isDefined && templatedLink.operationId.option().isDefined) {
-      ctx.violation(
+      ctx.eh.violation(
         ExclusiveLinkTargetError,
         templatedLink.id,
         ExclusiveLinkTargetError.message,
@@ -77,11 +77,14 @@ sealed case class OasLinkPopulator(map: YMap, templatedLink: TemplatedLink)(impl
       "parameters",
       entry => {
         val parameters: Seq[IriTemplateMapping] = entry.value.as[YMap].entries.map { entry =>
-          val variable   = ScalarNode(entry.key).text().value.toString
-          val expression = ScalarNode(entry.value).text().value.toString
-          IriTemplateMapping(Annotations(entry)).withTemplateVariable(variable).withLinkExpression(expression)
+          val variable   = ScalarNode(entry.key).string()
+          val expression = ScalarNode(entry.value).string()
+          IriTemplateMapping(Annotations(entry))
+            .set(IriTemplateMappingModel.TemplateVariable, variable)
+            .set(IriTemplateMappingModel.LinkExpression, expression)
         }
         templatedLink.setArray(TemplatedLinkModel.Mapping, parameters, Annotations(entry.value))
+
       }
     )
 

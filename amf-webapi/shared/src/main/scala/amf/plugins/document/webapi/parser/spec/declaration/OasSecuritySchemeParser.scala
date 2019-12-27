@@ -1,229 +1,51 @@
 package amf.plugins.document.webapi.parser.spec.declaration
-
-import amf.core.annotations.{LexicalInformation, VirtualObject}
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, _}
-import amf.core.remote.{Oas, Raml}
-import amf.core.utils.{Lazy, AmfStrings}
-import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
-import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorSecurityScheme
-import amf.plugins.document.webapi.parser.spec._
-import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.{isRamlAnnotation, isOasAnnotation}
-import amf.plugins.document.webapi.parser.spec.common._
-import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.vocabulary.VocabularyMappings
-import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.webapi.metamodel.security._
-import amf.plugins.domain.webapi.models.security.{SecurityScheme, _}
-import amf.plugins.domain.webapi.models.{Parameter, Response}
+import amf.core.model.domain.AmfScalar
 import amf.plugins.features.validation.CoreValidations
-import amf.validations.ParserSideValidations._
-import org.yaml.model._
-
-import scala.collection.mutable
-
-/**
-  *
-  */
-object SecuritySchemeParser {
-  def apply(entry: YMapEntry, adopt: (SecurityScheme, String) => SecurityScheme)(
-      implicit ctx: WebApiContext): SecuritySchemeParser = // todo factory for oas too?
-    ctx.vendor match {
-      case _: Raml => RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx))
-      case _: Oas =>
-        OasSecuritySchemeParser(entry.value, scheme => {
-          val name = entry.key.as[YScalar].text
-          scheme.add(Annotations(entry))
-          adopt(scheme, name)
-        })(toOas(ctx))
-      case other =>
-        ctx.violation(UnexpectedVendor, "", s"Unsupported vendor $other in security scheme parsers", entry)
-        RamlSecuritySchemeParser(entry, entry.key.as[YScalar].text, entry.value, adopt)(toRaml(ctx)) // use raml as default?
-    }
+import amf.core.annotations.{LexicalInformation, VirtualObject}
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.core.utils.Lazy
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, DataNodeParser}
+import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
+import org.yaml.model.{YNode, YScalar, YPart, YMapEntry, YType, YMap}
+import amf.validations.ParserSideValidations.{
+  MissingSecuritySchemeErrorSpecification,
+  CrossSecurityWarningSpecification
 }
-
-trait SecuritySchemeParser extends SpecParserOps {
-  def parse(): SecurityScheme
+import amf.plugins.domain.webapi.metamodel.security.{
+  OAuth1SettingsModel,
+  SecuritySchemeModel,
+  ApiKeySettingsModel,
+  HttpSettingsModel,
+  OpenIdConnectSettingsModel,
+  SettingsModel,
+  OAuth2FlowModel,
+  OAuth2SettingsModel,
+  ScopeModel
 }
-case class RamlSecuritySchemeParser(ast: YPart,
-                                    key: String,
-                                    node: YNode,
-                                    adopt: (SecurityScheme, String) => SecurityScheme)(implicit ctx: RamlWebApiContext)
-    extends SecuritySchemeParser {
-  override def parse(): SecurityScheme = {
-    ctx.link(node) match {
-      case Left(link) => parseReferenced(key, link, Annotations(node), adopt)
-      case Right(value) =>
-        val scheme = adopt(SecurityScheme(ast), key)
-
-        val map = value.as[YMap]
-        ctx.closedShape(scheme.id, map, "securitySchema")
-
-        map.key("type", (SecuritySchemeModel.Type in scheme).allowingAnnotations)
-
-        scheme.`type`.option() match {
-          case Some("oauth2" | "basic" | "apiKey") =>
-            ctx.warning(
-              CrossSecurityWarningSpecification,
-              scheme.id,
-              Some(SecuritySchemeModel.Type.value.iri()),
-              "OAS 2.0 security scheme type detected in RAML 1.0 spec",
-              scheme.`type`.annotations().find(classOf[LexicalInformation]),
-              Some(ctx.rootContextDocument)
-            )
-          case _ => // this will be checked during validation
-        }
-        map.key(
-          "type",
-          value => {
-            // we need to check this because of the problem parsing nulls like empty strings of value null
-            if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
-              ctx.violation(
-                MissingSecuritySchemeErrorSpecification,
-                scheme.id,
-                Some(SecuritySchemeModel.Type.value.iri()),
-                "Security Scheme must have a mandatory value from 'OAuth 1.0', 'OAuth 2.0', 'Basic Authentication', 'Digest Authentication', 'Pass Through', x-<other>'",
-                Some(LexicalInformation(Range(map.range))),
-                Some(ctx.rootContextDocument)
-              )
-            }
-          }
-        )
-        scheme.normalizeType() // normalize the common type
-        map.key("displayName", (SecuritySchemeModel.DisplayName in scheme).allowingAnnotations)
-        map.key("description", (SecuritySchemeModel.Description in scheme).allowingAnnotations)
-
-        RamlDescribedByParser("describedBy", map, scheme).parse()
-
-        map.key("settings", SecuritySchemeModel.Settings in scheme using RamlSecuritySettingsParser.parse(scheme))
-
-        AnnotationParser(scheme, map, List(VocabularyMappings.securityScheme)).parse()
-
-        scheme
-    }
-  }
-
-  def parseReferenced(name: String,
-                      parsedUrl: String,
-                      annotations: Annotations,
-                      adopt: (SecurityScheme, String) => SecurityScheme): SecurityScheme = {
-    val scheme = ctx.declarations
-      .findSecuritySchemeOrError(ast)(parsedUrl, SearchScope.All)
-
-    val copied: SecurityScheme = scheme.link(parsedUrl, annotations)
-    adopt(copied, name)
-    copied.withName(name)
-  }
+import amf.plugins.domain.webapi.models.security.{
+  Settings,
+  OpenIdConnectSettings,
+  SecurityScheme,
+  Scope,
+  HttpSettings,
+  OAuth2Flow,
+  OAuth2Settings
 }
+import amf.plugins.document.webapi.parser.spec.toRaml
+import amf.core.parser.{Annotations, ScalarNode, Range, SearchScope}
+import amf.core.parser.YMapOps
+import amf.core.utils.AmfStrings
 
-case class RamlDescribedByParser(key: String, map: YMap, scheme: SecurityScheme)(implicit ctx: RamlWebApiContext) {
-  def parse(): Unit = {
-    map.key(
-      key,
-      entry => {
-        entry.value.tagType match {
-          case YType.Map =>
-            val value = entry.value.as[YMap]
-            ctx.closedShape(scheme.id, value, "describedBy")
-
-            value.key(
-              "headers",
-              entry => {
-                val parameters: Seq[Parameter] =
-                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(scheme.id)) // todo replace in separation
-                    .parse()
-                    .map(_.withBinding("header"))
-                scheme.set(SecuritySchemeModel.Headers,
-                           AmfArray(parameters, Annotations(entry.value)),
-                           Annotations(entry))
-              }
-            )
-
-            if (value.key("queryParameters").isDefined && value.key("queryString").isDefined) {
-              ctx.violation(
-                ExclusivePropertiesSpecification,
-                scheme.id,
-                s"Properties 'queryString' and 'queryParameters' are exclusive and cannot be declared together",
-                value
-              )
-            }
-
-            value.key(
-              "queryParameters",
-              entry => {
-                val parameters: Seq[Parameter] =
-                  RamlParametersParser(entry.value.as[YMap], (p: Parameter) => p.adopted(scheme.id)) // todo replace in separation
-                    .parse()
-                    .map(_.withBinding("query"))
-                scheme.set(SecuritySchemeModel.QueryParameters,
-                           AmfArray(parameters, Annotations(entry.value)),
-                           Annotations(entry))
-              }
-            )
-
-            value.key(
-              "queryString",
-              queryEntry => {
-                Raml10TypeParser(queryEntry, shape => shape.adopted(scheme.id))
-                  .parse()
-                  .foreach(s => scheme.withQueryString(tracking(s, scheme.id)))
-              }
-            )
-            value.key(
-              "responses",
-              entry => {
-                val responses = mutable.ListBuffer[Response]()
-                entry.value.tagType match {
-                  case YType.Null => // ignore
-                  case _ =>
-                    val entries = entry.value
-                      .as[YMap]
-                      .entries
-                      .filter(y => !isRamlAnnotation(y.key.as[YScalar].text))
-
-                    val keys   = entries.map(_.key.as[YScalar].text)
-                    val keySet = keys.toSet
-                    if (keys.size > keySet.size) {
-                      ctx.violation(DuplicatedOperationStatusCodeSpecification,
-                                    scheme.id,
-                                    None,
-                                    "RAML Responses must not have duplicated status codes",
-                                    entry.value)
-                    }
-
-                    entries.foreach(entry => {
-                      responses += ctx.factory
-                        .responseParser(entry, (r: Response) => r.adopted(scheme.id), false)
-                        .parse() // todo replace in separation
-                    })
-                }
-                scheme.set(SecuritySchemeModel.Responses,
-                           AmfArray(responses, Annotations(entry.value)),
-                           Annotations(entry))
-              }
-            )
-            AnnotationParser(scheme, value).parse()
-          case YType.Null =>
-          case _ =>
-            ctx.violation(InvalidSecuritySchemeDescribedByType,
-                          scheme.id,
-                          s"Invalid 'describedBy' type, map expected",
-                          entry.value)
-        }
-      }
-    )
-  }
-}
-
-case class OasSecuritySchemeParser(node: YNode, adopt: SecurityScheme => SecurityScheme)(implicit ctx: OasWebApiContext)
-    extends SecuritySchemeParser {
+case class OasSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit ctx: OasWebApiContext)
+    extends SecuritySchemeParser(part, adopt) {
   def parse(): SecurityScheme = {
+    val node = getNode
+
     ctx.link(node) match {
       case Left(link) => parseReferenced(link, node, adopt)
       case Right(value) =>
-        val scheme = adopt(SecurityScheme())
+        val scheme = adopt(SecurityScheme(part))
         val map    = value.as[YMap]
 
         // 3 stages
@@ -233,7 +55,7 @@ case class OasSecuritySchemeParser(node: YNode, adopt: SecurityScheme => Securit
 
         scheme.`type`.option() match {
           case Some(s) if s.startsWith("x-") =>
-            ctx.warning(
+            ctx.eh.warning(
               CrossSecurityWarningSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
@@ -242,7 +64,7 @@ case class OasSecuritySchemeParser(node: YNode, adopt: SecurityScheme => Securit
               Some(ctx.rootContextDocument)
             )
           case Some("OAuth 1.0" | "OAuth 2.0" | "Basic Authentication" | "Digest Authentication" | "Pass Through") =>
-            ctx.warning(
+            ctx.eh.warning(
               CrossSecurityWarningSpecification,
               scheme.id,
               Some(SecuritySchemeModel.Type.value.iri()),
@@ -258,7 +80,7 @@ case class OasSecuritySchemeParser(node: YNode, adopt: SecurityScheme => Securit
           value => {
             // we need to check this because of the problem parsing nulls like empty strings of value null
             if (value.value.tagType == YType.Null && scheme.`type`.option().contains("")) {
-              ctx.violation(
+              ctx.eh.violation(
                 MissingSecuritySchemeErrorSpecification,
                 scheme.id,
                 Some(SecuritySchemeModel.Type.value.iri()),
@@ -301,10 +123,10 @@ case class OasSecuritySchemeParser(node: YNode, adopt: SecurityScheme => Securit
           case Some(schemeNode) =>
             OasSecuritySchemeParser(schemeNode, adopt).parse()
           case None =>
-            ctx.violation(CoreValidations.UnresolvedReference,
-                          "",
-                          s"Cannot find security scheme reference $parsedUrl",
-                          Annotations(node))
+            ctx.eh.violation(CoreValidations.UnresolvedReference,
+                             "",
+                             s"Cannot find security scheme reference $parsedUrl",
+                             Annotations(node))
             adopt(ErrorSecurityScheme(parsedUrl, node))
         }
       }

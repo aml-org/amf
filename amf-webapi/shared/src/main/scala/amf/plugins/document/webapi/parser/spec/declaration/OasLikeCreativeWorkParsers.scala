@@ -49,7 +49,7 @@ case class RamlCreativeWorkParser(node: YNode)(implicit val ctx: WebApiContext) 
       case _: Oas  => "url"
       case _: Raml => "url".asRamlAnnotation
       case other =>
-        ctx.violation(UnexpectedVendor, s"Unexpected vendor '$other'", node)
+        ctx.eh.violation(UnexpectedVendor, s"Unexpected vendor '$other'", node)
         "url"
     }
 

@@ -28,7 +28,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
         checkBalancedParams(value, entry.value, server.id, ServerModel.Url.value.iri(), ctx)
         if (!TemplateUri.isValid(value))
-          ctx.violation(InvalidServerPath, api.id, TemplateUri.invalidMsg(value), entry.value)
+          ctx.eh.violation(InvalidServerPath, api.id, TemplateUri.invalidMsg(value), entry.value)
 
         map.key("serverDescription".asRamlAnnotation, ServerModel.Description in server)
 
@@ -41,10 +41,10 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         map
           .key("baseUriParameters")
           .foreach { entry =>
-            ctx.violation(ParametersWithoutBaseUri,
-                          api.id,
-                          "'baseUri' not defined and 'baseUriParameters' defined.",
-                          entry)
+            ctx.eh.violation(ParametersWithoutBaseUri,
+                             api.id,
+                             "'baseUri' not defined and 'baseUriParameters' defined.",
+                             entry)
 
             val server = Server().adopted(api.id)
             parseBaseUriParameters(server, Nil)
@@ -83,15 +83,16 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
             val finalParams = flatten ++ unused
             server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
             unused.foreach { p =>
-              ctx.warning(UnusedBaseUriParameter,
-                          p.id,
-                          None,
-                          s"Unused base uri parameter ${p.name.value()}",
-                          p.position(),
-                          p.location())
+              ctx.eh.warning(UnusedBaseUriParameter,
+                             p.id,
+                             None,
+                             s"Unused base uri parameter ${p.name.value()}",
+                             p.position(),
+                             p.location())
             }
           case YType.Null =>
-          case _          => ctx.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
+          case _ =>
+            ctx.eh.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
         }
       case None =>
         if (orderedVariables.nonEmpty)
@@ -131,7 +132,7 @@ case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: 
         basePath = entry.value.as[String]
 
         if (!basePath.startsWith("/")) {
-          ctx.violation(InvalidBasePath, api.id, "'basePath' property must start with '/'", entry.value)
+          ctx.eh.violation(InvalidBasePath, api.id, "'basePath' property must start with '/'", entry.value)
           basePath = "/" + basePath
         }
       }

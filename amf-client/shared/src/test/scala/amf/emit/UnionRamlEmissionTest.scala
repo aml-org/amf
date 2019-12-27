@@ -1,7 +1,7 @@
 package amf.emit
 
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline._
 import amf.io.FunSuiteCycleTests

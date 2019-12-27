@@ -1,9 +1,9 @@
 package amf.dialects
-import amf.ProfileName
-import amf.core.AMFCompiler
-import amf.core.remote.Cache
+  import amf.ProfileName
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
+import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.facades.Validation
 import amf.io.FileAssertionTest
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -28,27 +28,21 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with F
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     val report = for {
-      _ <- Validation(platform).map(_.withEnabledValidation(true))
+      _ <- Validation(platform)
       dialect <- {
         new AMFCompiler(
-          "file://" + path + dialect,
-          platform,
-          None,
+          new CompilerContextBuilder("file://" + path + dialect,platform, eh = DefaultParserErrorHandler.withRun()).build(),
           Some("application/yaml"),
-          Some(AMLPlugin.ID),
-          cache = Cache()
+          Some(AMLPlugin.ID)
         ).build()
       }
       i <- {
         instance match {
           case Some(i) =>
             new AMFCompiler(
-              "file://" + path + i,
-              platform,
-              None,
+              new CompilerContextBuilder("file://" + path + i,platform, eh = DefaultParserErrorHandler.withRun()).build(),
               Some("application/yaml"),
               Some(AMLPlugin.ID),
-              cache = Cache()
             ).build()
           case _ => Future.successful(DialectInstance())
         }

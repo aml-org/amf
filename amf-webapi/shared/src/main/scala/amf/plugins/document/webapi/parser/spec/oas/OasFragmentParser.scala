@@ -29,10 +29,10 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
     val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.to[YMap] match {
       case Right(m) => m
       case _ =>
-        ctx.violation(InvalidFragmentType,
-                      root.location,
-                      "Cannot parse empty map",
-                      root.parsed.asInstanceOf[SyamlParsedDocument].document)
+        ctx.eh.violation(InvalidFragmentType,
+                         root.location,
+                         "Cannot parse empty map",
+                         root.parsed.asInstanceOf[SyamlParsedDocument].document)
         YMap.empty
     }
 
@@ -52,7 +52,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         .withLocation(root.location)
         .withId(root.location)
         .withEncodes(ExternalDomainElement().withRaw(root.raw))
-      ctx.violation(InvalidFragmentType, fragment.id, "Unsupported oas type", map)
+      ctx.eh.violation(InvalidFragmentType, fragment.id, "Unsupported oas type", map)
       fragment
     }
 
@@ -98,7 +98,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         OasTypeParser(filterMap,
                       "type",
                       (shape: Shape) => shape.withId(root.location + "#/shape"),
-                      OAS20SchemaVersion(position = "schema"))
+                      OAS20SchemaVersion(position = "schema")(ctx.eh))
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 

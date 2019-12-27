@@ -1,8 +1,9 @@
 package amf.error
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Range
+import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote.OasYamlHint
-import amf.facades.{AMFCompiler, Validation}
+import amf.facades.AMFCompiler
 
 import scala.concurrent.Future
 
@@ -48,6 +49,6 @@ class OasParserErrorTest extends ParserErrorTest {
 
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/oas"
 
-  override protected def build(validation: Validation, file: String): Future[BaseUnit] =
-    AMFCompiler(file, platform, OasYamlHint, validation).build()
+  override protected def build(eh: ParserErrorHandler, file: String): Future[BaseUnit] =
+    AMFCompiler(file, platform, OasYamlHint, eh = eh).build()
 }

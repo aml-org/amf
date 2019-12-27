@@ -1,13 +1,12 @@
 package amf.resolution
 
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.emit.AMFRenderer
-import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.plugins.document.webapi.{Oas20Plugin, Oas30Plugin, Raml08Plugin, Raml10Plugin}
@@ -77,16 +76,7 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   }
 
   test("Unresolved shape") {
-    Validation(platform)
-      .map(_.withEnabledValidation(true))
-      .flatMap(
-        v =>
-          cycle("unresolved-shape.raml",
-                "unresolved-shape.raml.jsonld",
-                RamlYamlHint,
-                Amf,
-                resolutionPath,
-                validation = Some(v)))
+    cycle("unresolved-shape.raml", "unresolved-shape.raml.jsonld", RamlYamlHint, Amf, resolutionPath)
   }
 
   test("Test url shortener with external references") {
@@ -280,17 +270,13 @@ class EditingResolutionTest extends FunSuiteCycleTests {
   }
 
   test("Recursion in inheritance with resource type - Array") {
-    Validation(platform)
-      .flatMap { validation =>
-        cycle(
-          "recursion-inheritance-array.raml",
-          "recursion-inheritance-array.jsonld",
-          RamlYamlHint,
-          Raml08,
-          validationsPath,
-          validation = Some(validation.withEnabledValidation(true))
-        )
-      }
+    cycle(
+      "recursion-inheritance-array.raml",
+      "recursion-inheritance-array.jsonld",
+      RamlYamlHint,
+      Raml08,
+      validationsPath
+    )
   }
 
   test("Generate jsonld with sourcemaps") {
@@ -423,6 +409,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
       RamlYamlHint,
       Amf,
       resolutionPath + "security-requirements/"
+    )
+  }
+
+  test("tracked element in example defined in resource type") {
+    cycle(
+      "examples-defined-in-rt.raml",
+      "examples-defined-in-rt.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "example-in-resource-type/"
     )
   }
 

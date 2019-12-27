@@ -47,7 +47,7 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
     case Subscribe => Response(Annotations(map))
   }
 
-  private def parseSingleMessage(map: YMap): Message = {
+  private def parseSingleMessage(map: YMap)(implicit ctx: AsyncWebApiContext): Message = {
     val message = buildMessage(map)
     message.adopted(parent)
 
@@ -120,7 +120,7 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
       case None => Nil
     }
 
-  def parseSchema(map: YMap, payload: Payload): Unit = {
+  def parseSchema(map: YMap, payload: Payload)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key("payload").foreach { entry =>
       val schemaVersion = getSchemaVersion(payload)
       OasTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), schemaVersion)
@@ -129,11 +129,13 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
     }
   }
 
-  def getSchemaVersion(payload: Payload): JSONSchemaVersion = Option(payload.schemaMediaType) match {
-    case Some(format) if (formatsTable("oas30Schema")).contains(format.value()) => OAS30SchemaVersion("schema")
-    // async 20 schemas are handled with draft 7. Avro schema is not supported
-    case _ => JSONSchemaDraft7SchemaVersion
-  }
+  def getSchemaVersion(payload: Payload)(implicit ctx: AsyncWebApiContext): JSONSchemaVersion =
+    Option(payload.schemaMediaType) match {
+      case Some(format) if (formatsTable("oas30Schema")).contains(format.value()) =>
+        OAS30SchemaVersion("schema")(ctx.eh)
+      // async 20 schemas are handled with draft 7. Avro schema is not supported
+      case _ => JSONSchemaDraft7SchemaVersion
+    }
 
   val formatsTable: Map[String, List[String]] = Map(
     "async20Schema" -> List("application/vnd.aai.asyncapi;version=2.0.0",

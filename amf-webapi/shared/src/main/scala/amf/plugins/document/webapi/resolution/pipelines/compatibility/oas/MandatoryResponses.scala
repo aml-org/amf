@@ -1,9 +1,8 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas
 
-import amf.core.parser.ErrorHandler
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Operation, Response}
 
 class MandatoryResponses()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {

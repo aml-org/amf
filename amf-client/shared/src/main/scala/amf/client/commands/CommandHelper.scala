@@ -3,8 +3,9 @@ package amf.client.commands
 import amf.client.convert.WebApiRegister
 import amf.core.client.ParserConfig
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.UnhandledErrorHandler
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
@@ -49,7 +50,8 @@ trait CommandHelper {
       Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
       config.inputFormat,
       Context(platform),
-      cache = Cache()
+      cache = Cache(),
+      errorHandler = UnhandledParserErrorHandler
     )
     val vendor = effectiveVendor(config.inputFormat)
     if (config.resolve)
@@ -67,7 +69,8 @@ trait CommandHelper {
         Option(effectiveMediaType(config.inputMediaType, config.inputFormat)),
         config.inputFormat,
         Context(platform),
-        cache = Cache()
+        cache = Cache(),
+        errorHandler = UnhandledParserErrorHandler
       )
       parsed map { parsed =>
         RuntimeResolver.resolve(vendor, parsed, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)

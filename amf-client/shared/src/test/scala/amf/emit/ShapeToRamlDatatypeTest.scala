@@ -1,7 +1,9 @@
 package amf.emit
 
+import amf.client.parse.DefaultParserErrorHandler
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.UnhandledErrorHandler
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.OasJsonHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
@@ -16,7 +18,7 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val generalFindShapeFunc = (u: BaseUnit) =>
+  val generalFindShapeFunc: BaseUnit => Option[AnyShape] = (u: BaseUnit) =>
     encodedWebApi(u)
       .flatMap(_.endPoints.headOption)
       .flatMap(_.operations.headOption)
@@ -58,11 +60,12 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
 
   private def cycle(sourceFile: String,
                     goldenFile: String,
-                    findShapeFunc: (BaseUnit) => Option[AnyShape] = generalFindShapeFunc,
-                    renderFn: (AnyShape) => String = (a: AnyShape) => a.toRamlDatatype): Future[Assertion] = {
+                    findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
+                    renderFn: AnyShape => String = (a: AnyShape) => a.toRamlDatatype): Future[Assertion] = {
     val ramlDatatype: Future[String] = for {
-      v          <- Validation(platform)
-      sourceUnit <- AMFCompiler(basePath + sourceFile, platform, OasJsonHint, v).build()
+      _ <- Validation(platform)
+      sourceUnit <- AMFCompiler(basePath + sourceFile, platform, OasJsonHint, eh = DefaultParserErrorHandler.withRun())
+        .build()
     } yield {
       findShapeFunc(Oas20Plugin.resolve(sourceUnit, UnhandledErrorHandler)).map(_.toRamlDatatype).getOrElse("")
     }

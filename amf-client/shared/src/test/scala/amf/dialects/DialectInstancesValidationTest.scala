@@ -1,10 +1,12 @@
 package amf.dialects
 
 import amf.ProfileName
-import amf.core.AMFCompiler
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.remote.Cache
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
+import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.internal.environment.Environment
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
@@ -195,27 +197,23 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
   protected def validate(dialect: String, instance: String, numErrors: Int, path: String = basePath) = {
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+    val dialectContext  = compilerContext(path + dialect)
+    val instanceContext = compilerContext(path + instance)
+
     for {
       _ <- amf.core.AMF.init()
       dialect <- {
         new AMFCompiler(
-          path + dialect,
-          platform,
-          None,
+          dialectContext,
           Some("application/yaml"),
-          Some(AMLPlugin.ID),
-          cache = Cache()
+          None
         ).build()
       }
       instance <- {
-        AMFValidatorPlugin.enabled = true
         new AMFCompiler(
-          path + instance,
-          platform,
-          None,
+          instanceContext,
           Some("application/yaml"),
-          Some(AMLPlugin.ID),
-          cache = Cache()
+          None
         ).build()
       }
       report <- {
@@ -241,31 +239,28 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
                                         directory: String = basePath) = {
     amf.core.AMF.registerPlugin(AMLPlugin)
     amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+    val dialectContext  = compilerContext(directory + dialect)
+    val instanceContext = compilerContext(directory + instance)
+
     for {
       _ <- amf.core.AMF.init()
       dialect <- {
         new AMFCompiler(
-          directory + dialect,
-          platform,
-          None,
+          dialectContext,
           Some("application/yaml"),
-          Some(AMLPlugin.ID),
-          cache = Cache()
+          None
         ).build()
       }
       profile <- {
-        AMFValidatorPlugin.enabled = true
-        AMFValidatorPlugin.loadValidationProfile(directory + profile.profile)
+        AMFValidatorPlugin.loadValidationProfile(directory + profile.profile,
+                                                 errorHandler = dialectContext.parserContext.eh)
       }
       instance <- {
-        AMFValidatorPlugin.enabled = true
+
         new AMFCompiler(
-          directory + instance,
-          platform,
-          None,
+          instanceContext,
           Some("application/yaml"),
-          Some(AMLPlugin.ID),
-          cache = Cache()
+          None
         ).build()
       }
       report <- {
@@ -282,4 +277,8 @@ class DialectInstancesValidationTest extends AsyncFunSuite with PlatformSecrets 
       } else assert(report.results.length == numErrors)
     }
   }
+
+  private def compilerContext(url: String) =
+    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
+
 }

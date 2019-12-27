@@ -2,10 +2,11 @@ package amf.plugins.document.webapi.contexts
 
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
-import amf.core.model.document.{EncodesModel, BaseUnit, DeclaresModel}
-import amf.core.model.domain.extensions.{ShapeExtension, CustomDomainProperty, DomainExtension}
-import amf.core.model.domain.{Shape, DomainElement, Linkable}
-import amf.core.parser.{FieldEntry, ErrorHandler}
+import amf.core.errorhandling.ErrorHandler
+import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
+import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
+import amf.core.model.domain.{DomainElement, Linkable, Shape}
+import amf.core.parser.FieldEntry
 import amf.core.remote._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -13,7 +14,7 @@ import amf.plugins.domain.shapes.metamodel.NodeShapeModel
 import amf.plugins.domain.shapes.models.UnionShape
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.plugins.domain.webapi.models._
-import amf.plugins.domain.webapi.models.security.{SecurityRequirement, ParametrizedSecurityScheme}
+import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.YType
 

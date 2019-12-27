@@ -2,8 +2,8 @@ package amf.convert
 
 import amf.core.AMFSerializer
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.io.FunSuiteCycleTests
@@ -23,7 +23,8 @@ abstract class DocBuilderTest extends FunSuiteCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     Raml10Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)
 
-  private def run(source: String, golden: String): Future[Assertion] = cycle(source, golden, RamlYamlHint, Amf)
+  private def run(source: String, golden: String): Future[Assertion] =
+    cycle(source, golden, RamlYamlHint, Amf, eh = None)
 
   test("Test types with references") {
     run("types.raml", "types.jsonld")

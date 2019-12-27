@@ -14,5 +14,5 @@ case class OasServerVariableParser(entry: YMapEntry, server: Server)(implicit ov
   }
   private def requiredDefaultField(variable: Parameter, map: YMap): Unit =
     if (map.key("default").isEmpty)
-      ctx.violation(ServerVariableMissingDefault, variable.id, "Server variable must define a 'default' field", map)
+      ctx.eh.violation(ServerVariableMissingDefault, variable.id, "Server variable must define a 'default' field", map)
 }

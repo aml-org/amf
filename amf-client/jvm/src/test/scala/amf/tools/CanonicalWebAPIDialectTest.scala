@@ -1,9 +1,11 @@
 package amf.tools
 
 import amf.ProfileName
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.AMF
 import amf.core.emitter.RenderOptions
-import amf.core.parser.UnhandledErrorHandler
+import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeValidator
@@ -14,7 +16,6 @@ import amf.io.BuildCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.webapi.Raml10Plugin
-import amf.plugins.document.webapi.resolution.pipelines.AmfEditingPipeline
 import amf.tools.canonical.{CanonicalWebAPISpecTransformer, CanonicalWebAPITransformer}
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -28,16 +29,17 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with
   def checkCanonicalDialectTransformation(source: String, target: String, shouldTranform: Boolean): Future[Assertion] = {
     val amfWebApi = basePath + source
     val golden    = basePath + target
+    val eh        = DefaultParserErrorHandler.withRun()
     for {
       _    <- AMF.init()
       _    <- Future(amf.Core.registerPlugin(AMLPlugin))
-      v    <- Validation(platform).map(_.withEnabledValidation(true))
-      d    <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, v).build()
+      v    <- Validation(platform)
+      d    <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = eh).build()
       _    <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
-      unit <- AMFCompiler(amfWebApi, platform, RamlYamlHint, v).build()
+      unit <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = eh).build()
       resolved <- {
         if (shouldTranform) {
-          Future { Raml10Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE) }
+          Future { Raml10Plugin.resolve(unit, eh, ResolutionPipeline.EDITING_PIPELINE) }
         } else {
           Future(unit)
         }
@@ -88,10 +90,10 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with
    */
 
   tests.foreach {
-    case (input) =>
+    case input =>
       val golden = input.replace("api.raml", "webapi.yaml")
-      test(s"Test parsed RAML/OAS WebAPIs can be re-parsed with the WebAPI dialect '${golden}'") {
-        checkCanonicalDialectTransformation(input, golden, false)
+      test(s"Test parsed RAML/OAS WebAPIs can be re-parsed with the WebAPI dialect '$golden'") {
+        checkCanonicalDialectTransformation(input, golden, shouldTranform = false)
       }
   }
 }

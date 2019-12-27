@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.contexts.emitter
 
 import amf.core.emitter.{PartEmitter, ShapeRenderOptions}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.ErrorHandler
 import amf.plugins.document.webapi.contexts.emitter.oas.OasRefEmitter
 import amf.plugins.document.webapi.contexts.{RefEmitter, SpecEmitterContext, SpecEmitterFactory}
 

@@ -2,19 +2,20 @@ package amf.plugins.document.webapi
 
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{ShapeRenderOptions, RenderOptions}
+import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document._
-import amf.core.parser.{ErrorHandler, ParserContext, ParsedReference}
+import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.webapi.contexts.emitter.async.{Async20SpecEmitterContext, AsyncSpecEmitterContext}
-import amf.plugins.document.webapi.contexts.parser.async.{AsyncWebApiContext, Async20WebApiContext}
+import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
 import amf.plugins.document.webapi.parser.AsyncHeader
 import amf.plugins.document.webapi.parser.AsyncHeader.Async20Header
 import amf.plugins.document.webapi.parser.spec.AsyncWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.async.AsyncApi20DocumentParser
-import amf.{ProfileName, AsyncProfile, Async20Profile}
+import amf.{Async20Profile, AsyncProfile, ProfileName}
 import org.yaml.model.YDocument
 
 sealed trait AsyncPlugin extends OasLikePlugin {
@@ -44,8 +45,8 @@ sealed trait AsyncPlugin extends OasLikePlugin {
 
   private def detectAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): Option[BaseUnit] = {
     AsyncHeader(root) map {
-      case Async20Header    => AsyncApi20DocumentParser(root).parseDocument()
-      case _ => // Ignore
+      case Async20Header => AsyncApi20DocumentParser(root).parseDocument()
+      case _             => // Ignore
 //      case f                => AsyncFragmentParser(root, Some(f)).parseFragment()
     }
     None

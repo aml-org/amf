@@ -2,6 +2,7 @@ package amf.client.commands
 
 import amf.ProfileName
 import amf.core.client.{ExitCodes, ParserConfig}
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
@@ -38,8 +39,9 @@ class TranslateCommand(override val platform: Platform) extends CommandHelper {
 
   def checkValidation(config: ParserConfig, model: BaseUnit): Future[Unit] = {
     val customProfileLoaded: Future[ProfileName] = if (config.customProfile.isDefined) {
-      RuntimeValidator.loadValidationProfile(config.customProfile.get) map { profileName =>
-        profileName
+      RuntimeValidator.loadValidationProfile(config.customProfile.get, errorHandler = UnhandledErrorHandler) map {
+        profileName =>
+          profileName
       }
     } else {
       Future {

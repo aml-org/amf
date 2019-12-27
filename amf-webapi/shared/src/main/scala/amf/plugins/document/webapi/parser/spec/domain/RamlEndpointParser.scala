@@ -5,7 +5,12 @@ import amf.core.model.DataType
 import amf.core.model.domain.{Shape, AmfArray, DataNode, AmfScalar, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{IdCounter, AmfStrings, TemplateUri}
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType, Raml08WebApiContext, Raml10WebApiContext}
+import amf.plugins.document.webapi.contexts.parser.raml.{
+  RamlWebApiContext,
+  RamlWebApiContextType,
+  Raml08WebApiContext,
+  Raml10WebApiContext
+}
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -14,7 +19,12 @@ import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, EndPointModel}
 import amf.plugins.domain.webapi.models.{Parameter, EndPoint, Operation}
-import amf.validations.ParserSideValidations.{SlashInUriParameterValues, UnusedBaseUriParameter, DuplicatedEndpointPath, InvalidEndpointPath}
+import amf.validations.ParserSideValidations.{
+  SlashInUriParameterValues,
+  UnusedBaseUriParameter,
+  DuplicatedEndpointPath,
+  InvalidEndpointPath
+}
 import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
 
@@ -61,10 +71,10 @@ abstract class RamlEndpointParser(entry: YMapEntry,
     endpoint.set(Path, AmfScalar(path, Annotations(entry.key)))
 
     if (!TemplateUri.isValid(path))
-      ctx.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
+      ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
     if (collector.exists(e => e.path.is(path)))
-      ctx.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
+      ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
     else {
       entry.value.tagType match {
         case YType.Null => collector += endpoint
@@ -107,18 +117,14 @@ abstract class RamlEndpointParser(entry: YMapEntry,
             case _: Raml08WebApiContext =>
               new Raml08WebApiContext(ctx.loc,
                                       ctx.refs,
-                                      ParserContext(),
+                                      ParserContext(eh = ctx.eh),
                                       Some(ctx.declarations),
-                                      Some(ctx.parserCount),
-                                      eh = Some(ctx),
                                       ctx.contextType)
             case _ =>
               new Raml10WebApiContext(ctx.loc,
                                       ctx.refs,
-                                      ParserContext(),
+                                      ParserContext(eh = ctx.eh),
                                       Some(ctx.declarations),
-                                      Some(ctx.parserCount),
-                                      eh = Some(ctx),
                                       ctx.contextType)
           }
           val operation = RamlOperationParser(entry, endpoint.withOperation, parseOptionalOperations)(operationContext)
@@ -203,7 +209,7 @@ abstract class RamlEndpointParser(entry: YMapEntry,
         if (isResourceType) {
           entries.foreach { entry =>
             val nestedEndpointName = entry.key.toString()
-            ctx.violation(
+            ctx.eh.violation(
               NestedEndpoint,
               endpoint.id.stripSuffix("/applied"),
               None,
@@ -234,10 +240,10 @@ abstract class RamlEndpointParser(entry: YMapEntry,
 
   private def validateSlashInDataNode(node: DataNode, entry: YMapEntry): Unit = node match {
     case scalar: ScalarDataNode if scalar.value.option().exists(_.contains('/')) =>
-      ctx.violation(SlashInUriParameterValues,
-                    node.id,
-                    s"Value '${scalar.value.value()}' of uri parameter must not contain '/' character",
-                    entry.value)
+      ctx.eh.violation(SlashInUriParameterValues,
+                       node.id,
+                       s"Value '${scalar.value.value()}' of uri parameter must not contain '/' character",
+                       entry.value)
     case _ =>
   }
 
@@ -287,22 +293,22 @@ abstract class RamlEndpointParser(entry: YMapEntry,
   private def checkParamsUsage(endpoint: EndPoint, pathParams: Seq[String], endpointParams: Seq[Parameter]): Unit = {
     endpointParams.foreach { p =>
       if (!p.name.option().exists(n => pathParams.contains(n)))
-        ctx.warning(UnusedBaseUriParameter,
-                    p.id,
-                    None,
-                    s"Unused uri parameter ${p.name.value()}",
-                    p.position(),
-                    p.location())
+        ctx.eh.warning(UnusedBaseUriParameter,
+                       p.id,
+                       None,
+                       s"Unused uri parameter ${p.name.value()}",
+                       p.position(),
+                       p.location())
     }
 
     endpoint.operations.flatMap(o => Option(o.request)).flatMap(_.uriParameters).foreach { p =>
       if (!p.name.option().exists(n => pathParams.contains(n))) {
-        ctx.warning(UnusedBaseUriParameter,
-                    p.id,
-                    None,
-                    s"Unused operation uri parameter ${p.name.value()}",
-                    p.position(),
-                    p.location())
+        ctx.eh.warning(UnusedBaseUriParameter,
+                       p.id,
+                       None,
+                       s"Unused operation uri parameter ${p.name.value()}",
+                       p.position(),
+                       p.location())
       }
     }
   }

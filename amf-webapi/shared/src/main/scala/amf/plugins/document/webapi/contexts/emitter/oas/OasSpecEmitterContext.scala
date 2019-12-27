@@ -1,10 +1,11 @@
 package amf.plugins.document.webapi.contexts.emitter.oas
 import amf.core.emitter.BaseEmitters.MapEntryEmitter
 import amf.core.emitter.{EntryEmitter, PartEmitter, ShapeRenderOptions, SpecOrdering}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension, ShapeExtension}
 import amf.core.model.domain.{DomainElement, Linkable, Shape}
-import amf.core.parser.{ErrorHandler, FieldEntry}
+import amf.core.parser.FieldEntry
 import amf.core.remote.{Oas20, Oas30, Vendor}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}

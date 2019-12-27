@@ -152,10 +152,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
               case Some(shape) =>
                 ctx.declarations += shape.add(DeclaredElement())
               case None =>
-                ctx.violation(UnableToParseShape,
-                              NodeShape().adopted(typesPrefix).id,
-                              s"Error parsing shape at $typeName",
-                              e)
+                ctx.eh.violation(UnableToParseShape,
+                                 NodeShape().adopted(typesPrefix).id,
+                                 s"Error parsing shape at $typeName",
+                                 e)
             }
           })
       }
@@ -163,37 +163,27 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   }
 
   protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
-    map.key(
-      securityKey,
-      e => {
-        e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += SecuritySchemeParser(
-            entry,
-            (scheme, name) => {
-              scheme.set(ParametrizedSecuritySchemeModel.Name,
-                         AmfScalar(name, Annotations(entry.key.value)),
-                         Annotations(entry.key))
-              scheme.adopted(parent)
-            }
-          ).parse()
-            .add(DeclaredElement())
-        }
-      }
-    )
+    parseSecuritySchemeDeclarationsFromKey(securityKey, map, parent)
+    parseSecuritySchemeDeclarationsFromKey("securitySchemes".asOasExtension, map, parent)
+  }
 
+  protected def parseSecuritySchemeDeclarationsFromKey(key: String, map: YMap, parent: String): Unit = {
     map.key(
-      "securitySchemes".asOasExtension,
+      key,
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += SecuritySchemeParser(
-            entry,
-            (scheme, name) => {
-              scheme.set(ParametrizedSecuritySchemeModel.Name,
-                         AmfScalar(name, Annotations(entry.key.value)),
-                         Annotations(entry.key))
-              scheme.adopted(parent)
-            }
-          ).parse()
+          ctx.declarations += ctx.factory
+            .securitySchemeParser(
+              entry,
+              (scheme) => {
+                val name = entry.key.as[String]
+                scheme.set(ParametrizedSecuritySchemeModel.Name,
+                           AmfScalar(name, Annotations(entry.key.value)),
+                           Annotations(entry.key))
+                scheme.adopted(parent)
+              }
+            )
+            .parse()
             .add(DeclaredElement())
         }
       }
@@ -215,10 +205,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
               case _ =>
                 val parameter =
                   ctx.factory.parameterParser(Right(YMap.empty), parentPath, Some(typeName), nameGenerator).parse
-                ctx.violation(InvalidParameterType,
-                              parameter.domainElement.id,
-                              "Map needed to parse a parameter declaration",
-                              e)
+                ctx.eh.violation(InvalidParameterType,
+                                 parameter.domainElement.id,
+                                 "Map needed to parse a parameter declaration",
+                                 e)
                 parameter
             }
             ctx.declarations.registerOasParameter(oasParameter)
@@ -272,9 +262,9 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
                 .collect { case Some(s) => s }
             api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
           case _ =>
-            ctx.violation(InvalidSecurityRequirementsSeq,
-                          entry.value,
-                          "'security' must be an array of security requirement object")
+            ctx.eh.violation(InvalidSecurityRequirementsSeq,
+                             entry.value,
+                             "'security' must be an array of security requirement object")
         }
       }
     )
@@ -350,7 +340,7 @@ abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiB
         case YType.Seq =>
           val customDomainProperty = CustomDomainProperty().withName(ast.key.as[YScalar].text)
           adopt(customDomainProperty)
-          ctx.violation(
+          ctx.eh.violation(
             InvalidAnnotationType,
             customDomainProperty.id,
             "Invalid value node type for annotation types parser, expected map or scalar reference",
@@ -380,10 +370,10 @@ abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiB
         .getOrElse {
           val customDomainProperty = CustomDomainProperty().withName(annotationName)
           adopt(customDomainProperty)
-          ctx.violation(DeclarationNotFound,
-                        customDomainProperty.id,
-                        "Could not find declared annotation link in references",
-                        scalar)
+          ctx.eh.violation(DeclarationNotFound,
+                           customDomainProperty.id,
+                           "Could not find declared annotation link in references",
+                           scalar)
           customDomainProperty
         }
     }
@@ -459,10 +449,10 @@ abstract class OasSpecParser(implicit ctx: OasLikeWebApiContext) extends WebApiB
               case Some(doc) => doc.link(text, Annotations(n)).asInstanceOf[CreativeWork]
               case _ =>
                 val documentation = RamlCreativeWorkParser(YNode(YMap.empty)).parse()
-                ctx.violation(DeclarationNotFound,
-                              documentation.id,
-                              s"not supported scalar $n.text for documentation item",
-                              n)
+                ctx.eh.violation(DeclarationNotFound,
+                                 documentation.id,
+                                 s"not supported scalar $n.text for documentation item",
+                                 n)
                 documentation
             }
       })

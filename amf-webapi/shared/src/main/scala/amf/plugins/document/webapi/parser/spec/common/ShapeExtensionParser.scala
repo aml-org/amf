@@ -8,7 +8,12 @@ import amf.core.remote.{Oas, Raml}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
-import amf.validations.ParserSideValidations.{UserDefinedFacetMatchesAncestorsTypeFacets, UnableToParseShapeExtensions, MissingRequiredUserDefinedFacet, UserDefinedFacetMatchesBuiltInFacets}
+import amf.validations.ParserSideValidations.{
+  UserDefinedFacetMatchesAncestorsTypeFacets,
+  UnableToParseShapeExtensions,
+  MissingRequiredUserDefinedFacet,
+  UserDefinedFacetMatchesBuiltInFacets
+}
 import org.yaml.model.YMap
 
 case class ShapeExtensionParser(shape: Shape,
@@ -25,10 +30,10 @@ case class ShapeExtensionParser(shape: Shape,
         case _: Raml => shapeExtensionDefinition.name.value() // TODO check this.
         case _: Oas  => s"facet-${shapeExtensionDefinition.name.value()}".asOasExtension
         case _ =>
-          ctx.violation(UnableToParseShapeExtensions,
-                        shape.id,
-                        s"Cannot parse shape extension for vendor ${ctx.vendor}",
-                        map)
+          ctx.eh.violation(UnableToParseShapeExtensions,
+                           shape.id,
+                           s"Cannot parse shape extension for vendor ${ctx.vendor}",
+                           map)
           shapeExtensionDefinition.name.value()
       }
       map.key(extensionKey) match {
@@ -41,7 +46,7 @@ case class ShapeExtensionParser(shape: Shape,
           shape.add(ShapeModel.CustomShapeProperties, extension)
         case None if directlyInherited.contains(shapeExtensionDefinition) =>
           if (shapeExtensionDefinition.minCount.option().exists(_ > 0)) {
-            ctx.violation(MissingRequiredUserDefinedFacet, shape.id, s"Missing required facet '$extensionKey'", map)
+            ctx.eh.violation(MissingRequiredUserDefinedFacet, shape.id, s"Missing required facet '$extensionKey'", map)
           }
         case _ =>
       }
@@ -72,18 +77,18 @@ case class ShapeExtensionParser(shape: Shape,
           .intersect(builtInFacets)
           .foreach(
             name =>
-              ctx.violation(UserDefinedFacetMatchesBuiltInFacets,
-                            shape.id,
-                            s"Custom defined facet '$name' matches built-in type facets",
-                            map))
+              ctx.eh.violation(UserDefinedFacetMatchesBuiltInFacets,
+                               shape.id,
+                               s"Custom defined facet '$name' matches built-in type facets",
+                               map))
         definedCustomFacets
           .intersect(inheritedCustomFacets)
           .foreach(
             name =>
-              ctx.violation(UserDefinedFacetMatchesAncestorsTypeFacets,
-                            shape.id,
-                            s"Custom defined facet '$name' matches custom facet from inherited type",
-                            map))
+              ctx.eh.violation(UserDefinedFacetMatchesAncestorsTypeFacets,
+                               shape.id,
+                               s"Custom defined facet '$name' matches custom facet from inherited type",
+                               map))
       })
   }
 

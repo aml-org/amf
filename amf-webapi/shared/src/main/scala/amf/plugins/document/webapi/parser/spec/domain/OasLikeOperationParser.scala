@@ -38,7 +38,7 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
     map.key("operationId").foreach { entry =>
       val operationId = entry.value.toString()
       if (!ctx.registerOperationId(operationId))
-        ctx.violation(DuplicatedOperationId, operation.id, s"Duplicated operation id '$operationId'", entry.value)
+        ctx.eh.violation(DuplicatedOperationId, operation.id, s"Duplicated operation id '$operationId'", entry.value)
     }
 
     map.key("operationId", OperationModel.Name in operation)

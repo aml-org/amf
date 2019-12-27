@@ -30,10 +30,10 @@ abstract class OasLikeEndpointParser(entry: YMapEntry,
     endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)))
 
     if (!TemplateUri.isValid(path))
-      ctx.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
+      ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
 
     if (collector.exists(other => other.path.option() exists (identicalPaths(_, path))))
-      ctx.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
+      ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
     else parseEndpoint(endpoint)
   }
 
@@ -48,9 +48,12 @@ abstract class OasLikeEndpointParser(entry: YMapEntry,
         ctx.obtainRemoteYNode(value).orElse(ctx.declarations.asts.get(value)) match {
           case Some(map) if map.tagType == YType.Map => collector += parseEndpointMap(endpoint, map.as[YMap])
           case Some(n) =>
-            ctx.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
+            ctx.eh.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
           case None =>
-            ctx.violation(InvalidEndpointPath, endpoint.id, s"Cannot find fragment path item ref $value", entry.value)
+            ctx.eh.violation(InvalidEndpointPath,
+                             endpoint.id,
+                             s"Cannot find fragment path item ref $value",
+                             entry.value)
         }
       case Right(node) if node.tagType == YType.Map => collector += parseEndpointMap(endpoint, node.as[YMap])
       case _                                        => collector += endpoint

@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.contexts
 
 import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
-import amf.core.parser.{ErrorHandler, ParsedReference, ParserContext}
+import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
@@ -24,14 +24,8 @@ import org.yaml.model._
 abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
                              private val wrapped: ParserContext,
-                             private val ds: Option[WebApiDeclarations] = None,
-                             parserCount: Option[Int] = None,
-                             override val eh: Option[ErrorHandler])
-    extends ParserContext(loc,
-                          refs,
-                          wrapped.futureDeclarations,
-                          parserCount = parserCount.getOrElse(wrapped.parserCount),
-                          eh.orElse(wrapped.eh))
+                             private val ds: Option[WebApiDeclarations] = None)
+    extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)
     with SpecAwareContext
     with PlatformSecrets {
 
@@ -39,7 +33,7 @@ abstract class WebApiContext(val loc: String,
   val vendor: Vendor
 
   val declarations: WebApiDeclarations =
-    ds.getOrElse(new WebApiDeclarations(None, errorHandler = Some(this), futureDeclarations = futureDeclarations))
+    ds.getOrElse(new WebApiDeclarations(None, errorHandler = eh, futureDeclarations = futureDeclarations))
 
   var localJSONSchemaContext: Option[YNode] = wrapped match {
     case wac: WebApiContext => wac.localJSONSchemaContext
@@ -144,7 +138,7 @@ abstract class WebApiContext(val loc: String,
                   case _                                                             => JSONSchemaDraft4SchemaVersion // we upgrade anything else to 4
                 }
               case _ =>
-                violation(InvalidJsonSchemaVersion, "", "JSON Schema version value must be a string", node)
+                eh.violation(InvalidJsonSchemaVersion, "", "JSON Schema version value must be a string", node)
                 JSONSchemaDraft4SchemaVersion
             }
           case _ => JSONSchemaUnspecifiedVersion
@@ -195,10 +189,13 @@ abstract class WebApiContext(val loc: String,
           if (ignore(shape, key)) {
             // annotation or path in endpoint/webapi => ignore
           } else if (!properties(key)) {
-            violation(ClosedShapeSpecification, node, s"Property '$key' not supported in a $vendor $shape node", entry)
+            eh.violation(ClosedShapeSpecification,
+                         node,
+                         s"Property '$key' not supported in a $vendor $shape node",
+                         entry)
           }
         }
       case None =>
-        violation(ClosedShapeSpecification, node, s"Cannot validate unknown node type $shape for $vendor", ast)
+        eh.violation(ClosedShapeSpecification, node, s"Cannot validate unknown node type $shape for $vendor", ast)
     }
 }
