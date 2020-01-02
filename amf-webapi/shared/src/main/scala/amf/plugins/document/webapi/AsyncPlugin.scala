@@ -20,7 +20,7 @@ import org.yaml.model.YDocument
 
 sealed trait AsyncPlugin extends OasLikePlugin {
 
-  override val vendors: Seq[String] = Seq(vendor.name, Oas.name)
+  override val vendors: Seq[String] = Seq(vendor.name, AsyncApi.name)
 
   override def specContext(options: RenderOptions): AsyncSpecEmitterContext
 
@@ -40,17 +40,14 @@ sealed trait AsyncPlugin extends OasLikePlugin {
     parsed map { unit =>
       promoteFragments(unit, ctx)
     }
-    None
   }
 
   private def detectAsyncUnit(root: Root)(implicit ctx: AsyncWebApiContext): Option[BaseUnit] = {
-    AsyncHeader(root) map {
-      case Async20Header => AsyncApi20DocumentParser(root).parseDocument()
-      case _             => // Ignore
-//      case f                => AsyncFragmentParser(root, Some(f)).parseFragment()
+    AsyncHeader(root) flatMap {
+      case Async20Header => Some(AsyncApi20DocumentParser(root).parseDocument())
+//    case f             => AsyncFragmentParser(root, Some(f)).parseFragment()
+      case _ => None
     }
-    None
-    // TODO ASYNC update this
   }
 
   /**
@@ -88,7 +85,7 @@ object Async20Plugin extends AsyncPlugin {
     * to decide which one will parse the document base on information fromt
     * the document structure
     */
-  override def canParse(root: Root): Boolean = AsyncHeader(root).exists(_ != Async20Header)
+  override def canParse(root: Root): Boolean = AsyncHeader(root).contains(Async20Header)
 
   override def canUnparse(unit: BaseUnit): Boolean = false
 

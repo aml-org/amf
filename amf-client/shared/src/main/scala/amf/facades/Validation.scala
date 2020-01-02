@@ -42,6 +42,7 @@ class Validation(platform: Platform) {
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Async20Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)

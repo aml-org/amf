@@ -15,9 +15,8 @@ object AsyncHeader {
 
   val async = "asyncapi"
 
-  object Async20Header extends AsyncHeader(async, "2.0")
+  object Async20Header extends AsyncHeader(async, "2.0.0")
 
-  // TODO ASYNC check this
   def apply(root: Root): Option[AsyncHeader] =
     root.parsed match {
       case parsed: SyamlParsedDocument =>

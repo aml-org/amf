@@ -5,13 +5,15 @@ import amf.core.model.document.Document
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, SyamlParsedDocument, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{SpecParserOps, WebApiBaseSpecParser}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
-import amf.plugins.domain.webapi.models.WebApi
+import amf.plugins.domain.webapi.models.{EndPoint, WebApi}
 import org.yaml.model.{YMap, YMapEntry, YType}
 import amf.plugins.document.webapi.parser.spec.domain.{AsyncServersParser, OasLikeInformationParser}
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.validations.ParserSideValidations.InvalidIdentifier
+
+import scala.collection.mutable
 
 abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiContext) extends AsyncApiSpecParser {
 
@@ -32,9 +34,17 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
 
   def parseWebApi(map: YMap): WebApi = {
     val api = WebApi(root.parsed.asInstanceOf[SyamlParsedDocument].document.node).adopted(root.location)
-    map.key("info", entry => OasLikeInformationParser(entry, api, ctx))
-    map.key("id", entry => IdentifierParser(entry, api, ctx))
-//    map.key("channels", entry => ChannelsParser(entry, api, ctx))
+    map.key("info", entry => OasLikeInformationParser(entry, api, ctx).parse())
+    map.key("id", entry => IdentifierParser(entry, api, ctx).parse())
+    map.key(
+      "channels",
+      entry => {
+        val paths     = entry.value.as[YMap]
+        val endpoints = mutable.ListBuffer[EndPoint]()
+        paths.entries.foreach(ctx.factory.endPointParser(_, api.withEndPoint, endpoints).parse())
+        api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
+      }
+    )
     map.key("externalDocs", WebApiModel.Documentations in api using (OasLikeCreativeWorkParser.parse(_, api.id)))
     map.key("servers", entry => {
       val servers = AsyncServersParser(entry.value.as[YMap], api).parse()
@@ -45,6 +55,11 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       val tags = OasLikeTagsParser(api.id, entry).parse()
       api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
     })
+
+    AnnotationParser(api, map).parse()
+    AnnotationParser(api, map).parseOrphanNode("channels")
+
+    ctx.closedShape(api.id, map, "webApi")
     api
   }
 

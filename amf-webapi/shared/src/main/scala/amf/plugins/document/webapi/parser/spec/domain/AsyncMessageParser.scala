@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.{TrackedElement, VirtualObject}
+import amf.core.metamodel.Field
 import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
@@ -12,17 +13,23 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   OasLikeTagsParser,
   OasTypeParser
 }
+import amf.plugins.document.webapi.parser.spec.domain.AsyncSchemaFormats.`oas30Schema`
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
-import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, MessageModel, PayloadModel}
+import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, MessageModel, OperationModel, PayloadModel}
 import amf.plugins.domain.webapi.models.{CorrelationId, Message, Parameter, Payload, Request, Response}
 import org.yaml.model.{YMap, YNode, YSequence}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 
-sealed trait MessageType
-
-case object Publish   extends MessageType
-case object Subscribe extends MessageType
+sealed trait MessageType {
+  def field: Field
+}
+case object Publish extends MessageType {
+  override def field: Field = OperationModel.Request
+}
+case object Subscribe extends MessageType {
+  override def field: Field = OperationModel.Responses
+}
 
 case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: MessageType)(
     implicit val ctx: AsyncWebApiContext)
@@ -94,7 +101,7 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
 
     // TODO missing parsing of bindings and traits
 
-    val payload = Payload(Annotations(VirtualObject()))
+    val payload = Payload(Annotations(VirtualObject())).adopted(message.id)
 
     map.key("contentType", PayloadModel.MediaType in payload)
     map.key("schemaFormat", PayloadModel.SchemaMediaType in payload)
@@ -131,24 +138,24 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
 
   def getSchemaVersion(payload: Payload)(implicit ctx: AsyncWebApiContext): JSONSchemaVersion =
     Option(payload.schemaMediaType) match {
-      case Some(format) if (formatsTable("oas30Schema")).contains(format.value()) =>
+      case Some(format) if `oas30Schema`.contains(format.value()) =>
         OAS30SchemaVersion("schema")(ctx.eh)
-      // async 20 schemas are handled with draft 7. Avro schema is not supported
+      // async20 schemas are handled with draft 7. Avro schema is not supported
       case _ => JSONSchemaDraft7SchemaVersion
     }
+}
 
-  val formatsTable: Map[String, List[String]] = Map(
-    "async20Schema" -> List("application/vnd.aai.asyncapi;version=2.0.0",
-                            "application/vnd.aai.asyncapi+json;version=2.0.0",
-                            "application/vnd.aai.asyncapi+yaml;version=2.0.0"),
-    "oas30Schema" -> List("application/vnd.oai.openapi;version=3.0.0",
-                          "application/vnd.oai.openapi+json;version=3.0.0",
-                          "application/vnd.oai.openapi+yaml;version=3.0.0"),
-    "draft7Schema" -> List("application/schema+json;version=draft-07", "application/schema+yaml;version=draft-07"),
-    "avroSchema" -> List("application/vnd.apache.avro;version=1.9.0",
-                         "application/vnd.apache.avro+json;version=1.9.0",
-                         "application/vnd.apache.avro+yaml;version=1.9.0")
-  )
+object AsyncSchemaFormats {
+  val `async20Schema` = List("application/vnd.aai.asyncapi;version=2.0.0",
+                             "application/vnd.aai.asyncapi+json;version=2.0.0",
+                             "application/vnd.aai.asyncapi+yaml;version=2.0.0")
+  val `oas30Schema` = List("application/vnd.oai.openapi;version=3.0.0",
+                           "application/vnd.oai.openapi+json;version=3.0.0",
+                           "application/vnd.oai.openapi+yaml;version=3.0.0")
+  val `draft7JsonSchema` = List("application/schema+json;version=draft-07", "application/schema+yaml;version=draft-07")
+  val `avroSchema` = List("application/vnd.apache.avro;version=1.9.0",
+                          "application/vnd.apache.avro+json;version=1.9.0",
+                          "application/vnd.apache.avro+yaml;version=1.9.0")
 }
 
 case class CorrelationIdParser(node: YNode, parentId: String)(implicit val ctx: AsyncWebApiContext)
@@ -159,7 +166,7 @@ case class CorrelationIdParser(node: YNode, parentId: String)(implicit val ctx: 
     val map           = node.as[YMap]
     val correlationId = CorrelationId(map).adopted(parentId)
     map.key("description", CorrelationIdModel.Description in correlationId)
-    map.key("name", CorrelationIdModel.Name in correlationId)
+    map.key("location", CorrelationIdModel.Location in correlationId)
 
     AnnotationParser(correlationId, map).parse()
     ctx.closedShape(correlationId.id, map, "correlationId")

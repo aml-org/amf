@@ -8,9 +8,17 @@ import scala.concurrent.Future
 
 class ValidAsyncModelParserTest extends ValidModelTest {
 
-//  test("Test test") {
-//    checkValid("someapi.yaml")
-//  }
+  test("Full message object") {
+    checkValid("../../upanddown/async20/message-obj.yaml")
+  }
+
+  test("Draft 7 schemas") {
+    checkValid("../../upanddown/async20/draft-7-schemas.yaml")
+  }
+
+  test("Channel parameters") {
+    checkValid("../../upanddown/async20/channel-parameters.yaml")
+  }
 
   override protected def checkValid(api: String, profile: ProfileName = Async20Profile): Future[Assertion] =
     super.checkValid(api, profile)

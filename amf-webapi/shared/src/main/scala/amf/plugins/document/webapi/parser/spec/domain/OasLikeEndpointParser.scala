@@ -210,8 +210,17 @@ case class AsyncEndpointParser(entry: YMapEntry,
     // TODO ASYNC add binding parser
     //    map.key("bindings", )
 
+    map.key("description", EndPointModel.Description in endpoint)
+    map.key(
+      "parameters",
+      entry => {
+        val parameters = AsyncParametersParser(endpoint.id, entry.value.as[YMap]).parse()
+        endpoint.setArray(EndPointModel.Parameters, parameters, Annotations(entry.value))
+      }
+    )
+
     map.regex(
-      "suscribe|publish",
+      "subscribe|publish",
       entries => {
         val operations = mutable.ListBuffer[Operation]()
         entries.foreach { entry =>

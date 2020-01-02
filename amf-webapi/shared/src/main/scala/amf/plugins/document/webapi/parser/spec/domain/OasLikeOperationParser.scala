@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
+import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
 import amf.plugins.document.webapi.parser.spec.oas.{
   Oas20RequestParser,
   Oas30CallbackParser,
@@ -47,14 +47,6 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
     map.key("externalDocs",
             OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)))
 
-    map.key(
-      "tags",
-      entry => {
-        val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
-        operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
-      }
-    )
-
     AnnotationParser(operation, map).parseOrphanNode("responses")
     AnnotationParser(operation, map).parse()
 
@@ -70,6 +62,14 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
     val map       = entry.value.as[YMap]
 
     map.key("deprecated", OperationModel.Deprecated in operation)
+
+    map.key(
+      "tags",
+      entry => {
+        val tags = StringTagsParser(entry.value.as[YSequence], operation.id).parse()
+        operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+      }
+    )
 
     map.key(
       "is".asOasExtension,
@@ -194,11 +194,34 @@ case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)
     val operation = super.parse()
     val map       = entry.value.as[YMap]
 
-    // TODO ASYNC complete operation has not message and trait ?
+    map.key(
+      "tags",
+      entry => {
+        val tags = OasLikeTagsParser(operation.id, entry).parse()
+        operation.set(OperationModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+
+    map.key(
+      "message",
+      entry =>
+        messageType() foreach { msgType =>
+          val messages = AsyncMessageParser(operation.id, entry.value.as[YMap], msgType).parse()
+          operation.setArray(msgType.field, messages, Annotations(entry.value))
+      }
+    )
+
 //    map.key("bindings", OperationModel.Bindings in operation)
 //    map.key("traits", OperationModel. in operation)
-//    map.key("message", OperationModel. in operation)
 
     operation
   }
+
+  private def messageType(): Option[MessageType] =
+    entry.key.value match {
+      case scalar: YScalar if scalar.text == "publish"   => Some(Publish)
+      case scalar: YScalar if scalar.text == "subscribe" => Some(Subscribe)
+      // invalid message type is validated with closed shape of pathItem
+      case _ => None
+    }
 }

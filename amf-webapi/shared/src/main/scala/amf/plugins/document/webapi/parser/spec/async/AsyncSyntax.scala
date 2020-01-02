@@ -2,9 +2,18 @@ package amf.plugins.document.webapi.parser.spec.async
 
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 
-// TODO ASYNC update
 object Async20Syntax extends SpecSyntax {
   override val nodes: Map[String, Set[String]] = Map(
+    "webApi" -> Set(
+      "asyncapi",
+      "id",
+      "info",
+      "servers",
+      "channels",
+      "components",
+      "tags",
+      "externalDocs"
+    ),
     "serverVariable" -> Set(
       "default",
       "description",
@@ -82,6 +91,36 @@ object Async20Syntax extends SpecSyntax {
     "correlationId" -> Set(
       "description",
       "location"
+    ),
+    "parameter" -> Set(
+      "description",
+      "schema",
+      "location"
+    ),
+    "pathItem" -> Set(
+      "description",
+      "subscribe",
+      "publish",
+      "parameters",
+      "bindings"
+    ),
+    "operation" -> Set(
+      "operationId",
+      "summary",
+      "description",
+      "tags",
+      "externalDocs",
+      "bindings",
+      "traits",
+      "message"
+    ),
+    "info" -> Set(
+      "title",
+      "description",
+      "termsOfService",
+      "contact",
+      "license",
+      "version"
     )
   )
 }
