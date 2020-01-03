@@ -1,27 +1,21 @@
 package amf.validation
 
-import amf.{Async20Profile, ProfileName}
+import amf.Async20Profile
 import amf.core.remote.{AsyncYamlHint, Hint}
-import org.scalatest.Assertion
-
-import scala.concurrent.Future
 
 class ValidAsyncModelParserTest extends ValidModelTest {
 
   test("Full message object") {
-    checkValid("../../upanddown/async20/message-obj.yaml")
+    checkValid("../../upanddown/async20/message-obj.yaml", Async20Profile)
   }
 
   test("Draft 7 schemas") {
-    checkValid("../../upanddown/async20/draft-7-schemas.yaml")
+    checkValid("../../upanddown/async20/draft-7-schemas.yaml", Async20Profile)
   }
 
   test("Channel parameters") {
-    checkValid("../../upanddown/async20/channel-parameters.yaml")
+    checkValid("../../upanddown/async20/channel-parameters.yaml", Async20Profile)
   }
-
-  override protected def checkValid(api: String, profile: ProfileName = Async20Profile): Future[Assertion] =
-    super.checkValid(api, profile)
 
   override val basePath: String = "file://amf-client/shared/src/test/resources/validations/async/"
   override val hint: Hint       = AsyncYamlHint

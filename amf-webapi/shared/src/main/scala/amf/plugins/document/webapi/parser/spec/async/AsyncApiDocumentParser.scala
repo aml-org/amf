@@ -3,12 +3,12 @@ import amf.core.Root
 import amf.core.annotations.SourceVendor
 import amf.core.model.document.Document
 import amf.core.model.domain.AmfArray
-import amf.core.parser.{Annotations, SyamlParsedDocument, YMapOps}
+import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
 import amf.plugins.domain.webapi.models.{EndPoint, WebApi}
-import org.yaml.model.{YMap, YMapEntry, YType}
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 import amf.plugins.document.webapi.parser.spec.domain.{AsyncServersParser, OasLikeInformationParser}
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.validations.ParserSideValidations.InvalidIdentifier
@@ -49,12 +49,21 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     map.key("servers", entry => {
       val servers = AsyncServersParser(entry.value.as[YMap], api).parse()
       api.withServers(servers)
-
     })
     map.key("tags", entry => {
       val tags = OasLikeTagsParser(api.id, entry).parse()
       api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
     })
+    map.key(
+      "defaultContentType",
+      entry => {
+        val annotations = Annotations(entry)
+        val contentType = ScalarNode(entry.value).string()
+        val value       = AmfArray(Seq(contentType))
+        api.set(WebApiModel.ContentType, value, annotations)
+        api.set(WebApiModel.Accepts, value, annotations)
+      }
+    )
 
     AnnotationParser(api, map).parse()
     AnnotationParser(api, map).parseOrphanNode("channels")

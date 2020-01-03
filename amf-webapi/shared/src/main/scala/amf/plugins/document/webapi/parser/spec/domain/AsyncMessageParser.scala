@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
-import amf.core.annotations.{TrackedElement, VirtualObject}
+import amf.core.annotations.{SynthesizedField, TrackedElement, VirtualObject}
 import amf.core.metamodel.Field
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -16,9 +16,15 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 import amf.plugins.document.webapi.parser.spec.domain.AsyncSchemaFormats.`oas30Schema`
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
-import amf.plugins.domain.webapi.metamodel.{CorrelationIdModel, MessageModel, OperationModel, PayloadModel}
+import amf.plugins.domain.webapi.metamodel.{
+  CorrelationIdModel,
+  MessageModel,
+  OperationModel,
+  ParameterModel,
+  PayloadModel
+}
 import amf.plugins.domain.webapi.models.{CorrelationId, Message, Parameter, Payload, Request, Response}
-import org.yaml.model.{YMap, YNode, YSequence}
+import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 
 sealed trait MessageType {
@@ -84,16 +90,9 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
 
     map.key(
       "headers",
-      entry => {
-        val param = Parameter().adopted(message.id)
-        val shape =
-          OasTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)
-            .parse()
-        shape.foreach { schema =>
-          param.withSchema(schema)
+      entry =>
+        parseHeaderSchema(entry, message.id) foreach { param =>
           message.withHeaders(Seq(param))
-        }
-        // must be a
       }
     )
 
@@ -111,6 +110,17 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
     AnnotationParser(message, map).parse()
     message
 
+  }
+
+  private def parseHeaderSchema(entry: YMapEntry, parentId: String): Option[Parameter] = {
+    val param = Parameter().withName("default-parameter", Annotations(SynthesizedField())).adopted(parentId) // set default name to avoid raw validations
+    val shape =
+      OasTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)
+        .parse()
+    shape.map { schema =>
+      param.set(ParameterModel.Binding, AmfScalar("header"), Annotations() += SynthesizedField())
+      param.withSchema(schema)
+    }
   }
 
   private def parseNamedValueExamples(map: YMap, parentId: String): Seq[Example] =

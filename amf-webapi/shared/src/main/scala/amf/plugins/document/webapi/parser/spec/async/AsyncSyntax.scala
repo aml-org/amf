@@ -12,7 +12,8 @@ object Async20Syntax extends SpecSyntax {
       "channels",
       "components",
       "tags",
-      "externalDocs"
+      "externalDocs",
+      "defaultContentType"
     ),
     "serverVariable" -> Set(
       "default",
