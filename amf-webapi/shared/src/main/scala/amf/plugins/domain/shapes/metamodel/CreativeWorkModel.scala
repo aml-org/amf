@@ -17,7 +17,7 @@ object CreativeWorkModel extends DomainElementModel with LinkableElementModel wi
     Field(Iri, Core + "url", ModelDoc(ModelVocabularies.Core, "url", "URL for the creative work"))
 
   val Title =
-    Field(Str, Core + "title", ModelDoc(ModelVocabularies.Core, "title", "Title of the creative work"))
+    Field(Str, Core + "title", ModelDoc(ModelVocabularies.Core, "title", "Title of the item"))
 
   override val `type`: List[ValueType] = Core + "CreativeWork" :: DomainElementModel.`type`
 

@@ -159,6 +159,7 @@ propertyTerms:
     range: Parameter
   encoding:
     displayName: encoding
+    description: An array of properties and its encoding information. The key, being the property name, must exist in the schema as a property
     range: Encoding
   endpoint:
     displayName: endpoint
@@ -188,10 +189,6 @@ propertyTerms:
     displayName: header
     description: Parameter passed as a header to an operation for communication models
     range: Parameter
-  identifier:
-    displayName: identifier
-    description: Specific api identifier
-    range: string
   isAbstract:
     displayName: isAbstract
     description: Defines a model as abstract
@@ -264,7 +261,7 @@ propertyTerms:
     range: Response
   schemaMediaType:
     displayName: schemaMediaType
-    description: defines the format of the defined payload schema
+    description: Defines the format of the payload schema
     range: string
   scheme:
     displayName: scheme
@@ -280,6 +277,7 @@ propertyTerms:
     range: string
   style:
     displayName: style
+    description: Describes how a specific property value will be serialized depending on its type.
     range: string
   supportedOperation:
     displayName: supported operation

@@ -29,7 +29,7 @@ object PayloadModel
   val SchemaMediaType = Field(
     Str,
     ApiContract + "schemaMediaType",
-    ModelDoc(ModelVocabularies.ApiContract, "schemaMediaType", "defines the format of the defined payload schema"))
+    ModelDoc(ModelVocabularies.ApiContract, "schemaMediaType", "Defines the format of the payload schema"))
 
   val Schema =
     Field(ShapeModel,
@@ -37,7 +37,15 @@ object PayloadModel
           ModelDoc(ModelVocabularies.Shapes, "schema", "Schema associated to this payload"))
 
   val Encoding =
-    Field(Array(EncodingModel), ApiContract + "encoding", ModelDoc(ModelVocabularies.ApiContract, "encoding", ""))
+    Field(
+      Array(EncodingModel),
+      ApiContract + "encoding",
+      ModelDoc(
+        ModelVocabularies.ApiContract,
+        "encoding",
+        "An array of properties and its encoding information. The key, being the property name, must exist in the schema as a property"
+      )
+    )
 
   override val key: Field = MediaType
 

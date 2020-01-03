@@ -78,9 +78,13 @@ object TupleShapeModel extends DataArrangementShape with DomainElementModel {
     Shapes + "closedItems",
     ModelDoc(ModelVocabularies.Shapes, "closed items", "Constraint limiting additional shapes in the collection"))
 
-  val AdditionalItemsSchema = Field(ShapeModel,
-                                    Shapes + "additionalItemsSchema",
-                                    ModelDoc(ModelVocabularies.Shapes, "additional items schema", ""))
+  val AdditionalItemsSchema = Field(
+    ShapeModel,
+    Shapes + "additionalItemsSchema",
+    ModelDoc(ModelVocabularies.Shapes,
+             "additional items",
+             "Controls whether it’s valid to have additional items in the array beyond what is defined")
+  )
 
   val TupleItems = Field(SortedArray(ShapeModel),
                          Shapes + "items",

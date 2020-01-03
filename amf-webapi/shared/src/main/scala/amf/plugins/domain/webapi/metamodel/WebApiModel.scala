@@ -29,9 +29,13 @@ object WebApiModel extends DomainElementModel with NameFieldSchema with Descript
     ApiContract + "contentType",
     ModelDoc(ModelVocabularies.ApiContract, "content type", "Media types returned by a API response"))
 
-  val Identifier = Field(Str,
-                         ApiContract + "identifier",
-                         ModelDoc(ModelVocabularies.ApiContract, "identifier", "Specific api identifier"))
+  val Identifier = Field(
+    Str,
+    Core + "identifier",
+    ModelDoc(ModelVocabularies.Core,
+             "identifier",
+             "The identifier property represents any kind of identifier, such as ISBNs, GTIN codes, UUIDs, etc.")
+  )
 
   val Schemes =
     Field(Array(Str),
