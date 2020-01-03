@@ -1,81 +1,89 @@
 package amf.emit
 
 import amf.client.parse.DefaultParserErrorHandler
-import amf.{OasProfile, ProfileNames}
 import amf.core.model.document.BaseUnit
+import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.core.validation.AMFValidationReport
 import amf.facades.Validation
 import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
+import amf.{Oas30Profile, OasProfile, ProfileName, RamlProfile}
 import org.mulesoft.common.io.AsyncFile
 import org.scalatest.Matchers
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-class CompatibilityCycleTest extends FunSuiteCycleTests with Matchers {
+class CompatibilityCycleTest extends CompatibilityCycle {
 
   override val basePath = "amf-client/shared/src/test/resources/compatibility/"
 
-  for {
-    file <- platform.fs.syncFile(basePath + "oas20").list
-  } {
-    // For each oas -> render raml and validate
-    val path = s"oas20/$file"
+  testCycleCompatibility("oas30", OasJsonHint, Raml, basePath)
+  testCycleCompatibility("oas20", OasJsonHint, Raml, basePath)
+  testCycleCompatibility("raml10", RamlYamlHint, Oas30, basePath)
+  testCycleCompatibility("raml10", RamlYamlHint, Oas20, basePath)
+}
 
-    test(s"Test $path") {
-      val c = CycleConfig(path, path, OasJsonHint, Raml, basePath, None, None)
-      for {
-        origin   <- build(c, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true)
-        resolved <- successful(transform(origin, c))
-        rendered <- render(resolved, c, useAmfJsonldSerialization = true)
-        tmp      <- writeTemporaryFile(path)(rendered)
-        report   <- validate(tmp, RamlYamlHint)
-      } yield {
-        report.toString should include("Conforms? true")
+trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
+
+  private val REPORT_CONFORMS = "Conforms? true"
+
+  def testCycleCompatibility(filePath: String,
+                             from: Hint,
+                             to: Vendor,
+                             basePath: String,
+                             syntax: Option[Syntax] = None,
+                             pipeline: Option[String] = None): Unit = {
+    for {
+      file <- platform.fs.syncFile(basePath + filePath).list
+    } {
+      val path = s"$filePath/$file"
+
+      test(s"Test $path to $to") {
+        val config     = CycleConfig(path, path, from, to, basePath, syntax, pipeline)
+        val targetHint = hint(vendor = to)
+        val toProfile  = profile(to)
+        for {
+          origin   <- build(config, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true)
+          resolved <- successful(transform(origin, config))
+          rendered <- render(resolved, config, useAmfJsonldSerialization = true)
+          tmp      <- writeTemporaryFile(path)(rendered)
+          report   <- validate(tmp, targetHint, toProfile, to)
+        } yield {
+          outputReportErrors(report)
+        }
       }
     }
   }
 
-  // testing -> raml10
-  for {
-    file <- platform.fs.syncFile(basePath + "raml10").list
-  } {
-    // For each oas -> render raml and validate
-    val path = s"raml10/$file"
-
-    test(s"Test $path") {
-      val c = CycleConfig(path, path, RamlYamlHint, Oas, basePath, None, None)
-      for {
-        origin   <- build(c, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true)
-        resolved <- successful(transform(origin, c))
-        rendered <- render(resolved, c, useAmfJsonldSerialization = true)
-        tmp      <- writeTemporaryFile(path)(rendered)
-        report   <- validate(tmp, OasYamlHint)
-      } yield {
-        report.toString should include("Conforms? true")
-      }
-    }
+  private def hint(vendor: Vendor) = vendor match {
+    case Raml | Raml08 | Raml10 => RamlYamlHint
+    case Oas | Oas20 | Oas30    => OasYamlHint
+    case _                      => throw new IllegalArgumentException
   }
 
-  private def validate(source: AsyncFile, hint: Hint): Future[AMFValidationReport] =
+  private def outputReportErrors(report: AMFValidationReport) = report.toString should include(REPORT_CONFORMS)
+
+  private def validate(source: AsyncFile,
+                       hint: Hint,
+                       profileName: ProfileName,
+                       target: Vendor): Future[AMFValidationReport] =
     Validation(platform)
       .flatMap { validation =>
-        val config = CycleConfig(source.path, source.path, hint, hint.vendor, "", None, None)
+        val config = CycleConfig(source.path, source.path, hint, target, "", None, None)
         build(config, Some(DefaultParserErrorHandler.withRun()), useAmfJsonldSerialisation = true).flatMap { unit =>
-          hint match {
-            case RamlYamlHint => validation.validate(unit, ProfileNames.RAML10)
-            case OasYamlHint  => validation.validate(unit, ProfileNames.OAS20)
-            case _            => Future.never
-          }
-
+          validation.validate(unit, profileName)
         }
       }
 
-  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = config.target match {
-    case Raml | Raml08 | Raml10 => CompatibilityPipeline.unhandled().resolve(unit)
-    case Oas | Oas20 | Oas30    => CompatibilityPipeline.unhandled(OasProfile).resolve(unit)
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
+    CompatibilityPipeline.unhandled(profile(config.target)).resolve(unit)
+
+  private def profile(vendor: Vendor): ProfileName = vendor match {
+    case Raml | Raml08 | Raml10 => RamlProfile
+    case Oas | Oas20            => OasProfile
+    case Oas30                  => Oas30Profile
     case _                      => throw new IllegalArgumentException
   }
 }
