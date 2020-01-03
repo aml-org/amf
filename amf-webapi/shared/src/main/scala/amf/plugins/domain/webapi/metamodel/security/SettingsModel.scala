@@ -1,10 +1,16 @@
 package amf.plugins.domain.webapi.metamodel.security
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.domain.{DataNodeModel, DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.plugins.domain.webapi.models.security.{ApiKeySettings, OAuth1Settings, OAuth2Settings, Settings}
-import amf.core.vocabulary.Namespace.{Core, Security}
+import amf.core.metamodel.Type.{Str, Array}
+import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DataNodeModel, DomainElementModel}
+import amf.plugins.domain.webapi.models.security.{
+  Settings,
+  ApiKeySettings,
+  HttpApiKeySettings,
+  OAuth1Settings,
+  OAuth2Settings
+}
+import amf.core.vocabulary.Namespace.{Security, Core}
 import amf.core.vocabulary.ValueType
 
 trait SettingsModel extends DomainElementModel
@@ -91,6 +97,25 @@ object ApiKeySettingsModel extends SettingsModel {
     ModelVocabularies.Security,
     "API Key Settings",
     "Settings for an API Key security scheme"
+  )
+}
+
+object HttpApiKeySettingsModel extends SettingsModel {
+
+  val Name = Field(Str, Core + "name", ModelDoc(ModelVocabularies.Security, "name", ""))
+
+  val In = Field(Str, Security + "in", ModelDoc(ModelVocabularies.Security, "in", ""))
+
+  override val `type`: List[ValueType] = List(Security + "HttpApiKeySettings") ++ SettingsModel.`type`
+
+  override val fields: List[Field] = List(Name, In) ++ SettingsModel.fields
+
+  override def modelInstance = HttpApiKeySettings()
+
+  override val doc: ModelDoc = ModelDoc(
+    ModelVocabularies.Security,
+    "Http API Key Settings",
+    "Settings for an Http API Key security scheme"
   )
 }
 

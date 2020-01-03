@@ -13,7 +13,7 @@ class Async20WebApiContext(loc: String,
                            private val ds: Option[AsyncWebApiDeclarations] = None,
                            private val operationIds: mutable.Set[String] = mutable.HashSet())
     extends AsyncWebApiContext(loc, refs, wrapped, ds, operationIds) {
-  override val factory: Async20VersionFactory = Async20VersionFactory(this)
+  override val factory: Async20VersionFactory = Async20VersionFactory()(this)
   override val vendor: Vendor                 = AsyncApi20
   override val syntax: SpecSyntax             = Async20Syntax
 }

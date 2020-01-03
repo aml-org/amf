@@ -1,4 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.declaration
+
 import amf.core.annotations.LexicalInformation
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
@@ -12,8 +13,10 @@ import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.document.webapi.parser.spec.toRaml
 import amf.core.parser.{Annotations, Range, YMapOps}
 import amf.core.utils.AmfStrings
+import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 
-case class OasSecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(implicit ctx: OasWebApiContext)
+case class Async2SecuritySchemeParser(part: YPart, adopt: SecurityScheme => SecurityScheme)(
+    implicit ctx: AsyncWebApiContext)
     extends OasLikeSecuritySchemeParser(part, adopt) {
 
   override def parse(): SecurityScheme = {
@@ -75,7 +78,7 @@ case class OasSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securit
           CrossSecurityWarningSpecification,
           scheme.id,
           Some(SecuritySchemeModel.Type.value.iri()),
-          s"RAML 1.0 extension security scheme type '$s' detected in OAS 2.0 spec",
+          s"RAML 1.0 extension security scheme type '$s' detected in Async 2.0 spec",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
           Some(ctx.rootContextDocument)
         )
@@ -84,7 +87,7 @@ case class OasSecuritySchemeParser(part: YPart, adopt: SecurityScheme => Securit
           CrossSecurityWarningSpecification,
           scheme.id,
           Some(SecuritySchemeModel.Type.value.iri()),
-          s"RAML 1.0 security scheme type detected in OAS 2.0 spec",
+          s"RAML 1.0 security scheme type detected in Async 2.0 spec",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
           Some(ctx.rootContextDocument)
         )

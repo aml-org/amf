@@ -494,6 +494,8 @@ object ParserSideValidations extends Validations {
     "Properties facet must be a map of key and values"
   )
 
+  val InvalidComponents = validation("invalid-components", "Components facet must be a map")
+
   val InvalidUserDefinedFacetName = validation(
     "invalid-user-defined-facet-name",
     "User defined facets must not begin with open parenthesis"
@@ -688,6 +690,7 @@ object ParserSideValidations extends Validations {
     InvalidDatetimeFormat,
     ItemsFieldRequired,
     InvalidTagType,
-    InvalidIdentifier
+    InvalidIdentifier,
+    InvalidComponents
   )
 }

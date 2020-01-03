@@ -18,7 +18,7 @@ abstract class OasSpecVersionFactory(implicit val ctx: OasWebApiContext) extends
   def serversParser(map: YMap, api: WebApi): OasServersParser
   def serversParser(map: YMap, endpoint: EndPoint): OasServersParser
   def serversParser(map: YMap, operation: Operation): OasServersParser
-  def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasSecuritySettingsParser
+  def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser
   def parameterParser(entryOrNode: Either[YMapEntry, YNode],
                       parentId: String,
                       nameNode: Option[YNode],
@@ -37,8 +37,8 @@ case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def serversParser(map: YMap, endpoint: EndPoint): OasServersParser =
     Oas3ServersParser(map, endpoint, EndPointModel.Servers)(ctx)
 
-  override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasSecuritySettingsParser =
-    Oas2SecuritySettingsParser(map, scheme)(ctx)
+  override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
+    new Oas2SecuritySettingsParser(map, scheme)(ctx)
 
   override def parameterParser(entryOrNode: Either[YMapEntry, YNode],
                                parentId: String,
@@ -67,7 +67,7 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
   override def serversParser(map: YMap, endpoint: EndPoint): OasServersParser =
     Oas3ServersParser(map, endpoint, EndPointModel.Servers)(ctx)
 
-  override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasSecuritySettingsParser =
+  override def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser =
     new Oas3SecuritySettingsParser(map, scheme)(ctx)
 
   override def parameterParser(entryOrNode: Either[YMapEntry, YNode],
@@ -80,7 +80,8 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
     OasServerVariableParser(entry, server)(ctx)
 
   override def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser =
-    new Oas30OperationParser(entry, producer)(ctx)
+    Oas30OperationParser(entry, producer)(ctx)
+
   override def endPointParser(entry: YMapEntry,
                               producer: String => EndPoint,
                               collector: ListBuffer[EndPoint]): OasLikeEndpointParser =

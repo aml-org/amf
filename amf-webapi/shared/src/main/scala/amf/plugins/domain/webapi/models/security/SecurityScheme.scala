@@ -108,6 +108,12 @@ class SecurityScheme(override val fields: Fields, override val annotations: Anno
     settings
   }
 
+  def withHttpApiKeySettings(): HttpApiKeySettings = {
+    val settings = HttpApiKeySettings()
+    set(SettingsField, settings)
+    settings
+  }
+
   def withHttpSettings(): HttpSettings = {
     val settings = HttpSettings()
     set(SettingsField, settings)

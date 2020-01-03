@@ -13,7 +13,8 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Simple publish and subscribe", "publish-subscribe.yaml", "publish-subscribe.jsonld"),
     FixtureData("Message object", "message-obj.yaml", "message-obj.jsonld"),
     FixtureData("Draft 7 schemas", "draft-7-schemas.yaml", "draft-7-schemas.jsonld"),
-    FixtureData("Parameters object", "channel-parameters.yaml", "channel-parameters.jsonld")
+    FixtureData("Parameters object", "channel-parameters.yaml", "channel-parameters.jsonld"),
+    FixtureData("Security schemes", "security-schemes.yaml", "security-schemes.jsonld")
   )
 
   cyclesAsyncAmf.foreach { f =>
