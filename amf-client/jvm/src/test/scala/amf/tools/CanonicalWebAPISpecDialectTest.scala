@@ -16,12 +16,12 @@ import amf.io.BuildCycleTests
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.webapi.Raml10Plugin
-import amf.tools.canonical.{CanonicalWebAPISpecTransformer, CanonicalWebAPITransformer}
+import amf.tools.canonical.CanonicalWebAPISpecTransformer
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.Future
 
-class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with PlatformSecrets {
+class CanonicalWebAPISpecDialectTest extends AsyncFunSuite with BuildCycleTests with PlatformSecrets {
 
   val CANONICAL_WEBAPI_DIALECT  = "file://vocabularies/dialects/canonical_webapi_spec.yaml"
   override def basePath: String = "file://amf-client/shared/src/test/resources/transformations/"
@@ -45,7 +45,7 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with
         }
       }
       // jsonld          <- new AMFRenderer(resolved, Vendor.AMF, RenderOptions(), Some(Syntax.Json)).renderToString
-      dialectInstance <- CanonicalWebAPISpecTransformer().transform(resolved)
+      dialectInstance <- CanonicalWebAPISpecTransformer.transform(resolved)
       // jsonld          <- new AMFRenderer(dialectInstance, Vendor.AMF, RenderOptions(), Some(Syntax.Json)).renderToString
       rendered <- new AMFRenderer(dialectInstance, Vendor.AML, RenderOptions().withNodeIds, Some(Syntax.Yaml)).renderToString
       tmp      <- writeTemporaryFile(golden)(rendered)
@@ -56,7 +56,7 @@ class CanonicalWebAPIDialectTest extends AsyncFunSuite with BuildCycleTests with
       report <- {
         RuntimeValidator(
           dialectInstance,
-          ProfileName(CanonicalWebAPITransformer.CANONICAL_WEBAPI_NAME)
+          ProfileName(CanonicalWebAPISpecTransformer.CANONICAL_WEBAPI_NAME)
         )
       }
     } yield {

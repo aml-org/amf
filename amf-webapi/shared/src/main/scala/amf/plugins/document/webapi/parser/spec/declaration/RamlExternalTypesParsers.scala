@@ -199,10 +199,9 @@ case class RamlJsonSchemaExpression(key: YNode,
       case inlined: MutRef =>
         if (inlined.origTag.tagType == YType.Include) {
           // JSON schema file we need to update the context
-          val rawFilePath        = inlined.origValue.asInstanceOf[YScalar].text.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
-          val root               = ctx.rootContextDocument
-          val normalizedFilePath = ctx.resolvedPath(root, rawFilePath)
-          ctx.refs.find(r => r.unit.location().contains(normalizedFilePath)) match {
+          val rawPath            = inlined.origValue.asInstanceOf[YScalar].text
+          val normalizedFilePath = normalizePath(rawPath)
+          ctx.refs.find(r => r.unit.location().exists(_.endsWith(normalizedFilePath))) match {
             case Some(ref) =>
               toJsonSchema(
                 ref.unit.location().get,
@@ -220,6 +219,19 @@ case class RamlJsonSchemaExpression(key: YNode,
       case _ =>
         toJsonSchema(ctx)
     }
+  }
+
+  private def normalizePath(rawPath: String): String = {
+    //    TODO: we need to resolve paths but this conflicts with absolute references to exchange_modules
+    //    val file = rawPath.split("#").head
+    //    val root               = ctx.rootContextDocument
+    //    val normalizedFilePath = ctx.resolvedPath(root, file)
+    val hashTagIdx = rawPath.indexOf("#")
+    val parentIdx  = rawPath.lastIndexOf("../") + 3
+    val currentIdx = rawPath.lastIndexOf("./") + 2
+    val start      = parentIdx.max(currentIdx).max(0)
+    val finish     = if (hashTagIdx == -1) rawPath.length else hashTagIdx
+    rawPath.substring(start, finish)
   }
 
   override val externalType: String = "JSON"
