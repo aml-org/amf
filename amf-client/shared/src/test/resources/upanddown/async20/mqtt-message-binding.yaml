@@ -1,0 +1,12 @@
+asyncapi: '2.0.0'
+info:
+  title: Mqtt message binding
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          mqtt:
+            bindingVersion: 31.07.92

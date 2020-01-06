@@ -8,6 +8,7 @@ import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncChannelBindingsParser
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
 import amf.validations.ParserSideValidations.{DuplicatedEndpointPath, InvalidEndpointPath, InvalidEndpointType}
@@ -207,8 +208,10 @@ case class AsyncEndpointParser(entry: YMapEntry,
 
     super.parseEndpointMap(endpoint, map)
 
-    // TODO ASYNC add binding parser
-    //    map.key("bindings", )
+    map.key("bindings").foreach { entry =>
+      val bindings = AsyncChannelBindingsParser.parse(entry.value.as[YMap], endpoint.id)
+      endpoint.setArray(EndPointModel.Bindings, bindings, Annotations(entry))
+    }
 
     map.key("description", EndPointModel.Description in endpoint)
     map.key(

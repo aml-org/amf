@@ -1,0 +1,14 @@
+asyncapi: '2.0.0'
+info:
+  title: Amqp message binding
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          amqp:
+            bindingVersion: 31.07.92
+            messageType: sometype
+            contentEncoding: some/mime

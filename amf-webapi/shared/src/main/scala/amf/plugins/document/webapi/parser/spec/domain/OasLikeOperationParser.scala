@@ -11,6 +11,7 @@ import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
+import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncOperationBindingsParser
 import amf.plugins.document.webapi.parser.spec.oas.{
   Oas20RequestParser,
   Oas30CallbackParser,
@@ -211,7 +212,11 @@ case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)
       }
     )
 
-//    map.key("bindings", OperationModel.Bindings in operation)
+    map.key("bindings").foreach { entry =>
+      val bindings = AsyncOperationBindingsParser.parse(entry.value.as[YMap], operation.id)
+      operation.setArray(OperationModel.Bindings, bindings, Annotations(entry))
+    }
+
 //    map.key("traits", OperationModel. in operation)
 
     operation

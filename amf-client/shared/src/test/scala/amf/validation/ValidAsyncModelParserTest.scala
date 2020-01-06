@@ -17,6 +17,10 @@ class ValidAsyncModelParserTest extends ValidModelTest {
     checkValid("../../upanddown/async20/channel-parameters.yaml", Async20Profile)
   }
 
+  test("Empty and dynamic binding") {
+    checkValid("../../upanddown/async20/empty-dynamic-binding.yaml", Async20Profile)
+  }
+
   override val basePath: String = "file://amf-client/shared/src/test/resources/validations/async/"
   override val hint: Hint       = AsyncYamlHint
 }

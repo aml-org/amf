@@ -14,6 +14,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   OasTypeParser
 }
 import amf.plugins.document.webapi.parser.spec.domain.AsyncSchemaFormats.`oas30Schema`
+import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.metamodel.{
@@ -98,7 +99,12 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
 
     map.key("correlationId", MessageModel.CorrelationId in message using (CorrelationIdParser(_, message.id).parse()))
 
-    // TODO missing parsing of bindings and traits
+    map.key("bindings").foreach { entry =>
+      val bindings = AsyncMessageBindingsParser.parse(entry.value.as[YMap], message.id)
+      message.setArray(MessageModel.Bindings, bindings, Annotations(entry))
+    }
+
+    // TODO missing parsing of traits
 
     val payload = Payload(Annotations(VirtualObject())).adopted(message.id)
 

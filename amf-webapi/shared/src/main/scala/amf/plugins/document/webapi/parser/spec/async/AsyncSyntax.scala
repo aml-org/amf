@@ -15,11 +15,107 @@ object Async20Syntax extends SpecSyntax {
       "externalDocs",
       "defaultContentType"
     ),
+    "server" -> Set(
+      "url",
+      "protocol",
+      "protocolVersion",
+      "description",
+      "variables",
+      "security",
+      "bindings"
+    ),
     "serverVariable" -> Set(
       "default",
       "description",
       "enum",
       "examples"
+    ),
+    "wsChannelBinding" -> Set(
+      "method",
+      "query",
+      "headers",
+      "bindingVersion"
+    ),
+    "amqpQueueChannelBinding" -> Set(
+      "name",
+      "durable",
+      "exclusive",
+      "autoDelete",
+      "vhost"
+    ),
+    "amqpIsQueueChannelBinding" -> Set(
+      "is",
+      "queue",
+      "bindingVersion"
+    ),
+    "amqpExchangeChannelBinding" -> Set(
+      "name",
+      "type",
+      "durable",
+      "autoDelete",
+      "vhost"
+    ),
+    "amqpIsExchangeChannelBinding" -> Set(
+      "is",
+      "exchange",
+      "bindingVersion"
+    ),
+    "httpOperationBinding" -> Set(
+      "type",
+      "method",
+      "query",
+      "bindingVersion"
+    ),
+    "amqpOperationBinding" -> Set(
+      "expiration",
+      "userId",
+      "cc",
+      "priority",
+      "deliveryMode",
+      "mandatory",
+      "bcc",
+      "replyTo",
+      "timestamp",
+      "ack",
+      "bindingVersion"
+    ),
+    "amqpMessageBinding" -> Set(
+      "contentEncoding",
+      "messageType",
+      "bindingVersion"
+    ),
+    "mqttOperationBinding" -> Set(
+      "qos",
+      "retain",
+      "bindingVersion"
+    ),
+    "mqttServerBinding" -> Set(
+      "clientId",
+      "cleanSession",
+      "lastWill",
+      "keepAlive",
+      "bindingVersion"
+    ),
+    "mqttServerLastWill" -> Set(
+      "topic",
+      "qos",
+      "retain"
+    ),
+    "mqttMessageBinding" -> Set(
+      "bindingVersion"
+    ),
+    "httpMessageBinding" -> Set(
+      "headers",
+      "bindingVersion"
+    ),
+    "kafkaMessageBinding" -> Set(
+      "key",
+      "bindingVersion"
+    ),
+    "kafkaOperationBinding" -> Set(
+      "groupId",
+      "clientId",
+      "bindingVersion"
     ),
     // Async Schema Object
     "schema" -> Set(

@@ -1692,6 +1692,143 @@ object AMFRawValidations {
     override def validations(): Seq[AMFValidation] = result
   }
 
+  object Async20Validations extends AmfProfileValidations {
+    private lazy val result = super.validations() ++ Seq(
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:WebSocketsChannelBinding",
+        "apiBinding:method",
+        "PropertyShape",
+        "sh:path",
+        "sh:in",
+        "GET,POST",
+        "",
+        "'method' for channel binding object must be one of 'GET' or 'POST'",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:MqttOperationBinding",
+        "apiBinding:qos",
+        "PropertyShape",
+        "sh:path",
+        "sh:in",
+        "0,1,2",
+        "",
+        "'qos' for mqtt operation binding object must be one of 0, 1 or 2",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:Amqp091ChannelBinding",
+        "apiBinding:is",
+        "PropertyShape",
+        "sh:path",
+        "sh:in",
+        "routingKey,queue",
+        "",
+        "'is' for amqp 0.9.1 channel binding object must be one of 'queue' or 'routingKey'",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:Amqp091ChannelExchange",
+        "apiBinding:type",
+        "PropertyShape",
+        "sh:path",
+        "sh:in",
+        "topic,direct,fanout,default,headers",
+        "",
+        "'type' for amqp 0.9.1 channel exchange object must be one of 'topic', 'direct', 'fanout', 'default' or 'headers'",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:HttpOperationBinding",
+        "apiBinding:method",
+        "PropertyShape",
+        "sh:path",
+        "sh:in",
+        "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS,CONNECT,TRACE",
+        "",
+        "'method' for http operation binding object must be one of 'GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS','CONNECT','TRACE'",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:HttpOperationBinding",
+        "apiBinding:type",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "",
+        "'type' for http operation binding is required",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:MqttServerBinding",
+        "apiBinding:keepAlive",
+        "PropertyShape",
+        "sh:path",
+        "sh:minInclusive ",
+        "0",
+        "",
+        "'keepAlive' must be greater than 0",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:MqttServerLastWill",
+        "apiBinding:qos",
+        "PropertyShape",
+        "sh:path",
+        "sh:in",
+        "0,1,2",
+        "",
+        "'qos' for mqtt server binding last will object must be one of 0, 1 or 2",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:Amqp091OperationBinding",
+        "apiBinding:deliveryMode",
+        "PropertyShape",
+        "sh:path",
+        "sh:in",
+        "1,2",
+        "",
+        "'deliveryMode' for amqp 0.9.1 operation binding object must be one of 1 or 2",
+        "Violation"
+      ),
+      AMFValidation(
+        AsyncApi20.name,
+        "Domain",
+        "apiBinding:MqttServerBinding",
+        "apiBinding:expiration",
+        "PropertyShape",
+        "sh:path",
+        "sh:minInclusive ",
+        "0",
+        "",
+        "'expiration' must be greater than 0",
+        "Violation"
+      )
+    )
+
+    override def validations(): Seq[AMFValidation] = result
+  }
+
   object Oas30Validations extends OasValidations {
     private lazy val result = super.validations() ++ Seq(
       AMFValidation(
@@ -1871,24 +2008,25 @@ object AMFRawValidations {
   }
 
   val map: Map[ProfileName, Seq[AMFValidation]] = Map(
-    AmfProfile    -> forProfile(AmfProfile),
-    Raml10Profile -> forProfile(Raml10Profile),
-    Raml08Profile -> forProfile(Raml08Profile),
-    RamlProfile   -> forProfile(RamlProfile), // ???
-    Oas20Profile  -> forProfile(Oas20Profile),
-    Oas30Profile  -> forProfile(Oas30Profile),
-    OasProfile    -> forProfile(OasProfile)
+    AmfProfile     -> forProfile(AmfProfile),
+    Raml10Profile  -> forProfile(Raml10Profile),
+    Raml08Profile  -> forProfile(Raml08Profile),
+    RamlProfile    -> forProfile(RamlProfile), // ???
+    Oas20Profile   -> forProfile(Oas20Profile),
+    Oas30Profile   -> forProfile(Oas30Profile),
+    OasProfile     -> forProfile(OasProfile),
+    Async20Profile -> forProfile(Async20Profile)
   )
 
-  def forProfile(p: ProfileName): Seq[AMFValidation] = {
+  private def forProfile(p: ProfileName): Seq[AMFValidation] = {
     p match {
       case Raml10Profile | RamlProfile => Raml10Validations.validations()
       case Raml08Profile               => Raml08Validations.validations()
       case OasProfile | Oas20Profile   => Oas20Validations.validations()
       case Oas30Profile                => Oas30Validations.validations()
+      case Async20Profile              => Async20Validations.validations()
       case AmfProfile                  => AmfValidations.validations()
       case _                           => Nil
     }
   }
-
 }

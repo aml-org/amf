@@ -13,9 +13,14 @@ object ParserSideValidations extends Validations {
   override val specification: String = PARSER_SIDE_VALIDATION
   override val namespace: Namespace  = AmfParser
 
+  val NonEmptyBindingMap = validation(
+    "non-empty-binding-map",
+    "Reserved name binding must have an empty map"
+  )
+
   val ExclusiveLinkTargetError = validation(
-    id = "exclusive-link-target-error",
-    message = "operationRef and operationId are mutually exclusive in a OAS 3.0.0 Link Object"
+    "exclusive-link-target-error",
+    "operationRef and operationId are mutually exclusive in a OAS 3.0.0 Link Object"
   )
 
   val InvalidJsonSchemaType = validation(
