@@ -22,6 +22,7 @@ servers:
       redis: {}
       someCustom:
         and: property
+      x-extension: say server
 
 channels:
   some-channel:
@@ -39,6 +40,7 @@ channels:
       redis: {}
       someCustom:
         and: property
+      x-extension: say channel
 
     description: some channel
     publish:
@@ -54,6 +56,7 @@ channels:
         redis: {}
         someCustom:
           and: property
+        x-extension: say operation
 
       message:
         bindings:
@@ -69,6 +72,7 @@ channels:
           someCustom:
             and:
               the: property
+          x-extension: say message
 
         payload:
           type: string

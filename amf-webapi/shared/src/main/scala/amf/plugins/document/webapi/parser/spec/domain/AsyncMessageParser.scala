@@ -102,6 +102,8 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
     map.key("bindings").foreach { entry =>
       val bindings = AsyncMessageBindingsParser.parse(entry.value.as[YMap], message.id)
       message.setArray(MessageModel.Bindings, bindings, Annotations(entry))
+
+      AnnotationParser(message, map).parseOrphanNode("bindings")
     }
 
     // TODO missing parsing of traits
