@@ -1784,7 +1784,7 @@ Basic primitives for the declaration of vocabularies.
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | name | string | name for an entity | http://a.ml/vocabularies/core#name |
+ | name | string | Name for an entity | http://a.ml/vocabularies/core#name |
  | imports | [[VocabularyReference](#vocabularyreference)] |  | http://www.w3.org/2002/07/owl#imports |
  | externals | [[External](#external)] |  | http://a.ml/vocabularies/meta#externals |
  | declares | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#declares |
