@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Test
+types:
+  User:
+    example:
+      name: Pepe
+      age: 20
+    additionalProperties: true
+    properties:
+      name:
+        type: string
+        required: true
+      age:
+        type: integer
+        required: true

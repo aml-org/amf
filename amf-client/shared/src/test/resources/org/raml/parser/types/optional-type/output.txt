@@ -1,0 +1,18 @@
+#%RAML 1.0
+title: API
+types:
+  SomeType:
+    example:
+      someProperty:
+        someProperty:
+          someProperty: null
+    additionalProperties: true
+    properties:
+      someProperty:
+        anyOf:
+          -
+            type: object
+            (amf-recursive): amf://id#1
+          -
+            type: nil
+        required: true

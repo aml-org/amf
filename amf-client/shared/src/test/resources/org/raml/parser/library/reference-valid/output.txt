@@ -1,0 +1,15 @@
+#%RAML 1.0
+title: Alainn Cosmetics Mobile Orders API
+version: "1"
+mediaType: application/json
+description: hola
+/items:
+  description: List of all items on sale
+  get:
+    responses:
+      "210":
+        body: {}
+    securedBy:
+      - oauth_2_0
+uses:
+  r: libraries/resource-types.raml
