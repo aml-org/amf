@@ -842,8 +842,8 @@ nodeMappings:
   IriTemplate:
     classTerm: apiContract.IriTemplateMapping
     mapping:
-      variable:
-        propertyTerm: apiContract.variable
+      templateVariable:
+        propertyTerm: apiContract.templateVariable
         range: string
       linkExpression:
         propertyTerm: apiContract.linkExpression
@@ -1079,7 +1079,7 @@ nodeMappings:
         propertyTerm: shacl.property
         range: PropertyShape
         allowMultiple: true
-      property1:
+      propertyNames:
         propertyTerm: shacl.propertyNames
         range: DataShapesUnion
       dependencies:
@@ -1912,7 +1912,7 @@ nodeMappings:
         propertyTerm: core.description
         range: string
       identifier:
-        propertyTerm: apiContract.identifier
+        propertyTerm: core.identifier
         range: string
       server:
         propertyTerm: apiContract.server

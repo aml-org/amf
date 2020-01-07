@@ -1,304 +1,211 @@
 #%Vocabulary 1.0
-base: http://a.ml/vocabularies/apiContract#
+base: http://a.ml/vocabularies/apiBinding#
 usage: API binding vocabulary
 uses:
-  doc: aml_doc.yaml
-  core: core.yaml
+  data: data_model.yaml
   shacl: external/shacl.yaml
 classTerms:
-  apiContract.AnnotationTypeDeclarationFragment:
-    displayName: Annotation Type Fragment
-    description: Fragment encoding a RAML annotation type
+  Amqp091ChannelBinding:
+    displayName: Amqp091ChannelBinding
+    extends: ChannelBinding
+  Amqp091ChannelExchange:
+    displayName: Amqp091ChannelExchange
+  Amqp091ChannelQueue:
+    displayName: Amqp091Queue
+  Amqp091MessageBinding:
+    displayName: Amqp091MessageBinding
+    extends: MessageBinding
+  Amqp091OperationBinding:
+    displayName: Amqp091OperationBinding
+    extends: OperationBinding
+  ChannelBinding:
+    displayName: ChannelBinding
+  DynamicBinding:
+    displayName: DynamicBinding
     extends:
-      - doc.Fragment
-      - doc.Unit
-  apiContract.Callback:
-    displayName: Callback
-    description: Model defining the information for a HTTP callback/ webhook
-  apiContract.DomainExtension:
-    displayName: Domain Extension
-    description: |-
-      Extension to the model being parsed from RAML annotation or OpenAPI extensions
-      They must be a DomainPropertySchema (only in RAML) defining them.
-      The DomainPropertySchema might have an associated Data Shape that must validate the extension nested graph.
-      They are parsed as RDF graphs using a default transformation from a set of nested records into RDF.
-  apiContract.Encoding:
-    displayName: Encoding
-  apiContract.EndPoint:
-    displayName: EndPoint
-    description: EndPoint in the API holding a number of executable operations
-  apiContract.Example:
-    displayName: Example
-    description: Example value for a schema inside an API
-  apiContract.Extension:
-    displayName: Extension
-    description: API spec information designed to be applied and compelement the information of a base specification. RAML extensions and overlays are examples of extensions.
+      - ServerBinding
+      - ChannelBinding
+      - OperationBinding
+      - MessageBinding
+  EmptyBinding:
+    displayName: EmptyBinding
     extends:
-      - doc.Document
-      - doc.Fragment
-      - doc.Module
-      - doc.Unit
-      - doc.DocumentExtension
-  apiContract.IriTemplateMapping:
-    displayName: Iri Template
-  apiContract.Message:
-    displayName: Message
-  apiContract.NamedExampleFragment:
-    displayName: Named Example Fragment
-    description: Fragment encoding a RAML named example
+      - ServerBinding
+      - ChannelBinding
+      - OperationBinding
+      - MessageBinding
+  HttpMessageBinding:
+    displayName: HttpMessageBinding
+    extends: MessageBinding
+  HttpOperationBinding:
+    displayName: HttpOperationBinding
+    extends: OperationBinding
+  KafkaMessageBinding:
+    displayName: KafkaMessageBinding
     extends:
-      - doc.Fragment
-      - doc.Unit
-  apiContract.Operation:
-    displayName: Operation
-    description: Action that can be executed using a particular HTTP invocation
-  apiContract.Overlay:
-    displayName: Overlay Model
-    description: Model defining a RAML overlay
-    extends:
-      - doc.Document
-      - doc.Fragment
-      - doc.Module
-      - doc.Unit
-      - doc.DocumentExtension
-  apiContract.Parameter:
-    displayName: Parameter
-    description: Piece of data required or returned by an Operation
-  apiContract.ParametrizedResourceType:
-    displayName: Parametrized Resource Type
-    description: RAML resource type that can accept parameters
-    extends: doc.ParametrizedDeclaration
-  apiContract.ParametrizedTrait:
-    displayName: Parametrized Trait
-    description: RAML trait with declared parameters
-    extends: doc.ParametrizedDeclaration
-  apiContract.Payload:
-    displayName: Payload
-    description: Encoded payload using certain media-type
-  apiContract.PayloadFragment:
-    displayName: Payload Fragment
-    description: Fragment encoding HTTP payload information
-    extends:
-      - doc.Fragment
-      - doc.Unit
-  apiContract.Request:
-    displayName: Request
-    description: Request information for an operation
-    extends: apiContract.Message
-  apiContract.ResourceType:
-    displayName: Resource Type
-    description: Type of document base unit encoding a RAML resource type
-    extends: doc.AbstractDeclaration
-  apiContract.ResourceTypeFragment:
-    displayName: Resource Type Fragment
-    description: Fragment encoding a RAML resource type
-    extends:
-      - doc.Fragment
-      - doc.Unit
-  apiContract.Response:
-    displayName: Response
-    description: Response information for an operation
-    extends: apiContract.Message
-  apiContract.Server:
-    displayName: Server
-    description: Information about the network accessible locations where the API is available
-  apiContract.ShapeExtension:
-    displayName: Shape Extension
-    description: Custom extensions for a data shape definition inside an API definition
-  apiContract.Tag:
-    displayName: Tag
-    description: Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format.
-  apiContract.TemplatedLink:
-    displayName: Templated Link
-    description: Templated link containing URL template and variables mapping
-  apiContract.Trait:
-    displayName: Trait
-    description: Type of document base unit encoding a RAML trait
-    extends: doc.AbstractDeclaration
-  apiContract.TraitFragment:
-    displayName: Trait Fragment
-    description: Fragment encoding a RAML trait
-    extends:
-      - doc.Fragment
-      - doc.Unit
-  apiContract.UserDocumentationFragment:
-    displayName: Documentation Item Fragment
-    description: Fragment encoding a RAML documentation item
-    extends:
-      - doc.Fragment
-      - doc.Unit
-  apiContract.WebAPI:
-    displayName: Web API
-    description: Top level element describing a HTTP API
+      - MessageBinding
+      - OperationBinding
+  KafkaOperationBinding:
+    displayName: KafkaOperationBinding
+    extends: OperationBinding
+  MessageBinding:
+    displayName: MessageBinding
+  MqttMessageBinding:
+    displayName: MqttMessageBinding
+    extends: MessageBinding
+  MqttOperationBinding:
+    displayName: MqttOperationBinding
+    extends: OperationBinding
+  MqttServerBinding:
+    displayName: MqttServerBinding
+    extends: ServerBinding
+  MqttServerLastWill:
+    displayName: MqttServerLastWill
+  OperationBinding:
+    displayName: OperationBinding
+  ServerBinding:
+    displayName: ServerBinding
+  WebSocketsChannelBinding:
+    displayName: WebSocketsChannelBinding
+    extends: ChannelBinding
 propertyTerms:
-  apiContract.accepts:
-    displayName: accepts
-    description: Media-types accepted in a API request
+  ack:
+    displayName: ack
+    description: Whether the consumer should ack the message or not
+    range: boolean
+  autoDelete:
+    displayName: autoDelete
+    description: Whether the exchange should be deleted when the last queue is unbound from it
+    range: boolean
+  bcc:
+    displayName: bcc
+    description: Like cc but consumers will not receive this information
     range: string
-  apiContract.allowEmptyValue:
-    displayName: allow empty value
-    description: Parameter can be passed without value
-    range: boolean
-  apiContract.allowReserved:
-    displayName: allow reserved
-    range: boolean
-  apiContract.binding:
+  binding:
     displayName: binding
-    description: Part of the Request model where the parameter can be encoded (header, path, query param, etc.)
+    description: Bindings for this server
+    range: ServerBinding
+  bindingVersion:
+    displayName: bindingVersion
+    description: The version of this binding
     range: string
-  apiContract.callback:
-    displayName: callback
-    description: associated callbacks
-    range: apiContract.Callback
-  apiContract.contentType:
-    displayName: content type
-    description: Media types returned by a API response
+  cc:
+    displayName: cc
+    description: The routing keys the message should be routed to at the time of publishing
     range: string
-  apiContract.cookieParameter:
-    displayName: cookie parameter
-    range: apiContract.Parameter
-  apiContract.encoding:
-    displayName: encoding
-    description: An array of properties and its encoding information. The key, being the property name, must exist in the schema as a property
-    range: apiContract.Encoding
-  apiContract.endpoint:
-    displayName: endpoint
-    description: End points defined in the API
-    range: apiContract.EndPoint
-  apiContract.examples:
-    displayName: examples
-    description: Examples for a particular domain element
-    range: apiContract.Example
-  apiContract.expects:
-    displayName: expects
-    description: Request information required by the operation
-    range: apiContract.Request
-  apiContract.explode:
-    displayName: explode
+  cleanSession:
+    displayName: cleanSession
+    description: Whether to create a persistent connection or not
     range: boolean
-  apiContract.expression:
-    displayName: expression
-    description: structural location of the information to fulfill the callback
+  clientId:
+    displayName: clientId
+    description: Id of the consumer inside a consumer group
     range: string
-  apiContract.guiSummary:
-    displayName: gui summary
-    description: Human readable description of the operation
-    extends: core.description
+  contentEncoding:
+    displayName: contentEncoding
+    description: MIME encoding for the message content
     range: string
-  apiContract.header:
-    displayName: header
-    description: Parameter passed as a header to an operation for communication models
-    range: apiContract.Parameter
-  apiContract.isAbstract:
-    displayName: isAbstract
-    description: Defines a model as abstract
+  definition:
+    displayName: definition
+    description: definition of the unknown dynamic binding
+    range: data.Node
+  deliveryMode:
+    displayName: deliveryMode
+    description: Delivery mode of the message
+    range: integer
+  durable:
+    displayName: durable
+    description: Whether the exchange should survive broker restarts or not
     range: boolean
-  apiContract.link:
-    displayName: links
-    description: Structural definition of links on the source data shape AST
-    range: apiContract.TemplatedLink
-  apiContract.linkExpression:
-    displayName: link expression
-    description: OAS 3 link expression
+  exchange:
+    displayName: exchange
+    description: Defines the exchange properties
+    range: Amqp091ChannelExchange
+  exclusive:
+    displayName: exclusive
+    description: Whether the queue should be used only by one connection or not
+    range: boolean
+  expiration:
+    displayName: expiration
+    description: TTL (Time-To-Live) for the message
+    range: integer
+  groupId:
+    displayName: groupId
+    description: Id of the consumer group
     range: string
-  apiContract.mapping:
-    displayName: mapping
-    description: Variable mapping for the URL template
-    range: apiContract.IriTemplateMapping
-  apiContract.method:
-    displayName: method
-    description: HTTP method required to invoke the operation
-    range: string
-  apiContract.operationId:
-    displayName: operation ID
-    description: Identifier of the target operation
-    range: string
-  apiContract.paramName:
-    displayName: param name
-    description: Name of a parameter
-    extends: core.name
-    range: string
-  apiContract.parameter:
-    displayName: parameter
-    description: Additional data required or returned by an operation
-    range: apiContract.Parameter
-  apiContract.path:
-    displayName: path
-    description: Path template for an endpoint
-    range: string
-  apiContract.payload:
-    displayName: payload
-    description: Main payload data required or returned by an operation
-    range: apiContract.Payload
-  apiContract.propertyName:
-    displayName: property name
-    range: string
-  apiContract.protocol:
-    displayName: protocol
-    description: The protocol this URL supports for connection
-    range: string
-  apiContract.protocolVersion:
-    displayName: protocolVersion
-    description: The version of the protocol used for connection
-    range: string
-  apiContract.queryString:
-    displayName: query string
-    description: Query string for the communication model
+  headers:
+    displayName: query
+    description: A Schema object containing the definitions for each query parameter
     range: shacl.Shape
-  apiContract.requestBody:
-    displayName: request body
+  is:
+    displayName: is
+    description: Defines what type of channel is it
     range: string
-  apiContract.required:
-    displayName: required
+  keepAlive:
+    displayName: keepAlive
+    description: Interval in seconds of the longest period of time the broker and the client can endure without sending a message
+    range: integer
+  key:
+    displayName: key
+    description: The message key
+    range: string
+  lastWill:
+    displayName: lastWill
+    description: Last Will and Testament configuration
+    range: MqttServerLastWill
+  mandatory:
+    displayName: mandatory
+    description: Whether the message is mandatory or not
     range: boolean
-  apiContract.response:
-    displayName: response
-    description: Response associated to this security scheme
-    range: apiContract.Response
-  apiContract.returns:
-    displayName: returns
-    description: Response data returned by the operation
-    range: apiContract.Response
-  apiContract.schemaMediaType:
-    displayName: schemaMediaType
-    description: Defines the format of the payload schema
+  messageType:
+    displayName: messageType
+    description: Application-specific message type
     range: string
-  apiContract.scheme:
-    displayName: scheme
-    description: URI scheme for the API protocol
+  method:
+    displayName: method
+    description: The HTTP method to use when establishing the connection
     range: string
-  apiContract.server:
-    displayName: servers
-    description: Specific information about the server where the endpoint is accessible
-    range: apiContract.Server
-  apiContract.statusCode:
-    displayName: status code
-    description: HTTP status code returned by a response
+  priority:
+    displayName: priority
+    description: A priority for the message
+    range: integer
+  qos:
+    displayName: qos
+    description: Defines how hard the broker/client will try to ensure that a message is received
+    range: integer
+  query:
+    displayName: query
+    description: A Schema object containing the definitions for each query parameter
+    range: shacl.Shape
+  queue:
+    displayName: queue
+    description: Defines the queue properties
+    range: Amqp091ChannelQueue
+  replyTo:
+    displayName: replyTo
+    description: Name of the queue where the consumer should send the response
     range: string
-  apiContract.style:
-    displayName: style
-    description: Describes how a specific property value will be serialized depending on its type.
+  retain:
+    displayName: retain
+    description: Whether the broker should retain the message or not
+    range: boolean
+  timestamp:
+    displayName: timestamp
+    description: Whether the message should include a timestamp or not
+    range: boolean
+  topic:
+    displayName: topic
+    description: The topic where the Last Will and Testament message will be sent
     range: string
-  apiContract.supportedOperation:
-    displayName: supported operation
-    description: Operations supported by an endpoint
-    range: apiContract.Operation
-  apiContract.tag:
-    displayName: tag
-    description: Additionally custom tagged information
-    range: apiContract.Tag
-  apiContract.template:
-    displayName: template
-    description: URL template for a templated link
+  type:
+    displayName: type
+    description: The type of the exchange
     range: string
-  apiContract.uriParameter:
-    displayName: uri parameter
-    range: apiContract.Parameter
-  apiContract.uriTemplate:
-    displayName: uriTemplate
-    description: URI template that will be used to generate the URI of the parsed nodeds in the graph
+  userId:
+    displayName: userId
+    description: Identifies the user who has sent the message
     range: string
-  apiContract.variable:
-    displayName: variable
-    description: Variables in the URL for the server
-    range: apiContract.Parameter
+  vhost:
+    displayName: vhost
+    description: The virtual host of the exchange
+    range: string

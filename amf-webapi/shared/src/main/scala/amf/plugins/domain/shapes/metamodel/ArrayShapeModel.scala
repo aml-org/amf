@@ -82,7 +82,7 @@ object TupleShapeModel extends DataArrangementShape with DomainElementModel {
     ShapeModel,
     Shapes + "additionalItemsSchema",
     ModelDoc(ModelVocabularies.Shapes,
-             "additional items",
+             "additional items schema",
              "Controls whether it’s valid to have additional items in the array beyond what is defined")
   )
 
