@@ -17,7 +17,11 @@ import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.{ScalarShape, Example, AnyShape}
 import amf.plugins.features.validation.CoreValidations
-import amf.validations.ParserSideValidations.{ExclusivePropertiesSpecification, ExamplesMustBeAMap, InvalidFragmentType}
+import amf.validations.ParserSideValidations.{
+  ExclusivePropertiesSpecification,
+  ExamplesMustBeAMap,
+  InvalidFragmentType
+}
 import org.mulesoft.lexer.Position
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._

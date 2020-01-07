@@ -77,8 +77,7 @@ case class ExtensionLikeParser(root: Root)(implicit override val ctx: ExtensionL
     root.references.map(_.unit).collectFirst { case u @ (_: ExtensionLike[_] | _: Document) => u }
   }
 
-  private def collectAncestorsDeclarationsAndReferences(reference: BaseUnit,
-                                                        collector: RamlWebApiDeclarations): Unit = {
+  private def collectAncestorsDeclarationsAndReferences(reference: BaseUnit, collector: RamlWebApiDeclarations): Unit = {
 
     reference.asInstanceOf[Document].declares.foreach(collector += _)
 

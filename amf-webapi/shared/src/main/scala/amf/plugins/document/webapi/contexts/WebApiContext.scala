@@ -6,6 +6,7 @@ import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.JsonSchemaPlugin
+import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.{JsonSchemaAstIndex, OasWebApiContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration.{
@@ -65,7 +66,7 @@ abstract class WebApiContext(val loc: String,
   }
 
   // TODO this should not have OasWebApiContext as a dependency
-  def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasWebApiContext): Option[AnyShape] = {
+  def parseRemoteJSONPath(fileUrl: String)(implicit ctx: OasLikeWebApiContext): Option[AnyShape] = {
     val referenceUrl =
       fileUrl.split("#") match {
         case s: Array[String] if s.size > 1 => Some(s.last)

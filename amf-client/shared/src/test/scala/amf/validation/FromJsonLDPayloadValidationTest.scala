@@ -16,11 +16,11 @@ class FromJsonLDPayloadValidationTest extends AsyncFunSuite with PlatformSecrets
 
   val testValidations = Map(
     "bad_domain/valid.jsonld"                               -> ExpectedReport(conforms = true, 0, OasProfile),
-    "endpoint/amf.jsonld"                                   -> ExpectedReport(conforms = false, 1, AmfProfile),
+    "endpoint/amf.jsonld"                                   -> ExpectedReport(conforms = true, 0, AmfProfile),
     "endpoint/valid.jsonld"                                 -> ExpectedReport(conforms = true, 0, AmfProfile),
-    "operation/amf.jsonld"                                  -> ExpectedReport(conforms = false, 1, AmfProfile),
+    "operation/amf.jsonld"                                  -> ExpectedReport(conforms = true, 0, AmfProfile),
     "operation/valid.jsonld"                                -> ExpectedReport(conforms = true, 0, AmfProfile),
-    "parameters/amf_properties.jsonld"                      -> ExpectedReport(conforms = false, 3, AmfProfile),
+    "parameters/amf_properties.jsonld"                      -> ExpectedReport(conforms = false, 2, AmfProfile),
     "parameters/amf_empty.jsonld"                           -> ExpectedReport(conforms = false, 2, AmfProfile),
     "parameters/amf_valid.jsonld"                           -> ExpectedReport(conforms = true, 0, AmfProfile),
     "shapes/enum_amf.jsonld"                                -> ExpectedReport(conforms = false, 1, OasProfile),

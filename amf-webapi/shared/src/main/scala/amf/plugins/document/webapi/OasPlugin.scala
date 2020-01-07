@@ -32,7 +32,7 @@ import amf.plugins.document.webapi.resolution.pipelines.{
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.{YDocument, YNode}
 
-sealed trait OasPlugin extends BaseWebApiPlugin {
+sealed trait OasPlugin extends OasLikePlugin {
 
   override val vendors: Seq[String] = Seq(vendor.name, Oas.name)
 
@@ -42,25 +42,6 @@ sealed trait OasPlugin extends BaseWebApiPlugin {
               refs: Seq[ParsedReference],
               wrapped: ParserContext,
               ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
-
-  // We might find $refs in the document pointing to actual shapes in external files in the
-  // right positions of the AST.
-  // We will try to promote these external fragments to data type fragments instead of just inlining them.
-  def promoteFragments(unit: BaseUnit, ctx: OasWebApiContext): BaseUnit = {
-    var oldReferences = unit.references.foldLeft(Map[String, BaseUnit]()) {
-      case (acc: Map[String, BaseUnit], e: BaseUnit) =>
-        acc + (e.location().getOrElse(e.id) -> e)
-    }
-    ctx.declarations.promotedFragments.foreach { promoted =>
-      val key = promoted.location().getOrElse(promoted.id)
-      oldReferences = oldReferences + (key -> promoted)
-    }
-
-    if (oldReferences.values.nonEmpty)
-      unit.withReferences(oldReferences.values.toSeq)
-    else
-      unit
-  }
 
   override def parse(document: Root,
                      parentContext: ParserContext,

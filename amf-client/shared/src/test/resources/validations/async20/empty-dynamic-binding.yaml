@@ -1,0 +1,78 @@
+asyncapi: '2.0.0'
+info:
+  title: Empty and dynamic bindings
+  version: '1.0.0'
+
+servers:
+  theName:
+    url: some.com
+    protocol: amqp
+    bindings:
+      mqtt5: {}
+      http: {}
+      ws: {}
+      kafka: {}
+      amqp: {}
+      amqp1: {}
+      nats: {}
+      jms: {}
+      sns: {}
+      sqs: {}
+      stomp: {}
+      redis: {}
+      someCustom:
+        and: property
+      x-extension: say server
+
+channels:
+  some-channel:
+    bindings:
+      mqtt5: {}
+      http: {}
+      kafka: {}
+      amqp1: {}
+      mqtt: {}
+      nats: {}
+      jms: {}
+      sns: {}
+      sqs: {}
+      stomp: {}
+      redis: {}
+      someCustom:
+        and: property
+      x-extension: say channel
+
+    description: some channel
+    publish:
+      bindings:
+        mqtt5: {}
+        ws: {}
+        amqp1: {}
+        nats: {}
+        jms: {}
+        sns: {}
+        sqs: {}
+        stomp: {}
+        redis: {}
+        someCustom:
+          and: property
+        x-extension: say operation
+
+      message:
+        bindings:
+          mqtt5: {}
+          ws: {}
+          amqp1: {}
+          nats: {}
+          jms: {}
+          sns: {}
+          sqs: {}
+          stomp: {}
+          redis: {}
+          someCustom:
+            and:
+              the: property
+          x-extension: say message
+
+        payload:
+          type: string

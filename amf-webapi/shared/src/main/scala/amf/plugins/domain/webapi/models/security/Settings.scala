@@ -139,6 +139,28 @@ object ApiKeySettings {
   def apply(annotations: Annotations): ApiKeySettings = new ApiKeySettings(Fields(), annotations)
 }
 
+case class HttpApiKeySettings(override val fields: Fields, override val annotations: Annotations)
+    extends Settings(fields, annotations) {
+
+  def name: StrField = fields.field(Name)
+  def in: StrField   = fields.field(In)
+
+  def withName(name: String): this.type = set(Name, name)
+  def withIn(in: String): this.type     = set(In, in)
+
+  override def meta: Obj = HttpApiKeySettingsModel
+
+  /** Value , path + field value that is used to compose the id when the object its adopted */
+  override def componentId: String = "/settings/http-api-key"
+}
+
+object HttpApiKeySettings {
+
+  def apply(): HttpApiKeySettings = apply(Annotations())
+
+  def apply(annotations: Annotations): HttpApiKeySettings = new HttpApiKeySettings(Fields(), annotations)
+}
+
 case class HttpSettings(override val fields: Fields, override val annotations: Annotations)
     extends Settings(fields, annotations) {
 
@@ -188,6 +210,7 @@ trait WithSettings {
   def withOAuth2Settings(): OAuth2Settings
   def withApiKeySettings(): ApiKeySettings
   def withHttpSettings(): HttpSettings
+  def withHttpApiKeySettings(): HttpApiKeySettings
   def withOpenIdConnectSettings(): OpenIdConnectSettings
 
   def id: String

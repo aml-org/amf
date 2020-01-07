@@ -4,7 +4,7 @@ import amf.core.parser._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
+import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
 import amf.plugins.domain.webapi.metamodel.TagModel
 import amf.plugins.domain.webapi.models.Tag
 import amf.validations.ParserSideValidations
@@ -28,7 +28,7 @@ class TagsParser(node: YNode, adopt: Tag => Tag)(implicit ctx: WebApiContext) ex
     map.key("name", TagModel.Name in tag)
     adopt(tag)
     map.key("description", TagModel.Description in tag)
-    map.key("externalDocs", TagModel.Documentation in tag using (OasCreativeWorkParser.parse(_, tag.id)))
+    map.key("externalDocs", TagModel.Documentation in tag using (OasLikeCreativeWorkParser.parse(_, tag.id)))
 
     AnnotationParser(tag, map).parse()
 

@@ -5,7 +5,12 @@ import amf.core.parser.{Annotations, SearchScope}
 import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.domain.webapi.metamodel.security.{ParametrizedSecuritySchemeModel, ScopeModel, OAuth2FlowModel, OpenIdConnectSettingsModel}
+import amf.plugins.domain.webapi.metamodel.security.{
+  ParametrizedSecuritySchemeModel,
+  ScopeModel,
+  OAuth2FlowModel,
+  OpenIdConnectSettingsModel
+}
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations.{ScopeNamesMustBeEmpty, InvalidSecurityRequirementObject}

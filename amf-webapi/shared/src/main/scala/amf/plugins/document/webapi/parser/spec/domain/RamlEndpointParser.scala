@@ -5,7 +5,12 @@ import amf.core.model.DataType
 import amf.core.model.domain.{Shape, AmfArray, DataNode, AmfScalar, ScalarNode => ScalarDataNode}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{IdCounter, AmfStrings, TemplateUri}
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType, Raml08WebApiContext, Raml10WebApiContext}
+import amf.plugins.document.webapi.contexts.parser.raml.{
+  RamlWebApiContext,
+  RamlWebApiContextType,
+  Raml08WebApiContext,
+  Raml10WebApiContext
+}
 import amf.plugins.document.webapi.parser.spec
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
@@ -14,7 +19,12 @@ import amf.plugins.domain.webapi.annotations.ParentEndPoint
 import amf.plugins.domain.webapi.metamodel.EndPointModel._
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, EndPointModel}
 import amf.plugins.domain.webapi.models.{Parameter, EndPoint, Operation}
-import amf.validations.ParserSideValidations.{SlashInUriParameterValues, UnusedBaseUriParameter, DuplicatedEndpointPath, InvalidEndpointPath}
+import amf.validations.ParserSideValidations.{
+  SlashInUriParameterValues,
+  UnusedBaseUriParameter,
+  DuplicatedEndpointPath,
+  InvalidEndpointPath
+}
 import amf.validations.ResolutionSideValidations.NestedEndpoint
 import org.yaml.model._
 

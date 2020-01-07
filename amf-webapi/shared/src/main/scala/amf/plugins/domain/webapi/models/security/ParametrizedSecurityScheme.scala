@@ -47,6 +47,12 @@ case class ParametrizedSecurityScheme(fields: Fields, annotations: Annotations)
     settings
   }
 
+  def withHttpApiKeySettings(): HttpApiKeySettings = {
+    val settings = HttpApiKeySettings()
+    set(SettingsField, settings)
+    settings
+  }
+
   def withHttpSettings(): HttpSettings = {
     val settings = HttpSettings()
     set(SettingsField, settings)

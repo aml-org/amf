@@ -1,0 +1,12 @@
+asyncapi: '2.0.0'
+info:
+  title: Kafka message binding
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          kafka:
+            key: somekey

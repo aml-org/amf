@@ -8,7 +8,12 @@ import amf.core.remote.{Oas, Raml}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.TypeInfo
-import amf.validations.ParserSideValidations.{UserDefinedFacetMatchesAncestorsTypeFacets, UnableToParseShapeExtensions, MissingRequiredUserDefinedFacet, UserDefinedFacetMatchesBuiltInFacets}
+import amf.validations.ParserSideValidations.{
+  UserDefinedFacetMatchesAncestorsTypeFacets,
+  UnableToParseShapeExtensions,
+  MissingRequiredUserDefinedFacet,
+  UserDefinedFacetMatchesBuiltInFacets
+}
 import org.yaml.model.YMap
 
 case class ShapeExtensionParser(shape: Shape,

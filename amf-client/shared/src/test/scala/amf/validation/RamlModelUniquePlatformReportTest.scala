@@ -287,7 +287,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   }
 
   test("Missing discriminator property") {
-    validate("discriminator/invalid/missing-discriminator-property.raml", Some("missing-discriminator-property.report"))
+    validate("discriminator/invalid/missing-discriminator-property.raml",
+             Some("missing-discriminator-property.report"))
   }
 
   test("Invalid payload in RAML 08") {

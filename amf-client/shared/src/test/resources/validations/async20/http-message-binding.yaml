@@ -1,0 +1,16 @@
+asyncapi: '2.0.0'
+info:
+  title: Http message binding
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    publish:
+      message:
+        bindings:
+          http:
+            headers:
+              type: object
+              properties:
+                some:
+                  type: string

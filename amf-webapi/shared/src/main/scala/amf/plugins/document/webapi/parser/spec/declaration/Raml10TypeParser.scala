@@ -1519,7 +1519,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
               )
 
-              map.key("readOnly".asRamlAnnotation, PropertyShapeModel.ReadOnly in property)
             case _ =>
           }
 
@@ -1598,7 +1597,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
       map.key("externalDocs".asRamlAnnotation,
-              AnyShapeModel.Documentation in shape using (OasCreativeWorkParser.parse(_, shape.id)))
+              AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
 
       map.key(
         "xml",
@@ -1614,6 +1613,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       if (map.key("and".asRamlAnnotation).isDefined) AndConstraintParser(map, shape).parse()
       if (map.key("xone".asRamlAnnotation).isDefined) XoneConstraintParser(map, shape).parse()
       if (map.key("not".asRamlAnnotation).isDefined) NotConstraintParser(map, shape).parse()
+      map.key("readOnly".asRamlAnnotation, PropertyShapeModel.ReadOnly in shape)
 
       // Custom shape property definitions, not instances, those are parsed at the end of the parsing process
       map.key(

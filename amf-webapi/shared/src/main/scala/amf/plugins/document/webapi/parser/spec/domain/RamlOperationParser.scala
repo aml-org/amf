@@ -8,7 +8,7 @@ import amf.core.utils.{IdCounter, AmfStrings}
 import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isRamlAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.OasCreativeWorkParser
+import amf.plugins.document.webapi.parser.spec.declaration.OasLikeCreativeWorkParser
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.metamodel.OperationModel.Method
@@ -57,7 +57,7 @@ case class RamlOperationParser(entry: YMapEntry, producer: String => Operation, 
     map.key("oasDeprecated".asRamlAnnotation, OperationModel.Deprecated in operation)
     map.key("summary".asRamlAnnotation, OperationModel.Summary in operation)
     map.key("externalDocs".asRamlAnnotation,
-            OperationModel.Documentation in operation using (OasCreativeWorkParser.parse(_, operation.id)))
+            OperationModel.Documentation in operation using (OasLikeCreativeWorkParser.parse(_, operation.id)))
     map.key("protocols", (OperationModel.Schemes in operation).allowingSingleValue)
     map.key("consumes".asRamlAnnotation, OperationModel.Accepts in operation)
     map.key("produces".asRamlAnnotation, OperationModel.ContentType in operation)

@@ -21,6 +21,7 @@ trait Message extends NamedDomainElement with Linkable {
   def title: StrField               = fields.field(Title)
   def summary: StrField             = fields.field(Summary)
   def bindings: Seq[MessageBinding] = fields.field(Bindings)
+  def headers: Seq[Parameter]       = fields.field(Headers)
 
   def withDescription(description: String): this.type            = set(Description, description)
   def isAbstract(isAbstract: Boolean): this.type                 = set(IsAbstract, isAbstract)
@@ -33,6 +34,7 @@ trait Message extends NamedDomainElement with Linkable {
   def withTitle(title: String): this.type                        = set(Title, title)
   def withSummary(summary: String): this.type                    = set(Summary, summary)
   def withBindings(bindings: Seq[MessageBinding]): this.type     = setArray(Bindings, bindings)
+  def withHeaders(headers: Seq[Parameter]): this.type            = setArray(Headers, headers)
 
   def withPayload(mediaType: Option[String] = None): Payload = {
     val result = Payload()

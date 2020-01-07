@@ -11,7 +11,7 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Oas20Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.exception.UnsupportedVendorException

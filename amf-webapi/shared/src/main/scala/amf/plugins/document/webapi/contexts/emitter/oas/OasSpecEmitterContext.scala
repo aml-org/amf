@@ -8,7 +8,8 @@ import amf.core.model.domain.{DomainElement, Linkable, Shape}
 import amf.core.parser.FieldEntry
 import amf.core.remote.{Oas20, Oas30, Vendor}
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.{RefEmitter, SpecEmitterContext, SpecEmitterFactory, TagToReferenceEmitter}
+import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, OasLikeSpecEmitterFactory}
+import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.{
@@ -20,9 +21,8 @@ import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, Se
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, WebApi}
 import org.yaml.model.YDocument.PartBuilder
 
-import scala.collection.mutable
-
-abstract class OasSpecEmitterFactory(implicit val spec: OasSpecEmitterContext) extends SpecEmitterFactory {
+abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterContext)
+    extends OasLikeSpecEmitterFactory {
   override def tagToReferenceEmitter: (DomainElement, Option[String], Seq[BaseUnit]) => TagToReferenceEmitter =
     OasTagToReferenceEmitter.apply
 
@@ -105,20 +105,20 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) exte
 abstract class OasSpecEmitterContext(eh: ErrorHandler,
                                      refEmitter: RefEmitter = OasRefEmitter,
                                      options: ShapeRenderOptions = ShapeRenderOptions())
-    extends SpecEmitterContext(eh, refEmitter, options) {
+    extends OasLikeSpecEmitterContext(eh, refEmitter, options) {
 
   def schemasDeclarationsPath: String
 
   override def localReference(reference: Linkable): PartEmitter =
     factory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
-  val factory: OasSpecEmitterFactory
-  val jsonPointersMap: mutable.Map[String, String] = mutable.Map() // id -> pointer
+  override val factory: OasSpecEmitterFactory
 
   val typeDefMatcher: OasTypeDefStringValueMatcher = CommonOasTypeDefMatcher
 
   val anyOfKey: String = "union".asOasExtension
 }
+
 final case class JsonSchemaEmitterContext(override val eh: ErrorHandler,
                                           override val options: ShapeRenderOptions = ShapeRenderOptions())
     extends Oas2SpecEmitterContext(eh = eh, options = options) {

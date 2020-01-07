@@ -1,0 +1,42 @@
+asyncapi: '2.0.0'
+info:
+  title: Correlation ID Example
+  version: '1.0.0'
+  description: A cut of the Streetlights API to test Correlation ID
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+channels:
+  smartylighting/streetlights/1/0/event/{streetlightId}/lighting/measured:
+    publish:
+      message:
+        headers:
+          type: object
+          properties:
+            a:
+              type: string
+            b:
+              type: integer
+        payload:
+          type: string
+        schemaFormat: application/schema+json;version=draft-07
+        correlationId:
+          description: some description
+          location: $message.header#/MQMD/CorrelId
+        contentType: application/json
+        name: lightMeasured
+        title: Light measured
+        summary: Inform about environmental lighting conditions of a particular streetlight.
+        description: some description
+        tags:
+          - name: some name
+            description: description of tag
+        externalDocs:
+          url: http://www.google.com
+        examples:
+          someExample: {
+            "key": "value"
+          }
+#        bindings:
+#        traits:

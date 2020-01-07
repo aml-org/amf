@@ -18,9 +18,9 @@ import amf.plugins.document.webapi.model.DataTypeFragment
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
+import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models._
 import org.yaml.model.{YNode, YPart}
 
 /**
@@ -420,11 +420,20 @@ object WebApiDeclarations {
   }
 }
 
-class OasWebApiDeclarations(val asts: Map[String, YNode],
+class OasLikeWebApiDeclarations(val asts: Map[String, YNode],
+                                override val alias: Option[String],
+                                override val errorHandler: ErrorHandler,
+                                override val futureDeclarations: FutureDeclarations)
+    extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
+
+class OasWebApiDeclarations(override val asts: Map[String, YNode],
                             override val alias: Option[String],
                             override val errorHandler: ErrorHandler,
                             override val futureDeclarations: FutureDeclarations)
-    extends WebApiDeclarations(alias, errorHandler = errorHandler, futureDeclarations = futureDeclarations) {}
+    extends OasLikeWebApiDeclarations(asts,
+                                      alias,
+                                      errorHandler = errorHandler,
+                                      futureDeclarations = futureDeclarations) {}
 
 object OasWebApiDeclarations {
   def apply(d: WebApiDeclarations): OasWebApiDeclarations = {
@@ -443,6 +452,27 @@ object OasWebApiDeclarations {
     declarations.securitySchemes = d.securitySchemes
     declarations.responses = d.responses
     declarations // add withs methods?
+  }
+}
+
+class AsyncWebApiDeclarations(override val asts: Map[String, YNode],
+                              override val alias: Option[String],
+                              override val errorHandler: ErrorHandler,
+                              override val futureDeclarations: FutureDeclarations)
+    extends OasLikeWebApiDeclarations(asts,
+                                      alias,
+                                      errorHandler = errorHandler,
+                                      futureDeclarations = futureDeclarations) {}
+
+object AsyncWebApiDeclarations {
+  def apply(d: WebApiDeclarations): AsyncWebApiDeclarations = {
+    val declarations = new AsyncWebApiDeclarations(Map(),
+                                                   d.alias,
+                                                   errorHandler = d.errorHandler,
+                                                   futureDeclarations = d.futureDeclarations)
+
+    // TODO ASYNC complete this
+    declarations
   }
 }
 

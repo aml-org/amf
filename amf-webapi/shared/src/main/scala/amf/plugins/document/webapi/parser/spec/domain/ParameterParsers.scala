@@ -518,32 +518,6 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     OasParameter(result)
   }
 
-  private def parseExplodeField(result: Parameter): Unit = {
-    map.key("explode") match {
-      case Some(entry) =>
-        (ParameterModel.Explode in result).explicit(entry)
-      case None =>
-        val defValue: Option[Boolean] = result.style.option().map {
-          case "form" => true
-          case _      => false
-        }
-        defValue.foreach(result.set(ParameterModel.Explode, _))
-    }
-  }
-
-  private def parseStyleField(result: Parameter): Unit = {
-    map.key("style") match {
-      case Some(entry) =>
-        (ParameterModel.Style in result).explicit(entry)
-      case None =>
-        val defValue: Option[String] = result.binding.option().map {
-          case "query" | "cookie" => "form"
-          case "path" | "header"  => "simple"
-        }
-        defValue.foreach(result.set(ParameterModel.Style, _))
-    }
-  }
-
   private def parseQueryFields(result: Parameter): Unit = {
     result.binding
       .option()

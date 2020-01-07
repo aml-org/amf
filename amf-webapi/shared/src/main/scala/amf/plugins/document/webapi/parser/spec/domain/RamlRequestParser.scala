@@ -10,7 +10,10 @@ import amf.plugins.document.webapi.parser.spec.declaration.{Raml10TypeParser, De
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.models.{Parameter, Request, Payload}
-import amf.validations.ParserSideValidations.{ExclusivePropertiesSpecification, UnsupportedExampleMediaTypeErrorSpecification}
+import amf.validations.ParserSideValidations.{
+  ExclusivePropertiesSpecification,
+  UnsupportedExampleMediaTypeErrorSpecification
+}
 import org.yaml.model.{YType, YMap, YScalar, YNode}
 
 import scala.collection.mutable

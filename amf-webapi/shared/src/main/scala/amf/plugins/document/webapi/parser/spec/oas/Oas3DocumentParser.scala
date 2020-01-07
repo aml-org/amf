@@ -7,7 +7,11 @@ import amf.core.parser._
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.AbstractDeclarationsParser
-import amf.plugins.document.webapi.parser.spec.domain.{OasLinkParser, OasHeaderParametersParser, Oas3NamedExamplesParser}
+import amf.plugins.document.webapi.parser.spec.domain.{
+  OasLinkParser,
+  OasHeaderParametersParser,
+  Oas3NamedExamplesParser
+}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{Parameter, WebApi}
@@ -75,7 +79,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .entries
           .foreach(entry => {
             val requestBody =
-              Oas3RequestParser(entry.value.as[YMap], parent, entry).parse()
+              Oas30RequestParser(entry.value.as[YMap], parent, entry).parse()
             ctx.declarations += requestBody.add(DeclaredElement())
           })
       }
@@ -117,7 +121,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .foreach { callbackEntry =>
             val name = callbackEntry.key.as[YScalar].text
             val callbacks =
-              CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent), name, callbackEntry)
+              Oas30CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent), name, callbackEntry)
                 .parse()
             callbacks.foreach { callback =>
               callback.add(DeclaredElement())
