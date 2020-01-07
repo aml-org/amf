@@ -498,7 +498,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing api_contract") {
-    testVocabulary(api_contract, 29, 44)
+    testVocabulary(api_contract, 29, 45)
   }
 
   test("Vocabularies parsing core") {

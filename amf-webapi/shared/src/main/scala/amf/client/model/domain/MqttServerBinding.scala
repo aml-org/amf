@@ -22,7 +22,7 @@ case class MqttServerBinding(override private[amf] val _internal: InternalMqttSe
   }
 
   def clientId: StrField           = _internal.clientId
-  def clientSession: BoolField     = _internal.clientSession
+  def cleanSession: BoolField      = _internal.cleanSession
   def lastWill: MqttServerLastWill = _internal.lastWill
   def keepAlive: IntField          = _internal.keepAlive
 
@@ -30,8 +30,8 @@ case class MqttServerBinding(override private[amf] val _internal: InternalMqttSe
     _internal.withClientId(clientId)
     this
   }
-  def withClientSession(clientSession: Boolean): this.type = {
-    _internal.withClientSession(clientSession)
+  def withCleanSession(cleanSession: Boolean): this.type = {
+    _internal.withCleanSession(cleanSession)
     this
   }
   def withLastWill(lastWill: MqttServerLastWill): this.type = {
