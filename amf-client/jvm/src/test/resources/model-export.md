@@ -477,7 +477,7 @@ They are parsed as RDF graphs using a default transformation from a set of neste
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | extensionName | string | Name of an entity | http://a.ml/vocabularies/core#extensionName |
+ | extensionName | string | Name of an extension entity | http://a.ml/vocabularies/core#extensionName |
  | definedBy | [CustomDomainProperty](#customdomainproperty) | Definition of an extension to the domain model defined directly by a user in the RAML/OpenAPI document. This can be achieved by using an annotationType in RAML. In OpenAPI thy don't need to       be declared, they can just be used.       This should be mapped to new RDF properties declared directly in the main document or module.       Contrast this extension mechanism with the creation of a propertyTerm in a vocabulary, a more re-usable and generic way of achieving the same functionality. It can be validated using a SHACL shape | http://a.ml/vocabularies/document#definedBy |
  | extension | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://a.ml/vocabularies/document#extension |
  | element | string | Element being extended | http://a.ml/vocabularies/document#element |
@@ -679,6 +679,16 @@ A Fragment is a parsing Unit that encodes a DomainElement
  | describedBy | url | Link to the AML dialect describing a particular subgraph of information | http://a.ml/vocabularies/meta#describedBy |
  | root | boolean | Indicates if the base unit represents the root of the document model obtained from parsing | http://a.ml/vocabularies/document#root |
 
+## HttpApiKeySettings
+Settings for an Http API Key security scheme
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string |  | http://a.ml/vocabularies/core#name |
+ | in | string |  | http://a.ml/vocabularies/security#in |
+ | additionalProperties | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://a.ml/vocabularies/security#additionalProperties |
+ | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
+
 ## HttpMessageBinding
 
 
@@ -818,6 +828,7 @@ Data shape containing nested multi-dimensional collection shapes
  | displayName | string | a display name for the request/response | http://a.ml/vocabularies/core#displayName |
  | title | string | a title for the request/response | http://a.ml/vocabularies/core#title |
  | summary | string | Human readable short description of the request/response | http://a.ml/vocabularies/core#summary |
+ | header | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#header |
  | binding | [[MessageBinding](#messagebinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
  | tag | [[Tag](#tag)] | Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format. | http://a.ml/vocabularies/apiContract#tag |
  | examples | [[Example](#example)] | Example value for a schema inside an API | http://a.ml/vocabularies/apiContract#examples |
@@ -1328,7 +1339,6 @@ Request information for an operation
  | ------ | ------ | ------ | ------ |
  | required | boolean |  | http://a.ml/vocabularies/apiContract#required |
  | parameter | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#parameter |
- | header | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#header |
  | queryString | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiContract#queryString |
  | uriParameter | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#uriParameter |
  | cookieParameter | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#cookieParameter |
@@ -1339,6 +1349,7 @@ Request information for an operation
  | displayName | string | a display name for the request/response | http://a.ml/vocabularies/core#displayName |
  | title | string | a title for the request/response | http://a.ml/vocabularies/core#title |
  | summary | string | Human readable short description of the request/response | http://a.ml/vocabularies/core#summary |
+ | header | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#header |
  | binding | [[MessageBinding](#messagebinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
  | tag | [[Tag](#tag)] | Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format. | http://a.ml/vocabularies/apiContract#tag |
  | examples | [[Example](#example)] | Example value for a schema inside an API | http://a.ml/vocabularies/apiContract#examples |
@@ -1381,7 +1392,6 @@ Response information for an operation
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
  | statusCode | string | HTTP status code returned by a response | http://a.ml/vocabularies/apiContract#statusCode |
- | header | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#header |
  | link | [[TemplatedLink](#templatedlink)] | Templated link containing URL template and variables mapping | http://a.ml/vocabularies/apiContract#link |
  | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
@@ -1390,6 +1400,7 @@ Response information for an operation
  | displayName | string | a display name for the request/response | http://a.ml/vocabularies/core#displayName |
  | title | string | a title for the request/response | http://a.ml/vocabularies/core#title |
  | summary | string | Human readable short description of the request/response | http://a.ml/vocabularies/core#summary |
+ | header | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#header |
  | binding | [[MessageBinding](#messagebinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
  | tag | [[Tag](#tag)] | Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format. | http://a.ml/vocabularies/apiContract#tag |
  | examples | [[Example](#example)] | Example value for a schema inside an API | http://a.ml/vocabularies/apiContract#examples |
