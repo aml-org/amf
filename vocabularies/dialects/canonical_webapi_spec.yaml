@@ -809,6 +809,18 @@ nodeMappings:
         range: string
 
 
+  HttpAPIKeySettings:
+    classTerm: security.HttpApiKeySettings
+    extends: Settings
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      in:
+        propertyTerm: security.in
+        range: string
+
+
   HttpMessageBinding:
     classTerm: apiBinding.HttpMessageBinding
     extends: MessageBinding
@@ -935,6 +947,10 @@ nodeMappings:
       summary:
         propertyTerm: core.summary
         range: string
+      header:
+        propertyTerm: apiContract.header
+        range: Parameter
+        allowMultiple: true
       binding:
         propertyTerm: apiBinding.binding
         range: MessageBinding
@@ -1488,10 +1504,6 @@ nodeMappings:
         propertyTerm: apiContract.parameter
         range: Parameter
         allowMultiple: true
-      header:
-        propertyTerm: apiContract.header
-        range: Parameter
-        allowMultiple: true
       queryString:
         propertyTerm: apiContract.queryString
         range: DataShapesUnion
@@ -1522,10 +1534,6 @@ nodeMappings:
       statusCode:
         propertyTerm: apiContract.statusCode
         range: string
-      header:
-        propertyTerm: apiContract.header
-        range: Parameter
-        allowMultiple: true
       links:
         propertyTerm: apiContract.link
         range: TemplatedLink
