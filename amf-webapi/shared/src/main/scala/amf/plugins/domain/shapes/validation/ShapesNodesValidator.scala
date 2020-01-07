@@ -30,31 +30,16 @@ object ShapesNodesValidator {
   }
 
   private def validateEnums(validationCandidates: Seq[ValidationCandidate], severity: String, env: Environment) = {
-    val bkpMap: mutable.Map[Shape, Value] = mutable.Map()
     val enumsCandidates = validationCandidates
       .groupBy(_.shape)
       .keys
       .flatMap({
         case s: Shape if s.values.nonEmpty =>
-          val value: Value = s.fields.entry(ShapeModel.Values).get.value
-          bkpMap.put(s, value)
-          val cs = s.values.map(v => ValidationCandidate(s, PayloadFragment(v, defaultMediaTypeFor(v))))
-          s.fields.removeField(ShapeModel.Values)
-          cs
+          s.values.map(v => ValidationCandidate(s, PayloadFragment(v, defaultMediaTypeFor(v))))
         case _ => Nil
       })
     //call to validation
-    PayloadValidationPluginsHandler.validateAll(enumsCandidates.toSeq, severity, env).map { r =>
-      restoreEnums(bkpMap)
-      r
-    }
-  }
-
-  private def restoreEnums(bkpMap: mutable.Map[Shape, Value]): Unit = {
-    bkpMap.keys.foreach { s =>
-      val e = bkpMap(s)
-      s.set(ShapeModel.Values, e.value, e.annotations)
-    }
+    PayloadValidationPluginsHandler.validateAll(enumsCandidates.toSeq, severity, env)
   }
 
   def defaultMediaTypeFor(dataNode: DataNode): String = dataNode match {
