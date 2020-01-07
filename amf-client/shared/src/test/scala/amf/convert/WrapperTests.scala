@@ -514,7 +514,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing security_model") {
-    testVocabulary(security_model, 12, 19)
+    testVocabulary(security_model, 13, 19)
   }
 
   test("Parsing text document with base url") {
