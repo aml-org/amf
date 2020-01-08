@@ -7,7 +7,7 @@ import amf.plugins.domain.webapi.metamodel.security._
 
 object Oas20SecuritySchemeObject extends DialectNode {
   override def name: String            = "SecuritySchemeNode"
-  override def nodeTypeMapping: String = SecuritySchemeModel.`type`.head.iri()
+  override def nodeTypeMapping: String = SettingsModel.`type`.head.iri()
   override def properties: Seq[PropertyMapping] = Seq(
     PropertyMapping()
       .withId(OAS20Dialect.DialectLocation + "#/declarations/securityScheme/type")
@@ -167,7 +167,7 @@ object Oauth2FlowObject extends DialectNode with Oauth2Properties {
 
 object Oas30SecuritySchemeObject extends DialectNode {
   override def name: String            = "SecuritySchemeNode"
-  override def nodeTypeMapping: String = SecuritySchemeModel.`type`.head.iri()
+  override def nodeTypeMapping: String = SettingsModel.`type`.head.iri()
   override def properties: Seq[PropertyMapping] = Seq(
     PropertyMapping()
       .withId(OAS30Dialect.DialectLocation + "#/declarations/securityScheme/type")

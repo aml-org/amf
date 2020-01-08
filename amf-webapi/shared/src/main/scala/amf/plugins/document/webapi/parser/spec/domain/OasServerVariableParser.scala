@@ -5,8 +5,8 @@ import amf.plugins.domain.webapi.models.{Server, Parameter}
 import amf.validations.ParserSideValidations.ServerVariableMissingDefault
 import amf.core.parser.YMapOps
 
-case class OasServerVariableParser(entry: YMapEntry, server: Server)(implicit override val ctx: OasWebApiContext)
-    extends OasLikeServerVariableParser(entry, server) {
+case class OasServerVariableParser(entry: YMapEntry, parent: String)(implicit override val ctx: OasWebApiContext)
+    extends OasLikeServerVariableParser(entry, parent) {
 
   override protected def parseMap(variable: Parameter, map: YMap): Unit = {
     requiredDefaultField(variable, map)

@@ -22,8 +22,8 @@ trait AsyncSpecAwareContext extends SpecAwareContext {}
 trait AsyncSpecVersionFactory extends OasLikeSpecVersionFactory {}
 
 case class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends AsyncSpecVersionFactory {
-  override def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser =
-    domain.AsyncServerVariableParser(entry, server)(ctx)
+  override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
+    domain.AsyncServerVariableParser(entry, parent)(ctx)
 
   override def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser =
     AsyncOperationParser(entry, producer)(ctx)

@@ -46,8 +46,8 @@ case class Oas2VersionFactory()(implicit override val ctx: OasWebApiContext) ext
                                nameGenerator: IdCounter): OasParameterParser =
     Oas2ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 
-  override def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser =
-    OasServerVariableParser(entry, server)(ctx)
+  override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
+    OasServerVariableParser(entry, parent)(ctx)
 
   override def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser =
     Oas20OperationParser(entry, producer)(ctx)
@@ -76,8 +76,8 @@ case class Oas3VersionFactory()(implicit override val ctx: OasWebApiContext) ext
                                nameGenerator: IdCounter): OasParameterParser =
     new Oas3ParameterParser(entryOrNode, parentId, nameNode, nameGenerator)(ctx)
 
-  override def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser =
-    OasServerVariableParser(entry, server)(ctx)
+  override def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser =
+    OasServerVariableParser(entry, parent)(ctx)
 
   override def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser =
     Oas30OperationParser(entry, producer)(ctx)
