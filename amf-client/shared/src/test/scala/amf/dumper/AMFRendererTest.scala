@@ -136,7 +136,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |    ],
         |    "http://a.ml/vocabularies/document#version": [
         |      {
-        |        "@value": "2.0.0"
+        |        "@value": "2.0.1"
         |      }
         |    ],
         |    "http://a.ml/vocabularies/document#root": [
@@ -421,7 +421,7 @@ class AMFRendererTest extends AsyncFunSuite with PlatformSecrets with AMFUnitFix
         |    ],
         |    "http://a.ml/vocabularies/document#version": [
         |      {
-        |        "@value": "2.0.0"
+        |        "@value": "2.0.1"
         |      }
         |    ],
         |    "http://a.ml/vocabularies/document#root": [
