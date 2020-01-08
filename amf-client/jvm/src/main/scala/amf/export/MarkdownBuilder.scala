@@ -20,6 +20,10 @@ class MarkdownBuilder(val current: String = "") {
     new MarkdownBuilder(current + "\n" + "---")
   }
 
+  def addBullet(text: String): MarkdownBuilder = {
+    new MarkdownBuilder(current + "\n" + s"* $text")
+  }
+
   def addRow(cols: List[String]): MarkdownBuilder = {
     val text = cols.fold("") { (acc, curr) =>
       acc + " | " + curr.replace("\n", " ")
