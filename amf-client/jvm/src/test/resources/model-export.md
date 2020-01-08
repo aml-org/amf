@@ -225,7 +225,7 @@ Base class for all shapes stored in the graph model
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -284,7 +284,7 @@ Shape that contains a nested collection of data shapes
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -389,7 +389,7 @@ It can be validated using a SHACL shape
  | ------ | ------ | ------ | ------ |
  | domain | [url] | RDFS domain property | http://www.w3.org/2000/01/rdf-schema#domain |
  | schema | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/shapes#schema |
- | name | string | name for an entity | http://a.ml/vocabularies/core#name |
+ | name | string | Name for an entity | http://a.ml/vocabularies/core#name |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
@@ -706,7 +706,7 @@ A Document that extends a target document, overwriting part of the information o
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | displayName | string | Display name for an external model | http://a.ml/vocabularies/core#displayName |
+ | displayName | string | The display name of the item | http://a.ml/vocabularies/core#displayName |
  | base | string | Base URI for the external model | http://a.ml/vocabularies/meta#base |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
@@ -765,7 +765,7 @@ Shape describing data uploaded in an API request
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -914,7 +914,7 @@ Data shape containing nested multi-dimensional collection shapes
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -1044,7 +1044,7 @@ Data shape representing the null/nil value in the input schema
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -1104,7 +1104,7 @@ Shape that validates a record of fields, like a JS object
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -1399,7 +1399,7 @@ Constraint over a property in a data shape.
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -1437,7 +1437,7 @@ Recursion on a Shape structure, used when expanding a shape and finding the cano
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -1564,7 +1564,7 @@ Data shape describing a scalar value in the input data model, reified as an scal
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -1600,7 +1600,7 @@ Raw schema that cannot be parsed using AMF shapes model
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -1650,7 +1650,7 @@ Authentication and access control mechanism defined in an API
  | ------ | ------ | ------ | ------ |
  | name | string | Name for the security scheme | http://a.ml/vocabularies/core#name |
  | type | string | Type of security scheme | http://a.ml/vocabularies/security#type |
- | displayName | string | Human readable name for an entity | http://a.ml/vocabularies/core#displayName |
+ | displayName | string | Human readable name for the term | http://a.ml/vocabularies/core#displayName |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | header | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#header |
  | parameter | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#parameter |
@@ -1715,7 +1715,7 @@ Shapes can be recursive and inherit from other shapes.
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -1818,7 +1818,7 @@ Data shape containing a multi-valued collection of shapes
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
@@ -1868,7 +1868,7 @@ Shape representing the union of many alternative data shapes
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
  | recursive | boolean | Indication taht this kind of linkable element can support recursive links | http://a.ml/vocabularies/document#recursive |
  | name | string | Name for a data shape | http://www.w3.org/ns/shacl#name |
- | name | string | Name for a data shape | http://a.ml/vocabularies/core#name |
+ | name | string | Human readable name for the term | http://a.ml/vocabularies/core#name |
  | description | string | Human readable description of an element | http://a.ml/vocabularies/core#description |
  | defaultValue | [DataNode](#datanode) | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#defaultValue |
  | in | [[DataNode](#datanode)] | Base class for all data nodes parsed from the data structure | http://www.w3.org/ns/shacl#in |
