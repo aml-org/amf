@@ -69,6 +69,10 @@ class ValidAsyncModelParserTest extends ValidModelTest {
     checkValid("ws-channel-binding.yaml", Async20Profile)
   }
 
+  test("Rpc server example") {
+    checkValid("rpc-server.yaml", Async20Profile)
+  }
+
   override val basePath: String = "file://amf-client/shared/src/test/resources/validations/async20/"
   override val hint: Hint       = AsyncYamlHint
 }
