@@ -13,7 +13,9 @@ import amf.plugins.domain.webapi.models.Request
   */
 object RequestModel extends DomainElementModel with ParametersFieldModel with MessageModel with KeyField {
 
-  val Required = Field(Bool, ApiContract + "required", ModelDoc(ModelVocabularies.ApiContract, "required", ""))
+  val Required = Field(Bool,
+                       ApiContract + "required",
+                       ModelDoc(ModelVocabularies.ApiContract, "required", "Marks the parameter as required"))
 
   val CookieParameters =
     Field(Array(ParameterModel),
