@@ -39,8 +39,8 @@ object ModelExporter {
 }
 
 object ModelExporterProgram {
-  val fileName = "model-export.md"
-  val basePath = "."
+  val fileName = "model.md"
+  val basePath = "documentation"
 
   def main(args: Array[String]): Unit = {
     ModelExporter.exportTo(s"${basePath}/${fileName}")
