@@ -7,8 +7,8 @@ import amf.validations.ParserSideValidations
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.core.parser.YMapOps
 
-case class AsyncServerVariableParser(entry: YMapEntry, server: Server)(implicit override val ctx: AsyncWebApiContext)
-    extends OasLikeServerVariableParser(entry, server) {
+case class AsyncServerVariableParser(entry: YMapEntry, parent: String)(implicit override val ctx: AsyncWebApiContext)
+    extends OasLikeServerVariableParser(entry, parent) {
 
   override protected def parseMap(variable: Parameter, map: YMap): Unit = {
     super.parseMap(variable, map)

@@ -18,7 +18,7 @@ import org.yaml.model.{YMap, YScalar, YNode, YMapEntry}
 import scala.collection.mutable
 
 trait OasLikeSpecVersionFactory extends SpecVersionFactory {
-  def serverVariableParser(entry: YMapEntry, server: Server): OasLikeServerVariableParser
+  def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser
   // TODO ASYNC complete this
   def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser
   def endPointParser(entry: YMapEntry,
