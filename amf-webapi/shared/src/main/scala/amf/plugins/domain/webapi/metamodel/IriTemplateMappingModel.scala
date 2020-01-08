@@ -14,11 +14,13 @@ object IriTemplateMappingModel extends DomainElementModel {
 
   val TemplateVariable = Field(
     Str,
-    ApiContract + "variable",
-    ModelDoc(ModelVocabularies.ApiContract, "variable", "Variable defined inside an URL tempplate"))
+    ApiContract + "templateVariable",
+    ModelDoc(ModelVocabularies.ApiContract, "templateVariable", "Variable defined inside an URL template"))
 
   val LinkExpression =
-    Field(Str, ApiContract + "linkExpression", ModelDoc(ModelVocabularies.ApiContract, "link expression", "OAS 3 link expression"))
+    Field(Str,
+          ApiContract + "linkExpression",
+          ModelDoc(ModelVocabularies.ApiContract, "link expression", "OAS 3 link expression"))
 
   override val `type`: List[ValueType] = ApiContract + "IriTemplateMapping" :: DomainElementModel.`type`
 

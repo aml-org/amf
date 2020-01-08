@@ -25,13 +25,12 @@ object ServerModel extends DomainElementModel with NameFieldSchema with Descript
   val Protocol = Field(
     Str,
     ApiContract + "protocol",
-    ModelDoc(ModelVocabularies.Core, "protocol", "The protocol this URL supports for connection")) // TODO should it be scheme?
+    ModelDoc(ModelVocabularies.ApiContract, "protocol", "The protocol this URL supports for connection"))
 
-  val ProtocolVersion = Field(Str,
-                              ApiContract + "protocolVersion",
-                              ModelDoc(ModelVocabularies.Core,
-                                       "protocolVersion",
-                                       "The version of the protocol used for connection")) // TODO should it be scheme?
+  val ProtocolVersion = Field(
+    Str,
+    ApiContract + "protocolVersion",
+    ModelDoc(ModelVocabularies.ApiContract, "protocolVersion", "The version of the protocol used for connection"))
 
   val Security = Field(
     Array(SecurityRequirementModel),

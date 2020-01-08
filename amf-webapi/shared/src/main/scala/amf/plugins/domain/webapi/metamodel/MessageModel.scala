@@ -32,9 +32,9 @@ trait MessageModel
 
   val DisplayName = Field(Str,
                           Core + "displayName",
-                          ModelDoc(ModelVocabularies.Core, "displayName", "a display name for the request/response"))
+                          ModelDoc(ModelVocabularies.Core, "displayName", "Human readable name for the term"))
 
-  val Title = Field(Str, Core + "title", ModelDoc(ModelVocabularies.Core, "title", "a title for the request/response"))
+  val Title = Field(Str, Core + "title", ModelDoc(ModelVocabularies.Core, "title", "Title of the item"))
 
   val Summary = Field(
     Str,

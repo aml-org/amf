@@ -502,7 +502,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing core") {
-    testVocabulary(core, 4, 19)
+    testVocabulary(core, 4, 20)
   }
 
   test("Vocabularies parsing data_model") {
@@ -514,7 +514,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing security_model") {
-    testVocabulary(security_model, 12, 19)
+    testVocabulary(security_model, 13, 19)
   }
 
   test("Parsing text document with base url") {

@@ -15,7 +15,7 @@ object AsyncServerBindingsParser extends AsyncBindingsParser {
     val map     = entry.value.as[YMap]
 
     map.key("clientId", MqttServerBindingModel.ClientId in binding)
-    map.key("cleanSession", MqttServerBindingModel.ClientSession in binding)
+    map.key("cleanSession", MqttServerBindingModel.CleanSession in binding)
     map.key("keepAlive", MqttServerBindingModel.KeepAlive in binding)
 
     parseLastWill(binding, map)

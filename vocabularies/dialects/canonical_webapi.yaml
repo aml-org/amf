@@ -89,10 +89,6 @@ nodeMappings:
         propertyTerm: apiContract.parameter
         range: Parameter
         allowMultiple: true
-      header:
-        propertyTerm: apiContract.header
-        range: Parameter
-        allowMultiple: true
       queryString:
         propertyTerm: apiContract.queryString
         range: DataShapesUnion
@@ -126,6 +122,10 @@ nodeMappings:
       summary:
         propertyTerm: core.summary
         range: string
+      header:
+        propertyTerm: apiContract.header
+        range: Parameter
+        allowMultiple: true
       binding:
         propertyTerm: apiBinding.binding
         range: MessageBinding
@@ -366,6 +366,10 @@ nodeMappings:
       summary:
         propertyTerm: core.summary
         range: string
+      header:
+        propertyTerm: apiContract.header
+        range: Parameter
+        allowMultiple: true
       binding:
         propertyTerm: apiBinding.binding
         range: MessageBinding
@@ -641,7 +645,7 @@ nodeMappings:
         propertyTerm: core.description
         range: string
       identifier:
-        propertyTerm: apiContract.identifier
+        propertyTerm: core.identifier
         range: string
       server:
         propertyTerm: apiContract.server
@@ -974,8 +978,8 @@ nodeMappings:
   IriTemplate:
     classTerm: apiContract.IriTemplateMapping
     mapping:
-      variable:
-        propertyTerm: apiContract.variable
+      templateVariable:
+        propertyTerm: apiContract.templateVariable
         range: string
       linkExpression:
         propertyTerm: apiContract.linkExpression
@@ -1137,6 +1141,17 @@ nodeMappings:
         range: string
       bearerFormat:
         propertyTerm: security.bearerFormat
+        range: string
+
+
+  HttpAPIKeySettings:
+    classTerm: security.HttpApiKeySettings
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      in:
+        propertyTerm: security.in
         range: string
 
 
@@ -1351,10 +1366,6 @@ nodeMappings:
       statusCode:
         propertyTerm: apiContract.statusCode
         range: string
-      header:
-        propertyTerm: apiContract.header
-        range: Parameter
-        allowMultiple: true
       links:
         propertyTerm: apiContract.link
         range: TemplatedLink
@@ -1381,6 +1392,10 @@ nodeMappings:
       summary:
         propertyTerm: core.summary
         range: string
+      header:
+        propertyTerm: apiContract.header
+        range: Parameter
+        allowMultiple: true
       binding:
         propertyTerm: apiBinding.binding
         range: MessageBinding
@@ -1537,7 +1552,7 @@ nodeMappings:
         propertyTerm: shacl.property
         range: PropertyShape
         allowMultiple: true
-      property1:
+      propertyNames:
         propertyTerm: shacl.propertyNames
         range: DataShapesUnion
       dependencies:
