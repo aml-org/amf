@@ -1461,7 +1461,7 @@ Request information for an operation
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
- | required | boolean |  | http://a.ml/vocabularies/apiContract#required |
+ | required | boolean | Marks the parameter as required | http://a.ml/vocabularies/apiContract#required |
  | parameter | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#parameter |
  | queryString | [Shape](#shape) | Base class for all shapes. Shapes are Domain Entities that define constraints over parts of a data graph. They can be used to define and enforce schemas for the data graph information through SHACL. Shapes can be recursive and inherit from other shapes. | http://a.ml/vocabularies/apiContract#queryString |
  | uriParameter | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#uriParameter |
