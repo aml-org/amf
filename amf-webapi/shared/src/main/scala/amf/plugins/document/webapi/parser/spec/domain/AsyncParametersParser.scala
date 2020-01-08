@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.SynthesizedField
+import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -32,6 +34,10 @@ case class AsyncParameterParser(parentId: String, definitionEntry: YMapEntry)(im
     parseSchema(map, param)
     map.key("description", ParameterModel.Description in param)
     map.key("location", ParameterModel.Binding in param)
+
+    if (param.binding.isNullOrEmpty) {
+      param.set(ParameterModel.Binding, AmfScalar("path"), Annotations() += SynthesizedField())
+    }
 
     AnnotationParser(param, map).parse()
     ctx.closedShape(param.id, map, "parameter")
