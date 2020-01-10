@@ -23,11 +23,10 @@
           {
             "in": "body",
             "name": "ローン申し込み",
-            "description": "ローン申し込みオブジェクトを入力して、ローンの詳細をサービスに保存します",
-            "required": true,
             "schema": {
               "$ref": "#/definitions/車両"
-            }
+            },
+            "required": true
           }
         ],
         "responses": {
@@ -71,7 +70,7 @@
           "format": "int32"
         },
         "車両詳細": {
-          "$ref": "#/definitions/車両詳細"
+          "type": "object"
         }
       },
       "example": {
