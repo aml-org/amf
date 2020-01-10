@@ -472,6 +472,7 @@ object AsyncWebApiDeclarations {
                                                    futureDeclarations = d.futureDeclarations)
 
     // TODO ASYNC complete this
+    declarations.securitySchemes = d.securitySchemes
     declarations
   }
 }

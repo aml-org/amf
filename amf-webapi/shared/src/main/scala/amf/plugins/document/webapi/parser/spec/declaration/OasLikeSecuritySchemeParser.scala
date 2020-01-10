@@ -1,4 +1,5 @@
 package amf.plugins.document.webapi.parser.spec.declaration
+
 import amf.core.annotations.LexicalInformation
 import amf.core.parser.{Annotations, Range, YMapOps, SearchScope}
 import org.yaml.model.{YType, YMap, YPart, YNode}
@@ -19,7 +20,34 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
     implicit ctx: OasLikeWebApiContext)
     extends SecuritySchemeParser(part, adopt) {
 
-  def crossSecurityWarnings(scheme: SecurityScheme): Unit
+  override def parse(): SecurityScheme = {
+    val node = getNode
+
+    ctx.link(node) match {
+      case Left(link) => parseReferenced(link, node, adopt)
+      case Right(value) =>
+        val scheme = adopt(SecurityScheme(part))
+        val map    = value.as[YMap]
+
+        parseType(map, scheme)
+
+        map.key("displayName".asOasExtension, SecuritySchemeModel.DisplayName in scheme)
+        map.key("description", SecuritySchemeModel.Description in scheme)
+
+        RamlDescribedByParser("describedBy".asOasExtension, map, scheme)(toRaml(ctx)).parse()
+
+        ctx.factory
+          .securitySettingsParser(map, scheme)
+          .parse()
+          .map { settings =>
+            scheme.set(SecuritySchemeModel.Settings, settings, Annotations(map))
+          }
+
+        AnnotationParser(scheme, map).parse()
+
+        scheme
+    }
+  }
 
   def parseType(map: YMap, scheme: SecurityScheme): Unit = {
     map.key("type", SecuritySchemeModel.Type in scheme)
@@ -31,6 +59,15 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
           scheme.id,
           Some(SecuritySchemeModel.Type.value.iri()),
           s"RAML 1.0 extension security scheme type '$s' detected in ${ctx.vendor.name} spec",
+          scheme.`type`.annotations().find(classOf[LexicalInformation]),
+          Some(ctx.rootContextDocument)
+        )
+      case Some("OAuth 1.0" | "OAuth 2.0" | "Basic Authentication" | "Digest Authentication" | "Pass Through") =>
+        ctx.eh.warning(
+          CrossSecurityWarningSpecification,
+          scheme.id,
+          Some(SecuritySchemeModel.Type.value.iri()),
+          s"RAML 1.0 security scheme type detected in OAS 2.0 spec",
           scheme.`type`.annotations().find(classOf[LexicalInformation]),
           Some(ctx.rootContextDocument)
         )
@@ -55,7 +92,6 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
     )
 
     scheme.normalizeType() // normalize the common type
-
   }
 
   def parseReferenced(parsedUrl: String, node: YNode, adopt: SecurityScheme => SecurityScheme): SecurityScheme = {
