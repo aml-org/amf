@@ -4,15 +4,14 @@ import java.io.{File, FileWriter}
 
 import amf.`export`.{Context, ExportableModelAdapter, MarkdownExporter, ModelTraverser}
 import amf.core.metamodel.Obj
-import amf.plugins.domain.shapes.metamodel.ArrayShapeModel
 import org.reflections.Reflections
 
 object ModelExporter {
 
   def exportText(startingModels: List[Obj] = getModelsByReflection): String = {
-    println(s"Starting model export...")
+//    println(s"Starting model export...")
     val models = ModelTraverser.traverse(startingModels, new Context())
-    println("Traversed depended model...")
+//    println("Traversed depended model...")
     val exportable = ExportableModelAdapter.adapt(models)
     MarkdownExporter.exportToMarkdown("AMF Model Documentation", exportable)
   }
@@ -22,7 +21,7 @@ object ModelExporter {
     withWriter(path) { writer =>
       writer.write(exportedText)
     }
-    println("Exported OK...")
+//    println("Exported OK...")
   }
 
   def getModelsByReflection: List[Obj] = {
