@@ -3,7 +3,6 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.domain.shapes.metamodel.ArrayShapeModel
 import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape}
 
 class AddItemsToArrayType()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
@@ -17,14 +16,14 @@ class AddItemsToArrayType()(override implicit val errorHandler: ErrorHandler) ex
         })
       model
     } catch {
-      case throwable: Throwable => model
+      case _: Throwable => model
     }
   }
 
   private def setArrayType(array: ArrayShape): Unit = {
     Option(array.items) match {
-      case Some(some) => // ignore
-      case None       => array.withItems(AnyShape())
+      case None => array.withItems(AnyShape())
+      case _    => // ignore
     }
   }
 }

@@ -1,12 +1,10 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility
 
 import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
-import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.resolution.pipelines.Raml10ResolutionPipeline
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.raml.{KeepOnlyWebApiServers, _}
-import amf.plugins.domain.webapi.models.{EndPoint, Operation}
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.raml._
 import amf.{ProfileName, RamlProfile}
 
 class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
@@ -25,9 +23,7 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
     new ShapeFormatAdjuster(),
     new CustomAnnotationDeclaration(),
     new PushSingleOperationPathParams(),
-    new UnionsAsTypeExpressions(),
-    new KeepOnlyWebApiServers(),
-    new KeepFirstWebApiServerUrl()
+    new UnionsAsTypeExpressions()
   )
 
   override def profileName: ProfileName = RamlProfile

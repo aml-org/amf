@@ -289,6 +289,16 @@ object Oas2Syntax extends SpecSyntax {
       "namespace",
       "prefix"
     ),
+    "server" -> Set(
+      "url",
+      "description",
+      "variables"
+    ),
+    "serverVariable" -> Set(
+      "enum",
+      "default",
+      "description"
+    ),
     "pathItem" -> Set(
       "get",
       "put",

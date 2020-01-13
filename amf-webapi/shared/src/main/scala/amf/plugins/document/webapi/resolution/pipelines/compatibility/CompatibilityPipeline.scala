@@ -11,8 +11,8 @@ class CompatibilityPipeline(override val eh: ErrorHandler, targetProfile: Profil
 
   override val steps: Seq[ResolutionStage] = profileName match {
     case RamlProfile | Raml10Profile | Raml08Profile => new RamlCompatibilityPipeline(eh).steps
-    case OasProfile | Oas20Profile                   => new OasCompatibilityPipeline(eh).steps
     case Oas30Profile                                => new Oas3CompatibilityPipeline(eh).steps
+    case OasProfile | Oas20Profile                   => new OasCompatibilityPipeline(eh).steps
     case _ =>
       eh.violation(ResolutionValidation, "", "No compatibility pipeline registered to target profile")
       Nil

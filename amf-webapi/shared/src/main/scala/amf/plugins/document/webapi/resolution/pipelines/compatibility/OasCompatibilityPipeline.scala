@@ -14,7 +14,7 @@ class OasCompatibilityPipeline(override val eh: ErrorHandler) extends Resolution
 
   override val steps: Seq[ResolutionStage] = resolution.steps ++ Seq(
     new LowercaseSchemes(),
-    new SecuritySettingsMapper(),
+    new Oas20SecuritySettingsMapper(),
     new MandatoryDocumentationUrl(),
     new MandatoryResponses(),
     new MandatoryPathParameters(),
