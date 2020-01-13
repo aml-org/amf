@@ -1,78 +1,76 @@
 package amf.plugins.document.webapi.parser.spec.async
 import amf.core.Root
-import amf.core.annotations.SourceVendor
+import amf.core.annotations.{DeclaredElement, SourceVendor}
 import amf.core.model.document.Document
-import amf.core.model.domain.{DomainElement, AmfArray, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
-import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
-import amf.plugins.domain.webapi.models.{EndPoint, WebApi}
-import org.yaml.model.{YMap, YMapEntry, YType}
 import amf.plugins.document.webapi.parser.spec.domain.{AsyncServersParser, OasLikeInformationParser}
 import amf.plugins.domain.webapi.metamodel.WebApiModel
-import amf.plugins.domain.webapi.metamodel.security.{ParametrizedSecuritySchemeModel, SecuritySchemeModel}
-import amf.validations.ParserSideValidations
-import amf.validations.ParserSideValidations.{InvalidIdentifier, InvalidComponents}
+import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
+import amf.plugins.domain.webapi.models.{EndPoint, WebApi}
+import amf.validations.ParserSideValidations.InvalidIdentifier
+import org.yaml.model.{YMap, YMapEntry, YType}
 
 import scala.collection.mutable
-import scala.collection.mutable.ListBuffer
 
 abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiContext) extends AsyncApiSpecParser {
 
   def parseDocument(): Document = parseDocument(Document())
 
+  // TODO rewrite this reusing other parser when doing APIMF-1758
   private def parseDocument[T <: Document](document: T): T = {
     document.adopted(root.location).withLocation(root.location)
 
     val map = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
-    val api          = parseWebApi(map).add(SourceVendor(ctx.vendor))
-    val declarations = parseDeclarations(map)
+    parseDeclarations(map)
+
+    val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
     document
       .withEncodes(api)
-      .withDeclares(declarations)
       .adopted(root.location)
+
+    val declarable = ctx.declarations.declarables()
+    if (declarable.nonEmpty) document.withDeclares(declarable)
 
     document
   }
 
-  def parseDeclarations(map: YMap): Seq[DomainElement] = {
-    val parent    = root.location + "#/declarations"
-    val collector = ListBuffer.empty[DomainElement]
+  // TODO rewrite this reusing other parser when doing APIMF-1758
+  protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
     map.key(
-      "components",
-      entry => {
-        entry.value.tagType match {
-          case YType.Map =>
-            val componentsMap = entry.value.as[YMap]
-            componentsMap.key(
-              "securitySchemes",
-              entry => {
-                entry.value.as[YMap].entries.foreach { securitySchemeEntry =>
-                  val securityScheme = ctx.factory
-                    .securitySchemeParser(
-                      securitySchemeEntry,
-                      (scheme) => {
-                        val name = securitySchemeEntry.key.as[String]
-                        scheme.set(SecuritySchemeModel.Name,
-                                   AmfScalar(name, Annotations(securitySchemeEntry.key.value)),
-                                   Annotations(securitySchemeEntry.key))
-                        scheme.adopted(parent + "/securitySchemes")
-                      }
-                    )
-                    .parse()
-                  collector += securityScheme
-                }
+      "securitySchemes",
+      e => {
+        e.value.as[YMap].entries.foreach { entry =>
+          ctx.declarations += ctx.factory
+            .securitySchemeParser(
+              entry,
+              (scheme) => {
+                val name = entry.key.as[String]
+                scheme.set(SecuritySchemeModel.Name,
+                           AmfScalar(name, Annotations(entry.key.value)),
+                           Annotations(entry.key))
+                scheme.adopted(parent)
               }
             )
-          case _ =>
-            ctx.violation(InvalidComponents, root.location, "Components facet must be a map")
+            .parse()
+            .add(DeclaredElement())
         }
       }
     )
-    collector
+  }
+
+  // TODO rewrite this reusing other parser when doing APIMF-1758
+  def parseDeclarations(map: YMap): Unit = {
+    map.key("components").foreach { components =>
+      val parent        = root.location + "#/declarations"
+      val componentsMap = components.value.as[YMap]
+
+      parseSecuritySchemeDeclarations(componentsMap, parent + "/securitySchemes")
+    }
   }
 
   def parseWebApi(map: YMap): WebApi = {

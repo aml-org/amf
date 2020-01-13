@@ -999,7 +999,7 @@ object AMFRawValidations {
         "PropertyShape",
         "sh:path",
         "sh:pattern",
-        "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|http|openIdConnect|x-.+$",
+        "^OAuth\\s1.0|OAuth\\s2.0|Basic\\sAuthentication|Digest\\sAuthentication|Pass\\sThrough|Api\\sKey|http|openIdConnect|userPassword|X509|symmetricEncryption|asymmetricEncryption|x-.+$",
         "Security scheme type should be one of the supported ones",
         "Security scheme type should be one of the supported ones",
         "Violation"

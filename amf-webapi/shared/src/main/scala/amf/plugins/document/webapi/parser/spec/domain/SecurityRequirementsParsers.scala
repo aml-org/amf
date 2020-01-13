@@ -3,28 +3,29 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.utils.IdCounter
-import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.domain.webapi.metamodel.security.{
-  ParametrizedSecuritySchemeModel,
-  ScopeModel,
   OAuth2FlowModel,
-  OpenIdConnectSettingsModel
+  OpenIdConnectSettingsModel,
+  ParametrizedSecuritySchemeModel,
+  ScopeModel
 }
 import amf.plugins.domain.webapi.models.security._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
-import amf.validations.ParserSideValidations.{ScopeNamesMustBeEmpty, InvalidSecurityRequirementObject}
+import amf.validations.ParserSideValidations.{InvalidSecurityRequirementObject, ScopeNamesMustBeEmpty}
 import org.yaml.model._
 
-case class OasSecurityRequirementParser(node: YNode, producer: String => SecurityRequirement, idCounter: IdCounter)(
-    implicit val ctx: OasWebApiContext) {
+case class OasLikeSecurityRequirementParser(node: YNode,
+                                            producer: String => SecurityRequirement,
+                                            idCounter: IdCounter)(implicit val ctx: OasLikeWebApiContext) {
   def parse(): Option[SecurityRequirement] = node.to[YMap] match {
     case Right(map) if map.entries.nonEmpty =>
       val securityRequirement = producer(idCounter.genId("requirement")).add(Annotations(node))
 
       // Parse individual schemes
       map.entries.foreach { entry =>
-        OasParametrizedSecuritySchemeParser(entry, securityRequirement.withScheme).parse()
+        OasLikeParametrizedSecuritySchemeParser(entry, securityRequirement.withScheme).parse()
       }
       Some(securityRequirement)
     case Right(map) if map.entries.isEmpty =>
@@ -35,8 +36,8 @@ case class OasSecurityRequirementParser(node: YNode, producer: String => Securit
       None
   }
 
-  case class OasParametrizedSecuritySchemeParser(schemeEntry: YMapEntry,
-                                                 producer: String => ParametrizedSecurityScheme) {
+  case class OasLikeParametrizedSecuritySchemeParser(schemeEntry: YMapEntry,
+                                                     producer: String => ParametrizedSecurityScheme) {
     def parse(): Option[ParametrizedSecurityScheme] = {
 
       val name   = schemeEntry.key.as[YScalar].text
@@ -48,29 +49,15 @@ case class OasSecurityRequirementParser(node: YNode, producer: String => Securit
         case None    => declaration
       }
 
-      if (declaration.`type`.is("OAuth 2.0")) {
-        val settings = OAuth2Settings().adopted(scheme.id)
-        val scopes = schemeEntry.value
-          .as[Seq[YNode]]
-          .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
-        val flows = Seq(
-          settings
-            .withFlow()
-            .setArray(OAuth2FlowModel.Scopes, scopes, Annotations(schemeEntry.value)))
-
-        scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows))
-      }
-
       parseScopes(scheme, declaration, schemeEntry)
+
       Some(scheme)
     }
 
     private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
       if (declaration.`type`.is("OAuth 2.0")) {
         val settings = OAuth2Settings().adopted(scheme.id)
-        val scopes = schemeEntry.value
-          .as[Seq[YNode]]
-          .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
+        val scopes   = getScopes(schemeEntry)
         val flows = Seq(
           settings
             .withFlow()
@@ -79,9 +66,7 @@ case class OasSecurityRequirementParser(node: YNode, producer: String => Securit
         scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows))
       } else if (declaration.`type`.is("openIdConnect")) {
         val settings = OpenIdConnectSettings().adopted(scheme.id)
-        val scopes = schemeEntry.value
-          .as[Seq[YNode]]
-          .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
+        val scopes   = getScopes(schemeEntry)
         scheme.set(ParametrizedSecuritySchemeModel.Settings,
                    settings.setArray(OpenIdConnectSettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
       } else
@@ -112,6 +97,11 @@ case class OasSecurityRequirementParser(node: YNode, producer: String => Securit
       }
     }
   }
+
+  private def getScopes(schemeEntry: YMapEntry) =
+    schemeEntry.value
+      .as[Seq[YNode]]
+      .map(n => Scope(n).set(ScopeModel.Name, AmfScalar(n.as[String]), Annotations(n)))
 }
 
 object RamlSecurityRequirementParser {

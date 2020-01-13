@@ -92,7 +92,7 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
         // TODO check for empty array for resolution ?
         val securedBy = entry.value
           .as[Seq[YNode]]
-          .map(s => OasSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
+          .map(s => OasLikeSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
           .collect { case Some(s) => s }
 
         operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))

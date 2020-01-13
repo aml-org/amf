@@ -15,14 +15,14 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
-import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, SecuritySchemeParser, _}
+import amf.plugins.document.webapi.parser.spec.declaration.{AbstractDeclarationsParser, _}
 import amf.plugins.document.webapi.parser.spec.domain
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.vocabulary.VocabularyMappings
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel._
-import amf.plugins.domain.webapi.metamodel.security.ParametrizedSecuritySchemeModel
+import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
@@ -81,7 +81,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     ctx.setJsonSchemaAST(map)
 
     val references = ReferencesParser(document, "uses".asOasExtension, map, root.references).parse(root.location)
-    parseDeclarations(root: Root, map)
+    parseDeclarations(root, map)
 
     val api = parseWebApi(map).add(SourceVendor(ctx.vendor))
     document
@@ -177,7 +177,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
               entry,
               (scheme) => {
                 val name = entry.key.as[String]
-                scheme.set(ParametrizedSecuritySchemeModel.Name,
+                scheme.set(SecuritySchemeModel.Name,
                            AmfScalar(name, Annotations(entry.key.value)),
                            Annotations(entry.key))
                 scheme.adopted(parent)
@@ -258,7 +258,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             val securedBy =
               entry.value
                 .as[Seq[YNode]]
-                .map(s => OasSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
+                .map(s => OasLikeSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
                 .collect { case Some(s) => s }
             api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
           case _ =>

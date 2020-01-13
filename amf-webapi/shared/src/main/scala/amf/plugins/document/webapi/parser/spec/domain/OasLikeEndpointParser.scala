@@ -139,7 +139,7 @@ abstract class OasEndpointParser(entry: YMapEntry,
         val idCounter = new IdCounter()
         val securedBy = entry.value
           .as[Seq[YNode]]
-          .map(s => OasSecurityRequirementParser(s, endpoint.withSecurity, idCounter).parse())
+          .map(s => OasLikeSecurityRequirementParser(s, endpoint.withSecurity, idCounter).parse())
           .collect { case Some(s) => s }
 
         if (securedBy.nonEmpty)

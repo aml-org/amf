@@ -2,7 +2,7 @@ asyncapi: '2.0.0'
 info:
   title: Security Schemes Example
   version: '1.0.0'
-channels:
+channels: {}
 components:
   securitySchemes:
     userPassword:
@@ -64,4 +64,16 @@ components:
       type: openIdConnect
       description: openIdConnect security scheme
       openIdConnectUrl: https://a.ml/
-
+servers:
+  some-server:
+    url: https://google.com
+    protocol: amqp
+    security:
+      - userPassword: []
+      - apiKey: []
+        httpApiKey: []
+      - X509: []
+      - symmetricEncryption: []
+      - http: []
+      - oauth2: ['write:pets']
+      - openIdConnect: []
