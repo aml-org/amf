@@ -1,9 +1,11 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.model.domain.AmfArray
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.domain.webapi.models.Server
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YNode}
 import amf.core.parser.{Annotations, YMapOps}
+import amf.core.utils.IdCounter
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncServerBindingsParser
 import amf.plugins.domain.webapi.metamodel.ServerModel
@@ -22,8 +24,19 @@ case class AsyncServerParser(parent: String, map: YMap)(implicit override val ct
       AnnotationParser(server, map).parseOrphanNode("bindings")
     }
 
-    // todo complete these
-    //    map.key("security", ServerModel.Security in server using SecurityRequirementParser)
+    map.key(
+      "security",
+      entry => {
+        val idCounter = new IdCounter()
+        val securedBy = entry.value
+          .as[Seq[YNode]]
+          .map(s => OasLikeSecurityRequirementParser(s, server.withSecurity, idCounter).parse())
+          .collect { case Some(s) => s }
+
+        server.set(ServerModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
+      }
+    )
+
     server
   }
 }
