@@ -59,6 +59,7 @@ case class Operation(fields: Fields, annotations: Annotations)
   def withBindings(bindings: Seq[OperationBinding]): this.type    = setArray(Bindings, bindings)
 
   override def removeServers(): Unit = fields.removeField(OperationModel.Servers)
+  def removeName(): fields.type      = fields.removeField(OperationModel.Name)
 
   def withResponse(name: String): Response = {
     val result = Response().withName(name).withStatusCode(if (name == "default") "200" else name)

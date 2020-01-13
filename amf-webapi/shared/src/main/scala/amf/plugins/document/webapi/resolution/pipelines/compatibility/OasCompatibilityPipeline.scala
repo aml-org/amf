@@ -5,6 +5,7 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.resolution.pipelines.OasResolutionPipeline
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas._
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.oas3.CleanRepeatedOperationIds
 import amf.{OasProfile, ProfileName}
 
 class OasCompatibilityPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
@@ -18,7 +19,8 @@ class OasCompatibilityPipeline(override val eh: ErrorHandler) extends Resolution
     new MandatoryResponses(),
     new MandatoryPathParameters(),
     new CleanNullSecurity(),
-    new CleanParameterExamples()
+    new CleanParameterExamples(),
+    new CleanRepeatedOperationIds()
   )
 
   override def profileName: ProfileName = OasProfile

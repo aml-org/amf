@@ -1,0 +1,31 @@
+#%RAML 1.0
+title: InfraAPI
+description: |
+  The Cisco Infrastructure API provides convient access to all programmable resources in the Cisco IT infrastructure.
+version: 1.0
+mediaType: application/json
+
+securitySchemes:
+  oauth_2_0:
+    description: |
+      Invoke the getAccessToken API to to user based on CEC/CCO UserID, password for the UserID, use the Bearer token obtained with above API to make further REST operations
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          description: |
+            Bearer token for authorization
+            type: string
+            example: |
+              Authorization : Bearer efWhCxlMXhRCcj6VgphCEfkNMxh6
+      responses:
+        401:
+          description: |
+            Authentication token was either missing or invalid.
+        403:
+          description: |
+             User is not authorized to access the resource.
+    settings:
+      authorizationUri: https://cloudsso.cisco.co/as/authorization.oauth2
+      accessTokenUri: https://cloudsso.cisco.com/as/token.oauth2
+      authorizationGrants: [ client_credentials ]

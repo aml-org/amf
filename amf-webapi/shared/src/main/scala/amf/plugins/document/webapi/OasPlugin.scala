@@ -221,7 +221,10 @@ object Oas30Plugin extends OasPlugin {
                        pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
     case ResolutionPipeline.DEFAULT_PIPELINE => new Oas30ResolutionPipeline(errorHandler).resolve(unit)
     case ResolutionPipeline.EDITING_PIPELINE => new Oas30EditingPipeline(errorHandler).resolve(unit)
-    case _                                   => super.resolve(unit, errorHandler, pipelineId)
+    case ResolutionPipeline.COMPATIBILITY_PIPELINE =>
+      new CompatibilityPipeline(errorHandler, Oas30Profile).resolve(unit)
+    case ResolutionPipeline.CACHE_PIPELINE => new Oas30EditingPipeline(errorHandler, false).resolve(unit)
+    case _                                 => super.resolve(unit, errorHandler, pipelineId)
   }
 
   override def context(loc: String,

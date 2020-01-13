@@ -24,13 +24,12 @@ class JapaneseCycleTest extends FunSuiteCycleTests {
   }
 
 // TODO: JSON-LD to OAS doesnt decode Japanese characters. It keeps them encoded. RAML does.
-  /*
-  test("Json-LD resolves to OAS20"){
+
+  test("Json-LD resolves to OAS20") {
     cycle("oasapi.jsonld", "cycled-oasapi.json", AmfJsonHint, Oas20)
   }
 
   test("Json-LD resolves to OAS30") {
     cycle("oas30api.jsonld", "cycled-oas30api.json", AmfJsonHint, Oas30)
   }
- */
 }
