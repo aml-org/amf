@@ -59,10 +59,10 @@ class ParametersNormalizationStage(profile: ProfileName)(override implicit val e
     unit match {
       case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
         // collect baseUri parameters
-        val webApi      = doc.encodes.asInstanceOf[WebApi]
-        var finalParams = Parameters(path = defaultServerParameters(webApi))
+        val webApi = doc.encodes.asInstanceOf[WebApi]
         // collect endpoint parameters
         webApi.endPoints.foreach { endpoint =>
+          var finalParams = Parameters(path = defaultServerParameters(webApi))
           finalParams = finalParams.merge(Parameters.classified(endpoint.path.value(), endpoint.parameters))
           endpoint.fields.removeField(EndPointModel.Parameters)
           // collect operation query parameters
