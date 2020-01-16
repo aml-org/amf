@@ -387,7 +387,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         ctx match {
           case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) if isDeclaration(ref) =>
             val shape = NodeShape(ast).withName(name, nameAnnotations)
-            shape.withLinkTarget(tmpShape).withLinkLabel(ref)
+            shape.withLinkTarget(tmpShape).withLinkLabel(text)
             adopt(shape)
             Some(shape)
           case _ =>
@@ -401,7 +401,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                     //            tmpShape.resolve(shape) // useless?
                     ctx.registerJsonSchema(ref, shape)
                     if (ctx.linkTypes || ref.equals("#"))
-                      shape.link(ref, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
+                      shape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
                     else shape
                   } orElse { Some(tmpShape) }
 
