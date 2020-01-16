@@ -21,9 +21,7 @@ trait OasLikeSpecVersionFactory extends SpecVersionFactory {
   def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser
   // TODO ASYNC complete this
   def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser
-  def endPointParser(entry: YMapEntry,
-                     producer: String => EndPoint,
-                     collector: mutable.ListBuffer[EndPoint]): OasLikeEndpointParser
+  def endPointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint]): OasLikeEndpointParser
   def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser
 }
 

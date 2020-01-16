@@ -302,18 +302,14 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   }
 
   private def parseEndpoint(api: WebApi, entry: YMapEntry) = {
-    val paths     = entry.value.as[YMap]
-    val endpoints = mutable.ListBuffer[EndPoint]()
-    paths.regex(
-      "^/.*",
-      entries => {
-        entries.foreach(
-          ctx.factory.endPointParser(_, api.withEndPoint, endpoints).parse()
-        )
-        api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
-        ctx.closedShape(api.id, paths, "paths")
-      }
-    )
+    val paths = entry.value.as[YMap]
+    val endpoints =
+      paths
+        .regex("^/.*")
+        .foldLeft(List[EndPoint]())((acc, curr) =>
+          acc ++ ctx.factory.endPointParser(curr, api.withEndPoint, acc).parse())
+    if (endpoints.nonEmpty) api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
+    ctx.closedShape(api.id, paths, "paths")
   }
 }
 
