@@ -44,7 +44,7 @@ abstract class OasLikeSecuritySchemeParser(part: YPart, adopt: SecurityScheme =>
           }
 
         AnnotationParser(scheme, map).parse()
-
+        ctx.closedShape(scheme.id, map, "securityScheme")
         scheme
     }
   }

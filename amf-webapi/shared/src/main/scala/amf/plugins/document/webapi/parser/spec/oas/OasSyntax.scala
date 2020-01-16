@@ -240,6 +240,16 @@ object Oas3Syntax extends SpecSyntax {
       "id",
       "name",
       "patternProperties"
+    ),
+    "securityScheme" -> Set(
+      "type",
+      "description",
+      "name",
+      "in",
+      "scheme",
+      "bearerFormat",
+      "flows",
+      "openIdConnectUrl"
     )
   )
 }
@@ -434,6 +444,16 @@ object Oas2Syntax extends SpecSyntax {
       "id",
       "name",
       "patternProperties"
+    ),
+    "securityScheme" -> Set(
+      "type",
+      "description",
+      "name",
+      "in",
+      "flow",
+      "authorizationUrl",
+      "tokenUrl",
+      "scopes"
     )
   )
 }
