@@ -288,24 +288,10 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
     if (documentations.nonEmpty) api.setArray(WebApiModel.Documentations, documentations)
 
-    map.key(
-      "paths",
-      entry => {
-        val paths = entry.value.as[YMap]
-        paths.regex(
-          "^/.*",
-          entries => {
-            val endpoints = mutable.ListBuffer[EndPoint]()
-            entries.foreach(
-              ctx.factory.endPointParser(_, api.withEndPoint, endpoints).parse()
-            )
-            api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
-          }
-        )
-
-        ctx.closedShape(api.id, paths, "paths")
-      }
-    )
+    map.key("paths") match {
+      case Some(entry) => parseEndpoint(api, entry)
+      case None        => ctx.eh.violation(MandatoryPathsProperty, api.id, "'paths' is mandatory in OAS spec")
+    }
 
     AnnotationParser(api, map).parse()
     AnnotationParser(api, map).parseOrphanNode("paths")
@@ -313,6 +299,21 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     ctx.closedShape(api.id, map, "webApi")
 
     api
+  }
+
+  private def parseEndpoint(api: WebApi, entry: YMapEntry) = {
+    val paths     = entry.value.as[YMap]
+    val endpoints = mutable.ListBuffer[EndPoint]()
+    paths.regex(
+      "^/.*",
+      entries => {
+        entries.foreach(
+          ctx.factory.endPointParser(_, api.withEndPoint, endpoints).parse()
+        )
+        api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
+        ctx.closedShape(api.id, paths, "paths")
+      }
+    )
   }
 }
 
