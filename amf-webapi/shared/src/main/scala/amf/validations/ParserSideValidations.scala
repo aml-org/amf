@@ -93,6 +93,11 @@ object ParserSideValidations extends Validations {
     "Scope names must be an empty array"
   )
 
+  val MandatoryPathsProperty = validation(
+    "mandatory-paths-property",
+    "Paths property must be declared"
+  )
+
   val InvalidSecuritySchemeDescribedByType = validation(
     "invalid-security-scheme-described-by-type",
     "Invalid 'describedBy' type, map expected"

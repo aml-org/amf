@@ -27,6 +27,7 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
+import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
 import org.yaml.parser.JsonParser
@@ -124,6 +125,62 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
 
       shape.defaultValueStr.value() shouldBe "name: roman\nlastname: riquelme\nage: 39"
       assert(shape.defaultValue.isInstanceOf[ObjectNode])
+    }
+  }
+
+  test("Node value uses unescaped strings in RAML") {
+    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
+    val doc =
+      """
+        | #%RAML 1.0
+        | title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
+        | baseUri: https://elmdv.symc.symantec.com/keybank/v1
+        | version: 1.0
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseStringAsync(doc).asFuture
+    } yield {
+      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
+  test("Node value uses unescaped strings in OAS 20 YAML") {
+    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
+    val doc =
+      """
+        | swagger: "2.0"
+        | info:
+        |   title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
+        |   version: 1.0
+        | paths: {}
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Oas20YamlParser().parseStringAsync(doc).asFuture
+    } yield {
+      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
+  test("Node value with double \\ should be unescaped") {
+    val expected = """\\"""
+    val doc =
+      """
+        | swagger: "2.0"
+        | info:
+        |   title: "\\\\"
+        |   version: 1.0
+        | paths: {}
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Oas20YamlParser().parseStringAsync(doc).asFuture
+    } yield {
+      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
     }
   }
 

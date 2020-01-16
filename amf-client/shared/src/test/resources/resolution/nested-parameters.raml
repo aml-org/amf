@@ -1,0 +1,25 @@
+#%RAML 1.0
+---
+title: API
+/users/{userId}:
+  uriParameters:
+    userId:
+      displayName: User ID
+      type: integer
+  get:
+  /{userName}/name:
+    uriParameters:
+      userName:
+        displayName: userName
+        type: integer
+    get:
+  /{userLastName}/lastName:
+    uriParameters:
+      userName:
+        displayName: userName
+        type: integer
+    get:
+  /pepito/age:
+    get:
+/getAll:
+  get:

@@ -15,7 +15,7 @@ class OasParserErrorTest extends ParserErrorTest {
       violation => {
         violation.level should be("Violation")
         violation.message should be("Unexpected $ref with $ref: ")
-        violation.position.map(_.range) should be(Some(Range((13, 9), (13, 9))))
+        violation.position.map(_.range) should be(Some(Range((14, 9), (14, 9))))
       }
     )
   }
