@@ -1,8 +1,10 @@
 package amf.io
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
+import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.rdf.RdfModel
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor}
@@ -34,11 +36,11 @@ trait BuildCycleTests extends FileAssertionTest {
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String, syntax: Option[Syntax]): Future[Assertion] =
-    cycle(source, source, hint, hint.vendor, directory, None, syntax = syntax)
+    cycle(source, source, hint, hint.vendor, directory, syntax = syntax, eh = None)
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String): Future[Assertion] =
-    cycle(source, source, hint, hint.vendor, directory, None)
+    cycle(source, source, hint, hint.vendor, directory, eh = None)
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   final def cycle(source: String,
@@ -46,14 +48,14 @@ trait BuildCycleTests extends FileAssertionTest {
                   hint: Hint,
                   target: Vendor,
                   directory: String = basePath,
-                  validation: Option[Validation] = None,
                   useAmfJsonldSerialization: Boolean = true,
                   syntax: Option[Syntax] = None,
-                  pipeline: Option[String] = None): Future[Assertion] = {
+                  pipeline: Option[String] = None,
+                  eh: Option[ParserErrorHandler] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
-    build(config, validation, useAmfJsonldSerialization)
+    build(config, eh.orElse(Some(DefaultParserErrorHandler.withRun())), useAmfJsonldSerialization)
       .map(transform(_, config))
       .flatMap(render(_, config, useAmfJsonldSerialization))
       .flatMap(writeTemporaryFile(golden))
@@ -61,17 +63,19 @@ trait BuildCycleTests extends FileAssertionTest {
   }
 
   /** Method to parse unit. Override if necessary. */
-  def build(config: CycleConfig, given: Option[Validation], useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
-    val validation: Future[Validation] = given match {
-      case Some(validation: Validation) => Future { validation }
-      case None                         => Validation(platform).map(_.withEnabledValidation(false))
-    }
-    validation.flatMap { v =>
+  def build(config: CycleConfig,
+            eh: Option[ParserErrorHandler],
+            useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
+    Validation(platform).flatMap { v =>
       var options = if (!useAmfJsonldSerialisation) { ParsingOptions().withoutAmfJsonLdSerialization } else {
         ParsingOptions().withAmfJsonLdSerialization
       }
       options = options.withBaseUnitUrl("file://" + config.goldenPath)
-      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, v, parsingOptions = options).build()
+      AMFCompiler(s"file://${config.sourcePath}",
+                  platform,
+                  config.hint,
+                  eh = eh.getOrElse(UnhandledParserErrorHandler),
+                  parsingOptions = options).build()
     }
   }
 
@@ -111,13 +115,12 @@ trait BuildCycleTests extends FileAssertionTest {
                hint: Hint,
                target: Vendor = Amf,
                directory: String = basePath,
-               validation: Option[Validation] = None,
                syntax: Option[Syntax] = None,
                pipeline: Option[String] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
-    build(config, validation, useAmfJsonldSerialisation = true)
+    build(config, None, useAmfJsonldSerialisation = true)
       .map(transformRdf(_, config))
       .flatMap(renderRdf(_, config))
       .flatMap(writeTemporaryFile(golden))
@@ -140,13 +143,12 @@ trait BuildCycleTests extends FileAssertionTest {
                    hint: Hint,
                    target: Vendor = Amf,
                    directory: String = basePath,
-                   validation: Option[Validation] = None,
                    syntax: Option[Syntax] = None,
                    pipeline: Option[String] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
-    build(config, validation, useAmfJsonldSerialisation = true)
+    build(config, None, useAmfJsonldSerialisation = true)
       .map(transformThroughRdf(_, config))
       .flatMap(render(_, config, useAmfJsonldSerialization = true))
       .flatMap(writeTemporaryFile(golden))

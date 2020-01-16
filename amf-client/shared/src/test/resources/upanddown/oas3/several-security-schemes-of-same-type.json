@@ -1,0 +1,40 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "some title",
+    "version": "0.1"
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuthInternalMule": {
+        "type": "oauth2",
+        "description": "C&A LDAP credentials.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://www.dropbox.com/1/oauth2/authorize",
+            "tokenUrl": "https://api.dropbox.com/1/oauth2/token"
+          },
+          "implicit": {
+            "authorizationUrl": "https://www.dropbox.com/1/oauth2/authorize",
+            "tokenUrl": "https://api.dropbox.com/1/oauth2/token"
+          }
+        }
+      },
+      "basicAuthLdap": {
+        "type": "oauth2",
+        "description": "C&A LDAP credentials.",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://www.dropbox.com/1/oauth2/authorize",
+            "tokenUrl": "https://api.dropbox.com/1/oauth2/token"
+          },
+          "implicit": {
+            "authorizationUrl": "https://www.dropbox.com/1/oauth2/authorize",
+            "tokenUrl": "https://api.dropbox.com/1/oauth2/token"
+          }
+        }
+      }
+    }
+  },
+  "paths": {}
+}

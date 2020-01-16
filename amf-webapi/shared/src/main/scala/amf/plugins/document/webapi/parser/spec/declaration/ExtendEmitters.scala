@@ -2,13 +2,14 @@ package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.domain.AmfElement
 import amf.core.model.domain.templates.{ParametrizedDeclaration, VariableValue}
-import amf.core.parser.{ErrorHandler, FieldEntry, Position}
+import amf.core.parser.{FieldEntry, Position}
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.parser.spec.domain.SingleValueArrayEmitter
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait}
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import amf.core.utils.AmfStrings
 import org.yaml.model.YMap
 
 import scala.collection.mutable.ListBuffer

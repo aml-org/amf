@@ -3,12 +3,12 @@ package amf.plugins.document.webapi.parser.spec.raml
 import amf.core.Root
 import amf.core.annotations.SourceVendor
 import amf.core.metamodel.document.FragmentModel
-import amf.core.model.document.{ExternalFragment, Fragment}
+import amf.core.model.document.{Fragment, ExternalFragment}
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{AmfScalar, ExternalDomainElement, Shape}
+import amf.core.model.domain.{Shape, AmfScalar, ExternalDomainElement}
 import amf.core.parser.{Annotations, _}
 import amf.core.remote.Raml10
-import amf.plugins.document.webapi.contexts.RamlWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragment
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
@@ -31,10 +31,10 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
       case _          =>
         // we need to check if named example fragment in order to support invalid structures as external fragment
         if (fragmentType != Raml10NamedExample)
-          ctx.violation(InvalidFragmentType,
-                        root.location,
-                        "Cannot parse empty map",
-                        root.parsed.asInstanceOf[SyamlParsedDocument].document)
+          ctx.eh.violation(InvalidFragmentType,
+                           root.location,
+                           "Cannot parse empty map",
+                           root.parsed.asInstanceOf[SyamlParsedDocument].document)
         YMap.empty
     }
 
@@ -159,9 +159,7 @@ case class RamlFragmentParser(root: Root, fragmentType: RamlFragment)(implicit v
 
       security.withEncodes(
         RamlSecuritySchemeParser(map,
-                                 "securityDefinitions",
-                                 map,
-                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme, _) =>
+                                 (security: amf.plugins.domain.webapi.models.security.SecurityScheme) =>
                                    security.adopted(root.location + "#/"))
           .parse())
     }

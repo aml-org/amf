@@ -13,17 +13,27 @@ import amf.plugins.domain.webapi.models.Encoding
   */
 object EncodingModel extends DomainElementModel with KeyField {
 
-  val PropertyName = Field(Str, ApiContract + "propertyName", ModelDoc(ModelVocabularies.ApiContract, "property name", ""))
+  val PropertyName =
+    Field(Str, ApiContract + "propertyName", ModelDoc(ModelVocabularies.ApiContract, "property name", ""))
 
-  val ContentType = Field(Str, ApiContract + "contentType", ModelDoc(ModelVocabularies.ApiContract, "content type", ""))
+  val ContentType =
+    Field(Str, ApiContract + "contentType", ModelDoc(ModelVocabularies.ApiContract, "content type", ""))
 
-  val Headers = Field(Array(ParameterModel), ApiContract + "header", ModelDoc(ModelVocabularies.ApiContract, "header", ""))
+  val Headers =
+    Field(Array(ParameterModel), ApiContract + "header", ModelDoc(ModelVocabularies.ApiContract, "header", ""))
 
-  val Style = Field(Str, ApiContract + "style", ModelDoc(ModelVocabularies.ApiContract, "style", ""))
+  val Style = Field(
+    Str,
+    ApiContract + "style",
+    ModelDoc(ModelVocabularies.ApiContract,
+             "style",
+             "Describes how a specific property value will be serialized depending on its type.")
+  )
 
   val Explode = Field(Bool, ApiContract + "explode", ModelDoc(ModelVocabularies.ApiContract, "explode", ""))
 
-  val AllowReserved = Field(Bool, ApiContract + "allowReserved", ModelDoc(ModelVocabularies.ApiContract, "allow reserved", ""))
+  val AllowReserved =
+    Field(Bool, ApiContract + "allowReserved", ModelDoc(ModelVocabularies.ApiContract, "allow reserved", ""))
 
   override val `type`: List[ValueType] = ApiContract + "Encoding" :: DomainElementModel.`type`
 

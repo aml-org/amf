@@ -1,13 +1,15 @@
 package amf.validation
 
+import _root_.org.scalatest.{Assertion, AsyncFunSuite}
 import amf._
+import amf.client.parse.DefaultParserErrorHandler
+import amf.core.errorhandling.AmfReportBuilder
+import amf.core.remote.Syntax.Yaml
 import amf.core.remote._
-import amf.core.validation.{AMFValidationReport, SeverityLevels}
+import amf.core.validation.AMFValidationReport
 import amf.facades.{AMFCompiler, Validation}
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
-import _root_.org.scalatest.{Assertion, AsyncFunSuite}
-import amf.core.remote.Syntax.Yaml
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -46,12 +48,15 @@ sealed trait ValidationReportGenTest extends AsyncFunSuite with FileAssertionTes
                          golden: Option[String] = None,
                          profile: ProfileName = defaultProfile,
                          profileFile: Option[String] = None): Future[Assertion] = {
+    val eh = DefaultParserErrorHandler.withRun()
     for {
       validation <- Validation(platform)
-      _          <- if (profileFile.isDefined) validation.loadValidationProfile(basePath + profileFile.get) else Future.unit
-      model      <- AMFCompiler(basePath + api, platform, hint, validation).build()
-      report     <- validation.validate(model, profile)
-      r          <- handleReport(report, golden.map(processGolden))
+      _ <- if (profileFile.isDefined)
+        validation.loadValidationProfile(basePath + profileFile.get, DefaultParserErrorHandler.withRun())
+      else Future.unit
+      model  <- AMFCompiler(basePath + api, platform, hint, eh = eh).build()
+      report <- validation.validate(model, profile)
+      r      <- handleReport(report, golden.map(processGolden))
     } yield {
       r
     }
@@ -74,14 +79,14 @@ trait ResolutionForUniquePlatformReportTest extends UniquePlatformReportGenTest 
                             golden: Option[String] = None,
                             profile: ProfileName = defaultProfile,
                             profileFile: Option[String] = None): Future[Assertion] = {
+    val errorHandler = DefaultParserErrorHandler.withRun()
     for {
       validation <- Validation(platform)
-      model      <- AMFCompiler(basePath + api, platform, profileToHint(profile), validation).build()
+      model      <- AMFCompiler(basePath + api, platform, profileToHint(profile), eh = errorHandler).build()
       report <- {
-        ValidationResolutionPipeline(profile, model)
-        val results = validation.aggregatedReport
-        val report =
-          AMFValidationReport(!results.exists(_.level == SeverityLevels.VIOLATION), model.id, profile, results)
+        new ValidationResolutionPipeline(profile, errorHandler).resolve(model)
+        val results = errorHandler.getErrors
+        val report  = new AmfReportBuilder(model, profile).buildReport(results)
         handleReport(report, golden)
       }
     } yield {

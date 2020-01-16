@@ -1,9 +1,11 @@
 package amf.resolution
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.{BaseUnit, Document}
-import amf.core.parser.{RuntimeErrorHandler, UnhandledErrorHandler}
+import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote._
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.emit.AMFRenderer
@@ -38,14 +40,13 @@ abstract class OasResolutionTest extends ResolutionTest {
 class ProductionValidationTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   override def build(config: CycleConfig,
-                     given: Option[Validation],
+                     eh: Option[ParserErrorHandler],
                      useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
-    val validation: Future[Validation] = given match {
-      case Some(validation: Validation) => Future { validation }
-      case None                         => Validation(platform).map(_.withEnabledValidation(true))
-    }
-    validation.flatMap { v =>
-      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, v).build()
+    Validation(platform).flatMap { v =>
+      AMFCompiler(s"file://${config.sourcePath}",
+                  platform,
+                  config.hint,
+                  eh = eh.getOrElse(DefaultParserErrorHandler.withRun())).build()
     }
   }
 
@@ -332,7 +333,7 @@ class Raml08ResolutionTest extends RamlResolutionTest {
 
   test("Test failing with exception") {
     recoverToExceptionIf[Exception] {
-      cycle("wrong-key.raml", "wrong-key.raml", RamlYamlHint, Raml08)
+      cycle("wrong-key.raml", "wrong-key.raml", RamlYamlHint, Raml08, eh = Some(UnhandledParserErrorHandler))
     }.map { ex =>
       assert(ex.getMessage.contains(s"Message: Property 'errorKey' not supported in a ${Raml08.name} webApi node"))
     }
@@ -366,14 +367,10 @@ class Raml08ResolutionTest extends RamlResolutionTest {
 class ProductionServiceTest extends RamlResolutionTest {
 
   override def build(config: CycleConfig,
-                     given: Option[Validation],
+                     eh: Option[ParserErrorHandler],
                      useAmfJsonldSerialization: Boolean): Future[BaseUnit] = {
-    val validation: Future[Validation] = given match {
-      case Some(validation: Validation) => Future { validation }
-      case None                         => Validation(platform)
-    }
-    validation.flatMap { v =>
-      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, v).build()
+    Validation(platform).flatMap { v =>
+      AMFCompiler(s"file://${config.sourcePath}", platform, config.hint, eh = UnhandledParserErrorHandler).build()
     }
   }
   private def dummyFunc: (BaseUnit, CycleConfig) => BaseUnit = (u: BaseUnit, _: CycleConfig) => u
@@ -423,10 +420,7 @@ class ProductionServiceTest extends RamlResolutionTest {
       AmfJsonHint,
       Raml,
       (u: BaseUnit, _: CycleConfig) => {
-        val resolved = new ReferenceResolutionStage(false)(new RuntimeErrorHandler {
-          override val parserCount: Int    = u.parserRun.get
-          override val currentFile: String = u.location().get
-        }).resolve(u)
+        val resolved = new ReferenceResolutionStage(false)(UnhandledErrorHandler).resolve(u)
         resolved.fields.removeField(DocumentModel.Declares)
         resolved
       }

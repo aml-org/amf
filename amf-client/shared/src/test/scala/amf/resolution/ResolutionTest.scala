@@ -1,8 +1,8 @@
 package amf.resolution
 
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote._
 import amf.emit.AMFRenderer
 import amf.io.FunSuiteCycleTests

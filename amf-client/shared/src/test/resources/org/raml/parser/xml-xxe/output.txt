@@ -1,0 +1,24 @@
+#%RAML 1.0
+title: Sample API
+/person:
+  post:
+    body:
+      application/xml:
+        example: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<!DOCTYPE xxeattack PUBLIC \"foo\" \"http://localhost:8086/\">\r\n<person>\r\n    <personName>John Doe</personName>\r\n</person>\r\n"
+        type: |
+          <?xml version="1.0" encoding="UTF-8" ?>
+          <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+          	<xsd:element name="person">
+          		<xsd:complexType>
+          			<xsd:sequence>
+          				<xsd:element name="personName" type="xsd:string"/>
+          			</xsd:sequence>
+          		</xsd:complexType>
+          	</xsd:element>
+          </xsd:schema>
+    responses:
+      "200":
+        body:
+          text/plain:
+            example: OK
+            type: any

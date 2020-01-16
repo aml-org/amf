@@ -5,10 +5,10 @@ import amf.core.model.domain.Shape
 import amf.core.parser._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.{RamlWebApiContext, RamlWebApiContextType}
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, matchType, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
-import amf.plugins.document.webapi.parser.{RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
+import amf.plugins.document.webapi.parser.{RamlTypeDefStringValueMatcher, RamlTypeDefMatcher}
 import amf.plugins.domain.shapes.models.TypeDef.{JSONSchemaType, _}
 import amf.plugins.domain.shapes.models._
 import amf.plugins.domain.shapes.parser.TypeDefXsdMapping
@@ -49,7 +49,7 @@ case class RamlTypeDetector(parent: String,
         .orElse(detectAnyOf(filterMap))
       typeExplicit match {
         case Some(JSONSchemaType) if infer.isDefined =>
-          ctx.warning(
+          ctx.eh.warning(
             JsonSchemaInheratinaceWarningSpecification,
             parent,
             Some(ShapeModel.Inherits.value.iri()),
@@ -70,10 +70,10 @@ case class RamlTypeDetector(parent: String,
       scalar.text match {
         case t if t.startsWith("<<") && t.endsWith(">>") =>
           if (ctx.contextType == RamlWebApiContextType.DEFAULT) {
-            ctx.violation(InvalidAbstractDeclarationParameterInType,
-                          parent,
-                          s"Resource Type/Trait parameter $t in type",
-                          node)
+            ctx.eh.violation(InvalidAbstractDeclarationParameterInType,
+                             parent,
+                             s"Resource Type/Trait parameter $t in type",
+                             node)
           }
           None
 
@@ -157,15 +157,15 @@ case class RamlTypeDetector(parent: String,
       _ <- `type`
       s <- schema
     } {
-      ctx.violation(ExclusiveSchemaType, parent, "'schema' and 'type' properties are mutually exclusive", s.key)
+      ctx.eh.violation(ExclusiveSchemaType, parent, "'schema' and 'type' properties are mutually exclusive", s.key)
     }
 
     schema.foreach(
       s =>
-        ctx.warning(SchemaDeprecated,
-                    parent,
-                    "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead",
-                    s.key))
+        ctx.eh.warning(SchemaDeprecated,
+                       parent,
+                       "'schema' keyword it's deprecated for 1.0 version, should use 'type' instead",
+                       s.key))
 
     `type`.orElse(schema)
   }
@@ -186,10 +186,10 @@ case class RamlTypeDetector(parent: String,
           else {
             val head = definedTypes.headOption
             if (definedTypes.count(_.equals(head.get)) != definedTypes.size) {
-              ctx.violation(InvalidTypeInheritanceErrorSpecification,
-                            parent,
-                            "Can't inherit from more than one class type",
-                            ast)
+              ctx.eh.violation(InvalidTypeInheritanceErrorSpecification,
+                               parent,
+                               "Can't inherit from more than one class type",
+                               ast)
               Some(UndefinedType)
             } else head
           }
@@ -208,10 +208,10 @@ case class RamlTypeDetector(parent: String,
             case Some(linkedShape: Shape) if linkedShape == shape => Some(AnyType)
             case Some(linkedShape: Shape)                         => apply(linkedShape, part, plainUnion)
             case _ =>
-              ctx.violation(InvalidTypeDefinition,
-                            shape.id,
-                            "Found reference to domain element different of Shape when shape was expected",
-                            part)
+              ctx.eh.violation(InvalidTypeDefinition,
+                               shape.id,
+                               "Found reference to domain element different of Shape when shape was expected",
+                               part)
               None
           }
         case _: NilShape => Some(NilType)

@@ -2,9 +2,9 @@ package amf.plugins.domain.webapi.resolution.stages
 
 import amf._
 import amf.core.annotations.SynthesizedField
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.AmfArray
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.parser.spec.domain.Parameters
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, RequestModel, ServerModel}

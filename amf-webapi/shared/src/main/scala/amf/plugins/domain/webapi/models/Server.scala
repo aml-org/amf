@@ -40,6 +40,12 @@ case class Server(fields: Fields, annotations: Annotations) extends DomainElemen
     result
   }
 
+  def withSecurity(name: String): SecurityRequirement = {
+    val result = SecurityRequirement().withName(name)
+    add(Security, result)
+    result
+  }
+
   override def meta: DomainElementModel = ServerModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */

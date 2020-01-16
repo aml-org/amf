@@ -1,7 +1,7 @@
 package amf.plugins.domain.shapes.resolution.stages.shape_normalization
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.{RecursiveShape, Shape}
-import amf.core.parser.ErrorHandler
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import amf.validations.ResolutionSideValidations.InvalidTypeInheritanceWarningSpecification
 import amf.{ProfileName, Raml08Profile}

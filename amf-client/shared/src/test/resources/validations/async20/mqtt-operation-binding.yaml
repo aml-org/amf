@@ -1,0 +1,12 @@
+asyncapi: '2.0.0'
+info:
+  title: Mqtt operation binding
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    publish:
+      bindings:
+        mqtt:
+          qos: 1
+          retain: false

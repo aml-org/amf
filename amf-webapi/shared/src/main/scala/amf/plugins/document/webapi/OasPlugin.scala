@@ -1,21 +1,28 @@
 package amf.plugins.document.webapi
 
+import amf._
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document._
 import amf.core.model.domain.DomainElement
-import amf.core.parser.{ErrorHandler, LibraryReference, LinkReference, ParsedReference, ParserContext}
+import amf.core.parser.{LibraryReference, LinkReference, ParsedReference, ParserContext}
 import amf.core.remote._
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
-import amf.plugins.document.webapi.contexts._
+import amf.plugins.document.webapi.contexts.emitter.oas.{
+  Oas2SpecEmitterContext,
+  Oas3SpecEmitterContext,
+  OasSpecEmitterContext
+}
+import amf.plugins.document.webapi.contexts.parser.oas.{Oas2WebApiContext, Oas3WebApiContext, OasWebApiContext}
 import amf.plugins.document.webapi.model.{Extension, Overlay}
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Header, Oas20Overlay, Oas30Header}
 import amf.plugins.document.webapi.parser.spec.OasWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.oas._
-import amf.plugins.document.webapi.resolution.pipelines.compatibility.{CompatibilityPipeline, OasCompatibilityPipeline}
+import amf.plugins.document.webapi.resolution.pipelines.compatibility.CompatibilityPipeline
 import amf.plugins.document.webapi.resolution.pipelines.{
   Oas30EditingPipeline,
   Oas30ResolutionPipeline,
@@ -23,10 +30,9 @@ import amf.plugins.document.webapi.resolution.pipelines.{
   OasResolutionPipeline
 }
 import amf.plugins.domain.webapi.models.WebApi
-import amf._
 import org.yaml.model.{YDocument, YNode}
 
-sealed trait OasPlugin extends BaseWebApiPlugin {
+sealed trait OasPlugin extends OasLikePlugin {
 
   override val vendors: Seq[String] = Seq(vendor.name, Oas.name)
 
@@ -36,25 +42,6 @@ sealed trait OasPlugin extends BaseWebApiPlugin {
               refs: Seq[ParsedReference],
               wrapped: ParserContext,
               ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
-
-  // We might find $refs in the document pointing to actual shapes in external files in the
-  // right positions of the AST.
-  // We will try to promote these external fragments to data type fragments instead of just inlining them.
-  def promoteFragments(unit: BaseUnit, ctx: OasWebApiContext): BaseUnit = {
-    var oldReferences = unit.references.foldLeft(Map[String, BaseUnit]()) {
-      case (acc: Map[String, BaseUnit], e: BaseUnit) =>
-        acc + (e.location().getOrElse(e.id) -> e)
-    }
-    ctx.declarations.promotedFragments.foreach { promoted =>
-      val key = promoted.location().getOrElse(promoted.id)
-      oldReferences = oldReferences + (key -> promoted)
-    }
-
-    if (oldReferences.values.nonEmpty)
-      unit.withReferences(oldReferences.values.toSeq)
-    else
-      unit
-  }
 
   override def parse(document: Root,
                      parentContext: ParserContext,
@@ -234,7 +221,10 @@ object Oas30Plugin extends OasPlugin {
                        pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = pipelineId match {
     case ResolutionPipeline.DEFAULT_PIPELINE => new Oas30ResolutionPipeline(errorHandler).resolve(unit)
     case ResolutionPipeline.EDITING_PIPELINE => new Oas30EditingPipeline(errorHandler).resolve(unit)
-    case _                                   => super.resolve(unit, errorHandler, pipelineId)
+    case ResolutionPipeline.COMPATIBILITY_PIPELINE =>
+      new CompatibilityPipeline(errorHandler, Oas30Profile).resolve(unit)
+    case ResolutionPipeline.CACHE_PIPELINE => new Oas30EditingPipeline(errorHandler, false).resolve(unit)
+    case _                                 => super.resolve(unit, errorHandler, pipelineId)
   }
 
   override def context(loc: String,

@@ -1,11 +1,11 @@
 package amf.facades
 
-import amf.{MessageStyle, ProfileName, RAMLStyle, RamlProfile}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Platform
 import amf.core.services.RuntimeValidator
 import amf.core.validation.core.ValidationProfile
-import amf.core.validation.{AMFValidationReport, AMFValidationResult, EffectiveValidations}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -14,11 +14,12 @@ import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.webapi.{Oas20Plugin, PayloadPlugin, Raml08Plugin, Raml10Plugin, _}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
-import amf.plugins.features.validation.{AMFValidatorPlugin, CoreValidations}
 import amf.plugins.features.validation.model.ValidationDialectText
+import amf.plugins.features.validation.{AMFValidatorPlugin, CoreValidations}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.validation.DialectValidations
 import amf.validations.{ParserSideValidations, PayloadValidations, RenderSideValidations, ResolutionSideValidations}
+import amf.{MessageStyle, ProfileName, RAMLStyle, RamlProfile}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -41,18 +42,13 @@ class Validation(platform: Platform) {
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Raml08Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas20Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Oas30Plugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(Async20Plugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(PayloadPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(JsonSchemaPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
-
-      RuntimeValidator.validatorOption match {
-        case Some(AMFValidatorPlugin) =>
-          AMFValidatorPlugin.reset()
-        case _ =>
-      }
     }
   }
 
@@ -77,28 +73,8 @@ class Validation(platform: Platform) {
 
   var profile: Option[ValidationProfile] = None
 
-  // The aggregated report
-  def reset(): Unit = validator.reset()
-
-  def aggregatedReport: List[AMFValidationResult] = {
-    val set = validator.aggregatedReport.keySet
-    if (set.isEmpty) Nil
-    else
-      validator.aggregatedReport(set.max).toList
-  }
-
-  // disable temporarily the reporting of validations
-  def enabled: Boolean = validator.enabled
-
-  def withEnabledValidation(enabled: Boolean): Validation = {
-    validator.withEnabledValidation(enabled)
-    this
-  }
-
-  def disableValidations[T]()(f: () => T): T = validator.disableValidations()(f)
-
-  def loadValidationProfile(validationProfilePath: String): Future[ProfileName] = {
-    validator.loadValidationProfile(validationProfilePath)
+  def loadValidationProfile(validationProfilePath: String, errorHandler: ErrorHandler): Future[ProfileName] = {
+    validator.loadValidationProfile(validationProfilePath, errorHandler = errorHandler)
   }
 
   /**

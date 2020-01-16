@@ -3,17 +3,18 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.{BasePathLexicalInformation, HostLexicalInformation, SynthesizedField}
 import amf.core.metamodel.Field
 import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.model.domain.{DomainElement, AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, TemplateUri}
-import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext}
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, RamlScalarNode, SpecParserOps}
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, RamlScalarNode}
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
-import amf.plugins.document.webapi.parser.spec.{toOas, toRaml}
-import amf.plugins.domain.webapi.metamodel.{ServerModel, WebApiModel}
+import amf.plugins.document.webapi.parser.spec.{toRaml, toOas}
+import amf.plugins.domain.webapi.metamodel.{WebApiModel, ServerModel}
 import amf.plugins.domain.webapi.models.{Parameter, Server, WebApi}
 import amf.validations.ParserSideValidations._
-import org.yaml.model.{YMap, YType}
+import org.yaml.model.{YType, YMap}
 
 case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebApiContext) extends SpecParserOps {
   def parse(): Unit = {
@@ -27,7 +28,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
 
         checkBalancedParams(value, entry.value, server.id, ServerModel.Url.value.iri(), ctx)
         if (!TemplateUri.isValid(value))
-          ctx.violation(InvalidServerPath, api.id, TemplateUri.invalidMsg(value), entry.value)
+          ctx.eh.violation(InvalidServerPath, api.id, TemplateUri.invalidMsg(value), entry.value)
 
         map.key("serverDescription".asRamlAnnotation, ServerModel.Description in server)
 
@@ -40,10 +41,10 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
         map
           .key("baseUriParameters")
           .foreach { entry =>
-            ctx.violation(ParametersWithoutBaseUri,
-                          api.id,
-                          "'baseUri' not defined and 'baseUriParameters' defined.",
-                          entry)
+            ctx.eh.violation(ParametersWithoutBaseUri,
+                             api.id,
+                             "'baseUri' not defined and 'baseUriParameters' defined.",
+                             entry)
 
             val server = Server().adopted(api.id)
             parseBaseUriParameters(server, Nil)
@@ -55,7 +56,7 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     }
 
     map.key("servers".asRamlAnnotation).foreach { entry =>
-      entry.value.as[Seq[YMap]].map(OasServerParser(api.id, _)(toOas(ctx)).parse()).foreach { server =>
+      entry.value.as[Seq[YMap]].map(new OasLikeServerParser(api.id, _)(toOas(ctx)).parse()).foreach { server =>
         api.add(WebApiModel.Servers, server)
       }
     }
@@ -82,15 +83,16 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
             val finalParams = flatten ++ unused
             server.set(ServerModel.Variables, AmfArray(finalParams, Annotations(entry.value)), Annotations(entry))
             unused.foreach { p =>
-              ctx.warning(UnusedBaseUriParameter,
-                          p.id,
-                          None,
-                          s"Unused base uri parameter ${p.name.value()}",
-                          p.position(),
-                          p.location())
+              ctx.eh.warning(UnusedBaseUriParameter,
+                             p.id,
+                             None,
+                             s"Unused base uri parameter ${p.name.value()}",
+                             p.position(),
+                             p.location())
             }
           case YType.Null =>
-          case _          => ctx.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
+          case _ =>
+            ctx.eh.violation(InvalidBaseUriParametersType, "", "Invalid node for baseUriParameters", entry.value)
         }
       case None =>
         if (orderedVariables.nonEmpty)
@@ -108,18 +110,6 @@ case class RamlServersParser(map: YMap, api: WebApi)(implicit val ctx: RamlWebAp
     param.annotations += SynthesizedField()
     param
   }
-}
-
-abstract class OasServersParser(map: YMap, elem: DomainElement, field: Field)(implicit val ctx: OasWebApiContext)
-    extends SpecParserOps {
-  def parse(): Unit
-
-  protected def parseServers(key: String): Unit =
-    map.key(key).foreach { entry =>
-      val servers = entry.value.as[Seq[YMap]].map(OasServerParser(elem.id, _).parse())
-
-      elem.set(field, AmfArray(servers, Annotations(entry)), Annotations(entry))
-    }
 }
 
 case class Oas3ServersParser(map: YMap, elem: DomainElement, field: Field)(implicit override val ctx: OasWebApiContext)
@@ -142,7 +132,7 @@ case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: 
         basePath = entry.value.as[String]
 
         if (!basePath.startsWith("/")) {
-          ctx.violation(InvalidBasePath, api.id, "'basePath' property must start with '/'", entry.value)
+          ctx.eh.violation(InvalidBasePath, api.id, "'basePath' property must start with '/'", entry.value)
           basePath = "/" + basePath
         }
       }
@@ -174,38 +164,4 @@ case class Oas2ServersParser(map: YMap, api: WebApi)(implicit override val ctx: 
   }
 
   def baseUriExists(map: YMap): Boolean = map.key("host").orElse(map.key("basePath")).isDefined
-}
-
-private case class OasServerParser(parent: String, map: YMap)(implicit val ctx: OasWebApiContext)
-    extends SpecParserOps {
-  def parse(): Server = {
-    val server = Server(map)
-
-    map.key("url", ServerModel.Url in server)
-
-    server.adopted(parent)
-
-    map.key("description", ServerModel.Description in server)
-
-    map.key("variables").foreach { entry =>
-      val variables = entry.value.as[YMap].entries.map { varEntry =>
-        val serverVariable =
-          Raml10ParameterParser(varEntry, (p: Parameter) => p.adopted(server.id))(toRaml(ctx)).parse()
-        serverVariable.withBinding("path")
-        // required field is validated in parsing as there is no way to differentiate a server variable from a parameter
-        requiredDefaultField(serverVariable, varEntry.value.as[YMap])
-        serverVariable
-      }
-      server.set(ServerModel.Variables, AmfArray(variables, Annotations(entry.value)), Annotations(entry))
-    }
-
-    AnnotationParser(server, map).parse()
-    ctx.closedShape(server.id, map, "server")
-    server
-  }
-
-  private def requiredDefaultField(serverVar: Parameter, map: YMap): Unit =
-    if (map.key("default").isEmpty)
-      ctx.violation(ServerVariableMissingDefault, serverVar.id, "Server variable must define a 'default' field", map)
-
 }

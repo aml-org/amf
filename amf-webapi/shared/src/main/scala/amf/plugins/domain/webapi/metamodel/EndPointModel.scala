@@ -53,7 +53,7 @@ object EndPointModel extends DomainElementModel with KeyField with NameFieldSche
   val Security = Field(
     Array(SecurityRequirementModel),
     Namespace.Security + "security",
-    ModelDoc(ModelVocabularies.Security, "security", "Security information associated to the endpoint")
+    ModelDoc(ModelVocabularies.Security, "security", "Textual indication of the kind of security scheme used")
   )
 
   val Bindings = Field(

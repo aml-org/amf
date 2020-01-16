@@ -1,0 +1,12 @@
+asyncapi: '2.0.0'
+info:
+  title: Kafka operation binding
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    publish:
+      bindings:
+        kafka:
+          groupId: 310792
+          clientId: some3333unique09id

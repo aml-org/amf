@@ -1,15 +1,21 @@
 package amf.plugins.domain.webapi.resolution
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation => AmfSourceLocation}
 import amf.core.emitter.SpecOrdering
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel, Fragment, Module}
 import amf.core.model.domain._
-import amf.core.parser.{Annotations, ErrorHandler, FragmentRef, ParserContext}
+import amf.core.parser.{Annotations, FragmentRef, ParserContext}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolvedNamedEntity}
-import amf.core.services.{AllValidationsMerger, RuntimeValidator}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.ExtensionProvenance
-import amf.plugins.document.webapi.contexts.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext, RamlWebApiContextType}
+import amf.plugins.document.webapi.contexts.parser.raml.{
+  Raml08WebApiContext,
+  Raml10WebApiContext,
+  RamlWebApiContext,
+  RamlWebApiContextType
+}
 import amf.plugins.document.webapi.model.{ResourceTypeFragment, TraitFragment}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorEndPoint
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
@@ -22,7 +28,6 @@ import org.yaml.model._
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-
 
 object ExtendsHelper {
   def custom(profile: ProfileName): RamlWebApiContext = profile match {
@@ -47,20 +52,23 @@ object ExtendsHelper {
         _.obj {
           _.entry(
             YNode(
-              YScalar.withLocation(name,
-                               YType.Str,
-                               trAnnotations
-                                 .find(classOf[SourceAST])
-                                 .map(_.ast)
-                                 .collectFirst({ case e: YMapEntry => Annotations(e.key) })
-                                 .getOrElse(trAnnotations).sourceLocation),
+              YScalar.withLocation(
+                name,
+                YType.Str,
+                trAnnotations
+                  .find(classOf[SourceAST])
+                  .map(_.ast)
+                  .collectFirst({ case e: YMapEntry => Annotations(e.key) })
+                  .getOrElse(trAnnotations)
+                  .sourceLocation
+              ),
               YType.Str
             ),
             DataNodeEmitter(node,
                             if (trAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
                             else SpecOrdering.Default,
                             resolvedLinks = true,
-                            referencesCollector)(ctx).emit(_)
+                            referencesCollector)(ctx.eh).emit(_)
           )
         }
       },
@@ -98,18 +106,17 @@ object ExtendsHelper {
     }
 
     val operation: Operation =
-      RuntimeValidator.nestedValidation(AllValidationsMerger(ctx.parserCount)) { // we don't emit validation here, final result will be validated after merging
-        ctx.adapt(name) { ctxForTrait =>
-          (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
-            ctx.declarations += e._2
-          }
-          ctxForTrait.contextType = RamlWebApiContextType.TRAIT
-          val operation = ctxForTrait.factory
-            .operationParser(entry, _ => Operation().withId(extensionId + "/applied"), true)
-            .parse()
-//          ctxForTrait.futureDeclarations.resolve()
-          operation
+      // we don't emit validation here, final result will be validated after merging
+      ctx.adapt(name) { ctxForTrait =>
+        (ctxForTrait.declarations.resourceTypes ++ ctxForTrait.declarations.traits).foreach { e =>
+          ctx.declarations += e._2
         }
+        ctxForTrait.contextType = RamlWebApiContextType.TRAIT
+        val operation = ctxForTrait.factory
+          .operationParser(entry, _ => Operation().withId(extensionId + "/applied"), true)
+          .parse()
+//          ctxForTrait.futureDeclarations.resolve()
+        operation
       }
 
     if (keepEditingInfo) annotateExtensionId(operation, extensionId, findUnitLocationOfElement(extensionId, unit))
@@ -135,20 +142,23 @@ object ExtendsHelper {
         _.obj {
           _.entry(
             YNode(
-              YScalar.withLocation(name,
-                               YType.Str,
-                               rtAnnotations
-                                 .find(classOf[SourceAST])
-                                 .map(_.ast)
-                                 .collectFirst({ case e: YMapEntry => Annotations(e.key) })
-                                 .getOrElse(rtAnnotations).sourceLocation),
+              YScalar.withLocation(
+                name,
+                YType.Str,
+                rtAnnotations
+                  .find(classOf[SourceAST])
+                  .map(_.ast)
+                  .collectFirst({ case e: YMapEntry => Annotations(e.key) })
+                  .getOrElse(rtAnnotations)
+                  .sourceLocation
+              ),
               YType.Str
             ),
             DataNodeEmitter(node,
                             if (rtAnnotations.contains(classOf[LexicalInformation])) SpecOrdering.Lexical
                             else SpecOrdering.Default,
                             resolvedLinks = true,
-                            referencesCollector)(ctx).emit(_)
+                            referencesCollector)(ctx.eh).emit(_)
           )
         }
       },
@@ -192,17 +202,15 @@ object ExtendsHelper {
       case (alias, ref) => ctx.declarations.fragments += (alias -> FragmentRef(ref, None))
     }
 
-    RuntimeValidator.nestedValidation(AllValidationsMerger(ctx.parserCount)) {
-      ctx.adapt(name) { ctxForResourceType =>
-        (ctxForResourceType.declarations.resourceTypes ++ ctxForResourceType.declarations.traits).foreach { e =>
-          ctx.declarations += e._2
-        }
-        ctxForResourceType.contextType = RamlWebApiContextType.RESOURCE_TYPE
-        ctxForResourceType.factory
-          .endPointParser(entry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)
-          .parse()
-        ctx.operationContexts ++= ctxForResourceType.operationContexts
+    ctx.adapt(name) { ctxForResourceType =>
+      (ctxForResourceType.declarations.resourceTypes ++ ctxForResourceType.declarations.traits).foreach { e =>
+        ctx.declarations += e._2
       }
+      ctxForResourceType.contextType = RamlWebApiContextType.RESOURCE_TYPE
+      ctxForResourceType.factory
+        .endPointParser(entry, _ => EndPoint().withId(extensionId + "/applied"), None, collector, true)
+        .parse()
+      ctx.operationContexts ++= ctxForResourceType.operationContexts
     }
 
     collector.toList match {
@@ -304,7 +312,7 @@ object ExtendsHelper {
           case (alias, (fullUrl, _)) =>
             // If the library alias is already in the context, skip it
             if (m.id == fullUrl && !ctx.declarations.libraries.exists(_._1 == alias)) {
-              val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(), eh = ctx.eh)
+              val nestedCtx = new Raml10WebApiContext("", Nil, ParserContext(eh = ctx.eh))
               m.declares.foreach { declaration =>
                 processDeclaration(declaration, nestedCtx, m)
               }
@@ -314,7 +322,7 @@ object ExtendsHelper {
         addNestedDeclarations(ctx, m)
       case _: Fragment => // Trait or RT, nothing to do
       case other =>
-        ctx.violation(
+        ctx.eh.violation(
           CoreValidations.ResolutionValidation,
           other,
           None,
@@ -352,38 +360,18 @@ object ExtendsHelper {
   }
 }
 
-class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext()) {
+case class CustomParserErrorHandler() extends DefaultParserErrorHandler {
   override def handle[T](error: YError, defaultValue: T): T = defaultValue
-  override def violation(id: ValidationSpecification,
-                         node: String,
-                         property: Option[String],
-                         message: String,
-                         lexical: Option[LexicalInformation],
-                         location: Option[String]): Unit =
-    super.violation(id, node, property, message, lexical, location)
   override def warning(id: ValidationSpecification,
                        node: String,
                        property: Option[String],
                        message: String,
                        lexical: Option[LexicalInformation],
-                       location: Option[String]): Unit      = {}
+                       location: Option[String]): Unit              = {}
   override def handle(loc: SourceLocation, e: SyamlException): Unit = {}
+
+}
+class CustomRaml08WebApiContext extends Raml08WebApiContext("", Nil, ParserContext(eh = CustomParserErrorHandler())) { // generating a new id???? cannot be ok
 }
 
-class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext()) {
-  override def handle[T](error: YError, defaultValue: T): T = defaultValue
-  override def violation(id: ValidationSpecification,
-                         node: String,
-                         property: Option[String],
-                         message: String,
-                         lexical: Option[LexicalInformation],
-                         location: Option[String]): Unit =
-    super.violation(id, node, property, message, lexical, location)
-  override def warning(id: ValidationSpecification,
-                       node: String,
-                       property: Option[String],
-                       message: String,
-                       lexical: Option[LexicalInformation],
-                       location: Option[String]): Unit      = {}
-  override def handle(location: SourceLocation, e: SyamlException): Unit = {}
-}
+class CustomRaml10WebApiContext extends Raml10WebApiContext("", Nil, ParserContext(eh = CustomParserErrorHandler())) {}

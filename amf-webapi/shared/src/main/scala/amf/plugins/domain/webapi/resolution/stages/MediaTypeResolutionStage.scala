@@ -1,10 +1,10 @@
 package amf.plugins.domain.webapi.resolution.stages
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfScalar, DomainElement, Shape}
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.{ExampleTracking, FileShape, NodeShape}
 import amf.plugins.domain.webapi.metamodel._

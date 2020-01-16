@@ -1,26 +1,21 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations._
-import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
+import amf.core.metamodel.domain.{ShapeModel, LinkableElementModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.DataType
 import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
 import amf.core.parser.{Annotations, Value, _}
-import amf.core.remote.{Oas, Raml08}
-import amf.core.utils.{AmfStrings, IdCounter}
+import amf.core.remote.{Raml08, Oas}
+import amf.core.utils.{IdCounter, AmfStrings}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Shapes
 import amf.plugins.document.webapi.annotations._
-import amf.plugins.document.webapi.contexts.{
-  Raml08WebApiContext,
-  Raml10WebApiContext,
-  RamlWebApiContext,
-  WebApiContext,
-  _
-}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml08WebApiContext, Raml10WebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema, matchType}
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, matchType, XMLSchema}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -46,13 +41,7 @@ object Raml10TypeParser {
             typeInfo: TypeInfo = TypeInfo(),
             defaultType: DefaultType = StringDefaultType)(implicit ctx: RamlWebApiContext): Raml10TypeParser =
     new Raml10TypeParser(Left(entry), entry.key, adopt, typeInfo, defaultType)(
-      new Raml10WebApiContext(ctx.rootContextDocument,
-                              ctx.refs,
-                              ctx,
-                              Some(ctx.declarations),
-                              Some(ctx.parserCount),
-                              ctx.eh,
-                              ctx.contextType))
+      new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), ctx.contextType))
 
   def apply(node: YNode, name: String, adopt: Shape => Shape, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml10TypeParser =
@@ -226,7 +215,7 @@ case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
           shape.withContext(ctx)
           adopt(shape)
           if (!text.validReferencePath && ctx.declarations.libraries.keys.exists(_ == text.split("\\.").head)) {
-            ctx.violation(
+            ctx.eh.violation(
               ChainedReferenceSpecification,
               shape.id,
               s"Chained reference '$text",
@@ -291,7 +280,7 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
         Some(AnyShape(ast).withName(name, Annotations()).add(Inferred()))
       case _ =>
         // TODO get parent id
-        ctx.violation(UnableToSetDefaultType, "", s"Cannot set default type $defaultType in raml 08", ast)
+        ctx.eh.violation(UnableToSetDefaultType, "", s"Cannot set default type $defaultType in raml 08", ast)
         None
     }
     product.map(adopt)
@@ -363,7 +352,7 @@ case class SimpleTypeParser(name: String, adopt: Shape => Shape, map: YMap, defa
               }
               Some(shape.withName(name, Annotations()))
             case _ =>
-              ctx.violation(InvalidTypeDefinition, "", s"Invalid type def ${value.text} for ${Raml08.name}", value)
+              ctx.eh.violation(InvalidTypeDefinition, "", s"Invalid type def ${value.text} for ${Raml08.name}", value)
               None
           }
         }
@@ -635,7 +624,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         InheritanceParser(ast.asInstanceOf[YMapEntry], shape, None).parse()
         shape
       case _ =>
-        ctx.violation(InvalidUnionType, shape.id, s"Invalid node for union shape '${node.toString()}", node)
+        ctx.eh.violation(InvalidUnionType, shape.id, s"Invalid node for union shape '${node.toString()}", node)
         shape
     }
   }
@@ -664,9 +653,10 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           val refTuple = ctx.link(node) match {
             case Left(key) =>
               (key,
-               ctx.declarations.findType(key,
-                                         SearchScope.Fragments,
-                                         Some((s: String) => ctx.violation(InvalidFragmentType, shape.id, s, node))))
+               ctx.declarations.findType(
+                 key,
+                 SearchScope.Fragments,
+                 Some((s: String) => ctx.eh.violation(InvalidFragmentType, shape.id, s, node))))
             case _ =>
               val text = node.as[YScalar].text
               (text, ctx.declarations.findType(text, SearchScope.Named))
@@ -691,7 +681,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               unresolve.withContext(ctx)
               adopt(unresolve)
               if (!text.validReferencePath && ctx.declarations.libraries.keys.exists(_ == text.split("\\.").head)) {
-                ctx.violation(
+                ctx.eh.violation(
                   ChainedReferenceSpecification,
                   shape.id,
                   s"Chained reference '$text",
@@ -832,10 +822,10 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             .option()
             .foreach(format => {
               if (format != "rfc3339" && format != "rfc2616") {
-                ctx.violation(InvalidDatetimeFormat,
-                              shape.id,
-                              s"Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
-                              ast)
+                ctx.eh.violation(InvalidDatetimeFormat,
+                                 shape.id,
+                                 s"Invalid format value for datetime, must be 'rfc3339' or 'rfc2616'",
+                                 ast)
               }
             })
         case _ =>
@@ -844,7 +834,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     protected def ensurePrecision(dataType: Option[String], value: String, ast: YNode): Boolean = {
       if (dataType.exists(_.endsWith("#integer")) && value.contains(".")) {
-        ctx.violation(
+        ctx.eh.violation(
           InvalidDecimalPoint,
           shape.id,
           "Invalid decimal point for an integer: " + value,
@@ -879,7 +869,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(entry.value))
 
             case _ =>
-              ctx.violation(InvalidUnionType, shape.id, "Unions are built from multiple shape nodes", entry)
+              ctx.eh.violation(InvalidUnionType, shape.id, "Unions are built from multiple shape nodes", entry)
           }
         }
       )
@@ -909,7 +899,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               shape.setArray(ShapeModel.Or, nodes, Annotations(entry.value))
 
             case _ =>
-              ctx.violation(InvalidOrType, shape.id, "Or constraints are built from multiple shape nodes", entry)
+              ctx.eh.violation(InvalidOrType, shape.id, "Or constraints are built from multiple shape nodes", entry)
           }
         }
       )
@@ -937,7 +927,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               shape.setArray(ShapeModel.And, nodes, Annotations(entry.value))
 
             case _ =>
-              ctx.violation(InvalidAndType, shape.id, "And constraints are built from multiple shape nodes", entry)
+              ctx.eh.violation(InvalidAndType, shape.id, "And constraints are built from multiple shape nodes", entry)
           }
         }
       )
@@ -967,7 +957,10 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               shape.setArray(ShapeModel.Xone, nodes, Annotations(entry.value))
 
             case _ =>
-              ctx.violation(InvalidXoneType, shape.id, "Xone constraints are built from multiple shape nodes", entry)
+              ctx.eh.violation(InvalidXoneType,
+                               shape.id,
+                               "Xone constraints are built from multiple shape nodes",
+                               entry)
           }
         }
       )
@@ -1010,7 +1003,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                          Seq(AmfScalar(entry.value.as[YScalar].text)),
                          Annotations(entry.value))
         case Some(entry) =>
-          ctx.violation(
+          ctx.eh.violation(
             UnexpectedFileTypesSyntax,
             shape.id,
             Some(FileShapeModel.FileTypes.value.iri()),
@@ -1053,7 +1046,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             // not an array regular array parsing
             case _ =>
               val tuple = TupleShape(ast).withName(name, nameAnnotations)
-              ctx.violation(InvalidTupleType, tuple.id, "Tuples must have a list of types", ast)
+              ctx.eh.violation(InvalidTupleType, tuple.id, "Tuples must have a list of types", ast)
               Left(tuple)
           }
         case None => Right(ArrayShape(ast).withName(name, nameAnnotations))
@@ -1099,7 +1092,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           adopt(parsed)
           parsed
         case _ =>
-          ctx.violation(UnableToParseArray, shape.id, "Cannot parse data arrangement shape", map)
+          ctx.eh.violation(UnableToParseArray, shape.id, "Cannot parse data arrangement shape", map)
           shape
       }
     }
@@ -1168,7 +1161,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         case shape: AnyShape
             if shape.annotations.contains(classOf[ParsedJSONSchema]) ||
               shape.annotations.contains(classOf[SchemaIsJsonSchema]) =>
-          ctx.warning(
+          ctx.eh.warning(
             JsonSchemaInheratinaceWarningSpecification,
             shape.id,
             Some(ShapeModel.Inherits.value.iri()),
@@ -1178,7 +1171,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           )
 
         case xml: SchemaShape =>
-          ctx.violation(
+          ctx.eh.violation(
             XmlSchemaInheratinaceWarningSpecification,
             xml.id,
             Some(ShapeModel.Inherits.value.iri()),
@@ -1195,7 +1188,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           case shape: AnyShape
               if shape.annotations.contains(classOf[ParsedJSONSchema]) ||
                 shape.annotations.contains(classOf[SchemaIsJsonSchema]) =>
-            ctx.warning(
+            ctx.eh.warning(
               JsonSchemaInheratinaceWarningSpecification,
               shape.id,
               Some(ShapeModel.Inherits.value.iri()),
@@ -1205,7 +1198,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             )
 
           case xml: SchemaShape =>
-            ctx.violation(
+            ctx.eh.violation(
               XmlSchemaInheratinaceWarningSpecification,
               xml.id,
               Some(ShapeModel.Inherits.value.iri()),
@@ -1317,7 +1310,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             case _ =>
               val baseClass = text match {
                 case JSONSchema(_) =>
-                  ctx.warning(
+                  ctx.eh.warning(
                     JsonSchemaInheratinaceWarningSpecification,
                     shape.id,
                     Some(ShapeModel.Inherits.value.iri()),
@@ -1355,7 +1348,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       )
       unresolvedShape.withContext(ctx)
       if (!reference.validReferencePath && ctx.declarations.libraries.keys.exists(_ == reference.split("\\.").head)) {
-        ctx.violation(
+        ctx.eh.violation(
           ChainedReferenceSpecification,
           unresolvedShape.id,
           s"Chained reference '$reference",
@@ -1411,7 +1404,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 PropertiesParser(m, shape.withProperty).parse()
               val hasPatternProperties = properties.exists(_.patternName.nonEmpty)
               if (hasPatternProperties && shape.closed.value()) {
-                ctx.violation(
+                ctx.eh.violation(
                   PatternPropertiesOnClosedNodeSpecification,
                   shape.id,
                   s"Node without additional properties support cannot have pattern properties",
@@ -1438,7 +1431,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               shape.set(NodeShapeModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
             case YType.Null =>
             case _ =>
-              ctx.violation(
+              ctx.eh.violation(
                 InvalidValueInPropertiesFacet,
                 shape.id,
                 s"Properties facet must be a map of key and values",
@@ -1466,7 +1459,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     def checkExtendedUnionDiscriminator(): Unit = {
       if (shape.inherits.length == 1 && shape.inherits.head.isInstanceOf[UnionShape]) {
         map.key("discriminator").foreach {
-          ctx.violation(
+          ctx.eh.violation(
             DiscriminatorOnExtendedUnionSpecification,
             shape.id,
             "Property discriminator forbidden in a node extending a unionShape",
@@ -1475,7 +1468,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         }
 
         map.key("discriminatorValue").foreach {
-          ctx.violation(
+          ctx.eh.violation(
             DiscriminatorOnExtendedUnionSpecification,
             shape.id,
             "Property discriminatorValue forbidden in a node extending a unionShape",
@@ -1526,7 +1519,6 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
               )
 
-              map.key("readOnly".asRamlAnnotation, PropertyShapeModel.ReadOnly in property)
             case _ =>
           }
 
@@ -1565,7 +1557,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
         case None =>
           // TODO get parent id
-          ctx.violation(InvalidPropertyType, "", "Invalid property name", entry.key)
+          ctx.eh.violation(InvalidPropertyType, "", "Invalid property name", entry.key)
           None
       }
     }
@@ -1605,7 +1597,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key("minItems", (ArrayShapeModel.MinItems in shape).allowingAnnotations)
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
       map.key("externalDocs".asRamlAnnotation,
-              AnyShapeModel.Documentation in shape using (OasCreativeWorkParser.parse(_, shape.id)))
+              AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
 
       map.key(
         "xml",
@@ -1621,6 +1613,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       if (map.key("and".asRamlAnnotation).isDefined) AndConstraintParser(map, shape).parse()
       if (map.key("xone".asRamlAnnotation).isDefined) XoneConstraintParser(map, shape).parse()
       if (map.key("not".asRamlAnnotation).isDefined) NotConstraintParser(map, shape).parse()
+      map.key("readOnly".asRamlAnnotation, PropertyShapeModel.ReadOnly in shape)
 
       // Custom shape property definitions, not instances, those are parsed at the end of the parsing process
       map.key(
@@ -1631,10 +1624,10 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
             (name) => {
               val propertyShape = shape.withCustomShapePropertyDefinition(name)
               if (name.startsWith("("))
-                ctx.violation(InvalidFragmentType,
-                              propertyShape.id,
-                              s"User defined facet name '$name' must not begin with open parenthesis",
-                              entry)
+                ctx.eh.violation(InvalidFragmentType,
+                                 propertyShape.id,
+                                 s"User defined facet name '$name' must not begin with open parenthesis",
+                                 entry)
               propertyShape
             }
           ).parse()

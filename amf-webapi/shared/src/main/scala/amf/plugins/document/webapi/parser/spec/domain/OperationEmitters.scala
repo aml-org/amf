@@ -2,17 +2,18 @@ package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.emitter.{SpecOrdering, EntryEmitter, PartEmitter}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{Annotations, FieldEntry, Fields, Position}
+import amf.core.parser.{Annotations, Position, FieldEntry, Fields}
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.oas.{OasDocumentEmitter, StringArrayTagsEmitter}
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork}
-import amf.plugins.domain.webapi.metamodel.{OperationModel, RequestModel}
+import amf.plugins.domain.webapi.metamodel.{RequestModel, OperationModel}
 import amf.plugins.domain.webapi.models.{Callback, Operation, Tag}
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}

@@ -415,4 +415,8 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
   test("Resource Type - Plain text - Libraries with same name in a merged context") {
     validate("resource_types/plain-text/multi-lib-same-name/api.raml")
   }
+
+  test("JSON Schema relative references") {
+    validate("json-schema-relative-references/api.raml")
+  }
 }

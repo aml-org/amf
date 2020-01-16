@@ -22,7 +22,7 @@ object OAS30Dialect extends OasBaseDialect {
         Oas30ServerObject,
         Oas30PathItemObject,
         AMLLinkObject,
-        ApiKeySecuritySchemeObject,
+        Oas30ApiKeySecuritySchemeObject,
         Oas30SchemaObject,
         Oas30ApiKeySecurityObject,
         AMLRequestBodyObject,

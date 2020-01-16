@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
 import amf.core.parser.{Annotations, ScalarNode, _}
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking

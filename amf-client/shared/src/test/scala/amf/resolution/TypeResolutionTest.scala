@@ -3,14 +3,14 @@ package amf.resolution
 import amf.compiler.CompilerTestBuilder
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
-import amf.core.parser.{DefaultParserSideErrorHandler, ParserContext, UnhandledErrorHandler}
+import amf.core.parser.ParserContext
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{Raml, RamlYamlHint}
-import amf.core.services.RuntimeValidator
 import amf.core.vocabulary.Namespace
 import amf.facades.Validation
-import amf.io.{BuildCycleTests, FunSuiteCycleTests}
+import amf.io.FunSuiteCycleTests
 import amf.plugins.document.webapi.Raml10Plugin
-import amf.plugins.document.webapi.contexts.Raml10WebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.Raml10WebApiContext
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.domain.shapes.models._
 
@@ -18,11 +18,11 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
 
   test("TypeExpressions") {
     Validation(platform)
-      .map(_.withEnabledValidation(false))
       .map(_ => {
         val adopt = (shape: Shape) => { shape.adopted("/test") }
 
-        implicit val ctx: Raml10WebApiContext = new Raml10WebApiContext("", Nil, ParserContext())
+        implicit val ctx: Raml10WebApiContext =
+          new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledParserErrorHandler))
 
         var res = RamlTypeExpressionParser(adopt).parse("integer")
         assert(res.get.isInstanceOf[ScalarShape])
@@ -60,10 +60,9 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
 
         var error = false
         try {
-          RuntimeValidator.disableValidations() { () =>
-            val fail = new Raml10WebApiContext("", Nil, ctx)
-            RamlTypeExpressionParser(adopt)(fail).parse("[]")
-          }
+
+          val fail = new Raml10WebApiContext("", Nil, ctx)
+          RamlTypeExpressionParser(adopt)(fail).parse("[]")
         } catch {
           case e: Exception => error = true
         }
@@ -172,7 +171,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
 
   override val basePath = "amf-client/shared/src/test/resources/resolution/"
 
-  val examples = Seq(
+  val examples: Seq[String] = Seq(
     "union1",
     "union2",
     "union3",
@@ -203,17 +202,16 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
     test(s"Resolve data types: $example") {
       Validation(platform)
         .flatMap(v => {
-          v.withEnabledValidation(true)
           v.loadValidationDialect().map(_ => v)
         })
         .flatMap { validation =>
-          cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath, Some(validation))
+          cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath)
         }
     }
   }
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = {
-    Raml10Plugin.resolve(unit, DefaultParserSideErrorHandler(unit))
+    Raml10Plugin.resolve(unit, unit.errorHandler())
   }
 
   val errorExamples = Seq(
@@ -227,11 +225,10 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
     test(s"Fails on erroneous data types: $example") {
       Validation(platform)
         .flatMap(v => {
-          v.withEnabledValidation(true)
           v.loadValidationDialect().map(_ => v)
         })
         .flatMap { validation =>
-          cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath, Some(validation))
+          cycle(s"$example.raml", s"${example}_canonical.raml", RamlYamlHint, Raml, basePath)
         }
     }
   }

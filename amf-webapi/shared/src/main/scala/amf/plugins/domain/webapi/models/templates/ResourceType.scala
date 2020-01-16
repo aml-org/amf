@@ -1,10 +1,11 @@
 package amf.plugins.domain.webapi.models.templates
 
+import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.domain.templates.AbstractDeclarationModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.templates.AbstractDeclaration
 import amf.core.model.domain.{DataNode, DomainElement, Linkable}
-import amf.core.parser.{Annotations, ErrorHandler, Fields, UnhandledErrorHandler}
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.templates.ResourceTypeModel
 import amf.plugins.domain.webapi.models.EndPoint
 import amf.plugins.domain.webapi.resolution.ExtendsHelper

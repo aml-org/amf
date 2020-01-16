@@ -5,16 +5,16 @@ import amf.core.annotations.{DeclaredElement, DeclaredHeader}
 import amf.core.model.domain.NamedDomainElement
 import amf.core.parser._
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.declaration.AbstractDeclarationsParser
 import amf.plugins.document.webapi.parser.spec.domain.{
-  Oas3NamedExamplesParser,
+  OasLinkParser,
   OasHeaderParametersParser,
-  OasLinkParser
+  Oas3NamedExamplesParser
 }
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
-import amf.plugins.domain.webapi.models.{Callback, Parameter, WebApi}
+import amf.plugins.domain.webapi.models.{Parameter, WebApi}
 import amf.validations.ParserSideValidations
 import org.yaml.model._
 
@@ -78,10 +78,9 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .as[YMap]
           .entries
           .foreach(entry => {
-            val typeName = entry.key.as[YScalar].text
             val requestBody =
-              Oas3RequestParser(entry.value.as[YMap], req => req.withName(typeName).adopted(parent)).parse()
-            requestBody.foreach(ctx.declarations += _.add(DeclaredElement()))
+              Oas30RequestParser(entry.value.as[YMap], parent, entry).parse()
+            ctx.declarations += requestBody.add(DeclaredElement())
           })
       }
     )
@@ -108,15 +107,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
         entry.value
           .as[YMap]
           .entries
-          .foreach { entry =>
-            val linkName = ScalarNode(entry.key).text().value.toString
-            OasLinkParser(entry.value, linkName, link => link.adopted(parent))
-              .parse()
-              .foreach { link =>
-                link.add(DeclaredElement())
-                ctx.declarations += link
-              }
-        }
+          .foreach(entry => ctx.declarations += OasLinkParser(parent, entry).parse().add(DeclaredElement()))
     )
   }
 
@@ -130,7 +121,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
           .foreach { callbackEntry =>
             val name = callbackEntry.key.as[YScalar].text
             val callbacks =
-              CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent), name, callbackEntry)
+              Oas30CallbackParser(callbackEntry.value.as[YMap], _.withName(name).adopted(parent), name, callbackEntry)
                 .parse()
             callbacks.foreach { callback =>
               callback.add(DeclaredElement())
@@ -158,7 +149,7 @@ case class Oas3DocumentParser(root: Root)(implicit override val ctx: OasWebApiCo
       case _ =>
     }
     def violation(elem: NamedDomainElement, msg: String): Unit = {
-      ctx.violation(
+      ctx.eh.violation(
         ParserSideValidations.InvalidFieldNameInComponents,
         elem.id,
         msg,

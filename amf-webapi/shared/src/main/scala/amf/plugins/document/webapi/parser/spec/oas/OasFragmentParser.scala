@@ -4,25 +4,22 @@ import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.model.document._
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.model.domain.{ExternalDomainElement, Shape}
+import amf.core.model.domain.{Shape, ExternalDomainElement}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.ExternalJsonRefsPlugin
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.OasHeader
 import amf.plugins.document.webapi.parser.OasHeader._
 import amf.plugins.document.webapi.parser.spec.declaration._
-import amf.plugins.document.webapi.parser.spec.domain.{ExampleOptions, RamlNamedExampleParser}
+import amf.plugins.document.webapi.parser.spec.domain.{RamlNamedExampleParser, ExampleOptions}
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.validations.ParserSideValidations.InvalidFragmentType
-import org.yaml.model.{YMap, YMapEntry, YScalar}
+import org.yaml.model.{YMap, YScalar, YMapEntry}
 
-/**
-  *
-  */
 case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(implicit val ctx: OasWebApiContext)
     extends OasSpecParser
     with PlatformSecrets {
@@ -32,10 +29,10 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
     val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.to[YMap] match {
       case Right(m) => m
       case _ =>
-        ctx.violation(InvalidFragmentType,
-                      root.location,
-                      "Cannot parse empty map",
-                      root.parsed.asInstanceOf[SyamlParsedDocument].document)
+        ctx.eh.violation(InvalidFragmentType,
+                         root.location,
+                         "Cannot parse empty map",
+                         root.parsed.asInstanceOf[SyamlParsedDocument].document)
         YMap.empty
     }
 
@@ -55,7 +52,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         .withLocation(root.location)
         .withId(root.location)
         .withEncodes(ExternalDomainElement().withRaw(root.raw))
-      ctx.violation(InvalidFragmentType, fragment.id, "Unsupported oas type", map)
+      ctx.eh.violation(InvalidFragmentType, fragment.id, "Unsupported oas type", map)
       fragment
     }
 
@@ -78,7 +75,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
 
       val item = DocumentationItemFragment().adopted(root.location + "#/")
 
-      item.withEncodes(OasCreativeWorkParser(map, item.id).parse())
+      item.withEncodes(OasLikeCreativeWorkParser(map, item.id).parse())
 
       item
     }
@@ -101,7 +98,7 @@ case class OasFragmentParser(root: Root, fragment: Option[OasHeader] = None)(imp
         OasTypeParser(filterMap,
                       "type",
                       (shape: Shape) => shape.withId(root.location + "#/shape"),
-                      OAS20SchemaVersion(position = "schema"))
+                      OAS20SchemaVersion(position = "schema")(ctx.eh))
           .parse()
       shapeOption.map(dataType.withEncodes(_))
 

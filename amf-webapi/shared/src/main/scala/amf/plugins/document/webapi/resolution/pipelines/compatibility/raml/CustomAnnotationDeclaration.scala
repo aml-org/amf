@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.extensions.CustomDomainProperty
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation
 import amf.plugins.domain.shapes.models.AnyShape

@@ -1,20 +1,22 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.Root
-import amf.core.annotations.{ExternalFragmentRef, LexicalInformation}
+import amf.core.annotations.{LexicalInformation, ExternalFragmentRef}
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.model.domain.Shape
-import amf.core.parser.{Annotations, InferredLinkReference, ParsedReference, Reference, ReferenceFragmentPartition, _}
+import amf.core.parser.{ParsedReference, InferredLinkReference, Reference, ReferenceFragmentPartition, Annotations, _}
 import amf.core.resolution.stages.ReferenceResolutionStage
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.annotations.{JSONSchemaId, ParsedJSONSchema, SchemaIsJsonSchema}
-import amf.plugins.document.webapi.contexts.{OasWebApiContext, RamlWebApiContext, WebApiContext}
+import amf.plugins.document.webapi.annotations.{ParsedJSONSchema, JSONSchemaId, SchemaIsJsonSchema}
+import amf.plugins.document.webapi.contexts.WebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
 import amf.plugins.document.webapi.parser.spec.domain.NodeDataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas2DocumentParser
 import amf.plugins.document.webapi.parser.spec.raml.RamlSpecParser
 import amf.plugins.document.webapi.parser.spec.toJsonSchema
 import amf.plugins.domain.shapes.metamodel.{AnyShapeModel, SchemaShapeModel}
-import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape, UnresolvedShape}
+import amf.plugins.domain.shapes.models.{SchemaShape, AnyShape, UnresolvedShape}
 import amf.validations.ParserSideValidations._
 import org.yaml.model.YNode.MutRef
 import org.yaml.model._
@@ -56,10 +58,10 @@ case class RamlJsonSchemaExpression(key: YNode,
               case _ =>
                 val empty = AnyShape()
                 adopt(empty)
-                ctx.violation(JsonSchemaFragmentNotFound,
-                              empty.id,
-                              s"could not find json schema fragment ${extFragment.get} in file $path",
-                              origin.valueAST)
+                ctx.eh.violation(JsonSchemaFragmentNotFound,
+                                 empty.id,
+                                 s"could not find json schema fragment ${extFragment.get} in file $path",
+                                 origin.valueAST)
                 empty
 
             }
@@ -111,7 +113,7 @@ case class RamlJsonSchemaExpression(key: YNode,
     def parse(): Unit = {
       // todo: should we add string begin position to each node position? in order to have the positions relatives to root api intead of absolut to text
       val url               = path.normalizeUrl + (if (!path.endsWith("/")) "/" else "") // alwarys add / to avoid ask if there is any one before add #
-      val schemaEntry       = JsonParser.withSource(text, valueAST.sourceName)(ctx).document()
+      val schemaEntry       = JsonParser.withSource(text, valueAST.sourceName)(ctx.eh).document()
       val jsonSchemaContext = toSchemaContext(ctx, valueAST)
       jsonSchemaContext.localJSONSchemaContext = Some(schemaEntry.node)
       jsonSchemaContext.setJsonSchemaAST(schemaEntry.node)
@@ -121,7 +123,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         jsonSchemaContext)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")
       val libraryShapes = jsonSchemaContext.declarations.shapes
-      val resolvedShapes = new ReferenceResolutionStage(false)(ctx)
+      val resolvedShapes = new ReferenceResolutionStage(false)(ctx.eh)
         .resolveDomainElementSet[Shape](libraryShapes.values.toSeq)
 
       val shapesMap = mutable.Map[String, AnyShape]()
@@ -148,11 +150,11 @@ case class RamlJsonSchemaExpression(key: YNode,
 
     val parser =
       if (url.isDefined)
-        JsonParser.withSource(text, url.get)(ctx)
+        JsonParser.withSource(text, url.get)(ctx.eh)
       else
         JsonParser.withSource(text,
                               valueAST.value.sourceName,
-                              Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx)
+                              Position(valueAST.range.lineFrom, valueAST.range.columnFrom))(ctx.eh)
 
     val schemaEntry = YMapEntry(key, parser.document().node)
 
@@ -180,7 +182,7 @@ case class RamlJsonSchemaExpression(key: YNode,
         case None =>
           val shape = SchemaShape()
           adopt(shape)
-          ctx.violation(UnableToParseJsonSchema, shape.id, "Cannot parse JSON Schema", value)
+          ctx.eh.violation(UnableToParseJsonSchema, shape.id, "Cannot parse JSON Schema", value)
           shape
       }
     // we clean from globalSpace the local references
@@ -197,8 +199,9 @@ case class RamlJsonSchemaExpression(key: YNode,
       case inlined: MutRef =>
         if (inlined.origTag.tagType == YType.Include) {
           // JSON schema file we need to update the context
-          val fileHint = inlined.origValue.asInstanceOf[YScalar].text.split("#").head // should replace ast for originUrl?? use ReferenceFragmentPartition?
-          ctx.refs.find(r => r.unit.location().exists(_.endsWith(fileHint))) match {
+          val rawPath            = inlined.origValue.asInstanceOf[YScalar].text
+          val normalizedFilePath = normalizePath(rawPath)
+          ctx.refs.find(r => r.unit.location().exists(_.endsWith(normalizedFilePath))) match {
             case Some(ref) =>
               toJsonSchema(
                 ref.unit.location().get,
@@ -216,6 +219,19 @@ case class RamlJsonSchemaExpression(key: YNode,
       case _ =>
         toJsonSchema(ctx)
     }
+  }
+
+  private def normalizePath(rawPath: String): String = {
+    //    TODO: we need to resolve paths but this conflicts with absolute references to exchange_modules
+    //    val file = rawPath.split("#").head
+    //    val root               = ctx.rootContextDocument
+    //    val normalizedFilePath = ctx.resolvedPath(root, file)
+    val hashTagIdx = rawPath.indexOf("#")
+    val parentIdx  = rawPath.lastIndexOf("../") + 3
+    val currentIdx = rawPath.lastIndexOf("./") + 2
+    val start      = parentIdx.max(currentIdx).max(0)
+    val finish     = if (hashTagIdx == -1) rawPath.length else hashTagIdx
+    rawPath.substring(start, finish)
   }
 
   override val externalType: String = "JSON"
@@ -253,10 +269,10 @@ case class RamlXmlSchemaExpression(key: YNode,
           case _ =>
             val shape = SchemaShape()
             adopt(shape)
-            ctx.violation(InvalidXmlSchemaType,
-                          shape.id,
-                          "Cannot parse XML Schema expression out of a non string value",
-                          value)
+            ctx.eh.violation(InvalidXmlSchemaType,
+                             shape.id,
+                             "Cannot parse XML Schema expression out of a non string value",
+                             value)
             shape
         }
         map.key("displayName", (ShapeModel.DisplayName in parsedSchema).allowingAnnotations)
@@ -277,10 +293,10 @@ case class RamlXmlSchemaExpression(key: YNode,
       case YType.Seq =>
         val shape = SchemaShape()
         adopt(shape)
-        ctx.violation(InvalidXmlSchemaType,
-                      shape.id,
-                      "Cannot parse XML Schema expression out of a non string value",
-                      value)
+        ctx.eh.violation(InvalidXmlSchemaType,
+                         shape.id,
+                         "Cannot parse XML Schema expression out of a non string value",
+                         value)
         shape
       case _ =>
         val raw   = value.as[YScalar].text
@@ -345,10 +361,10 @@ trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with Ram
   private def failSchemaExpressionParser = {
     val shape = SchemaShape()
     adopt(shape)
-    ctx.violation(InvalidExternalTypeType,
-                  shape.id,
-                  s"Cannot parse $externalType Schema expression out of a non string value",
-                  value)
+    ctx.eh.violation(InvalidExternalTypeType,
+                     shape.id,
+                     s"Cannot parse $externalType Schema expression out of a non string value",
+                     value)
     ValueAndOrigin("", value, None, Some(shape))
   }
 }

@@ -6,6 +6,7 @@ import amf.plugins.domain.webapi.models.security.{
   OpenIdConnectSettings => InternalOpenIdConnectSettings,
   HttpSettings => InternalHttpSettings,
   ApiKeySettings => InternalApiKeySettings,
+  HttpApiKeySettings => InternalHttpApiKeySettings,
   OAuth1Settings => InternalOAuth1Settings,
   OAuth2Settings => InternalOAuth2Settings,
   Settings => InternalSettings
@@ -105,6 +106,29 @@ case class ApiKeySettings(override private[amf] val _internal: InternalApiKeySet
   }
 
   /** Set in property of this ApiKeySettings] */
+  def withIn(in: String): this.type = {
+    _internal.withIn(in)
+    this
+  }
+}
+
+@JSExportAll
+case class HttpApiKeySettings(override private[amf] val _internal: InternalHttpApiKeySettings)
+    extends Settings(_internal) {
+
+  @JSExportTopLevel("model.domain.HttpApiKeySettings")
+  def this() = this(InternalHttpApiKeySettings())
+
+  def name: StrField = _internal.name
+  def in: StrField   = _internal.in
+
+  /** Set authorizationUri property of this HttpApiKeySettings. */
+  def withName(name: String): this.type = {
+    _internal.withName(name)
+    this
+  }
+
+  /** Set in property of this HttpApiKeySettings] */
   def withIn(in: String): this.type = {
     _internal.withIn(in)
     this

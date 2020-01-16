@@ -1,9 +1,8 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
-import amf.core.metamodel.domain.extensions.DomainExtensionModel
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.models.AnyShape
 
@@ -23,7 +22,7 @@ class MandatoryAnnotationType()(override implicit val errorHandler: ErrorHandler
                 case None =>
                   annotationCounter += 1
                   val customDomainProperty = CustomDomainProperty()
-                    .withId(model.location() + s"#genAnnotation${annotationCounter}")
+                    .withId(model.location() + s"#genAnnotation$annotationCounter")
                     .withName(domainExtension.name.value())
                     .withSchema(AnyShape())
                   domainExtension.withDefinedBy(customDomainProperty)

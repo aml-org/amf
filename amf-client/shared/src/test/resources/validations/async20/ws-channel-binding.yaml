@@ -1,0 +1,21 @@
+asyncapi: '2.0.0'
+info:
+  title: Websockets channel binding
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    bindings:
+      ws:
+        method: GET
+        query:
+          type: object
+          properties:
+            some:
+              type: string
+        headers:
+          type: object
+          properties:
+            some:
+              type: string
+        bindingVersion: 3.4.3

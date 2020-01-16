@@ -1,0 +1,17 @@
+asyncapi: '2.0.0'
+info:
+  title: Amqp queue channel bindings
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    bindings:
+      amqp:
+        bindingVersion: 31.07.92
+        is: queue
+        queue:
+          name: somename
+          durable: true
+          exclusive: false
+          autoDelete: true
+          vhost: /some-some

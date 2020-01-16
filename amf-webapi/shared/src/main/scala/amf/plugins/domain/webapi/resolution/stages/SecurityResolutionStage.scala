@@ -1,14 +1,19 @@
 package amf.plugins.domain.webapi.resolution.stages
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.model.domain.DomainElement
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.metamodel.security.OAuth2FlowModel
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel, WebApiModel}
 import amf.plugins.domain.webapi.models.WebApi
-import amf.plugins.domain.webapi.models.security.{OAuth2Settings, ParametrizedSecurityScheme, SecurityRequirement, Settings}
+import amf.plugins.domain.webapi.models.security.{
+  OAuth2Settings,
+  ParametrizedSecurityScheme,
+  SecurityRequirement,
+  Settings
+}
 import amf.plugins.features.validation.CoreValidations
 
 class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
@@ -53,7 +58,7 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
             case r: SecurityRequirement =>
               r.schemes.foreach {
                 case s: ParametrizedSecurityScheme
-                  if Option(s.settings).isDefined && Option(s.scheme).map(_.settings).isDefined =>
+                    if Option(s.settings).isDefined && Option(s.scheme).map(_.settings).isDefined =>
                   validateSettings(s.scheme.settings, s.settings)
                 case _ => // ignore
               }

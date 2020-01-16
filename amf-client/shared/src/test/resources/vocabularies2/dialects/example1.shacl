@@ -145,6 +145,9 @@
 <http://a.ml/vocabularies/amf/parser#examples-must-be-map> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#examples-must-be-map> <http://www.w3.org/ns/shacl#message> "Examples value should be a map" .
 <http://a.ml/vocabularies/amf/parser#examples-must-be-map> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#examples-must-be-seq> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#examples-must-be-seq> <http://www.w3.org/ns/shacl#message> "Examples value should be an array of strings" .
+<http://a.ml/vocabularies/amf/parser#examples-must-be-seq> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#exclusive-properties-error> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#exclusive-properties-error> <http://www.w3.org/ns/shacl#message> "Exclusive properties declared together" .
 <http://a.ml/vocabularies/amf/parser#exclusive-properties-error> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -184,6 +187,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-base-uri-parameters-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-base-uri-parameters-type> <http://www.w3.org/ns/shacl#message> "Invalid baseUriParameters type" .
 <http://a.ml/vocabularies/amf/parser#invalid-base-uri-parameters-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-components> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-components> <http://www.w3.org/ns/shacl#message> "Components facet must be a map" .
+<http://a.ml/vocabularies/amf/parser#invalid-components> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-datetime-format> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-datetime-format> <http://www.w3.org/ns/shacl#message> "Invalid format value for datetime" .
 <http://a.ml/vocabularies/amf/parser#invalid-datetime-format> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
@@ -214,6 +220,9 @@
 <http://a.ml/vocabularies/amf/parser#invalid-fragment-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-fragment-type> <http://www.w3.org/ns/shacl#message> "Invalid fragment type" .
 <http://a.ml/vocabularies/amf/parser#invalid-fragment-type> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-identifier> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
+<http://a.ml/vocabularies/amf/parser#invalid-identifier> <http://www.w3.org/ns/shacl#message> "'id' must be a string" .
+<http://a.ml/vocabularies/amf/parser#invalid-identifier> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-json-schema-expression> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/shacl#NodeShape> .
 <http://a.ml/vocabularies/amf/parser#invalid-json-schema-expression> <http://www.w3.org/ns/shacl#message> "Invalid json schema expression" .
 <http://a.ml/vocabularies/amf/parser#invalid-json-schema-expression> <http://www.w3.org/ns/shacl#targetNode> <http://a.ml/vocabularies/shapes#ParserShape> .

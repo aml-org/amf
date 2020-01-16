@@ -2,33 +2,20 @@ package amf.tools.canonical
 
 import amf.core.metamodel.Obj
 import amf.core.metamodel.document.{DocumentModel, ExternalFragmentModel, ModuleModel}
-import amf.core.metamodel.domain.extensions.{
-  CustomDomainPropertyModel,
-  DomainExtensionModel,
-  PropertyShapeModel,
-  ShapeExtensionModel
-}
-import amf.core.metamodel.domain.templates.VariableValueModel
 import amf.core.metamodel.domain._
+import amf.core.metamodel.domain.extensions.{CustomDomainPropertyModel, DomainExtensionModel}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.ParserContext
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.plugin.{CorePlugin, PluginContext}
 import amf.core.rdf.RdfModelParser
-import amf.core.registries.{AMFDomainRegistry, AMFPluginsRegistry}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
-import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.{
-  AnnotationTypeDeclarationFragmentModel,
-  DataTypeFragmentModel,
-  DocumentationItemFragmentModel,
-  NamedExampleFragmentModel,
-  ResourceTypeFragmentModel,
-  SecuritySchemeFragmentModel,
-  TraitFragmentModel
-}
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -39,7 +26,7 @@ import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-class CanonicalWebAPISpecTransformer extends PlatformSecrets {
+object CanonicalWebAPISpecTransformer extends PlatformSecrets {
 
   val CANONICAL_WEBAPI_NAME = "WebAPI Spec 1.0"
 
@@ -49,24 +36,6 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
   val REPO_LINK_TARGET    = "http://anypoint.com/vocabs/digital-repository#link-target"
   val REPO_LINK_LABEL     = "http://anypoint.com/vocabs/digital-repository#link-label"
   val REPO_EXTENDS        = "http://anypoint.com/vocabs/digital-repository#extends"
-
-  /**
-    * Cleans plugins that will cause a conflict with the canonical WebAPI dialect revivers
-    * @return
-    */
-  protected def removeWebAPIPlugin() = Future {
-    AMFPluginsRegistry.unregisterDomainPlugin(WebAPIDomainPlugin)
-    AMFPluginsRegistry.unregisterDomainPlugin(DataShapesDomainPlugin)
-  }
-
-  /**
-    * Resets the WebAPI plugins
-    * @return
-    */
-  protected def registerWebAPIPlugin() = Future {
-    AMFPluginsRegistry.registerDomainPlugin(WebAPIDomainPlugin)
-    AMFPluginsRegistry.registerDomainPlugin(DataShapesDomainPlugin)
-  }
 
   protected def findWebAPIDialect: Option[Dialect] =
     AMLPlugin.registry.allDialects().find(_.nameAndVersion() == CANONICAL_WEBAPI_NAME)
@@ -175,7 +144,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
           nativeModel.createResource(nodeMapping.id)
         )
       case _ =>
-        println(s"Couldn't find node mapping for ${mappedDocumentType}")
+        println(s"Couldn't find node mapping for $mappedDocumentType")
     }
 
     // now is a dialect domain element
@@ -304,7 +273,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
     topLevelUnit
   }
 
-  protected def transformDataNodes(mapping: Map[String, String], nativeModel: Model) = {
+  protected def transformDataNodes(mapping: Map[String, String], nativeModel: Model): Unit = {
     // we first remove the name from al ldata nodes
     // we first list all the data nodes
     val toCleanIt = nativeModel.listSubjectsWithProperty(
@@ -352,14 +321,14 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
           // link parent node and the reified property
           nativeModel.add(
             nextDataNode,
-            nativeModel.createProperty((CanonicalWebAPISpecDialectExporter.DataPropertiesField.value.iri())),
+            nativeModel.createProperty(CanonicalWebAPISpecDialectExporter.DataPropertiesField.value.iri()),
             pReif
           )
 
           // name
           nativeModel.add(
             pReif,
-            nativeModel.createProperty((DataNodeModel.Name.value.iri())),
+            nativeModel.createProperty(DataNodeModel.Name.value.iri()),
             nativeModel.createLiteral(name)
           )
 
@@ -426,7 +395,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
       nativeModel.createResource((Namespace.Document + "DomainElement").iri())
     )
     val domainElements: mutable.ListBuffer[String] = mutable.ListBuffer()
-    while (it.hasNext()) {
+    while (it.hasNext) {
       domainElements += it.next().getURI
     }
 
@@ -435,7 +404,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
       nativeModel.createProperty((Namespace.Rdf + "type").iri()),
       nativeModel.createResource((Namespace.Shapes + "Shape").iri())
     )
-    while (it.hasNext()) {
+    while (it.hasNext) {
       domainElements += it.next().getURI
     }
 
@@ -507,52 +476,12 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
         )
     }
 
-    // default meta object we need to remove so they don't clash
-    // with the meta objects from the dialect with the same names
-    val defaultRegistryModels = Seq(
-      DocumentModel,
-      ModuleModel,
-      ExternalFragmentModel,
-      DataTypeFragmentModel,
-      AnnotationTypeDeclarationFragmentModel,
-      DocumentationItemFragmentModel,
-      NamedExampleFragmentModel,
-      ResourceTypeFragmentModel,
-      TraitFragmentModel,
-      SecuritySchemeFragmentModel,
-      ExtensionModel,
-      OverlayModel,
-      // internal models
-      VariableValueModel,
-      RecursiveShapeModel,
-      PropertyShapeModel,
-      ShapeExtensionModel,
-      CustomDomainPropertyModel,
-      ExternalDomainElementModel,
-      DomainExtensionModel,
-      // dynamic nodes
-      ScalarNodeModel,
-      ArrayNodeModel,
-      ObjectNodeModel,
-      LinkNodeModel
-    )
-    val unregisteredModels = defaultRegistryModels.map { iri =>
-      AMFDomainRegistry.metadataRegistry.remove(defaultIri(iri))
-    } collect { case Some(x) => x }
+    val plugins = PluginContext(
+      blacklist = Seq(CorePlugin, WebAPIDomainPlugin, DataShapesDomainPlugin, AMFGraphPlugin))
 
-    // now we generate the unit
-    customTransform(nativeModel)
-
-    val parsedUnit = new RdfModelParser(platform)(ParserContext()).parse(model, baseUnitId)
-
-    // we put default objects back
-    unregisteredModels.foreach(m => AMFDomainRegistry.metadataRegistry.put(defaultIri(m), m))
-
-    parsedUnit
+    new RdfModelParser(platform)(ParserContext(eh = UnhandledParserErrorHandler, plugins = plugins))
+      .parse(model, baseUnitId)
   }
-
-  // Extension point to transform the model
-  protected def customTransform(model: Model): Model = model
 
   protected def transformLink(nativeModel: Model, domainElement: String): Unit = {
     val linksIt = nativeModel.listObjectsOfProperty(
@@ -596,7 +525,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
       val nextAnnotationValue = nextAnnotationValueIt.next()
 
       // autogen URI for the reified annotation
-      val reifiedAnnotationUri = nativeModel.createResource(domainElement + s"_annotations_${c}")
+      val reifiedAnnotationUri = nativeModel.createResource(domainElement + s"_annotations_$c")
       c += 1
 
       nativeModel.add(
@@ -642,7 +571,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
       // We try to also add the name of the annotation to the annotation link
       val maybeAnnotationNameIt = nativeModel.listObjectsOfProperty(
         nextAnnotation.asResource(),
-        nativeModel.createProperty((CustomDomainPropertyModel.Name.value.iri()))
+        nativeModel.createProperty(CustomDomainPropertyModel.Name.value.iri())
       )
       if (maybeAnnotationNameIt.hasNext) {
         nativeModel.add(
@@ -666,24 +595,7 @@ class CanonicalWebAPISpecTransformer extends PlatformSecrets {
   protected def defaultIri(metadata: Obj): String = metadata.`type`.head.iri()
 
   /**
-    * Transforms a WebAPI model parsed by AMF from a RAML/OAS document into
-    * a canonical WebAPI model compatible with the canonical WebAPI AML dialect
-    * @param unit
-    * @return
+    * Transforms a WebAPI model parsed by AMF from a RAML/OAS document into a canonical WebAPI model compatible with the canonical WebAPI AML dialect
     */
-  def transform(unit: BaseUnit): Future[BaseUnit] = {
-    for {
-      _           <- removeWebAPIPlugin()
-      transformed <- Future { cleanAMFModel(unit) }
-      _           <- registerWebAPIPlugin()
-    } yield {
-      transformed
-    }
-  }
-}
-
-object CanonicalWebAPISpecTransformer {
-  def apply(): CanonicalWebAPISpecTransformer = {
-    new CanonicalWebAPISpecTransformer()
-  }
+  def transform(unit: BaseUnit): Future[BaseUnit] = Future { cleanAMFModel(unit) }
 }

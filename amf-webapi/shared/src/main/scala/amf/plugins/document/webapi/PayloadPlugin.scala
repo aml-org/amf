@@ -1,15 +1,16 @@
 package amf.plugins.document.webapi
 
 import amf.AmfProfile
-import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin}
+import amf.client.plugins.{AMFDocumentPlugin, AMFDomainPlugin, AMFPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, PayloadFragment}
-import amf.core.parser.{ErrorHandler, ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
+import amf.core.parser.{ParserContext, SimpleReferenceHandler, SyamlParsedDocument}
 import amf.core.remote.{Payload, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.plugins.document.webapi.contexts.PayloadContext
+import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.parser.PayloadParser
 import amf.plugins.document.webapi.parser.spec.common.PayloadEmitter
 import amf.plugins.document.webapi.resolution.pipelines.ValidationResolutionPipeline
@@ -25,18 +26,18 @@ object PayloadPlugin extends AMFDocumentPlugin {
 
   override val ID: String = Payload.name
 
-  val vendors = Seq(Payload.name)
+  val vendors: Seq[String] = Seq(Payload.name)
 
   override def modelEntities: Nil.type = Nil
 
   override def serializableAnnotations(): Map[String, Nothing] = Map.empty
 
-  override def dependencies() = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin)
+  override def dependencies(): Seq[AMFDomainPlugin] = Seq(WebAPIDomainPlugin, DataShapesDomainPlugin)
 
   // we are looking for documents with a very specific payload
   // otherwise, this plugin can become the fallback option.
   // Fallback option should be an external fragment.
-  override def documentSyntaxes = Seq(
+  override def documentSyntaxes: Seq[String] = Seq(
     "application/amf+json",
     "application/amf+yaml",
     "application/payload+json",

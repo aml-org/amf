@@ -33,10 +33,10 @@ case class ScalarFormatType(shape: Shape, typeDef: TypeDef)(implicit ctx: WebApi
         val format = n.value.as[YScalar].text
 
         if (!FormatValidator.isValid(format, typeDef))
-          ctx.warning(InvalidShapeFormat,
-                      shape.id,
-                      s"Format $format is not valid for type ${XsdTypeDefMapping.xsd(typeDef)}",
-                      n)
+          ctx.eh.warning(InvalidShapeFormat,
+                         shape.id,
+                         s"Format $format is not valid for type ${XsdTypeDefMapping.xsd(typeDef)}",
+                         n)
 
         (ScalarShapeModel.Format in shape).allowingAnnotations(n)
         fromFormat(format)

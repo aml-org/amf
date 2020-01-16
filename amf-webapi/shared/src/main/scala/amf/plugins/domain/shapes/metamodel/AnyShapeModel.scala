@@ -16,7 +16,11 @@ trait AnyShapeModel extends ShapeModel with ExternalSourceElementModel with Exam
     ModelDoc(ModelVocabularies.Shapes, "XML serialization", "information about how to serialize"))
 
   val Comment =
-    Field(Str, Core + "comment", ModelDoc(ModelVocabularies.Core, "comment", "Comment associated to schema"))
+    Field(Str,
+          Core + "comment",
+          ModelDoc(ModelVocabularies.Core,
+                   "comment",
+                   "A comment on an item. The comment's content is expressed via the text"))
 
   override val `type`: List[ValueType] =
     List(Shapes + "AnyShape") ++ ShapeModel.`type`

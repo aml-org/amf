@@ -16,11 +16,9 @@ import org.yaml.model.YMapEntry
 class Response(override val fields: Fields, override val annotations: Annotations) extends Message {
 
   def statusCode: StrField      = fields.field(StatusCode)
-  def headers: Seq[Parameter]   = fields.field(Headers)
   def links: Seq[TemplatedLink] = fields.field(Links)
 
   def withStatusCode(statusCode: String): this.type   = set(StatusCode, statusCode)
-  def withHeaders(headers: Seq[Parameter]): this.type = setArray(Headers, headers)
   def withLinks(links: Seq[TemplatedLink]): this.type = setArray(Links, links)
 
   def withHeader(name: String): Parameter = {

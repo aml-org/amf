@@ -13,9 +13,14 @@ object ParserSideValidations extends Validations {
   override val specification: String = PARSER_SIDE_VALIDATION
   override val namespace: Namespace  = AmfParser
 
+  val NonEmptyBindingMap = validation(
+    "non-empty-binding-map",
+    "Reserved name binding must have an empty map"
+  )
+
   val ExclusiveLinkTargetError = validation(
-    id = "exclusive-link-target-error",
-    message = "operationRef and operationId are mutually exclusive in a OAS 3.0.0 Link Object"
+    "exclusive-link-target-error",
+    "operationRef and operationId are mutually exclusive in a OAS 3.0.0 Link Object"
   )
 
   val InvalidJsonSchemaType = validation(
@@ -298,6 +303,11 @@ object ParserSideValidations extends Validations {
     "Examples value should be a map"
   )
 
+  val ExamplesMustBeASeq = validation(
+    "examples-must-be-seq",
+    "Examples value should be an array of strings"
+  )
+
   val PathTemplateUnbalancedParameters = validation(
     "path-template-unbalanced-parameters",
     "Nested parameters are not allowed in path templates"
@@ -489,6 +499,8 @@ object ParserSideValidations extends Validations {
     "Properties facet must be a map of key and values"
   )
 
+  val InvalidComponents = validation("invalid-components", "Components facet must be a map")
+
   val InvalidUserDefinedFacetName = validation(
     "invalid-user-defined-facet-name",
     "User defined facets must not begin with open parenthesis"
@@ -534,6 +546,11 @@ object ParserSideValidations extends Validations {
   val ItemsFieldRequired = validation(
     "items-field-required",
     "'items' field is required when type is array"
+  )
+
+  val InvalidIdentifier = validation(
+    "invalid-identifier",
+    "'id' must be a string"
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
@@ -590,6 +607,7 @@ object ParserSideValidations extends Validations {
     XmlSchemaInheratinaceWarningSpecification,
     DuplicatedPropertySpecification,
     ExamplesMustBeAMap,
+    ExamplesMustBeASeq,
     UnsupportedExampleMediaTypeErrorSpecification,
     OasInvalidBodyParameter,
     DuplicatedParameters,
@@ -676,6 +694,8 @@ object ParserSideValidations extends Validations {
     SlashInUriParameterValues,
     InvalidDatetimeFormat,
     ItemsFieldRequired,
-    InvalidTagType
+    InvalidTagType,
+    InvalidIdentifier,
+    InvalidComponents
   )
 }

@@ -4,9 +4,11 @@ import amf.core.annotations.SynthesizedField
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.model.document.BaseUnit
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.parser.{Position, FieldEntry}
 import amf.core.utils._
-import amf.plugins.document.webapi.contexts.{Oas3SpecEmitterFactory, RamlScalarEmitter, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.Oas3SpecEmitterFactory
+import amf.plugins.document.webapi.contexts.emitter.raml.RamlScalarEmitter
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration.{AnnotationsEmitter, DataNodeEmitter}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
@@ -180,10 +182,7 @@ case class ExampleValuesEmitter(example: Example, ordering: SpecOrdering)(implic
     val fs = example.fields
     // This should remove Strict if we auto-generated it when parsing the model
     val explicitFielMeta =
-      List(ExampleModel.Strict,
-           ExampleModel.Description,
-           ExampleModel.DisplayName,
-           ExampleModel.CustomDomainProperties)
+      List(ExampleModel.Strict, ExampleModel.Description, ExampleModel.DisplayName, ExampleModel.CustomDomainProperties)
         .filter { f =>
           fs.entry(f) match {
             case Some(entry) => !entry.value.annotations.contains(classOf[SynthesizedField])

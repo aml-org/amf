@@ -1,0 +1,21 @@
+asyncapi: '2.0.0'
+info:
+  title: Correlation ID Example
+  version: '1.0.0'
+
+defaultContentType: application/json
+
+channels:
+  some-channel:
+    description: some channel
+#    bindings:
+    parameters:
+      userId:
+        description: id of the user
+        location: "$message.payload#/user/id"
+        schema:
+          type: string
+    publish:
+      message:
+        payload:
+          type: string

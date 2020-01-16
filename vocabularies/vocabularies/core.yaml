@@ -17,7 +17,7 @@ classTerms:
 propertyTerms:
   comment:
     displayName: comment
-    description: Comment associated to schema
+    description: A comment on an item. The comment's content is expressed via the text
     range: string
   correlationId:
     displayName: correlationId
@@ -33,7 +33,7 @@ propertyTerms:
     range: string
   displayName:
     displayName: display name
-    description: Human readable name for an entity
+    description: Human readable name for the term
     range: string
   documentation:
     displayName: documentation
@@ -45,7 +45,11 @@ propertyTerms:
     range: string
   extensionName:
     displayName: name
-    description: Name of an entity
+    description: Name of an extension entity
+    range: string
+  identifier:
+    displayName: identifier
+    description: The identifier property represents any kind of identifier, such as ISBNs, GTIN codes, UUIDs, etc.
     range: string
   license:
     displayName: license
@@ -53,7 +57,7 @@ propertyTerms:
     range: License
   location:
     displayName: location
-    description: structural location of the information where the id is located
+    description: Structural location of a piece of information
     range: string
   mediaType:
     displayName: mediaType
@@ -61,7 +65,7 @@ propertyTerms:
     range: string
   name:
     displayName: name
-    description: name for an entity
+    description: Name for an entity
     range: string
   provider:
     displayName: provider
@@ -77,7 +81,7 @@ propertyTerms:
     range: string
   title:
     displayName: title
-    description: a title for the request/response
+    description: Title of the item
     range: string
   url:
     displayName: url

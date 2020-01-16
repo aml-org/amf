@@ -21,11 +21,13 @@ object TemplatedLinkModel
                        ApiContract + "template",
                        ModelDoc(ModelVocabularies.ApiContract, "template", "URL template for a templated link"))
 
-  val OperationId = Field(Str,
-                          ApiContract + "operationId",
-                          ModelDoc(ModelVocabularies.ApiContract, "operation ID", "Identifier of the target operation"))
+  val OperationId = Field(
+    Str,
+    ApiContract + "operationId",
+    ModelDoc(ModelVocabularies.ApiContract, "operation ID", "Identifier of the target operation"))
 
-  val OperationRef = Field(Str,
+  val OperationRef = Field(
+    Str,
     ApiContract + "operationRef",
     ModelDoc(ModelVocabularies.ApiContract, "operation Ref", "Reference of the target operation"))
 
@@ -33,7 +35,8 @@ object TemplatedLinkModel
                       ApiContract + "mapping",
                       ModelDoc(ModelVocabularies.ApiContract, "mapping", "Variable mapping for the URL template"))
 
-  val RequestBody = Field(Str, ApiContract + "requestBody", ModelDoc(ModelVocabularies.ApiContract, "request body", ""))
+  val RequestBody =
+    Field(Str, ApiContract + "requestBody", ModelDoc(ModelVocabularies.ApiContract, "request body", ""))
 
   val Server = Field(ServerModel, ApiContract + "server", ModelDoc(ModelVocabularies.ApiContract, "server", ""))
 

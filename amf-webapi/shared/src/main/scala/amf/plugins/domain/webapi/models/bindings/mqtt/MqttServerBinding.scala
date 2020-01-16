@@ -15,19 +15,20 @@ class MqttServerBinding(override val fields: Fields, override val annotations: A
   override def meta: Obj                            = MqttServerBindingModel
 
   def clientId: StrField           = fields.field(ClientId)
-  def clientSession: BoolField     = fields.field(ClientSession)
+  def cleanSession: BoolField      = fields.field(CleanSession)
   def lastWill: MqttServerLastWill = fields.field(LastWill)
   def keepAlive: IntField          = fields.field(KeepAlive)
 
   def withClientId(clientId: String): this.type             = set(ClientId, clientId)
-  def withClientSession(clientSession: Boolean): this.type  = set(ClientSession, clientSession)
+  def withCleanSession(cleanSession: Boolean): this.type    = set(CleanSession, cleanSession)
   def withLastWill(lastWill: MqttServerLastWill): this.type = set(LastWill, lastWill)
   def withKeepAlive(keepAlive: Int): this.type              = set(KeepAlive, keepAlive)
 
-  override def componentId: String = "/mqtt-server"
+  override def componentId: String           = "/mqtt-server"
   override def linkCopy(): MqttServerBinding = MqttServerBinding().withId(id)
 
-  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = MqttServerBinding.apply
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    MqttServerBinding.apply
 }
 
 object MqttServerBinding {

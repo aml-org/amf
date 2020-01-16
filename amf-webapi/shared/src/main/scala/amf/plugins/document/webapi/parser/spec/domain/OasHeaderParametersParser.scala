@@ -3,14 +3,14 @@ package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.SynthesizedField
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, _}
-import amf.plugins.document.webapi.contexts.OasWebApiContext
+import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
+import amf.plugins.domain.webapi.metamodel.{PayloadModel, ParameterModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.CoreValidations
 import org.yaml.model.YMap
@@ -55,7 +55,10 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
                 case Some(requestNode) =>
                   OasHeaderParameterParser(requestNode.as[YMap], adopt).parse()
                 case None =>
-                  ctx.violation(CoreValidations.UnresolvedReference, "", s"Cannot find header reference $fullRef", map)
+                  ctx.eh.violation(CoreValidations.UnresolvedReference,
+                                   "",
+                                   s"Cannot find header reference $fullRef",
+                                   map)
                   val error = ErrorParameter(label, map)
                   adopt(error)
                   error

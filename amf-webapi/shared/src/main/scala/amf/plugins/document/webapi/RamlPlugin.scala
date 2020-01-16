@@ -2,17 +2,22 @@ package amf.plugins.document.webapi
 
 import amf._
 import amf.core.Root
-import amf.core.annotations.SourceAST
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document._
 import amf.core.model.domain.ExternalDomainElement
-import amf.core.parser.{EmptyFutureDeclarations, ErrorHandler, LinkReference, ParserContext, RefContainer}
+import amf.core.parser.{EmptyFutureDeclarations, LinkReference, ParserContext, RefContainer}
 import amf.core.remote.{Platform, Raml, Vendor}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
-import amf.plugins.document.webapi.contexts._
+import amf.plugins.document.webapi.contexts.emitter.raml.{
+  Raml08SpecEmitterContext,
+  Raml10SpecEmitterContext,
+  RamlSpecEmitterContext
+}
+import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.model._
 import amf.plugins.document.webapi.parser.RamlFragmentHeader._
 import amf.plugins.document.webapi.parser.RamlHeader.{Raml10, Raml10Extension, Raml10Library, Raml10Overlay, _}
@@ -28,7 +33,7 @@ import amf.plugins.document.webapi.resolution.pipelines.{
 }
 import amf.plugins.domain.webapi.models.WebApi
 import org.yaml.model.YNode.MutRef
-import org.yaml.model.{YDocument, YMap, YNode}
+import org.yaml.model.{YDocument, YNode}
 
 sealed trait RamlPlugin extends BaseWebApiPlugin {
 
@@ -39,7 +44,7 @@ sealed trait RamlPlugin extends BaseWebApiPlugin {
   // context that opens a new context for declarations and copies the global JSON Schema declarations
   def cleanContext(wrapped: ParserContext, root: Root): RamlWebApiContext = {
     val cleanNested =
-      ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = wrapped.parserCount)
+      ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.eh)
     val clean = context(cleanNested, root)
     clean.globalSpace = wrapped.globalSpace
     clean.reportDisambiguation = wrapped.reportDisambiguation

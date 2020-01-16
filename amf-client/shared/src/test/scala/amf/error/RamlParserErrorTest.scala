@@ -2,6 +2,7 @@ package amf.error
 
 import amf.core.model.document.{BaseUnit, Document}
 import amf.core.parser.Range
+import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.remote.RamlYamlHint
 import amf.facades.{AMFCompiler, Validation}
 import amf.plugins.domain.shapes.models.{ScalarShape, UnresolvedShape}
@@ -604,6 +605,6 @@ class RamlParserErrorTest extends ParserErrorTest {
 
   override protected val basePath: String = "file://amf-client/shared/src/test/resources/parser-results/raml/"
 
-  override protected def build(validation: Validation, file: String): Future[BaseUnit] =
-    AMFCompiler(file, platform, RamlYamlHint, validation).build()
+  override protected def build(eh: ParserErrorHandler, file: String): Future[BaseUnit] =
+    AMFCompiler(file, platform, RamlYamlHint, eh = eh).build()
 }

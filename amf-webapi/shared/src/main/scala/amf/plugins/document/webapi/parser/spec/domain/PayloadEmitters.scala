@@ -6,17 +6,17 @@ import amf.core.emitter._
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.Shape
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.parser.{Position, FieldEntry}
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
-import amf.plugins.document.webapi.contexts.RamlSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.raml.RamlSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
-import amf.plugins.domain.shapes.models.{AnyShape, NodeShape}
+import amf.plugins.domain.shapes.models.{NodeShape, AnyShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel
 import amf.plugins.domain.webapi.models.Payload
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YMap, YNode, YType}
+import org.yaml.model.{YType, YMap, YNode}
 
 /**
   *

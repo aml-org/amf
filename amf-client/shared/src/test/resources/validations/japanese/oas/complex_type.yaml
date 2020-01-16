@@ -1,0 +1,44 @@
+openapi: 3.0.0
+info:
+  title: "Complex Object Api"
+  version: 0.0.0
+paths:
+  /user:
+    get:
+      description: "A description"
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+components:
+  schemas:
+    Person:
+      type: object
+      properties:
+        DNI:
+          type: string
+    User:
+      type: object
+      properties:
+        name:
+          type: string
+          pattern: ([\u30a0-\u30ff]+)
+          example: キンギョ
+        age:
+          type: integer
+          format: int64
+          example: 1
+        ContactInfo:
+          $ref: '#/components/schemas/ContactInfo'
+    ContactInfo:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        phone:
+          type: string

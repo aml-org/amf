@@ -8,7 +8,9 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.Vendor
 import amf.core.utils.AmfStrings
-import amf.plugins.document.webapi.contexts.{OasSpecEmitterContext, RamlScalarEmitter, RamlSpecEmitterContext, SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.SpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
@@ -29,17 +31,20 @@ case class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], orde
     implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val securityTypes: Map[OasSecuritySchemeType, SecurityScheme] =
-      securitySchemes.map(s => OasSecuritySchemeTypeMapping.fromText(s.`type`.value()) -> s).toMap
-    val (oasSecurityDefinitions, extensionDefinitions) = securityTypes.partition(m => m._1.isOas)
+    val securityTypeMap: Seq[(OasSecuritySchemeType, SecurityScheme)] =
+      securitySchemes.map(s => (OasSecuritySchemeTypeMapping.fromText(s.`type`.value()), s))
+
+    val (oasSecurityDefinitions, extensionDefinitions) = securityTypeMap.partition(m => m._1.isOas)
     val isOas3                                         = spec.vendor == Vendor.OAS30
     if (oasSecurityDefinitions.nonEmpty)
       b.entry(
         if (isOas3) "securitySchemes" else "securityDefinitions",
         _.obj(
-          traverse(ordering.sorted(
-                     oasSecurityDefinitions.map(s => OasNamedSecuritySchemeEmitter(s._2, s._1, ordering)).toSeq),
-                   _))
+          traverse(
+            ordering.sorted(oasSecurityDefinitions
+              .map(s => OasNamedSecuritySchemeEmitter(s._2, s._1, ordering))),
+            _
+          ))
       )
     if (extensionDefinitions.nonEmpty)
       b.entry(

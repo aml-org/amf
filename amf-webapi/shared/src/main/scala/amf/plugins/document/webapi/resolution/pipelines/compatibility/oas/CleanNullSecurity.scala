@@ -1,11 +1,11 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.oas
 
 import amf.core.annotations.NullSecurity
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.ScalarNode
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.webapi.models.Operation
 
@@ -33,7 +33,6 @@ class CleanNullSecurity()(override implicit val errorHandler: ErrorHandler) exte
                 .withName("optionalSecurity")
                 .withExtension(ScalarNode("true", Some(DataType.Boolean))))
           }
-
 
         case _ => // ignore
       }

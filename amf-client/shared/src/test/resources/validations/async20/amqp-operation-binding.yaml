@@ -1,0 +1,24 @@
+asyncapi: '2.0.0'
+info:
+  title: Amqp operation binding
+  version: '1.0.0'
+
+channels:
+  some-channel:
+    publish:
+      bindings:
+        amqp:
+          bindingVersion: 31.07.92
+          expiration: 32
+          userId: some
+          cc: [some]
+          priority: 3
+          deliveryMode: 2
+          mandatory: true
+          bcc: [some]
+          replyTo: some
+          timestamp: true
+    subscribe:
+      bindings:
+        amqp:
+          ack: true

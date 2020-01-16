@@ -93,6 +93,11 @@ object Oas3Syntax extends SpecSyntax {
       "description",
       "variables"
     ),
+    "serverVariable" -> Set(
+      "enum",
+      "default",
+      "description"
+    ),
     "externalDoc" -> Set(
       "url",
       "description"
@@ -283,6 +288,16 @@ object Oas2Syntax extends SpecSyntax {
       "name",
       "namespace",
       "prefix"
+    ),
+    "server" -> Set(
+      "url",
+      "description",
+      "variables"
+    ),
+    "serverVariable" -> Set(
+      "enum",
+      "default",
+      "description"
     ),
     "pathItem" -> Set(
       "get",

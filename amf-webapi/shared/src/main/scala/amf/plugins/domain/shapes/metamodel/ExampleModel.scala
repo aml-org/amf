@@ -24,7 +24,7 @@ trait ExampleModel
     Core + "displayName",
     ModelDoc(ModelVocabularies.Core,
              "display name",
-             "Human readable name for the example",
+             "Human readable name for the term",
              Seq((Namespace.Core + "name").iri()))
   )
   val Summary = Field(

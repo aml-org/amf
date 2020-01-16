@@ -202,13 +202,13 @@
       }
     },
     "securitySchemes": {
-      "openIdConnectType": {
-        "type": "openIdConnect",
-        "openIdConnectUrl": "https://test.com/"
-      },
       "extSecurityScheme": {
         "type": "http",
         "scheme": "string"
+      },
+      "openIdConnectType": {
+        "type": "openIdConnect",
+        "openIdConnectUrl": "https://test.com/"
       }
     }
   },

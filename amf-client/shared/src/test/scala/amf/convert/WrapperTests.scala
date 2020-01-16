@@ -11,7 +11,7 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Oas20Resolver, Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.exception.UnsupportedVendorException
@@ -502,7 +502,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing core") {
-    testVocabulary(core, 4, 19)
+    testVocabulary(core, 4, 20)
   }
 
   test("Vocabularies parsing data_model") {
@@ -514,7 +514,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   }
 
   test("Vocabularies parsing security_model") {
-    testVocabulary(security_model, 12, 19)
+    testVocabulary(security_model, 13, 19)
   }
 
   test("Parsing text document with base url") {
@@ -1923,6 +1923,26 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       assert(!report.conforms)
     }
   }
+
+  test("Test resolution error with resolve stage") {
+    val api = """#%RAML 1.0
+                |title: API
+                |
+                |types:
+                |  SomeType:
+                |    type: SomeType
+                |""".stripMargin
+    for {
+      _        <- AMF.init().asFuture
+      unit     <- new RamlParser().parseStringAsync(api).asFuture
+      resolved <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE))
+      report   <- AMF.validateResolved(resolved, Raml10Profile, AMFStyle).asFuture
+    } yield {
+      println(report.toString())
+      assert(!report.conforms)
+    }
+  }
+
   // todo: move to common (file system)
   def getAbsolutePath(path: String): String
 }

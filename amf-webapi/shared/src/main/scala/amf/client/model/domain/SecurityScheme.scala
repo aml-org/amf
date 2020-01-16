@@ -86,6 +86,8 @@ case class SecurityScheme(override private[amf] val _internal: InternalSecurityS
 
   def withApiKeySettings(): ApiKeySettings = _internal.withApiKeySettings()
 
+  def withHttpApiKeySettings(): HttpApiKeySettings = _internal.withHttpApiKeySettings()
+
   def withHttpSettings(): HttpSettings = _internal.withHttpSettings()
 
   def withOpenIdConnectSettings(): OpenIdConnectSettings = _internal.withOpenIdConnectSettings()

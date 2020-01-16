@@ -40,8 +40,8 @@ Level: Warning
 - Source: http://a.ml/vocabularies/amf/validation#example-validation-error
   Message: should be string
   Level: Warning
-  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/end-points/%2Ftest%2F%7BitemId%7D/get/request/application%2Fjson/scalar/schema/example/default-example
-  Property: file://amf-client/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/end-points/%2Ftest%2F%7BitemId%7D/get/request/application%2Fjson/scalar/schema/example/default-example
+  Target: file://amf-client/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/end-points/%2Ftest%2F%7BitemId%7D/get/requestBody/application%2Fjson/scalar/schema/example/default-example
+  Property: file://amf-client/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json#/web-api/end-points/%2Ftest%2F%7BitemId%7D/get/requestBody/application%2Fjson/scalar/schema/example/default-example
   Position: Some(LexicalInformation([(90,25)-(90,26)]))
   Location: file://amf-client/shared/src/test/resources/validations/oas3/invalid-examples-params-and-media-type.json
 

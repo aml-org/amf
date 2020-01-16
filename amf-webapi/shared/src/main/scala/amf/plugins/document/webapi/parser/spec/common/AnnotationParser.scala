@@ -70,7 +70,7 @@ private case class ExtensionParser(annotation: String, parent: String, entry: YM
         if (allowedTargets.map(_.value()).intersect(target).isEmpty) {
           val ramlTarget         = VocabularyMappings.uriToRaml.get(target.head)
           val ramlAllowedTargets = allowedTargets.flatMap(uri => VocabularyMappings.uriToRaml.get(uri.value()))
-          ctx.violation(
+          ctx.eh.violation(
             InvalidAnnotationTarget,
             parent,
             s"Annotation $annotation not allowed in target ${ramlTarget

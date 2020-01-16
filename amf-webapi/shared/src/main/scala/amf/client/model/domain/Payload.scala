@@ -19,6 +19,7 @@ case class Payload(override private[amf] val _internal: InternalPayload)
 
   def name: StrField                 = _internal.name
   def mediaType: StrField            = _internal.mediaType
+  def schemaMediaType: StrField      = _internal.schemaMediaType
   def schema: Shape                  = _internal.schema
   def examples: ClientList[Example]  = _internal.examples.asClient
   def encoding: ClientList[Encoding] = _internal.encodings.asClient
@@ -32,6 +33,12 @@ case class Payload(override private[amf] val _internal: InternalPayload)
   /** Set mediaType property of this Payload. */
   def withMediaType(mediaType: String): this.type = {
     _internal.withMediaType(mediaType)
+    this
+  }
+
+  /** Set specific media type of schema. */
+  def withSchemaMediaType(mediaType: String): this.type = {
+    _internal.withSchemaMediaType(mediaType)
     this
   }
 

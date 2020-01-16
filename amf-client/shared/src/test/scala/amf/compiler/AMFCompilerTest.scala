@@ -4,6 +4,7 @@ import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.client.remote.Content
 import amf.core.Root
 import amf.core.model.document.{BaseUnit, Document, ExternalFragment}
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.parser.{UnspecifiedReference, _}
 import amf.core.remote.Syntax.{Json, Syntax, Yaml}
 import amf.core.remote._
@@ -60,12 +61,12 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   test("Simple cicle (yaml)") {
     recoverToExceptionIf[Exception] {
       Validation(platform)
-        .map(_.withEnabledValidation(false))
         .flatMap(
           v =>
             build(s"file://amf-client/shared/src/test/resources/reference-itself.raml",
                   RamlYamlHint,
-                  validation = Some(v)))
+                  validation = Some(v),
+                  eh = Some(UnhandledParserErrorHandler)))
     } map { ex =>
       assert(ex.getMessage.contains(
         s"Cyclic found following references file://amf-client/shared/src/test/resources/reference-itself.raml -> file://amf-client/shared/src/test/resources/reference-itself.raml"))
@@ -74,9 +75,10 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
 
   test("Cache duplicate imports") {
     val cache = new TestCache()
-    build("file://amf-client/shared/src/test/resources/input-duplicate-includes.json", OasJsonHint, cache = Some(cache)) map {
-      _ =>
-        cache.assertCacheSize(2)
+    build("file://amf-client/shared/src/test/resources/input-duplicate-includes.json",
+          OasJsonHint,
+          cache = Some(cache)) map { _ =>
+      cache.assertCacheSize(2)
     }
   }
 
@@ -113,7 +115,9 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
     Validation(platform)
       .flatMap(v => {
 
-        build("file://amf-client/shared/src/test/resources/non-exists-include.raml", RamlYamlHint, validation = Some(v))
+        build("file://amf-client/shared/src/test/resources/non-exists-include.raml",
+              RamlYamlHint,
+              validation = Some(v))
           .flatMap(bu => {
             v.validate(bu, RamlProfile, RAMLStyle)
           })
@@ -122,10 +126,10 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
         assert(!r.conforms)
         assert(r.results.lengthCompare(2) == 0)
         assert(
-          r.results.head.message
+          r.results.last.message
             .contains("amf-client/shared/src/test/resources/nonExists.raml"))
         assert(
-          r.results.head.message
+          r.results.last.message
             .contains("such file or directory")) // temp, assert better the message for js and jvm
       })
   }
@@ -205,11 +209,11 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
   private def assertCycles(syntax: Syntax, hint: Hint) = {
     recoverToExceptionIf[Exception] {
       Validation(platform)
-        .map(_.withEnabledValidation(false))
         .flatMap(v => {
           build(s"file://amf-client/shared/src/test/resources/input-cycle.${syntax.extension}",
                 hint,
-                validation = Some(v))
+                validation = Some(v),
+                eh = Some(UnhandledParserErrorHandler))
         })
     } map { ex =>
       assert(ex.getMessage.contains(
@@ -222,7 +226,7 @@ class AMFCompilerTest extends AsyncFunSuite with CompilerTestBuilder {
       if (size != expectedSize) {
         cache.foreach {
           case (a, b) =>
-            println(s"${a} -> ${System.identityHashCode(b)}")
+            println(s"$a -> ${System.identityHashCode(b)}")
         }
       }
       size should be(expectedSize)

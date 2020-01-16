@@ -1,6 +1,7 @@
 package amf.validation
 import amf.core.model.document.{BaseUnit, Module, PayloadFragment}
 import amf.core.model.domain.Shape
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.remote.{PayloadJsonHint, PayloadYamlHint, RamlYamlHint}
 import amf.core.unsafe.{PlatformSecrets, TrunkPlatform}
 import amf.core.validation.{SeverityLevels, ValidationCandidate}
@@ -46,15 +47,17 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
                                                                2,
                                                                PayloadProfile,
                                                                jsNumErrors = Some(3)),
-    ("payloads.raml", "H", "h_invalid.json")                      -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("payloads.raml", "PersonData", "person_valid.yaml")          -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("payloads.raml", "PersonData", "person_invalid.yaml")        -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("payloads.raml", "CustomerData", "person_valid.yaml")        -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a_valid.json")            -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a_invalid.json")          -> ExpectedReport(conforms = false, 1, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a2_valid.json")           -> ExpectedReport(conforms = true, 0, PayloadProfile),
-    ("test_cases.raml", "A", "test_case_a2_invalid.json")         -> ExpectedReport(conforms = false, 1, PayloadProfile)
+    ("payloads.raml", "H", "h_invalid.json")               -> ExpectedReport(conforms = false, 1, PayloadProfile),
+    ("payloads.raml", "PersonData", "person_valid.yaml")   -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("payloads.raml", "PersonData", "person_invalid.yaml") -> ExpectedReport(conforms = false, 1, PayloadProfile),
+    ("payloads.raml", "CustomerData", "customer_data_valid.yaml") -> ExpectedReport(conforms = true,
+                                                                                    0,
+                                                                                    PayloadProfile),
+    ("payloads.raml", "CustomerData", "person_valid.yaml") -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a_valid.json")     -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a_invalid.json")   -> ExpectedReport(conforms = false, 1, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a2_valid.json")    -> ExpectedReport(conforms = true, 0, PayloadProfile),
+    ("test_cases.raml", "A", "test_case_a2_invalid.json")  -> ExpectedReport(conforms = false, 1, PayloadProfile)
   )
 
   for {
@@ -66,9 +69,10 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
         case "yaml" => PayloadYamlHint
       }
       val candidates: Future[Seq[ValidationCandidate]] = for {
-        validation <- Validation(platform).map(_.withEnabledValidation(false))
-        library    <- AMFCompiler(payloadsPath + libraryFile, platform, RamlYamlHint, validation).build()
-        payload    <- AMFCompiler(payloadsPath + payloadFile, platform, hint, validation).build()
+        validation <- Validation(platform)
+        library <- AMFCompiler(payloadsPath + libraryFile, platform, RamlYamlHint, eh = UnhandledParserErrorHandler)
+          .build()
+        payload <- AMFCompiler(payloadsPath + payloadFile, platform, hint, eh = UnhandledParserErrorHandler).build()
       } yield {
         // todo check with antonio, i removed the canonical shape from validation, so i need to resolve here
         ValidationResolutionPipeline(AmfProfile, library)
@@ -103,14 +107,19 @@ class GenericPayloadValidationTest extends AsyncFunSuite with PlatformSecrets {
 
     for {
       content    <- platform.resolve(payloadsPath + "b_valid.yaml")
-      validation <- Validation(platform).map(_.withEnabledValidation(false))
-      filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml", platform, PayloadYamlHint, validation)
-        .build()
-      validationPayload <- Validation(platform).map(_.withEnabledValidation(false))
-      textPayload <- AMFCompiler(payloadsPath + "b_valid.yaml",
-                                 TrunkPlatform(content.stream.toString, forcedMediaType = Some("application/yaml")),
+      validation <- Validation(platform)
+      filePayload <- AMFCompiler(payloadsPath + "b_valid.yaml",
+                                 platform,
                                  PayloadYamlHint,
-                                 validationPayload).build()
+                                 eh = UnhandledParserErrorHandler)
+        .build()
+      validationPayload <- Validation(platform)
+      textPayload <- AMFCompiler(
+        payloadsPath + "b_valid.yaml",
+        TrunkPlatform(content.stream.toString, forcedMediaType = Some("application/yaml")),
+        PayloadYamlHint,
+        eh = UnhandledParserErrorHandler
+      ).build()
     } yield {
       val fileJson = render(filePayload)
       val textJson = render(textPayload)

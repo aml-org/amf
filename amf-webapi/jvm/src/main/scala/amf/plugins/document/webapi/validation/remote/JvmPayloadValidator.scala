@@ -6,6 +6,7 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
+import amf.plugins.document.webapi.validation.json.{JSONObject, JSONTokenerHack}
 import amf.validations.PayloadValidations.{
   ExampleValidationErrorSpecification,
   SchemaException => InternalSchemaException
@@ -14,7 +15,7 @@ import org.everit.json.schema.internal.{DateFormatValidator, RegexFormatValidato
 import org.everit.json.schema.loader.SchemaLoader
 import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
-import org.json.{JSONException, JSONObject}
+import org.json.JSONException
 
 class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
     extends PlatformPayloadValidator(shape) {

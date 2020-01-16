@@ -22,7 +22,7 @@ object MqttServerBindingModel extends ServerBindingModel with BindingVersion {
   val ClientId =
     Field(Str, ApiBinding + "clientId", ModelDoc(ModelVocabularies.ApiBinding, "clientId", "The client identifier"))
 
-  val ClientSession =
+  val CleanSession =
     Field(Bool,
           ApiBinding + "cleanSession",
           ModelDoc(ModelVocabularies.ApiBinding, "cleanSession", "Whether to create a persistent connection or not"))
@@ -44,7 +44,7 @@ object MqttServerBindingModel extends ServerBindingModel with BindingVersion {
   override def modelInstance: AmfObject = MqttServerBinding()
 
   override def fields: List[Field] =
-    List(ClientId, ClientSession, LastWill, KeepAlive, BindingVersion) ++ ServerBindingModel.fields
+    List(ClientId, CleanSession, LastWill, KeepAlive, BindingVersion) ++ ServerBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "MqttServerBinding" :: ServerBindingModel.`type`
 

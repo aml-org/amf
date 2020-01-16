@@ -1,11 +1,10 @@
 package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{DomainElement, Shape}
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.domain.shapes.annotations.ParsedFromTypeExpression
-import amf.plugins.domain.shapes.metamodel.UnionShapeModel
 import amf.plugins.domain.shapes.models.UnionShape
 
 import scala.collection.mutable
@@ -33,7 +32,7 @@ class UnionsAsTypeExpressions()(override implicit val errorHandler: ErrorHandler
                 declared.name.value()
               case _ =>
                 if (shape.name.option().isEmpty) {
-                  val namedShape = s"GenShape${counter}"
+                  val namedShape = s"GenShape$counter"
                   counter += 1
                   shape.withName(namedShape)
                 }

@@ -1,0 +1,42 @@
+#%RAML 1.0
+title: valid property type inheritance
+types:
+  Anything:
+    additionalProperties: true
+    properties:
+      name:
+        type: any
+        required: true
+  StringOrNumber:
+    type: object
+    additionalProperties: true
+    properties:
+      name:
+        type: string | number
+        required: true
+  NumberOrNil:
+    additionalProperties: true
+    properties:
+      name:
+        type: number | nil
+        required: true
+  Integer:
+    type: object
+    additionalProperties: true
+    properties:
+      name:
+        type: integer
+        required: true
+  StringOrNumberOrBoolean:
+    additionalProperties: true
+    properties:
+      name:
+        type: string | number | boolean
+        required: true
+  NumberOrString:
+    type: object
+    additionalProperties: true
+    properties:
+      name:
+        type: number | string
+        required: true

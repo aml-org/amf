@@ -1,0 +1,6 @@
+#%RAML 1.0 Library
+types:
+  Person0: !include ../schemas/person-schema.json
+  Person2: !include ./../schemas/person-schema.json
+  Person3: !include ./../../json-schema-relative-references/schemas/person-schema.json
+  Name: !include  ./../schemas/schema-library.json#/definitions/Name

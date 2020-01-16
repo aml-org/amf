@@ -29,9 +29,10 @@ object NodeShapeModel extends AnyShapeModel {
     Shacl + "closed",
     ModelDoc(ExternalModelVocabularies.Shacl, "closed", "Additional properties in the input node accepted constraint"))
 
-  val AdditionalPropertiesSchema = Field(ShapeModel,
-                                         Shacl + "additionalPropertiesSchema",
-                                         ModelDoc(ExternalModelVocabularies.Shacl, "additional properties schema", ""))
+  val AdditionalPropertiesSchema = Field(
+    ShapeModel,
+    Shacl + "additionalPropertiesSchema",
+    ModelDoc(ExternalModelVocabularies.Shacl, "additional properties schema", "Additional properties schema"))
 
   val Discriminator =
     Field(Str, Shapes + "discriminator", ModelDoc(ModelVocabularies.Shapes, "discriminator", "Discriminator property"))
@@ -55,7 +56,7 @@ object NodeShapeModel extends AnyShapeModel {
 
   val PropertyNames = Field(ShapeModel,
                             Shacl + "propertyNames",
-                            ModelDoc(ExternalModelVocabularies.Shacl, "property", "property names schema"))
+                            ModelDoc(ExternalModelVocabularies.Shacl, "property names", "Property names schema"))
 
   val Dependencies = Field(Array(PropertyDependenciesModel),
                            Shapes + "dependencies",

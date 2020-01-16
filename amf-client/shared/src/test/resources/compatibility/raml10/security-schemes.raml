@@ -1,0 +1,32 @@
+#%RAML 1.0
+---
+title: Process for all kind of products.
+documentation:
+ - title: Home
+   content: |
+     Welcome to product-process Documentation.
+baseUri: http://mule-deve.canda.biz:24014/api
+
+securitySchemes:
+  basicAuthInternalMule:
+    type: OAuth 2.0
+    description: Mulestac internal.http.user
+    settings:
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants: [ authorization_code, implicit ]
+  basicAuthLdap:
+    type: OAuth 2.0
+    description: "C&A LDAP credentials."
+    settings:
+      authorizationUri: https://www.dropbox.com/1/oauth2/authorize
+      accessTokenUri: https://api.dropbox.com/1/oauth2/token
+      authorizationGrants: [ authorization_code, implicit ]
+
+
+/salesProducts:
+  put:
+     securedBy: [basicAuthInternalMule]
+     description: Create or update a product in the crm-system (segmentation/marketing)
+     responses:
+        204:
