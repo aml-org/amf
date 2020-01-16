@@ -80,9 +80,9 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     map.key(
       "channels",
       entry => {
-        val paths     = entry.value.as[YMap]
-        val endpoints = mutable.ListBuffer[EndPoint]()
-        paths.entries.foreach(ctx.factory.endPointParser(_, api.withEndPoint, endpoints).parse())
+        val paths = entry.value.as[YMap]
+        val endpoints = paths.entries.foldLeft(List[EndPoint]())((acc, curr) =>
+          acc ++ ctx.factory.endPointParser(curr, api.withEndPoint, acc).parse())
         api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
       }
     )
