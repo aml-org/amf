@@ -289,7 +289,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     if (documentations.nonEmpty) api.setArray(WebApiModel.Documentations, documentations)
 
     map.key("paths") match {
-      case Some(entry) => parseEndpoint(api, entry)
+      case Some(entry) => parseEndpoints(api, entry)
       case None        => ctx.eh.violation(MandatoryPathsProperty, api.id, "'paths' is mandatory in OAS spec")
     }
 
@@ -301,7 +301,7 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     api
   }
 
-  private def parseEndpoint(api: WebApi, entry: YMapEntry) = {
+  private def parseEndpoints(api: WebApi, entry: YMapEntry) = {
     val paths = entry.value.as[YMap]
     val endpoints =
       paths
