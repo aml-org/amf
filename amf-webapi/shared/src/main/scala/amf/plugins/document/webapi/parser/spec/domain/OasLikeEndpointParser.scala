@@ -29,10 +29,8 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, producer: String => EndPo
     checkBalancedParams(path, entry.value, endpoint.id, EndPointModel.Path.value.iri(), ctx)
     endpoint.set(EndPointModel.Path, AmfScalar(path, Annotations(entry.key)))
 
-    if (!TemplateUri.isValid(path)) {
+    if (!TemplateUri.isValid(path))
       ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
-      return None
-    }
     if (collector.exists(other => other.path.option() exists (identicalPaths(_, path)))) {
       ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
       None
