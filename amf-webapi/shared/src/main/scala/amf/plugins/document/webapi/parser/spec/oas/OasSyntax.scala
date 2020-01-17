@@ -250,6 +250,27 @@ object Oas3Syntax extends SpecSyntax {
       "bearerFormat",
       "flows",
       "openIdConnectUrl"
+    ),
+    "clientCredentials" -> Set(
+      "refreshUrl",
+      "tokenUrl",
+      "scopes"
+    ),
+    "implicit" -> Set(
+      "authorizationUrl",
+      "refreshUrl",
+      "scopes"
+    ),
+    "password" -> Set(
+      "refreshUrl",
+      "tokenUrl",
+      "scopes"
+    ),
+    "authorizationCode" -> Set(
+      "authorizationUrl",
+      "refreshUrl",
+      "tokenUrl",
+      "scopes"
     )
   )
 }
