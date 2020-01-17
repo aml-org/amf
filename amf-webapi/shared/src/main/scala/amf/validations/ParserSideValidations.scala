@@ -28,6 +28,11 @@ object ParserSideValidations extends Validations {
     "Invalid json schema definition type"
   )
 
+  val MandatoryObjectNodeType = validation(
+    "mandatory-object-node-type",
+    "Mandatory object node type"
+  )
+
   val InvalidShapeFormat = validation(
     "invalid-shape-format",
     "Invalid shape format"

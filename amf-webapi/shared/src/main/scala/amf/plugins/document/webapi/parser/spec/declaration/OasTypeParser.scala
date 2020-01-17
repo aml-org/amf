@@ -950,7 +950,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       val properties  = mutable.LinkedHashMap[String, PropertyShape]()
       val properEntry = map.key("properties")
       properEntry.foreach(entry => {
-        entry.value.toOption[YMap] match {
+        Option(entry.value.as[YMap]) match {
           case Some(m) =>
             val props = PropertiesParser(m, shape.withProperty, requiredFields).parse()
             properties ++= props.map(p => p.name.value() -> p)
