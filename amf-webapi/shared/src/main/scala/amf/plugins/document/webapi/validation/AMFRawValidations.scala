@@ -1860,6 +1860,19 @@ object AMFRawValidations {
       AMFValidation(
         Oas30.name,
         "Domain",
+        "core:License",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "'name' is mandatory in License object",
+        "'name' is mandatory in License object",
+        "Violation"
+      ),
+      AMFValidation(
+        Oas30.name,
+        "Domain",
         "security:Settings",
         "security:in",
         "PropertyShape",
