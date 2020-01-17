@@ -1,18 +1,36 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.VirtualObject
+import amf.core.metamodel.Field
+import amf.core.parser.{ScalarNode, YMapOps}
+import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import org.yaml.model.{YMap, YMapEntry}
 import amf.plugins.domain.webapi.metamodel.security.{
-  OAuth2SettingsModel,
   HttpSettingsModel,
   OAuth2FlowModel,
+  OAuth2SettingsModel,
   OpenIdConnectSettingsModel
 }
 import amf.plugins.domain.webapi.models.security._
-import amf.core.parser.{Annotations, ScalarNode, YMapOps}
-import amf.core.utils.{Lazy, AmfStrings}
+import amf.validations.ParserSideValidations.{MissingOAuthFlowField, InvalidOAuth2FlowName}
+import org.yaml.model.{YMap, YMapEntry}
+
+object Oas3SecuritySettingsParser {
+  case class ParticularFlow(name: String, requiredFields: List[FlowField])
+  case class FlowField(name: String, field: Field)
+
+  val authorizationUrl: FlowField = FlowField("authorizationUrl", OAuth2FlowModel.AuthorizationUri)
+  val tokenUrl: FlowField         = FlowField("tokenUrl", OAuth2FlowModel.AccessTokenUri)
+  val refreshUrl: FlowField       = FlowField("refreshUrl", OAuth2FlowModel.RefreshUri)
+  val scopes: FlowField           = FlowField("scopes", OAuth2FlowModel.Scopes)
+
+  val flows: Map[String, ParticularFlow] = Seq(
+    ParticularFlow("implicit", List(authorizationUrl, scopes)),
+    ParticularFlow("password", List(tokenUrl, scopes)),
+    ParticularFlow("clientCredentials", List(tokenUrl, scopes)),
+    ParticularFlow("authorizationCode", List(authorizationUrl, tokenUrl, scopes))
+  ).map(x => (x.name, x)).toMap
+}
 
 class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: OasWebApiContext)
     extends OasLikeSecuritySettingsParser(map, scheme) {
@@ -80,7 +98,25 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
 
     parseScopes(flow, flowMap)
 
+    validateFlowFields(flow)
+
     settings.add(OAuth2SettingsModel.Flows, flow)
   }
+
   override def vendorSpecificSettingsProducers(): SettingsProducers = Oas3SettingsProducers
+
+  def validateFlowFields(flow: OAuth2Flow): Unit = {
+    val flowName              = flow.flow.value()
+    val requiredFieldsPerFlow = Oas3SecuritySettingsParser.flows
+    val requiredFlowsOption   = requiredFieldsPerFlow.get(flowName)
+    if (requiredFlowsOption.isEmpty)
+      ctx.eh.violation(InvalidOAuth2FlowName, flow.id, s"Flow name $flowName is not a valid OAuth2 flow")
+    else {
+      val missingFields =
+        requiredFlowsOption.get.requiredFields.filter(flowField => flow.fields.entry(flowField.field).isEmpty)
+      missingFields.foreach { flowField =>
+        ctx.eh.violation(MissingOAuthFlowField, flow.id, s"Missing ${flowField.name} for $flowName flow")
+      }
+    }
+  }
 }
