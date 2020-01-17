@@ -33,4 +33,8 @@ class UniquePlatformOasUnitValidationsTest extends UniquePlatformReportGenTest w
   test("Missing fields in License object") {
     validate("missing-fields-in-license.json", Some("missing-fields-in-license.report"), Oas30Profile)
   }
+
+  test("Null values in object fields") {
+    validate("null-values-object-nodes.json", Some("null-values-object-nodes.report"), Oas30Profile)
+  }
 }
