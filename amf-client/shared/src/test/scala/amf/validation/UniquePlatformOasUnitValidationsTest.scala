@@ -26,7 +26,15 @@ class UniquePlatformOasUnitValidationsTest extends UniquePlatformReportGenTest w
     validate("missing-flow-fields.json", Some("missing-flow-fields.report"), Oas30Profile)
   }
 
+  test("Invalid facets in OAuth 2 flow") {
+    validate("invalid-facet-oauth2-flow.json", Some("invalid-facet-oauth2-flow.report"), Oas30Profile)
+  }
+
   test("Missing fields in License object") {
     validate("missing-fields-in-license.json", Some("missing-fields-in-license.report"), Oas30Profile)
+  }
+
+  test("Null values in object fields") {
+    validate("null-values-object-nodes.json", Some("null-values-object-nodes.report"), Oas30Profile)
   }
 }

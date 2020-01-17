@@ -6,11 +6,12 @@ schemas:
   - Player: |
       {
         "type": "object",
-        "properties": [
+        "properties":
           {
-            "name": "string"
+            "name": {
+              "type":"string"
+            }
           }
-        ]
       }
 types:
   Person:
@@ -44,13 +45,14 @@ types:
     type: User | Developer
   Cleaner: |
     {
-      "type": "object",
-      "properties": [
-        {
-          "name": "string"
-        }
-      ]
-    }
+           "type": "object",
+           "properties":
+             {
+               "name": {
+                 "type":"string"
+               }
+             }
+         }
 
 /users:
   get:
@@ -94,22 +96,24 @@ types:
           application/json:
             type: |
               {
-                "type": "object",
-                "properties": [
-                  {
-                    "name": "string"
-                  }
-                ]
-              }
+                     "type": "object",
+                     "properties":
+                       {
+                         "name": {
+                           "type":"string"
+                         }
+                       }
+                   }
       205:
         body:
           application/json:
             schema: |
               {
-                "type": "object",
-                "properties": [
-                  {
-                    "name": "string"
-                  }
-                ]
-              }
+                     "type": "object",
+                     "properties":
+                       {
+                         "name": {
+                           "type":"string"
+                         }
+                       }
+                   }

@@ -100,6 +100,8 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
 
     validateFlowFields(flow)
 
+    ctx.closedShape(flow.id, flowMap, flow.flow.value())
+
     settings.add(OAuth2SettingsModel.Flows, flow)
   }
 
@@ -109,9 +111,7 @@ class Oas3SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx
     val flowName              = flow.flow.value()
     val requiredFieldsPerFlow = Oas3SecuritySettingsParser.flows
     val requiredFlowsOption   = requiredFieldsPerFlow.get(flowName)
-    if (requiredFlowsOption.isEmpty)
-      ctx.eh.violation(InvalidOAuth2FlowName, flow.id, s"Flow name $flowName is not a valid OAuth2 flow")
-    else {
+    if (requiredFlowsOption.nonEmpty) {
       val missingFields =
         requiredFlowsOption.get.requiredFields.filter(flowField => flow.fields.entry(flowField.field).isEmpty)
       missingFields.foreach { flowField =>

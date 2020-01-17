@@ -59,8 +59,7 @@ abstract class OasLikeEndpointParser(entry: YMapEntry, producer: String => EndPo
             None
 
         }
-      case Right(node) if node.tagType == YType.Map => Some(parseEndpointMap(endpoint, node.as[YMap]))
-      case _                                        => Some(endpoint)
+      case Right(node) => Some(parseEndpointMap(endpoint, node.as[YMap]))
     }
 
   protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
