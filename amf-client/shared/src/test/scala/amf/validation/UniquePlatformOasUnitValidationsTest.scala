@@ -37,4 +37,8 @@ class UniquePlatformOasUnitValidationsTest extends UniquePlatformReportGenTest w
   test("Null values in object fields") {
     validate("null-values-object-nodes.json", Some("null-values-object-nodes.report"), Oas30Profile)
   }
+
+  test("Tags has to be an array") {
+    validate("tags-type-array.json", Some("tags-type-array.report"), Oas30Profile)
+  }
 }
