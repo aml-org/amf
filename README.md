@@ -20,7 +20,7 @@ The API Modeling Framework (AMF) allows users to formally describe different kin
 
 ## General scope
 The library supports many of the required uses cases:
-- Parse a 1.0 RAML, 0.8 RAML, 2.0 OAS and JSON-LD AMF model.
+- Parse a 0.8 / 1.0 RAML, 2.0 / 3.0 OAS and JSON-LD AMF model.
 - AMF API design model creation.
 - Model edition.
 - Export to any of the mentioned standards.
@@ -138,7 +138,7 @@ java -jar amf-x.y.z.jar validate -in "RAML 1.0" -mime-in "application/yaml" -p "
 ```
 or
 ```bash
-java -jar amf-x.y.z.jar translate  yourAPIOASfile --format-in "OAS 2.0" -mime-in "application/json" --format-out "RAML 1.0" -mime-out "application/raml+yaml"
+java -jar amf-x.y.z.jar translate  yourAPIOASfile --format-in "OAS 3.0" -mime-in "application/json" --format-out "RAML 1.0" -mime-out "application/raml+yaml"
 ```
 To get all available options:
 ```bash
