@@ -1,0 +1,57 @@
+package amf.plugins.document.webapi.resolution.pipelines.compatibility.raml
+import amf.core.errorhandling.ErrorHandler
+import amf.core.model.document.{BaseUnit, Document}
+import amf.core.model.domain.{Shape, Linkable}
+import amf.core.resolution.stages.ResolutionStage
+import amf.plugins.document.vocabularies.emitters.common.IdCounter
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
+import amf.plugins.domain.shapes.models.TypeDef._
+import amf.plugins.domain.webapi.models.WebApi
+
+import scala.collection.mutable
+
+class EscapeReservedNamesTypes()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T): T = model match {
+    case d: Document if d.encodes.isInstanceOf[WebApi] =>
+      try {
+        val replacedNames: mutable.Map[String, String] = mutable.Map.empty
+
+        val expressionLikeNameCounter = new IdCounter()
+        d.declares.foreach {
+          case shape: Shape =>
+            shape.name.option().map { name =>
+              RamlTypeDefMatcher.matchType(name, default = UndefinedType) match {
+                case XMLSchemaType | JSONSchemaType | UndefinedType =>
+                // Do nothing
+                case TypeExpressionType =>
+                  val newName = expressionLikeNameCounter.genId("type")
+                  replacedNames(name) = newName
+                  shape.withName(newName)
+                case _ =>
+                  val newName = s"${name}_"
+                  replacedNames(name) = newName
+                  shape.withName(newName)
+              }
+            }
+          case _ => // Nothing
+        }
+
+        // Update links
+        model.iterator().foreach {
+          case l: Linkable if l.isLink =>
+            l.linkLabel
+              .option()
+              // TODO: need to check that the to-be replaced link label is a link to the same shape that changed its name?
+              .flatMap(replacedNames.get) match {
+              case Some(newLabel) => l.withLinkLabel(newLabel)
+              case _              => // Nothing
+            }
+          case _ => // Nothing
+        }
+      } catch {
+        case _: Throwable => // ignore: we don't want this to break anything
+      }
+      model
+    case _ => model
+  }
+}
