@@ -35,6 +35,7 @@ class Oas30SecuritySettingsMapper()(override implicit val errorHandler: ErrorHan
     case _                    => grant
   }
 
+  // TODO: refactor this. Logic should be simplified
   def fixOauth2(oauth2: OAuth2Settings): Unit = {
     if (oauth2.flows.isEmpty) {
       val flow = oauth2.authorizationGrants.head.option().getOrElse("implicit") match {
@@ -64,6 +65,9 @@ class Oas30SecuritySettingsMapper()(override implicit val errorHandler: ErrorHan
       case None => oauth2.withFlows(createFlowsFromNullFlow(oauth2))
       case _    => // ignore
     }
-    if (flow.scopes.isEmpty) flow.withScopes(Seq(Scope().withName("*").withDescription("")))
+    oauth2.flows.foreach(addPermissiveFlows)
   }
+
+  private def addPermissiveFlows(flow: OAuth2Flow): Unit =
+    if (flow.scopes.isEmpty) flow.withScopes(Seq(Scope().withName("*").withDescription("")))
 }

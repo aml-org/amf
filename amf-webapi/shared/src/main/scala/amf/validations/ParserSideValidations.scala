@@ -198,6 +198,11 @@ object ParserSideValidations extends Validations {
     "Required property boolean value is only supported in JSON Schema draft-3"
   )
 
+  val MissingOAuthFlowField = validation(
+    "missing-oauth-flow-field",
+    "Missing mandatory property for declared OAuth flow"
+  )
+
   val InvalidAdditionalPropertiesType = validation(
     "invalid-additional-properties-type",
     "additionalProperties should be a boolean or a map"
@@ -452,6 +457,11 @@ object ParserSideValidations extends Validations {
   val InvalidTypesType = validation(
     "invalid-types-type",
     "Invalid types type"
+  )
+
+  val InvalidOAuth2FlowName = validation(
+    "invalid-oauth2-flow-name",
+    "Invalid OAuth2 flow name"
   )
 
   val InvalidDocumentationType = validation(
