@@ -1,0 +1,33 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "WebAPI 2 Service",
+    "version": "1.0"
+  },
+  "components": {
+  },
+  "paths": {
+    "/complex": {
+      "put": {
+        "operationId": "putComplex",
+        "parameters": [
+          {
+            "name": "strValue",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK response"
+          }
+        }
+      }
+    }
+
+  }
+}

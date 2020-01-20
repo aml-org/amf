@@ -1,0 +1,37 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Cookie Responses",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/foo": {
+      "get": {
+        "responses": {
+          "default": {
+            "headers": {
+              "Set-Cookie": {
+                "style": "form",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "one": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "two": {
+                      "type": "number",
+                      "example": 2
+                    }
+                  },
+                  "example": "one=1;two=2"
+                }
+              }
+            },
+            "description": "asd"
+          }
+        }
+      }
+    }
+  }
+}
