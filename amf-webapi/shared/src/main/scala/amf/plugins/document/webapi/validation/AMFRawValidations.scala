@@ -2015,6 +2015,19 @@ object AMFRawValidations {
         "Does not comply with runtime expression ABNF syntax",
         "Does not comply with runtime expression ABNF syntax",
         "Violation"
+      ),
+      AMFValidation(
+        Oas30.name,
+        "Domain",
+        "apiContract:Tag",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:minLength",
+        "1",
+        "Property 'name' in Tag object cannot be empty",
+        "Property 'name' in Tag object cannot be empty",
+        "Violation"
       )
     )
     override def validations(): Seq[AMFValidation] = result
