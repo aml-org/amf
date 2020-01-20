@@ -37,4 +37,20 @@ class UniquePlatformOasUnitValidationsTest extends UniquePlatformReportGenTest w
   test("Null values in object fields") {
     validate("null-values-object-nodes.json", Some("null-values-object-nodes.report"), Oas30Profile)
   }
+
+  test("Invalid style for parameter") {
+    validate("invalid-style-for-parameter.json", Some("invalid-style-for-parameter.report"), Oas30Profile)
+  }
+
+  test("Invalid style for parameter2") {
+    validate("invalid-style-for-parameter2.json", Some("invalid-style-for-parameter2.report"), Oas30Profile)
+  }
+
+  test("Tag with no name") {
+    validate("tag-with-no-name.json", Some("tag-with-no-name.report"), Oas30Profile)
+  }
+
+  test("Tags has to be an array") {
+    validate("tags-type-array.json", Some("tags-type-array.report"), Oas30Profile)
+  }
 }

@@ -459,6 +459,11 @@ object ParserSideValidations extends Validations {
     "Invalid fragment type"
   )
 
+  val InvalidParameterStyleBindingCombination = validation(
+    "invalid-parameter-style-binding-combination",
+    "Invalid parameter style binding combination"
+  )
+
   val InvalidTypesType = validation(
     "invalid-types-type",
     "Invalid types type"
