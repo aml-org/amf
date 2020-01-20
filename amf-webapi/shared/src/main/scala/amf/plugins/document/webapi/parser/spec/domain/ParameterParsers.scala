@@ -37,6 +37,8 @@ import amf.validations.ParserSideValidations
 import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
+import scala.language.postfixOps
+
 case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext) {
 
@@ -568,6 +570,16 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
 
 object Oas3ParameterParser {
 
+  lazy val validStyles: Map[String, List[String]] = Map(
+    "matrix"         -> List("path"),
+    "label"          -> List("path"),
+    "form"           -> List("query", "cookie"),
+    "simple"         -> List("path", "header"),
+    "spaceDelimited" -> List("query"),
+    "pipeDelimited"  -> List("query"),
+    "deepObject"     -> List("query")
+  )
+
   def parseExplodeField(map: YMap, result: Parameter): Unit = {
     map.key("explode") match {
       case Some(entry) =>
@@ -583,11 +595,13 @@ object Oas3ParameterParser {
     }
   }
 
-  def parseStyleField(map: YMap, result: Parameter): Unit = {
+  def parseStyleField(map: YMap, result: Parameter)(implicit ctx: WebApiContext): Unit = {
     map.key("style") match {
       case Some(entry) =>
+        val styleText = entry.value.asScalar.map(_.text).getOrElse("")
+        validateStyle(result, styleText, ctx)
         result.fields.setWithoutId(ParameterModel.Style,
-                                   AmfScalar(entry.value.asScalar.map(_.text).getOrElse(""), Annotations(entry.value)),
+                                   AmfScalar(styleText, Annotations(entry.value)),
                                    Annotations(entry) += ExplicitField())
       case None =>
         val defValue: Option[String] = result.binding.option() match {
@@ -597,6 +611,18 @@ object Oas3ParameterParser {
         }
         defValue.foreach(result.set(ParameterModel.Style, _))
     }
+  }
+
+  private def isStyleValid(paramBinding: String, style: String): Boolean = Oas3ParameterParser.validStyles.exists {
+    case (key, value) => key.equals(style) && value.contains(paramBinding)
+  }
+
+  private def validateStyle(param: Parameter, style: String, ctx: WebApiContext): Unit = {
+    val paramBinding = param.binding.value()
+    if (!isStyleValid(paramBinding, style))
+      ctx.eh.violation(InvalidParameterStyleBindingCombination,
+                       param.id,
+                       s"'$style' style cannot be used with '$paramBinding' value of parameter property 'in'")
   }
 
   def validateSchemaOrContent(map: YMap, param: Parameter)(implicit ctx: WebApiContext): Unit = {
