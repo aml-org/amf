@@ -3,7 +3,6 @@ package amf.plugins.document.webapi.resolution.pipelines.compatibility
 import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.resolution.stages.ResolutionStage
-import amf.plugins.document.webapi.resolution.pipelines.Raml10ResolutionPipeline
 import amf.plugins.document.webapi.resolution.pipelines.compatibility.raml._
 import amf.{ProfileName, RamlProfile}
 
