@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/jsonschema/required/schema3-array.raml
+Profile: RAML 1.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#invalid-required-array-for-schema-version
+  Message: Required arrays of properties not supported in JSON Schema below version draft-4
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/jsonschema/required/schema3-array.raml#/web-api/end-points/%2Fproducts/put/request/application%2Fjson/application%2Fjson
+  Property:
+  Position: Some(LexicalInformation([(17,29)-(17,40)]))
+  Location: file://amf-client/shared/src/test/resources/validations/jsonschema/required/schema3-array.raml
