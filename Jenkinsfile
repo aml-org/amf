@@ -32,7 +32,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'japanese-jenkins'
         }
       }
       steps {
