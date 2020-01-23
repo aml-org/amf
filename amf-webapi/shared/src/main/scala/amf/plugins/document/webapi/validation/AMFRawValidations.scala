@@ -1093,6 +1093,19 @@ object AMFRawValidations {
         "Unknown method type",
         "Unknown Operation method",
         "Violation"
+      ),
+      AMFValidation(
+        Amf.name,
+        "Domain",
+        "apiContract:Parameter",
+        "apiContract:Name",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:headerParamNameMustBeAscii",
+        "0",
+        "Header parameter name is invalid according to HTTP spec",
+        "Header parameter name is invalid according to HTTP spec",
+        "Warning"
       )
     )
     override def validations(): Seq[AMFValidation] = result

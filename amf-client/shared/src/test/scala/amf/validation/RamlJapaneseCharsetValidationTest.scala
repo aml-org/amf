@@ -89,4 +89,8 @@ class RamlJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
   test("Declaring traits and resource types") {
     validate("traits-and-resource-types.raml")
   }
+
+  test("Non ascii header names") {
+    validate("non-ascii-headers.raml", Some("non-ascii-headers.report"))
+  }
 }
