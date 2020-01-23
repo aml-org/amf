@@ -1,0 +1,29 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "ローンマイクロサービス",
+    "version": "1"
+  },
+  "paths": {
+    "/ローン申し込み": {
+      "post": {
+        "parameters": [
+          {
+            "in": "header",
+            "name": "ローン申し込み",
+            "description": "ローン申し込みオブジェクトを入力して、ローンの詳細をサービスに保存します",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "説明"
+          }
+        }
+      }
+    }
+  }
+}
