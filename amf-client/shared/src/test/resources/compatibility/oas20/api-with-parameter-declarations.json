@@ -1,0 +1,67 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "parameters": {
+    "my-body-parameter": {
+      "name": "my-body-parameter",
+      "in": "body",
+      "schema": {
+        "$ref": "my-type"
+      }
+    },
+    "my-query-parameter": {
+      "name": "my-query-parameter",
+      "in": "query",
+      "type": "string"
+    },
+    "my-header-parameter": {
+      "name": "my-header-parameter",
+      "in": "header",
+      "type": "string"
+    },
+    "my-path-parameter": {
+      "name": "my-path-parameter",
+      "in": "path",
+      "type": "string",
+      "required": true
+    },
+    "my-formData-parameter": {
+      "name": "my-query-parameter",
+      "in": "formData",
+      "type": "string"
+    }
+  },
+  "paths": {
+    "/my-endpoint/{my-path-parameter}": {
+      "get": {
+        "parameters": [
+          {
+            "$ref": "#/parameters/my-body-parameter"
+          },
+          {
+            "$ref": "#/parameters/my-query-parameter"
+          },
+          {
+            "$ref": "#/parameters/my-header-parameter"
+          },
+          {
+            "$ref": "#/parameters/my-path-parameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This is a response"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "my-type": {
+      "type": "string"
+    }
+  }
+}
