@@ -68,11 +68,6 @@ object ParserSideValidations extends Validations {
     "Parameter name is required"
   )
 
-  val DuplicateRequiredItems = validation(
-    "duplicate-required-items",
-    "Duplicate required items"
-  )
-
   val RequestBodyContentRequired = validation(
     "content-required",
     "Request body content is required"

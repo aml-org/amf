@@ -927,7 +927,25 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
       }
 
-      val requiredFields = parseRequiredFields(map, shape)
+      val requiredFields = map
+        .key("required")
+        .map { field =>
+          field.value.tagType match {
+            case YType.Seq if version == JSONSchemaDraft3SchemaVersion =>
+              ctx.eh.violation(InvalidRequiredArrayForSchemaVersion,
+                               shape.id,
+                               "Required arrays of properties not supported in JSON Schema below version draft-4",
+                               field.value)
+              Map[String, YNode]()
+            case YType.Seq =>
+              field.value.as[YSequence].nodes.foldLeft(Map[String, YNode]()) {
+                case (acc, node) =>
+                  acc.updated(node.as[String], node)
+              }
+            case _ => Map[String, YNode]()
+          }
+        }
+        .getOrElse(Map[String, YNode]())
 
       val properties  = mutable.LinkedHashMap[String, PropertyShape]()
       val properEntry = map.key("properties")
@@ -986,36 +1004,6 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
   }
-
-  private def parseRequiredFields(map: YMap, shape: NodeShape): Map[String, YNode] = {
-    val defaultValue = Map[String, YNode]()
-    map
-      .key("required")
-      .map { field =>
-        (field.value.tagType, version) match {
-          case (YType.Seq, JSONSchemaDraft3SchemaVersion) =>
-            ctx.eh.violation(InvalidRequiredArrayForSchemaVersion,
-                             shape.id,
-                             "Required arrays of properties not supported in JSON Schema below version draft-4",
-                             field.value)
-            defaultValue
-          case (_, JSONSchemaDraft3SchemaVersion) => defaultValue
-          case (_, _) =>
-            val required = field.value.as[Seq[YNode]].groupBy(_.as[String])
-            validateRequiredFields(required, shape)
-            required.map { case (key, nodes) => key -> nodes.head }
-        }
-      }
-      .getOrElse(defaultValue)
-  }
-
-  private def validateRequiredFields(required: Map[String, Seq[YNode]], shape: NodeShape): Unit =
-    required
-      .foreach {
-        case (name, nodes) if nodes.size > 1 =>
-          ctx.eh.violation(DuplicateRequiredItems, shape.id, s"'$name' is duplicated in 'required' property")
-        case _ => // ignore
-      }
 
   case class DiscriminatorParser(shape: NodeShape, entry: YMapEntry) {
     def parse(): Unit = {
