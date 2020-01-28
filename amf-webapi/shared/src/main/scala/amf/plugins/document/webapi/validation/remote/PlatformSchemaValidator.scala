@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.validation.remote
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.core.client.ParsingOptions
 import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
@@ -28,13 +29,14 @@ import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import amf.core.client.ParsingOptions
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
 class UnknownDiscriminator()                extends RuntimeException
 class UnsupportedMediaType(msg: String)     extends Exception(msg)
 
-abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
+abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends PayloadValidator {
 
   override val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
@@ -57,8 +59,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   val validationMode: ValidationMode
 
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
-
-  val env = Environment()
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 
@@ -199,14 +199,18 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   }
 
   private def parsePayload(payload: String, mediaType: String, errorHandler: ParseErrorHandler): PayloadFragment = {
-    val defaultCtx = new PayloadContext("", Nil, ParserContext())
+    val options = ParsingOptions()
+    env.maxYamlReferences.foreach(options.setMaxYamlReferences)
+    // TODO pass error handler in context
+    val defaultCtx = new PayloadContext("", Nil, ParserContext(), options = options)
 
     val parser = mediaType match {
       case "application/json" => JsonParser(payload)(errorHandler)
       case _                  => YamlParser(payload)(errorHandler)
     }
     val node = parser.document().node
-    PayloadFragment(if (node.isNull) ScalarNode(payload, None) else DataNodeParser(node)(defaultCtx).parse(), mediaType)
+    PayloadFragment(if (node.isNull) ScalarNode(payload, None) else DataNodeParser(node)(defaultCtx).parse(),
+                    mediaType)
   }
   case class PayloadErrorHandler() extends RuntimeErrorHandler {
     override val currentFile: String                                  = ""
@@ -222,8 +226,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       new AMFValidationResult(message, SeverityLevels.VIOLATION, "", None, "", None, None, "")
   }
 
-  protected def buildPayloadNode(mediaType: String,
-                                 payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
+  protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {
     val fixedResult = parsePayloadWithErrorHandler(payload, mediaType, env, shape) match {
       case result if !result.hasError && validationMode == ScalarRelaxedValidationMode =>
         val frag = ScalarPayloadForParam(result.fragment, shape)
@@ -296,7 +299,8 @@ object ScalarPayloadForParam {
 
       fragment.encodes match {
         case s: ScalarNode if !s.dataType.option().exists(_.equals(DataType.String)) =>
-          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations), fragment.mediaType.value())
+          PayloadFragment(ScalarNode(s.value.value(), Some(DataType.String), s.annotations),
+                          fragment.mediaType.value())
         case _ => fragment
       }
     } else fragment

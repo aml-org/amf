@@ -123,7 +123,8 @@ object ExtensionLikeParser {
                                                                                baseCtx.refs,
                                                                                baseCtx,
                                                                                Some(baseCtx.declarations),
-                                                                               parentDeclarations)
+                                                                               parentDeclarations,
+                                                                               options = baseCtx.options)
     new ExtensionLikeParser(root)(exLikeCtx)
   }
 }

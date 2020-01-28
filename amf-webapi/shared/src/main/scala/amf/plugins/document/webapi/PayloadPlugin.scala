@@ -49,7 +49,8 @@ object PayloadPlugin extends AMFDocumentPlugin {
                      options: ParsingOptions): Option[PayloadFragment] = {
     root.parsed match {
       case parsed: SyamlParsedDocument =>
-        implicit val ctx: PayloadContext = new PayloadContext(root.location, parentContext.refs, parentContext)
+        implicit val ctx: PayloadContext =
+          new PayloadContext(root.location, parentContext.refs, parentContext, options = options)
         Some(PayloadParser(parsed.document, root.location, root.mediatype).parseUnit())
       case _ =>
         None

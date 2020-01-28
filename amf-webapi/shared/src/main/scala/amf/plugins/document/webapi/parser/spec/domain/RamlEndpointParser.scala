@@ -121,7 +121,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
                                       Some(ctx.declarations),
                                       Some(ctx.parserCount),
                                       eh = Some(ctx),
-                                      ctx.contextType)
+                                      ctx.contextType,
+                                      ctx.options)
             case _ =>
               new Raml10WebApiContext(ctx.loc,
                                       ctx.refs,
@@ -129,7 +130,8 @@ abstract class RamlEndpointParser(entry: YMapEntry,
                                       Some(ctx.declarations),
                                       Some(ctx.parserCount),
                                       eh = Some(ctx),
-                                      ctx.contextType)
+                                      ctx.contextType,
+                                      ctx.options)
           }
           val operation = RamlOperationParser(entry, endpoint.withOperation, parseOptionalOperations)(operationContext)
             .parse()
