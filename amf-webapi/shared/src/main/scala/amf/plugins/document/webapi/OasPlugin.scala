@@ -40,6 +40,7 @@ sealed trait OasPlugin extends OasLikePlugin {
 
   def context(loc: String,
               refs: Seq[ParsedReference],
+              options: ParsingOptions,
               wrapped: ParserContext,
               ds: Option[OasWebApiDeclarations] = None): OasWebApiContext
 
@@ -47,7 +48,7 @@ sealed trait OasPlugin extends OasLikePlugin {
                      parentContext: ParserContext,
                      platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
-    implicit val ctx: OasWebApiContext = context(document.location, document.references, parentContext)
+    implicit val ctx: OasWebApiContext = context(document.location, document.references, options, parentContext)
     val parsed = document.referenceKind match {
       case LibraryReference => Some(OasModuleParser(document).parseModule())
       case LinkReference    => Some(OasFragmentParser(document).parseFragment())
@@ -145,8 +146,9 @@ object Oas20Plugin extends OasPlugin {
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],
+                       options: ParsingOptions,
                        wrapped: ParserContext,
-                       ds: Option[OasWebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds)
+                       ds: Option[OasWebApiDeclarations]) = new Oas2WebApiContext(loc, refs, wrapped, ds, options)
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     super.domainValidationProfiles(platform).filterKeys(k => k == Oas20Profile.p || k == OasProfile.p)
@@ -229,8 +231,9 @@ object Oas30Plugin extends OasPlugin {
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],
+                       options: ParsingOptions,
                        wrapped: ParserContext,
-                       ds: Option[OasWebApiDeclarations]) = new Oas3WebApiContext(loc, refs, wrapped, ds)
+                       ds: Option[OasWebApiDeclarations]) = new Oas3WebApiContext(loc, refs, wrapped, ds, options)
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     defaultValidationProfiles.filterKeys(_ == validationProfile.p)

@@ -6,14 +6,14 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.Module
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
-import amf.core.services.{RuntimeValidator, DefaultValidationOptions}
+import amf.core.services.{DefaultValidationOptions, RuntimeValidator}
 import amf.core.validation.SeverityLevels._
 import amf.core.validation._
-import amf.core.validation.core.{ValidationProfile, ValidationSpecification, PropertyConstraint}
+import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
-import amf.plugins.domain.shapes.models.{SchemaShape, AnyShape}
+import amf.plugins.domain.shapes.models.{AnyShape, SchemaShape}
 import amf.plugins.domain.webapi.unsafe.JsonSchemaSecrets
 import amf.validations.CustomShaclFunctions
 
@@ -180,5 +180,5 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin with JsonSchema
   val defaultCtx = new PayloadContext("", Nil, ParserContext(eh = DefaultParserErrorHandler.withRun()))
 
   override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator =
-    payloadValidator(s, validationMode)
+    payloadValidator(s, env, validationMode)
 }

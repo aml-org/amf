@@ -7,26 +7,54 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils._
 import amf.plugins.document.webapi.contexts.WebApiContext
 import amf.plugins.features.validation.CoreValidations.SyamlError
+import amf.validations.ParserSideValidations.{ExeededMaxYamlReferences, MissingDiscriminatorProperty}
 import org.mulesoft.common.time.SimpleDateTime
 import org.mulesoft.lexer.InputRange
+import org.yaml.model.YNode.Alias
 import org.yaml.model._
 import org.yaml.parser.YamlParser
 
 import scala.collection.mutable.ListBuffer
 
+case class RefCounter(var count: Int = 0, maxRefThreshold: Long = RefCounter.defaultThreshold) {
+
+  def exceedsThreshold(node: YNode): Boolean = {
+    register(node)
+    count > maxRefThreshold
+  }
+
+  def register(node: YNode): Unit = if (node.isInstanceOf[Alias]) count = count + 1
+}
+
+object RefCounter {
+  val defaultThreshold = 10000
+  def apply(ctx: WebApiContext): RefCounter =
+    new RefCounter(maxRefThreshold = ctx.options.getMaxYamlReferences.getOrElse(defaultThreshold))
+}
+
 /**
   * Parse an object as a fully dynamic value.
   */
-case class DataNodeParser(node: YNode,
-                          parameters: AbstractVariables = AbstractVariables(),
-                          parent: Option[String] = None,
-                          idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
+class DataNodeParser(node: YNode,
+                     refsCounter: RefCounter,
+                     parameters: AbstractVariables = AbstractVariables(),
+                     parent: Option[String] = None,
+                     idCounter: IdCounter = new IdCounter)(implicit ctx: WebApiContext) {
 
   def parse(): DataNode = {
-    node.tag.tagType match {
-      case YType.Seq => parseArray(node.as[Seq[YNode]], node)
-      case YType.Map => parseObject(node.as[YMap])
-      case _         => ScalarNodeParser(parameters, parent, idCounter).parse(node)
+    if (refsCounter.exceedsThreshold(node)) {
+      ctx.violation(
+        ExeededMaxYamlReferences,
+        parent.getOrElse(""),
+        "Exceeded maximum yaml references threshold"
+      )
+      DataObjectNode()
+    } else {
+      node.tag.tagType match {
+        case YType.Seq => parseArray(node.as[Seq[YNode]], node)
+        case YType.Map => parseObject(node.as[YMap])
+        case _         => ScalarNodeParser(parameters, parent, idCounter).parse(node)
+      }
     }
   }
 
@@ -35,7 +63,7 @@ case class DataNodeParser(node: YNode,
     parent.foreach(p => node.adopted(p))
     val members: ListBuffer[DataNode] = ListBuffer()
     for { v <- seq } yield {
-      members += DataNodeParser(v, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
+      members += new DataNodeParser(v, refsCounter, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
     }
     node.withMembers(members)
     node
@@ -50,7 +78,8 @@ case class DataNodeParser(node: YNode,
       val value               = ast.value
       val propertyAnnotations = Annotations(ast)
 
-      val propertyNode = DataNodeParser(value, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
+      val propertyNode =
+        new DataNodeParser(value, refsCounter, parameters, Some(node.id), idCounter).parse().forceAdopted(node.id)
       node.addProperty(key, propertyNode, propertyAnnotations)
     }
     node
@@ -133,7 +162,7 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
   def parseIncludedAST(raw: String, node: YNode): DataNode = {
     val n = YamlParser(raw, node.sourceName).withIncludeTag("!include").document().node
     if (n.isNull) ScalarNode(raw, Some(DataType.String)).withId(parent.getOrElse("") + "/included")
-    else DataNodeParser(n, parameters, parent, idCounter).parse()
+    else new DataNodeParser(n, RefCounter(ctx), parameters, parent, idCounter).parse()
   }
 
   /**
@@ -185,5 +214,10 @@ case class ScalarNodeParser(parameters: AbstractVariables = AbstractVariables(),
 
 object DataNodeParser {
   def parse(parent: Option[String], idCounter: IdCounter)(node: YNode)(implicit ctx: WebApiContext): DataNode =
-    DataNodeParser(node, parent = parent, idCounter = idCounter).parse()
+    new DataNodeParser(node, refsCounter = RefCounter(ctx), parent = parent, idCounter = idCounter).parse()
+
+  def apply(node: YNode, parameters: AbstractVariables = AbstractVariables(), parent: Option[String] = None)(
+      implicit ctx: WebApiContext): DataNodeParser = {
+    new DataNodeParser(node = node, refsCounter = RefCounter(ctx), parameters = parameters, parent = parent)
+  }
 }
