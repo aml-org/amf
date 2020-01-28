@@ -6,6 +6,7 @@ import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
+import amf.internal.environment.Environment
 import amf.plugins.document.webapi.validation.json.{JSONObject, JSONTokenerHack}
 import amf.validations.PayloadValidations.{
   ExampleValidationErrorSpecification,
@@ -17,8 +18,8 @@ import org.everit.json.schema.regexp.{JavaUtilRegexpFactory, Regexp}
 import org.everit.json.schema.{Schema, SchemaException, ValidationException, Validator}
 import org.json.JSONException
 
-class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode)
-    extends PlatformPayloadValidator(shape) {
+class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, val env: Environment)
+    extends PlatformPayloadValidator(shape, env) {
 
   case class CustomJavaUtilRegexpFactory() extends JavaUtilRegexpFactory {
     override def createHandler(regexp: String): Regexp = super.createHandler(regexp.convertRegex)

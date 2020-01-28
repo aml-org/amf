@@ -227,5 +227,9 @@ class ValidRamlModelParserTest extends ValidModelTest {
     checkValid("union-generic-array.raml")
   }
 
+  test("Nested yaml aliases") {
+    checkValid("yaml-nested-alias.raml")
+  }
+
   override val hint: Hint = RamlYamlHint
 }

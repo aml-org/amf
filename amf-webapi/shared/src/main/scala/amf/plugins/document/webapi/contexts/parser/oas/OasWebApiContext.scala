@@ -1,4 +1,5 @@
 package amf.plugins.document.webapi.contexts.parser.oas
+import amf.core.client.ParsingOptions
 import amf.core.model.document.ExternalFragment
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
@@ -8,10 +9,11 @@ import scala.collection.mutable
 
 abstract class OasWebApiContext(loc: String,
                                 refs: Seq[ParsedReference],
+                                options: ParsingOptions,
                                 private val wrapped: ParserContext,
                                 private val ds: Option[OasWebApiDeclarations] = None,
                                 private val operationIds: mutable.Set[String] = mutable.HashSet())
-    extends OasLikeWebApiContext(loc, refs, wrapped, ds) {
+    extends OasLikeWebApiContext(loc, refs, options, wrapped, ds) {
 
   override val factory: OasSpecVersionFactory
 

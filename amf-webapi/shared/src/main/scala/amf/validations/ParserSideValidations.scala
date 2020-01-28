@@ -553,6 +553,11 @@ object ParserSideValidations extends Validations {
     "'id' must be a string"
   )
 
+  val ExeededMaxYamlReferences = validation(
+    "max-yaml-references",
+    "Exceeded maximum yaml references threshold"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -696,6 +701,7 @@ object ParserSideValidations extends Validations {
     ItemsFieldRequired,
     InvalidTagType,
     InvalidIdentifier,
-    InvalidComponents
+    InvalidComponents,
+    ExeededMaxYamlReferences
   )
 }
