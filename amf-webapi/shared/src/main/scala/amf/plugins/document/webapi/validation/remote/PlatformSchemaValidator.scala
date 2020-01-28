@@ -1,11 +1,19 @@
 package amf.plugins.document.webapi.validation.remote
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.core.client.ParsingOptions
 import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain._
-import amf.core.parser.{DefaultParserSideErrorHandler, ParserContext, RuntimeErrorHandler, SyamlParsedDocument}
+import amf.core.parser.{
+  DefaultParserSideErrorHandler,
+  ErrorHandler,
+  ParserContext,
+  ParserDefaultErrorHandler,
+  RuntimeErrorHandler,
+  SyamlParsedDocument
+}
 import amf.core.validation._
 import amf.internal.environment.Environment
 import amf.plugins.document.webapi.PayloadPlugin
@@ -34,7 +42,7 @@ class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
 class UnknownDiscriminator()                extends RuntimeException
 class UnsupportedMediaType(msg: String)     extends Exception(msg)
 
-abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
+abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends PayloadValidator {
 
   override val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
@@ -57,8 +65,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   val validationMode: ValidationMode
 
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
-
-  val env = Environment()
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 
@@ -199,7 +205,9 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   }
 
   private def parsePayload(payload: String, mediaType: String, errorHandler: ParseErrorHandler): PayloadFragment = {
-    val defaultCtx = new PayloadContext("", Nil, ParserContext())
+    val options = ParsingOptions()
+    env.maxYamlReferences.foreach(options.setMaxYamlReferences)
+    val defaultCtx = new PayloadContext("", Nil, ParserContext(), options = options)
 
     val parser = mediaType match {
       case "application/json" => JsonParser(payload)(errorHandler)
@@ -212,9 +220,9 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
     }
   }
   case class PayloadErrorHandler() extends RuntimeErrorHandler {
-    override val currentFile: String                          = ""
-    override val parserCount: Int                             = 1
-    private val errors: ListBuffer[AMFValidationResult]       = ListBuffer()
+    override val currentFile: String                                  = ""
+    override val parserCount: Int                                     = 1
+    private val errors: ListBuffer[AMFValidationResult]               = ListBuffer()
     override def handle(loc: SourceLocation, e: SyamlException): Unit = errors += processError(e.getMessage)
     override def handle[T](error: YError, defaultValue: T): T = {
       errors += processError(error.error)

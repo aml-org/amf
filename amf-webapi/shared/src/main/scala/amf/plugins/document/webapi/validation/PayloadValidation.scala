@@ -179,5 +179,5 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin with JsonSchema
   val defaultCtx = new PayloadContext("", Nil, ParserContext())
 
   override def validator(s: Shape, env: Environment, validationMode: ValidationMode): PayloadValidator =
-    payloadValidator(s, validationMode)
+    payloadValidator(s, env, validationMode)
 }

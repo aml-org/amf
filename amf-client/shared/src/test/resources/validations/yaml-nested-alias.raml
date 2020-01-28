@@ -1,0 +1,9 @@
+#%RAML 1.0
+title: my API
+types:
+  Foo:
+    type: array
+    examples:
+      a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
+      b: &b [*a,*a,*a,*a,*a,*a]
+      c: &c [*b,*b,*b,*b,*b,*b]

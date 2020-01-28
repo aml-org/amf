@@ -471,6 +471,10 @@ object ParserSideValidations extends Validations {
     "Values of uri parameter must not contain '/' character"
   )
 
+  val ExeededMaxYamlReferences = validation(
+    "max-yaml-references",
+    "Exceeded maximum yaml references threshold"
+  )
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(
@@ -601,6 +605,7 @@ object ParserSideValidations extends Validations {
     InvalidUserDefinedFacetName,
     MissingRequiredUserDefinedFacet,
     SlashInUriParameterValues,
-    InvalidDatetimeFormat
+    InvalidDatetimeFormat,
+    ExeededMaxYamlReferences
   )
 }
