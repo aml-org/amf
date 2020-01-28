@@ -39,11 +39,18 @@ package object spec {
                           ctx,
                           Some(toOasDeclarations(ctx.declarations)),
                           Some(ctx.parserCount),
-                          ctx.eh)
+                          ctx.eh,
+                          ctx.options)
   }
 
   def toOas(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), Some(ctx.parserCount), ctx.eh)
+    new Oas2WebApiContext(root,
+                          refs,
+                          ctx,
+                          Some(toOasDeclarations(ctx.declarations)),
+                          Some(ctx.parserCount),
+                          ctx.eh,
+                          ctx.options)
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
@@ -52,7 +59,8 @@ package object spec {
                             ctx,
                             Some(toRamlDeclarations(ctx.declarations)),
                             Some(ctx.parserCount),
-                            ctx.eh)
+                            ctx.eh,
+                            options = ctx.options)
   }
 
   private def toRamlDeclarations(ds: WebApiDeclarations) = {
@@ -83,7 +91,8 @@ package object spec {
                                 ctx,
                                 Some(toOasDeclarations(ctx.declarations)),
                                 Some(ctx.parserCount),
-                                ctx.eh)
+                                ctx.eh,
+                                ctx.options)
   }
 
   def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
@@ -92,6 +101,7 @@ package object spec {
                                 ctx,
                                 Some(toOasDeclarations(ctx.declarations)),
                                 Some(ctx.parserCount),
-                                ctx.eh)
+                                ctx.eh,
+                                ctx.options)
   }
 }

@@ -43,8 +43,9 @@ class JsonSchemaWebApiContext(loc: String,
                               private val wrapped: ParserContext,
                               private val ds: Option[OasWebApiDeclarations],
                               parserCount: Option[Int] = None,
-                              override val eh: Option[ErrorHandler] = None)
-    extends OasWebApiContext(loc, refs, wrapped, ds, parserCount, eh) {
+                              override val eh: Option[ErrorHandler] = None,
+                              options: ParsingOptions)
+    extends OasWebApiContext(loc, refs, options, wrapped, ds, parserCount, eh) {
   override val factory: OasSpecVersionFactory = Oas3VersionFactory()(this)
   override val syntax: SpecSyntax             = Oas3Syntax
   override val vendor: Vendor                 = JsonSchema
@@ -150,7 +151,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   private def getJsonSchemaContext(document: Root,
                                    parentContext: ParserContext,
-                                   url: String): JsonSchemaWebApiContext = {
+                                   url: String,
+                                   options: ParsingOptions): JsonSchemaWebApiContext = {
     val cleanNested =
       ParserContext(url, document.references, EmptyFutureDeclarations(), parserCount = parentContext.parserCount)
     cleanNested.globalSpace = parentContext.globalSpace
@@ -165,7 +167,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     new JsonSchemaWebApiContext(url,
                                 document.references,
                                 cleanNested,
-                                inheritedDeclarations.map(d => toOasDeclarations(d)))
+                                inheritedDeclarations.map(d => toOasDeclarations(d)),
+                                options = options)
   }
 
   private def getRootAst(document: Root,
@@ -203,7 +206,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         val hashFragment: Option[String] =
           parts.tail.headOption.map(t => if (t.startsWith("/definitions")) t.stripPrefix("/") else t)
 
-        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
+        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url, options)
         val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
 
         val parsed =
@@ -244,7 +247,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         val hashFragment: Option[String] =
           parts.tail.headOption.map(t => if (t.startsWith("/")) t.stripPrefix("/") else t)
 
-        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
+        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url, ctx.options)
         val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
 
         Some(OasParameterParser(Right(rootAst), parentId, None, new IdCounter())(ctx).parse())
