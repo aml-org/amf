@@ -26,6 +26,7 @@ sealed trait AsyncPlugin extends OasLikePlugin {
 
   def context(loc: String,
               refs: Seq[ParsedReference],
+              options: ParsingOptions,
               wrapped: ParserContext,
               ds: Option[AsyncWebApiDeclarations] = None): AsyncWebApiContext
 
@@ -33,7 +34,7 @@ sealed trait AsyncPlugin extends OasLikePlugin {
                      parentContext: ParserContext,
                      platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
-    implicit val ctx: AsyncWebApiContext = context(document.location, document.references, parentContext)
+    implicit val ctx: AsyncWebApiContext = context(document.location, document.references, options, parentContext)
     val parsed = document.referenceKind match {
       case _ => detectAsyncUnit(document)
     }
@@ -110,8 +111,10 @@ object Async20Plugin extends AsyncPlugin {
 
   override def context(loc: String,
                        refs: Seq[ParsedReference],
+                       options: ParsingOptions,
                        wrapped: ParserContext,
-                       ds: Option[AsyncWebApiDeclarations]) = new Async20WebApiContext(loc, refs, wrapped, ds)
+                       ds: Option[AsyncWebApiDeclarations]) =
+    new Async20WebApiContext(loc, refs, wrapped, ds, options = options)
 
   override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] =
     super.domainValidationProfiles(platform).filterKeys(k => k == Async20Profile.p || k == AsyncProfile.p)

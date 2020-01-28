@@ -88,7 +88,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         val hashFragment: Option[String] =
           parts.tail.headOption.map(t => if (t.startsWith("/")) t.stripPrefix("/") else t)
 
-        val jsonSchemaContext = getJsonSchemaContext(doc, ctx, url)
+        val jsonSchemaContext = getJsonSchemaContext(doc, ctx, url, ctx.options)
         val rootAst           = getRootAst(doc, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
         Some(rootAst)
 
@@ -138,7 +138,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
 
   private def getJsonSchemaContext(document: Root,
                                    parentContext: ParserContext,
-                                   url: String): JsonSchemaWebApiContext = {
+                                   url: String,
+                                   options: ParsingOptions): JsonSchemaWebApiContext = {
     val cleanNested =
       ParserContext(url, document.references, EmptyFutureDeclarations(), parentContext.eh)
     cleanNested.globalSpace = parentContext.globalSpace
@@ -153,7 +154,8 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
     new JsonSchemaWebApiContext(url,
                                 document.references,
                                 cleanNested,
-                                inheritedDeclarations.map(d => toOasDeclarations(d)))
+                                inheritedDeclarations.map(d => toOasDeclarations(d)),
+                                options)
   }
 
   private def getRootAst(document: Root,
@@ -191,7 +193,7 @@ class JsonSchemaPlugin extends AMFDocumentPlugin with PlatformSecrets {
         val hashFragment: Option[String] =
           parts.tail.headOption.map(t => if (t.startsWith("/definitions")) t.stripPrefix("/") else t)
 
-        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url)
+        val jsonSchemaContext = getJsonSchemaContext(document, parentContext, url, options)
         val rootAst           = getRootAst(document, parsedDoc, shapeId, hashFragment, url, jsonSchemaContext)
 
         val parsed =

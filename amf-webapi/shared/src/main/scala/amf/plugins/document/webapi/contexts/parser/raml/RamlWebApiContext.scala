@@ -1,4 +1,5 @@
 package amf.plugins.document.webapi.contexts.parser.raml
+import amf.core.client.ParsingOptions
 import amf.core.model.domain.Shape
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote.{Payload, Vendor}
@@ -15,10 +16,11 @@ import scala.collection.mutable
 
 abstract class RamlWebApiContext(override val loc: String,
                                  refs: Seq[ParsedReference],
+                                 options: ParsingOptions,
                                  val wrapped: ParserContext,
                                  private val ds: Option[RamlWebApiDeclarations] = None,
                                  var contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
-    extends WebApiContext(loc, refs, wrapped, ds)
+    extends WebApiContext(loc, refs, options, wrapped, ds)
     with RamlSpecAwareContext {
 
   var globalMediatype: Boolean                                  = false
@@ -161,10 +163,11 @@ class PayloadContext(loc: String,
                      refs: Seq[ParsedReference],
                      override val wrapped: ParserContext,
                      private val ds: Option[RamlWebApiDeclarations] = None,
-                     contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT)
-    extends RamlWebApiContext(loc, refs, wrapped, ds, contextType = contextType) {
+                     contextType: RamlWebApiContextType = RamlWebApiContextType.DEFAULT,
+                     options: ParsingOptions = ParsingOptions())
+    extends RamlWebApiContext(loc, refs, options, wrapped, ds, contextType = contextType) {
   override protected def clone(declarations: RamlWebApiDeclarations): RamlWebApiContext = {
-    new PayloadContext(loc, refs, wrapped, Some(declarations))
+    new PayloadContext(loc, refs, wrapped, Some(declarations), options = options)
   }
   override val factory: RamlSpecVersionFactory = new Raml10VersionFactory()(this)
   override val syntax: SpecSyntax = new SpecSyntax {
