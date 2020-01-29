@@ -25,7 +25,8 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
     new EscapeReservedNamesTypes(),
     new MakeRequiredFieldImplicitForOptionalProperties(),
     new ResolveResponseAndParameterDeclarations(),
-    new ResolveAdditionalProperties()
+    new ResolveAdditionalProperties(),
+    new ResolveLinksWithNonDeclaredTargets()
   )
 
   override def profileName: ProfileName = RamlProfile
