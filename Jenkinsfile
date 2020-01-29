@@ -55,6 +55,7 @@ pipeline {
       when {
         anyOf {
           branch 'master'
+          branch 'support/*'
           branch 'develop'
         }
       }
