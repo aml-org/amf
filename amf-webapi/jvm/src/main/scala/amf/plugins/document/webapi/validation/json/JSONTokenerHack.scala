@@ -67,7 +67,7 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
     case _ =>
       numberOption(string) match {
         case Some(o) => o
-        case _       => throw this.syntaxError("Unquoted string value")
+        case _       => throw new InvalidJSONValueException("Unquoted string value")
       }
   }
 
@@ -81,11 +81,11 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
 
   private def hackDouble(d: java.lang.Double): Object = {
     val pattern = "[0-9]+(\\.0+)".r
-    val str = d.toString
+    val str     = d.toString
 
     str match {
       case pattern(group) => Integer.valueOf(str.stripSuffix(group))
-      case _ => d
+      case _              => d
     }
   }
 
