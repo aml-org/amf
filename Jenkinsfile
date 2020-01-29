@@ -37,7 +37,7 @@ pipeline {
           branch 'master'
           branch 'develop'
           branch 'release/*'
-          branch 'new_model'
+          branch 'support/*'
         }
       }
       steps {
@@ -50,7 +50,6 @@ pipeline {
       when {
         anyOf {
           branch 'develop'
-          branch 'new_model'
         }
       }
       steps {
