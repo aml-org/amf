@@ -1892,27 +1892,27 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
-//  test("Excessive yaml anchors - payload validation") {
-//    AMF.init().asFuture flatMap { _ =>
-//      val validator =
-//        new ScalarShape().payloadValidator("application/yaml", Environment.empty().setMaxYamlReferences(50)).asOption
-//      val report = validator.get
-//        .validate(
-//          "application/yaml",
-//          """
-//            |a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
-//            |b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
-//            |c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
-//            |""".stripMargin
-//        )
-//        .asFuture
-//      report.map { r =>
-//        assert(!r.conforms)
-//        assert(r.results.asSeq.size == 1)
-//        assert(r.results.asSeq.head.message == "Exceeded maximum yaml references threshold")
-//      }
-//    }
-//  }
+  test("Excessive yaml anchors - payload validation") {
+    AMF.init().asFuture flatMap { _ =>
+      val validator =
+        new ScalarShape().payloadValidator("application/yaml", Environment.empty().setMaxYamlReferences(50)).asOption
+      val report = validator.get
+        .validate(
+          "application/yaml",
+          """
+            |a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
+            |b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
+            |c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
+            |""".stripMargin
+        )
+        .asFuture
+      report.map { r =>
+        assert(!r.conforms)
+        assert(r.results.asSeq.size == 1)
+        assert(r.results.asSeq.head.message == "Exceeded maximum yaml references threshold")
+      }
+    }
+  }
 
   test("Excessive yaml anchors - raml api") {
     val api =
