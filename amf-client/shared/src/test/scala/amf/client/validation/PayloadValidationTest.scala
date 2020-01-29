@@ -92,6 +92,21 @@ trait ClientPayloadValidationTest extends AsyncFunSuite with NativeOps with Matc
     }
   }
 
+  test("Test sync validation") {
+    AMF.init().flatMap { _ =>
+      amf.Core.registerPlugin(PayloadValidatorPlugin)
+
+      val test = new ScalarShape().withDataType(DataTypes.String).withName("test")
+
+      val report = test
+        .parameterValidator("application/yaml")
+        .asOption
+        .get
+        .syncValidate("application/yaml", "1234")
+      report.conforms shouldBe true
+    }
+  }
+
   test("'null' doesn't conform as string") {
     amf.Core.init().asFuture.flatMap { _ =>
       amf.Core.registerPlugin(PayloadValidatorPlugin)

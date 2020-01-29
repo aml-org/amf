@@ -73,7 +73,7 @@ class JSONTokenerHack(text: String) extends JSONTokener(text) {
     case _ =>
       numberOption(string) match {
         case Some(o) => o
-        case _       => throw this.syntaxError("Unquoted string value")
+        case _       => throw new InvalidJSONValueException("Unquoted string value")
       }
   }
 

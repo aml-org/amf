@@ -3,6 +3,7 @@ package amf.client.validation
 import amf.client.model.DataTypes
 import amf.client.model.domain.{NodeShape, ScalarShape}
 import amf.convert.NativeOpsFromJvm
+import amf.core.AMF
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import org.json.JSONException
 import org.scalatest.Matchers.a
@@ -10,32 +11,19 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.Matchers._
 
 class PayloadValidationTest extends ClientPayloadValidationTest with NativeOpsFromJvm {
-  test("Invalid unquoted string value with both payload and parameter validator") {
-    amf.Core.init().asFuture.flatMap { _ =>
+  test("Test unexpected type error") {
+    AMF.init().flatMap { _ =>
       amf.Core.registerPlugin(PayloadValidatorPlugin)
 
-      val s     = new ScalarShape().withDataType(DataTypes.String)
-      val shape = new NodeShape().withName("person")
-      shape.withProperty("someString").withRange(s)
+      val test = new ScalarShape().withDataType(DataTypes.String)
 
-      val payload =
-        """
-          |{
-          |  "someString": invalid string value
-          |}
-        """.stripMargin
-
-      val f = shape
+      val report = test
         .payloadValidator("application/json")
         .asOption
         .get
-        .validate("application/json", payload)
-        .asFuture
-
-      ScalaFutures.whenReady(f) { report =>
-        report.conforms shouldBe false
-        report.results.size() shouldBe 1
-      }
+        .syncValidate("application/json", "1234")
+      report.conforms shouldBe false
+      report.results.asSeq.head.message shouldBe "expected type: String, found: Integer" // APIKit compatibility
     }
   }
 }
