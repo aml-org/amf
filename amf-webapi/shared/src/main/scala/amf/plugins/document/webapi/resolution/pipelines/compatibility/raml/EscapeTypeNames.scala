@@ -10,14 +10,14 @@ import amf.plugins.domain.webapi.models.WebApi
 
 import scala.collection.mutable
 
-class EscapeReservedNamesTypes()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
+class EscapeTypeNames()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
   override def resolve[T <: BaseUnit](model: T): T = model match {
     case d: Document if d.encodes.isInstanceOf[WebApi] =>
       try {
         val replacedNames: mutable.Map[String, String] = mutable.Map.empty
 
         val expressionLikeNameCounter = new IdCounter()
-        d.declares.foreach {
+        d.iterator().foreach {
           case shape: Shape =>
             shape.name.option().map { name =>
               RamlTypeDefMatcher.matchType(name, default = UndefinedType) match {
