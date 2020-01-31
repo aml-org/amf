@@ -3,7 +3,7 @@ package amf.plugins.document.webapi.parser.spec.declaration
 import amf.client.model.document.Dialect
 import amf.core.Root
 import amf.core.annotations.Aliases
-import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment}
+import amf.core.model.document.{BaseUnit, DeclaresModel, Document, Fragment, Module}
 import amf.core.parser.{ParsedReference, _}
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.webapi.contexts.WebApiContext
@@ -53,6 +53,7 @@ case class ReferencesParser(baseUnit: BaseUnit, key: String, map: YMap, referenc
     references.foreach {
       case ParsedReference(f: Fragment, origin: Reference, _)                          => result += (origin.url, f)
       case ParsedReference(d: Document, origin: Reference, _)                          => result += (origin.url, d)
+      case ParsedReference(m: Module, origin: Reference, _)                            => result += (origin.url, m)
       case ParsedReference(other @ (_: Vocabulary | _: Dialect), origin: Reference, _) => result += (origin.url, other)
       case _                                                                           => // Nothing
     }
