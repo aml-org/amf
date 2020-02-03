@@ -21,6 +21,10 @@ class EscapeTypeNames()(override implicit val errorHandler: ErrorHandler) extend
           case shape: Shape =>
             shape.name.option().map { name =>
               RamlTypeDefMatcher.matchType(name, default = UndefinedType) match {
+                case UndefinedType if name.contains(".") =>
+                  val newName = name.replace(".", "_")
+                  replacedNames(name) = newName
+                  shape.withName(newName)
                 case XMLSchemaType | JSONSchemaType | UndefinedType =>
                 // Do nothing
                 case TypeExpressionType =>
