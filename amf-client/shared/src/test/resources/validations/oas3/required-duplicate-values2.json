@@ -1,0 +1,33 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "test",
+    "version": "1.0"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "test": {
+        "type": "object",
+        "required": [
+          "foo",
+          "bar",
+          "foo",
+          "bar",
+          "bazz"
+        ],
+        "properties": {
+          "foo": {
+            "type": "string"
+          },
+          "bar": {
+            "type": "string"
+          },
+          "bazz": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

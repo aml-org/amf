@@ -53,4 +53,16 @@ class UniquePlatformOasUnitValidationsTest extends UniquePlatformReportGenTest w
   test("Tags has to be an array") {
     validate("tags-type-array.json", Some("tags-type-array.report"), Oas30Profile)
   }
+
+  test("required cant have duplicate values") {
+    validate("required-duplicate-values.json", Some("required-duplicate-values.report"), Oas30Profile)
+  }
+
+  test("required cant have duplicate values 2") {
+    validate("required-duplicate-values2.json", Some("required-duplicate-values2.report"), Oas30Profile)
+  }
+
+  test("invalid query parameter schema") {
+    validate("invalid-query-parameter-schema.json", Some("invalid-query-parameter-schema.report"), Oas30Profile)
+  }
 }

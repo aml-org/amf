@@ -78,6 +78,11 @@ object ParserSideValidations extends Validations {
     "Discriminator property name is required"
   )
 
+  val InvalidRequiredValue = validation(
+    "invalid-required-value",
+    "Invalid required value"
+  )
+
   val InvalidServerPath = validation(
     "invalid-server-path",
     "Invalid server path"
@@ -186,6 +191,11 @@ object ParserSideValidations extends Validations {
   val InvalidDecimalPoint = validation(
     "invalid-decimal-point",
     "Invalid decimal point"
+  )
+
+  val DuplicateRequiredItem = validation(
+    "duplicate-required-item",
+    "Duplicate required item"
   )
 
   val InvalidTypeDefinition = validation(
