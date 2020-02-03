@@ -207,7 +207,8 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
       case _                  => YamlParser(payload)(errorHandler)
     }
     val node = parser.document().node
-    PayloadFragment(if (node.isNull) ScalarNode(payload, None) else DataNodeParser(node)(defaultCtx).parse(),
+    PayloadFragment(if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
+                    else DataNodeParser(node)(defaultCtx).parse(),
                     mediaType)
   }
 
