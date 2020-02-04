@@ -637,11 +637,12 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   private def parseObjectType(): Shape = {
     if (isFileType) {
-      val shape = node.tagType match {
+      val shape = FileShape(Annotations(node)).withName(name, nameAnnotations)
+      node.tagType match {
         case YType.Str =>
-          adopt(FileShape())
+          adopt(shape)
         case YType.Map =>
-          FileShapeParser(node, adopt).parse()
+          FileShapeParser(node, shape, adopt).parse()
       }
       shape
     } else {
@@ -987,12 +988,13 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class FileShapeParser(node: YNode, adopt: Shape => Shape) extends AnyShapeParser with CommonScalarParsingLogic {
+  case class FileShapeParser(node: YNode, file: FileShape, adopt: Shape => Shape)
+      extends AnyShapeParser
+      with CommonScalarParsingLogic {
     override val map: YMap = node.as[YMap]
     override val shape: FileShape = {
-      val s = FileShape(Annotations(map))
-      adopt(s)
-      s
+      adopt(file)
+      file
     }
 
     override def parse(): FileShape = {
