@@ -720,6 +720,10 @@ class CompleteCycleTest extends FunSuiteCycleTests {
           s"${parserResultPath}oas/")
   }
 
+  test("File type cycle") {
+    cycle("file-type.raml", "file-type.json", RamlYamlHint, Amf)
+  }
+
   /**
   * Please do not add more test for raml to raml or to jsonld in here. You can use Raml10CycleTestByDirectory or Raml08CycleTestByDirectory.
   * Check CycleTestByDirectory for information off how to use.

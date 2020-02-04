@@ -1,0 +1,13 @@
+#%RAML 1.0
+title: New API
+
+types:
+  SomeType:
+    properties:
+      fileProp:
+        type: file
+        fileTypes:
+          - "*/*"
+      stringProp:
+        example: Example
+        type: string
