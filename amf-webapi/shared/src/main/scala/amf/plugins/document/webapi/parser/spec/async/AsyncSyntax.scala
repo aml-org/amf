@@ -3,7 +3,67 @@ package amf.plugins.document.webapi.parser.spec.async
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 
 object Async20Syntax extends SpecSyntax {
+
+  private val shapeFacets = Set(
+    "id",
+    "$ref",
+    "$schema",
+    "title",
+    "displayName",
+    "description",
+    "x-intellij-html-description",
+    "x-intellij-language-injection",
+    "x-intellij-case-insensitive",
+    "default",
+    "example",
+    "examples",
+    "enum",
+    "type",
+    "allOf",
+    "anyOf",
+    "oneOf",
+    "not",
+    "deprecationMessage",
+    "required",
+    "readOnly",
+    "writeOnly",
+    "const"
+  )
+
   override val nodes: Map[String, Set[String]] = Map(
+    "shape" -> shapeFacets,
+    "nodeShape" -> (shapeFacets ++ Set(
+      "properties",
+      "minProperties",
+      "maxProperties",
+      "discriminator",
+      "discriminatorValue",
+      "additionalProperties",
+      "patternProperties",
+      "dependencies"
+    )),
+    "arrayShape" -> (shapeFacets ++ Set(
+      "uniqueItems",
+      "items",
+      "minItems",
+      "maxItems",
+      "additionalItems"
+    )),
+    "stringScalarShape" -> (shapeFacets ++ Set(
+      "pattern",
+      "minLength",
+      "maxLength",
+      "format"
+    )),
+    "numberScalarShape" -> (shapeFacets ++ Set(
+      "minimum",
+      "maximum",
+      "exclusiveMaximum",
+      "exclusiveMinimum",
+      "format",
+      "multipleOf"
+    )),
+    "dateScalarShape" -> (shapeFacets + "format"),
     "webApi" -> Set(
       "asyncapi",
       "id",
