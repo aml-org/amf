@@ -1,0 +1,16 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Example API",
+    "version": "1.0"
+  },
+  "paths": {},
+  "x-amf-securitySchemes": {
+    "custom_auth": {
+      "type": "x-custom",
+      "x-amf-settings": {
+        "custom": "Setting"
+      }
+    }
+  }
+}

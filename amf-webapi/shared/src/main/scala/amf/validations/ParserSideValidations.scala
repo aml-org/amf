@@ -38,6 +38,11 @@ object ParserSideValidations extends Validations {
     "Invalid shape format"
   )
 
+  val InvalidSecuritySchemeType = validation(
+    "invalid-security-scheme-type",
+    "Invalid security scheme type"
+  )
+
   val InvalidDatetimeFormat = validation(
     "invalid-datetime-format",
     "Invalid format value for datetime"

@@ -4,21 +4,25 @@ import amf.core.annotations._
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter._
 import amf.core.metamodel.Field
-import amf.core.metamodel.document.{ExtensionLikeModel, BaseUnitModel}
+import amf.core.metamodel.document.{BaseUnitModel, ExtensionLikeModel}
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document._
 import amf.core.model.domain.AmfScalar
 import amf.core.model.domain.extensions.DomainExtension
 import amf.core.parser.Position.ZERO
-import amf.core.parser.{Position, FieldEntry, Fields}
+import amf.core.parser.{FieldEntry, Fields, Position}
 import amf.core.remote.{Oas, Vendor}
-import amf.core.utils.{IdCounter, AmfStrings}
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.plugins.document.webapi.annotations.FormBodyParameter
 import amf.plugins.document.webapi.contexts._
-import amf.plugins.document.webapi.contexts.emitter.oas.{Oas3SpecEmitterFactory, OasSpecEmitterContext, Oas3SpecEmitterContext}
+import amf.plugins.document.webapi.contexts.emitter.oas.{
+  Oas3SpecEmitterContext,
+  Oas3SpecEmitterFactory,
+  OasSpecEmitterContext
+}
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.webapi.model.{Extension, Overlay}
-import amf.plugins.document.webapi.parser.OasHeader.{Oas20Overlay, Oas20Extension}
+import amf.plugins.document.webapi.parser.OasHeader.{Oas20Extension, Oas20Overlay}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
@@ -156,7 +160,7 @@ trait AccessibleOasDocumentEmitters {
                 result += ResponsesEmitter("responses", f, ordering, references, orphanAnnotations))
 
             fs.entry(OperationModel.Security)
-              .map(f => result += SecurityRequirementsEmitter("security", f, ordering))
+              .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))
 
             if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory]) {
               operation.fields.fields().find(_.field == OperationModel.Callbacks) foreach { f: FieldEntry =>
@@ -370,7 +374,8 @@ abstract class OasDocumentEmitter(document: BaseUnit)(implicit override val spec
         .fold(result += EntryPartEmitter("paths", EmptyMapEmitter()))(f =>
           result += EndpointsEmitter("paths", f, ordering, references, orphanAnnotations))
 
-      fs.entry(WebApiModel.Security).map(f => result += SecurityRequirementsEmitter("security", f, ordering))
+      fs.entry(WebApiModel.Security)
+        .map(f => result += OasWithExtensionsSecurityRequirementsEmitter("security", f, ordering))
 
       result ++= AnnotationsEmitter(api, ordering).emitters
 

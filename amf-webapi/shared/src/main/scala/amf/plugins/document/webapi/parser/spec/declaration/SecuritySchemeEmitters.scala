@@ -13,7 +13,11 @@ import amf.plugins.document.webapi.contexts.emitter.oas.OasSpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.oas.{OasSecuritySchemeType, OasSecuritySchemeTypeMapping}
+import amf.plugins.document.webapi.parser.spec.oas.{
+  OasSecuritySchemeType,
+  OasSecuritySchemeTypeMapping,
+  SecuritySchemeType
+}
 import amf.plugins.domain.shapes.models.AnyShape
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.security._
@@ -27,38 +31,62 @@ import scala.collection.mutable.ListBuffer
 /**
   *
   */
-case class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(
+abstract class OasSecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(
     implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val securityTypeMap: Seq[(OasSecuritySchemeType, SecurityScheme)] =
-      securitySchemes.map(s => (OasSecuritySchemeTypeMapping.fromText(s.`type`.value()), s))
+    val securityTypeMap: Seq[(SecuritySchemeType, SecurityScheme)] =
+      securitySchemes.map(s => (OasSecuritySchemeTypeMapping.mapsTo(spec.vendor, s.`type`.value()), s))
 
-    val (oasSecurityDefinitions, extensionDefinitions) = securityTypeMap.partition(m => m._1.isOas)
-    val isOas3                                         = spec.vendor == Vendor.OAS30
+    val (oasSecurityDefinitions, extensionDefinitions) = securityTypeMap.partition {
+      case (OasSecuritySchemeType(_), _) => true
+      case _                             => false
+    }
+
     if (oasSecurityDefinitions.nonEmpty)
       b.entry(
-        if (isOas3) "securitySchemes" else "securityDefinitions",
+        key,
         _.obj(
           traverse(
             ordering.sorted(oasSecurityDefinitions
-              .map(s => OasNamedSecuritySchemeEmitter(s._2, s._1, ordering))),
+              .map(s => emitter(s._2, s._1, ordering))),
             _
           ))
       )
     if (extensionDefinitions.nonEmpty)
       b.entry(
         "securitySchemes".asOasExtension,
-        _.obj(
-          traverse(
-            ordering.sorted(extensionDefinitions.map(s => OasNamedSecuritySchemeEmitter(s._2, s._1, ordering)).toSeq),
-            _))
+        _.obj(traverse(ordering.sorted(extensionDefinitions.map(s => emitter(s._2, s._1, ordering))), _))
       )
 
   }
 
   override def position(): Position =
     securitySchemes.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
+
+  def key: String
+
+  def emitter(securityScheme: SecurityScheme,
+              mapType: SecuritySchemeType,
+              ordering: SpecOrdering): OasNamedSecuritySchemeEmitter
+}
+
+class Oas3SecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(
+    implicit spec: OasSpecEmitterContext)
+    extends OasSecuritySchemesEmitters(securitySchemes, ordering) {
+
+  override def key = "securitySchemes"
+  override def emitter(securityScheme: SecurityScheme, mapType: SecuritySchemeType, ordering: SpecOrdering) =
+    Oas3NamedSecuritySchemeEmitter(securityScheme, mapType, ordering)
+}
+
+class Oas2SecuritySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering)(
+    implicit spec: OasSpecEmitterContext)
+    extends OasSecuritySchemesEmitters(securitySchemes, ordering) {
+
+  override def key: String = "securityDefinitions"
+  override def emitter(securityScheme: SecurityScheme, mapType: SecuritySchemeType, ordering: SpecOrdering) =
+    new OasNamedSecuritySchemeEmitter(securityScheme, mapType, ordering)
 }
 
 case class RamlSecuritySchemesEmitters(
@@ -79,9 +107,9 @@ case class RamlSecuritySchemesEmitters(
     securitySchemes.headOption.map(a => pos(a.annotations)).getOrElse(Position.ZERO)
 }
 
-case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                         mapType: OasSecuritySchemeType,
-                                         ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext)
+class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
+                                    mapType: SecuritySchemeType,
+                                    ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext)
     extends EntryEmitter {
 
   override def position(): Position = pos(securityScheme.annotations)
@@ -110,8 +138,18 @@ case class OasNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
     }
   }
 
-  private def emitInline(b: PartBuilder): Unit =
-    b.obj(traverse(ordering.sorted(OasSecuritySchemeEmitter(securityScheme, mapType, ordering).emitters()), _))
+  protected def emitInline(b: PartBuilder): Unit =
+    b.obj(traverse(ordering.sorted(new OasSecuritySchemeEmitter(securityScheme, mapType, ordering).emitters()), _))
+
+}
+
+case class Oas3NamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
+                                          mapType: SecuritySchemeType,
+                                          ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext)
+    extends OasNamedSecuritySchemeEmitter(securityScheme, mapType, ordering) {
+
+  override protected def emitInline(b: PartBuilder): Unit =
+    b.obj(traverse(ordering.sorted(Oas3SecuritySchemeEmitter(securityScheme, mapType, ordering).emitters()), _))
 
 }
 
@@ -159,9 +197,8 @@ abstract class RamlNamedSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
 }
 
-case class OasSecuritySchemeEmitter(securityScheme: SecurityScheme,
-                                    mapType: OasSecuritySchemeType,
-                                    ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext) {
+class OasSecuritySchemeEmitter(securityScheme: SecurityScheme, mapType: SecuritySchemeType, ordering: SpecOrdering)(
+    implicit spec: OasSpecEmitterContext) {
   def emitters(): Seq[EntryEmitter] = {
 
     val results = ListBuffer[EntryEmitter]()
@@ -171,7 +208,6 @@ case class OasSecuritySchemeEmitter(securityScheme: SecurityScheme,
     fs.entry(SecuritySchemeModel.Type)
       .map(f => {
         results += MapEntryEmitter("type", mapType.text, position = pos(f.value.annotations))
-
       })
     fs.entry(SecuritySchemeModel.DisplayName).map(f => results += ValueEmitter("displayName".asOasExtension, f))
     fs.entry(SecuritySchemeModel.Description).map(f => results += ValueEmitter("description", f))
@@ -182,6 +218,42 @@ case class OasSecuritySchemeEmitter(securityScheme: SecurityScheme,
 
     ordering.sorted(results)
 
+  }
+}
+
+case class Oas3SecuritySchemeEmitter(securityScheme: SecurityScheme,
+                                     mapType: SecuritySchemeType,
+                                     ordering: SpecOrdering)(implicit spec: OasSpecEmitterContext)
+    extends OasSecuritySchemeEmitter(securityScheme, mapType, ordering) {
+  val httpSchemaMappings = Map(
+    "Basic Authentication"  -> "basic",
+    "Digest Authentication" -> "digest"
+  )
+  override def emitters(): Seq[EntryEmitter] = {
+    securityScheme.`type`.value() match {
+      case s if httpSchemaMappings.get(s).isDefined => parseHttpScheme(securityScheme.`type`.value())
+      case _                                        => super.emitters()
+    }
+  }
+
+  private def parseHttpScheme(schemaType: String): Seq[EntryEmitter] = {
+    val results = ListBuffer[EntryEmitter]()
+
+    val fs = securityScheme.fields
+
+    fs.entry(SecuritySchemeModel.Type)
+      .map(f => {
+        results += MapEntryEmitter("type", "http", position = pos(f.value.annotations))
+      })
+    fs.entry(SecuritySchemeModel.DisplayName).map(f => results += ValueEmitter("displayName".asOasExtension, f))
+    fs.entry(SecuritySchemeModel.Description).map(f => results += ValueEmitter("description", f))
+
+    results += Raml10DescribedByEmitter("describedBy".asOasExtension, securityScheme, ordering, Nil)(toRaml(spec))
+    securityScheme.withHttpSettings().withScheme(httpSchemaMappings.getOrElse(schemaType, ""))
+
+    fs.entry(SecuritySchemeModel.Settings).map(f => results ++= OasSecuritySettingsEmitter(f, ordering).emitters())
+
+    ordering.sorted(results)
   }
 }
 
@@ -211,23 +283,46 @@ abstract class RamlSecuritySchemeEmitter(securityScheme: SecurityScheme,
     val results = ListBuffer[EntryEmitter]()
     val fs      = securityScheme.fields
 
-    emitType(results, fs)
+    emitType(results, securityScheme)
     fs.entry(SecuritySchemeModel.DisplayName).map(f => results += RamlScalarEmitter("displayName", f))
     fs.entry(SecuritySchemeModel.Description).map(f => results += RamlScalarEmitter("description", f))
 
     results += describedByEmitter("describedBy", securityScheme, ordering, references)
 
-    fs.entry(SecuritySchemeModel.Settings).map(f => results += RamlSecuritySettingsEmitter(f, ordering))
+    if (!isHttpBasicAuth(securityScheme) && !isHttpDigestAuth(securityScheme))
+      fs.entry(SecuritySchemeModel.Settings).map(f => results += RamlSecuritySettingsEmitter(f, ordering))
 
     results
 
   }
-  private def emitType(results: ListBuffer[EntryEmitter], fs: Fields): Unit =
-    fs.entry(SecuritySchemeModel.Type) foreach {
+
+  private def emitType(results: ListBuffer[EntryEmitter], securityScheme: SecurityScheme): Unit =
+    securityScheme.fields.entry(SecuritySchemeModel.Type) foreach {
       case f if f.scalar.toString == "Api Key" =>
         results += MapEntryEmitter("type", "x-apiKey", position = pos(f.value.annotations))
+      case f if isHttpBasicAuth(securityScheme) || isHttpDigestAuth(securityScheme) =>
+        results ++= emitSupportedHttpAuthTypes(f, securityScheme.settings)
       case f => results += RamlScalarEmitter("type", f)
     }
+
+  private def emitSupportedHttpAuthTypes(typeField: FieldEntry, settings: Settings): ListBuffer[EntryEmitter] = {
+    val results = ListBuffer[EntryEmitter]()
+    val resultantType =
+      settings.fields.entry(HttpSettingsModel.Scheme).map(x => x.scalar.toString).getOrElse("") match {
+        case "basic"  => "Basic Authentication"
+        case "digest" => "Digest Authentication"
+        case _        => ""
+      }
+    results += MapEntryEmitter("type", resultantType, position = pos(typeField.value.annotations))
+  }
+
+  private def isHttpAuth(securityScheme: SecurityScheme): Boolean = securityScheme.`type`.value() == "http"
+  private def hasHttpAuthScheme(scheme: String, securityScheme: SecurityScheme): Boolean =
+    securityScheme.settings.fields.entry(HttpSettingsModel.Scheme).exists(s => s.scalar.toString == scheme)
+  private def isHttpBasicAuth(securityScheme: SecurityScheme): Boolean =
+    isHttpAuth(securityScheme) && hasHttpAuthScheme("basic", securityScheme)
+  private def isHttpDigestAuth(securityScheme: SecurityScheme): Boolean =
+    isHttpAuth(securityScheme) && hasHttpAuthScheme("digest", securityScheme)
 }
 
 case class RamlSecuritySettingsEmitter(f: FieldEntry, ordering: SpecOrdering)(implicit spec: SpecEmitterContext)

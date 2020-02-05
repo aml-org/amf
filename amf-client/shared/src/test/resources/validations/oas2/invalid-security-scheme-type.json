@@ -1,0 +1,18 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "The Yield Global API"
+  },
+  "schemes": [
+    "https"
+  ],
+  "securityDefinitions": {
+    "bearerToken": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+    }
+  },
+  "paths": {}
+}

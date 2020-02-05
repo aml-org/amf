@@ -18,7 +18,8 @@ import amf.plugins.document.webapi.parser.spec.oas.{
   Oas30ParametersParser,
   Oas30RequestParser
 }
-import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel}
+import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel, WebApiModel}
+import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import amf.plugins.domain.webapi.models.{Operation, Request, Response}
 import amf.validations.ParserSideValidations.DuplicatedOperationId
 import org.yaml.model._
@@ -85,19 +86,14 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
       }
     )
 
-    map.key(
-      "security",
-      entry => {
-        val idCounter = new IdCounter()
-        // TODO check for empty array for resolution ?
-        val securedBy = entry.value
-          .as[Seq[YNode]]
-          .map(s => OasLikeSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
-          .collect { case Some(s) => s }
+    map.key("security", entry => {
+      operation.set(WebApiModel.Security, AmfArray(Seq(), Annotations(entry.value)))
+      parseSecurity(operation, entry)
+    })
 
-        operation.set(OperationModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+    map.key("security".asOasExtension, entry => {
+      parseSecurity(operation, entry)
+    })
 
     map.key(
       "responses",
@@ -123,6 +119,15 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
     )
 
     operation
+  }
+
+  private def parseSecurity(operation: Operation, entry: YMapEntry): Unit = {
+    val idCounter = new IdCounter()
+    // TODO check for empty array for resolution ?
+    val securedBy = entry.value
+      .as[Seq[YNode]]
+      .map(s => OasLikeSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
+      .collect { case Some(s) => s }
   }
 }
 
