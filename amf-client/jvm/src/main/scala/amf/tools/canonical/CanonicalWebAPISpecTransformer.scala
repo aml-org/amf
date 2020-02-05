@@ -16,6 +16,7 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
+import amf.plugins.document.webapi.Raml10Plugin
 import amf.plugins.document.webapi.metamodel.{ExtensionModel, OverlayModel}
 import amf.plugins.domain.shapes.DataShapesDomainPlugin
 import amf.plugins.domain.webapi.WebAPIDomainPlugin
@@ -477,7 +478,7 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     }
 
     val plugins = PluginContext(
-      blacklist = Seq(CorePlugin, WebAPIDomainPlugin, DataShapesDomainPlugin, AMFGraphPlugin))
+      blacklist = Seq(CorePlugin, WebAPIDomainPlugin, DataShapesDomainPlugin, AMFGraphPlugin, Raml10Plugin))
 
     new RdfModelParser(platform)(ParserContext(eh = UnhandledParserErrorHandler, plugins = plugins))
       .parse(model, baseUnitId)
