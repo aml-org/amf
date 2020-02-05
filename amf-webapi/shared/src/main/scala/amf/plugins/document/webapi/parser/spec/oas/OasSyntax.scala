@@ -6,14 +6,10 @@ object Oas3Syntax extends SpecSyntax {
 
   private val shapeFacets = Set(
     "id",
-    "$ref",
     "$schema",
     "title",
     "displayName",
     "description",
-    "x-intellij-html-description",
-    "x-intellij-language-injection",
-    "x-intellij-case-insensitive",
     "default",
     "example",
     "examples",
@@ -339,14 +335,10 @@ object Oas2Syntax extends SpecSyntax {
 
   private val shapeFacets = Set(
     "id",
-    "$ref",
     "$schema",
     "title",
     "displayName",
     "description",
-    "x-intellij-html-description",
-    "x-intellij-language-injection",
-    "x-intellij-case-insensitive",
     "default",
     "example",
     "examples",
