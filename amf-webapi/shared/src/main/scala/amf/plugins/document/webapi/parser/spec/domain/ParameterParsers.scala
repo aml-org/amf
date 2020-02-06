@@ -263,7 +263,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
 
   protected def cleanParameterEntries(map: YMap): YMap = {
     val filteredEntries =
-      map.entries.filterNot(e => Seq("name", "in").contains(e.key.value.asInstanceOf[YScalar].text))
+      map.entries.filterNot(e => Seq("name", "in", "allowEmptyValue").contains(e.key.value.asInstanceOf[YScalar].text))
     YMap(map.location, filteredEntries)
   }
 
