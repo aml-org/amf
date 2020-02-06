@@ -6,6 +6,7 @@ object Oas3Syntax extends SpecSyntax {
 
   private val shapeFacets = Set(
     "id",
+    "$id",
     "$schema",
     "title",
     "displayName",
@@ -21,9 +22,14 @@ object Oas3Syntax extends SpecSyntax {
     "not",
     "deprecationMessage",
     "required",
+    "optional",
     "readOnly",
     "writeOnly",
-    "const"
+    "const",
+    "declarations",
+    "externalDocs",
+    "nullable",
+    "xml"
   )
 
   override val nodes: Map[String, Set[String]] = Map(
@@ -43,7 +49,8 @@ object Oas3Syntax extends SpecSyntax {
       "items",
       "minItems",
       "maxItems",
-      "additionalItems"
+      "additionalItems",
+      "collectionFormat"
     )),
     "stringScalarShape" -> (shapeFacets ++ Set(
       "pattern",
@@ -335,6 +342,7 @@ object Oas2Syntax extends SpecSyntax {
 
   private val shapeFacets = Set(
     "id",
+    "$id",
     "$schema",
     "title",
     "displayName",
@@ -350,9 +358,14 @@ object Oas2Syntax extends SpecSyntax {
     "not",
     "deprecationMessage",
     "required",
+    "optional",
     "readOnly",
     "writeOnly",
-    "const"
+    "const",
+    "declarations",
+    "externalDocs",
+    "nullable",
+    "xml"
   )
 
   override val nodes: Map[String, Set[String]] = Map(
@@ -372,7 +385,8 @@ object Oas2Syntax extends SpecSyntax {
       "items",
       "minItems",
       "maxItems",
-      "additionalItems"
+      "additionalItems",
+      "collectionFormat"
     )),
     "stringScalarShape" -> (shapeFacets ++ Set(
       "pattern",
