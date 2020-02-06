@@ -5,7 +5,6 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.core.AMF
 import amf.core.emitter.RenderOptions
 import amf.core.remote._
-import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.emit.AMFRenderer
@@ -24,25 +23,21 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
   val CANONICAL_WEBAPI_DIALECT  = "file://vocabularies/dialects/canonical_webapi_spec.yaml"
   override def basePath: String = "file://amf-client/shared/src/test/resources/transformations/"
 
-  def checkCanonicalDialectTransformation(source: String, target: String, shouldTranform: Boolean): Future[Assertion] = {
+  def checkCanonicalDialectTransformation(source: String,
+                                          target: String,
+                                          shouldTranform: Boolean): Future[Assertion] = {
     val amfWebApi  = basePath + source
     val goldenYaml = s"$basePath$target.yaml"
     val goldenJson = s"$basePath$target.json"
     val eh         = DefaultParserErrorHandler.withRun()
     for {
-      _    <- AMF.init()
-      _    <- Future(amf.Core.registerPlugin(AMLPlugin))
-      v    <- Validation(platform)
-      d    <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = eh).build()
-      _    <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
-      unit <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = eh).build()
-      resolved <- {
-        if (shouldTranform) {
-          Future { Raml10Plugin.resolve(unit, eh, ResolutionPipeline.EDITING_PIPELINE) }
-        } else {
-          Future(unit)
-        }
-      }
+      _           <- AMF.init()
+      _           <- Future(amf.Core.registerPlugin(AMLPlugin))
+      v           <- Validation(platform)
+      d           <- AMFCompiler(CANONICAL_WEBAPI_DIALECT, platform, VocabularyYamlHint, eh = eh).build()
+      _           <- Future { AMLPlugin.registry.resolveRegisteredDialect(d.asInstanceOf[Dialect].header) }
+      unit        <- AMFCompiler(amfWebApi, platform, RamlYamlHint, eh = eh).build()
+      resolved    <- Future { Raml10Plugin.resolve(unit, eh) }
       transformed <- CanonicalWebAPISpecTransformer.transform(resolved)
       json        <- new AMFRenderer(transformed, Vendor.AMF, RenderOptions().withPrettyPrint, Some(Syntax.Json)).renderToString
       yaml        <- new AMFRenderer(transformed, Vendor.AML, RenderOptions().withNodeIds, Some(Syntax.Yaml)).renderToString
@@ -68,7 +63,9 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
     "simple/api.raml",
     "annotations/api.raml",
     "macros/api.raml",
-    "modular/api.raml"
+    "modular/api.raml",
+    "all-annotations/api.raml",
+//    "modular-recursion/api.raml"
 
     // "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml.jsonld" -> "banking-api.webapi.yaml",
     // "file://amf-client/shared/src/test/resources/upanddown/banking-api.raml.jsonld" -> "banking-api.webapi.yaml",
@@ -90,8 +87,10 @@ class CanonicalWebAPISpecDialectTest extends FunSuiteCycleTests with PlatformSec
 
   tests.foreach { input =>
     val golden = input.replace("api.raml", "webapi")
-    test(s"Test WebAPI dialect transformation and yaml/json rendering '$input'") {
-      checkCanonicalDialectTransformation(input, golden, shouldTranform = false)
+    (1 to 1).foreach { n =>
+      test(s"Test WebAPI dialect transformation and yaml/json rendering '$input' ($n)") {
+        checkCanonicalDialectTransformation(input, golden, shouldTranform = false)
+      }
     }
   }
 }

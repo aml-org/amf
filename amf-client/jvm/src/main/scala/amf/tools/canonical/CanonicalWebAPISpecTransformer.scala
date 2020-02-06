@@ -370,8 +370,13 @@ object CanonicalWebAPISpecTransformer extends PlatformSecrets {
     * @return Equivalent Canonical WebAPI AML dialect instance
     */
   protected def cleanAMFModel(unit: BaseUnit): BaseUnit = {
-    val mapping     = buildCanonicalClassMapping
-    val model       = unit.toNativeRdfModel()
+    val mapping = buildCanonicalClassMapping
+    val model   = unit.toNativeRdfModel()
+
+    println("----- Parsed UNIT <<<")
+    println(model.toN3())
+    println("----- Parsed UNIT >>> ")
+
     val nativeModel = model.native().asInstanceOf[Model]
 
     val baseUnitId = preProcessUnits(nativeModel)
