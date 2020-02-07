@@ -261,12 +261,6 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     p
   }
 
-  protected def cleanParameterEntries(map: YMap): YMap = {
-    val filteredEntries =
-      map.entries.filterNot(e => Seq("name", "in").contains(e.key.value.asInstanceOf[YScalar].text))
-    YMap(map.location, filteredEntries)
-  }
-
   private def buildFromBinding(in: String, bindingEntry: Option[YMapEntry]): OasParameter = {
     in match {
       case "body" =>
@@ -324,7 +318,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     OasTypeParser(
       entryOrNode,
       "schema",
-      cleanParameterEntries(map),
+      map,
       shape => shape.withName("schema").adopted(parameter.id),
       OAS20SchemaVersion(position = "parameter")(ctx.eh)
     )(toOas(ctx))
@@ -367,7 +361,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     OasTypeParser(
       entryOrNode,
       "schema",
-      cleanParameterEntries(map),
+      map,
       shape => setName(shape).asInstanceOf[Shape].adopted(payload.id),
       OAS20SchemaVersion(position = "parameter")(ctx.eh)
     )(toOas(ctx))

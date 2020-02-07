@@ -3,64 +3,8 @@ package amf.plugins.document.webapi.parser.spec.oas
 import amf.plugins.document.webapi.parser.spec.SpecSyntax
 
 object Oas3Syntax extends SpecSyntax {
-
-  private val shapeFacets = Set(
-    "id",
-    "$schema",
-    "title",
-    "displayName",
-    "description",
-    "default",
-    "example",
-    "examples",
-    "enum",
-    "type",
-    "allOf",
-    "anyOf",
-    "oneOf",
-    "not",
-    "deprecationMessage",
-    "required",
-    "readOnly",
-    "writeOnly",
-    "const"
-  )
-
   override val nodes: Map[String, Set[String]] = Map(
-    "shape" -> shapeFacets,
-    "nodeShape" -> (shapeFacets ++ Set(
-      "properties",
-      "minProperties",
-      "maxProperties",
-      "discriminator",
-      "discriminatorValue",
-      "additionalProperties",
-      "patternProperties",
-      "dependencies"
-    )),
-    "arrayShape" -> (shapeFacets ++ Set(
-      "uniqueItems",
-      "items",
-      "minItems",
-      "maxItems",
-      "additionalItems"
-    )),
-    "stringScalarShape" -> (shapeFacets ++ Set(
-      "pattern",
-      "minLength",
-      "maxLength",
-      "format"
-    )),
-    "numberScalarShape" -> (shapeFacets ++ Set(
-      "minimum",
-      "maximum",
-      "exclusiveMaximum",
-      "exclusiveMinimum",
-      "format",
-      "multipleOf"
-    )),
-    "dateScalarShape" -> (shapeFacets + "format"),
-    "paths"           -> Set(),
+    "paths" -> Set(),
     "webApi" -> Set(
       "openapi",
       "info",
@@ -333,63 +277,8 @@ object Oas3Syntax extends SpecSyntax {
 
 object Oas2Syntax extends SpecSyntax {
 
-  private val shapeFacets = Set(
-    "id",
-    "$schema",
-    "title",
-    "displayName",
-    "description",
-    "default",
-    "example",
-    "examples",
-    "enum",
-    "type",
-    "allOf",
-    "anyOf",
-    "oneOf",
-    "not",
-    "deprecationMessage",
-    "required",
-    "readOnly",
-    "writeOnly",
-    "const"
-  )
-
   override val nodes: Map[String, Set[String]] = Map(
-    "shape" -> shapeFacets,
-    "nodeShape" -> (shapeFacets ++ Set(
-      "properties",
-      "minProperties",
-      "maxProperties",
-      "discriminator",
-      "discriminatorValue",
-      "additionalProperties",
-      "patternProperties",
-      "dependencies"
-    )),
-    "arrayShape" -> (shapeFacets ++ Set(
-      "uniqueItems",
-      "items",
-      "minItems",
-      "maxItems",
-      "additionalItems"
-    )),
-    "stringScalarShape" -> (shapeFacets ++ Set(
-      "pattern",
-      "minLength",
-      "maxLength",
-      "format"
-    )),
-    "numberScalarShape" -> (shapeFacets ++ Set(
-      "minimum",
-      "maximum",
-      "exclusiveMaximum",
-      "exclusiveMinimum",
-      "format",
-      "multipleOf"
-    )),
-    "dateScalarShape" -> (shapeFacets + "format"),
-    "paths"           -> Set(), // paths in oas ignores the ones starting with '/', 'x-' and '$ref' but everything else is invalid
+    "paths" -> Set(), // paths in oas ignores the ones starting with '/', 'x-' and '$ref' but everything else is invalid
     "webApi" -> Set(
       "swagger",
       "info",

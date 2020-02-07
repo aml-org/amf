@@ -195,13 +195,5 @@ class OasJsonModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("oas3/oas3-closed-shapes.json", Some("oas3-closed-shapes.report"), Oas30Profile)
   }
 
-  test("Closed shape in scalar - Invalid") {
-    validate("scalar-invalid-facet.json", Some("scalar-invalid-facet.report"))
-  }
-
-  test("Closed shape in scalar - Valid") {
-    validate("scalar-valid-facet.json", None)
-  }
-
   override val hint: Hint = OasJsonHint
 }
