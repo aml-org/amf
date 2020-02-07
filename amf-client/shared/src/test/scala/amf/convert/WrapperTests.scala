@@ -60,6 +60,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val data_model     = "file://vocabularies/vocabularies/data_model.yaml"
   private val data_shapes    = "file://vocabularies/vocabularies/data_shapes.yaml"
   private val security_model = "file://vocabularies/vocabularies/security.yaml"
+  private val apiWithSpaces =
+    "file://amf-client/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
 
@@ -1880,6 +1882,17 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     } yield {
       // Check that the external fragment has references
       assert(unit.references().asSeq.head.references().asSeq.nonEmpty)
+    }
+  }
+
+  test("Test uri references to external reference from external reference are not encoded") {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseFileAsync(apiWithSpaces).asFuture
+    } yield {
+      val units      = unit.references().asSeq
+      val references = units.flatMap(x => x.references().asSeq)
+      (units.size + references.size) shouldBe 3
     }
   }
 
