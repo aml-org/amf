@@ -1,8 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
-import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
+import amf.core.annotations.{ExplicitField, NilUnion}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
 import amf.core.model.domain._
@@ -313,15 +314,6 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         val shape = ScalarShape(ast).withName(name, nameAnnotations)
         adopt(shape)
         ScalarShapeParser(typeDef, shape, map).parse()
-        typeDef match {
-          case TypeDef.IntType | TypeDef.DoubleType | TypeDef.FloatType | TypeDef.LongType | TypeDef.NumberType =>
-            ctx.closedShape(shape.id, map, "numberScalarShape")
-          case TypeDef.StrType => ctx.closedShape(shape.id, map, "stringScalarShape")
-          case TypeDef.DateOnlyType | TypeDef.DateTimeOnlyType | TypeDef.DateTimeType =>
-            ctx.closedShape(shape.id, map, "dateScalarShape")
-          case _ => // Nothing to do
-        }
-        shape
     }
     parsed
   }
