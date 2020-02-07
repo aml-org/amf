@@ -6,7 +6,6 @@ object Async20Syntax extends SpecSyntax {
 
   private val shapeFacets = Set(
     "id",
-    "$id",
     "$schema",
     "title",
     "displayName",
@@ -22,14 +21,9 @@ object Async20Syntax extends SpecSyntax {
     "not",
     "deprecationMessage",
     "required",
-    "optional",
     "readOnly",
     "writeOnly",
-    "const",
-    "declarations",
-    "externalDocs",
-    "nullable",
-    "xml"
+    "const"
   )
 
   override val nodes: Map[String, Set[String]] = Map(
@@ -49,8 +43,7 @@ object Async20Syntax extends SpecSyntax {
       "items",
       "minItems",
       "maxItems",
-      "additionalItems",
-      "collectionFormat"
+      "additionalItems"
     )),
     "stringScalarShape" -> (shapeFacets ++ Set(
       "pattern",

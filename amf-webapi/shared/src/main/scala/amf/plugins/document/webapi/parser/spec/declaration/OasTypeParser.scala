@@ -313,14 +313,14 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         val shape = ScalarShape(ast).withName(name, nameAnnotations)
         adopt(shape)
         ScalarShapeParser(typeDef, shape, map).parse()
-        typeDef match {
+        val syntaxType = typeDef match {
           case TypeDef.IntType | TypeDef.DoubleType | TypeDef.FloatType | TypeDef.LongType | TypeDef.NumberType =>
-            ctx.closedShape(shape.id, map, "numberScalarShape")
-          case TypeDef.StrType => ctx.closedShape(shape.id, map, "stringScalarShape")
-          case TypeDef.DateOnlyType | TypeDef.DateTimeOnlyType | TypeDef.DateTimeType =>
-            ctx.closedShape(shape.id, map, "dateScalarShape")
-          case _ => // Nothing to do
+            "numberScalarShape"
+          case TypeDef.StrType                                                        => "stringScalarShape"
+          case TypeDef.DateOnlyType | TypeDef.DateTimeOnlyType | TypeDef.DateTimeType => "dateScalarShape"
+          case _                                                                      => "shape"
         }
+        ctx.closedShape(shape.id, map, syntaxType)
         shape
     }
     parsed
