@@ -184,7 +184,7 @@ class WebApiReferenceHandler(vendor: String, plugin: BaseWebApiPlugin) extends R
         val parsed = SyamlParsedDocument(document)
 
         val refs    = new WebApiReferenceHandler(vendor, plugin).collect(parsed, compilerContext.parserContext)
-        val updated = compilerContext.forReference(reference.unit.id)
+        val updated = compilerContext.forReference(reference.unit.id, withNormalizedUri = false)
 
         val externals = refs.toReferences.map((r: Reference) => {
           r.resolve(updated, r.refs.map(_.node), allowRecursiveRefs = true)
