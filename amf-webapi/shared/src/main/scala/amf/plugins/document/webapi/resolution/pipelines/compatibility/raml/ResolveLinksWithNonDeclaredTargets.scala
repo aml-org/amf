@@ -78,6 +78,6 @@ class ResolveLinksWithNonDeclaredTargets()(
       declarations: Seq[String]
   ): Linkable => Boolean = { l =>
     val targetId = l.effectiveLinkTarget().id
-    l.id != targetId && !declarations.contains(targetId)
+    !declarations.contains(targetId)
   }
 }

@@ -425,18 +425,14 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
     val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
     ctx.findJsonSchema(fullRef) match {
-      case Some(u: UnresolvedShape) =>
-        val annots = Annotations(ast)
-        val copied = u.copyShape(annots ++= u.annotations.copy()).withLinkLabel(ref)
-        copied.unresolved(fullRef, e, "warning")(ctx)
-        adopt(copied)
-        Some(copied)
-      case Some(s) =>
-        val annots = Annotations(ast)
-        val copied =
-          s.link(ref, annots).asInstanceOf[AnyShape].withName(name, nameAnnotations).withSupportsRecursion(true)
-        adopt(copied)
-        Some(copied)
+      case Some(s: Shape) =>
+        val cloned = s.cloneShape(None).withLinkLabel(ref)
+        cloned.annotations ++= Annotations(ast)
+        if (s.isInstanceOf[UnresolvedShape]) {
+          cloned.unresolved(fullRef, e, "warning")(ctx)
+        }
+        adopt(cloned)
+        Some(cloned)
       case _ =>
         val tmpShape =
           UnresolvedShape(fullRef, e).withName(fullRef, Annotations()).withId(fullRef).withSupportsRecursion(true)
@@ -595,7 +591,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(UnionShapeModel.AnyOf, unionNodes, Annotations(entry.value))
+              shape.setArrayWithoutId(UnionShapeModel.AnyOf, unionNodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidUnionType, shape.id, "Unions are built from multiple shape nodes", entry.value)
 
@@ -622,7 +618,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.Or, unionNodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.Or, unionNodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidOrType,
                                shape.id,
@@ -651,7 +647,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.And, andNodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.And, andNodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidAndType,
                                shape.id,
@@ -680,7 +676,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.Xone, nodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.Xone, nodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidXoneType,
                                shape.id,
@@ -761,8 +757,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   }
 
-  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit)
-      extends DataArrangementShapeParser() {
+  case class TupleShapeParser(shape: TupleShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
 
     override def parse(): AnyShape = {
       adopt(shape)
@@ -813,8 +808,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit)
-      extends DataArrangementShapeParser() {
+  case class ArrayShapeParser(shape: ArrayShape, map: YMap, adopt: Shape => Unit) extends DataArrangementShapeParser() {
     override def parse(): AnyShape = {
       checkJsonIdentity(shape, map, adopt, ctx.declarations.futureDeclarations)
       super.parse()
@@ -1186,8 +1180,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       )
 
       map.key("enum", ShapeModel.Values in shape using dataNodeParser)
-      map.key("externalDocs",
-              AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
+      map.key("externalDocs", AnyShapeModel.Documentation in shape using (OasLikeCreativeWorkParser.parse(_, shape.id)))
       map.key("xml", AnyShapeModel.XMLSerialization in shape using XMLSerializerParser.parse(shape.name.value()))
 
       map.key(
