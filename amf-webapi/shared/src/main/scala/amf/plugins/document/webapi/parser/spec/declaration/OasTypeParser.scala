@@ -509,24 +509,24 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   trait CommonScalarParsingLogic {
     def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): TypeDef = {
-      map.key("pattern", ScalarShapeModel.Pattern in shape)
-      map.key("minLength", ScalarShapeModel.MinLength in shape)
-      map.key("maxLength", ScalarShapeModel.MaxLength in shape)
-
-      setValue("minimum", map, ScalarShapeModel.Minimum, shape)
-      setValue("maximum", map, ScalarShapeModel.Maximum, shape)
-
-      if (version == JSONSchemaDraft7SchemaVersion) {
-        parseNumericExclusive(map, shape)
-      } else {
-        map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
-        map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
+      typeDef match {
+        case TypeDef.StrType | TypeDef.FileType =>
+          map.key("pattern", ScalarShapeModel.Pattern in shape)
+          map.key("minLength", ScalarShapeModel.MinLength in shape)
+          map.key("maxLength", ScalarShapeModel.MaxLength in shape)
+        case n if n.isNumber =>
+          setValue("minimum", map, ScalarShapeModel.Minimum, shape)
+          setValue("maximum", map, ScalarShapeModel.Maximum, shape)
+          map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
+          if (version == JSONSchemaDraft7SchemaVersion) {
+            parseNumericExclusive(map, shape)
+          } else {
+            map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
+            map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
+          }
+        case _ => // Nothing to do
       }
-      map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
-
       ScalarFormatType(shape, typeDef).parse(map)
-//      shape.set(ScalarShapeModel.Repeat, value = false)
-
     }
 
     private def parseNumericExclusive(map: YMap, shape: Shape): Unit = {
