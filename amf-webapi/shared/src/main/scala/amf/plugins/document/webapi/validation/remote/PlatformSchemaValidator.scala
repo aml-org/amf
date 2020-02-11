@@ -126,7 +126,7 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
         "application/json",
         SyamlParsedDocument(
           document = new JsonSchemaValidationFragmentEmitter(dataType)(
-            JsonSchemaEmitterContext(dataType.errorHandler(), new ShapeRenderOptions().withoutDocumentation))
+            new JsonSchemaEmitterContext(dataType.errorHandler(), new ShapeRenderOptions().withoutDocumentation))
             .emitFragment())
       )
 

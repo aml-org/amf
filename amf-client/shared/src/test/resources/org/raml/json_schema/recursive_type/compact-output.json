@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "c1": {
+          "$ref": "#/definitions/B"
+        }
+      }
+    },
+    "A": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "a1": {
+          "$ref": "#/definitions/root"
+        }
+      }
+    },
+    "B": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/A"
+      }
+    }
+  }
+}
