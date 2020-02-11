@@ -25,7 +25,6 @@ class RamlCompatibilityPipeline(override val eh: ErrorHandler) extends Resolutio
     new EscapeTypeNames(),
     new MakeRequiredFieldImplicitForOptionalProperties(),
     new ResolveResponseAndParameterDeclarations(),
-    new ResolveAdditionalProperties(),
     new ResolveLinksWithNonDeclaredTargets()
   )
 
