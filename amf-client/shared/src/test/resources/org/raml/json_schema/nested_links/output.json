@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "internalRef1"
+      ],
+      "properties": {
+        "internalRef1": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "a",
+            "b"
+          ],
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "b": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{AmfArray, AmfScalar, RecursiveShape, Shape}
 import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.parser.{Annotations, Value}
+import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.webapi.annotations.ParsedJSONSchema
 import amf.plugins.document.webapi.parser.RamlShapeTypeBeautifier
 import amf.plugins.domain.shapes.metamodel._
@@ -416,6 +417,7 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
         finalMinShapes
       }
 
+    avoidDuplicatedIds(newUnionItems)
     baseUnion.fields.setWithoutId(UnionShapeModel.AnyOf,
                                   AmfArray(newUnionItems),
                                   baseUnion.fields.getValue(UnionShapeModel.AnyOf).annotations)
@@ -427,6 +429,16 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
 
     baseUnion
   }
+
+  private def avoidDuplicatedIds(newUnionItems: Seq[Shape]): Unit =
+    newUnionItems.groupBy(_.id).foreach {
+      case (_, shapes) if shapes.size > 1 =>
+        val counter = new IdCounter()
+        shapes.foreach { shape =>
+          shape.id = counter.genId(shape.id)
+        }
+      case _ =>
+    }
 
   protected def computeMinUnionNode(baseUnion: UnionShape, superNode: NodeShape): Shape = {
     val unionContext: NormalizationContext = UnionErrorHandler.wrapContext(context)
