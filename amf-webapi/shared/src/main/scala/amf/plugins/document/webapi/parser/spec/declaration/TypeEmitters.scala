@@ -48,12 +48,11 @@ import scala.collection.mutable.ListBuffer
 case class RamlNamedTypeEmitter(shape: AnyShape,
                                 ordering: SpecOrdering,
                                 references: Seq[BaseUnit] = Nil,
-                                typesEmitter: (
-                                    AnyShape,
-                                    SpecOrdering,
-                                    Option[AnnotationsEmitter],
-                                    Seq[Field],
-                                    Seq[BaseUnit]) => RamlTypePartEmitter)(implicit spec: SpecEmitterContext)
+                                typesEmitter: (AnyShape,
+                                               SpecOrdering,
+                                               Option[AnnotationsEmitter],
+                                               Seq[Field],
+                                               Seq[BaseUnit]) => RamlTypePartEmitter)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimizacion, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
@@ -180,10 +179,8 @@ case class RamlExternalSourceEmitter(shape: Shape with ShapeHelpers, references:
   override def position(): Position = pos(shape.annotations)
 }
 
-case class Raml10TypeEmitter(shape: Shape,
-                             ordering: SpecOrdering,
-                             ignored: Seq[Field] = Nil,
-                             references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext) {
+case class Raml10TypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
       case _
@@ -556,9 +553,11 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
 
     fs.entry(NodeShapeModel.AdditionalPropertiesSchema)
       .map(
-        f =>
-          result += OasEntryShapeEmitter("additionalProperties".asRamlAnnotation, f, ordering, references)(
-            amf.plugins.document.webapi.parser.spec.toOas(spec)))
+        f => {
+          val shape = f.value.value.asInstanceOf[Shape]
+          result += RamlTypeEntryEmitter("additionalProperties".asRamlAnnotation, shape, ordering, references)
+        }
+      )
 
     fs.entry(NodeShapeModel.Discriminator).map(f => result += RamlScalarEmitter("discriminator", f))
     fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += RamlScalarEmitter("discriminatorValue", f))
@@ -2251,10 +2250,8 @@ case class OasScalarShapeEmitter(scalar: ScalarShape,
   }
 }
 
-case class OasFileShapeEmitter(scalar: FileShape,
-                               ordering: SpecOrdering,
-                               references: Seq[BaseUnit],
-                               isHeader: Boolean)(override implicit val spec: OasSpecEmitterContext)
+case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit], isHeader: Boolean)(
+    override implicit val spec: OasSpecEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 

@@ -279,9 +279,10 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
       case FileType =>
         Some(FileShape(ast).withName(name, Annotations()))
       case _: ScalarType =>
-        Some(ScalarShape(ast)
-          .withName(name, Annotations())
-          .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
+        Some(
+          ScalarShape(ast)
+            .withName(name, Annotations())
+            .set(ScalarShapeModel.DataType, AmfScalar(XsdTypeDefMapping.xsd(defaultType)), Annotations() += Inferred()))
       case AnyType =>
         Some(AnyShape(ast).withName(name, Annotations()).add(Inferred()))
       case _ =>
@@ -660,10 +661,9 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
           val refTuple = ctx.link(node) match {
             case Left(key) =>
               (key,
-               ctx.declarations.findType(
-                 key,
-                 SearchScope.Fragments,
-                 Some((s: String) => ctx.eh.violation(InvalidFragmentType, shape.id, s, node))))
+               ctx.declarations.findType(key,
+                                         SearchScope.Fragments,
+                                         Some((s: String) => ctx.eh.violation(InvalidFragmentType, shape.id, s, node))))
             case _ =>
               val text = node.as[YScalar].text
               (text, ctx.declarations.findType(text, SearchScope.Named))
@@ -964,10 +964,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
               shape.setArray(ShapeModel.Xone, nodes, Annotations(entry.value))
 
             case _ =>
-              ctx.eh.violation(InvalidXoneType,
-                               shape.id,
-                               "Xone constraints are built from multiple shape nodes",
-                               entry)
+              ctx.eh.violation(InvalidXoneType, shape.id, "Xone constraints are built from multiple shape nodes", entry)
           }
         }
       )
@@ -1349,8 +1346,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         Annotations(node),
         reference,
         fatherMap.map(m =>
-          (resolvedKey: Option[String]) =>
-            ShapeExtensionParser(shape, m, ctx, typeInfo, overrideSyntax = resolvedKey)),
+          (resolvedKey: Option[String]) => ShapeExtensionParser(shape, m, ctx, typeInfo, overrideSyntax = resolvedKey)),
         Some((k: String) =>
           if (shape.fields.exists(LinkableElementModel.TargetId)) shape.set(LinkableElementModel.TargetId, k))
       )
@@ -1394,9 +1390,12 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       }
       map.key("additionalProperties", (NodeShapeModel.Closed in shape).negated.explicit)
       map.key("additionalProperties".asRamlAnnotation).foreach { entry =>
-        OasTypeParser(entry, s => s.adopted(shape.id))(toOas(ctx)).parse().foreach { s =>
-          shape.set(NodeShapeModel.AdditionalPropertiesSchema, s, Annotations(entry))
-        }
+        ctx.factory
+          .typeParser(entry, s => s.adopted(shape.id), true, defaultType)
+          .parse()
+          .foreach { parsed =>
+            shape.set(NodeShapeModel.AdditionalPropertiesSchema, parsed, Annotations(entry))
+          }
       }
 
       map.key("discriminator", (NodeShapeModel.Discriminator in shape).allowingAnnotations)
