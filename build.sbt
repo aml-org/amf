@@ -132,7 +132,7 @@ lazy val client = crossProject(JSPlatform, JVMPlatform)
   .settings(settings)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "org.reflections" % "reflections" % "0.9.11",
+    libraryDependencies += "org.reflections" % "reflections" % "0.9.12",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
     libraryDependencies += "org.topbraid"           % "shacl"                   % "1.3.0",
