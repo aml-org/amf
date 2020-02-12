@@ -11,7 +11,7 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Oas20Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.client.ParsingOptions
@@ -31,7 +31,6 @@ import amf.plugins.document.Vocabularies
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
-import org.yaml.parser.JsonParser
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -42,6 +41,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val banking       = "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml"
   private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
   private val oas3          = "file://amf-client/shared/src/test/resources/api/oas3.json"
+  private val async2        = "file://amf-client/shared/src/test/resources/api/async2.yaml"
   private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
   private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
@@ -236,6 +236,16 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new Oas30Renderer().generateString(unit).asFuture
     } yield {
       output should include("openIdConnectUrl")
+    }
+  }
+
+  test("Render / parse test Async 2.0") {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Async20Parser().parseFileAsync(async2).asFuture
+    } yield {
+      assert(unit.isInstanceOf[Document])
+      assert(unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].name.value() == "Correlation ID Example")
     }
   }
 
