@@ -1,0 +1,32 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Dropbox API",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://api.dropbox.com/{version}",
+      "variables": {
+        "version": {
+          "default": ""
+        }
+      }
+    }
+  ],
+  "paths": {},
+  "components": {
+    "securitySchemes": {
+      "oauth_2_0": {
+        "type": "oauth2",
+        "description": "Dropbox supports OAuth 2.0 for authenticating all API requests.\n",
+        "flows": {
+          "null": {
+            "authorizationUrl": "https://www.dropbox.com/1/oauth2/authorize",
+            "tokenUrl": "https://api.dropbox.com/1/oauth2/token"
+          }
+        }
+      }
+    }
+  }
+}
