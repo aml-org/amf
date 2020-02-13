@@ -1,0 +1,19 @@
+#%RAML 1.0
+title: Sample API
+types:
+  longNumber:
+    type: number
+  input:
+    type: object
+    properties:
+      in:
+        type: longNumber
+/test:
+  post:
+    body:
+      application/json:
+        type: input
+        example: |
+          {
+            "in": 22337203685477999090
+          }

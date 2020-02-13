@@ -1,0 +1,20 @@
+#%RAML 1.0
+securitySchemes:
+  basic:
+    type: Basic Authentication
+    description: |
+      This API supports Basic Authentication.
+  custom_auth:
+    type: x-custom
+    settings:
+      custom: Setting
+title: Dropbox API
+version: "1.0"
+/anEndpoint:
+  get:
+    responses:
+      "200":
+        description: asdasdasdasd
+  securedBy:
+    - basic
+    - custom_auth

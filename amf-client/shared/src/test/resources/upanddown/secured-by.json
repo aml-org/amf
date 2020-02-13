@@ -40,19 +40,17 @@
   "paths": {
     "/users": {
       "get": {
+        "responses": {},
         "security": [
           {
             "oauth_2_0": []
-          },
-          {
-            "oauth_1_0": []
           }
-        ],
-        "responses": {}
+        ]
       }
     },
     "/users/{userid}/gists": {
       "get": {
+        "responses": {},
         "security": [
           {
             "oauth_2_0": [
@@ -60,8 +58,7 @@
               "read:pets"
             ]
           }
-        ],
-        "responses": {}
+        ]
       }
     }
   },

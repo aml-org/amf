@@ -47,8 +47,7 @@ case class OasDeclarationsEmitter(declares: Seq[DomainElement], ordering: SpecOr
       result += AbstractDeclarationsEmitter("traits".asOasExtension, declarations.traits.values.toSeq, ordering, Nil)
 
     if (declarations.securitySchemes.nonEmpty)
-      result += OasSecuritySchemesEmitters(declarations.securitySchemes.values.toSeq, ordering)
-
+      result += spec.factory.securitySchemesEmitters(declarations.securitySchemes.values.toSeq, ordering)
     val oasParams = declarations.parameters.values.map(OasParameter(_)) ++ declarations.payloads.values
       .map(OasParameter(_))
     if (oasParams.nonEmpty)

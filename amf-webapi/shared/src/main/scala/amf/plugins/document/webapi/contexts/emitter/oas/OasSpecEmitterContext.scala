@@ -19,7 +19,7 @@ import amf.plugins.document.webapi.parser.{
   JsonSchemaTypeDefMatcher,
   OasTypeDefStringValueMatcher
 }
-import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement}
+import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, WebApi}
 import org.yaml.model.YDocument.PartBuilder
 
@@ -48,6 +48,8 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
 
   override def annotationTypeEmitter: (CustomDomainProperty, SpecOrdering) => AnnotationTypeEmitter =
     OasAnnotationTypeEmitter.apply
+
+  def securitySchemesEmitters(securitySchemes: Seq[SecurityScheme], ordering: SpecOrdering): OasSecuritySchemesEmitters
 
   def serversEmitter(api: WebApi, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit]): OasServersEmitter
 
@@ -96,6 +98,10 @@ class Oas2SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends O
                               ordering: SpecOrdering,
                               references: Seq[BaseUnit]): OasServersEmitter =
     Oas3EndPointServersEmitter(endpoint, f, ordering, references)(spec)
+
+  override def securitySchemesEmitters(securitySchemes: Seq[SecurityScheme],
+                                       ordering: SpecOrdering): OasSecuritySchemesEmitters =
+    new Oas2SecuritySchemesEmitters(securitySchemes, ordering)(spec)
 }
 
 case class CompactJsonSchemaEmitterFactory()(override implicit val spec: CompactJsonSchemaEmitterContext)
@@ -133,6 +139,10 @@ case class Oas3SpecEmitterFactory(override val spec: OasSpecEmitterContext) exte
                               ordering: SpecOrdering,
                               references: Seq[BaseUnit]): OasServersEmitter =
     Oas3EndPointServersEmitter(endpoint, f, ordering, references)(spec)
+
+  override def securitySchemesEmitters(securitySchemes: Seq[SecurityScheme],
+                                       ordering: SpecOrdering): OasSecuritySchemesEmitters =
+    new Oas3SecuritySchemesEmitters(securitySchemes, ordering)(spec)
 }
 
 abstract class OasSpecEmitterContext(eh: ErrorHandler,
