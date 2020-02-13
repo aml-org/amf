@@ -24,6 +24,7 @@ import amf.plugins.domain.shapes.models.{CreativeWork, NodeShape}
 import amf.plugins.domain.webapi.metamodel._
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import amf.validations.ParserSideValidations._
@@ -168,11 +169,27 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
   }
 
   protected def parseSecuritySchemeDeclarationsFromKey(key: String, map: YMap, parent: String): Unit = {
+
+    def validateSchemeType(scheme: SecurityScheme): Unit = {
+      val schemeType = scheme.`type`
+      if (schemeType.nonEmpty && !OasSecuritySchemeTypeMapping.validTypesFor(ctx.vendor).contains(schemeType.value()))
+        ctx.eh.violation(
+          InvalidSecuritySchemeType,
+          scheme.id,
+          Some(SecuritySchemeModel.Type.value.iri()),
+          s"'$schemeType' is not a valid security scheme type in ${ctx.vendor.name}",
+          scheme.`type`.annotations().find(classOf[LexicalInformation]),
+          Some(ctx.rootContextDocument)
+        )
+    }
+
+    val isExtension = key.startsWith("x-amf-")
+
     map.key(
       key,
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          ctx.declarations += ctx.factory
+          val securityScheme: SecurityScheme = ctx.factory
             .securitySchemeParser(
               entry,
               (scheme) => {
@@ -185,6 +202,8 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
             )
             .parse()
             .add(DeclaredElement())
+          if (!isExtension) validateSchemeType(securityScheme)
+          ctx.declarations += securityScheme
         }
       }
     )
@@ -249,25 +268,11 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       api.set(WebApiModel.Tags, AmfArray(tags, Annotations(entry.value)), Annotations(entry))
     })
 
-    map.key(
-      "security",
-      entry => {
-        entry.value.tagType match {
-          case YType.Seq =>
-            val idCounter = new IdCounter()
-            val securedBy =
-              entry.value
-                .as[Seq[YNode]]
-                .map(s => OasLikeSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
-                .collect { case Some(s) => s }
-            api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)), Annotations(entry))
-          case _ =>
-            ctx.eh.violation(InvalidSecurityRequirementsSeq,
-                             entry.value,
-                             "'security' must be an array of security requirement object")
-        }
-      }
-    )
+    map.key("security", entry => {
+      api.set(WebApiModel.Security, AmfArray(Seq(), Annotations(entry.value)), Annotations(entry))
+      parseSecurity(entry, api)
+    })
+    map.key("security".asOasExtension, entry => { parseSecurity(entry, api) })
 
     val documentations = ListBuffer[CreativeWork]()
 
@@ -299,6 +304,23 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
     ctx.closedShape(api.id, map, "webApi")
 
     api
+  }
+
+  def parseSecurity(entry: YMapEntry, api: WebApi) = {
+    entry.value.tagType match {
+      case YType.Seq =>
+        val idCounter = new IdCounter()
+        val securedBy =
+          entry.value
+            .as[Seq[YNode]]
+            .map(s => OasLikeSecurityRequirementParser(s, api.withSecurity, idCounter).parse()) // todo when generating id for security requirements webapi id is null
+            .collect { case Some(s) => s }
+      //api.set(WebApiModel.Security, AmfArray(securedBy, Annotations(entry.value)))
+      case _ =>
+        ctx.eh.violation(InvalidSecurityRequirementsSeq,
+                         entry.value,
+                         "'security' must be an array of security requirement object")
+    }
   }
 
   private def parseEndpoints(api: WebApi, entry: YMapEntry) = {

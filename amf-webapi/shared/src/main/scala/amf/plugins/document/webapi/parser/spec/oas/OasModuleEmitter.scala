@@ -138,9 +138,10 @@ class OasFragmentEmitter(fragment: Fragment)(implicit override val spec: OasSpec
     override val header: EntryEmitter = OasHeaderEmitter(OasHeader.Oas20SecurityScheme)
 
     val emitters: Seq[EntryEmitter] =
-      OasSecuritySchemeEmitter(securityScheme.encodes,
-                               OasSecuritySchemeTypeMapping.fromText(securityScheme.encodes.`type`.value()),
-                               ordering).emitters()
+      new OasSecuritySchemeEmitter(
+        securityScheme.encodes,
+        OasSecuritySchemeTypeMapping.mapsTo(spec.vendor, securityScheme.encodes.`type`.value()),
+        ordering).emitters()
   }
 
   case class NamedExampleFragmentEmitter(namedExample: NamedExampleFragment, ordering: SpecOrdering)

@@ -36,6 +36,11 @@ class RamlBodyPayloadValidationTest extends ApiShapePayloadValidationTest {
         conforms = true
       ),
       Fixture("Required pattern property", "required-pattern-prop.raml", "element-2: 2", conforms = true),
+      Fixture("Big number payload",
+              "big-number-payload.raml",
+              "{\"in\": 22337203685477999090}",
+              conforms = true,
+              Option("application/json")),
       Fixture("Invalid required pattern property",
               "required-pattern-prop.raml",
               "invalid-element-2: 2",
@@ -71,7 +76,11 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
   protected val basePath: String
 
   // todo: transform fixture to have more than one payload by api, so we don't need to parse multiple times same api.
-  protected case class Fixture(name: String, api: String, payload: String, conforms: Boolean)
+  protected case class Fixture(name: String,
+                               api: String,
+                               payload: String,
+                               conforms: Boolean,
+                               mediaType: Option[String] = None)
 
   protected val hint: Hint
 
@@ -81,18 +90,21 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
 
   protected def fixtureList: Seq[Fixture]
 
-  protected def validate(api: String, payload: String): Future[AMFValidationReport] =
+  protected def validate(api: String, payload: String, mediaType: Option[String]): Future[AMFValidationReport] =
     for {
-      validation <- Validation(platform)
+      _ <- Validation(platform)
       model <- AMFCompiler(api, platform, hint, eh = DefaultParserErrorHandler.withRun())
         .build()
         .map(transform)
       result <- {
         val shape = findShape(model.asInstanceOf[Document])
-        PayloadValidationPluginsHandler.validateWithGuessing(shape,
-                                                             payload,
-                                                             SeverityLevels.VIOLATION,
-                                                             validationMode = validationMode)
+        mediaType
+          .map(mediaTypeVal => {
+            PayloadValidationPluginsHandler
+              .validate(shape, mediaTypeVal, payload, SeverityLevels.VIOLATION, validationMode = validationMode)
+          })
+          .getOrElse(PayloadValidationPluginsHandler
+            .validateWithGuessing(shape, payload, SeverityLevels.VIOLATION, validationMode = validationMode))
       }
     } yield {
       result
@@ -100,7 +112,7 @@ trait ApiShapePayloadValidationTest extends AsyncFunSuite with Matchers with Pla
 
   fixtureList.foreach { f =>
     test("Test " + f.name) {
-      validate(basePath + f.api, f.payload).map(_.conforms should be(f.conforms))
+      validate(basePath + f.api, f.payload, f.mediaType).map(_.conforms should be(f.conforms))
     }
   }
 
