@@ -87,7 +87,7 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
     )
 
     map.key("security", entry => {
-      operation.set(WebApiModel.Security, AmfArray(Seq(), Annotations(entry.value)))
+      operation.set(WebApiModel.Security, AmfArray(Seq(), Annotations(entry.value)), Annotations(entry))
       parseSecurity(operation, entry)
     })
 
@@ -124,10 +124,9 @@ abstract class OasOperationParser(entry: YMapEntry, producer: String => Operatio
   private def parseSecurity(operation: Operation, entry: YMapEntry): Unit = {
     val idCounter = new IdCounter()
     // TODO check for empty array for resolution ?
-    val securedBy = entry.value
+    entry.value
       .as[Seq[YNode]]
-      .map(s => OasLikeSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
-      .collect { case Some(s) => s }
+      .foreach(s => OasLikeSecurityRequirementParser(s, operation.withSecurity, idCounter).parse())
   }
 }
 
