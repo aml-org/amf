@@ -48,12 +48,11 @@ import scala.collection.mutable.ListBuffer
 case class RamlNamedTypeEmitter(shape: AnyShape,
                                 ordering: SpecOrdering,
                                 references: Seq[BaseUnit] = Nil,
-                                typesEmitter: (
-                                    AnyShape,
-                                    SpecOrdering,
-                                    Option[AnnotationsEmitter],
-                                    Seq[Field],
-                                    Seq[BaseUnit]) => RamlTypePartEmitter)(implicit spec: SpecEmitterContext)
+                                typesEmitter: (AnyShape,
+                                               SpecOrdering,
+                                               Option[AnnotationsEmitter],
+                                               Seq[Field],
+                                               Seq[BaseUnit]) => RamlTypePartEmitter)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val name = shape.name.option().getOrElse("schema") // this used to throw an exception, but with the resolution optimizacion, we use the father shape, so it could have not name (if it's from an endpoint for example, and you want to write a new single shape, like a json schema)
@@ -103,9 +102,12 @@ case class Raml10TypePartEmitter(shape: Shape,
                                  references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
     extends RamlTypePartEmitter(shape, ordering, annotations, ignored, references) {
 
-  override def emitters: Seq[Emitter] =
+  override def emitters: Seq[Emitter] = {
+    val annotationEmitters = annotations.map(_.emitters).getOrElse(Nil)
     ordering.sorted(
-      Raml10TypeEmitter(shape, ordering, ignored, references).emitters() ++ annotations.map(_.emitters).getOrElse(Nil))
+      Raml10TypeEmitter(shape, ordering, ignored, references, forceEntry = annotationEmitters.nonEmpty)
+        .emitters() ++ annotationEmitters)
+  }
 
 }
 
@@ -183,7 +185,8 @@ case class RamlExternalSourceEmitter(shape: Shape with ShapeHelpers, references:
 case class Raml10TypeEmitter(shape: Shape,
                              ordering: SpecOrdering,
                              ignored: Seq[Field] = Nil,
-                             references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext) {
+                             references: Seq[BaseUnit],
+                             forceEntry: Boolean = false)(implicit spec: RamlSpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
       case _
@@ -206,6 +209,8 @@ case class Raml10TypeEmitter(shape: Shape,
         spec.externalLink(shape, references) match {
           case Some(fragment: EncodesModel) =>
             Seq(spec.externalReference(shape.linkLabel.option().getOrElse(fragment.location().get), shape))
+          case _ if forceEntry =>
+            Seq(spec.localReferenceEntryEmitter("type", shape))
           case _ =>
             Seq(spec.localReference(shape))
         }
@@ -556,9 +561,11 @@ case class RamlNodeShapeEmitter(node: NodeShape, ordering: SpecOrdering, referen
 
     fs.entry(NodeShapeModel.AdditionalPropertiesSchema)
       .map(
-        f =>
-          result += OasEntryShapeEmitter("additionalProperties".asRamlAnnotation, f, ordering, references)(
-            amf.plugins.document.webapi.parser.spec.toOas(spec)))
+        f => {
+          val shape = f.value.value.asInstanceOf[Shape]
+          result += RamlTypeEntryEmitter("additionalProperties".asRamlAnnotation, shape, ordering, references)
+        }
+      )
 
     fs.entry(NodeShapeModel.Discriminator).map(f => result += RamlScalarEmitter("discriminator", f))
     fs.entry(NodeShapeModel.DiscriminatorValue).map(f => result += RamlScalarEmitter("discriminatorValue", f))
@@ -2251,10 +2258,8 @@ case class OasScalarShapeEmitter(scalar: ScalarShape,
   }
 }
 
-case class OasFileShapeEmitter(scalar: FileShape,
-                               ordering: SpecOrdering,
-                               references: Seq[BaseUnit],
-                               isHeader: Boolean)(override implicit val spec: OasSpecEmitterContext)
+case class OasFileShapeEmitter(scalar: FileShape, ordering: SpecOrdering, references: Seq[BaseUnit], isHeader: Boolean)(
+    override implicit val spec: OasSpecEmitterContext)
     extends OasAnyShapeEmitter(scalar, ordering, references, isHeader = isHeader)
     with OasCommonOASFieldsEmitter {
 

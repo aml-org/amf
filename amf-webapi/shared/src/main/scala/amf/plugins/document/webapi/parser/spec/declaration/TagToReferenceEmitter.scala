@@ -19,14 +19,21 @@ import org.yaml.model.YType
 /**
   *
   */
-case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String], reference: Seq[BaseUnit])(
-    implicit override val spec: OasSpecEmitterContext)
+case class OasTagToReferenceEmitter(
+    target: DomainElement,
+    label: Option[String],
+    reference: Seq[BaseUnit]
+)(implicit override val spec: OasSpecEmitterContext)
     extends OasSpecEmitter
     with TagToReferenceEmitter {
   def emit(b: PartBuilder): Unit = {
     follow() match {
       case s: Shape if s.annotations.contains(classOf[DeclaredElement]) =>
-        spec.ref(b, OasDefinitions.appendDefinitionsPrefix(referenceLabel, Some(spec.vendor)))
+        spec.ref(
+          b,
+          OasDefinitions
+            .appendDefinitionsPrefix(referenceLabel, Some(spec.vendor))
+        )
       case p: Parameter if p.annotations.contains(classOf[DeclaredElement]) =>
         spec.ref(b, OasDefinitions.appendParameterDefinitionsPrefix(referenceLabel))
       case p: Payload if p.annotations.contains(classOf[DeclaredElement]) =>
@@ -78,6 +85,9 @@ case class RamlTagToReferenceEmitter(target: DomainElement, label: Option[String
 
   override def position(): Position = pos(target.annotations)
 }
+
+class RamlLocalReferenceEntryEmitter(override val key: String, reference: Linkable)
+    extends EntryPartEmitter(key, RamlLocalReferenceEmitter(reference))
 
 case class RamlLocalReferenceEmitter(reference: Linkable) extends PartEmitter {
   override def emit(b: PartBuilder): Unit = reference.linkLabel.option() match {

@@ -30,7 +30,10 @@ class ResponseExamplesResolutionStage()(override implicit val errorHandler: Erro
         response.fields.removeField(ResponseModel.Examples)
         examplesByMediaType.foreach {
           case (mediaType, example) =>
-            response.payloads.find(_.mediaType.value() == mediaType) match {
+            val mediaTypeIn = (mediaTypes: Seq[String]) => (p: Payload) => {
+              mediaTypes.contains(p.mediaType.value())
+            }
+            response.payloads.find(mediaTypeIn(Seq(mediaType, "*/*"))) match {
               case Some(p) =>
                 p.schema match {
                   case shape: AnyShape =>

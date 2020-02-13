@@ -1,0 +1,31 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "responses": {
+    "my-response": {
+      "description": "this is a default response",
+      "schema": {
+        "$ref": "#/definitions/my-type"
+      }
+    }
+  },
+  "paths": {
+    "/my-endpoint": {
+      "get": {
+        "responses": {
+          "200": {
+            "$ref": "#/responses/my-response"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "my-type": {
+      "type": "string"
+    }
+  }
+}

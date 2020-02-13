@@ -1,0 +1,60 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "paths": {},
+  "definitions": {
+    "AllOf": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/AnotherObject"
+        },
+        {
+          "$ref": "#/definitions/BaseObject/properties/propertyA"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "propertyBRef": {
+              "$ref": "#/definitions/BaseObject/properties/propertyB"
+            }
+          }
+        }
+      ]
+    },
+    "Object": {
+      "type": "object",
+      "properties": {
+        "propertyARef": {
+          "$ref": "#/definitions/BaseObject/properties/propertyA"
+        }
+      }
+    },
+    "Array": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/BaseObject/properties/propertyA"
+      }
+    },
+    "BaseObject": {
+      "properties": {
+        "propertyA": {
+          "type": "string"
+        },
+        "propertyB": {
+          "type": "string"
+        }
+      }
+    },
+    "AnotherObject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

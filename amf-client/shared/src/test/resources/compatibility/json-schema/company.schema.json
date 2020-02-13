@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "http://example.com/company.schema.json",
+  "title": "Company",
+  "description": "This is a company schema",
+  "type": "object",
+  "properties": {
+    "ceo": {
+      "$ref": "./person.schema.json#"
+    }
+  }
+}

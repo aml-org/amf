@@ -1,0 +1,40 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API",
+    "version": "1.0"
+  },
+  "paths": {},
+  "definitions": {
+    "AllOfAdditionalProps": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "PropertyA": {
+            "$ref": "#/definitions/ChildA"
+          },
+          "PropertyB": {
+            "$ref": "#/definitions/ChildB"
+          }
+        }
+      }
+    },
+    "ChildA": {
+      "type": "object",
+      "properties": {
+        "idA": {
+          "type": "string"
+        }
+      }
+    },
+    "ChildB": {
+      "type": "object",
+      "properties": {
+        "idB": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
