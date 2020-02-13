@@ -102,9 +102,12 @@ case class Raml10TypePartEmitter(shape: Shape,
                                  references: Seq[BaseUnit])(implicit spec: RamlSpecEmitterContext)
     extends RamlTypePartEmitter(shape, ordering, annotations, ignored, references) {
 
-  override def emitters: Seq[Emitter] =
+  override def emitters: Seq[Emitter] = {
+    val annotationEmitters = annotations.map(_.emitters).getOrElse(Nil)
     ordering.sorted(
-      Raml10TypeEmitter(shape, ordering, ignored, references).emitters() ++ annotations.map(_.emitters).getOrElse(Nil))
+      Raml10TypeEmitter(shape, ordering, ignored, references, forceEntry = annotationEmitters.nonEmpty)
+        .emitters() ++ annotationEmitters)
+  }
 
 }
 
@@ -179,8 +182,11 @@ case class RamlExternalSourceEmitter(shape: Shape with ShapeHelpers, references:
   override def position(): Position = pos(shape.annotations)
 }
 
-case class Raml10TypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[Field] = Nil, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext) {
+case class Raml10TypeEmitter(shape: Shape,
+                             ordering: SpecOrdering,
+                             ignored: Seq[Field] = Nil,
+                             references: Seq[BaseUnit],
+                             forceEntry: Boolean = false)(implicit spec: RamlSpecEmitterContext) {
   def emitters(): Seq[Emitter] = {
     shape match {
       case _
@@ -203,6 +209,8 @@ case class Raml10TypeEmitter(shape: Shape, ordering: SpecOrdering, ignored: Seq[
         spec.externalLink(shape, references) match {
           case Some(fragment: EncodesModel) =>
             Seq(spec.externalReference(shape.linkLabel.option().getOrElse(fragment.location().get), shape))
+          case _ if forceEntry =>
+            Seq(spec.localReferenceEntryEmitter("type", shape))
           case _ =>
             Seq(spec.localReference(shape))
         }

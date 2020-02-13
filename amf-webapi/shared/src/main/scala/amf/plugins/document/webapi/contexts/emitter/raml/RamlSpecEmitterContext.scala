@@ -320,6 +320,9 @@ abstract class RamlSpecEmitterContext(override val eh: ErrorHandler,
 
   override def localReference(reference: Linkable): PartEmitter = RamlLocalReferenceEmitter(reference)
 
+  def localReferenceEntryEmitter(key: String, reference: Linkable): EntryEmitter =
+    new RamlLocalReferenceEntryEmitter(key, reference)
+
   def externalReference(location: String, reference: Linkable): PartEmitter =
     new PartEmitter {
       override def emit(b: PartBuilder): Unit =
