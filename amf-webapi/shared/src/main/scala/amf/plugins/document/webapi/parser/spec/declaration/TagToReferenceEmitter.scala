@@ -41,20 +41,19 @@ case class OasTagToReferenceEmitter(target: DomainElement, label: Option[String]
     }
   }
 
-  /** Follow links. */
-  private def follow(): DomainElement = {
-    target match {
+  /** Follow links until first declaration or last element in chain */
+  private def follow(): DomainElement = follow(target)
+
+  @scala.annotation.tailrec
+  private def follow(element: DomainElement, seenLinks: Seq[String] = Seq()): DomainElement = {
+    element match {
       case s: Linkable if s.isLink =>
         s.linkTarget match {
+          case Some(t: Linkable) if t.isLink & !t.annotations.contains(classOf[DeclaredElement]) =>
+            // If find link which is not a declaration (declarations can be links as well) follow link
+            follow(t.linkTarget.get, seenLinks :+ element.id)
           case Some(t) => t
-          case _ =>
-            spec.eh.violation(ResolutionValidation,
-                              s.id,
-                              None,
-                              s"Expected shape link target on $target",
-                              target.position(),
-                              target.location())
-            s
+          case None    => s // This is unreachable
         }
       case other => other
     }

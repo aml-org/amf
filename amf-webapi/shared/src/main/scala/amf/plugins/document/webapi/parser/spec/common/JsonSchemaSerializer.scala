@@ -2,14 +2,18 @@ package amf.plugins.document.webapi.parser.spec.common
 
 import amf.core.AMFSerializer
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{ShapeRenderOptions, SpecOrdering, EntryEmitter}
+import amf.core.emitter.{EntryEmitter, ShapeRenderOptions, SpecOrdering}
 import amf.core.model.document.Document
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.Position
 import amf.core.remote.JsonSchema
 import amf.core.services.RuntimeSerializer
-import amf.plugins.document.webapi.annotations.{JSONSchemaRoot, ParsedJSONSchema, GeneratedJSONSchema}
-import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
+import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
+import amf.plugins.document.webapi.contexts.emitter.oas.{
+  CompactJsonSchemaEmitterContext,
+  DefinitionsEmissionHelper,
+  JsonSchemaEmitterContext
+}
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.oas.OasDeclarationsEmitter
 import amf.plugins.domain.shapes.models.AnyShape
@@ -61,7 +65,7 @@ object JsonSchemaEntry extends EntryEmitter {
   override def position(): Position = Position.ZERO
 }
 
-case class JsonSchemaEmitter(root: AnyShape,
+case class JsonSchemaEmitter(root: Shape,
                              declarations: Seq[DomainElement],
                              ordering: SpecOrdering = SpecOrdering.Lexical,
                              options: ShapeRenderOptions) {
@@ -74,16 +78,22 @@ case class JsonSchemaEmitter(root: AnyShape,
   }
 
   private val jsonSchemaRefEntry = new EntryEmitter {
-    override def emit(b: EntryBuilder): Unit =
-      b.entry("$ref", OasDefinitions.appendDefinitionsPrefix(root.name.value()))
+    override def emit(b: EntryBuilder): Unit = {
+      val name =
+        if (options.isWithCompactedEmission) DefinitionsEmissionHelper.normalizeName(root.name.option())
+        else root.name.value()
+      b.entry("$ref", OasDefinitions.appendDefinitionsPrefix(name))
+    }
 
     override def position(): Position = Position.ZERO
   }
 
-  private def sortedTypeEntries =
-    ordering.sorted(OasDeclarationsEmitter(declarations, SpecOrdering.Lexical, Seq())(JsonSchemaEmitterContext(
-      options.errorHandler,
-      options)).emitters) // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
+  private def sortedTypeEntries = {
+    val context =
+      if (options.isWithCompactedEmission) CompactJsonSchemaEmitterContext(options.errorHandler, options)
+      else new JsonSchemaEmitterContext(options.errorHandler, options)
+    ordering.sorted(OasDeclarationsEmitter(declarations, SpecOrdering.Lexical, Seq())(context).emitters)
+  } // spec 3 context? or 2? set from outside, from vendor?? support two versions of jsonSchema??
 
   private val emitters = Seq(JsonSchemaEntry, jsonSchemaRefEntry) ++ sortedTypeEntries
 }

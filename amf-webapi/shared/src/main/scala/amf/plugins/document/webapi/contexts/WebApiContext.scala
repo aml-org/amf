@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.contexts
 
+import amf.core.client.ParsingOptions
 import amf.core.model.document.{ExternalFragment, Fragment, RecursiveUnit}
 import amf.core.parser.{ParsedReference, ParserContext}
 import amf.core.remote._
@@ -23,6 +24,7 @@ import org.yaml.model._
 
 abstract class WebApiContext(val loc: String,
                              refs: Seq[ParsedReference],
+                             val options: ParsingOptions,
                              private val wrapped: ParserContext,
                              private val ds: Option[WebApiDeclarations] = None)
     extends ParserContext(loc, refs, wrapped.futureDeclarations, wrapped.eh)

@@ -218,6 +218,16 @@ object Async20Syntax extends SpecSyntax {
       "contact",
       "license",
       "version"
+    ),
+    "securityScheme" -> Set(
+      "type",
+      "description",
+      "name",
+      "in",
+      "scheme",
+      "bearerFormat",
+      "flows",
+      "openIdConnectUrl"
     )
   )
 }

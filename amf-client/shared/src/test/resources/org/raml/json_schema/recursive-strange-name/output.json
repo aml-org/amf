@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "other"
+      ],
+      "properties": {
+        "other": {
+          "type": "object",
+          "additionalProperties": true,
+          "properties": {
+            "a": {
+              "$ref": "#/definitions/root/properties/other"
+            }
+          }
+        }
+      }
+    },
+    "oth#er": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "a": {
+          "$ref": "#/definitions/oth#er"
+        }
+      }
+    }
+  }
+}

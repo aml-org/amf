@@ -225,6 +225,22 @@ class AnnotationInFieldTest extends AsyncFunSuite with CompilerTestBuilder {
     }
   }
 
+  test("test raml ReferenceTarget annotations coincides with references (invalid inclusion)") {
+    val uri =
+      "file://amf-client/shared/src/test/resources/nodes-annotations-examples/reference-targets/invalid-include/"
+    for {
+      unit <- build(s"${uri}api.raml", RamlYamlHint)
+    } yield {
+      val targets = unit.annotations.collect { case rt: ReferenceTargets => rt }
+
+      assert(targets.size == 1)
+      assert(unit.references.size == 1)
+      assert(targets.head.targetLocation == unit.references.head.id)
+
+      succeed
+    }
+  }
+
   private def assertRange(actual: amf.core.parser.Range, expected: amf.core.parser.Range) = {
     assert(actual.start.line == expected.start.line)
     assert(actual.start.column == expected.start.column)

@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/root",
+  "definitions": {
+    "root": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "internalRef1",
+        "internalRef2",
+        "externalRef1",
+        "externalRef2",
+        "otherExtRef1",
+        "otherExtRef2"
+      ],
+      "properties": {
+        "internalRef1": {
+          "type": "number"
+        },
+        "internalRef2": {
+          "type": "number"
+        },
+        "externalRef1": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "c"
+          ],
+          "properties": {
+            "c": {
+              "type": "string"
+            }
+          }
+        },
+        "externalRef2": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "c"
+          ],
+          "properties": {
+            "c": {
+              "type": "string"
+            }
+          }
+        },
+        "otherExtRef1": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "a",
+            "b"
+          ],
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "b": {
+              "type": "integer"
+            }
+          }
+        },
+        "otherExtRef2": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "a",
+            "b"
+          ],
+          "properties": {
+            "a": {
+              "type": "string"
+            },
+            "b": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  }
+}

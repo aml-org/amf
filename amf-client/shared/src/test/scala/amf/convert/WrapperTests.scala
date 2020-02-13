@@ -11,9 +11,10 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Oas20Resolver, Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
+import amf.core.client.ParsingOptions
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
 import amf.core.model.domain.{
@@ -27,9 +28,9 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Xsd
 import amf.plugins.document.Vocabularies
+import amf.plugins.domain.webapi.metamodel.WebApiModel
 import org.mulesoft.common.io.{LimitReachedException, LimitedStringBuffer}
 import org.yaml.builder.JsonOutputBuilder
-import org.yaml.parser.JsonParser
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -40,6 +41,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val banking       = "file://amf-client/shared/src/test/resources/production/raml10/banking-api/api.raml"
   private val zencoder      = "file://amf-client/shared/src/test/resources/api/zencoder.raml"
   private val oas3          = "file://amf-client/shared/src/test/resources/api/oas3.json"
+  private val async2        = "file://amf-client/shared/src/test/resources/api/async2.yaml"
   private val zencoder08    = "file://amf-client/shared/src/test/resources/api/zencoder08.raml"
   private val music         = "file://amf-client/shared/src/test/resources/production/world-music-api/api.raml"
   private val demosDialect  = "file://amf-client/shared/src/test/resources/api/dialects/eng-demos.raml"
@@ -58,6 +60,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val data_model     = "file://vocabularies/vocabularies/data_model.yaml"
   private val data_shapes    = "file://vocabularies/vocabularies/data_shapes.yaml"
   private val security_model = "file://vocabularies/vocabularies/security.yaml"
+  private val apiWithSpaces =
+    "file://amf-client/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
 
@@ -127,6 +131,62 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Node value uses unescaped strings in RAML") {
+    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
+    val doc =
+      """
+        | #%RAML 1.0
+        | title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
+        | baseUri: https://elmdv.symc.symantec.com/keybank/v1
+        | version: 1.0
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseStringAsync(doc).asFuture
+    } yield {
+      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
+  test("Node value uses unescaped strings in OAS 20 YAML") {
+    val expected = "The tag's name. This is typically a version (e.g., \"v0.0.1\")."
+    val doc =
+      """
+        | swagger: "2.0"
+        | info:
+        |   title: 'The tag''s name. This is typically a version (e.g., "v0.0.1").'
+        |   version: 1.0
+        | paths: {}
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Oas20YamlParser().parseStringAsync(doc).asFuture
+    } yield {
+      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
+  test("Node value with double \\ should be unescaped") {
+    val expected = """\\"""
+    val doc =
+      """
+        | swagger: "2.0"
+        | info:
+        |   title: "\\\\"
+        |   version: 1.0
+        | paths: {}
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Oas20YamlParser().parseStringAsync(doc).asFuture
+    } yield {
+      val webApi = unit._internal.asInstanceOf[InternalDocument].encodes
+      webApi.fields.get(WebApiModel.Name).toString shouldBe expected
+    }
+  }
+
   test("Render / parse test RAML 0.8") {
     for {
       _      <- AMF.init().asFuture
@@ -176,6 +236,16 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
       output <- new Oas30Renderer().generateString(unit).asFuture
     } yield {
       output should include("openIdConnectUrl")
+    }
+  }
+
+  test("Render / parse test Async 2.0") {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new Async20Parser().parseFileAsync(async2).asFuture
+    } yield {
+      assert(unit.isInstanceOf[Document])
+      assert(unit.asInstanceOf[Document].encodes.asInstanceOf[WebApi].name.value() == "Correlation ID Example")
     }
   }
 
@@ -1825,6 +1895,17 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     }
   }
 
+  test("Test uri references to external reference from external reference are not encoded") {
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseFileAsync(apiWithSpaces).asFuture
+    } yield {
+      val units      = unit.references().asSeq
+      val references = units.flatMap(x => x.references().asSeq)
+      (units.size + references.size) shouldBe 3
+    }
+  }
+
   test("Test JSON Schema emission without documentation") {
     val api = """#%RAML 1.0
                 |title: test json schema
@@ -1940,6 +2021,83 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     } yield {
       println(report.toString())
       assert(!report.conforms)
+    }
+  }
+
+  test("Excessive yaml anchors - payload validation") {
+    AMF.init().asFuture flatMap { _ =>
+      val validator =
+        new ScalarShape().payloadValidator("application/yaml", Environment.empty().setMaxYamlReferences(50)).asOption
+      val report = validator.get
+        .validate(
+          "application/yaml",
+          """
+          |a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
+          |b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
+          |c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
+          |""".stripMargin
+        )
+        .asFuture
+      report.map { r =>
+        assert(!r.conforms)
+        assert(r.results.asSeq.size == 1)
+        assert(r.results.asSeq.head.message == "Exceeded maximum yaml references threshold")
+      }
+    }
+  }
+
+  test("Excessive yaml anchors - raml api") {
+    val api =
+      """
+        |#%RAML 1.0
+        |title: my API
+        |types:
+        |  Foo:
+        |    examples:
+        |      a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
+        |      b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
+        |      c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
+        |""".stripMargin
+    for {
+      _    <- AMF.init().asFuture
+      unit <- new RamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
+      r    <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
+    } yield {
+      assert(!r.conforms)
+      assert(r.results.asSeq.size == 1)
+      assert(r.results.asSeq.head.message == "Exceeded maximum yaml references threshold")
+    }
+  }
+
+  test("Excessive yaml anchors - swagger api") {
+    val api =
+      """
+        |swagger: '2.0'
+        |info:
+        |  version: 1.0.0
+        |  title: test
+        |paths:
+        |  '/pets':
+        |    get:
+        |      responses:
+        |        default:
+        |          description: asd
+        |          examples:
+        |            a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
+        |            b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
+        |            c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
+        |            application/json: [*c,*c,*c,*c,*c,*c,*c,*c,*c]
+        |""".stripMargin
+    for {
+      _ <- AMF.init().asFuture
+      unit <- new Parser(Oas20.name, "application/yaml", None)
+        .parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50))
+        .asFuture
+      r <- AMF.validate(unit, Oas20Profile, AMFStyle).asFuture
+    } yield {
+      assert(!r.conforms)
+      assert(r.results.asSeq.size == 1)
+      assert(r.results.asSeq.head.message == "Exceeded maximum yaml references threshold")
     }
   }
 

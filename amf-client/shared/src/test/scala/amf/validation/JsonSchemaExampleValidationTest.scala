@@ -131,13 +131,36 @@ class JsonSchemaExampleValidationTest extends MultiPlatformReportGenTest {
   test("JSON Schema path with spaces 1") {
     validate("/json-schema-space/api.raml")
   }
-
   test("JSON Schema path with spaces 2") {
     validate("/json-schema-space other/api.raml")
   }
 
   test("JSON Schema with valid datetime format") {
     validate("/date-time-format/api.raml")
+  }
+
+  test("JSON Schema 3 with valid boolean required") {
+    validate("/required/schema3-boolean.raml")
+  }
+
+  test("JSON Schema 3 with invalid required array value") {
+    validate("/required/schema3-array.raml", Some("/required/schema3-array.report"))
+  }
+
+  test("JSON Schema 4 with invalid required boolean value") {
+    validate("/required/schema4-boolean.raml", Some("/required/schema4-boolean.report"))
+  }
+
+  test("JSON Schema 4 with valid required array value") {
+    validate("/required/schema4-array.raml")
+  }
+
+  test("Unspecified JSON Schema with invalid required array value") {
+    validate("/required/unspecified-array.raml")
+  }
+
+  test("Unspecified JSON Schema with invalid required boolean value") {
+    validate("/required/unspecified-boolean.raml")
   }
 
   override val hint: Hint = RamlYamlHint

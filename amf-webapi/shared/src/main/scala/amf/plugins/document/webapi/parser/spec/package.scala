@@ -88,19 +88,31 @@ package object spec {
   def toOas(ctx: WebApiContext): OasWebApiContext = {
     ctx.vendor match {
       case Vendor.OAS30 =>
-        new Oas3WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+        new Oas3WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(toOasDeclarations(ctx.declarations)),
+                              ctx.options)
       case _ =>
-        new Oas2WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+        new Oas2WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(toOasDeclarations(ctx.declarations)),
+                              ctx.options)
     }
 
   }
 
   def toOas(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new Oas2WebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.options)
   }
 
   def toRaml(ctx: WebApiContext): RamlWebApiContext = {
-    new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toRamlDeclarations(ctx.declarations)))
+    new Raml10WebApiContext(ctx.rootContextDocument,
+                            ctx.refs,
+                            ctx,
+                            Some(toRamlDeclarations(ctx.declarations)),
+                            options = ctx.options)
   }
 
   private def toRamlDeclarations(ds: WebApiDeclarations) = {
@@ -126,10 +138,14 @@ package object spec {
   }
 
   def toJsonSchema(ctx: WebApiContext): JsonSchemaWebApiContext = {
-    new JsonSchemaWebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new JsonSchemaWebApiContext(ctx.rootContextDocument,
+                                ctx.refs,
+                                ctx,
+                                Some(toOasDeclarations(ctx.declarations)),
+                                ctx.options)
   }
 
   def toJsonSchema(root: String, refs: Seq[ParsedReference], ctx: WebApiContext): OasWebApiContext = {
-    new JsonSchemaWebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)))
+    new JsonSchemaWebApiContext(root, refs, ctx, Some(toOasDeclarations(ctx.declarations)), ctx.options)
   }
 }

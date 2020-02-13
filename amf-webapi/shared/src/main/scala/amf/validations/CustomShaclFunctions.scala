@@ -48,6 +48,21 @@ object CustomShaclFunctions {
             case _ => None
         })
     }),
+    "headerParamNameMustBeAscii" -> ((element, violation) => {
+      for {
+        name    <- element.fields.?[AmfScalar](ParameterModel.Name)
+        binding <- element.fields.?[AmfScalar](ParameterModel.Binding)
+      } yield {
+        val isAscii: (String) => Boolean = (toMatch) => toMatch.matches("^[\\x00-\\x7F]+$")
+        val bindingVal                   = binding.value.toString
+        val nameVal                      = name.value.toString
+        (bindingVal, nameVal) match {
+          case ("header", name) if !isAscii(name) => violation(None)
+          case _                                  => // ignore
+        }
+      }
+
+    }),
     "minimumMaximumValidation" ->
       ((element, violation) => {
         for {

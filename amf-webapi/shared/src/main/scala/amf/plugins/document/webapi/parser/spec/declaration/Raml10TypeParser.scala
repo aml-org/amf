@@ -41,7 +41,12 @@ object Raml10TypeParser {
             typeInfo: TypeInfo = TypeInfo(),
             defaultType: DefaultType = StringDefaultType)(implicit ctx: RamlWebApiContext): Raml10TypeParser =
     new Raml10TypeParser(Left(entry), entry.key, adopt, typeInfo, defaultType)(
-      new Raml10WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), ctx.contextType))
+      new Raml10WebApiContext(ctx.rootContextDocument,
+                              ctx.refs,
+                              ctx,
+                              Some(ctx.declarations),
+                              ctx.contextType,
+                              ctx.options))
 
   def apply(node: YNode, name: String, adopt: Shape => Shape, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml10TypeParser =
@@ -137,12 +142,13 @@ object Raml08TypeParser {
                               ctx.refs,
                               ctx,
                               Some(ctx.declarations),
-                              contextType = ctx.contextType))
+                              contextType = ctx.contextType,
+                              options = ctx.options))
 
   def apply(entry: YMapEntry, adopt: Shape => Shape, isAnnotation: Boolean, defaultType: DefaultType)(
       implicit ctx: RamlWebApiContext): Raml08TypeParser =
     new Raml08TypeParser(Left(entry), entry.key, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
-      new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
+      new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), options = ctx.options))
 
   def apply(entryOrNode: Either[YMapEntry, YNode],
             name: String,
@@ -150,7 +156,7 @@ object Raml08TypeParser {
             isAnnotation: Boolean,
             defaultType: DefaultType)(implicit ctx: RamlWebApiContext): Raml08TypeParser =
     new Raml08TypeParser(entryOrNode, name, adopt, TypeInfo(isAnnotation = isAnnotation), defaultType)(
-      new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations)))
+      new Raml08WebApiContext(ctx.rootContextDocument, ctx.refs, ctx, Some(ctx.declarations), options = ctx.options))
 }
 
 case class Raml08TypeParser(entryOrNode: Either[YMapEntry, YNode],
@@ -631,11 +637,12 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   private def parseObjectType(): Shape = {
     if (isFileType) {
-      val shape = node.tagType match {
+      val shape = FileShape(Annotations(node)).withName(name, nameAnnotations)
+      node.tagType match {
         case YType.Str =>
-          adopt(FileShape())
+          adopt(shape)
         case YType.Map =>
-          FileShapeParser(node, adopt).parse()
+          FileShapeParser(node, shape, adopt).parse()
       }
       shape
     } else {
@@ -981,12 +988,13 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
   }
 
-  case class FileShapeParser(node: YNode, adopt: Shape => Shape) extends AnyShapeParser with CommonScalarParsingLogic {
+  case class FileShapeParser(node: YNode, file: FileShape, adopt: Shape => Shape)
+      extends AnyShapeParser
+      with CommonScalarParsingLogic {
     override val map: YMap = node.as[YMap]
     override val shape: FileShape = {
-      val s = FileShape(Annotations(map))
-      adopt(s)
-      s
+      adopt(file)
+      file
     }
 
     override def parse(): FileShape = {

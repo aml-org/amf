@@ -193,7 +193,6 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       .orElse(map.key("patternProperties"))
       .orElse(map.key("additionalProperties"))
       .orElse(map.key("discriminator"))
-      .orElse(map.key("required"))
       .map(_ => ObjectType)
 
   private def detectItemProperties(): Option[TypeDef.ArrayType.type] =
@@ -387,7 +386,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         ctx match {
           case _ @(_: Oas2WebApiContext | _: Oas3WebApiContext) if isDeclaration(ref) =>
             val shape = NodeShape(ast).withName(name, nameAnnotations)
-            shape.withLinkTarget(tmpShape).withLinkLabel(ref)
+            shape.withLinkTarget(tmpShape).withLinkLabel(text)
             adopt(shape)
             Some(shape)
           case _ =>
@@ -401,7 +400,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                     //            tmpShape.resolve(shape) // useless?
                     ctx.registerJsonSchema(ref, shape)
                     if (ctx.linkTypes || ref.equals("#"))
-                      shape.link(ref, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
+                      shape.link(text, Annotations(ast)).asInstanceOf[AnyShape].withName(name, Annotations())
                     else shape
                   } orElse { Some(tmpShape) }
 
@@ -510,24 +509,24 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
   trait CommonScalarParsingLogic {
     def parseScalar(map: YMap, shape: Shape, typeDef: TypeDef): TypeDef = {
-      map.key("pattern", ScalarShapeModel.Pattern in shape)
-      map.key("minLength", ScalarShapeModel.MinLength in shape)
-      map.key("maxLength", ScalarShapeModel.MaxLength in shape)
-
-      setValue("minimum", map, ScalarShapeModel.Minimum, shape)
-      setValue("maximum", map, ScalarShapeModel.Maximum, shape)
-
-      if (version == JSONSchemaDraft7SchemaVersion) {
-        parseNumericExclusive(map, shape)
-      } else {
-        map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
-        map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
+      typeDef match {
+        case TypeDef.StrType | TypeDef.FileType =>
+          map.key("pattern", ScalarShapeModel.Pattern in shape)
+          map.key("minLength", ScalarShapeModel.MinLength in shape)
+          map.key("maxLength", ScalarShapeModel.MaxLength in shape)
+        case n if n.isNumber =>
+          setValue("minimum", map, ScalarShapeModel.Minimum, shape)
+          setValue("maximum", map, ScalarShapeModel.Maximum, shape)
+          map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
+          if (version == JSONSchemaDraft7SchemaVersion) {
+            parseNumericExclusive(map, shape)
+          } else {
+            map.key("exclusiveMinimum", ScalarShapeModel.ExclusiveMinimum in shape)
+            map.key("exclusiveMaximum", ScalarShapeModel.ExclusiveMaximum in shape)
+          }
+        case _ => // Nothing to do
       }
-      map.key("multipleOf", ScalarShapeModel.MultipleOf in shape)
-
       ScalarFormatType(shape, typeDef).parse(map)
-//      shape.set(ScalarShapeModel.Repeat, value = false)
-
     }
 
     private def parseNumericExclusive(map: YMap, shape: Shape): Unit = {
@@ -927,30 +926,12 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
         map.key("discriminatorValue".asOasExtension, NodeShapeModel.DiscriminatorValue in shape)
       }
 
-      val requiredFields = map
-        .key("required")
-        .map { field =>
-          field.value.tagType match {
-            case YType.Seq if version == JSONSchemaDraft3SchemaVersion =>
-              ctx.eh.violation(InvalidRequiredArrayForSchemaVersion,
-                               shape.id,
-                               "Required arrays of properties not supported in JSON Schema below version draft-4",
-                               field.value)
-              Map[String, YNode]()
-            case YType.Seq =>
-              field.value.as[YSequence].nodes.foldLeft(Map[String, YNode]()) {
-                case (acc, node) =>
-                  acc.updated(node.as[String], node)
-              }
-            case _ => Map[String, YNode]()
-          }
-        }
-        .getOrElse(Map[String, YNode]())
+      val requiredFields = parseRequiredFields(map, shape)
 
       val properties  = mutable.LinkedHashMap[String, PropertyShape]()
       val properEntry = map.key("properties")
       properEntry.foreach(entry => {
-        entry.value.toOption[YMap] match {
+        Option(entry.value.as[YMap]) match {
           case Some(m) =>
             val props = PropertiesParser(m, shape.withProperty, requiredFields).parse()
             properties ++= props.map(p => p.name.value() -> p)
@@ -1004,6 +985,55 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
       shape
     }
   }
+
+  private def parseRequiredFields(map: YMap, shape: NodeShape): Map[String, YNode] = {
+
+    def parse(field: YMapEntry): Map[String, YNode] = {
+      val defaultValue = Map[String, YNode]()
+      val requiredSeq  = field.value.asOption[Seq[YNode]]
+      requiredSeq match {
+        case Some(required) =>
+          val requiredGroup = required.groupBy(_.as[String])
+          validateRequiredFields(requiredGroup, shape)
+          requiredGroup.map {
+            case (key, nodes) => key -> nodes.head
+          }
+        case None =>
+          ctx.eh.violation(InvalidRequiredValue, shape.id, "'required' field has to be an array", loc = field.location)
+          defaultValue
+      }
+    }
+
+    val defaultValue = Map[String, YNode]()
+    map
+      .key("required")
+      .map { field =>
+        (field.value.tagType, version) match {
+          case (YType.Seq, JSONSchemaDraft3SchemaVersion) =>
+            ctx.eh.violation(InvalidRequiredArrayForSchemaVersion,
+                             shape.id,
+                             "Required arrays of properties not supported in JSON Schema below version draft-4",
+                             field.value)
+            defaultValue
+          case (_, JSONSchemaDraft3SchemaVersion)        => defaultValue
+          case (YType.Seq, JSONSchemaUnspecifiedVersion) => parse(field)
+          case (_, JSONSchemaUnspecifiedVersion)         => defaultValue
+          case (_, _)                                    => parse(field)
+        }
+      }
+      .getOrElse(defaultValue)
+  }
+
+  private def validateRequiredFields(required: Map[String, Seq[YNode]], shape: NodeShape): Unit =
+    required
+      .foreach {
+        case (name, nodes) if nodes.size > 1 =>
+          ctx.eh.violation(DuplicateRequiredItem,
+                           shape.id,
+                           s"'$name' is duplicated in 'required' property",
+                           nodes.last)
+        case _ => // ignore
+      }
 
   case class DiscriminatorParser(shape: NodeShape, entry: YMapEntry) {
     def parse(): Unit = {

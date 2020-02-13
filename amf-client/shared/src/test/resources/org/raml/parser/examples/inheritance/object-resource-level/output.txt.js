@@ -18,7 +18,7 @@ Level: Violation
   Level: Violation
   Target: file://amf-client/shared/src/test/resources/org/raml/parser/examples/inheritance/object-resource-level/input.raml#/web-api/end-points/%2Fusers/get/202/application%2Fjson/any/schema/unresolved
   Property: 
-  Position: Some(LexicalInformation([(87,20)-(87,26)]))
+  Position: Some(LexicalInformation([(89,20)-(89,26)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/inheritance/object-resource-level/input.raml
 
 Level: Warning
@@ -36,7 +36,7 @@ Level: Warning
   Level: Warning
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(83,12)-(83,18)]))
+  Position: Some(LexicalInformation([(85,12)-(85,18)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/inheritance/object-resource-level/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#schema-deprecated
@@ -44,7 +44,7 @@ Level: Warning
   Level: Warning
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(87,12)-(87,18)]))
+  Position: Some(LexicalInformation([(89,12)-(89,18)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/inheritance/object-resource-level/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#schema-deprecated
@@ -52,7 +52,7 @@ Level: Warning
   Level: Warning
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(91,12)-(91,18)]))
+  Position: Some(LexicalInformation([(93,12)-(93,18)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/inheritance/object-resource-level/input.raml
 
 - Source: http://a.ml/vocabularies/amf/parser#schema-deprecated
@@ -60,5 +60,5 @@ Level: Warning
   Level: Warning
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(107,12)-(107,18)]))
+  Position: Some(LexicalInformation([(110,12)-(110,18)]))
   Location: file://amf-client/shared/src/test/resources/org/raml/parser/examples/inheritance/object-resource-level/input.raml

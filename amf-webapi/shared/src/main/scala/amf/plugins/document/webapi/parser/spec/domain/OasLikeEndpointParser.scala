@@ -17,12 +17,11 @@ import org.yaml.model._
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-abstract class OasLikeEndpointParser(entry: YMapEntry,
-                                     producer: String => EndPoint,
-                                     collector: mutable.ListBuffer[EndPoint])(implicit val ctx: OasLikeWebApiContext)
+abstract class OasLikeEndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+    implicit val ctx: OasLikeWebApiContext)
     extends SpecParserOps {
 
-  def parse(): Unit = {
+  def parse(): Option[EndPoint] = {
     val path = entry.key.as[YScalar].text
 
     val endpoint = producer(path).add(Annotations(entry))
@@ -32,10 +31,10 @@ abstract class OasLikeEndpointParser(entry: YMapEntry,
 
     if (!TemplateUri.isValid(path))
       ctx.eh.violation(InvalidEndpointPath, endpoint.id, TemplateUri.invalidMsg(path), entry.value)
-
-    if (collector.exists(other => other.path.option() exists (identicalPaths(_, path))))
+    if (collector.exists(other => other.path.option() exists (identicalPaths(_, path)))) {
       ctx.eh.violation(DuplicatedEndpointPath, endpoint.id, "Duplicated resource path " + path, entry)
-    else parseEndpoint(endpoint)
+      None
+    } else parseEndpoint(endpoint)
   }
 
   /**
@@ -43,21 +42,24 @@ abstract class OasLikeEndpointParser(entry: YMapEntry,
     */
   protected def identicalPaths(first: String, second: String): Boolean = first == second
 
-  private def parseEndpoint(endpoint: EndPoint) =
+  private def parseEndpoint(endpoint: EndPoint): Option[EndPoint] =
     ctx.link(entry.value) match {
       case Left(value) =>
         ctx.obtainRemoteYNode(value).orElse(ctx.declarations.asts.get(value)) match {
-          case Some(map) if map.tagType == YType.Map => collector += parseEndpointMap(endpoint, map.as[YMap])
+          case Some(map) if map.tagType == YType.Map => Some(parseEndpointMap(endpoint, map.as[YMap]))
           case Some(n) =>
             ctx.eh.violation(InvalidEndpointType, endpoint.id, "Invalid node for path item", n)
+            None
+
           case None =>
             ctx.eh.violation(InvalidEndpointPath,
                              endpoint.id,
                              s"Cannot find fragment path item ref $value",
                              entry.value)
+            None
+
         }
-      case Right(node) if node.tagType == YType.Map => collector += parseEndpointMap(endpoint, node.as[YMap])
-      case _                                        => collector += endpoint
+      case Right(node) => Some(parseEndpointMap(endpoint, node.as[YMap]))
     }
 
   protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
@@ -74,9 +76,8 @@ abstract class OasLikeEndpointParser(entry: YMapEntry,
   }
 }
 
-abstract class OasEndpointParser(entry: YMapEntry,
-                                 producer: String => EndPoint,
-                                 collector: mutable.ListBuffer[EndPoint])(override implicit val ctx: OasWebApiContext)
+abstract class OasEndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+    override implicit val ctx: OasWebApiContext)
     extends OasLikeEndpointParser(entry, producer, collector) {
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
@@ -163,9 +164,8 @@ abstract class OasEndpointParser(entry: YMapEntry,
   }
 }
 
-case class Oas20EndpointParser(entry: YMapEntry,
-                               producer: String => EndPoint,
-                               collector: mutable.ListBuffer[EndPoint])(override implicit val ctx: OasWebApiContext)
+case class Oas20EndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+    override implicit val ctx: OasWebApiContext)
     extends OasEndpointParser(entry, producer, collector) {
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {
@@ -174,9 +174,8 @@ case class Oas20EndpointParser(entry: YMapEntry,
 
 }
 
-case class Oas30EndpointParser(entry: YMapEntry,
-                               producer: String => EndPoint,
-                               collector: mutable.ListBuffer[EndPoint])(override implicit val ctx: OasWebApiContext)
+case class Oas30EndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+    override implicit val ctx: OasWebApiContext)
     extends OasEndpointParser(entry, producer, collector) {
 
   /**
@@ -199,9 +198,8 @@ case class Oas30EndpointParser(entry: YMapEntry,
   }
 }
 
-case class AsyncEndpointParser(entry: YMapEntry,
-                               producer: String => EndPoint,
-                               collector: mutable.ListBuffer[EndPoint])(override implicit val ctx: AsyncWebApiContext)
+case class AsyncEndpointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint])(
+    override implicit val ctx: AsyncWebApiContext)
     extends OasLikeEndpointParser(entry, producer, collector) {
 
   override protected def parseEndpointMap(endpoint: EndPoint, map: YMap): EndPoint = {

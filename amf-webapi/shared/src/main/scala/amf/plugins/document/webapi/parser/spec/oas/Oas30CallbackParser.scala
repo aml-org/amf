@@ -53,9 +53,8 @@ case class Oas30CallbackParser(map: YMap, adopt: Callback => Unit, name: String,
           val callback   = Callback().add(Annotations(entry))
           callback.fields.setWithoutId(CallbackModel.Expression, AmfScalar(expression, Annotations(entry.key)))
           adopt(callback)
-          val collector = mutable.ListBuffer[EndPoint]()
-          ctx.factory.endPointParser(entry, callback.withEndpoint, collector).parse()
-          collector.foreach(_.withPath(s"/$expression")) // rename path to avoid endpoint validations
+          val collected = ctx.factory.endPointParser(entry, callback.withEndpoint, List()).parse()
+          collected.foreach(_.withPath(s"/$expression")) // rename path to avoid endpoint validations
           callback
         }.toList
 

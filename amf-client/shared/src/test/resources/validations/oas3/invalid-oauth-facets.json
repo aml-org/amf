@@ -1,0 +1,18 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "v1",
+    "title": "test"
+  },
+  "paths": {
+  },
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "tokenUrl": "https://localhost:40443/connect/token",
+        "type": "oauth2",
+        "flows": {}
+      }
+    }
+  }
+}

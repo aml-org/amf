@@ -29,7 +29,7 @@ case class Async20VersionFactory()(implicit ctx: AsyncWebApiContext) extends Asy
     AsyncOperationParser(entry, producer)(ctx)
   override def endPointParser(entry: YMapEntry,
                               producer: String => EndPoint,
-                              collector: ListBuffer[EndPoint]): OasLikeEndpointParser =
+                              collector: List[EndPoint]): OasLikeEndpointParser =
     AsyncEndpointParser(entry, producer, collector)(ctx)
 
   override def securitySchemeParser: (YPart, SecurityScheme => SecurityScheme) => SecuritySchemeParser =

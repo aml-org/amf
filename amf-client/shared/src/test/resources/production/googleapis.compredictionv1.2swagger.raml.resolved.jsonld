@@ -1,5 +1,7 @@
 [
+
   {
+
     "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
@@ -8,7 +10,9 @@
       "http://a.ml/vocabularies/document#Unit"
     ],
     "http://a.ml/vocabularies/document#encodes": [
+
       {
+
         "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -88,6 +92,7 @@
           }
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
+
           {
             "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining",
             "@type": [
@@ -14679,6 +14684,7 @@
             ]
           },
           {
+
             "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
@@ -14695,7 +14701,9 @@
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
+
               {
+
                 "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
@@ -14717,7 +14725,9 @@
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
+
                   {
+
                     "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
@@ -16156,206 +16166,7 @@
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data",
-                        "@type": [
-                          "http://a.ml/vocabularies/apiContract#Parameter",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://a.ml/vocabularies/core#name": [
-                          {
-                            "@value": "data"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/apiContract#paramName": [
-                          {
-                            "@value": "data"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/core#description": [
-                          {
-                            "@value": "mybucket/mydata resource in Google Storage"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/apiContract#required": [
-                          {
-                            "@value": true
-                          }
-                        ],
-                        "http://a.ml/vocabularies/apiContract#binding": [
-                          {
-                            "@value": "path"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/shapes#schema": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/scalar/schema",
-                            "@type": [
-                              "http://a.ml/vocabularies/shapes#ScalarShape",
-                              "http://a.ml/vocabularies/shapes#AnyShape",
-                              "http://www.w3.org/ns/shacl#Shape",
-                              "http://a.ml/vocabularies/shapes#Shape",
-                              "http://a.ml/vocabularies/document#DomainElement"
-                            ],
-                            "http://www.w3.org/ns/shacl#datatype": [
-                              {
-                                "@id": "http://www.w3.org/2001/XMLSchema#string"
-                              }
-                            ],
-                            "http://www.w3.org/ns/shacl#name": [
-                              {
-                                "@value": "schema"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/core#description": [
-                              {
-                                "@value": "mybucket/mydata resource in Google Storage"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#sources": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/scalar/schema/source-map",
-                                "@type": [
-                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/scalar/schema/source-map/type-property-lexical-info/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/scalar/schema"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(122,8)-(122,12)]"
-                                      }
-                                    ]
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/scalar/schema/source-map/lexical/element_2",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://www.w3.org/ns/shacl#datatype"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(122,8)-(123,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/scalar/schema/source-map/lexical/element_0",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "http://a.ml/vocabularies/core#description"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(120,8)-(121,0)]"
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/scalar/schema/source-map/lexical/element_1",
-                                    "http://a.ml/vocabularies/document-source-maps#element": [
-                                      {
-                                        "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/scalar/schema"
-                                      }
-                                    ],
-                                    "http://a.ml/vocabularies/document-source-maps#value": [
-                                      {
-                                        "@value": "[(119,6)-(123,0)]"
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/source-map/synthesized-field/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "true"
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/source-map/lexical/element_3",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/apiContract#required"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(121,8)-(122,0)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/source-map/lexical/element_1",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/core#description"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(120,8)-(121,0)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/shapes#schema"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(119,6)-(123,0)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data/source-map/lexical/element_2",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining%2F%7Bdata%7D%2Fpredict/parameter/data"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(119,6)-(123,0)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
+
                       {
                         "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/parameter/hostedModelName",
                         "@type": [

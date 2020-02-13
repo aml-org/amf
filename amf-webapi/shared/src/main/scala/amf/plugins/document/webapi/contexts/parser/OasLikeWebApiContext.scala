@@ -1,19 +1,20 @@
 package amf.plugins.document.webapi.contexts.parser
 
+import amf.core.client.ParsingOptions
 import amf.core.model.document.ExternalFragment
-import amf.core.parser.{YMapOps, ParserContext, ParsedReference}
+import amf.core.parser.{ParsedReference, ParserContext, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.raml.RamlWebApiContext
-import amf.plugins.document.webapi.contexts.{WebApiContext, SpecVersionFactory}
+import amf.plugins.document.webapi.contexts.{SpecVersionFactory, WebApiContext}
 import amf.plugins.document.webapi.parser.spec.OasLikeWebApiDeclarations
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeSecuritySettingsParser
 import amf.plugins.document.webapi.parser.spec.domain.{
   OasLikeEndpointParser,
-  OasLikeServerVariableParser,
-  OasLikeOperationParser
+  OasLikeOperationParser,
+  OasLikeServerVariableParser
 }
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.plugins.domain.webapi.models.{Server, EndPoint, WebApi, Operation}
-import org.yaml.model.{YMap, YScalar, YNode, YMapEntry}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Server, WebApi}
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 import scala.collection.mutable
 
@@ -21,18 +22,17 @@ trait OasLikeSpecVersionFactory extends SpecVersionFactory {
   def serverVariableParser(entry: YMapEntry, parent: String): OasLikeServerVariableParser
   // TODO ASYNC complete this
   def operationParser(entry: YMapEntry, producer: String => Operation): OasLikeOperationParser
-  def endPointParser(entry: YMapEntry,
-                     producer: String => EndPoint,
-                     collector: mutable.ListBuffer[EndPoint]): OasLikeEndpointParser
+  def endPointParser(entry: YMapEntry, producer: String => EndPoint, collector: List[EndPoint]): OasLikeEndpointParser
   def securitySettingsParser(map: YMap, scheme: SecurityScheme): OasLikeSecuritySettingsParser
 }
 
 abstract class OasLikeWebApiContext(loc: String,
                                     refs: Seq[ParsedReference],
+                                    options: ParsingOptions,
                                     private val wrapped: ParserContext,
                                     private val ds: Option[OasLikeWebApiDeclarations] = None,
                                     private val operationIds: mutable.Set[String] = mutable.HashSet())
-    extends WebApiContext(loc, refs, wrapped, ds) {
+    extends WebApiContext(loc, refs, options, wrapped, ds) {
 
   val factory: OasLikeSpecVersionFactory
 

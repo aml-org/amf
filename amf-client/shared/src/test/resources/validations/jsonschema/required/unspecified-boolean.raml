@@ -1,0 +1,18 @@
+#%RAML 0.8
+title: sample1
+/products:
+  put:
+    description: Updates a single product
+    body:
+      application/json:
+        schema: |
+          {
+            "product": {
+                "name": {
+                    "required": true,
+                    "type": "string"
+                }
+            },
+            "required": true,
+            "type": "object"
+          }

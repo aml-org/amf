@@ -66,59 +66,9 @@ class RamlJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
     validate("complex-type.raml")
   }
 
-  /*
-  Note: Runs fine locally but doesnt run in remote Jenkins due to filename being in Japanese.
-  As Jenkins coverage broke while parsing the japanese name, the file was deleted and its contents were dumped below
   test("JSON Schema include") {
     validate("json-schema-include.raml")
   }
-
-  {
-  "$id": "https://example.com/person.schema.json",
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "人",
-  "type": "object",
-  "properties": {
-    "ファーストネーム": {
-      "type": "string",
-      "description": "人の名。"
-    },
-    "苗字": {
-      "type": "string",
-      "description": "その人の姓"
-    },
-    "年齢": {
-      "description": "ゼロ以上でなければならない年数",
-      "type": "integer",
-      "minimum": 0
-    },
-    "住所": {
-      "$ref": "#/definitions/住所"
-    }
-  },
-  "definitions": {
-    "住所": {
-      "type": "object",
-      "properties": {
-        "住所": {
-          "type": "string"
-        },
-        "シティ": {
-          "type": "string"
-        },
-        "状態": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "street_address",
-        "city",
-        "state"
-      ]
-    }
-  }
-}
-   */
 
   test("Full API check") {
     validate("full-check.raml")
@@ -138,5 +88,9 @@ class RamlJapaneseCharsetValidationTest extends MultiPlatformReportGenTest {
 
   test("Declaring traits and resource types") {
     validate("traits-and-resource-types.raml")
+  }
+
+  test("Non ascii header names") {
+    validate("non-ascii-headers.raml", Some("non-ascii-headers.report"))
   }
 }

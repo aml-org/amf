@@ -1,0 +1,21 @@
+#%RAML 0.8
+title: Sample API
+
+resourceTypes:
+  - baseResource: !include folder/baseResource.raml
+
+/schema:
+    put:
+      body:
+          application/json:
+                example: !include example.json
+      responses:
+            200:
+                body:
+                  application/json:
+
+/resource:
+  get:
+    queryParameters:
+      q:
+        example: 3.0

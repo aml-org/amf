@@ -2,6 +2,7 @@ package amf.plugins.document.webapi.validation.remote
 
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.core.client.ParsingOptions
 import amf.core.emitter.ShapeRenderOptions
 import amf.core.model.DataType
 import amf.core.model.document.PayloadFragment
@@ -15,7 +16,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
+import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, RefCounter}
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._
@@ -35,7 +36,7 @@ class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
 class UnknownDiscriminator()                extends RuntimeException
 class UnsupportedMediaType(msg: String)     extends Exception(msg)
 
-abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
+abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends PayloadValidator {
 
   override val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
@@ -58,8 +59,6 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   val validationMode: ValidationMode
 
   val isFileShape: Boolean = shape.isInstanceOf[FileShape]
-
-  val env: Environment = Environment()
 
   protected val schemas: mutable.Map[String, LoadedSchema] = mutable.Map()
 
@@ -127,7 +126,7 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
         "application/json",
         SyamlParsedDocument(
           document = new JsonSchemaValidationFragmentEmitter(dataType)(
-            JsonSchemaEmitterContext(dataType.errorHandler(), new ShapeRenderOptions().withoutDocumentation))
+            new JsonSchemaEmitterContext(dataType.errorHandler(), new ShapeRenderOptions().withoutDocumentation))
             .emitFragment())
       )
 
@@ -199,14 +198,17 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
   }
 
   private def parsePayload(payload: String, mediaType: String, errorHandler: AmfParserErrorHandler): PayloadFragment = {
-    val defaultCtx = new PayloadContext("", Nil, ParserContext(eh = errorHandler))
+    val options = ParsingOptions()
+    env.maxYamlReferences.foreach(options.setMaxYamlReferences)
+    val defaultCtx = new PayloadContext("", Nil, ParserContext(eh = errorHandler), options = options)
 
     val parser = mediaType match {
       case "application/json" => JsonParser(payload)(errorHandler)
       case _                  => YamlParser(payload)(errorHandler)
     }
     val node = parser.document().node
-    PayloadFragment(if (node.isNull) ScalarNode(payload, None) else DataNodeParser(node)(defaultCtx).parse(),
+    PayloadFragment(if (node.isNull) ScalarNode(payload, None).withDataType(DataType.Nil)
+                    else DataNodeParser(node)(defaultCtx).parse(),
                     mediaType)
   }
 

@@ -240,6 +240,37 @@ object Oas3Syntax extends SpecSyntax {
       "id",
       "name",
       "patternProperties"
+    ),
+    "securityScheme" -> Set(
+      "type",
+      "description",
+      "name",
+      "in",
+      "scheme",
+      "bearerFormat",
+      "flows",
+      "openIdConnectUrl"
+    ),
+    "clientCredentials" -> Set(
+      "refreshUrl",
+      "tokenUrl",
+      "scopes"
+    ),
+    "implicit" -> Set(
+      "authorizationUrl",
+      "refreshUrl",
+      "scopes"
+    ),
+    "password" -> Set(
+      "refreshUrl",
+      "tokenUrl",
+      "scopes"
+    ),
+    "authorizationCode" -> Set(
+      "authorizationUrl",
+      "refreshUrl",
+      "tokenUrl",
+      "scopes"
     )
   )
 }
@@ -434,6 +465,16 @@ object Oas2Syntax extends SpecSyntax {
       "id",
       "name",
       "patternProperties"
+    ),
+    "securityScheme" -> Set(
+      "type",
+      "description",
+      "name",
+      "in",
+      "flow",
+      "authorizationUrl",
+      "tokenUrl",
+      "scopes"
     )
   )
 }

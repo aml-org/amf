@@ -1093,6 +1093,19 @@ object AMFRawValidations {
         "Unknown method type",
         "Unknown Operation method",
         "Violation"
+      ),
+      AMFValidation(
+        Amf.name,
+        "Domain",
+        "apiContract:Parameter",
+        "apiContract:Name",
+        "PropertyShape",
+        "sh:path",
+        "raml-shapes:headerParamNameMustBeAscii",
+        "0",
+        "Header parameter name is invalid according to HTTP spec",
+        "Header parameter name is invalid according to HTTP spec",
+        "Warning"
       )
     )
     override def validations(): Seq[AMFValidation] = result
@@ -1860,6 +1873,19 @@ object AMFRawValidations {
       AMFValidation(
         Oas30.name,
         "Domain",
+        "core:License",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:minCount",
+        "1",
+        "'name' is mandatory in License object",
+        "'name' is mandatory in License object",
+        "Violation"
+      ),
+      AMFValidation(
+        Oas30.name,
+        "Domain",
         "security:Settings",
         "security:in",
         "PropertyShape",
@@ -2001,6 +2027,19 @@ object AMFRawValidations {
         "0",
         "Does not comply with runtime expression ABNF syntax",
         "Does not comply with runtime expression ABNF syntax",
+        "Violation"
+      ),
+      AMFValidation(
+        Oas30.name,
+        "Domain",
+        "apiContract:Tag",
+        "core:name",
+        "PropertyShape",
+        "sh:path",
+        "sh:minLength",
+        "1",
+        "Property 'name' in Tag object cannot be empty",
+        "Property 'name' in Tag object cannot be empty",
         "Violation"
       )
     )

@@ -13,6 +13,7 @@ class CompleteCycleTest extends FunSuiteCycleTests {
   val validationsPath   = "amf-client/shared/src/test/resources/validations/"
   val apiPath           = "amf-client/shared/src/test/resources/api/"
   val parserResultPath  = "amf-client/shared/src/test/resources/parser-results/"
+  val oasPath           = "amf-client/shared/src/test/resources/validations/oas3/"
 
   test("Full oas to oas test") {
     cycle("full-example.json", OasJsonHint)
@@ -92,6 +93,14 @@ class CompleteCycleTest extends FunSuiteCycleTests {
 
   test("Complete amf to amf test") {
     cycle("complete.jsonld", AmfJsonHint)
+  }
+
+  test("Oas generates endpoint although path is invalid") {
+    cycle("invalid-endpoint-path-still-parses.json",
+          "cycled/invalid-endpoint-path-still-parses.json.jsonld",
+          OasJsonHint,
+          Amf,
+          directory = oasPath)
   }
 
   test("Complete raml to oas test") {
@@ -709,6 +718,10 @@ class CompleteCycleTest extends FunSuiteCycleTests {
           OasJsonHint,
           Oas20,
           s"${parserResultPath}oas/")
+  }
+
+  test("File type cycle") {
+    cycle("file-type.raml", "file-type.json", RamlYamlHint, Amf)
   }
 
   /**

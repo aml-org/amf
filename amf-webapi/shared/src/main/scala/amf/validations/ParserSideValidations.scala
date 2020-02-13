@@ -28,6 +28,11 @@ object ParserSideValidations extends Validations {
     "Invalid json schema definition type"
   )
 
+  val MandatoryObjectNodeType = validation(
+    "mandatory-object-node-type",
+    "Mandatory object node type"
+  )
+
   val InvalidShapeFormat = validation(
     "invalid-shape-format",
     "Invalid shape format"
@@ -73,6 +78,11 @@ object ParserSideValidations extends Validations {
     "Discriminator property name is required"
   )
 
+  val InvalidRequiredValue = validation(
+    "invalid-required-value",
+    "Invalid required value"
+  )
+
   val InvalidServerPath = validation(
     "invalid-server-path",
     "Invalid server path"
@@ -91,6 +101,11 @@ object ParserSideValidations extends Validations {
   val ScopeNamesMustBeEmpty = validation(
     "scope-names-must-be-empty",
     "Scope names must be an empty array"
+  )
+
+  val MandatoryPathsProperty = validation(
+    "mandatory-paths-property",
+    "Paths property must be declared"
   )
 
   val InvalidSecuritySchemeDescribedByType = validation(
@@ -178,6 +193,11 @@ object ParserSideValidations extends Validations {
     "Invalid decimal point"
   )
 
+  val DuplicateRequiredItem = validation(
+    "duplicate-required-item",
+    "Duplicate required item"
+  )
+
   val InvalidTypeDefinition = validation(
     "invalid-type-definition",
     "Invalid type definition"
@@ -191,6 +211,11 @@ object ParserSideValidations extends Validations {
   val InvalidRequiredBooleanForSchemaVersion = validation(
     "invalid-required-boolean-for-schema-version",
     "Required property boolean value is only supported in JSON Schema draft-3"
+  )
+
+  val MissingOAuthFlowField = validation(
+    "missing-oauth-flow-field",
+    "Missing mandatory property for declared OAuth flow"
   )
 
   val InvalidAdditionalPropertiesType = validation(
@@ -444,9 +469,19 @@ object ParserSideValidations extends Validations {
     "Invalid fragment type"
   )
 
+  val InvalidParameterStyleBindingCombination = validation(
+    "invalid-parameter-style-binding-combination",
+    "Invalid parameter style binding combination"
+  )
+
   val InvalidTypesType = validation(
     "invalid-types-type",
     "Invalid types type"
+  )
+
+  val InvalidOAuth2FlowName = validation(
+    "invalid-oauth2-flow-name",
+    "Invalid OAuth2 flow name"
   )
 
   val InvalidDocumentationType = validation(
@@ -551,6 +586,11 @@ object ParserSideValidations extends Validations {
   val InvalidIdentifier = validation(
     "invalid-identifier",
     "'id' must be a string"
+  )
+
+  val ExeededMaxYamlReferences = validation(
+    "max-yaml-references",
+    "Exceeded maximum yaml references threshold"
   )
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
@@ -696,6 +736,7 @@ object ParserSideValidations extends Validations {
     ItemsFieldRequired,
     InvalidTagType,
     InvalidIdentifier,
-    InvalidComponents
+    InvalidComponents,
+    ExeededMaxYamlReferences
   )
 }

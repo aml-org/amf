@@ -300,7 +300,8 @@ class XRaml10SpecEmitterContext(eh: ErrorHandler,
   override def localReference(reference: Linkable): PartEmitter =
     oasFactory.tagToReferenceEmitter(reference.asInstanceOf[DomainElement], reference.linkLabel.option(), Nil)
 
-  val oasFactory: OasSpecEmitterFactory = Oas2SpecEmitterFactory(new Oas2SpecEmitterContext(eh, refEmitter, options))
+  val oasFactory: OasSpecEmitterFactory = new Oas2SpecEmitterFactory(
+    new Oas2SpecEmitterContext(eh, refEmitter, options))
 }
 
 class Raml08SpecEmitterContext(eh: ErrorHandler, options: ShapeRenderOptions = ShapeRenderOptions())

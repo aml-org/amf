@@ -1,5 +1,5 @@
 Model: file://amf-client/shared/src/test/resources/validations/japanese/oas/facet-string-pattern-invalid.yaml
-Profile: OAS 2.0
+Profile: OAS 3.0
 Conforms? true
 Number of results: 1
 

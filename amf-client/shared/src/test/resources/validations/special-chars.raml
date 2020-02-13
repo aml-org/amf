@@ -1,0 +1,48 @@
+#%RAML 1.0
+# baseUri: https://mocksvc.mulesoft.com/mocks/e015233a-5406-41ab-87b4-887b2f93afec # baseUri: https://mocksvc.mulesoft.com/mocks/8ce22d79-348e-447d-9f7e-2b566f08cbce # 
+version: v1
+title: MDM ACE API
+
+
+/products:
+  post:
+
+    body: 
+      application/json:
+        type: object
+        properties:
+          "someProp withSpace":
+            type: string
+            example: "some example"
+          "someProp`":
+            type: string
+            example: "some example"
+          "someProp]":
+            type: string
+            example: "some example"
+          "someProp[":
+            type: string
+            example: "some example"
+          "someProp^":
+            type: string
+            "example": "some example"
+          "someProp/":
+            type: string
+            example: "some example"
+          "someProp|":
+            type: string
+            "example": "some example"
+          "someProp}":
+            type: string
+            example: "some example"
+          "someProp{":
+            type: string
+            example: "some example"
+          "someProp+":
+            type: string
+            example: "some example"
+    responses: 
+      200:
+        body: 
+          application/json:
+            type: string
