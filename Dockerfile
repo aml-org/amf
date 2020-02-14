@@ -8,14 +8,26 @@ ENV SBT_VERSION 0.13.16
 # Update the repository sources list and install dependencies
 RUN apt-get update
 
-# Install JDK 8
 RUN apt-get install -y software-properties-common unzip htop rsync openssh-client jq
-RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-RUN add-apt-repository -y ppa:webupd8team/java
-RUN apt-get update
-RUN apt-get install -y oracle-java8-installer
-RUN echo "JAVA_HOME=/usr/lib/jvm/java-8-oracle" >> /etc/environment
-RUN echo "JRE_HOME=/usr/lib/jvm/java-8-oracle/jre" >> /etc/environment
+
+# Set the locale
+RUN apt-get update && apt-get install -y locales
+RUN echo "en_US UTF-8" >> /etc/locale.gen
+RUN dpkg-reconfigure locales
+RUN locale-gen en_US.UTF-8
+RUN localedef -c -i en_US -f UTF-8 en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+# install Java
+USER root
+RUN mkdir -p /usr/share/man/man1 && \
+    apt-get update -y && \
+    apt-get install -y openjdk-8-jdk
+
+RUN apt-get install unzip -y && \
+    apt-get autoremove -y
 
 # Install Scala
 ## Piping curl directly in tar
@@ -41,12 +53,11 @@ RUN \
 RUN \
   apt-get install nodejs --assume-yes
 
-# Set the locale
-RUN sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
-  locale-gen
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+ENV JAVA_TOOL_OPTIONS -Dfile.encoding=UTF8
+
 
 # Final user and home config
 RUN useradd --create-home --shell /bin/bash jenkins
