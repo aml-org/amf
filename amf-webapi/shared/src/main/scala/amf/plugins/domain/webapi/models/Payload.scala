@@ -5,8 +5,8 @@ import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
-import amf.plugins.domain.shapes.models.{ArrayShape, Example, NodeShape, ScalarShape}
-import amf.plugins.domain.webapi.metamodel.PayloadModel
+import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape, Example, NodeShape, ScalarShape}
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.metamodel.PayloadModel.{Encoding => EncodingModel, _}
 import org.yaml.model.YPart
 
@@ -31,6 +31,11 @@ case class Payload(fields: Fields, annotations: Annotations)
   def withEncodings(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
 
   override def removeExamples(): Unit = fields.removeField(Examples)
+
+  override def setSchema(shape: Shape): Shape = {
+    set(ParameterModel.Schema, shape)
+    shape
+  }
 
   def withObjectSchema(name: String): NodeShape = {
     val node = NodeShape().withName(name)
