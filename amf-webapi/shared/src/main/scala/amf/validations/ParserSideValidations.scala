@@ -598,6 +598,11 @@ object ParserSideValidations extends Validations {
     "Exceeded maximum yaml references threshold"
   )
 
+  val MissingParameterType = validation(
+    "missing-parameter-type",
+    "Missing parameter type"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ExclusiveLinkTargetError.id -> all(VIOLATION),
     OasBodyAndFormDataParameterSpecification.id -> Map(

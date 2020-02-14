@@ -4,7 +4,7 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{Example, NodeShape, ScalarShape}
+import amf.plugins.domain.shapes.models.{AnyShape, Example, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.metamodel.ParameterModel._
 import org.yaml.model.YPart
@@ -45,6 +45,11 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withExamples(examples: Seq[Example]): this.type          = setArray(Examples, examples)
 
   override def removeExamples(): Unit = fields.removeField(Examples)
+
+  override def setSchema(shape: Shape): Shape = {
+    set(ParameterModel.Schema, shape)
+    shape
+  }
 
   def isHeader: Boolean = binding.is("header")
   def isQuery: Boolean  = binding.is("query")
