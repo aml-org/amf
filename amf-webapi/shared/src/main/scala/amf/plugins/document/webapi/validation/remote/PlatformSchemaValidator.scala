@@ -1,6 +1,7 @@
 package amf.plugins.document.webapi.validation.remote
 
 import amf.client.plugins.{ScalarRelaxedValidationMode, ValidationMode}
+import amf.core.annotations.LexicalInformation
 import amf.core.model.document.PayloadFragment
 import amf.core.model.domain.{DataNode, ObjectNode, ScalarNode, Shape}
 import amf.core.parser.{
@@ -187,11 +188,11 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
                                    shape: Shape): PayloadParsingResult = {
 
     val errorHandler = PayloadErrorHandler()
-    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.getErrors)
+    PayloadParsingResult(parsePayload(payload, mediaType, errorHandler), errorHandler.errors.toList)
   }
 
-  private def parsePayload(payload: String, mediaType: String, errorHandler: ParseErrorHandler): PayloadFragment = {
-    val defaultCtx = new PayloadContext("", Nil, ParserContext())
+  private def parsePayload(payload: String, mediaType: String, errorHandler: ErrorHandler): PayloadFragment = {
+    val defaultCtx = new PayloadContext("", Nil, ParserContext(), eh = Some(errorHandler))
 
     val parser = mediaType match {
       case "application/json" => JsonParser(payload)(errorHandler)
@@ -203,18 +204,21 @@ abstract class PlatformPayloadValidator(shape: Shape) extends PayloadValidator {
       case None => PayloadFragment(ScalarNode(payload, None), mediaType)
     }
   }
-  case class PayloadErrorHandler() extends RuntimeErrorHandler {
-    override val currentFile: String                          = ""
-    override val parserCount: Int                             = 1
-    private val errors: ListBuffer[AMFValidationResult]       = ListBuffer()
-    override def handle(node: YPart, e: SyamlException): Unit = errors += processError(e.getMessage)
-    override def handle[T](error: YError, defaultValue: T): T = {
-      errors += processError(error.error)
-      defaultValue
+  case class PayloadErrorHandler(errors: ListBuffer[AMFValidationResult] = ListBuffer()) extends ErrorHandler {
+    override def reportConstraint(id: String,
+                                  node: String,
+                                  property: Option[String],
+                                  message: String,
+                                  lexical: Option[LexicalInformation],
+                                  level: String,
+                                  location: Option[String]): Unit =
+      handleAmfResult(AMFValidationResult(message, level, node, property, id, lexical, location, this))
+
+    def handleAmfResult(result: AMFValidationResult): Unit = synchronized {
+      if (!errors.exists(v => v.equals(result))) {
+        errors += result
+      }
     }
-    def getErrors: List[AMFValidationResult] = errors.toList
-    private def processError(message: String): AMFValidationResult =
-      new AMFValidationResult(message, SeverityLevels.VIOLATION, "", None, "", None, None, "")
   }
 
   protected def buildPayloadNode(mediaType: String, payload: String): (Option[LoadedObj], Some[PayloadParsingResult]) = {

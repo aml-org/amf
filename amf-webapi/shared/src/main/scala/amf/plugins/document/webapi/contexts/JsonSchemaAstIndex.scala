@@ -1,12 +1,15 @@
 package amf.plugins.document.webapi.contexts
-import org.yaml.model._
 import amf.core.parser._
+import amf.plugins.document.webapi.parser.spec.common.RefCounter
+import amf.plugins.features.validation.ParserSideValidations
+import org.yaml.model._
 
 import scala.collection.mutable
 
 class JsonSchemaAstIndex(root: YNode)(implicit val ctx: WebApiContext) {
 
   private val index: mutable.Map[String, YNode] = mutable.Map.empty
+  private val refsCounter: RefCounter           = RefCounter(ctx)
 
   init()
   def init(): Unit = root.to[YMap] match {
@@ -29,26 +32,35 @@ class JsonSchemaAstIndex(root: YNode)(implicit val ctx: WebApiContext) {
   def getNode(ref: String): Option[YNode] = index.get(ref)
 
   private def index(key: String, node: YNode, path: String, lastId: Option[String]): Unit = {
-    lastId.foreach { li =>
-      index.put(li + "/" + key, node)
-    }
-    val newPath = if (path.nonEmpty) path + "/" + key else key
-    index.put(newPath, node)
-    node.tagType match {
-      case YType.Map =>
-        val m     = node.as[YMap]
-        val idOpt = m.key("id").orElse(m.key("$id")).flatMap(_.value.asScalar.map(_.text))
-        val newId = idOpt.map { newId =>
-          if (newId.startsWith("#")) lastId.getOrElse("") + newId
-          else newId
-        // todo: id with uri htt[://example.com/last => http://example.com/newId
-        }
-        newId.foreach { index.put(_, node) }
-        indexMap(newPath, newId, m)
-      case YType.Seq =>
-        val s = node.as[YSequence]
-        indexSequence(newPath, lastId, s)
-      case _ =>
+    if (refsCounter.exceedsThreshold(node)) {
+      ctx.violation(
+        ParserSideValidations.ParsingErrorSpecification.id,
+        lastId.getOrElse(""),
+        "Exceeded maximum yaml references threshold",
+        node
+      )
+    } else {
+      lastId.foreach { li =>
+        index.put(li + "/" + key, node)
+      }
+      val newPath = if (path.nonEmpty) path + "/" + key else key
+      index.put(newPath, node)
+      node.tagType match {
+        case YType.Map =>
+          val m     = node.as[YMap]
+          val idOpt = m.key("id").orElse(m.key("$id")).flatMap(_.value.asScalar.map(_.text))
+          val newId = idOpt.map { newId =>
+            if (newId.startsWith("#")) lastId.getOrElse("") + newId
+            else newId
+          // todo: id with uri htt[://example.com/last => http://example.com/newId
+          }
+          newId.foreach { index.put(_, node) }
+          indexMap(newPath, newId, m)
+        case YType.Seq =>
+          val s = node.as[YSequence]
+          indexSequence(newPath, lastId, s)
+        case _ =>
+      }
     }
 
   }
