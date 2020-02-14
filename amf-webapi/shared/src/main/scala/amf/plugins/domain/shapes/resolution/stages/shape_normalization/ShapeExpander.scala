@@ -247,23 +247,29 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
   }
 
   protected def expandNode(node: NodeShape): NodeShape = {
+
+    def updateClosure(shape: Shape, node: NodeShape) = shape match {
+      case rec: RecursiveShape =>
+        rec.fixpointTarget.foreach(target => addClosure(target, node))
+        addClosures(rec.closureShapes.toSeq, node)
+      case other =>
+        addClosures(other.closureShapes.toSeq, node)
+    }
+
     val oldProperties = node.fields.getValue(NodeShapeModel.Properties)
     if (Option(oldProperties).isDefined) {
       val newProperties = node.properties.map { prop =>
         val newPropertyShape = recursiveNormalization(prop).asInstanceOf[PropertyShape]
         // update the closure
-        newPropertyShape.range match {
-          case rec: RecursiveShape =>
-            rec.fixpointTarget.foreach(target => addClosure(target, node))
-            addClosures(rec.closureShapes.toSeq, node)
-          case other =>
-            addClosures(other.closureShapes.toSeq, node)
-
-        }
+        updateClosure(newPropertyShape.range, node)
         newPropertyShape
       }
       node.setArrayWithoutId(NodeShapeModel.Properties, newProperties, oldProperties.annotations)
     }
+    Option(node.additionalPropertiesSchema).map(x => {
+      val resultantShape = recursiveNormalization(x)
+      updateClosure(resultantShape, node)
+    })
 
     expandInherits(node)
     expandLogicalConstraints(node)

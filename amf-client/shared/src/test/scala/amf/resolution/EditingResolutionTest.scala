@@ -422,6 +422,14 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("recursivity in additional properties") {
+    cycle("recursive-additional-properties.yaml",
+          "recursive-additional-properties.jsonld",
+          OasYamlHint,
+          Amf,
+          s"${resolutionPath}recursive-additional-properties/")
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {
       case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)

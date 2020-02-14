@@ -1,0 +1,34 @@
+swagger: '2.0'
+schemes:
+  - https
+host: firestore.googleapis.com
+basePath: /
+
+externalDocs:
+  url: 'https://cloud.google.com/firestore'
+tags:
+  - name: projects
+paths:
+  '/v1/{parent}/{collectionId}':
+    get:
+      operationId: firestore.projects.databases.documents.list
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/Value'
+definitions:
+  MapValue:
+    description: An array value.
+    properties:
+      values:
+        additionalProperties:
+          $ref: '#/definitions/Value'
+        type: object
+    type: object
+  Value:
+    properties:
+      mapValue:
+        $ref: '#/definitions/MapValue'
+        description: A map value.
+    type: object
