@@ -11,7 +11,7 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
+import amf.client.resolve.{Raml08Resolver, Raml10Resolver, Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
 import amf.core.client.ParsingOptions
@@ -64,6 +64,8 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     "file://amf-client/shared/src/test/resources/api/api-with-spaces/space in path api/api.raml"
   private val scalarAnnotations =
     "file://amf-client/shared/src/test/resources/org/raml/parser/annotation/scalar-nodes/input.raml"
+  private val recursiveAdditionalProperties =
+    "file://amf-client/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
 
   def testVocabulary(file: String, numClasses: Int, numProperties: Int) = {
     for {

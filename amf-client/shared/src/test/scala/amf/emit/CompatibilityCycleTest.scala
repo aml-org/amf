@@ -49,10 +49,7 @@ trait CompatibilityCycle extends FunSuiteCycleTests with Matchers {
           resolved <- successful(transform(origin, config))
           rendered <- render(resolved, config, useAmfJsonldSerialization = true)
           tmp      <- writeTemporaryFile(path)(rendered)
-          report   <- {
-            println(tmp)
-            validate(tmp, targetHint, toProfile, to)
-          }
+          report   <- validate(tmp, targetHint, toProfile, to)
         } yield {
           outputReportErrors(report)
         }
