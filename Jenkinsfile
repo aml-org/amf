@@ -23,6 +23,7 @@ pipeline {
           branch 'master'
           branch 'build/develop'
           branch 'release/*'
+          branch 'support/*'
         }
       }
       steps {
