@@ -1,0 +1,239 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#3",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "Przelewy24 REST API Documentation"
+          }
+        ],
+        "apiContract:server": [
+          {
+            "@id": "#4",
+            "@type": [
+              "apiContract:Server",
+              "doc:DomainElement"
+            ],
+            "core:urlTemplate": [
+              {
+                "@value": "sandbox.przelewy24.pl"
+              }
+            ],
+            "smaps": {
+              "host-lexical": {
+                "core:urlTemplate": "[(6,2)-(6,33)]"
+              },
+              "synthesized-field": {
+                "#4": "true"
+              }
+            }
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#5",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "/v1/transaction/register/splitpayment"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#6",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "post"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#7",
+                    "@type": [
+                      "apiContract:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#8",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "formData"
+                          }
+                        ],
+                        "raml-shapes:schema": [
+                          {
+                            "@id": "#9",
+                            "@type": [
+                              "shacl:NodeShape",
+                              "raml-shapes:AnyShape",
+                              "shacl:Shape",
+                              "raml-shapes:Shape",
+                              "doc:DomainElement"
+                            ],
+                            "shacl:closed": [
+                              {
+                                "@value": false
+                              }
+                            ],
+                            "shacl:property": [
+                              {
+                                "@id": "#10",
+                                "@type": [
+                                  "shacl:PropertyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "raml-shapes:range": [
+                                  {
+                                    "@id": "#2",
+                                    "@type": [
+                                      "raml-shapes:AnyShape",
+                                      "shacl:Shape",
+                                      "raml-shapes:Shape",
+                                      "doc:DomainElement"
+                                    ]
+                                  }
+                                ],
+                                "shacl:minCount": [
+                                  {
+                                    "@value": 0
+                                  }
+                                ],
+                                "shacl:name": [
+                                  {
+                                    "@value": "splitPaymentDetails"
+                                  }
+                                ]
+                              }
+                            ],
+                            "shacl:name": [
+                              {
+                                "@value": "formData"
+                              }
+                            ]
+                          }
+                        ],
+                        "smaps": {
+                          "form-body-parameter": {
+                            "#8": "true"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "smaps": {
+                  "synthesized-field": {
+                    "apiContract:expects": "true"
+                  },
+                  "lexical": {
+                    "#6": "[(9,6)-(15,7)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#5": "[(8,4)-(16,5)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#3": "OAS 2.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(7,11)-(17,3)]",
+            "#3": "[(1,0)-(24,1)]",
+            "core:name": "[(4,4)-(4,48)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.0.1"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#1",
+        "@type": [
+          "apiContract:Payload",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "splitPaymentDetails"
+          }
+        ],
+        "raml-shapes:schema": [
+          {
+            "@id": "#2",
+            "@type": [
+              "raml-shapes:AnyShape",
+              "shacl:Shape",
+              "raml-shapes:Shape",
+              "doc:DomainElement"
+            ]
+          }
+        ],
+        "smaps": {
+          "parameter-name-for-payload": {
+            "core:name": "splitPaymentDetails->[(20,6)-(20,35)]"
+          },
+          "form-body-parameter": {
+            "#1": "true"
+          },
+          "lexical": {
+            "#1": "[(19,4)-(22,5)]"
+          },
+          "declared-element": {
+            "#1": ""
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "amf://id",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "raml-shapes": "http://a.ml/vocabularies/shapes#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

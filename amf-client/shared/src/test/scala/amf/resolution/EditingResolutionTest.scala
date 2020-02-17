@@ -359,6 +359,16 @@ class EditingResolutionTest extends FunSuiteCycleTests {
     )
   }
 
+  test("Resolving parameter without type doesnt throw NPE") {
+    cycle(
+      "parameter-without-type.json",
+      "parameter-without-type.jsonld",
+      OasJsonHint,
+      Amf,
+      resolutionPath + "parameter-without-type/"
+    )
+  }
+
   // This test hangs diff
   ignore("Emission of API with JSON Schema's schema as references") {
     cycle("api.raml", "api.jsonld", RamlYamlHint, Amf, resolutionPath + "stackoverflow-case/")
