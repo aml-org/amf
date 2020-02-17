@@ -1,0 +1,42 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "asd",
+    "version": "1"
+  },
+  "paths": {
+    "/anEndpoint": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/EntityResponse2"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "EntityResponse2": {
+      "type": "object",
+      "required": [
+        "properties",
+        "subEntitiesByLocator"
+      ],
+      "properties": {
+        "accountLocator": {
+          "type": "string"
+        },
+        "subEntitiesByLocator": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/EntityResponse2"
+          }
+        }
+      },
+      "title": "EntityResponse2"
+    }
+  }
+}
