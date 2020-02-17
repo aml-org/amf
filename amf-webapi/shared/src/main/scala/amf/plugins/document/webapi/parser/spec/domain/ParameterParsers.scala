@@ -363,7 +363,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
 
   def parseType(container: SchemaContainer, binding: String, typeParsing: () => Unit) = {
 
-    def setDefaultSchema = (c: SchemaContainer) => c.setSchema(AnyShape())
+    def setDefaultSchema = (c: SchemaContainer) => c.setSchema(AnyShape(Annotations(Inferred())))
 
     map.key("type") match {
       case None =>
