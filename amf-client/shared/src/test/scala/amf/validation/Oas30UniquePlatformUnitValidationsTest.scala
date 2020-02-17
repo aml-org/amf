@@ -65,4 +65,8 @@ class Oas30UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("invalid query parameter schema") {
     validate("invalid-query-parameter-schema.json", Some("invalid-query-parameter-schema.report"), Oas30Profile)
   }
+
+  test("invalid ref inside paths object") {
+    validate("invalid-ref-inside-paths-object.json", Some("invalid-ref-inside-paths-object.report"), Oas30Profile)
+  }
 }
