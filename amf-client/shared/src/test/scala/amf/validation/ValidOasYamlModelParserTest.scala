@@ -17,5 +17,9 @@ class ValidOasYamlModelParserTest extends ValidModelTest {
     checkValid("/pattern/pattern-with-hack.yaml", OasProfile)
   }
 
+  test("Recursive shape in additional properties doesnt raise violation") {
+    checkValid("/recursives/oas/additional-properties.json", OasProfile)
+  }
+
   override val hint: Hint = OasYamlHint
 }

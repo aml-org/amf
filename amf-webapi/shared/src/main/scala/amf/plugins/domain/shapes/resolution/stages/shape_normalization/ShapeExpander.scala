@@ -267,7 +267,7 @@ sealed case class ShapeExpander(root: Shape, recursionRegister: RecursionErrorRe
       node.setArrayWithoutId(NodeShapeModel.Properties, newProperties, oldProperties.annotations)
     }
     Option(node.additionalPropertiesSchema).map(x => {
-      val resultantShape = recursiveNormalization(x)
+      val resultantShape = traverseOptionalShapeFacet(x)
       updateClosure(resultantShape, node)
     })
 
