@@ -13,12 +13,14 @@ import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
+import amf.plugins.document.webapi.parser.spec.common.RefCounter
 import amf.plugins.document.webapi.parser.spec.domain.{Raml10EndPointEmitter, Raml10OperationEmitter}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
 import amf.plugins.domain.webapi.resolution.ExtendsHelper
 import amf.plugins.domain.webapi.resolution.stages.DomainElementMerging
 import amf.plugins.features.validation.CoreValidations.ResolutionValidation
+import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
 import amf.{ProfileName, Raml08Profile}
 import org.yaml.model._
 
@@ -321,6 +323,7 @@ class ExtendsResolutionStage(
   case class TraitBranch(key: Key, operation: Operation, children: Seq[Branch]) extends Branch
 
   private abstract class ElementTreeBuilder(element: DomainElement) {
+    private val refsCounter = RefCounter()
 
     private def buildEntry(entry: YMapEntry) = {
       val sons: Seq[ElementTree] = buildNode(entry.value)
@@ -328,12 +331,21 @@ class ExtendsResolutionStage(
     }
 
     private def buildNode(node: YNode): Seq[ElementTree] = {
-      node.tagType match {
-        case YType.Map =>
-          node.as[YMap].entries.map { buildEntry }
-        case YType.Seq =>
-          node.as[Seq[YNode]].flatMap { buildNode }
-        case _ => Nil
+      if (refsCounter.exceedsThreshold(node)) {
+        errorHandler.violation(
+          ExeededMaxYamlReferences,
+          "",
+          "Exceeded maximum yaml references threshold"
+        )
+        Nil
+      } else {
+        node.tagType match {
+          case YType.Map =>
+            node.as[YMap].entries.map { buildEntry }
+          case YType.Seq =>
+            node.as[Seq[YNode]].flatMap { buildNode }
+          case _ => Nil
+        }
       }
     }
 
