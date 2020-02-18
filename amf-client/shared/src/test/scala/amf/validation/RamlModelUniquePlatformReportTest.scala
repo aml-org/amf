@@ -1,6 +1,6 @@
 package amf.validation
 
-import amf.Raml08Profile
+import amf.{Raml08Profile, Raml10Profile}
 import amf.core.remote.{Hint, RamlYamlHint}
 
 class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
@@ -422,5 +422,15 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
 
   test("JSON Schema relative references") {
     validate("json-schema-relative-references/api.raml")
+  }
+
+  test("Optional responses in traits with RAML 1.0") {
+    validate("optional-responses/optional-responses-10.raml",
+             Some("optional-responses-10.report"),
+             profile = Raml10Profile)
+  }
+
+  test("Optional responses in traits with RAML 0.8") {
+    validate("optional-responses/optional-responses-08.raml", profile = Raml08Profile)
   }
 }
