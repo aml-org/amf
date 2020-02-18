@@ -1,0 +1,27 @@
+#%RAML 1.0
+title: test
+
+traits:
+  rateLimited:
+    responses:
+      200?:
+        description: aDescription
+      201?:
+        description: anotherDescription
+      204?:
+        description: yetAnotherDescription
+      429:
+        description: Too Many Requests. The number of HTTP requests exceeds the SLA limit.
+        body:
+          application/json:
+            properties:
+              error:
+                type: string
+              error_description?:
+                type: string
+
+/test:
+  get:
+    is: [rateLimited]
+    responses:
+      200:

@@ -26,8 +26,9 @@ case class Raml10ResponseParser(entry: YMapEntry, adopt: Response => Unit, parse
 
   override def parseMap(response: Response, map: YMap): Unit = {
     AnnotationParser(response, map, List(VocabularyMappings.response)).parse()
-
   }
+
+  override def supportsOptionalResponses: Boolean = false
 
   override protected val defaultType: DefaultType = AnyDefaultType
 }
@@ -38,6 +39,8 @@ case class Raml08ResponseParser(entry: YMapEntry, adopt: Response => Unit, parse
   override protected def parseMap(response: Response, map: YMap): Unit = Unit
 
   override protected val defaultType: DefaultType = AnyDefaultType
+
+  override def supportsOptionalResponses: Boolean = true
 }
 
 abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, parseOptional: Boolean = false)(
@@ -47,6 +50,8 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
   protected def parseMap(response: Response, map: YMap)
 
   protected val defaultType: DefaultType
+
+  def supportsOptionalResponses: Boolean
 
   def parse(): Response = {
     val node: AmfScalar = ScalarNode(entry.key).text()
@@ -68,7 +73,7 @@ abstract class RamlResponseParser(entry: YMapEntry, adopt: Response => Unit, par
         // res.withStatusCode(if (res.name.value() == "default") "200" else res.name.value())
         res.withStatusCode(res.name.value())
 
-        if (parseOptional && node.toString.endsWith("?")) { // only in raml the method can be optional, check?
+        if (parseOptional && node.toString.endsWith("?") && supportsOptionalResponses) {
           res.set(ResponseModel.Optional, value = true)
           val name = node.toString.stripSuffix("?")
           res.set(ResponseModel.Name, name)
