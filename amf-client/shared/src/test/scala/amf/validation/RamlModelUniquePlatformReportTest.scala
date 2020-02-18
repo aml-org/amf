@@ -32,6 +32,10 @@ class RamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("types/property_overwriting.raml", Some("property_overwriting.report"))
   }
 
+  test("Property overwriting 2") {
+    validate("types/property-overwriting-2.raml", Some("property-overwriting-2.report"))
+  }
+
   test("Invalid media type") {
     validate("webapi/invalid_media_type.raml", Some("invalid-media-type.report"))
   }
