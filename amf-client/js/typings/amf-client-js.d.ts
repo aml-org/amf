@@ -1806,16 +1806,36 @@ declare module 'amf-client-js' {
     export class RenderOptions {
 
       withSourceMaps: RenderOptions
-
       withoutSourceMaps: RenderOptions
-
       isWithSourceMaps: boolean
 
       withCompactUris: RenderOptions
-
       withoutCompactUris: RenderOptions
-
       isWithCompactUris: boolean
+
+      withPrettyPrint: RenderOptions
+      withoutPrettyPrint: RenderOptions
+      isPrettyPrint: boolean
+
+      withRawSourceMaps : RenderOptions
+      withoutRawSourceMaps : RenderOptions
+      isRawSourceMaps : boolean
+
+      withValidation : RenderOptions
+      withoutValidation : RenderOptions
+      isValidation : boolean
+
+      withNodeIds : RenderOptions
+      withoutNodeIds : RenderOptions
+      isNodeIds : boolean
+
+      withAmfJsonLdSerialization : RenderOptions
+      withoutAmfJsonLdSerialization : RenderOptions
+      isAmfJsonLdSerialization : boolean
+
+      withFlattenedJsonLd : RenderOptions
+      withoutFlattenedJsonLd : RenderOptions
+      isFlattenedJsonLd : boolean
 
       static apply(): RenderOptions
     }
