@@ -11,11 +11,9 @@ import amf.client.model.domain._
 import amf.client.parse._
 import amf.client.remote.Content
 import amf.client.render.{Renderer, _}
-import amf.client.resolve.ClientErrorHandlerConverter.ErrorHandlerConverter
-import amf.client.resolve.{ClientErrorHandler, Oas20Resolver, Raml08Resolver, Raml10Resolver, Resolver}
+import amf.client.resolve.{Raml08Resolver, Raml10Resolver}
 import amf.client.resource.{ResourceLoader, ResourceNotFound}
 import amf.common.Diff
-import amf.core.client.ParsingOptions
 import amf.core.exception.UnsupportedVendorException
 import amf.core.model.document.{Document => InternalDocument}
 import amf.core.model.domain.{
@@ -2024,150 +2022,6 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
     } yield {
       println(report.toString())
       assert(!report.conforms)
-    }
-  }
-
-  test("Excessive yaml anchors - payload validation") {
-    AMF.init().asFuture flatMap { _ =>
-      val validator =
-        new ScalarShape().payloadValidator("application/yaml", Environment.empty().setMaxYamlReferences(50)).asOption
-      val report = validator.get
-        .validate(
-          "application/yaml",
-          """
-          |a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
-          |b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
-          |c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
-          |""".stripMargin
-        )
-        .asFuture
-      report.map { r =>
-        assert(!r.conforms)
-        assert(r.results.asSeq.size == 1)
-        assert(r.results.asSeq.head.message == "Exceeded maximum yaml references threshold")
-      }
-    }
-  }
-
-  test("Excessive yaml anchors - raml api") {
-    val api =
-      """
-        |#%RAML 1.0
-        |title: my API
-        |types:
-        |  Foo:
-        |    examples:
-        |      a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
-        |      b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
-        |      c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
-        |""".stripMargin
-    for {
-      _    <- AMF.init().asFuture
-      unit <- new RamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
-      r    <- AMF.validate(unit, Raml10Profile, AMFStyle).asFuture
-    } yield {
-      assert(!r.conforms)
-      assert(r.results.asSeq.size == 1)
-      assert(r.results.asSeq.head.message == "Exceeded maximum yaml references threshold")
-    }
-  }
-
-  test("Excessive yaml anchors - swagger api") {
-    val api =
-      """
-        |swagger: '2.0'
-        |info:
-        |  version: 1.0.0
-        |  title: test
-        |paths:
-        |  '/pets':
-        |    get:
-        |      responses:
-        |        default:
-        |          description: asd
-        |          examples:
-        |            a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
-        |            b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
-        |            c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
-        |            application/json: [*c,*c,*c,*c,*c,*c,*c,*c,*c]
-        |""".stripMargin
-    for {
-      _ <- AMF.init().asFuture
-      unit <- new Parser(Oas20.name, "application/yaml", None)
-        .parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50))
-        .asFuture
-      r <- AMF.validate(unit, Oas20Profile, AMFStyle).asFuture
-    } yield {
-      assert(!r.conforms)
-      assert(r.results.asSeq.size == 1)
-      assert(r.results.asSeq.head.message == "Exceeded maximum yaml references threshold")
-    }
-  }
-
-  test("Excessive yaml anchors - raml resolution") {
-    val api           = """#%RAML 1.0
-                |title: my API
-                |/person:
-                |  get:
-                |    body:
-                |      application/json:
-                |        examples:
-                |          a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
-                |          b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
-                |          c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
-                |          d: &d [*c,*c,*c,*c,*c,*c,*c,*c,*c]
-                |          e: &e [*d,*d,*d,*d,*d,*d,*d,*d,*d]
-                |          f: &f [*e,*e,*e,*e,*e,*e,*e,*e,*e]
-                |          g: &g [*f,*f,*f,*f,*f,*f,*f,*f,*f]
-                |          h: &h [*g,*g,*g,*g,*g,*g,*g,*g,*g]
-                |""".stripMargin
-    val eh            = DefaultParserErrorHandler.withRun()
-    val clientHandler = ErrorHandlerConverter.asClient(eh)
-    for {
-      _    <- AMF.init().asFuture
-      unit <- new RamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
-      _    <- Future(new Raml10Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE, clientHandler))
-    } yield {
-      val errors = eh.getErrors
-      assert(errors.size == 1)
-      assert(errors.head.message == "Exceeded maximum yaml references threshold")
-    }
-  }
-
-  test("Excessive yaml anchors - oas resolution") {
-    val api           = """swagger: '2.0'
-                |info:
-                |  version: 1.0.0
-                |  title: test
-                |produces: [application/json]
-                |paths:
-                |  '/pets':
-                |    get:
-                |      responses:
-                |        default:
-                |          description: asd
-                |          schema:
-                |            type: array
-                |          examples:
-                |            a: &a ["lol","lol","lol","lol","lol","lol","lol","lol","lol"]
-                |            b: &b [*a,*a,*a,*a,*a,*a,*a,*a,*a]
-                |            c: &c [*b,*b,*b,*b,*b,*b,*b,*b,*b]
-                |            d: &d [*c,*c,*c,*c,*c,*c,*c,*c,*c]
-                |            e: &e [*d,*d,*d,*d,*d,*d,*d,*d,*d]
-                |            f: &f [*e,*e,*e,*e,*e,*e,*e,*e,*e]
-                |            g: &g [*f,*f,*f,*f,*f,*f,*f,*f,*f]
-                |            application/json: &h [*g,*g,*g,*g,*g,*g,*g,*g,*g]
-                |""".stripMargin
-    val eh            = DefaultParserErrorHandler.withRun()
-    val clientHandler = ErrorHandlerConverter.asClient(eh)
-    for {
-      _    <- AMF.init().asFuture
-      unit <- new Oas20YamlParser().parseStringAsync(api, ParsingOptions().setMaxYamlReferences(50)).asFuture
-      _    <- Future(new Oas20Resolver().resolve(unit, ResolutionPipeline.EDITING_PIPELINE, clientHandler))
-    } yield {
-      val errors = eh.getErrors
-      assert(errors.size == 1)
-      assert(errors.head.message == "Exceeded maximum yaml references threshold")
     }
   }
 
