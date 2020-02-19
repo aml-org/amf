@@ -16,7 +16,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.JsonSchemaEmitterContext
 import amf.plugins.document.webapi.contexts.parser.raml.PayloadContext
 import amf.plugins.document.webapi.metamodel.FragmentsTypesModels.DataTypeFragmentModel
 import amf.plugins.document.webapi.model.DataTypeFragment
-import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, RefCounter}
+import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
 import amf.plugins.document.webapi.parser.spec.oas.JsonSchemaValidationFragmentEmitter
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.domain.shapes.models._

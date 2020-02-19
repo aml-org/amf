@@ -2,8 +2,8 @@ package amf.plugins.document.webapi.contexts.parser.oas
 
 import org.yaml.model._
 import amf.core.parser._
+import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.parser.spec.common.RefCounter
 import amf.validations.ParserSideValidations.ExeededMaxYamlReferences
 
 import scala.collection.mutable
@@ -11,7 +11,7 @@ import scala.collection.mutable
 class JsonSchemaAstIndex(root: YNode)(implicit val ctx: WebApiContext) {
 
   private val index: mutable.Map[String, YNode] = mutable.Map.empty
-  private val refsCounter: RefCounter           = RefCounter(ctx)
+  private val refsCounter: AliasCounter         = AliasCounter(ctx.options.getMaxYamlReferences)
 
   init()
   def init(): Unit = root.to[YMap] match {

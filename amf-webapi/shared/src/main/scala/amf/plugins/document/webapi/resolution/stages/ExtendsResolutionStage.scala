@@ -10,10 +10,10 @@ import amf.core.model.domain.{DataNode, DomainElement, ElementTree}
 import amf.core.parser.{ParserContext, YNodeLikeOps}
 import amf.core.resolution.stages.{ReferenceResolutionStage, ResolutionStage}
 import amf.core.unsafe.PlatformSecrets
+import amf.core.utils.AliasCounter
 import amf.plugins.document.webapi.contexts.emitter.raml.Raml10SpecEmitterContext
 import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.{ErrorEndPoint, ErrorTrait}
-import amf.plugins.document.webapi.parser.spec.common.RefCounter
 import amf.plugins.document.webapi.parser.spec.domain.{Raml10EndPointEmitter, Raml10OperationEmitter}
 import amf.plugins.domain.webapi.models.templates.{ParametrizedResourceType, ParametrizedTrait, ResourceType, Trait}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation}
@@ -323,7 +323,7 @@ class ExtendsResolutionStage(
   case class TraitBranch(key: Key, operation: Operation, children: Seq[Branch]) extends Branch
 
   private abstract class ElementTreeBuilder(element: DomainElement) {
-    private val refsCounter = RefCounter()
+    private val refsCounter = AliasCounter()
 
     private def buildEntry(entry: YMapEntry) = {
       val sons: Seq[ElementTree] = buildNode(entry.value)
