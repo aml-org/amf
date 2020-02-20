@@ -1,0 +1,38 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Alamo Quay API",
+    "description": "Docker image info from Quay for Alamo"
+  },
+  "paths": {
+    "/repository": {
+      "get": {
+        "responses": {
+          "404": {
+            "description": "repoistory not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#components/schemas/Message"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Message": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

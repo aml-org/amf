@@ -166,7 +166,7 @@ abstract class WebApiContext(val loc: String,
   private def normalizeJsonPath(path: String): String = {
     if (path == "#" || path == "" || path == "/") "/" // exception root cases
     else {
-      val s = if (path.startsWith("#")) path.replace("#", "") else path
+      val s = if (path.startsWith("#/")) path.replace("#/", "") else path
       if (s.startsWith("/")) s.stripPrefix("/") else s
     }
   }
