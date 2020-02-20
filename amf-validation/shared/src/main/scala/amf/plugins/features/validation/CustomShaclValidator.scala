@@ -14,8 +14,7 @@ import amf.{OASStyle, RAMLStyle}
 import org.yaml.model.YScalar
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class CustomValidationResult(message: Option[String],
                                   path: String,
@@ -45,7 +44,7 @@ class CustomValidationReport(var rs: List[ValidationResult] = Nil) extends Valid
 class CustomShaclValidator(model: BaseUnit,
                            validations: EffectiveValidations,
                            customFunctions: CustomShaclFunctions,
-                           options: ValidationOptions) {
+                           options: ValidationOptions)(implicit executionContext: ExecutionContext) {
 
   var validationReport: CustomValidationReport = new CustomValidationReport(Nil)
 

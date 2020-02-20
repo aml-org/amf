@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.validation
 
+import amf.client.execution.BaseExecutionEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins._
 import amf.core.benchmark.ExecutionLog
@@ -7,6 +8,7 @@ import amf.core.model.document.Module
 import amf.core.model.domain._
 import amf.core.parser.ParserContext
 import amf.core.services.{DefaultValidationOptions, RuntimeValidator}
+import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.SeverityLevels._
 import amf.core.validation._
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
@@ -19,14 +21,15 @@ import amf.validations.CustomShaclFunctions
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-case class ShaclPayloadValidation(validationCandidates: Seq[ValidationCandidate],
-                                  validations: EffectiveValidations = EffectiveValidations())
+case class ShaclPayloadValidation private (validationCandidates: Seq[ValidationCandidate],
+                                           validations: EffectiveValidations,
+                                           exec: BaseExecutionEnvironment)
     extends WebApiValidations
     with JsonSchemaSecrets {
 
+  implicit val executionContext: ExecutionContext              = exec.executionContext
   val profiles: ListBuffer[ValidationProfile]                  = ListBuffer[ValidationProfile]()
   val validationsCache: mutable.Map[String, ValidationProfile] = mutable.Map()
 
@@ -159,6 +162,13 @@ case class ShaclPayloadValidation(validationCandidates: Seq[ValidationCandidate]
   }
 }
 
+object ShaclPayloadValidation extends PlatformSecrets {
+  def apply(validationCandidates: Seq[ValidationCandidate],
+            validations: EffectiveValidations = EffectiveValidations(),
+            exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): ShaclPayloadValidation =
+    new ShaclPayloadValidation(validationCandidates, validations, exec)
+}
+
 object PayloadValidatorPlugin extends AMFPayloadValidationPlugin with JsonSchemaSecrets {
 
   override def canValidate(shape: Shape, env: Environment): Boolean = {
@@ -173,7 +183,7 @@ object PayloadValidatorPlugin extends AMFPayloadValidationPlugin with JsonSchema
 
   override def dependencies(): Seq[AMFPlugin] = Nil
 
-  override def init(): Future[AMFPlugin] = Future.successful(this)
+  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful(this)
 
   override val payloadMediaType: Seq[String] = Seq("application/json", "application/yaml", "text/vnd.yaml")
 

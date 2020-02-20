@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.common
 
+import amf.client.execution.BaseExecutionEnvironment
 import amf.core.AMFSerializer
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, ShapeRenderOptions, SpecOrdering}
@@ -8,6 +9,7 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.parser.Position
 import amf.core.remote.JsonSchema
 import amf.core.services.RuntimeSerializer
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.annotations.{GeneratedJSONSchema, JSONSchemaRoot, ParsedJSONSchema}
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   CompactJsonSchemaEmitterContext,
@@ -21,22 +23,28 @@ import amf.plugins.domain.shapes.models.AnyShape
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 
-trait JsonSchemaSerializer {
+import scala.concurrent.ExecutionContext
+
+trait JsonSchemaSerializer extends PlatformSecrets {
   // todo, check if its resolved?
   // todo lexical ordering?
 
-  protected def toJsonSchema(element: AnyShape): String = {
+  protected def toJsonSchema(element: AnyShape, exec: BaseExecutionEnvironment): String = {
     element.annotations.find(classOf[ParsedJSONSchema]) match {
       case Some(a) => a.rawText
       case _ =>
         element.annotations.find(classOf[GeneratedJSONSchema]) match {
           case Some(g) => g.rawText
-          case _       => generateJsonSchema(element)
+          case _       => generateJsonSchema(element, exec = exec)
         }
     }
   }
 
-  protected def generateJsonSchema(element: AnyShape, options: ShapeRenderOptions = ShapeRenderOptions()): String = {
+  protected def generateJsonSchema(element: AnyShape,
+                                   options: ShapeRenderOptions = ShapeRenderOptions(),
+                                   exec: BaseExecutionEnvironment): String = {
+    implicit val executionContext: ExecutionContext = exec.executionContext
+
     AMFSerializer.init()
     val originalId = element.id
     val document   = Document().withDeclares(Seq(fixNameIfNeeded(element)) ++ element.closureShapes)

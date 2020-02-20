@@ -3,12 +3,14 @@ package amf.client
 import amf.client.convert.ClientPayloadPluginConverter
 import amf.client.convert.CoreClientConverters._
 import amf.client.environment.Environment
+import amf.client.execution.BaseExecutionEnvironment
 import amf.client.model.document.{BaseUnit, Dialect}
 import amf.client.parse._
 import amf.client.plugins.{AMFPlugin, ClientAMFPayloadValidationPlugin}
 import amf.client.render._
 import amf.client.resolve._
 import amf.client.validate.ValidationReport
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.webapi.validation.PayloadValidatorPlugin
 import amf.plugins.document.{Vocabularies, WebApi}
 import amf.plugins.features.AMFValidation
@@ -19,14 +21,14 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 @JSExportTopLevel("AMF")
-object AMF {
+object AMF extends PlatformSecrets {
 
-  def init(): ClientFuture[Unit] = {
-    WebApi.register()
+  def init(executionEnvironment: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): ClientFuture[Unit] = {
+    WebApi.register(executionEnvironment)
     Vocabularies.register()
     AMFValidation.register()
     amf.Core.registerPlugin(PayloadValidatorPlugin)
-    amf.Core.init()
+    amf.Core.init(executionEnvironment)
   }
 
   def raml10Parser(): Raml10Parser = new Raml10Parser()
@@ -56,6 +58,13 @@ object AMF {
                env: Environment): ClientFuture[ValidationReport] =
     Core.validate(model, profileName, messageStyle, env)
 
+  def validate(model: BaseUnit,
+               profileName: ProfileName,
+               messageStyle: MessageStyle,
+               env: ClientOption[Environment],
+               executionEnvironment: BaseExecutionEnvironment): ClientFuture[ValidationReport] =
+    Core.validateWithExecutionEnvironment(model, profileName, messageStyle, env, executionEnvironment)
+
   /**
     * This method receives a resolved model. Don't use it with an unresolved one.
     */
@@ -73,17 +82,33 @@ object AMF {
                        env: Environment): ClientFuture[ValidationReport] =
     Core.validateResolved(model, profileName, messageStyle, env)
 
+  def validateResolved(model: BaseUnit,
+                       profileName: ProfileName,
+                       messageStyle: MessageStyle,
+                       env: ClientOption[Environment],
+                       executionEnvironment: BaseExecutionEnvironment): ClientFuture[ValidationReport] =
+    Core.validateResolvedWithExecutionEnvironment(model, profileName, messageStyle, env, executionEnvironment)
+
   def loadValidationProfile(url: String): ClientFuture[ProfileName] = Core.loadValidationProfile(url)
 
   def loadValidationProfile(url: String, env: Environment): ClientFuture[ProfileName] =
     Core.loadValidationProfile(url, env)
+
+  def loadValidationProfileWithExecutionEnvironment(
+      url: String,
+      env: ClientOption[Environment],
+      executionEnvironment: BaseExecutionEnvironment): ClientFuture[ProfileName] =
+    Core.loadValidationProfileWithExecutionEnvironment(url, env, executionEnvironment)
 
   def emitShapesGraph(profileName: ProfileName): String =
     Core.emitShapesGraph(profileName)
 
   def registerNamespace(alias: String, prefix: String): Boolean = Core.registerNamespace(alias, prefix)
 
-  def registerDialect(url: String): ClientFuture[Dialect] = Vocabularies.registerDialect(url)
+  def registerDialect(
+      url: String,
+      executionEnvironment: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): ClientFuture[Dialect] =
+    Vocabularies.registerDialect(url, executionEnvironment)
 
   def resolveRaml10(unit: BaseUnit): BaseUnit = new Raml10Resolver().resolve(unit)
 

@@ -29,8 +29,7 @@ import org.yaml.model._
 import org.yaml.parser.{JsonParser, YamlParser}
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class ExampleUnknownException(e: Throwable) extends RuntimeException(e)
 class InvalidJsonObject(e: Throwable)       extends RuntimeException(e)
@@ -43,16 +42,19 @@ abstract class PlatformPayloadValidator(shape: Shape, env: Environment) extends 
   override val defaultSeverity: String = SeverityLevels.VIOLATION
   protected def getReportProcessor(profileName: ProfileName): ValidationProcessor
 
-  override def isValid(mediaType: String, payload: String): Future[Boolean] = {
+  override def isValid(mediaType: String, payload: String)(
+      implicit executionContext: ExecutionContext): Future[Boolean] = {
     Future(validateForPayload(mediaType, payload, BooleanValidationProcessor))
   }
 
-  override def validate(mediaType: String, payload: String): Future[AMFValidationReport] = {
+  override def validate(mediaType: String, payload: String)(
+      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     Future(
       validateForPayload(mediaType, payload, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
   }
 
-  override def validate(fragment: PayloadFragment): Future[AMFValidationReport] = {
+  override def validate(fragment: PayloadFragment)(
+      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
     Future(validateForFragment(fragment, getReportProcessor(ProfileNames.AMF)).asInstanceOf[AMFValidationReport])
   }
 

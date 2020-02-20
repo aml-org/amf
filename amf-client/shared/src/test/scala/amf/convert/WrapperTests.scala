@@ -67,7 +67,7 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
   private val recursiveAdditionalProperties =
     "file://amf-client/shared/src/test/resources/recursive/recursive-additional-properties.yaml"
 
-  def testVocabulary(file: String, numClasses: Int, numProperties: Int) = {
+  def testVocabulary(file: String, numClasses: Int, numProperties: Int): Future[Assertion] = {
     for {
       _    <- AMF.init().asFuture
       unit <- amf.Core.parser(Aml.name, "application/yaml").parseFileAsync(file).asFuture
@@ -885,9 +885,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
         |      "200":
         |       description: a descrip""".stripMargin
     for {
-      _         <- AMF.init().asFuture
-      doc       <- Future { buildBasicApi() }
-      generated <- new Renderer(Oas20.name, "application/yaml").generateString(doc).asFuture
+      _   <- AMF.init().asFuture
+      doc <- Future { buildBasicApi() }
+      generated <- new Renderer(Oas20.name, "application/yaml", None)
+        .generateString(doc)
+        .asFuture
     } yield {
       val deltas = Diff.ignoreAllSpace.diff(expected, generated)
       if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))
@@ -921,9 +923,11 @@ trait WrapperTests extends AsyncFunSuite with Matchers with NativeOps {
          |      name:
          |        type: string""".stripMargin
     for {
-      _         <- AMF.init().asFuture
-      doc       <- Future { buildApiWithTypeTarget() }
-      generated <- new Renderer(Oas20.name, "application/yaml").generateString(doc).asFuture
+      _   <- AMF.init().asFuture
+      doc <- Future { buildApiWithTypeTarget() }
+      generated <- new Renderer(Oas20.name, "application/yaml", None)
+        .generateString(doc)
+        .asFuture
     } yield {
       val deltas = Diff.ignoreAllSpace.diff(expected, generated)
       if (deltas.nonEmpty) fail("Expected and golden are different: " + Diff.makeString(deltas))

@@ -61,13 +61,13 @@ class ShapeToRamlDatatypeTest extends AsyncFunSuite with FileAssertionTest {
   private def cycle(sourceFile: String,
                     goldenFile: String,
                     findShapeFunc: BaseUnit => Option[AnyShape] = generalFindShapeFunc,
-                    renderFn: AnyShape => String = (a: AnyShape) => a.toRamlDatatype): Future[Assertion] = {
+                    renderFn: AnyShape => String = (a: AnyShape) => a.toRamlDatatype()): Future[Assertion] = {
     val ramlDatatype: Future[String] = for {
       _ <- Validation(platform)
       sourceUnit <- AMFCompiler(basePath + sourceFile, platform, OasJsonHint, eh = DefaultParserErrorHandler.withRun())
         .build()
     } yield {
-      findShapeFunc(Oas20Plugin.resolve(sourceUnit, UnhandledErrorHandler)).map(_.toRamlDatatype).getOrElse("")
+      findShapeFunc(Oas20Plugin.resolve(sourceUnit, UnhandledErrorHandler)).map(_.toRamlDatatype()).getOrElse("")
     }
     ramlDatatype.flatMap { writeTemporaryFile(goldenFile) }.flatMap(assertDifferences(_, goldenPath + goldenFile))
   }
