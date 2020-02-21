@@ -7,7 +7,8 @@ import amf.core.model.domain.{DomainElement, Shape}
 import amf.core.utils.RegexConverter
 import amf.core.validation.{AMFValidationResult, SeverityLevels}
 import amf.internal.environment.Environment
-import amf.plugins.document.webapi.validation.json.{JSONObject, JSONTokenerHack}
+import amf.plugins.document.webapi.validation.json.{InvalidJSONValueException, JSONObject, JSONTokenerHack}
+import amf.plugins.domain.shapes.models.ScalarShape
 import amf.validations.PayloadValidations.{
   ExampleValidationErrorSpecification,
   SchemaException => InternalSchemaException
@@ -102,15 +103,17 @@ class JvmPayloadValidator(val shape: Shape, val validationMode: ValidationMode, 
   override protected def loadJson(text: String): Object = {
     try new JSONTokenerHack(text).nextValue()
     catch {
-      case e: JSONException => throw new InvalidJsonObject(e)
+      case e: InvalidJSONValueException => throw new InvalidJsonValue(e)
+      case e: JSONException             => throw new InvalidJsonObject(e)
     }
   }
 
   override protected def getReportProcessor(profileName: ProfileName): ValidationProcessor =
-    JvmReportValidationProcessor(profileName)
+    JvmReportValidationProcessor(profileName, shape)
 }
 
-case class JvmReportValidationProcessor(override val profileName: ProfileName) extends ReportValidationProcessor {
+case class JvmReportValidationProcessor(override val profileName: ProfileName, val shape: Shape)
+    extends ReportValidationProcessor {
 
   override def processException(r: Throwable, element: Option[DomainElement]): Return = {
     val results = r match {
@@ -130,11 +133,27 @@ case class JvmReportValidationProcessor(override val profileName: ProfileName) e
             source = e
           ))
 
+      case e: InvalidJsonValue if shape.isInstanceOf[ScalarShape] =>
+        Seq(
+          AMFValidationResult(
+            message = s"expected type: ${formattedDatatype(shape.asInstanceOf[ScalarShape])}, found: String",
+            level = SeverityLevels.VIOLATION,
+            targetNode = element.map(_.id).getOrElse(""),
+            targetProperty = None,
+            validationId = ExampleValidationErrorSpecification.id,
+            position = element.flatMap(_.position()),
+            location = element.flatMap(_.location()),
+            source = e
+          ))
+
       case other =>
         super.processCommonException(other, element)
     }
     processResults(results)
   }
+
+  private def formattedDatatype(scalarShape: ScalarShape): String =
+    scalarShape.dataType.value().split("#").last.capitalize
 
   private def iterateValidations(validationException: ValidationException,
                                  element: Option[DomainElement]): Seq[AMFValidationResult] = {
