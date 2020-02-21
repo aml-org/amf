@@ -10,3 +10,5 @@ trait BindingVersion {
                              ApiBinding + "bindingVersion",
                              ModelDoc(ModelVocabularies.ApiBinding, "bindingVersion", "The version of this binding"))
 }
+
+object BindingVersion extends BindingVersion

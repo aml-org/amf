@@ -98,8 +98,8 @@ object AsyncChannelBindingsParser extends AsyncBindingsParser {
     val map     = entry.value.as[YMap]
 
     map.key("method", WebSocketsChannelBindingModel.Method in binding)
-    map.key("query", entry => parseSchema(WebSocketsChannelBindingModel.Query, binding, entry, parent))   // TODO validate as object
-    map.key("headers", entry => parseSchema(WebSocketsChannelBindingModel.Query, binding, entry, parent)) // TODO validate as object
+    map.key("query", entry => parseSchema(WebSocketsChannelBindingModel.Query, binding, entry, parent))     // TODO validate as object
+    map.key("headers", entry => parseSchema(WebSocketsChannelBindingModel.Headers, binding, entry, parent)) // TODO validate as object
     parseBindingVersion(binding, WebSocketsChannelBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding.id, map, "wsChannelBinding")

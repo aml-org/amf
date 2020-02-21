@@ -7,6 +7,7 @@
   "paths": {
     "/resource": {
       "get": {
+        "x-a": "stringValue4",
         "parameters": [
           {
             "x-amf-mediaType": "application/json",
@@ -27,8 +28,7 @@
             }
           }
         ],
-        "responses": {},
-        "x-a": "stringValue4"
+        "responses": {}
       },
       "x-a": "stringValue3"
     }

@@ -98,7 +98,7 @@ trait RamlEmitterVersionFactory extends SpecEmitterFactory {
     : (ParametrizedSecurityScheme, SpecOrdering) => ParametrizedSecuritySchemeEmitter =
     RamlParametrizedSecuritySchemeEmitter.apply
 
-  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => SecurityRequirementEmitter =
+  override def securityRequirementEmitter: (SecurityRequirement, SpecOrdering) => AbstractSecurityRequirementEmitter =
     RamlSecurityRequirementEmitter.apply
 
   def payloadsEmitter: (String, FieldEntry, SpecOrdering, Seq[BaseUnit]) => RamlPayloadsEmitter

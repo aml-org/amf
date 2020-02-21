@@ -36,12 +36,16 @@ case class AsyncParameterParser(parentId: String, definitionEntry: YMapEntry)(im
     map.key("location", ParameterModel.Binding in param)
 
     if (param.binding.isNullOrEmpty) {
-      param.set(ParameterModel.Binding, AmfScalar("path"), Annotations() += SynthesizedField())
+      inferAsUriParameter(param)
     }
 
     AnnotationParser(param, map).parse()
     ctx.closedShape(param.id, map, "parameter")
     param
+  }
+
+  private def inferAsUriParameter(param: Parameter) = {
+    param.set(ParameterModel.Binding, AmfScalar("path"), Annotations() += SynthesizedField())
   }
 
   def parseSchema(map: YMap, param: Parameter): Unit = {

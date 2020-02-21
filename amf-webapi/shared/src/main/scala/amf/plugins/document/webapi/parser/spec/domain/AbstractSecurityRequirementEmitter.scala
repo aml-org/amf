@@ -70,45 +70,13 @@ case class OasWithExtensionsSecurityRequirementsEmitter(key: String, f: FieldEnt
   override def position(): Position = pos(f.value.annotations)
 }
 
-abstract class SecurityRequirementEmitter(securityRequirement: SecurityRequirement, ordering: SpecOrdering)
+abstract class AbstractSecurityRequirementEmitter(securityRequirement: SecurityRequirement, ordering: SpecOrdering)
     extends PartEmitter
 
-case class OasSecurityRequirementEmitter(requirement: SecurityRequirement, ordering: SpecOrdering)
-    extends SecurityRequirementEmitter(requirement, ordering) {
-
-  override def emit(b: PartBuilder): Unit = {
-    b.obj { eb =>
-      requirement.schemes.foreach { parametrizedScheme =>
-        val fs = parametrizedScheme.fields
-        fs.entry(ParametrizedSecuritySchemeModel.Settings) match {
-          case Some(f) =>
-            val scopes = f.element match {
-              case settings: OAuth2Settings =>
-                settings.flows.headOption.toList
-                  .flatMap { flow =>
-                    flow.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
-                  }
-              case settings: OpenIdConnectSettings =>
-                settings.scopes.map(s => ScalarEmitter(AmfScalar(s.name.value(), s.annotations)))
-              case _ => // we cant emit, if its not 2.0 isnt valid in oas.
-                Nil
-            }
-
-            eb.entry(parametrizedScheme.name.value(), _.list(traverse(ordering.sorted(scopes), _)))
-
-          case None =>
-            eb.entry(parametrizedScheme.name.value(), _.list(_ => {}))
-        }
-      }
-    }
-  }
-
-  override def position(): Position = pos(requirement.annotations)
-}
 
 case class RamlSecurityRequirementEmitter(requirement: SecurityRequirement, ordering: SpecOrdering)(
     implicit spec: SpecEmitterContext)
-    extends SecurityRequirementEmitter(requirement, ordering) {
+    extends AbstractSecurityRequirementEmitter(requirement, ordering) {
   override def emit(b: PartBuilder): Unit = {
     requirement.schemes.foreach { scheme =>
       RamlParametrizedSecuritySchemeEmitter(scheme, ordering).emit(b)
