@@ -63,14 +63,14 @@ package object spec {
     }
 
     def appendParameterDefinitionsPrefix(url: String, asHeader: Boolean = false)(
-        implicit spec: OasSpecEmitterContext): String = {
+        implicit spec: SpecEmitterContext): String = {
       if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
         appendOas3ComponentsPrefix(url, "parameters")
       else
         appendPrefix(parameterDefinitionsPrefix, url)
     }
 
-    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: OasSpecEmitterContext): String = {
+    def appendResponsesDefinitionsPrefix(url: String)(implicit spec: SpecEmitterContext): String = {
       if (spec.factory.isInstanceOf[Oas3SpecEmitterFactory])
         appendOas3ComponentsPrefix(url, "responses")
       else

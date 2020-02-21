@@ -86,7 +86,12 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
         api.set(WebApiModel.EndPoints, AmfArray(endpoints), Annotations(entry.value))
       }
     )
-    map.key("externalDocs", WebApiModel.Documentations in api using (OasLikeCreativeWorkParser.parse(_, api.id)))
+    map.key(
+      "externalDocs",
+      entry => {
+        api.set(WebApiModel.Documentations, OasLikeCreativeWorkParser(entry.value, api.id).parse())
+      }
+    )
     map.key("servers", entry => {
       val servers = AsyncServersParser(entry.value.as[YMap], api).parse()
       api.withServers(servers)
@@ -121,7 +126,7 @@ case class IdentifierParser(entry: YMapEntry, webApi: WebApi, override implicit 
     entry.value.tagType match {
       case YType.Str =>
         val id = entry.value.toString
-        webApi.withIdentifier(id)
+        webApi.set(WebApiModel.Identifier, AmfScalar(id), Annotations(entry))
       case _ =>
         ctx.eh.violation(InvalidIdentifier, webApi.id, "'id' must be a string", entry.location)
     }
