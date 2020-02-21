@@ -198,6 +198,21 @@
                                     "@type": [
                                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                     ],
+                                    "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
+                                      {
+                                        "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/default/array/default/items/array/items/source-map/external-fragment-ref/element_0",
+                                        "http://a.ml/vocabularies/document-source-maps#element": [
+                                          {
+                                            "@value": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/default/array/default/items/array/items"
+                                          }
+                                        ],
+                                        "http://a.ml/vocabularies/document-source-maps#value": [
+                                          {
+                                            "@value": "Pet.json"
+                                          }
+                                        ]
+                                      }
+                                    ],
                                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                                       {
                                         "@id": "file://amf-client/shared/src/test/resources/upanddown/petstore/petstore.json#/web-api/end-points/%2Fpets/get/200/default/array/default/items/array/items/source-map/lexical/element_0",

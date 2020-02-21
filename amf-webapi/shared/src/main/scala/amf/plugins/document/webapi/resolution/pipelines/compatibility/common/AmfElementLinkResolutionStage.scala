@@ -9,10 +9,11 @@ import amf.core.resolution.stages.elements.resolution.ReferenceResolution.ASSERT
 
 abstract class AmfElementLinkResolutionStage()(override implicit val errorHandler: ErrorHandler)
     extends ResolutionStage {
+  val resolver = new ReferenceResolution(errorHandler)
+
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
       case doc: Document =>
-        val resolver = new ReferenceResolution(errorHandler)
         doc.iterator().foreach {
           case d: DomainElement =>
             d.fields

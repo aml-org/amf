@@ -339,7 +339,7 @@
             ],
             "http://a.ml/vocabularies/shapes#range": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema",
+                "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/a1",
                 "@type": [
                   "http://www.w3.org/ns/shacl#NodeShape",
                   "http://a.ml/vocabularies/shapes#AnyShape",
@@ -347,201 +347,58 @@
                   "http://a.ml/vocabularies/shapes#Shape",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://www.w3.org/ns/shacl#closed": [
+                "http://a.ml/vocabularies/document#link-target": [
                   {
-                    "@value": false
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops/b.json#/definitions/B/schema"
                   }
                 ],
-                "http://www.w3.org/ns/shacl#property": [
+                "http://a.ml/vocabularies/document#link-label": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b",
-                    "@type": [
-                      "http://www.w3.org/ns/shacl#PropertyShape",
-                      "http://www.w3.org/ns/shacl#Shape",
-                      "http://a.ml/vocabularies/shapes#Shape",
-                      "http://a.ml/vocabularies/document#DomainElement"
-                    ],
-                    "http://www.w3.org/ns/shacl#path": [
-                      {
-                        "@id": "http://a.ml/vocabularies/data#b"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/shapes#range": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b/scalar/b",
-                        "@type": [
-                          "http://a.ml/vocabularies/shapes#ScalarShape",
-                          "http://a.ml/vocabularies/shapes#AnyShape",
-                          "http://www.w3.org/ns/shacl#Shape",
-                          "http://a.ml/vocabularies/shapes#Shape",
-                          "http://a.ml/vocabularies/document#DomainElement"
-                        ],
-                        "http://www.w3.org/ns/shacl#datatype": [
-                          {
-                            "@id": "http://www.w3.org/2001/XMLSchema#string"
-                          }
-                        ],
-                        "http://www.w3.org/ns/shacl#name": [
-                          {
-                            "@value": "b"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#sources": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b/scalar/b/source-map",
-                            "@type": [
-                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b/scalar/b/source-map/type-property-lexical-info/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b/scalar/b"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(9,10)-(9,16)]"
-                                  }
-                                ]
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#lexical": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b/scalar/b/source-map/lexical/element_1",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b/scalar/b"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(8,8)-(10,9)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b/scalar/b/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://www.w3.org/ns/shacl#datatype"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(9,10)-(9,26)]"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#minCount": [
-                      {
-                        "@value": 0
-                      }
-                    ],
-                    "http://www.w3.org/ns/shacl#name": [
-                      {
-                        "@value": "b"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#sources": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b/source-map",
-                        "@type": [
-                          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#lexical": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/property/b"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(8,8)-(10,9)]"
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
+                    "@value": "b.json#/definitions/B"
+                  }
+                ],
+                "http://a.ml/vocabularies/document#recursive": [
+                  {
+                    "@value": true
                   }
                 ],
                 "http://www.w3.org/ns/shacl#name": [
                   {
-                    "@value": "schema"
-                  }
-                ],
-                "http://a.ml/vocabularies/core#description": [
-                  {
-                    "@value": "Comment describing your JSON Schema"
+                    "@value": "a1"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/a1/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#type-property-lexical-info": [
+                    "http://a.ml/vocabularies/document-source-maps#external-fragment-ref": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/source-map/type-property-lexical-info/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/a1/source-map/external-fragment-ref/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema"
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/a1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(6,6)-(6,12)]"
+                            "@value": "b.json#/definitions/B"
                           }
                         ]
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/source-map/lexical/element_2",
+                        "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/a1/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "http://www.w3.org/ns/shacl#property"
+                            "@value": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/a1"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(7,6)-(11,7)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/core#description"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(5,6)-(5,58)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema/source-map/lexical/element_1",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "file://amf-client/shared/src/test/resources/production/raml08/definitions-loops-crossfiles/api.raml#/declarations/schemas/someSchema/property/a1/schema"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(3,9)-(12,5)]"
+                            "@value": "[(6,4)-(8,5)]"
                           }
                         ]
                       }

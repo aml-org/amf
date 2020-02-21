@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
+import amf.core.annotations.{ExplicitField, ExternalFragmentRef, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
-import amf.core.annotations.{ExplicitField, NilUnion}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -451,22 +450,17 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             tmpShape.unresolved(text, e, "warning").withSupportsRecursion(true)
             Some(tmpShape)
           case Some(jsonSchemaShape) =>
-            if (ctx.declarations.fragments.contains(text)) {
-              // case when in an OAS spec we point with a regular $ref to something that is external
-              // and holds a JSON schema
-              // we need to promote an external fragment to data type fragment
-              val promotedShape =
-                ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
-              Some(
-                promotedShape
-                  .link(text, Annotations(ast))
-                  .asInstanceOf[AnyShape]
-                  .withName(name, nameAnnotations)
-                  .withSupportsRecursion(true))
-            } else {
+            // case when in an OAS spec we point with a regular $ref to something that is external and holds a JSON
+            // schema we need to promote an external fragment to data type fragment
+            val promotedShape =
+              ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
+            Some(
+              promotedShape
+                .link(text, Annotations(ast) += ExternalFragmentRef(ref))
+                .asInstanceOf[AnyShape]
+                .withName(name, nameAnnotations)
+                .withSupportsRecursion(true))
 
-              Some(jsonSchemaShape)
-            }
         }
     }
   }
@@ -1022,10 +1016,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     required
       .foreach {
         case (name, nodes) if nodes.size > 1 =>
-          ctx.eh.violation(DuplicateRequiredItem,
-                           shape.id,
-                           s"'$name' is duplicated in 'required' property",
-                           nodes.last)
+          ctx.eh.violation(DuplicateRequiredItem, shape.id, s"'$name' is duplicated in 'required' property", nodes.last)
         case _ => // ignore
       }
 
