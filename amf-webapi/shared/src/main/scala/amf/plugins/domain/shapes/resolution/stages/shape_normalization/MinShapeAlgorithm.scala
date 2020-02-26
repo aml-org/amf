@@ -198,7 +198,10 @@ private[stages] class MinShapeAlgorithm()(implicit val context: NormalizationCon
   }
 
   protected def computeMinScalar(baseScalar: ScalarShape, superScalar: ScalarShape): ScalarShape = {
-    computeNarrowRestrictions(ScalarShapeModel.fields, baseScalar, superScalar)
+    computeNarrowRestrictions(ScalarShapeModel.fields,
+                              baseScalar,
+                              superScalar,
+                              filteredFields = Seq(ScalarShapeModel.Examples))
     baseScalar
   }
 

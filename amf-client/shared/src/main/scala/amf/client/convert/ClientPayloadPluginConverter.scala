@@ -49,7 +49,8 @@ object ClientPayloadPluginConverter {
             validator.validate(payload, mediaType).asInternal
           override def validate(payloadFragment: InternalPayloadFragment): Future[AMFValidationReport] =
             validator.validate(payloadFragment).asInternal
-
+          override def syncValidate(mediaType: String, payload: String): AMFValidationReport =
+            validator.syncValidate(mediaType, payload)
           override def isValid(payload: String, mediaType: String): Future[Boolean] =
             validator.isValid(payload, mediaType).asInternal
         }
