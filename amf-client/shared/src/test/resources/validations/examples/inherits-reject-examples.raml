@@ -1,0 +1,16 @@
+#%RAML 1.0
+
+title: Complex inherits should reject examples
+
+types:
+  A:
+    type: string
+  B:
+    type: object
+    properties:
+      b1:
+        type: A
+        example: "This is a long example"
+  C:
+    type: A
+    maxLength: 3
