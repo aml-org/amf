@@ -32,7 +32,7 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
       .foreach { entry =>
         entries += entry
         parameters = parameters.add(
-          OasParametersParser(entry.value.as[Seq[YNode]], request.getOrCreate.id).parse(inRequest = true))
+          OasParametersParser(entry.value.as[Seq[YNode]], request.getOrCreate.id).parse(inRequestOrEndpoint = true))
       }
 
     map
