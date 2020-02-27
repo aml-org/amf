@@ -697,7 +697,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
 
   private case class ParameterInformation(oasParam: OasParameter, name: String, binding: String)
 
-  def parse(inRequest: Boolean = false): Parameters = {
+  def parse(inRequestOrEndpoint: Boolean = false): Parameters = {
     val nameGenerator = new IdCounter()
     val oasParameters = values
       .map(value => ctx.factory.parameterParser(Right(value), parentId, None, nameGenerator).parse)
@@ -707,13 +707,13 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
 
     validateDuplicated(oasParameters)
 
-    if (inRequest) {
+    if (inRequestOrEndpoint) {
       if (body.nonEmpty && formData.nonEmpty) {
         val bodyParam = body.head
         ctx.eh.violation(
           OasBodyAndFormDataParameterSpecification,
           bodyParam.domainElement.id,
-          "Cannot declare body and formData params at the same time for a request",
+          "Cannot declare 'body' and 'formData' params at the same time for a request or resource",
           bodyParam.ast.get
         )
       }
@@ -790,7 +790,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
         ctx.eh.violation(
           id,
           param.domainElement.id,
-          "Cannot declare more than one body parameter for a request",
+          "Cannot declare more than one 'body' parameter for a request or a resource",
           param.ast.get
         )
       }

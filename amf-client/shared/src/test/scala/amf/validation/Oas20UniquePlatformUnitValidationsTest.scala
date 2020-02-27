@@ -24,4 +24,8 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Empty array for parametrized security schemes") {
     validate("invalid-security-array.json", Some("invalid-security-array.report"), Oas20Profile)
   }
+
+  test("Duplicated body parameter at endpoint level") {
+    validate("invalid-duplicated-body-parameter.json", Some("invalid-duplicated-body-parameter.report"), Oas20Profile)
+  }
 }
