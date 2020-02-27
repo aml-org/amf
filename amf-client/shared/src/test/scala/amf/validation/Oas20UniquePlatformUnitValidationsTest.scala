@@ -14,6 +14,10 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   }
 
   test("invalid ref inside paths object") {
-    validate("invalid-ref-inside-paths-object.json", Some("invalid-ref-inside-paths-object.report"), Oas30Profile)
+    validate("invalid-ref-inside-paths-object.json", Some("invalid-ref-inside-paths-object.report"), Oas20Profile)
+  }
+
+  test("Required license name") {
+    validate("mandatory-license-name.json", Some("mandatory-license-name.report"), Oas20Profile)
   }
 }

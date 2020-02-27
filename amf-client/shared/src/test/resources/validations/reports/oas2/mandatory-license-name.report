@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/oas2/mandatory-license-name.json
+Profile: OAS 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#mandatory-license-name
+  Message: Name is mandatory in License object
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/oas2/mandatory-license-name.json#/web-api/license
+  Property: http://a.ml/vocabularies/core#name
+  Position: Some(LexicalInformation([(6,15)-(6,17)]))
+  Location: file://amf-client/shared/src/test/resources/validations/oas2/mandatory-license-name.json
