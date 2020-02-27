@@ -20,4 +20,8 @@ class Oas20UniquePlatformUnitValidationsTest extends UniquePlatformReportGenTest
   test("Required license name") {
     validate("mandatory-license-name.json", Some("mandatory-license-name.report"), Oas20Profile)
   }
+
+  test("Empty array for parametrized security schemes") {
+    validate("invalid-security-array.json", Some("invalid-security-array.report"), Oas20Profile)
+  }
 }
