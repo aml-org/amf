@@ -69,16 +69,13 @@ case class OasLikeSecurityRequirementParser(node: YNode,
         val scopes   = getScopes(schemeEntry)
         scheme.set(ParametrizedSecuritySchemeModel.Settings,
                    settings.setArray(OpenIdConnectSettingsModel.Scopes, scopes, Annotations(schemeEntry.value)))
-      } else
-        schemeEntry.value.tag.tagType match {
-          case YType.Seq if schemeEntry.value.as[Seq[YNode]].nonEmpty =>
-            val msg = declaration.`type`.option() match {
-              case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
-              case None             => "Scopes array must be empty for given security scheme"
-            }
-            ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
-          case _ =>
+      } else if (schemeEntry.value.as[Seq[YNode]].nonEmpty) {
+        val msg = declaration.`type`.option() match {
+          case Some(schemeType) => s"Scopes array must be empty for security scheme type $schemeType"
+          case None             => "Scopes array must be empty for given security scheme"
         }
+        ctx.eh.violation(ScopeNamesMustBeEmpty, scheme.id, msg, node)
+      }
     }
 
     private def parseTarget(name: String, scheme: ParametrizedSecurityScheme, part: YPart): SecurityScheme = {
