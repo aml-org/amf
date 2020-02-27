@@ -92,7 +92,7 @@ abstract class OasEndpointParser(entry: YMapEntry, producer: String => EndPoint,
       .key("parameters")
       .foreach { entry =>
         entries += entry
-        parameters = parameters.add(OasParametersParser(entry.value.as[Seq[YNode]], endpoint.id).parse())
+        parameters = parameters.add(OasParametersParser(entry.value.as[Seq[YNode]], endpoint.id).parse(true))
       }
     // This is because there may be complex path parameters coming from RAML1
     map.key("uriParameters".asOasExtension).foreach { entry =>

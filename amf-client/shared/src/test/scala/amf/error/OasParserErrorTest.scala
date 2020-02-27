@@ -41,7 +41,7 @@ class OasParserErrorTest extends ParserErrorTest {
       "/error/invalid-body-parameter.json",
       violation => {
         violation.level should be("Violation")
-        violation.message should be("Cannot declare more than one body parameter for a request")
+        violation.message should be("Cannot declare more than one 'body' parameter for a request or a resource")
         violation.position.map(_.range) should be(Some(Range((22, 13), (33, 11))))
       }
     )
