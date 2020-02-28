@@ -1,0 +1,24 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api",
+    "version": "1.0",
+    "description": "some api"
+  },
+  "paths": {
+    "/some": {}
+  },
+  "definitions": {
+    "my type": {
+      "type": "object",
+      "properties": {
+        "my.property": {
+          "type": "string"
+        }
+      }
+    },
+    "another.type": {
+      "$ref": "#/definitions/my type"
+    }
+  }
+}
