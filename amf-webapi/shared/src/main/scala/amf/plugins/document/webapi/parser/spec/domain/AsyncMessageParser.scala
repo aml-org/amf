@@ -4,6 +4,7 @@ import amf.core.metamodel.Field
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.spec.async.{MessageType, Publish, Subscribe}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{
   JSONSchemaDraft7SchemaVersion,
@@ -27,16 +28,6 @@ import amf.plugins.domain.webapi.metamodel.{
 import amf.plugins.domain.webapi.models.{CorrelationId, Message, Parameter, Payload, Request, Response}
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-
-sealed trait MessageType {
-  def field: Field
-}
-case object Publish extends MessageType {
-  override def field: Field = OperationModel.Request
-}
-case object Subscribe extends MessageType {
-  override def field: Field = OperationModel.Responses
-}
 
 case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: MessageType)(
     implicit val ctx: AsyncWebApiContext)

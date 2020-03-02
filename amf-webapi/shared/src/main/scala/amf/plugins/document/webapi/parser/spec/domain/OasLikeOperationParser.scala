@@ -8,6 +8,7 @@ import amf.core.utils.{IdCounter, _}
 import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
+import amf.plugins.document.webapi.parser.spec.async.AsyncHelper
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
@@ -19,7 +20,6 @@ import amf.plugins.document.webapi.parser.spec.oas.{
   Oas30RequestParser
 }
 import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel, WebApiModel}
-import amf.plugins.domain.webapi.models.security.SecurityRequirement
 import amf.plugins.domain.webapi.models.{Operation, Request, Response}
 import amf.validations.ParserSideValidations.DuplicatedOperationId
 import org.yaml.model._
@@ -209,10 +209,10 @@ case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)
 
     map.key(
       "message",
-      entry =>
-        messageType() foreach { msgType =>
-          val messages = AsyncMessageParser(operation.id, entry.value.as[YMap], msgType).parse()
-          operation.setArray(msgType.field, messages, Annotations(entry.value))
+      messageEntry =>
+        AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
+          val messages = AsyncMessageParser(operation.id, messageEntry.value.as[YMap], msgType).parse()
+          operation.setArray(msgType.field, messages, Annotations(messageEntry.value))
       }
     )
 
@@ -224,15 +224,6 @@ case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)
     }
 
 //    map.key("traits", OperationModel. in operation)
-
     operation
   }
-
-  private def messageType(): Option[MessageType] =
-    entry.key.value match {
-      case scalar: YScalar if scalar.text == "publish"   => Some(Publish)
-      case scalar: YScalar if scalar.text == "subscribe" => Some(Subscribe)
-      // invalid message type is validated with closed shape of pathItem
-      case _ => None
-    }
 }

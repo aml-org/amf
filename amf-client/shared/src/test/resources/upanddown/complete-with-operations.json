@@ -1,111 +1,111 @@
-  {
-    "swagger": "2.0",
-    "info": {
-      "title": "test title",
-      "description": "test description",
-      "termsOfService": "terms of service",
-      "version": "1.1",
-      "license": {
-        "url": "http://test.com/licenseUrl",
-        "name": "licenseName"
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "test title",
+    "description": "test description",
+    "termsOfService": "terms of service",
+    "version": "1.1",
+    "license": {
+      "url": "http://test.com/licenseUrl",
+      "name": "licenseName"
+    },
+    "contact": {
+      "url": "http://test.com/contactUrl",
+      "name": "contactName",
+      "email": "contactEmail"
+    }
+  },
+  "host": "api.example.com",
+  "basePath": "/path",
+  "consumes": [
+    "application/yaml"
+  ],
+  "produces": [
+    "application/yaml"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "externalDocs": {
+    "url": "http://test.com/externalDocsUrl",
+    "description": "externalDocsDescription"
+  },
+  "paths": {
+    "/levelzero": {
+      "x-amf-displayName": "Name",
+      "get": {
+        "operationId": "Some title",
+        "description": "Some description",
+        "summary": "This is a summary",
+        "externalDocs": {
+          "url": "http://test.com/urlExternalDocs",
+          "description": "descriptionExternalDocs"
+        },
+        "deprecated": true,
+        "schemes": [
+          "http",
+          "https"
+        ],
+        "consumes": [
+          "application/xml"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {}
       },
-      "contact": {
-        "url": "http://test.com/contactUrl",
-        "name": "contactName",
-        "email": "contactEmail"
+      "post": {
+        "operationId": "other some title",
+        "description": "other some description",
+        "externalDocs": {
+          "url": "http://test.com/urlExternalDocs",
+          "description": "descriptionExternalDocs"
+        },
+        "schemes": [
+          "http",
+          "https"
+        ],
+        "responses": {}
       }
     },
-    "host": "api.example.com",
-    "basePath": "/path",
-    "consumes": [
-      "application/yaml"
-    ],
-    "produces": [
-      "application/yaml"
-    ],
-    "schemes": [
-      "http",
-      "https"
-    ],
-    "externalDocs": {
-      "url": "http://test.com/externalDocsUrl",
-      "description": "externalDocsDescription"
-    },
-    "paths": {
-      "/levelzero": {
-        "x-amf-displayName": "Name",
-        "get": {
-          "operationId": "Some title",
-          "description": "Some description",
-          "deprecated": true,
-          "summary": "This is a summary",
-          "externalDocs": {
-            "url": "http://test.com/urlExternalDocs",
-            "description": "descriptionExternalDocs"
-          },
-          "schemes": [
-            "http",
-            "https"
-          ],
-          "consumes": [
-            "application/xml"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {}
+    "/levelzero/level-one": {
+      "x-amf-displayName": "One display name",
+      "x-amf-description": "and this description!",
+      "get": {
+        "operationId": "Some title level one",
+        "description": "Some description level one",
+        "summary": "This is a summary level one",
+        "externalDocs": {
+          "url": "http://test.com/urlExternalDocs",
+          "description": "descriptionExternalDocs level one"
         },
-        "post": {
-          "operationId": "other some title",
-          "description": "other some description",
-          "externalDocs": {
-            "url": "http://test.com/urlExternalDocs",
-            "description": "descriptionExternalDocs"
-          },
-          "schemes": [
-            "http",
-            "https"
-          ],
-          "responses": {}
-        }
-      },
-      "/levelzero/level-one": {
-        "x-amf-displayName": "One display name",
-        "x-amf-description": "and this description!",
-        "get": {
-          "operationId": "Some title level one",
-          "description": "Some description level one",
-          "deprecated": true,
-          "summary": "This is a summary level one",
-          "externalDocs": {
-            "url": "http://test.com/urlExternalDocs",
-            "description": "descriptionExternalDocs level one"
-          },
-          "schemes": [
-            "http",
-            "https"
-          ],
-          "responses": {}
-        }
-      },
-      "/levelzero/another-level-one": {
-        "x-amf-displayName": "some other display name"
-      },
-      "/another-levelzero": {
-        "x-amf-displayName": "Root name",
-        "post": {
-          "operationId": "Some title another level 0",
-          "description": "Some description another level 0",
-          "externalDocs": {
-            "url": "http://test.com/urlExternalDocs",
-            "description": "descriptionExternalDocs another level 0"
-          },
-          "schemes": [
-            "http",
-            "https"
-          ],
-          "responses": {}
-        }
+        "deprecated": true,
+        "schemes": [
+          "http",
+          "https"
+        ],
+        "responses": {}
+      }
+    },
+    "/levelzero/another-level-one": {
+      "x-amf-displayName": "some other display name"
+    },
+    "/another-levelzero": {
+      "x-amf-displayName": "Root name",
+      "post": {
+        "operationId": "Some title another level 0",
+        "description": "Some description another level 0",
+        "externalDocs": {
+          "url": "http://test.com/urlExternalDocs",
+          "description": "descriptionExternalDocs another level 0"
+        },
+        "schemes": [
+          "http",
+          "https"
+        ],
+        "responses": {}
       }
     }
   }
+}

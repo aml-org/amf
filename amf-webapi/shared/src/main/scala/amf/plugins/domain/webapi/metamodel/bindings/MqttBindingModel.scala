@@ -1,21 +1,16 @@
 package amf.plugins.domain.webapi.metamodel.bindings
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Bool, Str, Int}
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DomainElementModel}
+import amf.core.metamodel.Type.{Bool, Int, Str}
+import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.webapi.metamodel.bindings.Amqp091MessageBindingModel.{
-  BindingVersion,
-  ContentEncoding,
-  MessageType
-}
 import amf.plugins.domain.webapi.models.bindings.mqtt.{
+  MqttMessageBinding,
   MqttOperationBinding,
   MqttServerBinding,
-  MqttServerLastWill,
-  MqttMessageBinding
+  MqttServerLastWill
 }
 
 object MqttServerBindingModel extends ServerBindingModel with BindingVersion {

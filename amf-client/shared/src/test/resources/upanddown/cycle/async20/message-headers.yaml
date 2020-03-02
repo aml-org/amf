@@ -1,0 +1,19 @@
+asyncapi: 2.0.0
+info:
+  title: API
+  version: "1.0"
+channels:
+  users/signup:
+    description: This channel is used to exchange messages about users signing up
+    subscribe:
+      summary: A user signed up.
+      message:
+        headers:
+          type: object
+          properties:
+            correlationId:
+              description: Correlation ID set by application
+              type: string
+            applicationInstanceId:
+              description: Unique identifier for a given instance of the publishing application
+              type: string
