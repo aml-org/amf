@@ -47,6 +47,7 @@ class OASSchemaVersion(override val name: String, val position: String)(implicit
                  "",
                  s"Invalid schema position '$position', only 'schema' and 'parameter' are valid")
 }
+abstract class RAMLSchemaVersion(override val name: String) extends JSONSchemaVersion(name)
 class OAS20SchemaVersion(override val position: String)(implicit eh: ErrorHandler)
     extends OASSchemaVersion("oas2.0", position)
 object OAS20SchemaVersion { def apply(position: String)(implicit eh: ErrorHandler) = new OAS20SchemaVersion(position) }
@@ -59,6 +60,7 @@ object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3")
 object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4")
 object JSONSchemaDraft7SchemaVersion extends JSONSchemaVersion("draft-7")
 object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
+case class RAML10SchemaVersion()     extends RAMLSchemaVersion("raml1.0")
 
 /**
   * OpenAPI Type Parser.
@@ -85,7 +87,6 @@ object OasTypeParser {
 
   def apply(node: YNode, name: String, adopt: Shape => Unit)(implicit ctx: OasLikeWebApiContext): OasTypeParser =
     new OasTypeParser(Right(node), name, node.as[YMap], adopt, OAS20SchemaVersion("schema")(ctx.eh))
-
 }
 
 case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
@@ -1022,7 +1023,10 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     required
       .foreach {
         case (name, nodes) if nodes.size > 1 =>
-          ctx.eh.violation(DuplicateRequiredItem, shape.id, s"'$name' is duplicated in 'required' property", nodes.last)
+          ctx.eh.violation(DuplicateRequiredItem,
+                           shape.id,
+                           s"'$name' is duplicated in 'required' property",
+                           nodes.last)
         case _ => // ignore
       }
 

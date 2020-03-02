@@ -26,7 +26,7 @@ import org.mulesoft.lexer.Position
 import scala.collection.mutable
 case class RamlJsonSchemaExpression(key: YNode,
                                     override val value: YNode,
-                                    override val adopt: Shape => Shape,
+                                    override val adopt: Shape => Unit,
                                     parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
 
@@ -143,7 +143,7 @@ case class RamlJsonSchemaExpression(key: YNode,
   private def parseJsonShape(text: String,
                              key: YNode,
                              valueAST: YNode,
-                             adopt: Shape => Shape,
+                             adopt: Shape => Unit,
                              value: YNode,
                              extLocation: Option[String]): AnyShape = {
     val url = extLocation.flatMap(ctx.declarations.fragments.get).flatMap(_.location)
@@ -239,7 +239,7 @@ case class RamlJsonSchemaExpression(key: YNode,
 
 case class RamlXmlSchemaExpression(key: YNode,
                                    override val value: YNode,
-                                   override val adopt: Shape => Shape,
+                                   override val adopt: Shape => Unit,
                                    parseExample: Boolean = false)(override implicit val ctx: RamlWebApiContext)
     extends RamlExternalTypesParser {
   override def parseValue(origin: ValueAndOrigin): SchemaShape = {
@@ -320,7 +320,7 @@ case class RamlXmlSchemaExpression(key: YNode,
 trait RamlExternalTypesParser extends RamlSpecParser with ExampleParser with RamlTypeSyntax {
 
   val value: YNode
-  val adopt: Shape => Shape
+  val adopt: Shape => Unit
   val externalType: String
   def parseValue(origin: ValueAndOrigin): AnyShape
 
