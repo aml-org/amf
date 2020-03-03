@@ -14,7 +14,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   OasLikeTagsParser,
   OasTypeParser
 }
-import amf.plugins.document.webapi.parser.spec.domain.AsyncSchemaFormats.`oas30Schema`
+import amf.plugins.document.webapi.parser.spec.async.parser.{AsyncApiTypeParser, AsyncSchemaFormats}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
@@ -114,7 +114,7 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
   private def parseHeaderSchema(entry: YMapEntry, parentId: String): Option[Parameter] = {
     val param = Parameter().withName("default-parameter", Annotations(SynthesizedField())).adopted(parentId) // set default name to avoid raw validations
     val shape =
-      OasTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)
+      AsyncApiTypeParser(entry, shape => shape.withName("schema").adopted(param.id), JSONSchemaDraft7SchemaVersion)
         .parse()
     shape.map { schema =>
       param.set(ParameterModel.Binding, AmfScalar("header"), Annotations() += SynthesizedField())
@@ -138,33 +138,12 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
 
   def parseSchema(map: YMap, payload: Payload)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key("payload").foreach { entry =>
-      val schemaVersion = getSchemaVersion(payload)
-      OasTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), schemaVersion)
+      val schemaVersion = AsyncSchemaFormats.getSchemaVersion(payload)(ctx.eh)
+      AsyncApiTypeParser(entry, shape => shape.withName("schema").adopted(payload.id), schemaVersion)
         .parse()
         .foreach(s => payload.set(PayloadModel.Schema, tracking(s, payload.id), Annotations(entry)))
     }
   }
-
-  def getSchemaVersion(payload: Payload)(implicit ctx: AsyncWebApiContext): JSONSchemaVersion =
-    Option(payload.schemaMediaType) match {
-      case Some(format) if `oas30Schema`.contains(format.value()) =>
-        OAS30SchemaVersion("schema")(ctx.eh)
-      // async20 schemas are handled with draft 7. Avro schema is not supported
-      case _ => JSONSchemaDraft7SchemaVersion
-    }
-}
-
-object AsyncSchemaFormats {
-  val `async20Schema` = List("application/vnd.aai.asyncapi;version=2.0.0",
-                             "application/vnd.aai.asyncapi+json;version=2.0.0",
-                             "application/vnd.aai.asyncapi+yaml;version=2.0.0")
-  val `oas30Schema` = List("application/vnd.oai.openapi;version=3.0.0",
-                           "application/vnd.oai.openapi+json;version=3.0.0",
-                           "application/vnd.oai.openapi+yaml;version=3.0.0")
-  val `draft7JsonSchema` = List("application/schema+json;version=draft-07", "application/schema+yaml;version=draft-07")
-  val `avroSchema` = List("application/vnd.apache.avro;version=1.9.0",
-                          "application/vnd.apache.avro+json;version=1.9.0",
-                          "application/vnd.apache.avro+yaml;version=1.9.0")
 }
 
 case class CorrelationIdParser(node: YNode, parentId: String)(implicit val ctx: AsyncWebApiContext)

@@ -13,7 +13,7 @@ import amf.validations.ParserSideValidations.InvalidTypeExpression
 import org.yaml.model.{YMapEntry, YNode, YPart, YScalar}
 protected case class ParsingResult(result: Option[Shape], remaining: Seq[Char])
 
-class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Option[YPart] = None, checking: Boolean)(
+class RamlTypeExpressionParser(adopt: Shape => Unit, var i: Int = 0, ast: Option[YPart] = None, checking: Boolean)(
     implicit ctx: WebApiContext) {
   var parsedShape: Option[Shape] = None
   var acc: String                = ""
@@ -265,7 +265,6 @@ class RamlTypeExpressionParser(adopt: Shape => Shape, var i: Int = 0, ast: Optio
 }
 
 object RamlTypeExpressionParser {
-  def apply(adopt: Shape => Shape, part: Option[YPart] = None, checking: Boolean = false)(
-      implicit ctx: WebApiContext) =
+  def apply(adopt: Shape => Unit, part: Option[YPart] = None, checking: Boolean = false)(implicit ctx: WebApiContext) =
     new RamlTypeExpressionParser(adopt, 0, part, checking)
 }

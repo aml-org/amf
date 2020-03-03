@@ -19,7 +19,7 @@ class TypeResolutionTest extends FunSuiteCycleTests with CompilerTestBuilder {
   test("TypeExpressions") {
     Validation(platform)
       .map(_ => {
-        val adopt = (shape: Shape) => { shape.adopted("/test") }
+        val adopt: Shape => Unit = shape => { shape.adopted("/test") }
 
         implicit val ctx: Raml10WebApiContext =
           new Raml10WebApiContext("", Nil, ParserContext(eh = UnhandledParserErrorHandler))
