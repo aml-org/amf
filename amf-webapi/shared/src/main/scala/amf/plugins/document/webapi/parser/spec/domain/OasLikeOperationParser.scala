@@ -18,7 +18,8 @@ import amf.plugins.document.webapi.parser.spec.oas.{
   Oas30ParametersParser,
   Oas30RequestParser
 }
-import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel}
+import amf.plugins.domain.webapi.metamodel.OperationModel.Method
+import amf.plugins.domain.webapi.metamodel.{OperationModel, ResponseModel, WebApiModel}
 import amf.plugins.domain.webapi.models.{Operation, Request, Response}
 import amf.validations.ParserSideValidations.DuplicatedOperationId
 import org.yaml.model._
@@ -32,7 +33,9 @@ abstract class OasLikeOperationParser(entry: YMapEntry, producer: String => Oper
   def parse(): Operation = {
 
     val operation: Operation = producer(ScalarNode(entry.key).string().value.toString).add(Annotations(entry))
-    val map                  = entry.value.as[YMap]
+    operation.set(Method, ScalarNode(entry.key).string()) // add lexical info
+
+    val map = entry.value.as[YMap]
 
     ctx.closedShape(operation.id, map, "operation")
 
