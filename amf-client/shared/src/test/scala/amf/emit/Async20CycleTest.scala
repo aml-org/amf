@@ -84,7 +84,7 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("RAML type - simple union", "raml-types/simple-union.yaml", "raml-types/simple-union.yaml"),
     FixtureData("RAML type - simple object", "raml-types/simple-object.yaml", "raml-types/simple-object.yaml"),
     FixtureData("RAML type - simple scalar", "raml-types/simple-scalar.yaml", "raml-types/simple-scalar.yaml"),
-//    FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.yaml"),
+    FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.yaml"),
 //    FixtureData("Channel params with refs", "references/channel-params.yaml", "references/channel-params.yaml"),
   )
 }

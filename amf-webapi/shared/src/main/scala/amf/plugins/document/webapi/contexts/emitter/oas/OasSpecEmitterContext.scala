@@ -14,12 +14,17 @@ import amf.plugins.document.webapi.contexts.emitter.{OasLikeSpecEmitterContext, 
 import amf.plugins.document.webapi.contexts.{RefEmitter, TagToReferenceEmitter}
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.document.webapi.parser.spec.domain._
-import amf.plugins.document.webapi.parser.spec.oas.emitters.OasSecurityRequirementEmitter
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{
+  OasExampleEmitters,
+  OasLikeExampleEmitters,
+  OasSecurityRequirementEmitter
+}
 import amf.plugins.document.webapi.parser.{
   CommonOasTypeDefMatcher,
   JsonSchemaTypeDefMatcher,
   OasTypeDefStringValueMatcher
 }
+import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.webapi.models.security.{ParametrizedSecurityScheme, SecurityRequirement, SecurityScheme}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, WebApi}
 import org.yaml.model.YDocument.PartBuilder
@@ -66,6 +71,10 @@ abstract class OasSpecEmitterFactory(override implicit val spec: OasSpecEmitterC
 
   override def declaredTypesEmitter: (Seq[Shape], Seq[BaseUnit], SpecOrdering) => EntryEmitter =
     OasDeclaredTypesEmitters.apply
+
+  override def exampleEmitter
+    : (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters =
+    OasExampleEmitters.apply
 }
 
 class Oas2SpecEmitterFactory(override val spec: OasSpecEmitterContext) extends OasSpecEmitterFactory()(spec) {
