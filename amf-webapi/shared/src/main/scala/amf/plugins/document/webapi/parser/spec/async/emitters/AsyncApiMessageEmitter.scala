@@ -5,14 +5,13 @@ import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.model.domain.{AmfScalar, Shape}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
-import amf.plugins.document.webapi.parser.spec.async.emitters.bindings.AsyncApiMessageBindingsEmitter
+import amf.plugins.document.webapi.parser.spec.async.parser.AsyncSchemaFormats
 import amf.plugins.document.webapi.parser.spec.declaration.AsyncSchemaEmitter
 import amf.plugins.document.webapi.parser.spec.domain.MultipleExampleEmitter
 import amf.plugins.document.webapi.parser.spec.oas.emitters.TagsEmitter
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
 import amf.plugins.domain.webapi.metamodel.{MessageModel, PayloadModel}
-import amf.plugins.domain.webapi.models.bindings.MessageBinding
 import amf.plugins.domain.webapi.models._
 import org.yaml.model.{YDocument, YNode}
 
@@ -108,12 +107,18 @@ private class AsyncApiMessageContentEmitter(message: Message, ordering: SpecOrde
 
   private def emitPayloads(f: FieldEntry, result: ListBuffer[EntryEmitter]): Unit = {
     f.arrayValues[Payload].headOption.foreach { payload =>
-      val fs = payload.fields
-
+      val fs              = payload.fields
+      val schemaMediaType = payload.schemaMediaType.option()
       fs.entry(PayloadModel.MediaType).map(field => result += ValueEmitter("contentType", field))
       fs.entry(PayloadModel.SchemaMediaType).map(field => result += ValueEmitter("schemaFormat", field))
       fs.entry(PayloadModel.Schema)
-        .map(field => result += AsyncSchemaEmitter("payload", field.element.asInstanceOf[Shape], ordering, List()))
+        .map(
+          field =>
+            result += AsyncSchemaEmitter("payload",
+                                         field.element.asInstanceOf[Shape],
+                                         ordering,
+                                         List(),
+                                         schemaMediaType))
     }
   }
 

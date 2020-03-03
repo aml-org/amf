@@ -26,6 +26,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
 }
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.spec.async.parser.AsyncSchemaFormats
 import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
@@ -1270,14 +1271,32 @@ case class OasSchemaEmitter(f: FieldEntry, ordering: SpecOrdering, references: S
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class AsyncSchemaEmitter(key: String, shape: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasLikeSpecEmitterContext)
+case class AsyncSchemaEmitter(key: String,
+                              shape: Shape,
+                              ordering: SpecOrdering,
+                              references: Seq[BaseUnit],
+                              mediaType: Option[String] = None)(implicit spec: SpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
+    val schemaVersion = AsyncSchemaFormats.getSchemaVersion(mediaType)(spec.eh)
+    schemaVersion match {
+      case RAML10SchemaVersion() => emitAsRaml(b)
+      case _                     => emitAsOas(b)
+    }
+  }
 
+  private def emitAsRaml(b: EntryBuilder): Unit = {
+    val emitters = Raml10TypeEmitter(shape, ordering, references = references)(toRaml(spec)).entries()
     b.entry(
       key,
-      OasTypePartEmitter(shape, ordering, references = references).emit(_)
+      _.obj(eb => emitters.foreach(_.emit(eb)))
+    )
+  }
+
+  private def emitAsOas(b: EntryBuilder): Unit = {
+    b.entry(
+      key,
+      OasTypePartEmitter(shape, ordering, references = references)(toOas(spec)).emit(_)
     )
   }
 
