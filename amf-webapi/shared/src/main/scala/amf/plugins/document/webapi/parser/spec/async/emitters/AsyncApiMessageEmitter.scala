@@ -7,7 +7,7 @@ import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.async.parser.AsyncSchemaFormats
 import amf.plugins.document.webapi.parser.spec.declaration.AsyncSchemaEmitter
-import amf.plugins.document.webapi.parser.spec.domain.MultipleExampleEmitter
+import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, NamedMultipleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.oas.emitters.TagsEmitter
 import amf.plugins.domain.shapes.models.{CreativeWork, Example}
 import amf.plugins.domain.webapi.annotations.OrphanOasExtension
@@ -90,7 +90,7 @@ private class AsyncApiMessageContentEmitter(message: Message, ordering: SpecOrde
           fs.entry(MessageModel.Bindings)
             .foreach(f => result += new AsyncApiBindingsEmitter(f, ordering, bindingOrphanAnnotations))
           fs.entry(MessageModel.Examples)
-            .foreach(f => result += MultipleExampleEmitter("examples", f.arrayValues[Example], ordering, Seq())) // TODO: references
+            .foreach(f => result += NamedMultipleExampleEmitter("examples", f.arrayValues[Example], ordering, Seq())) // TODO: references
 
           traverse(ordering.sorted(result), emitter)
         }

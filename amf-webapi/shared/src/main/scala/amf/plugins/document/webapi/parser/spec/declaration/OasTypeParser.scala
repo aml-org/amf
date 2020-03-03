@@ -841,7 +841,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
 
     private def parseExample() = {
       val examples: Seq[Example] =
-        if (version == JSONSchemaDraft7SchemaVersion)
+        if (version == JSONSchemaDraft7SchemaVersion || version == JSONSchemaDraft6SchemaVersion)
           parseExamplesArray()
         else
           RamlExamplesParser(map, "example", "examples".asOasExtension, None, shape.withExample, options).parse()

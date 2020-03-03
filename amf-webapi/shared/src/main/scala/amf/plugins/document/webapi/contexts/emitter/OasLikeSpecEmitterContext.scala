@@ -16,6 +16,8 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
   OasRecursiveShapeEmitter,
   OasTypeEmitter
 }
+import amf.plugins.document.webapi.parser.spec.oas.emitters.{OasExampleEmitters, OasLikeExampleEmitters}
+import amf.plugins.domain.shapes.models.Example
 
 import scala.collection.mutable
 
@@ -31,6 +33,8 @@ abstract class OasLikeSpecEmitterFactory(implicit val spec: OasLikeSpecEmitterCo
 
   def recursiveShapeEmitter: (RecursiveShape, SpecOrdering, Seq[(String, String)]) => EntryEmitter =
     OasRecursiveShapeEmitter.apply
+
+  def exampleEmitter: (Boolean, Option[Example], SpecOrdering, Seq[Example], Seq[BaseUnit]) => OasLikeExampleEmitters
 
   override def annotationEmitter: (DomainExtension, SpecOrdering) => AnnotationEmitter = OasAnnotationEmitter.apply
 }
