@@ -27,7 +27,7 @@ import amf.plugins.document.webapi.contexts.emitter.oas.{
 import amf.plugins.document.webapi.contexts.emitter.raml.{RamlScalarEmitter, RamlSpecEmitterContext}
 import amf.plugins.document.webapi.parser.spec._
 import amf.plugins.document.webapi.parser.spec.async.parser.AsyncSchemaFormats
-import amf.plugins.document.webapi.parser.spec.domain.{MultipleExampleEmitter, SingleExampleEmitter}
+import amf.plugins.document.webapi.parser.spec.domain.{NamedMultipleExampleEmitter, SingleExampleEmitter}
 import amf.plugins.document.webapi.parser.spec.raml.CommentEmitter
 import amf.plugins.document.webapi.parser.{OasTypeDefMatcher, RamlTypeDefMatcher, RamlTypeDefStringValueMatcher}
 import amf.plugins.domain.shapes.metamodel._
@@ -656,10 +656,10 @@ trait ExamplesEmitter {
         anonymous.headOption.foreach { a =>
           results += SingleExampleEmitter("example", a, ordering)
         }
-        results += MultipleExampleEmitter("examples",
-                                          named ++ (if (anonymous.lengthCompare(1) > 0) examples.tail else None),
-                                          ordering,
-                                          references)
+        results += NamedMultipleExampleEmitter("examples",
+                                               named ++ (if (anonymous.lengthCompare(1) > 0) examples.tail else None),
+                                               ordering,
+                                               references)
       })
   }
 }
@@ -1275,7 +1275,7 @@ case class AsyncSchemaEmitter(key: String,
                               shape: Shape,
                               ordering: SpecOrdering,
                               references: Seq[BaseUnit],
-                              mediaType: Option[String] = None)(implicit spec: SpecEmitterContext)
+                              mediaType: Option[String] = None)(implicit spec: OasLikeSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val schemaVersion = AsyncSchemaFormats.getSchemaVersion(mediaType)(spec.eh)
@@ -1296,7 +1296,7 @@ case class AsyncSchemaEmitter(key: String,
   private def emitAsOas(b: EntryBuilder): Unit = {
     b.entry(
       key,
-      OasTypePartEmitter(shape, ordering, references = references)(toOas(spec)).emit(_)
+      OasTypePartEmitter(shape, ordering, references = references)(spec).emit(_)
     )
   }
 
@@ -1781,15 +1781,8 @@ class OasAnyShapeEmitter(shape: AnyShape,
     super.emitters() ++ result
   }
 
-  private def examplesEmitters(main: Option[Example], extentions: Seq[Example], isHeader: Boolean) = {
-    val em    = ListBuffer[EntryEmitter]()
-    val label = if (isHeader) "x-amf-example" else "example"
-    main.foreach(a => em += SingleExampleEmitter(label, a, ordering))
-    val labesl = if (isHeader) "x-amf-examples" else "examples"
-    if (extentions.nonEmpty)
-      em += MultipleExampleEmitter("examples".asOasExtension, extentions, ordering, references)
-    em
-  }
+  private def examplesEmitters(main: Option[Example], extensions: Seq[Example], isHeader: Boolean) =
+    spec.factory.exampleEmitter(isHeader, main, ordering, extensions, references).emitters()
 }
 
 case class OasArrayShapeEmitter(shape: ArrayShape,

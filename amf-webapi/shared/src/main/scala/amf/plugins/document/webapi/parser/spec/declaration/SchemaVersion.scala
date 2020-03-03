@@ -22,6 +22,7 @@ object OAS30SchemaVersion {
 }
 object JSONSchemaDraft3SchemaVersion extends JSONSchemaVersion("draft-3")
 object JSONSchemaDraft4SchemaVersion extends JSONSchemaVersion("draft-4")
+object JSONSchemaDraft6SchemaVersion extends JSONSchemaVersion("draft-6")
 object JSONSchemaDraft7SchemaVersion extends JSONSchemaVersion("draft-7")
 object JSONSchemaUnspecifiedVersion  extends JSONSchemaVersion("")
 case class RAML10SchemaVersion()     extends RAMLSchemaVersion("raml1.0")

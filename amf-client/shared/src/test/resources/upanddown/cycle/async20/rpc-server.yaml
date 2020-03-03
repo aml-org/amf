@@ -55,7 +55,9 @@ channels:
           properties:
             numbers:
               type: array
+              examples:
+                -
+                  - 4
+                  - 3
               items:
                 type: number
-              examples:
-                - [4,3]
