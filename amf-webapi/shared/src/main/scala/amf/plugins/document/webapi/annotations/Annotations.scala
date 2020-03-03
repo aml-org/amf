@@ -134,6 +134,12 @@ case class EmptyPayload() extends Annotation
 
 case class EndPointParameter() extends Annotation
 
+case class EndPointTraitEntry(range: Range) extends Annotation
+
+case class EndPointResourceTypeEntry(range: Range) extends Annotation
+
+case class OperationTraitEntry(range: Range) extends Annotation
+
 // save original text link?
 case class ReferencedElement(parsedUrl: String, referenced: DomainElement) extends Annotation
 
