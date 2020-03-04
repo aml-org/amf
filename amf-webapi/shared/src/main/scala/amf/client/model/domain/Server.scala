@@ -22,7 +22,7 @@ case class Server(override private[amf] val _internal: InternalServer) extends D
   def protocol: StrField                        = _internal.protocol
   def protocolVersion: StrField                 = _internal.protocolVersion
   def security: ClientList[SecurityRequirement] = _internal.security.asClient
-  def bindings: ClientList[ServerBinding]       = _internal.bindings.asClient
+  def bindings: ServerBindings                  = _internal.bindings
 
   /** Set url property of this Server. */
   def withUrl(url: String): this.type = {
@@ -57,8 +57,8 @@ case class Server(override private[amf] val _internal: InternalServer) extends D
     this
   }
 
-  def withBindings(bindings: ClientList[ServerBinding]): this.type = {
-    _internal.withBindings(bindings.asInternal)
+  def withBindings(bindings: ServerBindings): this.type = {
+    _internal.withBindings(bindings)
     this
   }
 

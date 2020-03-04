@@ -23,7 +23,16 @@ import amf.plugins.document.webapi.parser.spec.domain.{
 import amf.plugins.document.webapi.parser.spec.oas.OasLikeDeclarationsHelper
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
-import amf.plugins.domain.webapi.models.bindings.{ChannelBinding, MessageBinding, OperationBinding, ServerBinding}
+import amf.plugins.domain.webapi.models.bindings.{
+  ChannelBinding,
+  ChannelBindings,
+  MessageBinding,
+  MessageBindings,
+  OperationBinding,
+  OperationBindings,
+  ServerBinding,
+  ServerBindings
+}
 import amf.plugins.domain.webapi.models.{EndPoint, Parameter, WebApi}
 import amf.validations.ParserSideValidations.InvalidIdentifier
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
@@ -183,70 +192,55 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
   }
 
   def parseMessageBindingsDeclarations(componentsMap: YMap, parent: String): Unit = {
-    parseBindingsDeclarations[MessageBinding](
+    parseBindingsDeclarations[MessageBindings](
       "messageBindings",
       componentsMap,
-      (map, key) => {
-        AsyncMessageBindingsParser.parse(map, parent, Some(key))
-      },
-      (name, bindings) => {
-        ctx.declarations.registerMessageBindings(name, bindings)
+      (entry) => {
+        AsyncMessageBindingsParser.parse(Left(entry), parent)
       }
     )
   }
 
   def parseServerBindingsDeclarations(componentsMap: YMap, parent: String): Unit = {
-    parseBindingsDeclarations[ServerBinding](
+    parseBindingsDeclarations[ServerBindings](
       "serverBindings",
       componentsMap,
-      (map, key) => {
-        AsyncServerBindingsParser.parse(map, parent, Some(key))
-      },
-      (name, bindings) => {
-        ctx.declarations.registerServerBindings(name, bindings)
+      (entry) => {
+        AsyncServerBindingsParser.parse(Left(entry), parent)
       }
     )
   }
 
   def parseOperationBindingsDeclarations(componentsMap: YMap, parent: String): Unit = {
-    parseBindingsDeclarations[OperationBinding](
+    parseBindingsDeclarations[OperationBindings](
       "operationBindings",
       componentsMap,
-      (map, key) => {
-        AsyncOperationBindingsParser.parse(map, parent, Some(key))
-      },
-      (name, bindings) => {
-        ctx.declarations.registerOperationBindings(name, bindings)
+      (entry) => {
+        AsyncOperationBindingsParser.parse(Left(entry), parent)
       }
     )
   }
 
   def parseChannelBindingsDeclarations(componentsMap: YMap, parent: String): Unit = {
-    parseBindingsDeclarations[ChannelBinding](
+    parseBindingsDeclarations[ChannelBindings](
       "channelBindings",
       componentsMap,
-      (map, key) => {
-        AsyncChannelBindingsParser.parse(map, parent, Some(key))
-      },
-      (name, bindings) => {
-        ctx.declarations.registerChannelBindings(name, bindings)
+      (entry) => {
+        AsyncChannelBindingsParser.parse(Left(entry), parent)
       }
     )
   }
 
   def parseBindingsDeclarations[T <: DomainElement](keyword: String,
                                                     componentsMap: YMap,
-                                                    parse: (YMap, YNode) => Seq[T],
-                                                    registerToDeclares: (String, Seq[T]) => Unit): Unit = {
+                                                    parse: (YMapEntry) => T): Unit = {
     componentsMap.key(
       keyword,
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          val map              = entry.value.as[YMap]
-          val name             = entry.key.as[YScalar].text
-          val bindings: Seq[T] = parse(map, entry.key)
-          bindings.map(_.add(DeclaredElement()))
-          registerToDeclares(name, bindings)
+          val bindings: T = parse(entry)
+          bindings.add(DeclaredElement())
+          ctx.declarations += bindings
         }
       }
     )

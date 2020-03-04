@@ -3,18 +3,32 @@ package amf.plugins.document.webapi.parser.spec.domain.binding
 import amf.core.parser.{Annotations, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.domain.webapi.metamodel.bindings.{MqttServerBindingModel, MqttServerLastWillModel}
-import amf.plugins.domain.webapi.models.bindings.ServerBinding
+import amf.plugins.domain.webapi.models.bindings.{ServerBinding, ServerBindings}
 import amf.plugins.domain.webapi.models.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
-import org.yaml.model.{YMap, YMapEntry, YNode}
+import org.yaml.model.{YMap, YMapEntry, YScalar}
 
 object AsyncServerBindingsParser extends AsyncBindingsParser {
-  override type T = ServerBinding
+  override type Binding  = ServerBinding
+  override type Bindings = ServerBindings
 
-  override protected def parseMqtt(entry: YMapEntry, parent: String, key: Option[YNode])(
-      implicit ctx: AsyncWebApiContext): ServerBinding = {
-    val binding = MqttServerBinding(Annotations(entry))
-    nameAndAdopt(binding, parent, key)
-    val map = entry.value.as[YMap]
+  override def parse(entryOrMap: Either[YMapEntry, YMap], parent: String)(
+      implicit ctx: AsyncWebApiContext): ServerBindings = {
+    entryOrMap match {
+      case Left(entry) =>
+        val map = entry.value.as[YMap]
+        val bindingsObj =
+          ServerBindings(map).withName(entry.key.as[YScalar].text, Annotations(entry.key)).adopted(parent)
+        val bindings = parseElements(map, bindingsObj.id)
+        bindingsObj.withBindings(bindings)
+      case Right(map) =>
+        val bindingsObj: ServerBindings  = ServerBindings(map).adopted(parent)
+        val bindings: Seq[ServerBinding] = parseElements(map, bindingsObj.id)
+        bindingsObj.withBindings(bindings)
+    }
+  }
+  override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): ServerBinding = {
+    val binding = MqttServerBinding(Annotations(entry)).adopted(parent)
+    val map     = entry.value.as[YMap]
 
     map.key("clientId", MqttServerBindingModel.ClientId in binding)
     map.key("cleanSession", MqttServerBindingModel.CleanSession in binding)

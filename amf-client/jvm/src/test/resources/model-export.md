@@ -16,6 +16,7 @@ AMF Model Documentation
 * [BaseUnit](#baseunit)
 * [Callback](#callback)
 * [ChannelBinding](#channelbinding)
+* [ChannelBindings](#channelbindings)
 * [ClassTerm](#classterm)
 * [CorrelationId](#correlationid)
 * [CreativeWork](#creativework)
@@ -63,6 +64,7 @@ AMF Model Documentation
 * [MatrixShape](#matrixshape)
 * [Message](#message)
 * [MessageBinding](#messagebinding)
+* [MessageBindings](#messagebindings)
 * [Module](#module)
 * [MqttMessageBinding](#mqttmessagebinding)
 * [MqttOperationBinding](#mqttoperationbinding)
@@ -81,6 +83,7 @@ AMF Model Documentation
 * [OpenIdConnectSettings](#openidconnectsettings)
 * [Operation](#operation)
 * [OperationBinding](#operationbinding)
+* [OperationBindings](#operationbindings)
 * [Organization](#organization)
 * [Overlay](#overlay)
 * [Parameter](#parameter)
@@ -108,6 +111,7 @@ AMF Model Documentation
 * [SecuritySchemeFragment](#securityschemefragment)
 * [Server](#server)
 * [ServerBinding](#serverbinding)
+* [ServerBindings](#serverbindings)
 * [Settings](#settings)
 * [Shape](#shape)
 * [ShapeExtension](#shapeextension)
@@ -336,6 +340,15 @@ Model defining the information for a HTTP callback/ webhook
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
+ | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
+
+## ChannelBindings
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | binding | [[ChannelBinding](#channelbinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## ClassTerm
@@ -649,7 +662,7 @@ EndPoint in the API holding a number of executable operations
  | payload | [[Payload](#payload)] | Encoded payload using certain media-type | http://a.ml/vocabularies/apiContract#payload |
  | server | [[Server](#server)] | Information about the network accessible locations where the API is available | http://a.ml/vocabularies/apiContract#server |
  | security | [[SecurityRequirement](#securityrequirement)] | Flow for an OAuth2 security scheme setting | http://a.ml/vocabularies/security#security |
- | binding | [[ChannelBinding](#channelbinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | binding | [ChannelBindings](#channelbindings) |  | http://a.ml/vocabularies/apiBinding#binding |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Example
@@ -953,7 +966,7 @@ Data shape containing nested multi-dimensional collection shapes
  | title | string | Title of the item | http://a.ml/vocabularies/core#title |
  | summary | string | Human readable short description of the request/response | http://a.ml/vocabularies/core#summary |
  | header | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#header |
- | binding | [[MessageBinding](#messagebinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | binding | [MessageBindings](#messagebindings) |  | http://a.ml/vocabularies/apiBinding#binding |
  | tag | [[Tag](#tag)] | Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format. | http://a.ml/vocabularies/apiContract#tag |
  | examples | [[Example](#example)] | Example value for a schema inside an API | http://a.ml/vocabularies/apiContract#examples |
  | documentation | [CreativeWork](#creativework) | The most generic kind of creative work, including books, movies, photographs, software programs, etc. | http://a.ml/vocabularies/core#documentation |
@@ -968,6 +981,15 @@ Data shape containing nested multi-dimensional collection shapes
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
+ | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
+
+## MessageBindings
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | binding | [[MessageBinding](#messagebinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Module
@@ -1219,7 +1241,7 @@ Action that can be executed using a particular HTTP invocation
  | tag | [[Tag](#tag)] | Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format. | http://a.ml/vocabularies/apiContract#tag |
  | callback | [[Callback](#callback)] | Model defining the information for a HTTP callback/ webhook | http://a.ml/vocabularies/apiContract#callback |
  | server | [[Server](#server)] | Information about the network accessible locations where the API is available | http://a.ml/vocabularies/apiContract#server |
- | binding | [[OperationBinding](#operationbinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | binding | [OperationBindings](#operationbindings) |  | http://a.ml/vocabularies/apiBinding#binding |
  | isAbstract | boolean | Defines a model as abstract | http://a.ml/vocabularies/apiContract#isAbstract |
  | link-target | url | URI of the linked element | http://a.ml/vocabularies/document#link-target |
  | link-label | string | Label for the type of link | http://a.ml/vocabularies/document#link-label |
@@ -1231,6 +1253,15 @@ Action that can be executed using a particular HTTP invocation
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
+ | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
+
+## OperationBindings
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | binding | [[OperationBinding](#operationbinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Organization
@@ -1474,7 +1505,7 @@ Request information for an operation
  | title | string | Title of the item | http://a.ml/vocabularies/core#title |
  | summary | string | Human readable short description of the request/response | http://a.ml/vocabularies/core#summary |
  | header | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#header |
- | binding | [[MessageBinding](#messagebinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | binding | [MessageBindings](#messagebindings) |  | http://a.ml/vocabularies/apiBinding#binding |
  | tag | [[Tag](#tag)] | Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format. | http://a.ml/vocabularies/apiContract#tag |
  | examples | [[Example](#example)] | Example value for a schema inside an API | http://a.ml/vocabularies/apiContract#examples |
  | documentation | [CreativeWork](#creativework) | The most generic kind of creative work, including books, movies, photographs, software programs, etc. | http://a.ml/vocabularies/core#documentation |
@@ -1525,7 +1556,7 @@ Response information for an operation
  | title | string | Title of the item | http://a.ml/vocabularies/core#title |
  | summary | string | Human readable short description of the request/response | http://a.ml/vocabularies/core#summary |
  | header | [[Parameter](#parameter)] | Piece of data required or returned by an Operation | http://a.ml/vocabularies/apiContract#header |
- | binding | [[MessageBinding](#messagebinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | binding | [MessageBindings](#messagebindings) |  | http://a.ml/vocabularies/apiBinding#binding |
  | tag | [[Tag](#tag)] | Categorical information provided by some API spec format. Tags are extensions to the model supported directly in the input API spec format. | http://a.ml/vocabularies/apiContract#tag |
  | examples | [[Example](#example)] | Example value for a schema inside an API | http://a.ml/vocabularies/apiContract#examples |
  | documentation | [CreativeWork](#creativework) | The most generic kind of creative work, including books, movies, photographs, software programs, etc. | http://a.ml/vocabularies/core#documentation |
@@ -1686,7 +1717,7 @@ Information about the network accessible locations where the API is available
  | protocol | string | The protocol this URL supports for connection | http://a.ml/vocabularies/apiContract#protocol |
  | protocolVersion | string | The version of the protocol used for connection | http://a.ml/vocabularies/apiContract#protocolVersion |
  | security | [[SecurityRequirement](#securityrequirement)] | Flow for an OAuth2 security scheme setting | http://a.ml/vocabularies/security#security |
- | binding | [[ServerBinding](#serverbinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
+ | binding | [ServerBindings](#serverbindings) |  | http://a.ml/vocabularies/apiBinding#binding |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## ServerBinding
@@ -1694,6 +1725,15 @@ Information about the network accessible locations where the API is available
 
  | Name | Value | Documentation | Namespace |
  | ------ | ------ | ------ | ------ |
+ | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
+
+## ServerBindings
+
+
+ | Name | Value | Documentation | Namespace |
+ | ------ | ------ | ------ | ------ |
+ | name | string | Name of the shape | http://a.ml/vocabularies/core#name |
+ | binding | [[ServerBinding](#serverbinding)] |  | http://a.ml/vocabularies/apiBinding#binding |
  | extends | [[DomainElement](#domainelement)] | Base class for any element describing a domain model. Domain Elements are encoded or declared into base units | http://a.ml/vocabularies/document#extends |
 
 ## Settings

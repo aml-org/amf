@@ -220,8 +220,8 @@ case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)
     )
 
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncOperationBindingsParser.parse(entry.value.as[YMap], operation.id)
-      operation.setArray(OperationModel.Bindings, bindings, Annotations(entry))
+      val bindings = AsyncOperationBindingsParser.parse(Right(entry.value.as[YMap]), operation.id)
+      operation.set(OperationModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(operation, map).parseOrphanNode("bindings")
     }

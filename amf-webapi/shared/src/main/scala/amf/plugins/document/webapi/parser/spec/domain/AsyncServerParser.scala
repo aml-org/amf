@@ -18,8 +18,8 @@ case class AsyncServerParser(parent: String, map: YMap)(implicit override val ct
     map.key("protocol", ServerModel.Protocol in server)
     map.key("protocolVersion", ServerModel.ProtocolVersion in server)
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncServerBindingsParser.parse(entry.value.as[YMap], server.id)
-      server.setArray(ServerModel.Bindings, bindings, Annotations(entry))
+      val bindings = AsyncServerBindingsParser.parse(Right(entry.value.as[YMap]), server.id)
+      server.set(ServerModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(server, map).parseOrphanNode("bindings")
     }

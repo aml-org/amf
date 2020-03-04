@@ -35,7 +35,7 @@ case class Operation(override private[amf] val _internal: InternalOperation)
   def callbacks: ClientList[Callback]           = _internal.callbacks.asClient
   def servers: ClientList[Server]               = _internal.servers.asClient
   def isAbstract: BoolField                     = _internal.isAbstract
-  def bindings: ClientList[OperationBinding]    = _internal.bindings.asClient
+  def bindings: OperationBindings               = _internal.bindings
 
   /** Set method property of this Operation. */
   def withMethod(method: String): this.type = {
@@ -156,8 +156,8 @@ case class Operation(override private[amf] val _internal: InternalOperation)
     */
   def withServer(name: String): Server = _internal.withServer(name)
 
-  def withBindings(bindings: ClientList[OperationBinding]): this.type = {
-    _internal.withBindings(bindings.asInternal)
+  def withBindings(bindings: OperationBindings): this.type = {
+    _internal.withBindings(bindings)
     this
   }
 

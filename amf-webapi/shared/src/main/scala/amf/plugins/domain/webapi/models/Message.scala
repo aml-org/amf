@@ -4,10 +4,10 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{CreativeWork, ExemplifiedDomainElement}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example, ExemplifiedDomainElement}
 import amf.plugins.domain.webapi.metamodel.MessageModel
 import amf.plugins.domain.webapi.metamodel.MessageModel._
-import amf.plugins.domain.webapi.models.bindings.MessageBinding
+import amf.plugins.domain.webapi.models.bindings.{MessageBinding, MessageBindings}
 import amf.core.utils.AmfStrings
 
 class Message(override val fields: Fields, override val annotations: Annotations)
@@ -15,17 +15,17 @@ class Message(override val fields: Fields, override val annotations: Annotations
     with ExemplifiedDomainElement
     with Linkable {
 
-  def description: StrField         = fields.field(Description)
-  def isAbstract: BoolField         = fields.field(IsAbstract)
-  def documentation: CreativeWork   = fields.field(Documentation)
-  def tags: Seq[Tag]                = fields.field(Tags)
-  def payloads: Seq[Payload]        = fields.field(Payloads)
-  def correlationId: CorrelationId  = fields.field(MessageModel.CorrelationId)
-  def displayName: StrField         = fields.field(DisplayName)
-  def title: StrField               = fields.field(Title)
-  def summary: StrField             = fields.field(Summary)
-  def bindings: Seq[MessageBinding] = fields.field(Bindings)
-  def headers: Seq[Parameter]       = fields.field(Headers)
+  def description: StrField        = fields.field(Description)
+  def isAbstract: BoolField        = fields.field(IsAbstract)
+  def documentation: CreativeWork  = fields.field(Documentation)
+  def tags: Seq[Tag]               = fields.field(Tags)
+  def payloads: Seq[Payload]       = fields.field(Payloads)
+  def correlationId: CorrelationId = fields.field(MessageModel.CorrelationId)
+  def displayName: StrField        = fields.field(DisplayName)
+  def title: StrField              = fields.field(Title)
+  def summary: StrField            = fields.field(Summary)
+  def bindings: MessageBindings    = fields.field(Bindings)
+  def headers: Seq[Parameter]      = fields.field(Headers)
 
   def withDescription(description: String): this.type            = set(Description, description)
   def isAbstract(isAbstract: Boolean): this.type                 = set(IsAbstract, isAbstract)
@@ -36,7 +36,7 @@ class Message(override val fields: Fields, override val annotations: Annotations
   def withDisplayName(displayName: String): this.type            = set(DisplayName, displayName)
   def withTitle(title: String): this.type                        = set(Title, title)
   def withSummary(summary: String): this.type                    = set(Summary, summary)
-  def withBindings(bindings: Seq[MessageBinding]): this.type     = setArray(Bindings, bindings)
+  def withBindings(bindings: MessageBindings): this.type         = set(Bindings, bindings)
   def withHeaders(headers: Seq[Parameter]): this.type            = setArray(Headers, headers)
 
   def withPayload(mediaType: Option[String] = None): Payload = {

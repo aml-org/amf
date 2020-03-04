@@ -14,6 +14,10 @@ import amf.client.model.domain.{
   MqttServerBinding => ClientMqttServerBinding,
   DynamicBinding => ClientDynamicBinding,
   ChannelBinding => ClientChannelBinding,
+  ChannelBindings => ClientChannelBindings,
+  OperationBindings => ClientOperationBindings,
+  MessageBindings => ClientMessageBindings,
+  ServerBindings => ClientServerBindings,
   Server => ClientServer,
   ApiKeySettings => ClientApiKeySettings,
   HttpApiKeySettings => ClientHttpApiKeySettings,
@@ -65,10 +69,14 @@ import amf.plugins.domain.webapi.models.bindings.kafka._
 import amf.plugins.domain.webapi.models.bindings.websockets._
 import amf.plugins.domain.webapi.models.bindings.{
   ChannelBinding,
+  ChannelBindings,
+  ServerBindings,
+  MessageBindings,
   DynamicBinding,
   EmptyBinding,
   MessageBinding,
   OperationBinding,
+  OperationBindings,
   ServerBinding
 }
 import amf.plugins.domain.webapi.models.security._
@@ -100,6 +108,10 @@ trait WebApiBaseConverter
     with OAuth2FlowConverter
     with SecurityRequirementConverter
     with CorrelationIdConverter
+    with ChannelBindingsConverter
+    with OperationBindingsConverter
+    with ServerBindingsConverter
+    with MessageBindingsConverter
     with Amqp091ChannelBindingConverter
     with Amqp091MessageBindingConverter
     with Amqp091OperationBindingConverter
@@ -126,6 +138,34 @@ trait ChannelBindingConverter extends PlatformSecrets {
     override def asClient(from: ChannelBinding): ClientChannelBinding =
       platform.wrap[ClientChannelBinding](from)
     override def asInternal(from: ClientChannelBinding): ChannelBinding = from._internal
+  }
+}
+trait ChannelBindingsConverter extends PlatformSecrets {
+  implicit object ChannelBindingsMatcher extends BidirectionalMatcher[ChannelBindings, ClientChannelBindings] {
+    override def asClient(from: ChannelBindings): ClientChannelBindings =
+      platform.wrap[ClientChannelBindings](from)
+    override def asInternal(from: ClientChannelBindings): ChannelBindings = from._internal
+  }
+}
+trait OperationBindingsConverter extends PlatformSecrets {
+  implicit object OperationBindingsMatcher extends BidirectionalMatcher[OperationBindings, ClientOperationBindings] {
+    override def asClient(from: OperationBindings): ClientOperationBindings =
+      platform.wrap[ClientOperationBindings](from)
+    override def asInternal(from: ClientOperationBindings): OperationBindings = from._internal
+  }
+}
+trait MessageBindingsConverter extends PlatformSecrets {
+  implicit object MessageBindingsMatcher extends BidirectionalMatcher[MessageBindings, ClientMessageBindings] {
+    override def asClient(from: MessageBindings): ClientMessageBindings =
+      platform.wrap[ClientMessageBindings](from)
+    override def asInternal(from: ClientMessageBindings): MessageBindings = from._internal
+  }
+}
+trait ServerBindingsConverter extends PlatformSecrets {
+  implicit object ServerBindingsMatcher extends BidirectionalMatcher[ServerBindings, ClientServerBindings] {
+    override def asClient(from: ServerBindings): ClientServerBindings =
+      platform.wrap[ClientServerBindings](from)
+    override def asInternal(from: ClientServerBindings): ServerBindings = from._internal
   }
 }
 trait OperationBindingConverter extends PlatformSecrets {

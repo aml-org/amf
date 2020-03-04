@@ -1,7 +1,5 @@
 [
-
   {
-
     "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
@@ -10,9 +8,7 @@
       "http://a.ml/vocabularies/document#Unit"
     ],
     "http://a.ml/vocabularies/document#encodes": [
-
       {
-
         "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -92,7 +88,6 @@
           }
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
-
           {
             "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Ftraining",
             "@type": [
@@ -14684,7 +14679,6 @@
             ]
           },
           {
-
             "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
@@ -14701,9 +14695,7 @@
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
-
               {
-
                 "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/post",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
@@ -14725,9 +14717,7 @@
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
-
                   {
-
                     "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/post/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
@@ -16166,7 +16156,6 @@
                       }
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
-
                       {
                         "@id": "file://amf-client/shared/src/test/resources/production/googleapis.compredictionv1.2swagger.raml#/web-api/end-points/%2Fhostedmodels%2F%7BhostedModelName%7D%2Fpredict/parameter/hostedModelName",
                         "@type": [
@@ -18845,7 +18834,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
