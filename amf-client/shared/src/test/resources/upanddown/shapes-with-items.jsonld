@@ -445,9 +445,9 @@
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#required-param-payload": [
+                    "http://a.ml/vocabularies/document-source-maps#body-parameter": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user/source-map/required-param-payload/element_0",
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user/source-map/body-parameter/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user"
@@ -455,7 +455,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "true->[(37,10)-(37,26)]"
+                            "@value": "true"
                           }
                         ]
                       }
@@ -497,6 +497,21 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(33,8)-(44,9)]"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#required-param-payload": [
+                      {
+                        "@id": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user/source-map/required-param-payload/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://amf-client/shared/src/test/resources/upanddown/shapes-with-items.json#/web-api/end-points/%2Fuser%2F%7Bid%7D/user"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "true->[(37,10)-(37,26)]"
                           }
                         ]
                       }

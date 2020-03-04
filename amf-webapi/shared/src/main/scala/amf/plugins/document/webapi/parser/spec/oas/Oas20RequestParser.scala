@@ -100,13 +100,18 @@ case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: O
 
     map.key(
       "requestPayloads".asOasExtension,
-      entry =>
+      entry => {
+        entries += entry
         entry.value
           .as[Seq[YNode]]
           .map(value => payloads += OasPayloadParser(value, request.getOrCreate.withPayload).parse())
+      }
     )
 
-    if (payloads.nonEmpty) request.getOrCreate.set(RequestModel.Payloads, AmfArray(payloads))
+    if (payloads.nonEmpty)
+      request.getOrCreate.set(RequestModel.Payloads,
+                              AmfArray(payloads, Annotations(entries.head.value)),
+                              Annotations(entries.head))
 
     map.key(
       "queryString".asOasExtension,

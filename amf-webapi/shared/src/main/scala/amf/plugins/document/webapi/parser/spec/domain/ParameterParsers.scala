@@ -8,6 +8,7 @@ import amf.core.parser.{Annotations, _}
 import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.validation.core.ValidationSpecification
 import amf.plugins.document.webapi.annotations.{
+  BodyParameter,
   FormBodyParameter,
   Inferred,
   ParameterNameForPayload,
@@ -704,6 +705,7 @@ case class OasParametersParser(values: Seq[YNode], parentId: String)(implicit ct
 
     val formData = oasParameters.flatMap(_.formData)
     val body     = oasParameters.filter(_.isBody)
+    body.foreach(_.domainElement.annotations += BodyParameter())
 
     validateDuplicated(oasParameters)
 

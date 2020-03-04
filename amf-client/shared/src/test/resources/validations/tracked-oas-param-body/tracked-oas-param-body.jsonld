@@ -684,6 +684,9 @@
                           }
                         ],
                         "smaps": {
+                          "body-parameter": {
+                            "#5": "true"
+                          },
                           "lexical": {
                             "raml-shapes:schema": "[(16,10)-(48,28)]",
                             "core:name": "[(15,10)-(16,0)]",
@@ -692,7 +695,12 @@
                           }
                         }
                       }
-                    ]
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "apiContract:payload": "[(11,6)-(48,28)]"
+                      }
+                    }
                   }
                 ],
                 "smaps": {
