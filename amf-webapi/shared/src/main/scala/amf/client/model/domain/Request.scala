@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
   * Request model class.
   */
 @JSExportAll
-case class Request(override private[amf] val _internal: InternalRequest) extends Message {
+case class Request(override private[amf] val _internal: InternalRequest) extends Message(_internal) {
 
   @JSExportTopLevel("model.domain.Request")
   def this() = this(InternalRequest())

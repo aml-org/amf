@@ -14,15 +14,16 @@ import amf.plugins.domain.webapi.metamodel.bindings.{
 import amf.plugins.domain.webapi.models.bindings.ChannelBinding
 import amf.plugins.domain.webapi.models.bindings.amqp.{Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091Queue}
 import amf.plugins.domain.webapi.models.bindings.websockets.WebSocketsChannelBinding
-import org.yaml.model.{YMap, YMapEntry}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
 object AsyncChannelBindingsParser extends AsyncBindingsParser {
   override type T = ChannelBinding
 
-  override protected def parseAmqp(entry: YMapEntry, parent: String)(
+  override protected def parseAmqp(entry: YMapEntry, parent: String, key: Option[YNode])(
       implicit ctx: AsyncWebApiContext): ChannelBinding = {
-    val binding = Amqp091ChannelBinding(Annotations(entry)).adopted(parent)
-    val map     = entry.value.as[YMap]
+    val binding = Amqp091ChannelBinding(Annotations(entry))
+    nameAndAdopt(binding, parent, key)
+    val map = entry.value.as[YMap]
 
     map.key("is", Amqp091ChannelBindingModel.Is in binding)
 
@@ -93,9 +94,11 @@ object AsyncChannelBindingsParser extends AsyncBindingsParser {
     }
   }
 
-  override protected def parseWs(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): ChannelBinding = {
-    val binding = WebSocketsChannelBinding(Annotations(entry)).adopted(parent)
-    val map     = entry.value.as[YMap]
+  override protected def parseWs(entry: YMapEntry, parent: String, key: Option[YNode])(
+      implicit ctx: AsyncWebApiContext): ChannelBinding = {
+    val binding = WebSocketsChannelBinding(Annotations(entry))
+    nameAndAdopt(binding, parent, key)
+    val map = entry.value.as[YMap]
 
     map.key("method", WebSocketsChannelBindingModel.Method in binding)
     map.key("query", entry => parseSchema(WebSocketsChannelBindingModel.Query, binding, entry, parent))     // TODO validate as object

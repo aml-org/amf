@@ -19,6 +19,7 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.bindings.{ChannelBinding, MessageBinding, OperationBinding, ServerBinding}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YNode, YPart}
@@ -41,7 +42,13 @@ class WebApiDeclarations(val alias: Option[String],
                          var requests: Map[String, Request] = Map(),
                          var headers: Map[String, Parameter] = Map(),
                          var links: Map[String, TemplatedLink] = Map(),
+                         var correlationIds: Map[String, CorrelationId] = Map(),
                          var callbacks: Map[String, List[Callback]] = Map(),
+                         var messages: Map[String, Message] = Map(),
+                         var messageBindings: Map[String, Seq[MessageBinding]] = Map(),
+                         var operationBindings: Map[String, Seq[OperationBinding]] = Map(),
+                         var channelBindings: Map[String, Seq[ChannelBinding]] = Map(),
+                         var serverBindings: Map[String, Seq[ServerBinding]] = Map(),
                          val errorHandler: ErrorHandler,
                          val futureDeclarations: FutureDeclarations,
                          var others: Map[String, BaseUnit] = Map())
@@ -130,6 +137,10 @@ class WebApiDeclarations(val alias: Option[String],
         requests = requests + (rq.name.value() -> rq)
       case l: TemplatedLink =>
         links = links + (l.name.value() -> l)
+      case l: CorrelationId =>
+        correlationIds = correlationIds + (l.name.value() -> l)
+      case m: Message =>
+        messages = messages + (m.name.value() -> m)
       case c: Callback =>
         val name = c.name.value()
         callbacks.get(name) match {
@@ -166,6 +177,18 @@ class WebApiDeclarations(val alias: Option[String],
     this.headers = headers + (header.name.value() -> header)
   }
 
+  def registerMessageBindings(name: String, bindings: Seq[MessageBinding]): Unit =
+    this.messageBindings = messageBindings + (name -> bindings)
+
+  def registerServerBindings(name: String, bindings: Seq[ServerBinding]): Unit =
+    this.serverBindings = serverBindings + (name -> bindings)
+
+  def registerOperationBindings(name: String, bindings: Seq[OperationBinding]): Unit =
+    this.operationBindings = operationBindings + (name -> bindings)
+
+  def registerChannelBindings(name: String, bindings: Seq[ChannelBinding]): Unit =
+    this.channelBindings = channelBindings + (name -> bindings)
+
   def parameterPayload(parameter: Parameter): Payload = payloads(parameter.name.value())
 
   /** Get or create specified library. */
@@ -184,7 +207,7 @@ class WebApiDeclarations(val alias: Option[String],
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values ++ correlationIds.values ++ messageBindings.values.flatten ++ operationBindings.values.flatten ++ channelBindings.values.flatten ++ serverBindings.values.flatten ++ messages.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {

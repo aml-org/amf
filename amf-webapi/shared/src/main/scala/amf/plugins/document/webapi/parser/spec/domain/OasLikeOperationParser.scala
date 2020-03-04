@@ -214,7 +214,7 @@ case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)
       "message",
       messageEntry =>
         AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
-          val messages = AsyncMessageParser(operation.id, messageEntry.value.as[YMap], msgType).parse()
+          val messages = AsyncMessageParser(operation.id, Some(msgType)).parse(messageEntry.value.as[YMap])
           operation.setArray(msgType.field, messages, Annotations(messageEntry.value))
       }
     )

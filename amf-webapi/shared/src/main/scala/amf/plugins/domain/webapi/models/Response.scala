@@ -13,7 +13,8 @@ import org.yaml.model.YMapEntry
 /**
   * Response internal model.
   */
-class Response(override val fields: Fields, override val annotations: Annotations) extends Message {
+class Response(override val fields: Fields, override val annotations: Annotations)
+    extends Message(fields: Fields, annotations: Annotations) {
 
   def statusCode: StrField      = fields.field(StatusCode)
   def links: Seq[TemplatedLink] = fields.field(Links)

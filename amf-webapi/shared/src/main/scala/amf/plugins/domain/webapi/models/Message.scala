@@ -1,14 +1,19 @@
 package amf.plugins.domain.webapi.models
 
-import amf.core.metamodel.Field
-import amf.core.model.domain.{Linkable, NamedDomainElement}
+import amf.core.metamodel.{Field, Obj}
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
-import amf.plugins.domain.shapes.models.{CreativeWork, Example, ExemplifiedDomainElement}
+import amf.core.parser.{Annotations, Fields}
+import amf.plugins.domain.shapes.models.{CreativeWork, ExemplifiedDomainElement}
 import amf.plugins.domain.webapi.metamodel.MessageModel
 import amf.plugins.domain.webapi.metamodel.MessageModel._
 import amf.plugins.domain.webapi.models.bindings.MessageBinding
+import amf.core.utils.AmfStrings
 
-trait Message extends NamedDomainElement with Linkable with ExemplifiedDomainElement {
+class Message(override val fields: Fields, override val annotations: Annotations)
+    extends NamedDomainElement
+    with ExemplifiedDomainElement
+    with Linkable {
 
   def description: StrField         = fields.field(Description)
   def isAbstract: BoolField         = fields.field(IsAbstract)
@@ -41,5 +46,22 @@ trait Message extends NamedDomainElement with Linkable with ExemplifiedDomainEle
     result
   }
 
+  override def meta: Obj = MessageModel
+
+  override def linkCopy(): Message = Message().withId(id)
+
   override protected def nameField: Field = MessageModel.Name
+
+  override def componentId: String = "/" + name.option().getOrElse("message").urlComponentEncoded
+
+  /** apply method for create a new instance with fields and annotations. Aux method for copy */
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    (fields, annot) => new Message(fields, annot)
+}
+
+object Message {
+
+  def apply(): Message = apply(Annotations())
+
+  def apply(annotations: Annotations): Message = new Message(Fields(), annotations)
 }

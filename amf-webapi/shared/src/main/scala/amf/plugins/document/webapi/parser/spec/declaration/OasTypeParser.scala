@@ -55,6 +55,7 @@ object OasTypeParser {
       entry.value.as[YMap],
       adopt,
       if (ctx.vendor == Vendor.OAS30) OAS30SchemaVersion("schema")(ctx.eh)
+      else if (ctx.vendor == Vendor.ASYNC20) JSONSchemaDraft7SchemaVersion
       else OAS20SchemaVersion("schema")(ctx.eh)
     )
 

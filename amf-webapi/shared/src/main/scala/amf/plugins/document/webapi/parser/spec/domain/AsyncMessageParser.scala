@@ -1,60 +1,59 @@
 package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.{SynthesizedField, TrackedElement, VirtualObject}
-import amf.core.metamodel.Field
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.async.{MessageType, Publish, Subscribe}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft7SchemaVersion,
-  JSONSchemaVersion,
-  OAS30SchemaVersion,
-  OasLikeCreativeWorkParser,
-  OasLikeTagsParser,
-  OasTypeParser
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OasLikeCreativeWorkParser, OasLikeTagsParser}
 import amf.plugins.document.webapi.parser.spec.async.parser.{AsyncApiTypeParser, AsyncSchemaFormats}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
-import amf.plugins.domain.webapi.metamodel.{
-  CorrelationIdModel,
-  MessageModel,
-  OperationModel,
-  ParameterModel,
-  PayloadModel
-}
-import amf.plugins.domain.webapi.models.{CorrelationId, Message, Parameter, Payload, Request, Response}
+import amf.plugins.domain.webapi.metamodel.{MessageModel, ParameterModel, PayloadModel}
+import amf.plugins.domain.webapi.models.{Message, Parameter, Payload, Request, Response}
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 
-case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: MessageType)(
-    implicit val ctx: AsyncWebApiContext)
+case class AsyncMessageParser(parent: String, messageType: Option[MessageType])(implicit val ctx: AsyncWebApiContext)
     extends SpecParserOps {
 
-  def parse(): List[Message] = {
+  def parse(rootMap: YMap): List[Message] = {
     rootMap.key("oneOf") match {
       case Some(entry) =>
         entry.value
           .as[YSequence]
           .nodes
           .map { node =>
-            parseSingleMessage(node.as[YMap])
+            parseSingleMessage(Right(node.as[YMap]))
           }
           .toList
-      case None => List(parseSingleMessage(rootMap))
+      case None => List(parseSingleMessage(Right(rootMap)))
     }
   }
 
+  def parseSingle(entryOrNode: Either[YMapEntry, YNode]): Message = parseSingleMessage(entryOrNode)
+
   private def buildMessage(map: YMap): Message = messageType match {
-    case Publish   => Request(Annotations(map))
-    case Subscribe => Response(Annotations(map))
+    case Some(Publish)   => Request(Annotations(map))
+    case Some(Subscribe) => Response(Annotations(map))
+    case None            => Message(Annotations(map))
   }
 
-  private def parseSingleMessage(map: YMap)(implicit ctx: AsyncWebApiContext): Message = {
+  def nameAndAdopt(m: Message, entry: Option[YMapEntry]): Unit = {
+    entry foreach { e =>
+      m.set(MessageModel.Name, ScalarNode(e.key).string())
+    }
+    m.adopted(parent)
+  }
+
+  private def parseSingleMessage(entryOrNode: Either[YMapEntry, YNode])(implicit ctx: AsyncWebApiContext): Message = {
+    val map = entryOrNode match {
+      case Left(entry) => entry.value.as[YMap]
+      case Right(node) => node.as[YMap]
+    }
     val message = buildMessage(map)
-    message.adopted(parent)
+    nameAndAdopt(message, entryOrNode.left.toOption)
 
     ctx.closedShape(message.id, map, "message")
 
@@ -88,7 +87,8 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
       }
     )
 
-    map.key("correlationId", MessageModel.CorrelationId in message using (CorrelationIdParser(_, message.id).parse()))
+    map.key("correlationId",
+            MessageModel.CorrelationId in message using (AsyncCorrelationIdParser(_, message.id).parse()))
 
     map.key("bindings").foreach { entry =>
       val bindings = AsyncMessageBindingsParser.parse(entry.value.as[YMap], message.id)
@@ -143,21 +143,5 @@ case class AsyncMessageParser(parent: String, rootMap: YMap, messageType: Messag
         .parse()
         .foreach(s => payload.set(PayloadModel.Schema, tracking(s, payload.id), Annotations(entry)))
     }
-  }
-}
-
-case class CorrelationIdParser(node: YNode, parentId: String)(implicit val ctx: AsyncWebApiContext)
-    extends SpecParserOps {
-
-  def parse(): CorrelationId = {
-    // missing handling of refs
-    val map           = node.as[YMap]
-    val correlationId = CorrelationId(map).adopted(parentId)
-    map.key("description", CorrelationIdModel.Description in correlationId)
-    map.key("location", CorrelationIdModel.Location in correlationId)
-
-    AnnotationParser(correlationId, map).parse()
-    ctx.closedShape(correlationId.id, map, "correlationId")
-    correlationId
   }
 }

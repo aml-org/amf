@@ -13,15 +13,16 @@ import amf.plugins.domain.webapi.models.bindings.amqp.Amqp091OperationBinding
 import amf.plugins.domain.webapi.models.bindings.http.HttpOperationBinding
 import amf.plugins.domain.webapi.models.bindings.kafka.KafkaOperationBinding
 import amf.plugins.domain.webapi.models.bindings.mqtt.MqttOperationBinding
-import org.yaml.model.{YMap, YMapEntry}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
 object AsyncOperationBindingsParser extends AsyncBindingsParser {
   override type T = OperationBinding
 
-  override protected def parseHttp(entry: YMapEntry, parent: String)(
+  override protected def parseHttp(entry: YMapEntry, parent: String, key: Option[YNode])(
       implicit ctx: AsyncWebApiContext): OperationBinding = {
-    val binding = HttpOperationBinding(Annotations(entry)).adopted(parent)
-    val map     = entry.value.as[YMap]
+    val binding = HttpOperationBinding(Annotations(entry))
+    nameAndAdopt(binding, parent, key)
+    val map = entry.value.as[YMap]
 
     map.key("type", HttpOperationBindingModel.Type in binding)
     if (binding.`type`.is("request")) map.key("method", HttpOperationBindingModel.Method in binding)
@@ -33,10 +34,11 @@ object AsyncOperationBindingsParser extends AsyncBindingsParser {
     binding
   }
 
-  override protected def parseAmqp(entry: YMapEntry, parent: String)(
+  override protected def parseAmqp(entry: YMapEntry, parent: String, key: Option[YNode])(
       implicit ctx: AsyncWebApiContext): OperationBinding = {
-    val binding = Amqp091OperationBinding(Annotations(entry)).adopted(parent)
-    val map     = entry.value.as[YMap]
+    val binding = Amqp091OperationBinding(Annotations(entry))
+    nameAndAdopt(binding, parent, key)
+    val map = entry.value.as[YMap]
 
     map.key("expiration", Amqp091OperationBindingModel.Expiration in binding)
     map.key("userId", Amqp091OperationBindingModel.UserId in binding)
@@ -56,10 +58,11 @@ object AsyncOperationBindingsParser extends AsyncBindingsParser {
     binding
   }
 
-  override protected def parseKafka(entry: YMapEntry, parent: String)(
+  override protected def parseKafka(entry: YMapEntry, parent: String, key: Option[YNode])(
       implicit ctx: AsyncWebApiContext): OperationBinding = {
-    val binding = KafkaOperationBinding(Annotations(entry)).adopted(parent)
-    val map     = entry.value.as[YMap]
+    val binding = KafkaOperationBinding(Annotations(entry))
+    nameAndAdopt(binding, parent, key)
+    val map = entry.value.as[YMap]
 
     map.key("groupId", KafkaOperationBindingModel.GroupId in binding)
     map.key("clientId", KafkaOperationBindingModel.ClientId in binding)
@@ -70,10 +73,11 @@ object AsyncOperationBindingsParser extends AsyncBindingsParser {
     binding
   }
 
-  override protected def parseMqtt(entry: YMapEntry, parent: String)(
+  override protected def parseMqtt(entry: YMapEntry, parent: String, key: Option[YNode])(
       implicit ctx: AsyncWebApiContext): OperationBinding = {
-    val binding = MqttOperationBinding(Annotations(entry)).adopted(parent)
-    val map     = entry.value.as[YMap]
+    val binding = MqttOperationBinding(Annotations(entry))
+    nameAndAdopt(binding, parent, key)
+    val map = entry.value.as[YMap]
 
     map.key("qos", MqttOperationBindingModel.Qos in binding)
     map.key("retain", MqttOperationBindingModel.Retain in binding)
