@@ -1,18 +1,21 @@
 package amf.client.model.domain
 
-import amf.client.convert.WebApiClientConverters._
 import amf.client.model.{BoolField, StrField}
 import amf.plugins.domain.webapi.models.{Message => InternalMessage}
-
-import scala.scalajs.js.annotation.JSExportAll
+import amf.client.convert.WebApiClientConverters._
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 /**
   * Message model class.
   */
 @JSExportAll
-trait Message extends NamedDomainElement with DomainElement with Linkable {
+class Message(override private[amf] val _internal: InternalMessage)
+    extends NamedDomainElement
+    with DomainElement
+    with Linkable {
 
-  override private[amf] val _internal: InternalMessage
+  @JSExportTopLevel("model.domain.Message")
+  def this() = this(InternalMessage())
 
   override def name: StrField              = _internal.name
   def description: StrField                = _internal.description
@@ -83,4 +86,5 @@ trait Message extends NamedDomainElement with DomainElement with Linkable {
 
   def withPayload(): Payload = _internal.withPayload()
 
+  override def linkCopy(): Message = _internal.linkCopy()
 }

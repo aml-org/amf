@@ -1,0 +1,92 @@
+asyncapi: '2.0.0'
+info:
+  title: components
+  version: '1.0.0'
+channels: {}
+components:
+  securitySchemes:
+    userPassword:
+      type: userPassword
+      description: userPassword security scheme
+
+  schemas:
+    conditional-subschemas:
+      type: string
+      properties:
+        country:
+          enum: ["United States of America", "Canada"]
+      if:
+        properties:
+          country:
+            const: United States
+      then:
+        properties:
+          postal_code:
+            pattern: "[0-9]{5}(-[0-9]{4})?"
+      else:
+        properties:
+          postal_code:
+            pattern: "[A-Z][0-9][A-Z] [0-9][A-Z][0-9]"
+
+  parameters:
+    userId:
+      description: id of the user
+      location: "$message.payload#/user/id"
+      schema:
+        type: string
+
+  messages:
+    someMessage:
+      headers:
+        type: object
+        properties:
+          a:
+            type: string
+          b:
+            type: integer
+      payload:
+        type: string
+      schemaFormat: application/schema+json;version=draft-07
+      contentType: application/json
+      name: lightMeasured
+      title: Light measured
+      summary: Inform about environmental lighting conditions of a particular streetlight.
+
+  correlationIds:
+    someId:
+      description: Default Correlation ID
+      location: $message.header#/correlationId
+
+  messageBindings:
+    someMessageBinding:
+      mqtt:
+        bindingVersion: 31.07.92
+      kafka:
+        key: somekey
+
+  serverBindings:
+    someServerBinding:
+      mqtt:
+        clientId: someid
+        cleanSession: true
+        keepAlive: 12
+        bindingVersion: 3.4.3
+
+  operationBindings:
+    someOperationBinding:
+      http:
+        bindingVersion: 31.07.92
+        type: request
+        method: TRACE
+        query:
+          type: object
+          properties:
+            some:
+              type: string
+
+  channelBindings:
+    someHttpBinding:
+      ws:
+        bindingVersion: 1.0.0
+
+

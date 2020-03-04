@@ -12,7 +12,8 @@ import org.yaml.model.YPart
 /**
   * Request internal model.
   */
-class Request(override val fields: Fields, override val annotations: Annotations) extends Message {
+class Request(override val fields: Fields, override val annotations: Annotations)
+    extends Message(fields: Fields, annotations: Annotations) {
 
   def required: BoolField              = fields.field(Required)
   def queryParameters: Seq[Parameter]  = fields.field(QueryParameters)

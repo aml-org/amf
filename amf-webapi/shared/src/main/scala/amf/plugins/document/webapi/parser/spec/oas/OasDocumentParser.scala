@@ -36,7 +36,9 @@ import scala.collection.mutable.ListBuffer
 /**
   * Oas spec parser
   */
-abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext) extends OasSpecParser {
+abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
+    extends OasSpecParser
+    with OasLikeDeclarationsHelper {
 
   def parseExtension(): Extension = {
     val extension = parseDocument(Extension())
@@ -135,33 +137,6 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
 
   protected val definitionsKey: String
   protected val securityKey: String
-
-  def parseTypeDeclarations(map: YMap, typesPrefix: String): Unit = {
-
-    map.key(
-      definitionsKey,
-      entry => {
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val typeName = e.key.as[YScalar].text
-            OasTypeParser(e, shape => {
-              shape.set(ShapeModel.Name, AmfScalar(typeName, Annotations(e.key.value)), Annotations(e.key))
-              shape.adopted(typesPrefix)
-            })(ctx).parse() match {
-              case Some(shape) =>
-                ctx.declarations += shape.add(DeclaredElement())
-              case None =>
-                ctx.eh.violation(UnableToParseShape,
-                                 NodeShape().adopted(typesPrefix).id,
-                                 s"Error parsing shape at $typeName",
-                                 e)
-            }
-          })
-      }
-    )
-  }
 
   protected def parseSecuritySchemeDeclarations(map: YMap, parent: String): Unit = {
     parseSecuritySchemeDeclarationsFromKey(securityKey, map, parent)

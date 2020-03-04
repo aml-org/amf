@@ -5,14 +5,16 @@ import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.domain.webapi.metamodel.bindings.{MqttServerBindingModel, MqttServerLastWillModel}
 import amf.plugins.domain.webapi.models.bindings.ServerBinding
 import amf.plugins.domain.webapi.models.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
-import org.yaml.model.{YMap, YMapEntry}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
 object AsyncServerBindingsParser extends AsyncBindingsParser {
   override type T = ServerBinding
 
-  override protected def parseMqtt(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): ServerBinding = {
-    val binding = MqttServerBinding(Annotations(entry)).adopted(parent)
-    val map     = entry.value.as[YMap]
+  override protected def parseMqtt(entry: YMapEntry, parent: String, key: Option[YNode])(
+      implicit ctx: AsyncWebApiContext): ServerBinding = {
+    val binding = MqttServerBinding(Annotations(entry))
+    nameAndAdopt(binding, parent, key)
+    val map = entry.value.as[YMap]
 
     map.key("clientId", MqttServerBindingModel.ClientId in binding)
     map.key("cleanSession", MqttServerBindingModel.CleanSession in binding)
