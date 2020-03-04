@@ -56,14 +56,14 @@ case class OasLikeSecurityRequirementParser(node: YNode,
 
     private def parseScopes(scheme: ParametrizedSecurityScheme, declaration: SecurityScheme, schemeEntry: YMapEntry) = {
       if (declaration.`type`.is("OAuth 2.0")) {
-        val settings = OAuth2Settings().adopted(scheme.id)
+        val settings = OAuth2Settings().adopted(scheme.id).add(Annotations(schemeEntry))
         val scopes   = getScopes(schemeEntry)
         val flows = Seq(
           settings
             .withFlow()
             .setArray(OAuth2FlowModel.Scopes, scopes, Annotations(schemeEntry.value)))
 
-        scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows))
+        scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows)).add(Annotations(schemeEntry))
       } else if (declaration.`type`.is("openIdConnect")) {
         val settings = OpenIdConnectSettings().adopted(scheme.id)
         val scopes   = getScopes(schemeEntry)
