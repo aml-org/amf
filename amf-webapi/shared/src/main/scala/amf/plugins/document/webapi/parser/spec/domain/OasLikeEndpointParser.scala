@@ -207,8 +207,8 @@ case class AsyncEndpointParser(entry: YMapEntry, producer: String => EndPoint, c
     super.parseEndpointMap(endpoint, map)
 
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncChannelBindingsParser.parse(entry.value.as[YMap], endpoint.id)
-      endpoint.setArray(EndPointModel.Bindings, bindings, Annotations(entry))
+      val bindings = AsyncChannelBindingsParser.parse(Right(entry.value.as[YMap]), endpoint.id)
+      endpoint.set(EndPointModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(endpoint, map).parseOrphanNode("bindings")
     }

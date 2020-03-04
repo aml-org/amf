@@ -25,13 +25,6 @@ case class DynamicBinding(override private[amf] val _internal: InternalDynamicBi
     this
   }
 
-  override def name: StrField = _internal.name
-
-  override def withName(name: String): this.type = {
-    _internal.withName(name)
-    this
-  }
-
   def withType(`type`: String): this.type = {
     _internal.withType(`type`)
     this
@@ -48,13 +41,6 @@ case class EmptyBinding(override private[amf] val _internal: InternalEmptyBindin
 
   @JSExportTopLevel("model.domain.EmptyBinding")
   def this() = this(InternalEmptyBinding())
-
-  override def name: StrField = _internal.name
-
-  override def withName(name: String): this.type = {
-    _internal.withName(name)
-    this
-  }
 
   def `type`: StrField = _internal.`type`
 

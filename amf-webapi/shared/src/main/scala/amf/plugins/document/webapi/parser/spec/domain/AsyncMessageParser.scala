@@ -14,6 +14,7 @@ import amf.plugins.domain.webapi.metamodel.{MessageModel, ParameterModel, Payloa
 import amf.plugins.domain.webapi.models.{Message, Parameter, Payload, Request, Response}
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
+import amf.plugins.domain.webapi.models.bindings.MessageBindings
 
 case class AsyncMessageParser(parent: String, messageType: Option[MessageType])(implicit val ctx: AsyncWebApiContext)
     extends SpecParserOps {
@@ -91,8 +92,8 @@ case class AsyncMessageParser(parent: String, messageType: Option[MessageType])(
             MessageModel.CorrelationId in message using (AsyncCorrelationIdParser(_, message.id).parse()))
 
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncMessageBindingsParser.parse(entry.value.as[YMap], message.id)
-      message.setArray(MessageModel.Bindings, bindings, Annotations(entry))
+      val bindings: MessageBindings = AsyncMessageBindingsParser.parse(Right(entry.value.as[YMap]), message.id)
+      message.set(MessageModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(message, map).parseOrphanNode("bindings")
     }
