@@ -4,8 +4,20 @@
     "title": "Basic servers",
     "version": "0.1"
   },
+  "servers": [
+    {
+      "url": "https://api.example.com/v1",
+      "description": "The production API server"
+    }
+  ],
   "paths": {
     "/with-no-overriding": {
+      "servers": [
+        {
+          "url": "https://api.example.com/v1",
+          "description": "The production API server"
+        }
+      ],
       "get": {
         "servers": [
           {
@@ -21,6 +33,12 @@
       }
     },
     "/ping": {
+      "servers": [
+        {
+          "url": "https://ping.example.com",
+          "description": "Override base path for all operations with the /ping path"
+        }
+      ],
       "post": {
         "servers": [
           {

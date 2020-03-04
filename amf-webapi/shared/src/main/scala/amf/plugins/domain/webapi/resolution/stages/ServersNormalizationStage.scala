@@ -11,7 +11,8 @@ import amf.plugins.domain.webapi.models.{Server, ServerContainer, WebApi}
   *
   * @param profile target profile
   */
-class ServersNormalizationStage(profile: ProfileName)(override implicit val errorHandler: ErrorHandler)
+class ServersNormalizationStage(profile: ProfileName, val keepEditingInfo: Boolean = false)(
+    override implicit val errorHandler: ErrorHandler)
     extends ResolutionStage() {
 
   override def resolve[T <: BaseUnit](model: T): T = {
@@ -48,7 +49,7 @@ class ServersNormalizationStage(profile: ProfileName)(override implicit val erro
   private def propagateServers(base: ServerContainer, children: Seq[ServerContainer]): Unit =
     if (children.nonEmpty && base.servers.nonEmpty) {
       val servers: Seq[Server] = base.servers
-      base.removeServers()
+      if (!keepEditingInfo) base.removeServers()
       children.foreach { child =>
         if (child.servers.isEmpty)
           child.withServers(servers)
