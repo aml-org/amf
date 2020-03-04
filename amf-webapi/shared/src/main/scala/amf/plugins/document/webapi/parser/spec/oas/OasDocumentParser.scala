@@ -269,24 +269,27 @@ abstract class OasDocumentParser(root: Root)(implicit val ctx: OasWebApiContext)
       }
     )
 
-    val documentations = ListBuffer[CreativeWork]()
+    val documentations: mutable.ListBuffer[(CreativeWork, YMapEntry)] = ListBuffer[(CreativeWork, YMapEntry)]()
 
     map.key(
       "externalDocs",
       entry => {
-        documentations += OasLikeCreativeWorkParser(entry.value, api.id).parse()
+        documentations.append((OasLikeCreativeWorkParser(entry.value, api.id).parse(), entry))
       }
     )
 
     map.key(
       "userDocumentation".asOasExtension,
       entry => {
-        documentations ++= UserDocumentationParser(entry.value.as[Seq[YNode]])
-          .parse()
+        documentations.appendAll(
+          UserDocumentationParser(entry.value.as[Seq[YNode]])
+            .parse()
+            .map(c => (c, entry)))
       }
     )
 
-    if (documentations.nonEmpty) api.setArray(WebApiModel.Documentations, documentations)
+    if (documentations.nonEmpty)
+      api.setArray(WebApiModel.Documentations, documentations.map(_._1), Annotations(documentations.map(_._2).head))
 
     map.key("paths") match {
       case Some(entry) => parseEndpoints(api, entry)
