@@ -475,9 +475,9 @@
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
-                            "http://a.ml/vocabularies/document-source-maps#invalid-binding": [
+                            "http://a.ml/vocabularies/document-source-maps#body-parameter": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/source-map/invalid-binding/element_0",
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/source-map/body-parameter/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
                                     "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody"
@@ -485,7 +485,7 @@
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "bo"
+                                    "@value": "true"
                                   }
                                 ]
                               }
@@ -530,6 +530,21 @@
                                   }
                                 ]
                               }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#invalid-binding": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody/source-map/invalid-binding/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/MyBody"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "bo"
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -543,10 +558,23 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
                                 "@value": "http://a.ml/vocabularies/apiContract#parameter"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(10,8)-(28,9)]"
+                              }
+                            ]
+                          },
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/invalid-parameter-binding.json#/web-api/end-points/%2Fpets%2F%7Bid%7D/post/request/source-map/lexical/element_0",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "http://a.ml/vocabularies/apiContract#payload"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [

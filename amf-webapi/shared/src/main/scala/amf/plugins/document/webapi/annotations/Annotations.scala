@@ -68,6 +68,17 @@ object FormBodyParameter extends AnnotationGraphLoader {
   }
 }
 
+case class BodyParameter() extends SerializableAnnotation with PerpetualAnnotation {
+  override val name: String  = "body-parameter"
+  override val value: String = "true"
+}
+
+object BodyParameter extends AnnotationGraphLoader {
+  override def unparse(value: String, objects: Map[String, AmfElement]): Option[Annotation] = {
+    Some(BodyParameter())
+  }
+}
+
 case class ParameterNameForPayload(paramName: String, range: Range)
     extends SerializableAnnotation
     with PerpetualAnnotation { // perpetual? after resolution i should have a normal payload
