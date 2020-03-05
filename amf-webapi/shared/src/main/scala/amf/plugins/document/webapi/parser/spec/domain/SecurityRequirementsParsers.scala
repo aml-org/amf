@@ -1,5 +1,6 @@
 package amf.plugins.document.webapi.parser.spec.domain
 
+import amf.core.annotations.VirtualObject
 import amf.core.model.domain.AmfScalar
 import amf.core.parser.{Annotations, SearchScope}
 import amf.core.utils.IdCounter
@@ -61,6 +62,7 @@ case class OasLikeSecurityRequirementParser(node: YNode,
         val flows = Seq(
           settings
             .withFlow()
+            .add(VirtualObject())
             .setArray(OAuth2FlowModel.Scopes, scopes, Annotations(schemeEntry.value)))
 
         scheme.set(ParametrizedSecuritySchemeModel.Settings, settings.withFlows(flows)).add(Annotations(schemeEntry))
