@@ -1080,18 +1080,43 @@ case class RamlTupleShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, refe
     val fs = tuple.fields
 
     result += RamlTupleItemsShapeEmitter(tuple, ordering, references)
-    result += MapEntryEmitter("tuple".asRamlAnnotation, "true", YType.Bool)
 
     fs.entry(ArrayShapeModel.MaxItems).map(f => result += RamlScalarEmitter("maxItems", f))
-
     fs.entry(ArrayShapeModel.MinItems).map(f => result += RamlScalarEmitter("minItems", f))
-
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += RamlScalarEmitter("uniqueItems", f))
 
     result
   }
 
   override val typeName: Option[String] = tuple.annotations.find(classOf[ExplicitField]).map(_ => "array")
+}
+
+case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends EntryEmitter {
+
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry(
+      "tuple".asRamlAnnotation,
+      _.list(
+        b => tuple.items.foreach(RamlTupleItemEmitter(_, ordering, references).emit(b))
+      )
+    )
+  }
+
+  override def position(): Position = pos(tuple.fields.getValue(TupleShapeModel.TupleItems).annotations)
+}
+
+case class RamlTupleItemEmitter(item: Shape, ordering: SpecOrdering, references: Seq[BaseUnit])(
+    implicit spec: RamlSpecEmitterContext)
+    extends PartEmitter {
+  override def emit(b: PartBuilder): Unit = {
+    Raml10TypeEmitter(item, ordering, references = references).entries().foreach { e =>
+      b.obj(eb => e.emit(eb))
+    }
+  }
+
+  override def position(): Position = pos(item.annotations)
 }
 
 case class RamlItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -1125,33 +1150,6 @@ case class RamlItemsShapeEmitter(array: ArrayShape, ordering: SpecOrdering, refe
   override def position(): Position = {
     pos(array.fields.getValue(ArrayShapeModel.Items).annotations)
   }
-}
-
-case class RamlTupleItemsShapeEmitter(tuple: TupleShape, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: RamlSpecEmitterContext)
-    extends EntryEmitter {
-
-  override def emit(b: EntryBuilder): Unit = {
-    val result = mutable.ListBuffer[EntryEmitter]()
-    tuple.items match {
-      case tupleItems: AnyShape =>
-        tuple.items
-          .foreach { _ =>
-            Raml10TypeEmitter(tupleItems, ordering, references = references).entries().foreach(result += _)
-          }
-      case _ => // ignore
-    }
-
-    // todo garrote review type
-    /* b.entry(
-      "items",
-      _.list { b =>
-        traverse(ordering.sorted(result), b)
-      }
-    ) */
-  }
-
-  override def position(): Position = pos(tuple.fields.getValue(TupleShapeModel.TupleItems).annotations)
 }
 
 case class RamlPropertiesShapeEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(

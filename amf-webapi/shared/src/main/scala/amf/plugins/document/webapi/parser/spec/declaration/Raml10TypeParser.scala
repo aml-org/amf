@@ -1131,7 +1131,8 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
       map.key("maxItems", (ArrayShapeModel.MaxItems in shape).allowingAnnotations)
       map.key("uniqueItems", (ArrayShapeModel.UniqueItems in shape).allowingAnnotations)
 
-      val itemsField = map.key("items")
+      // The items of the tuple are emitted as an annotation
+      val itemsField = map.key("tuple".asRamlAnnotation)
       itemsField match {
         case None => // ignore
         case Some(entry) =>
