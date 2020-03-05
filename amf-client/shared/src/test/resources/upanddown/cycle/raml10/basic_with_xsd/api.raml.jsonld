@@ -249,6 +249,21 @@
                                 "@type": [
                                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                                 ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api/end-points/%2Ftest/get/request/application%2Fxml/schema/schema/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/apiContract#examples"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(12,0)-(13,36)]"
+                                      }
+                                    ]
+                                  }
+                                ],
                                 "http://a.ml/vocabularies/document-source-maps#auto-generated-name": [
                                   {
                                     "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/basic_with_xsd/api.raml#/web-api/end-points/%2Ftest/get/request/application%2Fxml/schema/schema/source-map/auto-generated-name/element_0",

@@ -1057,10 +1057,23 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml#/type/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml#/type/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml#/type"
+                    "@value": "http://www.w3.org/ns/shacl#property"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,0)-(7,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml#/type/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/apiContract#examples"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1070,15 +1083,15 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml#/type/source-map/lexical/element_0",
+                "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml#/type/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#property"
+                    "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/raml10/fragment_usage/api.raml#/type"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(3,0)-(7,0)]"
+                    "@value": "[(3,0)-(21,16)]"
                   }
                 ]
               }
