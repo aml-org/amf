@@ -73,7 +73,7 @@ trait ExampleParser {
       RamlExamplesParser(map, "example", "examples", Option(shape.id), shape.withExample, options.checkScalar(shape))
         .parse()
     if (examples.nonEmpty)
-      shape.setArray(AnyShapeModel.Examples, examples)
+      shape.setArray(AnyShapeModel.Examples, examples, Annotations(map))
   }
 }
 
