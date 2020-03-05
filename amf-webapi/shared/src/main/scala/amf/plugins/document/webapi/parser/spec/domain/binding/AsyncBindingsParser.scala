@@ -2,7 +2,7 @@ package amf.plugins.document.webapi.parser.spec.domain.binding
 
 import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.Field
-import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfScalar, DomainElement, NamedDomainElement}
 import amf.core.parser.{Annotations, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, SpecParserOps}
@@ -11,13 +11,35 @@ import amf.plugins.document.webapi.parser.spec.domain.binding.Bindings._
 import amf.plugins.domain.webapi.metamodel.bindings.{DynamicBindingModel, EmptyBindingModel}
 import amf.plugins.domain.webapi.models.bindings._
 import amf.validations.ParserSideValidations
-import org.yaml.model.{YMap, YMapEntry, YNode}
+import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
+import amf.plugins.document.webapi.parser.spec.domain.ConversionHelpers._
 
 trait AsyncBindingsParser extends SpecParserOps {
   protected type Binding
-  protected type Bindings <: DomainElement
+  protected type Bindings <: NamedDomainElement
 
-  def parse(entryOrMap: Either[YMapEntry, YMap], parent: String)(implicit ctx: AsyncWebApiContext): Bindings
+  def parse(entryOrMap: Either[YMapEntry, YNode], parent: String)(implicit ctx: AsyncWebApiContext): Bindings = {
+    val map: YMap = entryOrMap
+    ctx.link(map) match {
+      case Left(fullRef) =>
+        handleRef(entryOrMap, fullRef, parent)
+      case Right(_) =>
+        buildAndPopulate(entryOrMap, parent)
+    }
+  }
+
+  protected def buildAndPopulate(entryOrMap: Either[YMapEntry, YNode], parent: String)(
+      implicit ctx: AsyncWebApiContext): Bindings
+
+  protected def handleRef(entryOrNode: Either[YMapEntry, YNode], fullRef: String, parent: String)(
+      implicit ctx: AsyncWebApiContext): Bindings
+
+  protected def nameAndAdopt(m: Bindings, entry: Option[YMapEntry], parent: String): Bindings = {
+    entry foreach { e =>
+      m.withName(e.key.as[YScalar].text, Annotations(e.key))
+    }
+    m.adopted(parent)
+  }
 
   protected def parseElements(map: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Seq[Binding] = {
     map.regex("^(?!x-).*").map(parseElement(_, parent)).toSeq

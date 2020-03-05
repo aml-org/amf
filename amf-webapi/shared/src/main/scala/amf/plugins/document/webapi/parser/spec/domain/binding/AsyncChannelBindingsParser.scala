@@ -3,8 +3,10 @@ package amf.plugins.document.webapi.parser.spec.domain.binding
 import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.Field
 import amf.core.model.domain.{AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, YMapOps}
+import amf.core.parser.{Annotations, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorChannelBindings
 import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091ChannelBindingModel,
   Amqp091ChannelExchangeModel,
@@ -14,25 +16,45 @@ import amf.plugins.domain.webapi.metamodel.bindings.{
 import amf.plugins.domain.webapi.models.bindings.{ChannelBinding, ChannelBindings}
 import amf.plugins.domain.webapi.models.bindings.amqp.{Amqp091ChannelBinding, Amqp091ChannelExchange, Amqp091Queue}
 import amf.plugins.domain.webapi.models.bindings.websockets.WebSocketsChannelBinding
-import org.yaml.model.{YMap, YMapEntry, YScalar}
+import amf.plugins.features.validation.CoreValidations
+import org.yaml.model.{YMap, YMapEntry, YNode}
+import amf.plugins.document.webapi.parser.spec.domain.ConversionHelpers._
 
 object AsyncChannelBindingsParser extends AsyncBindingsParser {
   override type Binding            = ChannelBinding
   override protected type Bindings = ChannelBindings
 
-  override def parse(entryOrMap: Either[YMapEntry, YMap], parent: String)(
+  def buildAndPopulate(entryOrMap: Either[YMapEntry, YNode], parent: String)(
       implicit ctx: AsyncWebApiContext): ChannelBindings = {
-    entryOrMap match {
-      case Left(entry) =>
-        val map = entry.value.as[YMap]
-        val bindingsObj =
-          ChannelBindings(map).withName(entry.key.as[YScalar].text, Annotations(entry.key)).adopted(parent)
-        val bindings = parseElements(map, bindingsObj.id)
-        bindingsObj.withBindings(bindings)
-      case Right(map) =>
-        val bindingsObj: ChannelBindings  = ChannelBindings(map).adopted(parent)
-        val bindings: Seq[ChannelBinding] = parseElements(map, bindingsObj.id)
-        bindingsObj.withBindings(bindings)
+    val map: YMap       = entryOrMap
+    val channelBindings = ChannelBindings(map)
+    nameAndAdopt(channelBindings, entryOrMap.left.toOption, parent)
+    parseBindings(channelBindings, map)
+  }
+
+  private def parseBindings(obj: ChannelBindings, map: YMap)(implicit ctx: AsyncWebApiContext): ChannelBindings = {
+    val bindings: Seq[ChannelBinding] = parseElements(map, obj.id)
+    obj.withBindings(bindings)
+  }
+
+  def handleRef(entryOrNode: Either[YMapEntry, YNode], fullRef: String, parent: String)(
+      implicit ctx: AsyncWebApiContext): ChannelBindings = {
+    val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "channelBindings")
+    ctx.declarations
+      .findChannelBindings(label, SearchScope.Named)
+      .map(channelBindings => nameAndAdopt(channelBindings.link(label), entryOrNode.left.toOption, parent))
+      .getOrElse(remote(fullRef, entryOrNode, parent))
+  }
+
+  private def remote(fullRef: String, entryOrNode: Either[YMapEntry, YNode], parent: String)(
+      implicit ctx: AsyncWebApiContext): ChannelBindings = {
+    ctx.obtainRemoteYNode(fullRef) match {
+      case Some(bindingsNode) =>
+        val external = AsyncChannelBindingsParser.parse(Right(bindingsNode), parent)
+        nameAndAdopt(external.link(fullRef), entryOrNode.left.toOption, parent)
+      case None =>
+        ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", entryOrNode)
+        nameAndAdopt(new ErrorChannelBindings(fullRef, entryOrNode).link(fullRef), entryOrNode.left.toOption, parent)
     }
   }
 

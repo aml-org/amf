@@ -39,7 +39,7 @@ import amf.validations.ParserSideValidations._
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType, _}
 
 import scala.language.postfixOps
-
+import ConversionHelpers._
 case class RamlParametersParser(map: YMap, adopted: Parameter => Unit, parseOptional: Boolean = false)(
     implicit ctx: RamlWebApiContext) {
 
@@ -227,10 +227,7 @@ case class Oas2ParameterParser(entryOrNode: Either[YMapEntry, YNode],
                                nameGenerator: IdCounter)(implicit ctx: WebApiContext)
     extends OasParameterParser {
 
-  protected val map: YMap = entryOrNode match {
-    case Left(entry) => entry.value.as[YMap]
-    case Right(node) => node.as[YMap]
-  }
+  protected val map: YMap = entryOrNode
 
   protected def setName(p: DomainElement with NamedDomainElement): DomainElement = {
     p match {

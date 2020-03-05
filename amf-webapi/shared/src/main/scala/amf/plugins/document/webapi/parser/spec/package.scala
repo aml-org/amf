@@ -34,7 +34,7 @@ package object spec {
     val responsesDefinitionsPrefix = "#/responses/"
 
     def stripDefinitionsPrefix(url: String)(implicit ctx: WebApiContext): String = {
-      if (ctx.vendor == Vendor.OAS30) url.stripPrefix(oas3DefinitionsPrefix)
+      if (ctx.vendor == Vendor.OAS30 || ctx.vendor == Vendor.ASYNC20) url.stripPrefix(oas3DefinitionsPrefix)
       else url.stripPrefix(oas2DefinitionsPrefix)
     }
 
