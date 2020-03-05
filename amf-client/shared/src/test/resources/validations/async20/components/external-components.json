@@ -1,0 +1,51 @@
+{
+  "external-schema": {
+    "type": "object",
+    "properties": {
+      "a": {
+        "type": "string"
+      }
+    }
+  },
+  "external-correlation-id": {
+    "description": "external correlation id",
+    "location": "$message.header#/correlationId"
+  },
+  "external-param": {
+    "description": "external",
+    "location": "$message.payload#/user/external",
+    "schema": {
+      "type": "string"
+    }
+  },
+  "external-message": {
+    "name": "some external message",
+    "title": "external message",
+    "summary": "external message summary",
+    "description": "A longer description of external message",
+    "contentType": "application/json"
+  },
+  "external-message-binding": {
+    "kafka": {
+      "key": "keyFromExternal"
+    }
+  },
+  "external-server-binding": {
+    "mqtt": {
+      "bindingVersion": "versionFromExternal",
+      "cleanSession": true,
+      "keepAlive": true
+    }
+  },
+  "external-operation-binding": {
+    "http": {
+      "bindingVersion": "versionFromExternal",
+      "type": "request"
+    }
+  },
+  "external-channel-binding": {
+    "ws": {
+      "bindingVersion": "versionFromExternal"
+    }
+  }
+}

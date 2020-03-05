@@ -2,7 +2,7 @@ package amf.plugins.domain.webapi.metamodel.bindings
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Array
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.core.metamodel.domain.common.NameFieldSchema
 import amf.core.vocabulary.ValueType
 import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract}
@@ -22,7 +22,7 @@ object ServerBindingsModel extends DomainElementModel with NameFieldSchema {
     List(
       Name,
       Bindings,
-    ) ++ DomainElementModel.fields
+    ) ++ LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance = ServerBindings()
 

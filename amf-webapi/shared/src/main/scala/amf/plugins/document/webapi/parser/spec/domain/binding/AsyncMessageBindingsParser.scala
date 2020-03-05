@@ -1,7 +1,9 @@
 package amf.plugins.document.webapi.parser.spec.domain.binding
 
-import amf.core.parser.{Annotations, YMapOps}
+import amf.core.parser.{Annotations, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorMessageBindings
 import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091MessageBindingModel,
   HttpMessageBindingModel,
@@ -13,25 +15,45 @@ import amf.plugins.domain.webapi.models.bindings.amqp.Amqp091MessageBinding
 import amf.plugins.domain.webapi.models.bindings.http.HttpMessageBinding
 import amf.plugins.domain.webapi.models.bindings.kafka.KafkaMessageBinding
 import amf.plugins.domain.webapi.models.bindings.mqtt.MqttMessageBinding
-import org.yaml.model.{YMap, YMapEntry, YScalar}
+import amf.plugins.features.validation.CoreValidations
+import org.yaml.model.{YMap, YMapEntry, YNode}
+import amf.plugins.document.webapi.parser.spec.domain.ConversionHelpers._
 
 object AsyncMessageBindingsParser extends AsyncBindingsParser {
   override type Binding  = MessageBinding
   override type Bindings = MessageBindings
 
-  override def parse(entryOrMap: Either[YMapEntry, YMap], parent: String)(
+  def buildAndPopulate(entryOrMap: Either[YMapEntry, YNode], parent: String)(
       implicit ctx: AsyncWebApiContext): MessageBindings = {
-    entryOrMap match {
-      case Left(entry) =>
-        val map = entry.value.as[YMap]
-        val bindingsObj =
-          MessageBindings(map).withName(entry.key.as[YScalar].text, Annotations(entry.key)).adopted(parent)
-        val bindings = parseElements(map, bindingsObj.id)
-        bindingsObj.withBindings(bindings)
-      case Right(map) =>
-        val bindingsObj: MessageBindings  = MessageBindings(map).adopted(parent)
-        val bindings: Seq[MessageBinding] = parseElements(map, bindingsObj.id)
-        bindingsObj.withBindings(bindings)
+    val map: YMap       = entryOrMap
+    val messageBindings = MessageBindings(map)
+    nameAndAdopt(messageBindings, entryOrMap.left.toOption, parent)
+    parseBindings(messageBindings, map)
+  }
+
+  private def parseBindings(obj: MessageBindings, map: YMap)(implicit ctx: AsyncWebApiContext): MessageBindings = {
+    val bindings: Seq[MessageBinding] = parseElements(map, obj.id)
+    obj.withBindings(bindings)
+  }
+
+  def handleRef(entryOrNode: Either[YMapEntry, YNode], fullRef: String, parent: String)(
+      implicit ctx: AsyncWebApiContext): MessageBindings = {
+    val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "messageBindings")
+    ctx.declarations
+      .findMessageBindings(label, SearchScope.Named)
+      .map(messageBindings => nameAndAdopt(messageBindings.link(label), entryOrNode.left.toOption, parent))
+      .getOrElse(remote(fullRef, entryOrNode, parent))
+  }
+
+  private def remote(fullRef: String, entryOrNode: Either[YMapEntry, YNode], parent: String)(
+      implicit ctx: AsyncWebApiContext): MessageBindings = {
+    ctx.obtainRemoteYNode(fullRef) match {
+      case Some(bindingsNode) =>
+        val external = AsyncMessageBindingsParser.parse(Right(bindingsNode), parent)
+        nameAndAdopt(external.link(fullRef), entryOrNode.left.toOption, parent)
+      case None =>
+        ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", entryOrNode)
+        nameAndAdopt(new ErrorMessageBindings(fullRef, entryOrNode).link(fullRef), entryOrNode.left.toOption, parent)
     }
   }
 

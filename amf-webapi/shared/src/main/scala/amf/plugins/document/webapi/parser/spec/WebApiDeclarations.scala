@@ -258,6 +258,36 @@ class WebApiDeclarations(val alias: Option[String],
       case p: Parameter => p
     }
 
+  def findCorrelationId(key: String, scope: SearchScope.Scope): Option[CorrelationId] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].correlationIds, scope) collect {
+      case c: CorrelationId => c
+    }
+
+  def findServerBindings(key: String, scope: SearchScope.Scope): Option[ServerBindings] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].serverBindings, scope) collect {
+      case c: ServerBindings => c
+    }
+
+  def findOperationBindings(key: String, scope: SearchScope.Scope): Option[OperationBindings] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].operationBindings, scope) collect {
+      case c: OperationBindings => c
+    }
+
+  def findChannelBindings(key: String, scope: SearchScope.Scope): Option[ChannelBindings] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].channelBindings, scope) collect {
+      case c: ChannelBindings => c
+    }
+
+  def findMessageBindings(key: String, scope: SearchScope.Scope): Option[MessageBindings] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].messageBindings, scope) collect {
+      case c: MessageBindings => c
+    }
+
+  def findMessage(key: String, scope: SearchScope.Scope): Option[Message] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].messages, scope) collect {
+      case m: Message => m
+    }
+
   def findCallbackInDeclarations(key: String): Option[List[Callback]] = callbacks.get(key)
 
   def findResourceTypeOrError(ast: YPart)(key: String, scope: SearchScope.Scope): ResourceType =
@@ -427,6 +457,46 @@ object WebApiDeclarations {
 
   class ErrorLink(idPart: String, ast: YPart) extends TemplatedLink(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorTemplateLink/"
+    withId(idPart)
+  }
+
+  class ErrorCorrelationId(idPart: String, ast: YPart)
+      extends CorrelationId(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#errorCorrelationId/"
+    withId(idPart)
+  }
+
+  class ErrorMessage(idPart: String, ast: YPart) extends Message(Fields(), Annotations(ast)) with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#errorMessage/"
+    withId(idPart)
+  }
+
+  class ErrorServerBindings(idPart: String, ast: YPart)
+      extends ServerBindings(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#serverBindings/"
+    withId(idPart)
+  }
+
+  class ErrorOperationBindings(idPart: String, ast: YPart)
+      extends OperationBindings(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#operationBindings/"
+    withId(idPart)
+  }
+
+  class ErrorChannelBindings(idPart: String, ast: YPart)
+      extends ChannelBindings(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#channelBindings/"
+    withId(idPart)
+  }
+
+  class ErrorMessageBindings(idPart: String, ast: YPart)
+      extends MessageBindings(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#messageBindings/"
     withId(idPart)
   }
 

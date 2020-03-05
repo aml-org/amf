@@ -1,7 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain
 import amf.core.annotations.{SynthesizedField, TrackedElement, VirtualObject}
 import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, ScalarNode, YMapOps}
+import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.async.{MessageType, Publish, Subscribe}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
@@ -15,6 +15,10 @@ import amf.plugins.domain.webapi.models.{Message, Parameter, Payload, Request, R
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.models.bindings.MessageBindings
+import amf.plugins.features.validation.CoreValidations
+import ConversionHelpers._
+import amf.plugins.document.webapi.parser.spec.OasDefinitions
+import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorMessage
 
 case class AsyncMessageParser(parent: String, messageType: Option[MessageType])(implicit val ctx: AsyncWebApiContext)
     extends SpecParserOps {
@@ -41,7 +45,7 @@ case class AsyncMessageParser(parent: String, messageType: Option[MessageType])(
     case None            => Message(Annotations(map))
   }
 
-  def nameAndAdopt(m: Message, entry: Option[YMapEntry]): Unit = {
+  def nameAndAdopt(m: Message, entry: Option[YMapEntry]): Message = {
     entry foreach { e =>
       m.set(MessageModel.Name, ScalarNode(e.key).string())
     }
@@ -49,16 +53,54 @@ case class AsyncMessageParser(parent: String, messageType: Option[MessageType])(
   }
 
   private def parseSingleMessage(entryOrNode: Either[YMapEntry, YNode])(implicit ctx: AsyncWebApiContext): Message = {
-    val map = entryOrNode match {
-      case Left(entry) => entry.value.as[YMap]
-      case Right(node) => node.as[YMap]
+    val map: YMap = entryOrNode
+    ctx.link(map) match {
+      case Left(fullRef) =>
+        handleRef(entryOrNode, fullRef)
+      case Right(_) =>
+        val message = buildMessage(map)
+        nameAndAdopt(message, entryOrNode.left.toOption)
+        AsyncMessagePopulator(map, message).populate()
     }
-    val message = buildMessage(map)
-    nameAndAdopt(message, entryOrNode.left.toOption)
+  }
 
-    ctx.closedShape(message.id, map, "message")
+  private def handleRef(entryOrNode: Either[YMapEntry, YNode], fullRef: String): Message = {
+    val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "messages")
+    ctx.declarations
+      .findMessage(label, SearchScope.Named)
+      .map(msg => nameAndAdopt(generateLink(label, msg, entryOrNode), entryOrNode.left.toOption))
+      .getOrElse(remote(fullRef, entryOrNode))
+  }
 
-    map.key("name", MessageModel.Name in message)
+  private def remote(fullRef: String, entryOrNode: Either[YMapEntry, YNode]) = {
+    ctx.obtainRemoteYNode(fullRef) match {
+      case Some(messageNode) =>
+        val external = AsyncMessageParser(parent, messageType).parseSingle(Right(messageNode))
+        nameAndAdopt(generateLink(fullRef, external, entryOrNode), entryOrNode.left.toOption)
+      case None =>
+        ctx.eh.violation(CoreValidations.UnresolvedReference,
+                         "",
+                         s"Cannot find link reference $fullRef",
+                         Annotations(entryOrNode))
+        nameAndAdopt(new ErrorMessage(fullRef, entryOrNode).link(fullRef), entryOrNode.left.toOption)
+    }
+  }
+
+  private def generateLink(label: String, effectiveTarget: Message, entryOrNode: Either[YMapEntry, YNode]): Message = {
+    val message = buildMessage(entryOrNode)
+    val hash    = s"${message.id}$label".hashCode
+    message
+      .withId(s"${message.id}/link-$hash")
+      .withLinkTarget(effectiveTarget)
+      .withLinkLabel(label)
+  }
+
+}
+
+sealed case class AsyncMessagePopulator(map: YMap, message: Message)(implicit ctx: AsyncWebApiContext)
+    extends SpecParserOps {
+  def populate(): Message = {
+    map.key("name", MessageModel.DisplayName in message)
     map.key("title", MessageModel.Title in message)
     map.key("summary", MessageModel.Summary in message)
     map.key("description", MessageModel.Description in message)
@@ -106,10 +148,10 @@ case class AsyncMessageParser(parent: String, messageType: Option[MessageType])(
     map.key("schemaFormat", PayloadModel.SchemaMediaType in payload)
     parseSchema(map, payload)
 
+    ctx.closedShape(message.id, map, "message")
     message.set(MessageModel.Payloads, AmfArray(Seq(payload)))
     AnnotationParser(message, map).parse()
     message
-
   }
 
   private def parseHeaderSchema(entry: YMapEntry, parentId: String): Option[Parameter] = {
