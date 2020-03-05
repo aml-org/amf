@@ -601,7 +601,20 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema/source-map/lexical/element_2",
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://www.w3.org/ns/shacl#name"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(5,2)-(5,12)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://www.w3.org/ns/shacl#property"
@@ -617,17 +630,17 @@
                 "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://www.w3.org/ns/shacl#name"
+                    "@value": "http://a.ml/vocabularies/apiContract#examples"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(5,2)-(5,12)]"
+                    "@value": "[(6,0)-(9,48)]"
                   }
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema/source-map/lexical/element_1",
+                "@id": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-client/shared/src/test/resources/production/raml10/jsonchema-apiexternalexample/api.raml#/declarations/types/jsonSchema"

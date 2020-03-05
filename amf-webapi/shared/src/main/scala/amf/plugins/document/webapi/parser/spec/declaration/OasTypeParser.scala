@@ -875,7 +875,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           RamlExamplesParser(map, "example", "examples".asOasExtension, None, shape.withExample, options).parse()
 
       if (examples.nonEmpty)
-        shape.setArray(AnyShapeModel.Examples, examples)
+        shape.setArray(AnyShapeModel.Examples, examples, Annotations(map))
     }
 
     private def parseExamplesArray(): Seq[Example] =
