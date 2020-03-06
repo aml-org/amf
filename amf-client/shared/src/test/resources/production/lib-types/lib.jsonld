@@ -656,23 +656,48 @@
         ],
         "raml-shapes:items": [
           {
-            "@id": "#13/link--717571069",
+            "@id": "#13",
             "@type": [
               "raml-shapes:RecursiveShape",
               "shacl:Shape",
               "raml-shapes:Shape",
               "doc:DomainElement"
             ],
-            "doc:link-target": [
+            "raml-shapes:fixPoint": [
               {
-                "@id": "#13"
+                "@id": "#1"
               }
             ],
-            "doc:link-label": [
+            "doc:recursive": [
+              {
+                "@value": true
+              }
+            ],
+            "shacl:name": [
               {
                 "@value": "account"
               }
-            ]
+            ],
+            "smaps": {
+              "inherited-shapes": {
+                "#13": "amf://id#9"
+              },
+              "resolved-link": {
+                "#13": "amf://id#8"
+              },
+              "type-property-lexical-info": {
+                "#13": "[(9,4)-(9,8)]"
+              },
+              "lexical": {
+                "#13": "[(8,2)-(15,0)]"
+              },
+              "declared-element": {
+                "#13": ""
+              },
+              "resolved-link-target": {
+                "#13": "amf://id#1"
+              }
+            }
           }
         ],
         "shacl:name": [

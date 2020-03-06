@@ -68,6 +68,7 @@ class ProductionResolutionTest extends RamlResolutionTest {
   override val basePath = "amf-client/shared/src/test/resources/production/"
   val completeCyclePath = "amf-client/shared/src/test/resources/upanddown/"
   val validationPath    = "amf-client/shared/src/test/resources/validations/"
+  val resolutionPath    = "amf-client/shared/src/test/resources/resolution/"
   val productionRaml10  = "amf-client/shared/src/test/resources/production/raml10/"
   val productionRaml08  = "amf-client/shared/src/test/resources/production/raml08/"
 
@@ -269,6 +270,16 @@ class ProductionResolutionTest extends RamlResolutionTest {
 
   test("Test nil type with additional facets") {
     cycle("nil-type.raml", "nil-type.raml.resolved", RamlYamlHint, Amf, validationPath)
+  }
+
+  test("jsonld with links to declares and references") {
+    cycle(
+      "link-to-declares-and-refs.raml",
+      "link-to-declares-and-refs-default.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "links-to-declares-and-references/"
+    )
   }
 }
 
