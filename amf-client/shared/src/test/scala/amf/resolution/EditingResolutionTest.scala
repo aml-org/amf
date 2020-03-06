@@ -440,6 +440,26 @@ class EditingResolutionTest extends FunSuiteCycleTests {
           s"${resolutionPath}recursive-additional-properties/")
   }
 
+  test("types with properties that must not be extracted to declares") {
+    cycle(
+      "avoid-extract-to-declares.raml",
+      "avoid-extract-to-declares.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "links-to-declares-and-references/"
+    )
+  }
+
+  test("jsonld with links to declares and references") {
+    cycle(
+      "link-to-declares-and-refs.raml",
+      "link-to-declares-and-refs-editing.jsonld",
+      RamlYamlHint,
+      Amf,
+      resolutionPath + "links-to-declares-and-references/"
+    )
+  }
+
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
     config.target match {
       case Raml08        => Raml08Plugin.resolve(unit, UnhandledErrorHandler, ResolutionPipeline.EDITING_PIPELINE)

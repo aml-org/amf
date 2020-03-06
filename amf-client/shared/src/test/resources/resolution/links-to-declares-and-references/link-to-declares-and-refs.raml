@@ -1,0 +1,44 @@
+#%RAML 1.0
+title: Shopper Customers
+
+types:
+  declared-type:
+    type: object
+    properties:
+      declared: string
+
+uses:
+ lib: lib.raml
+
+securedBy: [!include security-scheme.raml]
+
+/external-data-type:
+  get:
+    responses:
+      200:
+        body:
+          application/json: !include data-type.raml
+
+/declared-type:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: declared-type
+
+/external-lib:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: lib.A
+
+/external-fragment:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: !include json-schema.json
