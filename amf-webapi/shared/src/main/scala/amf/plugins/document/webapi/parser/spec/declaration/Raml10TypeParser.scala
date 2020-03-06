@@ -69,11 +69,21 @@ object Raml10TypeParser {
 trait ExampleParser {
   def parseExamples(shape: AnyShape, map: YMap, options: ExampleOptions = DefaultExampleOptions)(
       implicit ctx: WebApiContext): Unit = {
-    val examples =
-      RamlExamplesParser(map, "example", "examples", Option(shape.id), shape.withExample, options.checkScalar(shape))
-        .parse()
-    if (examples.nonEmpty)
-      shape.setArray(AnyShapeModel.Examples, examples, Annotations(map))
+
+    def setShape(examples: Seq[Example], maybeEntry: Option[YMapEntry]): Unit =
+      if (examples.nonEmpty)
+        maybeEntry
+          .map(entry => shape.set(AnyShapeModel.Examples, AmfArray(examples), Annotations(entry)))
+          .getOrElse(shape.set(AnyShapeModel.Examples, AmfArray(examples)))
+
+    RamlExamplesParser(map,
+                       "example",
+                       "examples",
+                       Option(shape.id),
+                       shape.withExample,
+                       options.checkScalar(shape),
+                       setShape)
+      .parse()
   }
 }
 
