@@ -66,7 +66,7 @@
                         ],
                         "raml-shapes:schema": [
                           {
-                            "@id": "#24/link--1801060029",
+                            "@id": "#24",
                             "@type": [
                               "raml-shapes:UnionShape",
                               "raml-shapes:AnyShape",
@@ -74,16 +74,56 @@
                               "raml-shapes:Shape",
                               "doc:DomainElement"
                             ],
-                            "doc:link-target": [
+                            "raml-shapes:anyOf": [
                               {
-                                "@id": "#24"
+                                "@id": "#12/link--2059000429",
+                                "@type": [
+                                  "shacl:NodeShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "doc:link-target": [
+                                  {
+                                    "@id": "#12"
+                                  }
+                                ],
+                                "doc:link-label": [
+                                  {
+                                    "@value": "Dog"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "#17/link--2058852856",
+                                "@type": [
+                                  "shacl:NodeShape",
+                                  "raml-shapes:AnyShape",
+                                  "shacl:Shape",
+                                  "raml-shapes:Shape",
+                                  "doc:DomainElement"
+                                ],
+                                "doc:link-target": [
+                                  {
+                                    "@id": "#17"
+                                  }
+                                ],
+                                "doc:link-label": [
+                                  {
+                                    "@value": "Cat"
+                                  }
+                                ]
                               }
                             ],
-                            "doc:link-label": [
-                              {
-                                "@value": "amf_inline_type_1"
+                            "smaps": {
+                              "auto-generated-name": {
+                                "#24": ""
+                              },
+                              "lexical": {
+                                "#24": "[(24,6)-(25,0)]"
                               }
-                            ]
+                            }
                           }
                         ],
                         "smaps": {
@@ -1049,74 +1089,6 @@
           },
           "resolved-link": {
             "#17": "amf://id#16"
-          }
-        }
-      },
-      {
-        "@id": "#24",
-        "@type": [
-          "raml-shapes:UnionShape",
-          "raml-shapes:AnyShape",
-          "shacl:Shape",
-          "raml-shapes:Shape",
-          "doc:DomainElement"
-        ],
-        "raml-shapes:anyOf": [
-          {
-            "@id": "#12/link--2059000429",
-            "@type": [
-              "shacl:NodeShape",
-              "raml-shapes:AnyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "doc:link-target": [
-              {
-                "@id": "#12"
-              }
-            ],
-            "doc:link-label": [
-              {
-                "@value": "Dog"
-              }
-            ]
-          },
-          {
-            "@id": "#17/link--2058852856",
-            "@type": [
-              "shacl:NodeShape",
-              "raml-shapes:AnyShape",
-              "shacl:Shape",
-              "raml-shapes:Shape",
-              "doc:DomainElement"
-            ],
-            "doc:link-target": [
-              {
-                "@id": "#17"
-              }
-            ],
-            "doc:link-label": [
-              {
-                "@value": "Cat"
-              }
-            ]
-          }
-        ],
-        "shacl:name": [
-          {
-            "@value": "amf_inline_type_1"
-          }
-        ],
-        "smaps": {
-          "inline-element": {
-            "#24": ""
-          },
-          "lexical": {
-            "#24": "[(24,6)-(25,0)]"
-          },
-          "auto-generated-name": {
-            "#24": ""
           }
         }
       }
