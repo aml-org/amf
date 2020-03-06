@@ -4,58 +4,46 @@ import amf.core.parser.{Annotations, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorMessageBindings
+import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
 import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091MessageBindingModel,
   HttpMessageBindingModel,
   KafkaMessageBindingModel,
   MqttMessageBindingModel
 }
-import amf.plugins.domain.webapi.models.bindings.{MessageBinding, MessageBindings}
 import amf.plugins.domain.webapi.models.bindings.amqp.Amqp091MessageBinding
 import amf.plugins.domain.webapi.models.bindings.http.HttpMessageBinding
 import amf.plugins.domain.webapi.models.bindings.kafka.KafkaMessageBinding
 import amf.plugins.domain.webapi.models.bindings.mqtt.MqttMessageBinding
-import amf.plugins.features.validation.CoreValidations
-import org.yaml.model.{YMap, YMapEntry, YNode}
-import amf.plugins.document.webapi.parser.spec.domain.ConversionHelpers._
+import amf.plugins.domain.webapi.models.bindings.{MessageBinding, MessageBindings}
+import org.yaml.model.{YMap, YMapEntry}
 
-object AsyncMessageBindingsParser extends AsyncBindingsParser {
+case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
+    extends AsyncBindingsParser(entryLike, parent) {
+
   override type Binding  = MessageBinding
   override type Bindings = MessageBindings
 
-  def buildAndPopulate(entryOrMap: Either[YMapEntry, YNode], parent: String)(
-      implicit ctx: AsyncWebApiContext): MessageBindings = {
-    val map: YMap       = entryOrMap
-    val messageBindings = MessageBindings(map)
-    nameAndAdopt(messageBindings, entryOrMap.left.toOption, parent)
-    parseBindings(messageBindings, map)
-  }
+  override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
+    AsyncMessageBindingsParser(entryLike, parent)
 
-  private def parseBindings(obj: MessageBindings, map: YMap)(implicit ctx: AsyncWebApiContext): MessageBindings = {
+  protected def parseBindings(obj: MessageBindings, map: YMap): MessageBindings = {
     val bindings: Seq[MessageBinding] = parseElements(map, obj.id)
     obj.withBindings(bindings)
   }
 
-  def handleRef(entryOrNode: Either[YMapEntry, YNode], fullRef: String, parent: String)(
-      implicit ctx: AsyncWebApiContext): MessageBindings = {
+  override protected def createBindings(map: YMap): MessageBindings = MessageBindings(map)
+
+  def handleRef(fullRef: String): MessageBindings = {
     val label = OasDefinitions.stripOas3ComponentsPrefix(fullRef, "messageBindings")
     ctx.declarations
       .findMessageBindings(label, SearchScope.Named)
-      .map(messageBindings => nameAndAdopt(messageBindings.link(label), entryOrNode.left.toOption, parent))
-      .getOrElse(remote(fullRef, entryOrNode, parent))
+      .map(messageBindings => nameAndAdopt(messageBindings.link(label), entryLike.key))
+      .getOrElse(remote(fullRef, entryLike, parent))
   }
 
-  private def remote(fullRef: String, entryOrNode: Either[YMapEntry, YNode], parent: String)(
-      implicit ctx: AsyncWebApiContext): MessageBindings = {
-    ctx.obtainRemoteYNode(fullRef) match {
-      case Some(bindingsNode) =>
-        val external = AsyncMessageBindingsParser.parse(Right(bindingsNode), parent)
-        nameAndAdopt(external.link(fullRef), entryOrNode.left.toOption, parent)
-      case None =>
-        ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", entryOrNode)
-        nameAndAdopt(new ErrorMessageBindings(fullRef, entryOrNode).link(fullRef), entryOrNode.left.toOption, parent)
-    }
-  }
+  override protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): MessageBindings =
+    new ErrorMessageBindings(fullRef, entryLike.asMap)
 
   override protected def parseAmqp(entry: YMapEntry, parent: String)(
       implicit ctx: AsyncWebApiContext): MessageBinding = {

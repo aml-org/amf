@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec.async.AsyncHelper
 import amf.plugins.document.webapi.parser.spec.common.WellKnownAnnotation.isOasAnnotation
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncOperationBindingsParser
 import amf.plugins.document.webapi.parser.spec.oas.{
@@ -214,13 +214,13 @@ case class AsyncOperationParser(entry: YMapEntry, producer: String => Operation)
       "message",
       messageEntry =>
         AsyncHelper.messageType(entry.key.value.toString) foreach { msgType =>
-          val messages = AsyncMessageParser(operation.id, Some(msgType)).parse(messageEntry.value.as[YMap])
+          val messages = AsyncMultipleMessageParser(messageEntry.value.as[YMap], operation.id, msgType).parse()
           operation.setArray(msgType.field, messages, Annotations(messageEntry.value))
       }
     )
 
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncOperationBindingsParser.parse(Right(entry.value.as[YMap]), operation.id)
+      val bindings = AsyncOperationBindingsParser(YMapEntryLike(entry.value), operation.id).parse()
       operation.set(OperationModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(operation, map).parseOrphanNode("bindings")
