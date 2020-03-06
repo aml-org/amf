@@ -5,7 +5,12 @@ import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, WebApiBaseSpecParser}
+import amf.plugins.document.webapi.parser.spec.common.{
+  AnnotationParser,
+  SpecParserOps,
+  WebApiBaseSpecParser,
+  YMapEntryLike
+}
 import amf.plugins.document.webapi.parser.spec.declaration.{OasLikeCreativeWorkParser, OasLikeTagsParser}
 import amf.plugins.document.webapi.parser.spec.domain.binding.{
   AsyncChannelBindingsParser,
@@ -13,31 +18,14 @@ import amf.plugins.document.webapi.parser.spec.domain.binding.{
   AsyncOperationBindingsParser,
   AsyncServerBindingsParser
 }
-import amf.plugins.document.webapi.parser.spec.domain.{
-  AsyncCorrelationIdParser,
-  AsyncMessageParser,
-  AsyncParametersParser,
-  AsyncServersParser,
-  OasLikeInformationParser
-}
+import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.oas.OasLikeDeclarationsHelper
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
-import amf.plugins.domain.webapi.models.bindings.{
-  ChannelBinding,
-  ChannelBindings,
-  MessageBinding,
-  MessageBindings,
-  OperationBinding,
-  OperationBindings,
-  ServerBinding,
-  ServerBindings
-}
+import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
 import amf.plugins.domain.webapi.models.{EndPoint, Parameter, WebApi}
 import amf.validations.ParserSideValidations.InvalidIdentifier
-import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
-
-import scala.collection.mutable
+import org.yaml.model.{YMap, YMapEntry, YType}
 
 abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiContext)
     extends AsyncApiSpecParser
@@ -136,7 +124,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       "messages",
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          val message = AsyncMessageParser(parent, None).parseSingle(Left(entry))
+          val message = AsyncMessageParser(YMapEntryLike(entry), parent, None).parse()
           message.add(DeclaredElement())
           ctx.declarations += message
         }
@@ -184,7 +172,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       "correlationIds",
       e => {
         e.value.as[YMap].entries.foreach { entry =>
-          val correlationId = AsyncCorrelationIdParser(Left(entry), parent).parse()
+          val correlationId = AsyncCorrelationIdParser(YMapEntryLike(entry), parent).parse()
           ctx.declarations += correlationId.add(DeclaredElement())
         }
       }
@@ -195,8 +183,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     parseBindingsDeclarations[MessageBindings](
       "messageBindings",
       componentsMap,
-      (entry) => {
-        AsyncMessageBindingsParser.parse(Left(entry), parent)
+      entry => {
+        AsyncMessageBindingsParser(YMapEntryLike(entry), parent).parse()
       }
     )
   }
@@ -205,8 +193,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     parseBindingsDeclarations[ServerBindings](
       "serverBindings",
       componentsMap,
-      (entry) => {
-        AsyncServerBindingsParser.parse(Left(entry), parent)
+      entry => {
+        AsyncServerBindingsParser(YMapEntryLike(entry), parent).parse()
       }
     )
   }
@@ -215,8 +203,8 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     parseBindingsDeclarations[OperationBindings](
       "operationBindings",
       componentsMap,
-      (entry) => {
-        AsyncOperationBindingsParser.parse(Left(entry), parent)
+      entry => {
+        AsyncOperationBindingsParser(YMapEntryLike(entry), parent).parse()
       }
     )
   }
@@ -225,15 +213,15 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
     parseBindingsDeclarations[ChannelBindings](
       "channelBindings",
       componentsMap,
-      (entry) => {
-        AsyncChannelBindingsParser.parse(Left(entry), parent)
+      entry => {
+        AsyncChannelBindingsParser(YMapEntryLike(entry), parent).parse()
       }
     )
   }
 
   def parseBindingsDeclarations[T <: DomainElement](keyword: String,
                                                     componentsMap: YMap,
-                                                    parse: (YMapEntry) => T): Unit = {
+                                                    parse: YMapEntry => T): Unit = {
     componentsMap.key(
       keyword,
       e => {

@@ -2,43 +2,69 @@ package amf.plugins.document.webapi.parser.spec.domain.binding
 
 import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.Field
-import amf.core.model.domain.{AmfScalar, DomainElement, NamedDomainElement}
+import amf.core.model.domain.{AmfScalar, DomainElement, Linkable, NamedDomainElement}
 import amf.core.parser.{Annotations, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OasTypeParser}
 import amf.plugins.document.webapi.parser.spec.domain.binding.Bindings._
 import amf.plugins.domain.webapi.metamodel.bindings.{DynamicBindingModel, EmptyBindingModel}
 import amf.plugins.domain.webapi.models.bindings._
+import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
-import amf.plugins.document.webapi.parser.spec.domain.ConversionHelpers._
 
-trait AsyncBindingsParser extends SpecParserOps {
+abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(implicit ctx: AsyncWebApiContext)
+    extends SpecParserOps {
+
   protected type Binding
-  protected type Bindings <: NamedDomainElement
+  protected type Bindings <: NamedDomainElement with Linkable
 
-  def parse(entryOrMap: Either[YMapEntry, YNode], parent: String)(implicit ctx: AsyncWebApiContext): Bindings = {
-    val map: YMap = entryOrMap
+  def parse(): Bindings = {
+    val map: YMap = entryLike.asMap
     ctx.link(map) match {
-      case Left(fullRef) =>
-        handleRef(entryOrMap, fullRef, parent)
-      case Right(_) =>
-        buildAndPopulate(entryOrMap, parent)
+      case Left(fullRef) => handleRef(fullRef)
+      case Right(_)      => buildAndPopulate()
     }
   }
 
-  protected def buildAndPopulate(entryOrMap: Either[YMapEntry, YNode], parent: String)(
-      implicit ctx: AsyncWebApiContext): Bindings
+  protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser
 
-  protected def handleRef(entryOrNode: Either[YMapEntry, YNode], fullRef: String, parent: String)(
-      implicit ctx: AsyncWebApiContext): Bindings
+  def buildAndPopulate(): Bindings = {
+    val map: YMap          = entryLike.asMap
+    val bindings: Bindings = createBindings(map)
+    nameAndAdopt(bindings, entryLike.key)
+    parseBindings(bindings, map)
+  }
 
-  protected def nameAndAdopt(m: Bindings, entry: Option[YMapEntry], parent: String): Bindings = {
-    entry foreach { e =>
-      m.withName(e.key.as[YScalar].text, Annotations(e.key))
+  protected def parseBindings(obj: Bindings, map: YMap): Bindings
+
+  protected def createBindings(map: YMap): Bindings
+
+  protected def handleRef(fullRef: String): Bindings
+
+  protected def nameAndAdopt(m: Bindings, key: Option[YNode]): Bindings = {
+    key foreach { k =>
+      m.withName(k.as[YScalar].text, Annotations(k))
     }
     m.adopted(parent)
+  }
+
+  protected def errorBindings(fullRef: String, entryLike: YMapEntryLike): Bindings
+
+  protected def remote(fullRef: String, entryLike: YMapEntryLike, parent: String)(
+      implicit ctx: AsyncWebApiContext): Bindings = {
+    ctx.obtainRemoteYNode(fullRef) match {
+      case Some(bindingsNode) =>
+        val external = createParser(YMapEntryLike(bindingsNode)).parse()
+        nameAndAdopt(external.link(fullRef), entryLike.key)
+      case None =>
+        ctx.eh.violation(CoreValidations.UnresolvedReference,
+                         "",
+                         s"Cannot find link reference $fullRef",
+                         entryLike.asMap)
+        nameAndAdopt(errorBindings(fullRef, entryLike).link(fullRef), entryLike.key)
+    }
   }
 
   protected def parseElements(map: YMap, parent: String)(implicit ctx: AsyncWebApiContext): Seq[Binding] = {
@@ -125,10 +151,15 @@ trait AsyncBindingsParser extends SpecParserOps {
       implicit ctx: AsyncWebApiContext): Unit = {
     map.key("bindingVersion", field in binding)
 
-    // If omitted, "latest" MUST be assumed.
-    if (binding.bindingVersion.isNullOrEmpty) {
-      binding.set(field, AmfScalar("latest"), Annotations(SynthesizedField()))
-    }
+    if (bindingVersionIsEmpty(binding)) setDefaultBindingVersionValue(binding, field)
+  }
+
+  private def setDefaultBindingVersionValue(binding: BindingVersion, field: Field) = {
+    binding.set(field, AmfScalar("latest"), Annotations(SynthesizedField()))
+  }
+
+  private def bindingVersionIsEmpty(binding: BindingVersion) = {
+    binding.bindingVersion.isNullOrEmpty
   }
 
   protected def parseSchema(field: Field, binding: DomainElement, entry: YMapEntry, parent: String)(

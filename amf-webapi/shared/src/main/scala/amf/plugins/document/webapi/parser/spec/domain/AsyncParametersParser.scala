@@ -6,32 +6,30 @@ import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OasTypeParser}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.models.Parameter
 import amf.plugins.features.validation.CoreValidations
-import org.yaml.model.{YMap, YMapEntry, YNode}
-import ConversionHelpers._
+import org.yaml.model.YMap
 
 case class AsyncParametersParser(parentId: String, map: YMap)(implicit val ctx: AsyncWebApiContext) {
 
   def parse(): Seq[Parameter] = {
-    map.entries.map(entry => AsyncParameterParser(parentId, Left(entry)).parse())
+    map.entries.map(entry => AsyncParameterParser(parentId, YMapEntryLike(entry)).parse())
   }
 }
 
-case class AsyncParameterParser(parentId: String, entryOrNode: Either[YMapEntry, YNode])(
-    implicit val ctx: AsyncWebApiContext)
+case class AsyncParameterParser(parentId: String, entryLike: YMapEntryLike)(implicit val ctx: AsyncWebApiContext)
     extends SpecParserOps {
 
   private def nameAndAdopt(param: Parameter): Parameter = {
-    entryOrNode.left.foreach(entry => param.set(ParameterModel.Name, ScalarNode(entry.key).string()))
+    entryLike.key.foreach(k => param.set(ParameterModel.Name, ScalarNode(k).string()))
     param.adopted(parentId)
   }
 
   def parse(): Parameter = {
-    val map: YMap = entryOrNode
+    val map: YMap = entryLike.asMap
     ctx.link(map) match {
       case Left(fullRef) =>
         handleRef(map, fullRef)
@@ -84,7 +82,7 @@ case class AsyncParameterParser(parentId: String, entryOrNode: Either[YMapEntry,
   private def remote(fullRef: String, map: YMap): Parameter = {
     ctx.obtainRemoteYNode(fullRef) match {
       case Some(paramNode) =>
-        val external = AsyncParameterParser(parentId, Right(paramNode)).parse()
+        val external = AsyncParameterParser(parentId, YMapEntryLike(paramNode)).parse()
         nameAndAdopt(external.link(fullRef))
       case None =>
         ctx.eh.violation(CoreValidations.UnresolvedReference, "", s"Cannot find link reference $fullRef", map)
