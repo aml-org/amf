@@ -45,11 +45,18 @@ case class OasResponseExamplesParser(entry: YMapEntry)(implicit ctx: WebApiConte
   }
 }
 
-case class OasExamplesParser(map: YMap, parentId: String)(implicit ctx: WebApiContext) {
+case class OasExamplesParser(map: YMap, parentId: String, callback: (Seq[Example], Option[YMapEntry]) => Unit)(
+    implicit ctx: WebApiContext) {
   def parse(): Seq[Example] = {
     (map.key("example"), map.key("examples")) match {
-      case (Some(exampleEntry), None)  => List(parseExample(exampleEntry.value))
-      case (None, Some(examplesEntry)) => Oas3NamedExamplesParser(examplesEntry, parentId).parse()
+      case (Some(exampleEntry), None) =>
+        val examples = List(parseExample(exampleEntry.value))
+        callback(examples, Some(exampleEntry))
+        examples
+      case (None, Some(examplesEntry)) =>
+        val examples = Oas3NamedExamplesParser(examplesEntry, parentId).parse()
+        callback(examples, Some(examplesEntry))
+        examples
       case (Some(_), Some(_)) =>
         ctx.eh.violation(
           ExclusivePropertiesSpecification,
@@ -57,8 +64,11 @@ case class OasExamplesParser(map: YMap, parentId: String)(implicit ctx: WebApiCo
           s"Properties 'example' and 'examples' are exclusive and cannot be declared together",
           map
         )
+        callback(Nil, None)
         Nil
-      case _ => Nil
+      case _ =>
+        callback(Nil, None)
+        Nil
     }
   }
 
@@ -90,7 +100,8 @@ case class RamlExamplesParser(map: YMap,
                               multipleExamplesKey: String,
                               parentId: Option[String],
                               producer: Option[String] => Example,
-                              options: ExampleOptions)(implicit ctx: WebApiContext) {
+                              options: ExampleOptions,
+                              callback: (Seq[Example], Option[YMapEntry]) => Unit)(implicit ctx: WebApiContext) {
   def parse(): Seq[Example] = {
     if (map.key(singleExampleKey).isDefined && map.key(multipleExamplesKey).isDefined && parentId.isDefined) {
       ctx.eh.violation(
@@ -100,8 +111,14 @@ case class RamlExamplesParser(map: YMap,
         map
       )
     }
-    RamlMultipleExampleParser(multipleExamplesKey, map, producer, options).parse() ++
+    val examples = RamlMultipleExampleParser(multipleExamplesKey, map, producer, options).parse() ++
       RamlSingleExampleParser(singleExampleKey, map, producer, options).parse()
+
+    val maybeEntry = map
+      .key(multipleExamplesKey)
+      .orElse(map.key(singleExampleKey))
+    callback(examples, maybeEntry)
+    examples
   }
 }
 

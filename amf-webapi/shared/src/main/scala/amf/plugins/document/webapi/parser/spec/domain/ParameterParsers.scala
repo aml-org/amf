@@ -29,7 +29,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.{
 import amf.plugins.document.webapi.parser.spec.raml.RamlTypeExpressionParser
 import amf.plugins.document.webapi.parser.spec.{OasDefinitions, toOas}
 import amf.plugins.domain.shapes.models.ExampleTracking._
-import amf.plugins.domain.shapes.models.{AnyShape, FileShape, NodeShape}
+import amf.plugins.domain.shapes.models.{AnyShape, Example, FileShape, NodeShape}
 import amf.plugins.domain.webapi.annotations.{InvalidBinding, ParameterBindingInBodyLexicalInfo}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload, SchemaContainer}
@@ -576,7 +576,12 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
     )
 
   private def parseExamples(param: Parameter): Unit = {
-    val examples = OasExamplesParser(map, param.id).parse()
+    def setShape(examples: Seq[Example], maybeEntry: Option[YMapEntry]): Unit =
+      maybeEntry
+        .map(entry => param.set(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
+        .getOrElse(param.set(PayloadModel.Examples, AmfArray(examples)))
+
+    val examples = OasExamplesParser(map, param.id, setShape).parse()
     if (examples.nonEmpty) param.set(PayloadModel.Examples, AmfArray(examples))
   }
 
