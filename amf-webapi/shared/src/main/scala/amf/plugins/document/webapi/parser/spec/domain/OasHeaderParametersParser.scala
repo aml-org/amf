@@ -9,11 +9,12 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorParameter
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
 import amf.plugins.document.webapi.parser.spec.declaration.OasTypeParser
 import amf.plugins.document.webapi.parser.spec.oas.Oas3Syntax
+import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
-import amf.plugins.domain.webapi.metamodel.{PayloadModel, ParameterModel, ResponseModel}
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel, ResponseModel}
 import amf.plugins.domain.webapi.models.{Parameter, Payload}
 import amf.plugins.features.validation.CoreValidations
-import org.yaml.model.YMap
+import org.yaml.model.{YMap, YMapEntry}
 
 case class OasHeaderParametersParser(map: YMap, adopt: Parameter => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Seq[Parameter] = {
@@ -120,8 +121,13 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
     )
     Oas3ParameterParser.validateSchemaOrContent(map, parameter)
 
-    val examples = OasExamplesParser(map, parameter.id).parse()
-    if (examples.nonEmpty) parameter.set(PayloadModel.Examples, AmfArray(examples))
+    def setShape(examples: Seq[Example], maybeEntry: Option[YMapEntry]): Unit =
+      if (examples.nonEmpty)
+        maybeEntry
+          .map(entry => parameter.set(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
+          .getOrElse(parameter.set(PayloadModel.Examples, AmfArray(examples)))
+
+    OasExamplesParser(map, parameter.id, setShape).parse()
 
     parameter.withBinding("header")
     Oas3ParameterParser.parseStyleField(map, parameter)
