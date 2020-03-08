@@ -112,6 +112,19 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
+                            "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/source-map/lexical/element_1",
+                            "http://a.ml/vocabularies/document-source-maps#element": [
+                              {
+                                "@value": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#value": [
+                              {
+                                "@value": "[(8,0)-(11,0)]"
+                              }
+                            ]
+                          },
+                          {
                             "@id": "file://amf-client/shared/src/test/resources/upanddown/cycle/oas20/yaml/invalid-param-ref/api.yaml#/web-api/end-points/%2Fresource/get/request/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
