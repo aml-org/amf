@@ -20,7 +20,7 @@ import scala.collection.mutable.ListBuffer
 case class Oas20RequestParser(map: YMap, adopt: Request => Unit)(implicit ctx: OasWebApiContext) {
   def parse(): Option[Request] = {
     val request = new Lazy[Request](() => {
-      val req = Request().add(VirtualObject())
+      val req = Request(map).add(VirtualObject())
       adopt(req)
       req
     })
