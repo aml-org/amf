@@ -7,6 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
 import amf.plugins.domain.webapi.metamodel.RequestModel
 import amf.plugins.domain.webapi.metamodel.RequestModel._
+import org.yaml.model.YPart
 
 /**
   * Request internal model.
@@ -63,7 +64,7 @@ class Request(override val fields: Fields, override val annotations: Annotations
 
 object Request {
 
-  def apply(): Request = apply(Annotations())
-
+  def apply(): Request                         = apply(Annotations())
+  def apply(ast: YPart): Request               = apply(Annotations(ast))
   def apply(annotations: Annotations): Request = new Request(Fields(), annotations)
 }
