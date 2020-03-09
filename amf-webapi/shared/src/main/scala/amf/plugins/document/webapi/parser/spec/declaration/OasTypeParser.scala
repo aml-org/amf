@@ -1,7 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, ExternalFragmentRef, NilUnion, SynthesizedField}
+import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
+import amf.core.annotations.{ExplicitField, NilUnion}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -433,17 +434,22 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
             tmpShape.unresolved(text, e, "warning").withSupportsRecursion(true)
             Some(tmpShape)
           case Some(jsonSchemaShape) =>
-            // case when in an OAS spec we point with a regular $ref to something that is external and holds a JSON
-            // schema we need to promote an external fragment to data type fragment
-            val promotedShape =
-              ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
-            Some(
-              promotedShape
-                .link(text, Annotations(ast) += ExternalFragmentRef(ref))
-                .asInstanceOf[AnyShape]
-                .withName(name, nameAnnotations)
-                .withSupportsRecursion(true))
+            if (ctx.declarations.fragments.contains(text)) {
+              // case when in an OAS spec we point with a regular $ref to something that is external
+              // and holds a JSON schema
+              // we need to promote an external fragment to data type fragment
+              val promotedShape =
+                ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
+              Some(
+                promotedShape
+                  .link(text, Annotations(ast))
+                  .asInstanceOf[AnyShape]
+                  .withName(name, nameAnnotations)
+                  .withSupportsRecursion(true))
+            } else {
 
+              Some(jsonSchemaShape)
+            }
         }
     }
   }
