@@ -5,6 +5,7 @@ import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.spec.async.parser.AsyncOperationParser
 import amf.plugins.document.webapi.parser.spec.common.{
   AnnotationParser,
   SpecParserOps,
@@ -23,7 +24,7 @@ import amf.plugins.document.webapi.parser.spec.oas.OasLikeDeclarationsHelper
 import amf.plugins.domain.webapi.metamodel.WebApiModel
 import amf.plugins.domain.webapi.metamodel.security.SecuritySchemeModel
 import amf.plugins.domain.webapi.models.bindings.{ChannelBindings, MessageBindings, OperationBindings, ServerBindings}
-import amf.plugins.domain.webapi.models.{EndPoint, Parameter, WebApi}
+import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter, WebApi}
 import amf.validations.ParserSideValidations.InvalidIdentifier
 import org.yaml.model.{YMap, YMapEntry, YType}
 
@@ -112,6 +113,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       parseServerBindingsDeclarations(componentsMap, parent + "/serverBindings")
       parseOperationBindingsDeclarations(componentsMap, parent + "/operationBindings")
       parseChannelBindingsDeclarations(componentsMap, parent + "/channelBindings")
+      parseOperationTraits(componentsMap, parent + "/operationTraits")
 
       // TODO operation & message traits (maintain the current order)
 
@@ -127,6 +129,19 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
           val message = AsyncMessageParser(YMapEntryLike(entry), parent, None).parse()
           message.add(DeclaredElement())
           ctx.declarations += message
+        }
+      }
+    )
+
+  def parseOperationTraits(componentsMap: YMap, parent: String): Unit =
+    componentsMap.key(
+      "operationTraits",
+      entry => {
+        entry.value.as[YMap].entries.foreach { entry =>
+          val produceOperation = (name: String) => Operation().withName(name).withMethod(name).adopted(parent)
+          val operation        = AsyncOperationParser(entry, produceOperation, isTrait = true).parse()
+          operation.add(DeclaredElement())
+          ctx.declarations += operation
         }
       }
     )

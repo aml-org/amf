@@ -211,6 +211,14 @@ object Async20Syntax extends SpecSyntax {
       "traits",
       "message"
     ),
+    "operationTrait" -> Set(
+      "operationId",
+      "summary",
+      "description",
+      "tags",
+      "externalDocs",
+      "bindings"
+    ),
     "info" -> Set(
       "title",
       "description",
