@@ -3,14 +3,16 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.model.{BoolField, IntField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.webapi.metamodel.bindings.{MqttServerLastWillModel, MqttServerBindingModel}
 import amf.plugins.domain.webapi.metamodel.bindings.MqttServerBindingModel._
 import amf.plugins.domain.webapi.metamodel.bindings.MqttServerLastWillModel._
+import amf.plugins.domain.webapi.metamodel.bindings.{MqttServerBindingModel, MqttServerLastWillModel}
+import amf.plugins.domain.webapi.models.Key
 import amf.plugins.domain.webapi.models.bindings.{BindingVersion, ServerBinding}
 
 class MqttServerBinding(override val fields: Fields, override val annotations: Annotations)
     extends ServerBinding
-    with BindingVersion {
+    with BindingVersion
+    with Key {
   override protected def bindingVersionField: Field = BindingVersion
   override def meta: Obj                            = MqttServerBindingModel
 
@@ -29,6 +31,8 @@ class MqttServerBinding(override val fields: Fields, override val annotations: A
 
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     MqttServerBinding.apply
+
+  override def key: StrField = fields.field(MqttServerBindingModel.key)
 }
 
 object MqttServerBinding {

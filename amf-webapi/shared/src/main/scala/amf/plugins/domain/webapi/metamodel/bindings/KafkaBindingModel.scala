@@ -6,7 +6,7 @@ import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.webapi.models.bindings.kafka.{KafkaOperationBinding, KafkaMessageBinding}
+import amf.plugins.domain.webapi.models.bindings.kafka.{KafkaMessageBinding, KafkaOperationBinding}
 
 object KafkaOperationBindingModel extends OperationBindingModel with BindingVersion {
   val GroupId =
@@ -21,6 +21,8 @@ object KafkaOperationBindingModel extends OperationBindingModel with BindingVers
 
   override def fields: List[Field] = List(GroupId, ClientId, BindingVersion) ++ OperationBindingModel.fields
 
+  override val key: Field = Type
+
   override val `type`: List[ValueType] = ApiBinding + "KafkaOperationBinding" :: OperationBindingModel.`type`
 
   override val doc: ModelDoc = ModelDoc(
@@ -31,14 +33,16 @@ object KafkaOperationBindingModel extends OperationBindingModel with BindingVers
 }
 
 object KafkaMessageBindingModel extends OperationBindingModel with BindingVersion {
-  val Key =
-    Field(Str, ApiBinding + "key", ModelDoc(ModelVocabularies.ApiBinding, "key", "The message key"))
+  val MessageKey =
+    Field(Str, ApiBinding + "messageKey", ModelDoc(ModelVocabularies.ApiBinding, "key", "The message key"))
 
   override def modelInstance: AmfObject = KafkaMessageBinding()
 
-  override def fields: List[Field] = List(Key, BindingVersion) ++ MessageBindingModel.fields
+  override def fields: List[Field] = List(MessageKey, BindingVersion) ++ MessageBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "KafkaMessageBinding" :: MessageBindingModel.`type`
+
+  override val key: Field = Type
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiBinding,

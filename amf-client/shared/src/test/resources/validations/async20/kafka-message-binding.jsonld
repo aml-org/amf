@@ -81,7 +81,7 @@
                               "http://a.ml/vocabularies/apiBinding#MessageBinding",
                               "http://a.ml/vocabularies/document#DomainElement"
                             ],
-                            "http://a.ml/vocabularies/apiBinding#key": [
+                            "http://a.ml/vocabularies/apiBinding#messageKey": [
                               {
                                 "@value": "somekey"
                               }
@@ -89,6 +89,11 @@
                             "http://a.ml/vocabularies/apiBinding#bindingVersion": [
                               {
                                 "@value": "latest"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/apiBinding#type": [
+                              {
+                                "@value": "kafka"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -130,7 +135,7 @@
                                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/kafka-message-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings/kafka-message/source-map/lexical/element_0",
                                     "http://a.ml/vocabularies/document-source-maps#element": [
                                       {
-                                        "@value": "http://a.ml/vocabularies/apiBinding#key"
+                                        "@value": "http://a.ml/vocabularies/apiBinding#messageKey"
                                       }
                                     ],
                                     "http://a.ml/vocabularies/document-source-maps#value": [

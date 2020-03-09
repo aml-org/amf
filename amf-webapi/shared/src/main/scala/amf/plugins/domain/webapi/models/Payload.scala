@@ -5,16 +5,9 @@ import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
-import amf.plugins.domain.shapes.models.{
-  AnyShape,
-  ArrayShape,
-  Example,
-  ExemplifiedDomainElement,
-  NodeShape,
-  ScalarShape
-}
-import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
+import amf.plugins.domain.shapes.models.{ArrayShape, ExemplifiedDomainElement, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.PayloadModel.{Encoding => EncodingModel, _}
+import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import org.yaml.model.YPart
 
 /**

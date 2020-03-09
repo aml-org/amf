@@ -50,7 +50,7 @@ class HttpOperationBindingEmitter(binding: HttpOperationBinding, ordering: SpecO
         val fs     = binding.fields
         val result = ListBuffer[EntryEmitter]()
 
-        fs.entry(HttpOperationBindingModel.Type).foreach(f => result += ValueEmitter("type", f))
+        fs.entry(HttpOperationBindingModel.OperationType).foreach(f => result += ValueEmitter("type", f))
         fs.entry(HttpOperationBindingModel.Method).foreach(f => result += ValueEmitter("method", f))
         fs.entry(HttpOperationBindingModel.Query)
           .foreach(f => result += AsyncSchemaEmitter("query", f.element.asInstanceOf[Shape], ordering, Seq()))

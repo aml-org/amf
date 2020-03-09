@@ -64,7 +64,7 @@
                           "http://a.ml/vocabularies/apiBinding#OperationBinding",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiBinding#type": [
+                        "http://a.ml/vocabularies/apiBinding#operationType": [
                           {
                             "@value": "request"
                           }
@@ -274,6 +274,11 @@
                             "@value": "31.07.92"
                           }
                         ],
+                        "http://a.ml/vocabularies/apiBinding#type": [
+                          {
+                            "@value": "http"
+                          }
+                        ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
                             "@id": "file://amf-client/shared/src/test/resources/validations/async20/http-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/http-operation/source-map",
@@ -337,7 +342,7 @@
                                 "@id": "file://amf-client/shared/src/test/resources/validations/async20/http-operation-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings/http-operation/source-map/lexical/element_3",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "http://a.ml/vocabularies/apiBinding#type"
+                                    "@value": "http://a.ml/vocabularies/apiBinding#operationType"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
