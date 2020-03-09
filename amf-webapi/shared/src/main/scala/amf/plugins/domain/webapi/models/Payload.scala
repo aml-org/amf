@@ -5,7 +5,14 @@ import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils.AmfStrings
-import amf.plugins.domain.shapes.models.{AnyShape, ArrayShape, Example, NodeShape, ScalarShape}
+import amf.plugins.domain.shapes.models.{
+  AnyShape,
+  ArrayShape,
+  Example,
+  ExemplifiedDomainElement,
+  NodeShape,
+  ScalarShape
+}
 import amf.plugins.domain.webapi.metamodel.{ParameterModel, PayloadModel}
 import amf.plugins.domain.webapi.metamodel.PayloadModel.{Encoding => EncodingModel, _}
 import org.yaml.model.YPart
@@ -16,18 +23,17 @@ import org.yaml.model.YPart
 case class Payload(fields: Fields, annotations: Annotations)
     extends NamedDomainElement
     with Linkable
-    with SchemaContainer {
+    with SchemaContainer
+    with ExemplifiedDomainElement {
 
   def mediaType: StrField       = fields.field(MediaType)
   def schemaMediaType: StrField = fields.field(SchemaMediaType)
   def schema: Shape             = fields.field(Schema)
-  def examples: Seq[Example]    = fields.field(Examples)
   def encodings: Seq[Encoding]  = fields.field(EncodingModel)
 
   def withMediaType(mediaType: String): this.type       = set(MediaType, mediaType)
   def withSchemaMediaType(mediaType: String): this.type = set(SchemaMediaType, mediaType)
   def withSchema(schema: Shape): this.type              = set(Schema, schema)
-  def withExamples(examples: Seq[Example]): this.type   = setArray(Examples, examples)
   def withEncodings(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
 
   override def removeExamples(): Unit = fields.removeField(Examples)
@@ -53,13 +59,6 @@ case class Payload(fields: Fields, annotations: Annotations)
     val array = ArrayShape().withName(name)
     set(PayloadModel.Schema, array)
     array
-  }
-
-  def withExample(name: Option[String] = None): Example = {
-    val example = Example()
-    name.foreach { example.withName(_) }
-    add(Examples, example)
-    example
   }
 
   def withEncoding(name: String): Encoding = {
