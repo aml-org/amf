@@ -114,8 +114,7 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
       parseOperationBindingsDeclarations(componentsMap, parent + "/operationBindings")
       parseChannelBindingsDeclarations(componentsMap, parent + "/channelBindings")
       parseOperationTraits(componentsMap, parent + "/operationTraits")
-
-      // TODO operation & message traits (maintain the current order)
+      parseMessageTraits(componentsMap, parent + "/messageTraits")
 
       parseMessageDeclarations(componentsMap, parent + "/messages")
     }
@@ -142,6 +141,18 @@ abstract class AsyncApiDocumentParser(root: Root)(implicit val ctx: AsyncWebApiC
           val operation        = AsyncOperationParser(entry, produceOperation, isTrait = true).parse()
           operation.add(DeclaredElement())
           ctx.declarations += operation
+        }
+      }
+    )
+
+  def parseMessageTraits(componentsMap: YMap, parent: String): Unit =
+    componentsMap.key(
+      "messageTraits",
+      entry => {
+        entry.value.as[YMap].entries.foreach { entry =>
+          val message = AsyncMessageParser(YMapEntryLike(entry), parent, None, isTrait = true).parse()
+          message.add(DeclaredElement())
+          ctx.declarations += message
         }
       }
     )
