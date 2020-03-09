@@ -10,7 +10,7 @@ import amf.plugins.document.webapi.parser.spec.async.AsyncHelper
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.OasLikeTagsParser
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncOperationBindingsParser
-import amf.plugins.document.webapi.parser.spec.domain.{AsyncMultipleMessageParser, OasLikeOperationParser}
+import amf.plugins.document.webapi.parser.spec.domain.OasLikeOperationParser
 import amf.plugins.domain.webapi.metamodel.OperationModel
 import amf.plugins.domain.webapi.models.Operation
 import amf.plugins.features.validation.CoreValidations

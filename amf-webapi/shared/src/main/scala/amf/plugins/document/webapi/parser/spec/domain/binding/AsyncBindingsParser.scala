@@ -2,19 +2,13 @@ package amf.plugins.document.webapi.parser.spec.domain.binding
 
 import amf.core.annotations.SynthesizedField
 import amf.core.metamodel.Field
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement, Linkable, NamedDomainElement}
+import amf.core.model.domain._
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OasTypeParser}
 import amf.plugins.document.webapi.parser.spec.domain.binding.Bindings._
-import amf.plugins.domain.webapi.metamodel.bindings.{
-  BindingType,
-  DynamicBindingModel,
-  EmptyBindingModel,
-  MessageBindingsModel,
-  WebSocketsChannelBindingModel
-}
+import amf.plugins.domain.webapi.metamodel.bindings.{DynamicBindingModel, WebSocketsChannelBindingModel}
 import amf.plugins.domain.webapi.models.bindings._
 import amf.plugins.features.validation.CoreValidations
 import amf.validations.ParserSideValidations
