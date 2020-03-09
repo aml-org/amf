@@ -7,7 +7,7 @@ import amf.plugins.document.webapi.contexts.parser.OasLikeWebApiContext
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.contexts.parser.oas.OasWebApiContext
 import amf.plugins.document.webapi.parser.spec
-import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps}
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncChannelBindingsParser
 import amf.plugins.domain.webapi.metamodel.{EndPointModel, OperationModel}
 import amf.plugins.domain.webapi.models.{EndPoint, Operation, Parameter}
@@ -207,8 +207,8 @@ case class AsyncEndpointParser(entry: YMapEntry, producer: String => EndPoint, c
     super.parseEndpointMap(endpoint, map)
 
     map.key("bindings").foreach { entry =>
-      val bindings = AsyncChannelBindingsParser.parse(entry.value.as[YMap], endpoint.id)
-      endpoint.setArray(EndPointModel.Bindings, bindings, Annotations(entry))
+      val bindings = AsyncChannelBindingsParser(YMapEntryLike(entry.value), endpoint.id).parse()
+      endpoint.set(EndPointModel.Bindings, bindings, Annotations(entry))
 
       AnnotationParser(endpoint, map).parseOrphanNode("bindings")
     }

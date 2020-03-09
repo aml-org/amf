@@ -43,6 +43,8 @@ object MqttServerBindingModel extends ServerBindingModel with BindingVersion {
 
   override val `type`: List[ValueType] = ApiBinding + "MqttServerBinding" :: ServerBindingModel.`type`
 
+  override val key: Field = Type
+
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiBinding,
     "MqttServerBinding",
@@ -103,6 +105,8 @@ object MqttOperationBindingModel extends OperationBindingModel with BindingVersi
           ApiBinding + "retain",
           ModelDoc(ModelVocabularies.ApiBinding, "retain", "Whether the broker should retain the message or not"))
 
+  override val key: Field = Type
+
   override def modelInstance: AmfObject = MqttOperationBinding()
 
   override def fields: List[Field] = List(Qos, Retain, BindingVersion) ++ OperationBindingModel.fields
@@ -120,6 +124,8 @@ object MqttMessageBindingModel extends MessageBindingModel with BindingVersion {
   override def modelInstance: AmfObject = MqttMessageBinding()
 
   override def fields: List[Field] = List(BindingVersion) ++ MessageBindingModel.fields
+
+  override val key: Field = Type
 
   override val `type`: List[ValueType] = ApiBinding + "MqttMessageBinding" :: MessageBindingModel.`type`
 

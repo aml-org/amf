@@ -595,67 +595,104 @@
                 ],
                 "http://a.ml/vocabularies/apiBinding#binding": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/amqp091-operation",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings",
                     "@type": [
-                      "http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding",
-                      "http://a.ml/vocabularies/apiBinding#OperationBinding",
+                      "http://a.ml/vocabularies/apiContract#OperationBindings",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/apiBinding#ack": [
+                    "http://a.ml/vocabularies/apiBinding#binding": [
                       {
-                        "@value": true
-                      }
-                    ],
-                    "http://a.ml/vocabularies/apiBinding#bindingVersion": [
-                      {
-                        "@value": "latest"
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings/amqp091-operation",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding",
+                          "http://a.ml/vocabularies/apiBinding#OperationBinding",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/apiBinding#ack": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+                          {
+                            "@value": "latest"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiBinding#type": [
+                          {
+                            "@value": "amqp"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings/amqp091-operation/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings/amqp091-operation/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings/amqp091-operation/source-map/lexical/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings/amqp091-operation"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(30,8)-(32,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings/amqp091-operation/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#ack"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(31,10)-(32,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/amqp091-operation/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
-                        "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/amqp091-operation/source-map/synthesized-field/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "true"
-                              }
-                            ]
-                          }
-                        ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/amqp091-operation/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/amqp091-operation"
+                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/operation-bindings"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(30,8)-(32,0)]"
-                              }
-                            ]
-                          },
-                          {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/subscribe/amqp091-operation/source-map/lexical/element_0",
-                            "http://a.ml/vocabularies/document-source-maps#element": [
-                              {
-                                "@value": "http://a.ml/vocabularies/apiBinding#ack"
-                              }
-                            ],
-                            "http://a.ml/vocabularies/document-source-maps#value": [
-                              {
-                                "@value": "[(31,10)-(32,0)]"
+                                "@value": "[(30,0)-(32,0)]"
                               }
                             ]
                           }
@@ -867,7 +904,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(18,6)-(22,0)]"
+                            "@value": "[(19,0)-(22,0)]"
                           }
                         ]
                       },
@@ -891,46 +928,116 @@
             ],
             "http://a.ml/vocabularies/apiBinding#binding": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel",
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings",
                 "@type": [
-                  "http://a.ml/vocabularies/apiBinding#Amqp091ChannelBinding",
-                  "http://a.ml/vocabularies/apiBinding#ChannelBinding",
+                  "http://a.ml/vocabularies/apiContract#ChannelBindings",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/apiBinding#is": [
+                "http://a.ml/vocabularies/apiBinding#binding": [
                   {
-                    "@value": "queue"
-                  }
-                ],
-                "http://a.ml/vocabularies/apiBinding#queue": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/amqp091-queue",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel",
                     "@type": [
-                      "http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue",
+                      "http://a.ml/vocabularies/apiBinding#Amqp091ChannelBinding",
+                      "http://a.ml/vocabularies/apiBinding#ChannelBinding",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/apiBinding#exclusive": [
+                    "http://a.ml/vocabularies/apiBinding#is": [
                       {
-                        "@value": true
+                        "@value": "queue"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiBinding#vhost": [
+                    "http://a.ml/vocabularies/apiBinding#queue": [
                       {
-                        "@value": "/"
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/amqp091-queue",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/apiBinding#exclusive": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiBinding#vhost": [
+                          {
+                            "@value": "/"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/amqp091-queue/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/amqp091-queue/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#vhost"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/amqp091-queue/source-map/lexical/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/amqp091-queue"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(25,8)-(27,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/amqp091-queue/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#exclusive"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(26,10)-(27,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+                      {
+                        "@value": "latest"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiBinding#type": [
+                      {
+                        "@value": "amqp"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/amqp091-queue/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/amqp091-queue/source-map/synthesized-field/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/source-map/synthesized-field/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/apiBinding#vhost"
+                                "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -942,28 +1049,28 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/amqp091-queue/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/amqp091-queue"
+                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(25,8)-(27,0)]"
+                                "@value": "[(23,6)-(27,0)]"
                               }
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/amqp091-queue/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/amqp091-channel/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/apiBinding#exclusive"
+                                "@value": "http://a.ml/vocabularies/apiBinding#is"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(26,10)-(27,0)]"
+                                "@value": "[(24,8)-(25,0)]"
                               }
                             ]
                           }
@@ -972,56 +1079,23 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/apiBinding#bindingVersion": [
-                  {
-                    "@value": "latest"
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/source-map/synthesized-field/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "true"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel"
+                            "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/channel-bindings"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(23,6)-(27,0)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/%7Bqueue%7D/amqp091-channel/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/apiBinding#is"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(24,8)-(25,0)]"
+                            "@value": "[(23,0)-(27,0)]"
                           }
                         ]
                       }
@@ -1658,67 +1732,104 @@
                     ],
                     "http://a.ml/vocabularies/apiBinding#binding": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/amqp091-message",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings",
                         "@type": [
-                          "http://a.ml/vocabularies/apiBinding#Amqp091MessageBinding",
-                          "http://a.ml/vocabularies/apiBinding#MessageBinding",
+                          "http://a.ml/vocabularies/apiContract#MessageBindings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
-                        "http://a.ml/vocabularies/apiBinding#messageType": [
+                        "http://a.ml/vocabularies/apiBinding#binding": [
                           {
-                            "@value": "the message type"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/apiBinding#bindingVersion": [
-                          {
-                            "@value": "latest"
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings/amqp091-message",
+                            "@type": [
+                              "http://a.ml/vocabularies/apiBinding#Amqp091MessageBinding",
+                              "http://a.ml/vocabularies/apiBinding#MessageBinding",
+                              "http://a.ml/vocabularies/document#DomainElement"
+                            ],
+                            "http://a.ml/vocabularies/apiBinding#messageType": [
+                              {
+                                "@value": "the message type"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+                              {
+                                "@value": "latest"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/apiBinding#type": [
+                              {
+                                "@value": "amqp"
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#sources": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings/amqp091-message/source-map",
+                                "@type": [
+                                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings/amqp091-message/source-map/synthesized-field/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "true"
+                                      }
+                                    ]
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings/amqp091-message/source-map/lexical/element_1",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings/amqp091-message"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(53,10)-(55,0)]"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings/amqp091-message/source-map/lexical/element_0",
+                                    "http://a.ml/vocabularies/document-source-maps#element": [
+                                      {
+                                        "@value": "http://a.ml/vocabularies/apiBinding#messageType"
+                                      }
+                                    ],
+                                    "http://a.ml/vocabularies/document-source-maps#value": [
+                                      {
+                                        "@value": "[(54,12)-(55,0)]"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#sources": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/amqp091-message/source-map",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings/source-map",
                             "@type": [
                               "http://a.ml/vocabularies/document-source-maps#SourceMap"
                             ],
-                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/amqp091-message/source-map/synthesized-field/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "true"
-                                  }
-                                ]
-                              }
-                            ],
                             "http://a.ml/vocabularies/document-source-maps#lexical": [
                               {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/amqp091-message/source-map/lexical/element_1",
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings/source-map/lexical/element_0",
                                 "http://a.ml/vocabularies/document-source-maps#element": [
                                   {
-                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/amqp091-message"
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/message-bindings"
                                   }
                                 ],
                                 "http://a.ml/vocabularies/document-source-maps#value": [
                                   {
-                                    "@value": "[(53,10)-(55,0)]"
-                                  }
-                                ]
-                              },
-                              {
-                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/publish/request/amqp091-message/source-map/lexical/element_0",
-                                "http://a.ml/vocabularies/document-source-maps#element": [
-                                  {
-                                    "@value": "http://a.ml/vocabularies/apiBinding#messageType"
-                                  }
-                                ],
-                                "http://a.ml/vocabularies/document-source-maps#value": [
-                                  {
-                                    "@value": "[(54,12)-(55,0)]"
+                                    "@value": "[(53,0)-(55,0)]"
                                   }
                                 ]
                               }
@@ -1831,46 +1942,116 @@
             ],
             "http://a.ml/vocabularies/apiBinding#binding": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel",
+                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings",
                 "@type": [
-                  "http://a.ml/vocabularies/apiBinding#Amqp091ChannelBinding",
-                  "http://a.ml/vocabularies/apiBinding#ChannelBinding",
+                  "http://a.ml/vocabularies/apiContract#ChannelBindings",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/apiBinding#is": [
+                "http://a.ml/vocabularies/apiBinding#binding": [
                   {
-                    "@value": "queue"
-                  }
-                ],
-                "http://a.ml/vocabularies/apiBinding#queue": [
-                  {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/amqp091-queue",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel",
                     "@type": [
-                      "http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue",
+                      "http://a.ml/vocabularies/apiBinding#Amqp091ChannelBinding",
+                      "http://a.ml/vocabularies/apiBinding#ChannelBinding",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
-                    "http://a.ml/vocabularies/apiBinding#durable": [
+                    "http://a.ml/vocabularies/apiBinding#is": [
                       {
-                        "@value": false
+                        "@value": "queue"
                       }
                     ],
-                    "http://a.ml/vocabularies/apiBinding#vhost": [
+                    "http://a.ml/vocabularies/apiBinding#queue": [
                       {
-                        "@value": "/"
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/amqp091-queue",
+                        "@type": [
+                          "http://a.ml/vocabularies/apiBinding#Amqp091ChannelQueue",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://a.ml/vocabularies/apiBinding#durable": [
+                          {
+                            "@value": false
+                          }
+                        ],
+                        "http://a.ml/vocabularies/apiBinding#vhost": [
+                          {
+                            "@value": "/"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#sources": [
+                          {
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/amqp091-queue/source-map",
+                            "@type": [
+                              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/amqp091-queue/source-map/synthesized-field/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#vhost"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "true"
+                                  }
+                                ]
+                              }
+                            ],
+                            "http://a.ml/vocabularies/document-source-maps#lexical": [
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/amqp091-queue/source-map/lexical/element_1",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/amqp091-queue"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(47,8)-(49,0)]"
+                                  }
+                                ]
+                              },
+                              {
+                                "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/amqp091-queue/source-map/lexical/element_0",
+                                "http://a.ml/vocabularies/document-source-maps#element": [
+                                  {
+                                    "@value": "http://a.ml/vocabularies/apiBinding#durable"
+                                  }
+                                ],
+                                "http://a.ml/vocabularies/document-source-maps#value": [
+                                  {
+                                    "@value": "[(48,10)-(49,0)]"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+                      {
+                        "@value": "latest"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/apiBinding#type": [
+                      {
+                        "@value": "amqp"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#sources": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/amqp091-queue/source-map",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/source-map",
                         "@type": [
                           "http://a.ml/vocabularies/document-source-maps#SourceMap"
                         ],
                         "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/amqp091-queue/source-map/synthesized-field/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/source-map/synthesized-field/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/apiBinding#vhost"
+                                "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1882,28 +2063,28 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#lexical": [
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/amqp091-queue/source-map/lexical/element_1",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/source-map/lexical/element_1",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/amqp091-queue"
+                                "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(47,8)-(49,0)]"
+                                "@value": "[(45,6)-(49,0)]"
                               }
                             ]
                           },
                           {
-                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/amqp091-queue/source-map/lexical/element_0",
+                            "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/amqp091-channel/source-map/lexical/element_0",
                             "http://a.ml/vocabularies/document-source-maps#element": [
                               {
-                                "@value": "http://a.ml/vocabularies/apiBinding#durable"
+                                "@value": "http://a.ml/vocabularies/apiBinding#is"
                               }
                             ],
                             "http://a.ml/vocabularies/document-source-maps#value": [
                               {
-                                "@value": "[(48,10)-(49,0)]"
+                                "@value": "[(46,8)-(47,0)]"
                               }
                             ]
                           }
@@ -1912,56 +2093,23 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/apiBinding#bindingVersion": [
-                  {
-                    "@value": "latest"
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/source-map",
+                    "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
-                    "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/source-map/synthesized-field/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/apiBinding#bindingVersion"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "true"
-                          }
-                        ]
-                      }
-                    ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/source-map/lexical/element_1",
+                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel"
+                            "@value": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/channel-bindings"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(45,6)-(49,0)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-client/shared/src/test/resources/validations/async20/rpc-server.yaml#/web-api/end-points/rpc_queue/amqp091-channel/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/apiBinding#is"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(46,8)-(47,0)]"
+                            "@value": "[(45,0)-(49,0)]"
                           }
                         ]
                       }
@@ -2141,7 +2289,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

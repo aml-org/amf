@@ -60,11 +60,11 @@ class AsyncApiTypeParser(entryOrNode: Either[YMapEntry, YNode],
                          name: String,
                          map: YMap,
                          adopt: Shape => Unit,
-                         version: JSONSchemaVersion)(implicit val ctx: WebApiContext) {
+                         version: JSONSchemaVersion)(implicit val ctx: OasLikeWebApiContext) {
 
   def parse(): Option[Shape] = version match {
     case RAML10SchemaVersion() =>
       Raml10TypeParser(entryOrNode, name, adopt, isAnnotation = false, AnyDefaultType)(toRaml(ctx)).parse()
-    case _ => new OasTypeParser(entryOrNode, name, map, adopt, version)(toOas(ctx)).parse()
+    case _ => new OasTypeParser(entryOrNode, name, map, adopt, version).parse()
   }
 }

@@ -1,7 +1,5 @@
 [
-
   {
-
     "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml",
     "@type": [
       "http://a.ml/vocabularies/document#Document",
@@ -10,9 +8,7 @@
       "http://a.ml/vocabularies/document#Unit"
     ],
     "http://a.ml/vocabularies/document#encodes": [
-
       {
-
         "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api",
         "@type": [
           "http://a.ml/vocabularies/apiContract#WebAPI",
@@ -26,24 +22,18 @@
         ],
         "http://a.ml/vocabularies/apiContract#endpoint": [
           {
-
             "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/apiContract#path": [
-
               {
-
                 "@value": "/users/{userId}"
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
-
               {
-
-
                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
@@ -55,11 +45,7 @@
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
-
-
                   {
-
-
                     "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
@@ -67,10 +53,7 @@
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
-
-
                       {
-
                         "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D/parameter/userId",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
@@ -277,8 +260,6 @@
             ]
           },
           {
-
-
             "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
@@ -290,11 +271,7 @@
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
-
-
               {
-
-
                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
@@ -306,11 +283,7 @@
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
-
-
                   {
-
-
                     "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
@@ -318,8 +291,6 @@
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
-
-
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserName%7D%2Fname/parameter/userId",
                         "@type": [
@@ -711,8 +682,6 @@
             ]
           },
           {
-
-
             "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
@@ -724,11 +693,7 @@
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
-
-
               {
-
-
                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
@@ -740,11 +705,7 @@
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
-
-
                   {
-
-
                     "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
@@ -752,8 +713,6 @@
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
-
-
                       {
                         "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2F%7BuserLastName%7D%2FlastName/parameter/userId",
                         "@type": [
@@ -1063,10 +1022,6 @@
             ]
           },
           {
-
-
-
-
             "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
@@ -1078,11 +1033,7 @@
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
-
-
               {
-
-
                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
@@ -1094,11 +1045,7 @@
                   }
                 ],
                 "http://a.ml/vocabularies/apiContract#expects": [
-
-
                   {
-
-
                     "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/get/request",
                     "@type": [
                       "http://a.ml/vocabularies/apiContract#Request",
@@ -1106,24 +1053,18 @@
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiContract#uriParameter": [
-
-
-
                       {
-
                         "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2Fusers%2F%7BuserId%7D%2Fpepito%2Fage/parameter/userId",
                         "@type": [
                           "http://a.ml/vocabularies/apiContract#Parameter",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/core#name": [
-
                           {
                             "@value": "userId"
                           }
                         ],
                         "http://a.ml/vocabularies/apiContract#paramName": [
-
                           {
                             "@value": "userId"
                           }
@@ -1349,7 +1290,6 @@
             ]
           },
           {
-
             "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll",
             "@type": [
               "http://a.ml/vocabularies/apiContract#EndPoint",
@@ -1361,18 +1301,14 @@
               }
             ],
             "http://a.ml/vocabularies/apiContract#supportedOperation": [
-
               {
-
                 "@id": "file://amf-client/shared/src/test/resources/resolution/nested-parameters.raml#/web-api/end-points/%2FgetAll/get",
                 "@type": [
                   "http://a.ml/vocabularies/apiContract#Operation",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiContract#method": [
-
                   {
-
                     "@value": "get"
                   }
                 ],
@@ -1481,7 +1417,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.0.1"
+        "@value": "2.1.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [

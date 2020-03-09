@@ -9,8 +9,7 @@ import amf.plugins.document.webapi.parser.spec.declaration.AsyncSchemaEmitter
 import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091MessageBindingModel,
   HttpMessageBindingModel,
-  KafkaMessageBindingModel,
-  MqttMessageBindingModel
+  KafkaMessageBindingModel
 }
 import amf.plugins.domain.webapi.models.bindings.MessageBinding
 import amf.plugins.domain.webapi.models.bindings.amqp.Amqp091MessageBinding
@@ -73,7 +72,7 @@ class KafkaMessageEmitter(binding: KafkaMessageBinding, ordering: SpecOrdering)(
         val result = ListBuffer[EntryEmitter]()
         val fs     = binding.fields
 
-        fs.entry(KafkaMessageBindingModel.Key)
+        fs.entry(KafkaMessageBindingModel.MessageKey)
           .foreach(f => result += ValueEmitter("key", f)) // TODO: should emit also enums ??
         emitBindingVersion(fs, result)
         traverse(ordering.sorted(result), emitter)

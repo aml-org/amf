@@ -1,23 +1,28 @@
 package amf.plugins.domain.webapi.models.bindings.amqp
 
-import amf.core.parser.{Annotations, Fields}
 import amf.core.metamodel.{Field, Obj}
+import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
-import amf.core.model.domain.{DomainElement, NamedDomainElement, Linkable}
+import amf.core.parser.{Annotations, Fields}
 import amf.plugins.domain.webapi.metamodel.bindings.Amqp091ChannelBindingModel._
 import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091ChannelBindingModel,
-  Amqp091QueueModel => QueueModel,
-  Amqp091ChannelExchangeModel => ChannelExchange
+  Amqp091ChannelExchangeModel => ChannelExchange,
+  Amqp091QueueModel => QueueModel
 }
-import amf.plugins.domain.webapi.models.bindings.{ChannelBinding, BindingVersion}
+import amf.plugins.domain.webapi.models.Key
+import amf.plugins.domain.webapi.models.bindings.{BindingVersion, ChannelBinding}
 
 class Amqp091ChannelBinding(override val fields: Fields, override val annotations: Annotations)
     extends ChannelBinding
-    with BindingVersion {
+    with BindingVersion
+    with Key {
+
   override def meta: Obj = Amqp091ChannelBindingModel
 
   override def componentId: String = "/amqp091-channel"
+
+  override def key: StrField = fields.field(Amqp091ChannelBindingModel.key)
 
   override protected def bindingVersionField: Field = BindingVersion
 

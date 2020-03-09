@@ -46,7 +46,10 @@ class Async20CycleTest extends FunSuiteCycleTests {
     FixtureData("Mqtt operation binding", "mqtt-operation-binding.yaml", "mqtt-operation-binding.jsonld"),
     FixtureData("Mqtt server binding", "mqtt-server-binding.yaml", "mqtt-server-binding.jsonld"),
     FixtureData("Websockets channel binding", "ws-channel-binding.yaml", "ws-channel-binding.jsonld"),
-    FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.jsonld")
+    FixtureData("Rpc server example", "rpc-server.yaml", "rpc-server.jsonld"),
+    FixtureData("Components declarations and references",
+                "components/async-components.yaml",
+                "components/async-components.jsonld")
   )
 
   def cyclesAsyncAsync: Seq[FixtureData] = Seq(

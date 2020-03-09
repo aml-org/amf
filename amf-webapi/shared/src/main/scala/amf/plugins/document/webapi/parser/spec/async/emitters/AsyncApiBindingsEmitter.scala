@@ -1,8 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.async.emitters
-import amf.core.emitter.BaseEmitters.{EmptyMapEmitter, ScalarEmitter, pos, traverse}
+import amf.core.emitter.BaseEmitters.{EmptyMapEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.extensions.DomainExtension
-import amf.core.model.domain.{AmfElement, AmfScalar, Annotation, DataNode}
+import amf.core.model.domain.{AmfElement, DataNode, DomainElement}
 import amf.core.parser.{FieldEntry, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
@@ -29,8 +29,7 @@ class AsyncApiBindingsEmitter(fieldEntry: FieldEntry, ordering: SpecOrdering, ex
     extends EntryEmitter {
 
   def emit(b: EntryBuilder): Unit = {
-    val emitters: Seq[EntryEmitter] = fieldEntry
-      .arrayValues[AmfElement]
+    val emitters: Seq[EntryEmitter] = obtainBindings(fieldEntry.value.value)
       .flatMap(emitterForElement) ++ extensionEmitters
     b.entry(
       "bindings",
@@ -38,6 +37,16 @@ class AsyncApiBindingsEmitter(fieldEntry: FieldEntry, ordering: SpecOrdering, ex
         traverse(ordering.sorted(emitters), emitter)
       }
     )
+  }
+
+  def obtainBindings(value: AmfElement): Seq[AmfElement] = {
+    value match {
+      case s: ServerBindings    => s.bindings
+      case s: OperationBindings => s.bindings
+      case s: ChannelBindings   => s.bindings
+      case s: MessageBindings   => s.bindings
+      case _                    => Nil
+    }
   }
 
   def extensionEmitters: Seq[EntryEmitter] = OrphanAnnotationsEmitter(extensions, ordering).emitters

@@ -19,6 +19,16 @@ import amf.plugins.document.webapi.parser.spec.WebApiDeclarations._
 import amf.plugins.document.webapi.parser.spec.domain.OasParameter
 import amf.plugins.domain.shapes.models.{AnyShape, CreativeWork, Example}
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.bindings.{
+  ChannelBinding,
+  ChannelBindings,
+  MessageBinding,
+  MessageBindings,
+  OperationBinding,
+  OperationBindings,
+  ServerBinding,
+  ServerBindings
+}
 import amf.plugins.domain.webapi.models.security.SecurityScheme
 import amf.plugins.domain.webapi.models.templates.{ResourceType, Trait}
 import org.yaml.model.{YNode, YPart}
@@ -41,7 +51,13 @@ class WebApiDeclarations(val alias: Option[String],
                          var requests: Map[String, Request] = Map(),
                          var headers: Map[String, Parameter] = Map(),
                          var links: Map[String, TemplatedLink] = Map(),
+                         var correlationIds: Map[String, CorrelationId] = Map(),
                          var callbacks: Map[String, List[Callback]] = Map(),
+                         var messages: Map[String, Message] = Map(),
+                         var messageBindings: Map[String, MessageBindings] = Map(),
+                         var operationBindings: Map[String, OperationBindings] = Map(),
+                         var channelBindings: Map[String, ChannelBindings] = Map(),
+                         var serverBindings: Map[String, ServerBindings] = Map(),
                          val errorHandler: ErrorHandler,
                          val futureDeclarations: FutureDeclarations,
                          var others: Map[String, BaseUnit] = Map())
@@ -130,6 +146,19 @@ class WebApiDeclarations(val alias: Option[String],
         requests = requests + (rq.name.value() -> rq)
       case l: TemplatedLink =>
         links = links + (l.name.value() -> l)
+      case l: CorrelationId =>
+        correlationIds = correlationIds + (l.name.value() -> l)
+      case m: Message =>
+        messages = messages + (m.name.value() -> m)
+      case b: MessageBindings =>
+        messageBindings = messageBindings + (b.name.value() -> b)
+      case b: ServerBindings =>
+        serverBindings = serverBindings + (b.name.value() -> b)
+      case b: ChannelBindings =>
+        channelBindings = channelBindings + (b.name.value() -> b)
+      case b: OperationBindings =>
+        operationBindings = operationBindings + (b.name.value() -> b)
+
       case c: Callback =>
         val name = c.name.value()
         callbacks.get(name) match {
@@ -184,7 +213,7 @@ class WebApiDeclarations(val alias: Option[String],
   override def declarables(): Seq[DomainElement] =
     super
       .declarables()
-      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values).toList
+      .toList ++ (shapes.values ++ resourceTypes.values ++ traits.values ++ parameters.values ++ payloads.values ++ securitySchemes.values ++ responses.values ++ examples.values ++ requests.values ++ links.values ++ callbacks.values.flatten ++ headers.values ++ correlationIds.values ++ messageBindings.values ++ operationBindings.values ++ channelBindings.values ++ serverBindings.values ++ messages.values).toList
 
   def findParameterOrError(ast: YPart)(key: String, scope: SearchScope.Scope): Parameter =
     findParameter(key, scope) match {
@@ -227,6 +256,36 @@ class WebApiDeclarations(val alias: Option[String],
   def findHeader(key: String, scope: SearchScope.Scope): Option[Parameter] =
     findForType(key, _.asInstanceOf[WebApiDeclarations].headers, scope) collect {
       case p: Parameter => p
+    }
+
+  def findCorrelationId(key: String, scope: SearchScope.Scope): Option[CorrelationId] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].correlationIds, scope) collect {
+      case c: CorrelationId => c
+    }
+
+  def findServerBindings(key: String, scope: SearchScope.Scope): Option[ServerBindings] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].serverBindings, scope) collect {
+      case c: ServerBindings => c
+    }
+
+  def findOperationBindings(key: String, scope: SearchScope.Scope): Option[OperationBindings] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].operationBindings, scope) collect {
+      case c: OperationBindings => c
+    }
+
+  def findChannelBindings(key: String, scope: SearchScope.Scope): Option[ChannelBindings] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].channelBindings, scope) collect {
+      case c: ChannelBindings => c
+    }
+
+  def findMessageBindings(key: String, scope: SearchScope.Scope): Option[MessageBindings] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].messageBindings, scope) collect {
+      case c: MessageBindings => c
+    }
+
+  def findMessage(key: String, scope: SearchScope.Scope): Option[Message] =
+    findForType(key, _.asInstanceOf[WebApiDeclarations].messages, scope) collect {
+      case m: Message => m
     }
 
   def findCallbackInDeclarations(key: String): Option[List[Callback]] = callbacks.get(key)
@@ -398,6 +457,46 @@ object WebApiDeclarations {
 
   class ErrorLink(idPart: String, ast: YPart) extends TemplatedLink(Fields(), Annotations(ast)) with ErrorDeclaration {
     override val namespace: String = "http://amferror.com/#errorTemplateLink/"
+    withId(idPart)
+  }
+
+  class ErrorCorrelationId(idPart: String, ast: YPart)
+      extends CorrelationId(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#errorCorrelationId/"
+    withId(idPart)
+  }
+
+  class ErrorMessage(idPart: String, ast: YPart) extends Message(Fields(), Annotations(ast)) with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#errorMessage/"
+    withId(idPart)
+  }
+
+  class ErrorServerBindings(idPart: String, ast: YPart)
+      extends ServerBindings(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#serverBindings/"
+    withId(idPart)
+  }
+
+  class ErrorOperationBindings(idPart: String, ast: YPart)
+      extends OperationBindings(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#operationBindings/"
+    withId(idPart)
+  }
+
+  class ErrorChannelBindings(idPart: String, ast: YPart)
+      extends ChannelBindings(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#channelBindings/"
+    withId(idPart)
+  }
+
+  class ErrorMessageBindings(idPart: String, ast: YPart)
+      extends MessageBindings(Fields(), Annotations(ast))
+      with ErrorDeclaration {
+    override val namespace: String = "http://amferror.com/#messageBindings/"
     withId(idPart)
   }
 

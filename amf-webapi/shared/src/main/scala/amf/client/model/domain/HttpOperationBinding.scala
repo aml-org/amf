@@ -13,12 +13,12 @@ case class HttpOperationBinding(override private[amf] val _internal: InternalHtt
   @JSExportTopLevel("model.domain.HttpOperationBinding")
   def this() = this(InternalHttpOperationBinding())
 
-  def `type`: StrField = _internal.`type`
-  def method: StrField = _internal.method
-  def query: Shape     = _internal.query
+  def operationType: StrField = _internal.operationType
+  def method: StrField        = _internal.method
+  def query: Shape            = _internal.query
 
   def withType(`type`: String): this.type = {
-    _internal.withType(`type`)
+    _internal.withOperationType(`type`)
     this
   }
   def withMethod(method: String): this.type = {
