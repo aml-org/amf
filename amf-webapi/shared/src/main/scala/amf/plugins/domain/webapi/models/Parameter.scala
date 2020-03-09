@@ -4,7 +4,7 @@ import amf.core.metamodel.{Field, Obj}
 import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{Example, NodeShape, ScalarShape}
+import amf.plugins.domain.shapes.models.{AnyShape, Example, ExemplifiedDomainElement, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.metamodel.ParameterModel._
 import org.yaml.model.YPart
@@ -16,7 +16,8 @@ import amf.core.utils.AmfStrings
 class Parameter(override val fields: Fields, override val annotations: Annotations)
     extends NamedDomainElement
     with Linkable
-    with SchemaContainer {
+    with SchemaContainer
+    with ExemplifiedDomainElement {
 
   def parameterName: StrField    = fields.field(ParameterName)
   def description: StrField      = fields.field(Description)
@@ -29,7 +30,6 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def binding: StrField          = fields.field(Binding)
   def schema: Shape              = fields.field(Schema)
   def payloads: Seq[Payload]     = fields.field(Payloads)
-  def examples: Seq[Example]     = fields.field(Examples)
 
   def withParameterName(name: String): this.type               = set(ParameterName, name)
   def withDescription(description: String): this.type          = set(Description, description)
@@ -42,7 +42,6 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withBinding(binding: String): this.type                  = set(Binding, binding)
   def withSchema(schema: Shape): this.type                     = set(Schema, schema)
   def withPayloads(payloads: Seq[Payload]): this.type          = setArray(Payloads, payloads)
-  def withExamples(examples: Seq[Example]): this.type          = setArray(Examples, examples)
 
   override def removeExamples(): Unit = fields.removeField(Examples)
 
@@ -69,13 +68,6 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
     val result = Payload().withMediaType(mediaType)
     add(ParameterModel.Payloads, result)
     result
-  }
-
-  def withExample(name: Option[String] = None): Example = {
-    val example = Example()
-    name.foreach { example.withName(_) }
-    add(Examples, example)
-    example
   }
 
   override def linkCopy(): Parameter = {

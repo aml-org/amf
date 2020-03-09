@@ -1,22 +1,21 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
 import amf.core.annotations._
-import amf.core.metamodel.domain.{ShapeModel, LinkableElementModel}
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
+import amf.core.metamodel.domain.{LinkableElementModel, ShapeModel}
 import amf.core.model.DataType
-import amf.core.model.domain.extensions.PropertyShape
 import amf.core.model.domain.{ScalarNode => DynamicDataNode, _}
-import amf.core.parser.{Annotations, Value, _}
-import amf.core.remote.{Raml08, Oas}
-import amf.core.utils.{IdCounter, AmfStrings}
+import amf.core.model.domain.extensions.PropertyShape
+import amf.core.parser.{Annotations, _}
+import amf.core.remote.Raml08
+import amf.core.utils.{AmfStrings, IdCounter}
 import amf.core.vocabulary.Namespace
 import amf.core.vocabulary.Namespace.Shapes
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts.WebApiContext
-import amf.plugins.document.webapi.contexts.parser.raml.{RamlWebApiContext, Raml08WebApiContext, Raml10WebApiContext}
+import amf.plugins.document.webapi.contexts.parser.raml.{Raml08WebApiContext, Raml10WebApiContext, RamlWebApiContext}
 import amf.plugins.document.webapi.parser.RamlTypeDefMatcher
-import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, matchType, XMLSchema}
-import amf.plugins.document.webapi.parser.spec._
+import amf.plugins.document.webapi.parser.RamlTypeDefMatcher.{JSONSchema, XMLSchema}
 import amf.plugins.document.webapi.parser.spec.common._
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.document.webapi.parser.spec.raml.{RamlSpecParser, RamlTypeExpressionParser}
@@ -28,9 +27,7 @@ import amf.plugins.domain.shapes.parser.XsdTypeDefMapping
 import amf.plugins.domain.webapi.annotations.TypePropertyLexicalInfo
 import amf.validation.DialectValidations.InvalidUnionType
 import amf.validations.ParserSideValidations._
-import org.mulesoft.lexer.InputRange
 import org.yaml.model.{YPart, _}
-import org.yaml.render.YamlRender
 
 import scala.collection.mutable
 import scala.language.postfixOps
@@ -70,19 +67,7 @@ trait ExampleParser {
   def parseExamples(shape: AnyShape, map: YMap, options: ExampleOptions = DefaultExampleOptions)(
       implicit ctx: WebApiContext): Unit = {
 
-    def setShape(examples: Seq[Example], maybeEntry: Option[YMapEntry]): Unit =
-      if (examples.nonEmpty)
-        maybeEntry
-          .map(entry => shape.set(AnyShapeModel.Examples, AmfArray(examples), Annotations(entry)))
-          .getOrElse(shape.set(AnyShapeModel.Examples, AmfArray(examples)))
-
-    RamlExamplesParser(map,
-                       "example",
-                       "examples",
-                       Option(shape.id),
-                       shape.withExample,
-                       options.checkScalar(shape),
-                       setShape)
+    RamlExamplesParser(map, "example", "examples", shape, options.checkScalar(shape))
       .parse()
   }
 }
@@ -299,7 +284,7 @@ case class Raml08DefaultTypeParser(defaultType: TypeDef, name: String, ast: YPar
         ctx.eh.violation(UnableToSetDefaultType, "", s"Cannot set default type $defaultType in raml 08", ast)
         None
     }
-    product.map(adopt)
+    product.foreach(adopt)
     product
   }
 }
@@ -1639,7 +1624,7 @@ sealed abstract class RamlTypeParser(entryOrNode: Either[YMapEntry, YNode],
         entry =>
           PropertiesParser(
             entry.value.as[YMap],
-            (name) => {
+            name => {
               val propertyShape = shape.withCustomShapePropertyDefinition(name)
               if (name.startsWith("("))
                 ctx.eh.violation(InvalidFragmentType,

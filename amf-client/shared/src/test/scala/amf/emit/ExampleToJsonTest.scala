@@ -80,17 +80,11 @@ class ExampleToJsonTest extends AsyncFunSuite with FileAssertionTest {
       val sourceAst: Option[SourceAST] = unit.annotations.find(_.isInstanceOf[SourceAST])
       sourceAst match {
         case Some(a) =>
-          val ast     = a.ast.asInstanceOf[YDocument].as[YMap]
-          val context = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultParserErrorHandler.withRun()))
-          val examples =
-            RamlExamplesParser(ast,
-                               "example",
-                               "examples",
-                               None,
-                               AnyShape.apply().withExample,
-                               DefaultExampleOptions,
-                               (_, _) => Unit)(context).parse()
-          Future.successful(examples.head)
+          val ast      = a.ast.asInstanceOf[YDocument].as[YMap]
+          val context  = new Raml10WebApiContext("", Nil, ParserContext(eh = DefaultParserErrorHandler.withRun()))
+          val anyShape = AnyShape()
+          RamlExamplesParser(ast, "example", "examples", anyShape, DefaultExampleOptions)(context).parse()
+          Future.successful(anyShape.examples.head)
         case None => Future.failed(fail("Not a named example fragment"))
       }
     case _ => Future.failed(fail("Not a named example fragment"))

@@ -53,17 +53,12 @@ case class OasContentParser(entry: YMapEntry, producer: Option[String] => Payloa
           .map(s => payload.set(PayloadModel.Schema, tracking(s, payload.id), Annotations(entry)))
       }
     )
-    def setShape(examples: Seq[Example], maybeEntry: Option[YMapEntry]): Unit =
-      maybeEntry
-        .map(entry => payload.set(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
-        .getOrElse(payload.set(PayloadModel.Examples, AmfArray(examples)))
 
-    val examples: Seq[Example] = OasExamplesParser(map, payload.id, setShape).parse()
-    if (examples.nonEmpty)
-      examples.foreach { ex =>
-        payload.mediaType.option().foreach(ex.withMediaType)
-        ex.annotations += TrackedElement(payload.id)
-      }
+    OasExamplesParser(map, payload).parse()
+    payload.examples.foreach { ex =>
+      payload.mediaType.option().foreach(ex.withMediaType)
+      ex.annotations += TrackedElement(payload.id)
+    }
 
     // encoding
     map.key(
