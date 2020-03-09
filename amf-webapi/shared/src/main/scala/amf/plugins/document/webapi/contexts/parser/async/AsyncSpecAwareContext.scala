@@ -2,19 +2,18 @@ package amf.plugins.document.webapi.contexts.parser.async
 
 import amf.plugins.document.webapi.contexts.SpecAwareContext
 import amf.plugins.document.webapi.contexts.parser.OasLikeSpecVersionFactory
+import amf.plugins.document.webapi.parser.spec.async.parser.AsyncOperationParser
 import amf.plugins.document.webapi.parser.spec.declaration.{
-  OasLikeSecuritySettingsParser,
   Async2SecuritySchemeParser,
-  SecuritySchemeParser,
-  Async2SecuritySettingsParser
+  Async2SecuritySettingsParser,
+  OasLikeSecuritySettingsParser,
+  SecuritySchemeParser
 }
 import amf.plugins.document.webapi.parser.spec.domain
 import amf.plugins.document.webapi.parser.spec.domain._
 import amf.plugins.domain.webapi.models.security.SecurityScheme
-import amf.plugins.domain.webapi.models.{Server, EndPoint, Operation}
-import org.yaml.model.{YMap, YPart, YMapEntry}
-
-import scala.collection.mutable.ListBuffer
+import amf.plugins.domain.webapi.models.{EndPoint, Operation}
+import org.yaml.model.{YMap, YMapEntry, YPart}
 
 // TODO ASYNC complete all this
 trait AsyncSpecAwareContext extends SpecAwareContext {}
