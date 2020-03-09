@@ -840,16 +840,11 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     }
 
     private def parseExample() = {
-      def setShape(examples: Seq[Example], maybeEntry: Option[YMapEntry]): Unit =
-        if (examples.nonEmpty)
-          maybeEntry
-            .map(entry => shape.set(AnyShapeModel.Examples, AmfArray(examples), Annotations(entry)))
-            .getOrElse(shape.set(AnyShapeModel.Examples, AmfArray(examples)))
 
       if (version == JSONSchemaDraft7SchemaVersion || version == JSONSchemaDraft6SchemaVersion)
         parseExamplesArray()
       else
-        RamlExamplesParser(map, "example", "examples".asOasExtension, None, shape.withExample, options, setShape)
+        RamlExamplesParser(map, "example", "examples".asOasExtension, shape, options)
           .parse()
     }
 

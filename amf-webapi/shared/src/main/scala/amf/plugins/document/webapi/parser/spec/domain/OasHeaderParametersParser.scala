@@ -127,7 +127,7 @@ case class OasHeaderParameterParser(map: YMap, adopt: Parameter => Unit)(implici
           .map(entry => parameter.set(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
           .getOrElse(parameter.set(PayloadModel.Examples, AmfArray(examples)))
 
-    OasExamplesParser(map, parameter.id, setShape).parse()
+    OasExamplesParser(map, parameter).parse()
 
     parameter.withBinding("header")
     Oas3ParameterParser.parseStyleField(map, parameter)

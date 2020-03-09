@@ -1,20 +1,19 @@
 package amf.plugins.domain.webapi.models
 
 import amf.core.metamodel.Field
-import amf.core.model.domain.{NamedDomainElement, Linkable}
+import amf.core.model.domain.{Linkable, NamedDomainElement}
 import amf.core.model.{BoolField, StrField}
-import amf.plugins.domain.shapes.models.{Example, CreativeWork}
+import amf.plugins.domain.shapes.models.{CreativeWork, Example, ExemplifiedDomainElement}
 import amf.plugins.domain.webapi.metamodel.MessageModel
 import amf.plugins.domain.webapi.metamodel.MessageModel._
 import amf.plugins.domain.webapi.models.bindings.MessageBinding
 
-trait Message extends NamedDomainElement with Linkable {
+trait Message extends NamedDomainElement with Linkable with ExemplifiedDomainElement {
 
   def description: StrField         = fields.field(Description)
   def isAbstract: BoolField         = fields.field(IsAbstract)
   def documentation: CreativeWork   = fields.field(Documentation)
   def tags: Seq[Tag]                = fields.field(Tags)
-  def examples: Seq[Example]        = fields.field(Examples)
   def payloads: Seq[Payload]        = fields.field(Payloads)
   def correlationId: CorrelationId  = fields.field(MessageModel.CorrelationId)
   def displayName: StrField         = fields.field(DisplayName)
@@ -27,7 +26,6 @@ trait Message extends NamedDomainElement with Linkable {
   def isAbstract(isAbstract: Boolean): this.type                 = set(IsAbstract, isAbstract)
   def withDocumentation(documentation: CreativeWork): this.type  = set(Documentation, documentation)
   def withTags(tags: Seq[Tag]): this.type                        = setArray(Tags, tags)
-  def withExamples(examples: Seq[Example]): this.type            = setArray(Examples, examples)
   def withPayloads(payloads: Seq[Payload]): this.type            = setArray(Payloads, payloads)
   def withCorrelationId(correlationId: CorrelationId): this.type = set(MessageModel.CorrelationId, correlationId)
   def withDisplayName(displayName: String): this.type            = set(DisplayName, displayName)

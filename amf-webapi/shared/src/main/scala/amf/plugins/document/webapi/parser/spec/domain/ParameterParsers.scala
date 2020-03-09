@@ -581,8 +581,7 @@ class Oas3ParameterParser(entryOrNode: Either[YMapEntry, YNode],
         .map(entry => param.set(PayloadModel.Examples, AmfArray(examples), Annotations(entry)))
         .getOrElse(param.set(PayloadModel.Examples, AmfArray(examples)))
 
-    val examples = OasExamplesParser(map, param.id, setShape).parse()
-    if (examples.nonEmpty) param.set(PayloadModel.Examples, AmfArray(examples))
+    OasExamplesParser(map, param).parse()
   }
 
   private def parseContent(param: Parameter): Unit = {
