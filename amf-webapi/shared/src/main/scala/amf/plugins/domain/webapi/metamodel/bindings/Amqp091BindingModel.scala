@@ -1,19 +1,13 @@
 package amf.plugins.domain.webapi.metamodel.bindings
 
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Int, Str, Array, Bool}
+import amf.core.metamodel.Type.{Array, Bool, Int, Str}
 import amf.core.metamodel.domain.common.NameFieldSchema
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies, DomainElementModel}
+import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
-import amf.plugins.domain.webapi.models.bindings.amqp.{
-  Amqp091OperationBinding,
-  Amqp091ChannelBinding,
-  Amqp091ChannelExchange,
-  Amqp091MessageBinding,
-  Amqp091Queue
-}
+import amf.plugins.domain.webapi.models.bindings.amqp._
 
 object Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersion {
 
@@ -39,6 +33,7 @@ object Amqp091ChannelBindingModel extends ChannelBindingModel with BindingVersio
     "Amqp091ChannelBinding",
     ""
   )
+  override val key: Field = Type
 }
 
 object Amqp091ChannelExchangeModel extends DomainElementModel with NameFieldSchema {
@@ -174,6 +169,8 @@ object Amqp091OperationBindingModel extends OperationBindingModel with BindingVe
 
   override val `type`: List[ValueType] = ApiBinding + "Amqp091OperationBinding" :: OperationBindingModel.`type`
 
+  override val key: Field = Type
+
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiBinding,
     "Amqp091OperationBinding",
@@ -197,6 +194,8 @@ object Amqp091MessageBindingModel extends MessageBindingModel with BindingVersio
   override def fields: List[Field] = List(ContentEncoding, MessageType, BindingVersion) ++ MessageBindingModel.fields
 
   override val `type`: List[ValueType] = ApiBinding + "Amqp091MessageBinding" :: MessageBindingModel.`type`
+
+  override val key: Field = Type
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.ApiBinding,

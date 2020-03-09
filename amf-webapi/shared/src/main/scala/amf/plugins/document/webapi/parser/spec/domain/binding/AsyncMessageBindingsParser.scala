@@ -50,6 +50,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val binding = Amqp091MessageBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
+    binding.set(Amqp091MessageBindingModel.Type, "amqp")
     map.key("contentEncoding", Amqp091MessageBindingModel.ContentEncoding in binding)
     map.key("messageType", Amqp091MessageBindingModel.MessageType in binding)
     parseBindingVersion(binding, Amqp091MessageBindingModel.BindingVersion, map)
@@ -64,6 +65,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val binding = HttpMessageBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
+    binding.set(HttpMessageBindingModel.Type, "http")
     map.key("headers", parseSchema(HttpMessageBindingModel.Headers, binding, _, parent))
     parseBindingVersion(binding, HttpMessageBindingModel.BindingVersion, map)
 
@@ -77,7 +79,8 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val binding = KafkaMessageBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    map.key("key", KafkaMessageBindingModel.Key in binding)
+    binding.set(KafkaMessageBindingModel.Type, "kafka")
+    map.key("key", KafkaMessageBindingModel.MessageKey in binding)
     parseBindingVersion(binding, KafkaMessageBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding.id, map, "kafkaMessageBinding")
@@ -91,6 +94,7 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
     val map = entry.value.as[YMap]
 
+    binding.set(MqttMessageBindingModel.Type, "mqtt")
     parseBindingVersion(binding, MqttMessageBindingModel.BindingVersion, map)
 
     ctx.closedShape(binding.id, map, "mqttMessageBinding")
