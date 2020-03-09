@@ -32,6 +32,9 @@
       }
     },
     "schemas": {
+      "External": {
+        "type": "number"
+      },
       "Product": {
         "type": "object",
         "properties": {
@@ -40,9 +43,6 @@
             "format": "int64"
           }
         }
-      },
-      "External": {
-        "$ref": "definitions.json#/NumberSchema"
       }
     },
     "responses": {
