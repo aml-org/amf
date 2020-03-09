@@ -1,0 +1,93 @@
+[
+  {
+    "@id": "testId",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "testId/default-response",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#Response",
+          "http://a.ml/vocabularies/apiContract#Message",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/apiContract#payload": [
+          {
+            "@id": "target/default-response/default",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#Payload",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/apiBinding#binding": [
+          {
+            "@id": "target/default-response/kafka-message",
+            "@type": [
+              "http://a.ml/vocabularies/apiBinding#KafkaMessageBinding",
+              "http://a.ml/vocabularies/apiBinding#MessageBinding",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiBinding#messageKey": [
+              {
+                "@value": "baseKey"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+              {
+                "@value": "baseVersion"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#type": [
+              {
+                "@value": "kafka"
+              }
+            ]
+          },
+          {
+            "@id": "target/default-response/amqp091-message",
+            "@type": [
+              "http://a.ml/vocabularies/apiBinding#Amqp091MessageBinding",
+              "http://a.ml/vocabularies/apiBinding#MessageBinding",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiBinding#contentEncoding": [
+              {
+                "@value": "traitEncoding"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#messageType": [
+              {
+                "@value": "traitType"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+              {
+                "@value": "latest"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#type": [
+              {
+                "@value": "amqp"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.0.1"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": false
+      }
+    ]
+  }
+]

@@ -1,0 +1,198 @@
+[
+  {
+    "@id": "testId",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "testId/subscribe",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#Operation",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/apiContract#method": [
+          {
+            "@value": "subscribe"
+          }
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "traitOperationId"
+          }
+        ],
+        "http://a.ml/vocabularies/apiBinding#binding": [
+          {
+            "@id": "target/amqp091-operation",
+            "@type": [
+              "http://a.ml/vocabularies/apiBinding#Amqp091OperationBinding",
+              "http://a.ml/vocabularies/apiBinding#OperationBinding",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiBinding#expiration": [
+              {
+                "@value": 32
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#userId": [
+              {
+                "@value": "some"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#cc": [
+              {
+                "@value": "some"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#priority": [
+              {
+                "@value": 3
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#deliveryMode": [
+              {
+                "@value": 2
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#mandatory": [
+              {
+                "@value": true
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#bcc": [
+              {
+                "@value": "some"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#replyTo": [
+              {
+                "@value": "some"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#timestamp": [
+              {
+                "@value": true
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+              {
+                "@value": "31.07.92"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#type": [
+              {
+                "@value": "amqp"
+              }
+            ]
+          },
+          {
+            "@id": "target/http-operation",
+            "@type": [
+              "http://a.ml/vocabularies/apiBinding#HttpOperationBinding",
+              "http://a.ml/vocabularies/apiBinding#OperationBinding",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/apiBinding#operationType": [
+              {
+                "@value": "traitType"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#query": [
+              {
+                "@id": "patch/http-operation#/schema",
+                "@type": [
+                  "http://www.w3.org/ns/shacl#NodeShape",
+                  "http://a.ml/vocabularies/shapes#AnyShape",
+                  "http://www.w3.org/ns/shacl#Shape",
+                  "http://a.ml/vocabularies/shapes#Shape",
+                  "http://a.ml/vocabularies/document#DomainElement"
+                ],
+                "http://www.w3.org/ns/shacl#closed": [
+                  {
+                    "@value": false
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#property": [
+                  {
+                    "@id": "patch/http-operation#/schema/property/some",
+                    "@type": [
+                      "http://www.w3.org/ns/shacl#PropertyShape",
+                      "http://www.w3.org/ns/shacl#Shape",
+                      "http://a.ml/vocabularies/shapes#Shape",
+                      "http://a.ml/vocabularies/document#DomainElement"
+                    ],
+                    "http://www.w3.org/ns/shacl#path": [
+                      {
+                        "@id": "http://a.ml/vocabularies/data#some"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/shapes#range": [
+                      {
+                        "@id": "patch/http-operation#/schema/property/some/scalar/some",
+                        "@type": [
+                          "http://a.ml/vocabularies/shapes#ScalarShape",
+                          "http://a.ml/vocabularies/shapes#AnyShape",
+                          "http://www.w3.org/ns/shacl#Shape",
+                          "http://a.ml/vocabularies/shapes#Shape",
+                          "http://a.ml/vocabularies/document#DomainElement"
+                        ],
+                        "http://www.w3.org/ns/shacl#datatype": [
+                          {
+                            "@id": "http://www.w3.org/2001/XMLSchema#string"
+                          }
+                        ],
+                        "http://www.w3.org/ns/shacl#name": [
+                          {
+                            "@value": "some"
+                          }
+                        ]
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#minCount": [
+                      {
+                        "@value": 0
+                      }
+                    ],
+                    "http://www.w3.org/ns/shacl#name": [
+                      {
+                        "@value": "some"
+                      }
+                    ]
+                  }
+                ],
+                "http://www.w3.org/ns/shacl#name": [
+                  {
+                    "@value": "schema"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#bindingVersion": [
+              {
+                "@value": "latest"
+              }
+            ],
+            "http://a.ml/vocabularies/apiBinding#type": [
+              {
+                "@value": "http"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.0.1"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": false
+      }
+    ]
+  }
+]

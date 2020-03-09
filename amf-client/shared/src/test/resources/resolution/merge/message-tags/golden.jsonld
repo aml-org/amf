@@ -1,0 +1,59 @@
+[
+  {
+    "@id": "testId",
+    "@type": [
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "testId/default-response",
+        "@type": [
+          "http://a.ml/vocabularies/apiContract#Response",
+          "http://a.ml/vocabularies/apiContract#Message",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/apiContract#payload": [
+          {
+            "@id": "target/default-response/default",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#Payload",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/apiContract#tag": [
+          {
+            "@id": "target/default-response/tag/traitTag",
+            "@type": [
+              "http://a.ml/vocabularies/apiContract#Tag",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "traitTag"
+              }
+            ],
+            "http://a.ml/vocabularies/core#description": [
+              {
+                "@value": "traitDescription"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.0.1"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": false
+      }
+    ]
+  }
+]
