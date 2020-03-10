@@ -1,0 +1,11 @@
+#%RAML 0.8
+baseUri: https://mocksvc.mulesoft.com/mocks/41242504-1822-49c7-b3a5-97573f04cd91
+title: eTMF Upload API
+version: 1.0
+  
+/SDEDocument:
+  post:
+    body:
+      application/json:
+        schema: !include SDEDocument_Site.schema.json
+        example: !include SDEDocument_Site.example.json
