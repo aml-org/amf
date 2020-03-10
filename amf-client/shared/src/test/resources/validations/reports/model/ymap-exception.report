@@ -1,0 +1,30 @@
+Model: file://amf-client/shared/src/test/resources/validations/ymap-exception/api.yaml
+Profile: OAS 2.0
+Conforms? false
+Number of results: 3
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/core#syaml-error
+  Message: Syntax error : Unexpected ''
+  Level: Violation
+  Target: 
+  Property: 
+  Position: None
+  Location: file://amf-client/shared/src/test/resources/validations/ymap-exception/parameters.yaml
+
+- Source: http://a.ml/vocabularies/amf/core#syaml-error
+  Message: YAML map expected
+  Level: Violation
+  Target: 
+  Property: 
+  Position: None
+  Location: 
+
+- Source: http://a.ml/vocabularies/amf/parser#parameter-name-required
+  Message: 'name' property is required in a parameter.
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/ymap-exception/api.yaml#/web-api/end-points/%2Fpets/get/request/parameter/parameter_1
+  Property: 
+  Position: None
+  Location: 
