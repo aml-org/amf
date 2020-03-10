@@ -1,8 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.core.annotations.{ExplicitField, NilUnion, SynthesizedField}
+import amf.core.annotations.{ExplicitField, ExternalFragmentRef, NilUnion, SynthesizedField}
 import amf.core.metamodel.Field
-import amf.core.annotations.{ExplicitField, NilUnion}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.domain.ShapeModel
 import amf.core.metamodel.domain.extensions.PropertyShapeModel
@@ -405,26 +404,11 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
   private def searchRemoteJsonSchema(ref: String, text: String, e: YMapEntry) = {
     val fullRef = ctx.resolvedPath(ctx.rootContextDocument, ref)
     ctx.findJsonSchema(fullRef) match {
-      case Some(u: UnresolvedShape) =>
-        val annots = Annotations(ast)
-        val copied = u.copyShape(annots ++= u.annotations.copy()).withLinkLabel(ref)
-        copied.unresolved(fullRef, e, "warning")(ctx)
-        adopt(copied)
-        Some(copied)
-      case Some(s) =>
-        val annots = Annotations(ast)
-        val copied =
-          s.link(ref, annots).asInstanceOf[AnyShape].withName(name, nameAnnotations).withSupportsRecursion(true)
-        adopt(copied)
-        Some(copied)
+      case Some(u: UnresolvedShape) => copyUnresolvedShape(ref, fullRef, e, u)
+      case Some(shape)              => createLinkToParsedShape(ref, shape)
       case _ =>
         val tmpShape = JsonSchemaParsingHelper.createTemporaryShape(shape => adopt(shape), e, ctx, fullRef)
-        // remote reference
-        ctx.parseRemoteJSONPath(fullRef).map { shape =>
-          ctx.registerJsonSchema(fullRef, shape)
-          ctx.futureDeclarations.resolveRef(fullRef, shape)
-          shape
-        } match {
+        parseAndRegisterRemoteSchema(fullRef) match {
           case None =>
             // it might still be resolvable at the RAML (not JSON Schema) level
             tmpShape.unresolved(text, e, "warning").withSupportsRecursion(true)
@@ -432,21 +416,51 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
           case Some(jsonSchemaShape) =>
             if (ctx.declarations.fragments.contains(text)) {
               // case when in an OAS spec we point with a regular $ref to something that is external
-              // and holds a JSON schema
-              // we need to promote an external fragment to data type fragment
-              val promotedShape =
-                ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
-              Some(
-                promotedShape
-                  .link(text, Annotations(ast))
-                  .asInstanceOf[AnyShape]
-                  .withName(name, nameAnnotations)
-                  .withSupportsRecursion(true))
+              // and holds a JSON schema we need to promote an external fragment to data type fragment
+              promoteParsedShape(ref, text, fullRef, jsonSchemaShape)
             } else {
 
               Some(jsonSchemaShape)
             }
         }
+    }
+  }
+
+  private def copyUnresolvedShape(ref: String, fullRef: String, entry: YMapEntry, unresolved: UnresolvedShape) = {
+    val annots = Annotations(ast)
+    val copied = unresolved.copyShape(annots ++= unresolved.annotations.copy()).withLinkLabel(ref)
+    copied.unresolved(fullRef, entry, "warning")(ctx)
+    adopt(copied)
+    Some(copied)
+  }
+
+  private def createLinkToParsedShape(ref: String, shape: AnyShape) = {
+    val annots = Annotations(ast)
+    val copied =
+      shape.link(ref, annots).asInstanceOf[AnyShape].withName(name, nameAnnotations).withSupportsRecursion(true)
+    adopt(copied)
+    Some(copied)
+  }
+
+  private def promoteParsedShape(ref: String,
+                                 text: String,
+                                 fullRef: String,
+                                 jsonSchemaShape: AnyShape): Option[AnyShape] = {
+    val promotedShape =
+      ctx.declarations.promoteExternaltoDataTypeFragment(text, fullRef, jsonSchemaShape)
+    Some(
+      promotedShape
+        .link(text, Annotations(ast) += ExternalFragmentRef(ref))
+        .asInstanceOf[AnyShape]
+        .withName(name, nameAnnotations)
+        .withSupportsRecursion(true))
+  }
+
+  private def parseAndRegisterRemoteSchema(fullRef: String): Option[AnyShape] = {
+    ctx.parseRemoteJSONPath(fullRef).map { shape =>
+      ctx.registerJsonSchema(fullRef, shape)
+      ctx.futureDeclarations.resolveRef(fullRef, shape)
+      shape
     }
   }
 
@@ -999,10 +1013,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
     required
       .foreach {
         case (name, nodes) if nodes.size > 1 =>
-          ctx.eh.violation(DuplicateRequiredItem,
-                           shape.id,
-                           s"'$name' is duplicated in 'required' property",
-                           nodes.last)
+          ctx.eh.violation(DuplicateRequiredItem, shape.id, s"'$name' is duplicated in 'required' property", nodes.last)
         case _ => // ignore
       }
 
