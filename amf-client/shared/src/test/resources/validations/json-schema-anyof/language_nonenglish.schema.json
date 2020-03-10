@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Non English",
+  "type": "object",
+  "properties": {
+    "language": {
+      "type": "string",
+      "pattern": "^((?!English).)*$"
+    },
+    "languageAbbreviation": {
+      "description": "The language abbreviation",
+      "type": "string"
+    },
+    "languageIdentifier": {
+      "description": "The language identifier",
+      "type": "string"
+    }
+  },
+  "required": [
+    "language",
+    "languageAbbreviation",
+    "languageIdentifier"
+  ]
+}
