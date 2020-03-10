@@ -118,6 +118,11 @@ object ParserSideValidations extends Validations {
     "Invalid 'describedBy' type, map expected"
   )
 
+  val ExpectedReference = validation(
+    "expected-reference",
+    "Expected reference"
+  )
+
   val InvalidTagType = validation(
     "invalid-tag-type",
     "Tag values must be of type string"
