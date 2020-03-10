@@ -601,7 +601,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.Or, unionNodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.Or, unionNodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidOrType,
                                shape.id,
@@ -630,7 +630,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.And, andNodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.And, andNodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidAndType,
                                shape.id,
@@ -659,7 +659,7 @@ case class OasTypeParser(entryOrNode: Either[YMapEntry, YNode],
                 }
                 .filter(_.isDefined)
                 .map(_.get)
-              shape.setArray(ShapeModel.Xone, nodes, Annotations(entry.value))
+              shape.setArrayWithoutId(ShapeModel.Xone, nodes, Annotations(entry.value))
             case _ =>
               ctx.eh.violation(InvalidXoneType,
                                shape.id,
