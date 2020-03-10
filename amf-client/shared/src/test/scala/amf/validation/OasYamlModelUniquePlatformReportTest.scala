@@ -15,5 +15,9 @@ class OasYamlModelUniquePlatformReportTest extends UniquePlatformReportGenTest {
     validate("oas-definition-self-chained-ref.yaml", Some("oas-definition-self-chained-ref.report"))
   }
 
+  test("Avoid YMap error exception in parameters parser") {
+    validate("ymap-exception/api.yaml", Some("ymap-exception.report"))
+  }
+
   override val hint: Hint = OasYamlHint
 }
