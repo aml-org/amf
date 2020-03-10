@@ -147,13 +147,8 @@ case class RamlJsonSchemaExpression(key: YNode,
         Root(SyamlParsedDocument(schemaEntry), url, "application/json", Nil, InferredLinkReference, text))(
         jsonSchemaContext)
         .parseTypeDeclarations(schemaEntry.node.as[YMap], url + "#/definitions/")(jsonSchemaContext)
-      val libraryShapes = jsonSchemaContext.declarations.shapes
-
-      // Why are we calling a resolution stage from a parser
-      val resolvedShapes = new ReferenceResolutionStage(false)(ctx.eh)
-        .resolveDomainElementSet[Shape](libraryShapes.values.toSeq)
-
-      val shapesMap = mutable.Map[String, AnyShape]()
+      val resolvedShapes = jsonSchemaContext.declarations.shapes.values.toSeq
+      val shapesMap      = mutable.Map[String, AnyShape]()
       resolvedShapes.map(s => (s, s.annotations.find(classOf[JSONSchemaId]))).foreach {
         case (s: AnyShape, Some(a)) if a.id.equals(s.name.value()) =>
           shapesMap += s.name.value -> s
