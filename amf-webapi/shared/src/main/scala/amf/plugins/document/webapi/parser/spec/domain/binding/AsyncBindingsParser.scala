@@ -131,7 +131,6 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
   protected def parseEmptyBinding(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding = {
     val binding = EmptyBinding(Annotations(entry))
 
-    parseType(binding, entry, EmptyBindingModel.Type, parent)
     validateEmptyMap(entry.value, binding.id, entry.key.as[String])
 
     binding.asInstanceOf[Binding]
@@ -140,7 +139,6 @@ abstract class AsyncBindingsParser(entryLike: YMapEntryLike, parent: String)(imp
   protected def parseDynamicBinding(entry: YMapEntry, parent: String)(implicit ctx: AsyncWebApiContext): Binding = {
     val binding = DynamicBinding(Annotations(entry))
 
-    parseType(binding, entry, DynamicBindingModel.Type, parent)
     binding.set(DynamicBindingModel.Definition,
                 DataNodeParser(entry.value, parent = Some(parent)).parse(),
                 Annotations(entry.value))

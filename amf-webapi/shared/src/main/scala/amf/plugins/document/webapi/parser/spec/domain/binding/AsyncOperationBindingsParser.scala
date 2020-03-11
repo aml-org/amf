@@ -47,7 +47,6 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val binding = HttpOperationBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(HttpOperationBindingModel.Type, "http")
     map.key("type", HttpOperationBindingModel.OperationType in binding)
     if (binding.operationType.is("request")) map.key("method", HttpOperationBindingModel.Method in binding)
     map.key("query", entry => parseSchema(HttpOperationBindingModel.Query, binding, entry, parent)) // TODO validate as object
@@ -63,7 +62,6 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val binding = Amqp091OperationBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(Amqp091OperationBindingModel.Type, "amqp")
     map.key("expiration", Amqp091OperationBindingModel.Expiration in binding)
     map.key("userId", Amqp091OperationBindingModel.UserId in binding)
     map.key("cc", Amqp091OperationBindingModel.CC in binding)
@@ -87,7 +85,6 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val binding = KafkaOperationBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(KafkaOperationBindingModel.Type, "kafka")
     map.key("groupId", KafkaOperationBindingModel.GroupId in binding)
     map.key("clientId", KafkaOperationBindingModel.ClientId in binding)
     parseBindingVersion(binding, KafkaOperationBindingModel.BindingVersion, map)
@@ -102,7 +99,6 @@ case class AsyncOperationBindingsParser(entryLike: YMapEntryLike, parent: String
     val binding = MqttOperationBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(MqttOperationBindingModel.Type, "mqtt")
     map.key("qos", MqttOperationBindingModel.Qos in binding)
     map.key("retain", MqttOperationBindingModel.Retain in binding)
     parseBindingVersion(binding, MqttOperationBindingModel.BindingVersion, map)
