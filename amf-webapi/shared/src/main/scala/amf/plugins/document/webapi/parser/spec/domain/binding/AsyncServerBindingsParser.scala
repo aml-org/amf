@@ -42,7 +42,6 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
     val binding = MqttServerBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(MqttServerBindingModel.Type, "mqtt")
     map.key("clientId", MqttServerBindingModel.ClientId in binding)
     map.key("cleanSession", MqttServerBindingModel.CleanSession in binding)
     map.key("keepAlive", MqttServerBindingModel.KeepAlive in binding)

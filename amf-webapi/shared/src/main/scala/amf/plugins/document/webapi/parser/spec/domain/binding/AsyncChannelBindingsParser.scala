@@ -48,7 +48,6 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     val binding = Amqp091ChannelBinding(Annotations(entry)).adopted(parent)
     val map     = entry.value.as[YMap]
 
-    binding.set(Amqp091ChannelBindingModel.Type, "amqp")
     map.key("is", Amqp091ChannelBindingModel.Is in binding)
 
     // Default channel type is 'routingKey'.
