@@ -1,5 +1,7 @@
 package amf.plugins.document.webapi.parser.spec.domain.binding
 
+import amf.core.metamodel.Field
+import amf.core.model.domain.AmfArray
 import amf.core.parser.{Annotations, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
@@ -9,6 +11,7 @@ import amf.plugins.domain.webapi.metamodel.bindings.{
   Amqp091MessageBindingModel,
   HttpMessageBindingModel,
   KafkaMessageBindingModel,
+  MessageBindingsModel,
   MqttMessageBindingModel
 }
 import amf.plugins.domain.webapi.models.bindings.amqp.Amqp091MessageBinding
@@ -23,14 +26,10 @@ case class AsyncMessageBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
   override type Binding  = MessageBinding
   override type Bindings = MessageBindings
+  override protected val bindingsField: Field = MessageBindingsModel.Bindings
 
   override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
     AsyncMessageBindingsParser(entryLike, parent)
-
-  protected def parseBindings(obj: MessageBindings, map: YMap): MessageBindings = {
-    val bindings: Seq[MessageBinding] = parseElements(map, obj.id)
-    obj.withBindings(bindings)
-  }
 
   override protected def createBindings(map: YMap): MessageBindings = MessageBindings(map)
 

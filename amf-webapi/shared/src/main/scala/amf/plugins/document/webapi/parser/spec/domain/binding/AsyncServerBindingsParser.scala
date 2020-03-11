@@ -1,11 +1,16 @@
 package amf.plugins.document.webapi.parser.spec.domain.binding
 
+import amf.core.metamodel.Field
 import amf.core.parser.{Annotations, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorServerBindings
 import amf.plugins.document.webapi.parser.spec.common.YMapEntryLike
-import amf.plugins.domain.webapi.metamodel.bindings.{MqttServerBindingModel, MqttServerLastWillModel}
+import amf.plugins.domain.webapi.metamodel.bindings.{
+  MqttServerBindingModel,
+  MqttServerLastWillModel,
+  ServerBindingsModel
+}
 import amf.plugins.domain.webapi.models.bindings.mqtt.{MqttServerBinding, MqttServerLastWill}
 import amf.plugins.domain.webapi.models.bindings.{ServerBinding, ServerBindings}
 import org.yaml.model.{YMap, YMapEntry}
@@ -15,14 +20,10 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
 
   override type Binding  = ServerBinding
   override type Bindings = ServerBindings
+  override val bindingsField: Field = ServerBindingsModel.Bindings
 
   override protected def createParser(entryLike: YMapEntryLike): AsyncBindingsParser =
     AsyncServerBindingsParser(entryLike, parent)
-
-  protected def parseBindings(obj: ServerBindings, map: YMap): ServerBindings = {
-    val bindings: Seq[ServerBinding] = parseElements(map, obj.id)
-    obj.withBindings(bindings)
-  }
 
   override protected def createBindings(map: YMap): ServerBindings = ServerBindings(map)
 
