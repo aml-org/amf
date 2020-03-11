@@ -5,7 +5,7 @@ import amf.core.metamodel.domain.{DataNodeModel, ShapeModel}
 import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.plugins.domain.webapi.models.{Key, Payload}
 
-case class JsonMergePatch(isNull: AmfElement => Boolean, keyCriteria: KeyCriteria) {
+case class JsonMergePatch(isNull: AmfElement => Boolean, keyCriteria: KeyCriteria, ignoredFields: Seq[Field] = Seq()) {
 
   def merge[T <: AmfElement](target: T, patch: T): AmfElement = {
     (target, patch) match {
@@ -16,7 +16,7 @@ case class JsonMergePatch(isNull: AmfElement => Boolean, keyCriteria: KeyCriteri
   }
 
   private def mergeObjectLikeArrays(target: AmfArray, patch: AmfArray) = {
-    if (target.values.forall(keyCriteria.hasKey) && patch.values.forall(keyCriteria.hasKey)) {
+    if (keyCriteria.hasKeysForAll(target) && keyCriteria.hasKeysForAll(patch)) {
       val mergedArray = mergeArrays(patch, target)
       AmfArray(mergedArray)
     } else patch
@@ -46,7 +46,7 @@ case class JsonMergePatch(isNull: AmfElement => Boolean, keyCriteria: KeyCriteri
         val element = fieldValue.value
         if (isNull(element)) target.fields.removeField(field)
         else if (skipRecursiveMerge(field)) target.set(field, fieldValue.value)
-        else {
+        else if (!ignoredFields.contains(field)) { // TODO: should be filtered beforehand. Can't do it because Fields object is mutable :-(
           val nextValue = merge(target.fields.get(field), element)
           target.set(field, nextValue)
         }
@@ -56,13 +56,12 @@ case class JsonMergePatch(isNull: AmfElement => Boolean, keyCriteria: KeyCriteri
 
   private def skipRecursiveMerge(field: Field) =
     field.`type`.isInstanceOf[ShapeModel] || field.`type`.equals(DataNodeModel)
-
-  def isObjectLikeArray(array: AmfArray): Boolean = array.values.forall(keyCriteria.getKeyFor(_).isDefined)
 }
 
 trait KeyCriteria {
   def getKeyFor(element: AmfElement): Option[String]
-  def hasKey(element: AmfElement): Boolean = getKeyFor(element).isDefined
+  def hasKey(element: AmfElement): Boolean    = getKeyFor(element).isDefined
+  def hasKeysForAll(array: AmfArray): Boolean = array.values.forall(hasKey)
 }
 
 case class DefaultKeyCriteria() extends KeyCriteria {

@@ -14,12 +14,14 @@ class AmfEditingPipeline(override val eh: ErrorHandler, urlShortening: Boolean =
   protected def references                   = new ReferenceResolutionStage(keepEditingInfo = true)
   private def url: Option[UrlShortenerStage] = if (urlShortening) Some(new UrlShortenerStage()) else None
 
+  protected def parameterNormalizationStage: ParametersNormalizationStage = new AmfParametersNormalizationStage()
+
   override lazy val steps: Seq[ResolutionStage] = Seq(
     references,
     new ExtensionsResolutionStage(profileName, keepEditingInfo = true),
     new ShapeNormalizationStage(profileName, keepEditingInfo = true),
     new SecurityResolutionStage(),
-    new ParametersNormalizationStage(profileName),
+    parameterNormalizationStage,
     new ServersNormalizationStage(profileName, keepEditingInfo = true),
     new PathDescriptionNormalizationStage(profileName, keepEditingInfo = true),
     new MediaTypeResolutionStage(profileName, keepEditingInfo = true),

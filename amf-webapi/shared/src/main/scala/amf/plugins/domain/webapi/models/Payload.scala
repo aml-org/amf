@@ -29,8 +29,6 @@ case class Payload(fields: Fields, annotations: Annotations)
   def withSchema(schema: Shape): this.type              = set(Schema, schema)
   def withEncodings(encoding: Seq[Encoding]): this.type = setArray(EncodingModel, encoding)
 
-  override def removeExamples(): Unit = fields.removeField(Examples)
-
   override def setSchema(shape: Shape): Shape = {
     set(ParameterModel.Schema, shape)
     shape

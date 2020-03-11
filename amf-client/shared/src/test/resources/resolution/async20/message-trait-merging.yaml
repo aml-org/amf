@@ -1,0 +1,22 @@
+asyncapi: 2.0.0
+info:
+  title: something
+  version: aversion
+channels:
+  aChannel:
+    publish:
+      message:
+        name: baseMessage
+        summary: baseSummary
+        contentType: baseContentType
+        traits:
+          - $ref: "#/components/messageTraits/firstTrait"
+          - $ref: "#/components/messageTraits/secondTrait"
+components:
+  messageTraits:
+    firstTrait:
+      name: firstMessage
+      summary: firstSummary
+    secondTrait:
+      name: secondMessage
+      title: secondTitle

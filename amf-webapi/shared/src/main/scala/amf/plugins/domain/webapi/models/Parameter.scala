@@ -1,14 +1,14 @@
 package amf.plugins.domain.webapi.models
 
 import amf.core.metamodel.{Field, Obj}
-import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.{DomainElement, Linkable, NamedDomainElement, Shape}
+import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.domain.shapes.models.{AnyShape, Example, ExemplifiedDomainElement, NodeShape, ScalarShape}
+import amf.core.utils.AmfStrings
+import amf.plugins.domain.shapes.models.{ExemplifiedDomainElement, NodeShape, ScalarShape}
 import amf.plugins.domain.webapi.metamodel.ParameterModel
 import amf.plugins.domain.webapi.metamodel.ParameterModel._
 import org.yaml.model.YPart
-import amf.core.utils.AmfStrings
 
 /**
   * Parameter internal model.
@@ -42,8 +42,6 @@ class Parameter(override val fields: Fields, override val annotations: Annotatio
   def withBinding(binding: String): this.type                  = set(Binding, binding)
   def withSchema(schema: Shape): this.type                     = set(Schema, schema)
   def withPayloads(payloads: Seq[Payload]): this.type          = setArray(Payloads, payloads)
-
-  override def removeExamples(): Unit = fields.removeField(Examples)
 
   override def setSchema(shape: Shape): Shape = {
     set(ParameterModel.Schema, shape)

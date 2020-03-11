@@ -1,10 +1,8 @@
 package amf.plugins.document.webapi.parser.spec.oas.emitters
 
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.{Fields, Position}
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.parser.Position
+import amf.core.parser.{Fields, Position}
 import amf.plugins.document.webapi.contexts.SpecEmitterContext
 import amf.plugins.document.webapi.parser.spec.declaration._
 import amf.plugins.domain.shapes.models.CreativeWork
@@ -57,8 +55,6 @@ abstract class OasLikeOperationPartEmitter(operation: Operation, ordering: SpecO
       case None    => fs.entry(OperationModel.OperationId).foreach(f => result += ValueEmitter("operationId", f))
     }
   }
-
-  def emitSpecific(fs: Fields, tempResult: ListBuffer[EntryEmitter]): ListBuffer[EntryEmitter]
 
   override def position(): Position = pos(operation.annotations)
 

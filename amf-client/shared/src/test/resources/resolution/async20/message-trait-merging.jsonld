@@ -1,0 +1,359 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "doc:encodes": [
+      {
+        "@id": "#/web-api",
+        "@type": [
+          "apiContract:WebAPI",
+          "doc:RootDomainElement",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "something"
+          }
+        ],
+        "core:version": [
+          {
+            "@value": "aversion"
+          }
+        ],
+        "apiContract:endpoint": [
+          {
+            "@id": "#/web-api/end-points/aChannel",
+            "@type": [
+              "apiContract:EndPoint",
+              "doc:DomainElement"
+            ],
+            "apiContract:path": [
+              {
+                "@value": "aChannel"
+              }
+            ],
+            "apiContract:supportedOperation": [
+              {
+                "@id": "#/web-api/end-points/aChannel/publish",
+                "@type": [
+                  "apiContract:Operation",
+                  "doc:DomainElement"
+                ],
+                "apiContract:method": [
+                  {
+                    "@value": "publish"
+                  }
+                ],
+                "apiContract:expects": [
+                  {
+                    "@id": "#/web-api/end-points/aChannel/publish/request",
+                    "@type": [
+                      "apiContract:Request",
+                      "apiContract:Message",
+                      "doc:DomainElement"
+                    ],
+                    "apiContract:payload": [
+                      {
+                        "@id": "#/web-api/end-points/aChannel/publish/request/baseContentType",
+                        "@type": [
+                          "apiContract:Payload",
+                          "doc:DomainElement"
+                        ],
+                        "core:mediaType": [
+                          {
+                            "@value": "baseContentType"
+                          }
+                        ],
+                        "smaps": {
+                          "lexical": {
+                            "core:mediaType": "[(11,8)-(12,0)]"
+                          }
+                        }
+                      }
+                    ],
+                    "core:displayName": [
+                      {
+                        "@value": "secondMessage"
+                      }
+                    ],
+                    "core:title": [
+                      {
+                        "@value": "secondTitle"
+                      }
+                    ],
+                    "core:summary": [
+                      {
+                        "@value": "firstSummary"
+                      }
+                    ],
+                    "doc:extends": [
+                      {
+                        "@id": "#/declarations/messageTraits/firstTrait",
+                        "@type": [
+                          "apiContract:Message",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "firstTrait"
+                          }
+                        ],
+                        "apiContract:payload": [
+                          {
+                            "@id": "#/declarations/messageTraits/firstTrait/default",
+                            "@type": [
+                              "apiContract:Payload",
+                              "doc:DomainElement"
+                            ]
+                          }
+                        ],
+                        "core:displayName": [
+                          {
+                            "@value": "firstMessage"
+                          }
+                        ],
+                        "core:summary": [
+                          {
+                            "@value": "firstSummary"
+                          }
+                        ],
+                        "apiContract:isAbstract": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "smaps": {
+                          "resolved-link-target": {
+                            "#/declarations/messageTraits/firstTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/declarations/messageTraits/firstTrait"
+                          },
+                          "declared-element": {
+                            "#/declarations/messageTraits/firstTrait": ""
+                          },
+                          "lexical": {
+                            "core:summary": "[(19,6)-(20,0)]",
+                            "#/declarations/messageTraits/firstTrait": "[(18,0)-(20,0)]",
+                            "core:displayName": "[(18,6)-(19,0)]"
+                          },
+                          "resolved-link": {
+                            "#/declarations/messageTraits/firstTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/web-api/end-points/aChannel/publish/request/message"
+                          }
+                        }
+                      },
+                      {
+                        "@id": "#/declarations/messageTraits/secondTrait",
+                        "@type": [
+                          "apiContract:Message",
+                          "doc:DomainElement"
+                        ],
+                        "core:name": [
+                          {
+                            "@value": "secondTrait"
+                          }
+                        ],
+                        "apiContract:payload": [
+                          {
+                            "@id": "#/declarations/messageTraits/secondTrait/default",
+                            "@type": [
+                              "apiContract:Payload",
+                              "doc:DomainElement"
+                            ]
+                          }
+                        ],
+                        "core:displayName": [
+                          {
+                            "@value": "secondMessage"
+                          }
+                        ],
+                        "core:title": [
+                          {
+                            "@value": "secondTitle"
+                          }
+                        ],
+                        "apiContract:isAbstract": [
+                          {
+                            "@value": true
+                          }
+                        ],
+                        "smaps": {
+                          "resolved-link-target": {
+                            "#/declarations/messageTraits/secondTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/declarations/messageTraits/secondTrait"
+                          },
+                          "declared-element": {
+                            "#/declarations/messageTraits/secondTrait": ""
+                          },
+                          "lexical": {
+                            "core:title": "[(22,6)-(22,24)]",
+                            "#/declarations/messageTraits/secondTrait": "[(21,0)-(22,24)]",
+                            "core:displayName": "[(21,6)-(22,0)]"
+                          },
+                          "resolved-link": {
+                            "#/declarations/messageTraits/secondTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/web-api/end-points/aChannel/publish/request/message"
+                          }
+                        }
+                      }
+                    ],
+                    "smaps": {
+                      "lexical": {
+                        "doc:extends": "[(12,8)-(15,0)]",
+                        "#/web-api/end-points/aChannel/publish/request": "[(9,0)-(15,0)]"
+                      }
+                    }
+                  }
+                ],
+                "smaps": {
+                  "lexical": {
+                    "apiContract:expects": "[(8,14)-(15,0)]",
+                    "#/web-api/end-points/aChannel/publish": "[(7,4)-(15,0)]"
+                  }
+                }
+              }
+            ],
+            "smaps": {
+              "lexical": {
+                "#/web-api/end-points/aChannel": "[(6,2)-(15,0)]"
+              }
+            }
+          }
+        ],
+        "smaps": {
+          "source-vendor": {
+            "#/web-api": "ASYNC 2.0"
+          },
+          "lexical": {
+            "apiContract:endpoint": "[(5,0)-(15,0)]",
+            "core:name": "[(3,2)-(4,0)]",
+            "#/web-api": "[(1,0)-(22,24)]",
+            "core:version": "[(4,2)-(5,0)]"
+          }
+        }
+      }
+    ],
+    "doc:version": [
+      {
+        "@value": "2.1.0"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/messageTraits/firstTrait",
+        "@type": [
+          "apiContract:Message",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "firstTrait"
+          }
+        ],
+        "apiContract:payload": [
+          {
+            "@id": "#/declarations/messageTraits/firstTrait/default",
+            "@type": [
+              "apiContract:Payload",
+              "doc:DomainElement"
+            ]
+          }
+        ],
+        "core:displayName": [
+          {
+            "@value": "firstMessage"
+          }
+        ],
+        "core:summary": [
+          {
+            "@value": "firstSummary"
+          }
+        ],
+        "apiContract:isAbstract": [
+          {
+            "@value": true
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#/declarations/messageTraits/firstTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/declarations/messageTraits/firstTrait"
+          },
+          "declared-element": {
+            "#/declarations/messageTraits/firstTrait": ""
+          },
+          "lexical": {
+            "core:summary": "[(19,6)-(20,0)]",
+            "#/declarations/messageTraits/firstTrait": "[(18,0)-(20,0)]",
+            "core:displayName": "[(18,6)-(19,0)]"
+          },
+          "resolved-link": {
+            "#/declarations/messageTraits/firstTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/web-api/end-points/aChannel/publish/request/message"
+          }
+        }
+      },
+      {
+        "@id": "#/declarations/messageTraits/secondTrait",
+        "@type": [
+          "apiContract:Message",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "secondTrait"
+          }
+        ],
+        "apiContract:payload": [
+          {
+            "@id": "#/declarations/messageTraits/secondTrait/default",
+            "@type": [
+              "apiContract:Payload",
+              "doc:DomainElement"
+            ]
+          }
+        ],
+        "core:displayName": [
+          {
+            "@value": "secondMessage"
+          }
+        ],
+        "core:title": [
+          {
+            "@value": "secondTitle"
+          }
+        ],
+        "apiContract:isAbstract": [
+          {
+            "@value": true
+          }
+        ],
+        "smaps": {
+          "resolved-link-target": {
+            "#/declarations/messageTraits/secondTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/declarations/messageTraits/secondTrait"
+          },
+          "declared-element": {
+            "#/declarations/messageTraits/secondTrait": ""
+          },
+          "lexical": {
+            "core:title": "[(22,6)-(22,24)]",
+            "#/declarations/messageTraits/secondTrait": "[(21,0)-(22,24)]",
+            "core:displayName": "[(21,6)-(22,0)]"
+          },
+          "resolved-link": {
+            "#/declarations/messageTraits/secondTrait": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml#/web-api/end-points/aChannel/publish/request/message"
+          }
+        }
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-client/shared/src/test/resources/resolution/async20/message-trait-merging.yaml",
+      "doc": "http://a.ml/vocabularies/document#",
+      "apiContract": "http://a.ml/vocabularies/apiContract#",
+      "core": "http://a.ml/vocabularies/core#"
+    }
+  }
+]

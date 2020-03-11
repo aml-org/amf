@@ -1,0 +1,20 @@
+asyncapi: 2.0.0
+info:
+  title: asdasd
+  version: asdasd
+channels:
+  someChannel:
+    publish:
+      operationId: baseId
+      summary: baseSummary
+      description: baseDescription
+      traits:
+        - $ref: "#/components/operationTraits/firstTrait"
+        - $ref: "#/components/operationTraits/secondTrait"
+components:
+  operationTraits:
+    firstTrait:
+      summary: firstSummary
+      description: firstDescription
+    secondTrait:
+      description: secondDescription

@@ -18,42 +18,26 @@ import amf.plugins.features.validation.CoreValidations
 
 class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
-  // TODO validate given settings against root defined settings? Step over? Override only the explicit ones?
-  private def validateSettings(root: Settings, settings: Settings): Unit =
-    root match {
-      case rootAuth2: OAuth2Settings if settings.isInstanceOf[OAuth2Settings] =>
-        val auth2Settings   = settings.asInstanceOf[OAuth2Settings]
-        val rootAuth2Scopes = scopeNames(rootAuth2)
-        val scopes = scopeNames(auth2Settings).filter { s =>
-          !rootAuth2Scopes.contains(s)
-        }
-        if (scopes.nonEmpty)
-          errorHandler.violation(
-            CoreValidations.ResolutionValidation,
-            settings.id,
-            Some(OAuth2FlowModel.Scopes.value.toString),
-            "Follow scopes are not defined in root: " + scopes.toString(),
-            settings.position(),
-            settings.location()
-          )
-      // Should I validate that settings are from same class?
-      case _ => // ignore
+  override def resolve[T <: BaseUnit](model: T): T = {
+    model match {
+      case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
+        resolveSecurity(doc.encodes.asInstanceOf[WebApi])
+      case _ =>
     }
+    model.asInstanceOf[T]
+  }
 
-  private def scopeNames(oauth2: OAuth2Settings): Seq[String] =
-    oauth2.flows.headOption.toList.flatMap(_.scopes.flatMap(_.name.option()))
-
-  private def resolveSecurity(api: WebApi): Unit = {
-    val rootSecurity = field(api, WebApiModel.Security)
+  protected def resolveSecurity(api: WebApi): Unit = {
+    val rootSecurity = getAndRemove(api, WebApiModel.Security)
 
     api.endPoints.foreach { endPoint =>
-      val endPointSecurity = merge(rootSecurity, field(endPoint, EndPointModel.Security))
+      val endPointSecurity = overrideWith(rootSecurity, getAndRemove(endPoint, EndPointModel.Security))
 
       endPoint.operations.foreach { operation =>
         // I need to know if this is an empty array or if it's not defined.
-        val opSecurity = field(operation, OperationModel.Security)
+        val opSecurity = getAndRemove(operation, OperationModel.Security)
 
-        merge(endPointSecurity, opSecurity).foreach { requirements =>
+        overrideWith(endPointSecurity, opSecurity).foreach { requirements =>
           requirements.foreach {
             case r: SecurityRequirement =>
               r.schemes.foreach {
@@ -65,29 +49,46 @@ class SecurityResolutionStage()(override implicit val errorHandler: ErrorHandler
             case _ => // ignore
           }
           if (requirements.nonEmpty) operation.setArray(OperationModel.Security, requirements)
-
         }
       }
     }
   }
 
-  /** Get and remove field from domain element */
-  private def field(element: DomainElement, field: Field) = {
+  // TODO validate given settings against root defined settings? Step over? Override only the explicit ones?
+  private def validateSettings(root: Settings, settings: Settings): Unit =
+    root match {
+      case rootAuth2: OAuth2Settings if settings.isInstanceOf[OAuth2Settings] =>
+        val auth2Settings   = settings.asInstanceOf[OAuth2Settings]
+        val rootAuth2Scopes = scopeNames(rootAuth2)
+        val scopes = scopeNames(auth2Settings).filter { s =>
+          !rootAuth2Scopes.contains(s)
+        }
+        if (scopes.nonEmpty) scopesNotDefinedValidation(settings, scopes)
+      // TODO: Should I validate that settings are from same class?
+      case _ => // ignore
+    }
+
+  private def scopeNames(oauth2: OAuth2Settings): Seq[String] =
+    oauth2.flows.headOption.toList.flatMap(_.scopes.flatMap(_.name.option()))
+
+  private def getAndRemove(element: DomainElement, field: Field) = {
     val result = element.fields.entry(field).map(_.array.values.map(v => v.asInstanceOf[SecurityRequirement]))
     element.fields.removeField(field)
     result
   }
 
-  private def merge(root: Option[Seq[SecurityRequirement]],
-                    ep: Option[Seq[SecurityRequirement]]): Option[Seq[SecurityRequirement]] =
-    ep.orElse(root).filter(_.nonEmpty)
+  private def overrideWith(base: Option[Seq[SecurityRequirement]],
+                           overrider: Option[Seq[SecurityRequirement]]): Option[Seq[SecurityRequirement]] =
+    overrider.orElse(base).filter(_.nonEmpty)
 
-  override def resolve[T <: BaseUnit](model: T): T = {
-    model match {
-      case doc: Document if doc.encodes.isInstanceOf[WebApi] =>
-        resolveSecurity(doc.encodes.asInstanceOf[WebApi])
-      case _ =>
-    }
-    model.asInstanceOf[T]
+  private def scopesNotDefinedValidation(settings: Settings, scopes: Seq[String]) = {
+    errorHandler.violation(
+      CoreValidations.ResolutionValidation,
+      settings.id,
+      Some(OAuth2FlowModel.Scopes.value.toString),
+      "Follow scopes are not defined in root: " + scopes.toString(),
+      settings.position(),
+      settings.location()
+    )
   }
 }
