@@ -1,0 +1,11 @@
+asyncapi: 2.0.0
+info:
+  title: aTitle
+  version: aVersion
+channels: {}
+servers:
+  ^($$$:
+    url: development.gigantic-server.com
+    description: Development server
+    protocol: amqp
+    protocolVersion: 0.9.1
