@@ -113,6 +113,11 @@ object ParserSideValidations extends Validations {
     "Paths property must be declared"
   )
 
+  val MandatoryChannelsProperty = validation(
+    "mandatory-channels-property",
+    "Channels property must be declared"
+  )
+
   val InvalidSecuritySchemeDescribedByType = validation(
     "invalid-security-scheme-described-by-type",
     "Invalid 'describedBy' type, map expected"

@@ -1,0 +1,10 @@
+asyncapi: 2.0.0
+info:
+  title: asasd
+  version: asd
+channels:
+  /employees:
+    subscribe:
+      bindings:
+        http:
+          method: GET

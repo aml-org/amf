@@ -1,0 +1,10 @@
+asyncapi: 2.0.0
+info:
+  title: aTitle
+  version: aVersion
+channels: {}
+servers:
+  production:
+    description: Development server
+    protocol: amqp
+    protocolVersion: 0.9.1

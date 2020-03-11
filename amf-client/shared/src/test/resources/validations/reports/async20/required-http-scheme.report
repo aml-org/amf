@@ -1,0 +1,14 @@
+Model: file://amf-client/shared/src/test/resources/validations/async20/validations/required-http-scheme.yaml
+Profile: ASYNC 2.0
+Conforms? false
+Number of results: 1
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/parser#HttpSettings-scheme-minCount
+  Message: 'scheme' field is mandatory in http security scheme
+  Level: Violation
+  Target: file://amf-client/shared/src/test/resources/validations/async20/validations/required-http-scheme.yaml#/declarations/securitySchemes/some/settings/http
+  Property: http://a.ml/vocabularies/security#scheme
+  Position: Some(LexicalInformation([(9,0)-(9,16)]))
+  Location: file://amf-client/shared/src/test/resources/validations/async20/validations/required-http-scheme.yaml

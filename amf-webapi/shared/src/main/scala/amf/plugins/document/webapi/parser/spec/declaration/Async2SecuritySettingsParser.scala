@@ -1,12 +1,14 @@
 package amf.plugins.document.webapi.parser.spec.declaration
 
-import amf.plugins.document.webapi.parser.spec.common.AnnotationParser
-import org.yaml.model.{YMap, YMapEntry}
-import amf.plugins.domain.webapi.metamodel.security._
-import amf.plugins.domain.webapi.models.security._
 import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
+import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, OAuth2FlowValidations}
+import amf.plugins.domain.webapi.metamodel.security._
+import amf.plugins.domain.webapi.models.security._
+import org.yaml.model.{YMap, YMapEntry}
+
+import scala.language.implicitConversions
 
 class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit ctx: AsyncWebApiContext)
     extends OasLikeSecuritySettingsParser(map, scheme) {
@@ -65,7 +67,7 @@ class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit c
   }
 
   override def parseOauth2Settings(settings: OAuth2Settings): OAuth2Settings = {
-    map.key("flows", parseFlows(_, settings))
+    map.key("flows").foreach(parseFlows(_, settings))
 
     map.key(
       "settings".asOasExtension,
@@ -77,8 +79,11 @@ class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit c
     settings
   }
 
-  private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit =
-    entry.value.as[YMap].entries.foreach(parseFlow(settings, _))
+  private def parseFlows(entry: YMapEntry, settings: OAuth2Settings): Unit = {
+    val flows = entry.value.as[YMap].entries.map(parseFlow(settings, _))
+    flows.foreach(OAuth2FlowValidations.validateFlowFields(_, ctx.eh))
+    settings.setArray(OAuth2SettingsModel.Flows, flows)
+  }
 
   private def parseFlow(settings: OAuth2Settings, flowEntry: YMapEntry) = {
     val flow    = OAuth2Flow(flowEntry)
@@ -94,8 +99,7 @@ class Async2SecuritySettingsParser(map: YMap, scheme: SecurityScheme)(implicit c
     flowMap.key("refreshUrl", OAuth2FlowModel.RefreshUri in flow)
 
     parseScopes(flow, flowMap)
-
-    settings.add(OAuth2SettingsModel.Flows, flow)
+    flow
   }
   override def vendorSpecificSettingsProducers(): SettingsProducers = Async2SettingsProducers
 }

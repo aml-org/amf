@@ -1,0 +1,10 @@
+asyncapi: 2.0.0
+info:
+  title: aTitel
+  version: aversion
+channels:
+  user/{$$}/signup:
+    publish:
+      message:
+        correlationId:
+          description: anId
