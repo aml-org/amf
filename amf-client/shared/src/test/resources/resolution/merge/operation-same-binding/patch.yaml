@@ -1,0 +1,10 @@
+subscribe:
+  operationId: "traitOperationId"
+  bindings:
+    http:
+      type: traitType
+      query:
+        type: object
+        properties:
+          some:
+            type: number
