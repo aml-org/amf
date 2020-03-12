@@ -19,6 +19,7 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.webapi.annotations._
 import amf.plugins.document.webapi.contexts._
 import amf.plugins.document.webapi.contexts.emitter.OasLikeSpecEmitterContext
+import amf.plugins.document.webapi.contexts.emitter.async.Async20SpecEmitterContext
 import amf.plugins.document.webapi.contexts.emitter.oas.{
   CompactJsonSchemaEmitterContext,
   JsonSchemaEmitterContext,
@@ -1279,7 +1280,7 @@ case class AsyncSchemaEmitter(key: String,
     val schemaVersion = AsyncSchemaFormats.getSchemaVersion(mediaType)(spec.eh)
     schemaVersion match {
       case RAML10SchemaVersion() => emitAsRaml(b)
-      case _                     => emitAsOas(b)
+      case _                     => emitAsOas(b, schemaVersion)
     }
   }
 
@@ -1291,10 +1292,13 @@ case class AsyncSchemaEmitter(key: String,
     )
   }
 
-  private def emitAsOas(b: EntryBuilder): Unit = {
+  private def emitAsOas(b: EntryBuilder, schemaVersion: JSONSchemaVersion): Unit = {
     b.entry(
       key,
-      OasTypePartEmitter(shape, ordering, references = references)(spec).emit(_)
+      b => {
+        val newCtx = new Async20SpecEmitterContext(spec.eh, schemaVersion = schemaVersion)
+        OasTypePartEmitter(shape, ordering, references = references)(newCtx).emit(b)
+      }
     )
   }
 
@@ -1526,13 +1530,22 @@ abstract class OasShapeEmitter(shape: Shape,
     if (Option(shape.xone).isDefined && shape.xone.nonEmpty)
       result += OasXoneConstraintEmitter(shape, ordering, references, pointer, schemaPath)
     if (Option(shape.not).isDefined)
-      result += OasNotConstraintEmitter(shape, ordering, references, pointer, schemaPath)
+      result += OasEntryShapeEmitter("not", shape.not, ordering, references, pointer, schemaPath)
 
     fs.entry(ShapeModel.ReadOnly).map(fe => result += ValueEmitter("readOnly", fe))
 
-    if (spec.vendor == Vendor.OAS30) {
+    if (spec.schemaVersion.isInstanceOf[OAS30SchemaVersion] || spec.schemaVersion == JSONSchemaDraft7SchemaVersion) {
       fs.entry(ShapeModel.Deprecated).map(f => result += ValueEmitter("deprecated", f))
       fs.entry(ShapeModel.WriteOnly).map(fe => result += ValueEmitter("writeOnly", fe))
+    }
+
+    if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion) {
+      if (Option(shape.ifShape).isDefined)
+        result += OasEntryShapeEmitter("if", shape.ifShape, ordering, references, pointer, schemaPath)
+      if (Option(shape.thenShape).isDefined)
+        result += OasEntryShapeEmitter("then", shape.thenShape, ordering, references, pointer, schemaPath)
+      if (Option(shape.ifShape).isDefined)
+        result += OasEntryShapeEmitter("else", shape.elseShape, ordering, references, pointer, schemaPath)
     }
 
     result
@@ -1721,26 +1734,6 @@ case class OasXoneConstraintEmitter(shape: Shape,
   override def position(): Position = emitters.map(_.position()).sortBy(_.line).headOption.getOrElse(ZERO)
 }
 
-case class OasNotConstraintEmitter(shape: Shape,
-                                   ordering: SpecOrdering,
-                                   references: Seq[BaseUnit],
-                                   pointer: Seq[String] = Nil,
-                                   schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeSpecEmitterContext)
-    extends EntryEmitter {
-
-  val emitter =
-    OasTypePartEmitter(shape.not, ordering, ignored = Nil, references = references, pointer :+ "not", schemaPath)
-
-  override def emit(b: EntryBuilder): Unit = {
-    b.entry(
-      "not",
-      p => emitter.emit(p)
-    )
-  }
-
-  override def position(): Position = emitter.position()
-}
-
 object OasAnyShapeEmitter {
   def apply(shape: AnyShape,
             ordering: SpecOrdering,
@@ -1761,7 +1754,7 @@ class OasAnyShapeEmitter(shape: AnyShape,
   override def emitters(): Seq[EntryEmitter] = {
     val result = ListBuffer[EntryEmitter]()
 
-    if (spec.options.isWithDocumentation)
+    if (spec.options.isWithDocumentation) {
       shape.fields
         .entry(AnyShapeModel.Examples)
         .map(f => {
@@ -1775,6 +1768,9 @@ class OasAnyShapeEmitter(shape: AnyShape,
             case (anonymous, named) => examplesEmitters(anonymous.headOption, anonymous.tail ++ named, isHeader)
           })
         })
+      if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion)
+        shape.fields.entry(AnyShapeModel.Comment).map(c => result += ValueEmitter("$comment", c))
+    }
 
     super.emitters() ++ result
   }
@@ -1801,6 +1797,9 @@ case class OasArrayShapeEmitter(shape: ArrayShape,
     fs.entry(ArrayShapeModel.MinItems).map(f => result += ValueEmitter("minItems", f))
 
     fs.entry(ArrayShapeModel.UniqueItems).map(f => result += ValueEmitter("uniqueItems", f))
+
+    if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion && Option(shape.contains).isDefined)
+      result += OasEntryShapeEmitter("contains", shape.contains, ordering, references, pointer, schemaPath)
 
     fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
       case Some(f) if f.value.annotations.contains(classOf[CollectionFormatFromItems]) =>
@@ -1849,7 +1848,14 @@ case class OasTupleShapeEmitter(shape: TupleShape,
       case Some(f) => result += ValueEmitter("additionalItems", f.negated)
       case None =>
         fs.entry(TupleShapeModel.AdditionalItemsSchema)
-          .map(f => result += OasEntryShapeEmitter("additionalItems", f, ordering, references))
+          .map(
+            f =>
+              result += OasEntryShapeEmitter("additionalItems",
+                                             f.element.asInstanceOf[Shape],
+                                             ordering,
+                                             references,
+                                             pointer,
+                                             schemaPath))
     }
 
     fs.entry(ArrayShapeModel.CollectionFormat) match { // What happens if there is an array of an array with collectionFormat?
@@ -1975,7 +1981,7 @@ case class OasNodeShapeEmitter(node: NodeShape,
                                isHeader: Boolean = false)(implicit spec: OasLikeSpecEmitterContext)
     extends OasAnyShapeEmitter(node, ordering, references, isHeader = isHeader) {
   override def emitters(): Seq[EntryEmitter] = {
-    val isOas3 = spec.vendor == Vendor.OAS30
+    val isOas3 = spec.schemaVersion.isInstanceOf[OAS30SchemaVersion]
 
     val result: ListBuffer[EntryEmitter] = ListBuffer(super.emitters(): _*)
 
@@ -1992,7 +1998,14 @@ case class OasNodeShapeEmitter(node: NodeShape,
       case Some(f) => result += ValueEmitter("additionalProperties", f.negated)
       case _ =>
         fs.entry(NodeShapeModel.AdditionalPropertiesSchema)
-          .map(f => result += OasEntryShapeEmitter("additionalProperties", f, ordering, references))
+          .map(
+            f =>
+              result += OasEntryShapeEmitter("additionalProperties",
+                                             f.element.asInstanceOf[Shape],
+                                             ordering,
+                                             references,
+                                             pointer,
+                                             schemaPath))
     }
 
     if (isOas3) {
@@ -2017,6 +2030,9 @@ case class OasNodeShapeEmitter(node: NodeShape,
     fs.entry(NodeShapeModel.Dependencies).map(f => result += OasShapeDependenciesEmitter(f, ordering, properties))
 
     fs.entry(NodeShapeModel.Inherits).map(f => result += OasShapeInheritsEmitter(f, ordering, references))
+
+    if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion && Option(node.propertyNames).isDefined)
+      result += OasEntryShapeEmitter("propertyNames", node.propertyNames, ordering, references, pointer, schemaPath)
 
     result
   }
@@ -2060,20 +2076,26 @@ case class IriTemplateEmitter(key: String, f: FieldEntry, ordering: SpecOrdering
   override def position(): Position = pos(f.value.annotations)
 }
 
-case class OasEntryShapeEmitter(key: String, f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
-    implicit spec: OasLikeSpecEmitterContext)
+case class OasEntryShapeEmitter(key: String,
+                                shape: Shape,
+                                ordering: SpecOrdering,
+                                references: Seq[BaseUnit],
+                                pointer: Seq[String] = Nil,
+                                schemaPath: Seq[(String, String)] = Nil)(implicit spec: OasLikeSpecEmitterContext)
     extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
       key,
       _.obj { b =>
-        val emitters = OasTypeEmitter(f.element.asInstanceOf[Shape], ordering, references = references).entries()
+        val emitters =
+          OasTypeEmitter(shape, ordering, references = references, pointer = pointer :+ key, schemaPath = schemaPath)
+            .entries()
         traverse(ordering.sorted(emitters), b)
       }
     )
   }
 
-  override def position(): Position = pos(f.value.annotations)
+  override def position(): Position = pos(shape.annotations)
 }
 
 case class OasShapeInheritsEmitter(f: FieldEntry, ordering: SpecOrdering, references: Seq[BaseUnit])(
@@ -2180,9 +2202,10 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
 
     emitFormatRanges(fs, result)
 
-    fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("exclusiveMinimum", f))
-
-    fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("exclusiveMaximum", f))
+    if (spec.schemaVersion != JSONSchemaDraft7SchemaVersion) {
+      fs.entry(ScalarShapeModel.ExclusiveMinimum).map(f => result += ValueEmitter("exclusiveMinimum", f))
+      fs.entry(ScalarShapeModel.ExclusiveMaximum).map(f => result += ValueEmitter("exclusiveMaximum", f))
+    }
 
     fs.entry(ScalarShapeModel.MultipleOf)
       .map(f => result += ValueEmitter("multipleOf", f, Some(NumberTypeToYTypeConverter.convert(typeDef))))
@@ -2221,15 +2244,26 @@ trait OasCommonOASFieldsEmitter extends RamlFormatTranslator {
   }
 
   private def emitMinAndMax(fs: Fields, result: ListBuffer[EntryEmitter]): Unit = {
-    fs.entry(ScalarShapeModel.Minimum).foreach(emitMin(_, result))
-    fs.entry(ScalarShapeModel.Maximum).foreach(emitMax(_, result))
+    if (spec.schemaVersion == JSONSchemaDraft7SchemaVersion) {
+      fs.entry(ScalarShapeModel.Minimum)
+        .foreach(emitMin(_, result, fs.entry(ScalarShapeModel.ExclusiveMinimum).exists(_.scalar.toBool)))
+      fs.entry(ScalarShapeModel.Maximum)
+        .foreach(emitMax(_, result, fs.entry(ScalarShapeModel.ExclusiveMaximum).exists(_.scalar.toBool)))
+    } else {
+      fs.entry(ScalarShapeModel.Minimum).foreach(emitMin(_, result))
+      fs.entry(ScalarShapeModel.Maximum).foreach(emitMax(_, result))
+    }
   }
 
-  private def emitMin(f: FieldEntry, result: ListBuffer[EntryEmitter]) =
-    result += ValueEmitter("minimum", f, Some(NumberTypeToYTypeConverter.convert(typeDef)))
+  private def emitMin(f: FieldEntry, result: ListBuffer[EntryEmitter], isExclusive: Boolean = false) =
+    result += ValueEmitter(if (isExclusive) "exclusiveMinimum" else "minimum",
+                           f,
+                           Some(NumberTypeToYTypeConverter.convert(typeDef)))
 
-  private def emitMax(f: FieldEntry, result: ListBuffer[EntryEmitter]) =
-    result += ValueEmitter("maximum", f, Some(NumberTypeToYTypeConverter.convert(typeDef)))
+  private def emitMax(f: FieldEntry, result: ListBuffer[EntryEmitter], isExclusive: Boolean = false) =
+    result += ValueEmitter(if (isExclusive) "exclusiveMaximum" else "maximum",
+                           f,
+                           Some(NumberTypeToYTypeConverter.convert(typeDef)))
 
   private def buildMin(min: Double, result: ListBuffer[EntryEmitter]): Unit =
     build(min, "minimum", ScalarShapeModel.Minimum, result)

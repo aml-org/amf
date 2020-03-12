@@ -218,18 +218,20 @@ class Oas3SpecEmitterContext(eh: ErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
                              options: ShapeRenderOptions = ShapeRenderOptions())
     extends OasSpecEmitterContext(eh, refEmitter, options) {
-  override val factory: OasSpecEmitterFactory  = Oas3SpecEmitterFactory(this)
-  override val vendor: Vendor                  = Oas30
-  override def schemasDeclarationsPath: String = "/components/schemas/"
+  override def schemaVersion: JSONSchemaVersion = OAS30SchemaVersion("schema")(eh)
+  override val factory: OasSpecEmitterFactory   = Oas3SpecEmitterFactory(this)
+  override val vendor: Vendor                   = Oas30
+  override def schemasDeclarationsPath: String  = "/components/schemas/"
 }
 
 class Oas2SpecEmitterContext(eh: ErrorHandler,
                              refEmitter: RefEmitter = OasRefEmitter,
                              options: ShapeRenderOptions = ShapeRenderOptions())
     extends OasSpecEmitterContext(eh, refEmitter, options) {
-  override val factory: OasSpecEmitterFactory  = new Oas2SpecEmitterFactory(this)
-  override val vendor: Vendor                  = Oas20
-  override def schemasDeclarationsPath: String = "/definitions/"
+  override def schemaVersion: JSONSchemaVersion = OAS20SchemaVersion("schema")(eh)
+  override val factory: OasSpecEmitterFactory   = new Oas2SpecEmitterFactory(this)
+  override val vendor: Vendor                   = Oas20
+  override def schemasDeclarationsPath: String  = "/definitions/"
 }
 
 object OasRefEmitter extends RefEmitter {

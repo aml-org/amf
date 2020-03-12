@@ -9,15 +9,15 @@ import amf.plugins.domain.shapes.models.Example
 
 import scala.collection.mutable.ListBuffer
 
-object AsyncApiExampleEmitters {
+object Draft7ExampleEmitters {
 
   def apply(examples: Seq[Example], ordering: SpecOrdering, references: Seq[BaseUnit])(
-      implicit spec: OasLikeSpecEmitterContext): AsyncApiExampleEmitters = {
-    new AsyncApiExampleEmitters(examples, ordering, references)
+      implicit spec: OasLikeSpecEmitterContext): Draft7ExampleEmitters = {
+    new Draft7ExampleEmitters(examples, ordering, references)
   }
 }
 
-class AsyncApiExampleEmitters(examples: Seq[Example], ordering: SpecOrdering, references: Seq[BaseUnit])(
+class Draft7ExampleEmitters(examples: Seq[Example], ordering: SpecOrdering, references: Seq[BaseUnit])(
     implicit spec: OasLikeSpecEmitterContext)
     extends OasLikeExampleEmitters {
   override def emitters(): ListBuffer[EntryEmitter] = {
