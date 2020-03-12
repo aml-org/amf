@@ -1,25 +1,22 @@
-package amf.plugins.document.webapi.parser.spec.domain
+package amf.plugins.document.webapi.parser.spec.async.parser
+
 import amf.core.annotations.{SynthesizedField, TrackedElement, VirtualObject}
 import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{Annotations, ScalarNode, SearchScope, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.OasDefinitions
 import amf.plugins.document.webapi.parser.spec.WebApiDeclarations.ErrorMessage
-import amf.plugins.document.webapi.parser.spec.async.parser.{AsyncApiTypeParser, AsyncSchemaFormats}
 import amf.plugins.document.webapi.parser.spec.async.{MessageType, Publish, Subscribe}
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, SpecParserOps, YMapEntryLike}
-import amf.plugins.document.webapi.parser.spec.declaration.{
-  JSONSchemaDraft7SchemaVersion,
-  OasLikeCreativeWorkParser,
-  OasLikeTagsParser
-}
+import amf.plugins.document.webapi.parser.spec.declaration.{JSONSchemaDraft7SchemaVersion, OasLikeCreativeWorkParser, OasLikeTagsParser}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncMessageBindingsParser
+import amf.plugins.document.webapi.parser.spec.domain.{Oas3ExampleOptions, RamlExampleValueAsString}
 import amf.plugins.domain.shapes.metamodel.ExampleModel
 import amf.plugins.domain.shapes.models.Example
 import amf.plugins.domain.shapes.models.ExampleTracking.tracking
 import amf.plugins.domain.webapi.metamodel.{MessageModel, ParameterModel, PayloadModel}
-import amf.plugins.domain.webapi.models.bindings.MessageBindings
 import amf.plugins.domain.webapi.models._
+import amf.plugins.domain.webapi.models.bindings.MessageBindings
 import amf.plugins.features.validation.CoreValidations
 import org.yaml.model.{YMap, YMapEntry, YNode, YSequence}
 
@@ -33,7 +30,7 @@ object AsyncMessageParser {
   }
 }
 
-case class AsyncMessageParser(entryLike: YMapEntryLike,
+private class AsyncMessageParser(entryLike: YMapEntryLike,
                               parent: String,
                               messageType: Option[MessageType],
                               populator: AsyncMessagePopulator,

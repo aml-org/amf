@@ -5,7 +5,13 @@ import amf.core.model.document.Document
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, ScalarNode, SyamlParsedDocument, YMapOps}
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.document.webapi.parser.spec.async.parser.AsyncOperationParser
+import amf.plugins.document.webapi.parser.spec.async.parser.{
+  AsyncCorrelationIdParser,
+  AsyncMessageParser,
+  AsyncOperationParser,
+  AsyncParametersParser,
+  AsyncServersParser
+}
 import amf.plugins.document.webapi.parser.spec.common.{
   AnnotationParser,
   SpecParserOps,

@@ -1,14 +1,15 @@
-package amf.plugins.document.webapi.parser.spec.domain
+package amf.plugins.document.webapi.parser.spec.async.parser
 
 import amf.core.model.domain.AmfArray
-import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
-import amf.plugins.domain.webapi.models.Server
-import org.yaml.model.{YMap, YNode}
-import amf.core.parser.{Annotations, YMapOps}
+import amf.core.parser.Annotations
 import amf.core.utils.IdCounter
+import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.document.webapi.parser.spec.common.{AnnotationParser, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.domain.binding.AsyncServerBindingsParser
+import amf.plugins.document.webapi.parser.spec.domain.{OasLikeSecurityRequirementParser, OasLikeServerParser}
 import amf.plugins.domain.webapi.metamodel.ServerModel
+import amf.plugins.domain.webapi.models.Server
+import org.yaml.model.{YMap, YNode}
 
 case class AsyncServerParser(parent: String, map: YMap)(implicit override val ctx: AsyncWebApiContext)
     extends OasLikeServerParser(parent, map) {

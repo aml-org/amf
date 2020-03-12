@@ -11,12 +11,12 @@ import amf.core.model.domain.{DataNode, ScalarNode}
 import amf.core.parser.{ParserContext, YMapOps}
 import amf.io.FileAssertionTest
 import amf.plugins.document.webapi.contexts.parser.async.{Async20WebApiContext, AsyncWebApiContext}
-import amf.plugins.document.webapi.parser.spec.async.Subscribe
-import amf.plugins.document.webapi.parser.spec.common.DataNodeParser
+import amf.plugins.document.webapi.parser.spec.async.parser.{AsyncMessageParser, AsyncOperationParser}
+import amf.plugins.document.webapi.parser.spec.common.{DataNodeParser, YMapEntryLike}
 import amf.plugins.document.webapi.parser.spec.declaration.DataNodeEmitter
-import amf.plugins.document.webapi.parser.spec.domain.{AsyncMessageParser, AsyncOperationParser}
 import amf.plugins.domain.shapes.resolution.stages.merge.{AsyncKeyCriteria, JsonMergePatch}
 import amf.plugins.domain.webapi.models.{Message, Operation}
+import org.apache.jena.ext.com.google.common.eventbus.Subscribe
 import org.mulesoft.common.io.Fs
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 import org.yaml.model.{YDocument, YMap, YNode}
@@ -136,9 +136,8 @@ trait JsonMergePatchTest
       document
         .as[YMap]
         .key("message")
-        .map(entry => AsyncMessageParser(id, entry.value.as[YMap], Subscribe)(getBogusParserCtx).parse())
+        .map(entry => AsyncMessageParser(YMapEntryLike(entry), id, Option[Subscribe])(getBogusParserCtx).parse())
         .get
-        .head
     }
   }
 

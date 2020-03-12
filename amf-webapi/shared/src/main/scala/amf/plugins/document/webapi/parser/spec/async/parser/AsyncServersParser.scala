@@ -1,4 +1,5 @@
-package amf.plugins.document.webapi.parser.spec.domain
+package amf.plugins.document.webapi.parser.spec.async.parser
+
 import amf.plugins.document.webapi.contexts.parser.async.AsyncWebApiContext
 import amf.plugins.domain.webapi.models.{Server, WebApi}
 import org.yaml.model.YMap
