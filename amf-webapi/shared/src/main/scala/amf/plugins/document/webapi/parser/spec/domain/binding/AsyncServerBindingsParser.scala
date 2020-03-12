@@ -58,7 +58,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
   private def parseLastWill(binding: MqttServerBinding, map: YMap)(implicit ctx: AsyncWebApiContext): Unit = {
     map.key(
       "lastWill", { entry =>
-        val lastWill    = MqttServerLastWill(Annotations(entry)).adopted(binding.id)
+        val lastWill    = MqttServerLastWill(Annotations(entry.value)).adopted(binding.id)
         val lastWillMap = entry.value.as[YMap]
 
         lastWillMap.key("topic", MqttServerLastWillModel.Topic in lastWill)
@@ -66,8 +66,7 @@ case class AsyncServerBindingsParser(entryLike: YMapEntryLike, parent: String)(i
         lastWillMap.key("retain", MqttServerLastWillModel.Retain in lastWill)
 
         ctx.closedShape(lastWill.id, lastWillMap, "mqttServerLastWill")
-
-        binding.set(MqttServerBindingModel.LastWill, lastWill)
+        binding.set(MqttServerBindingModel.LastWill, lastWill, Annotations(entry))
       }
     )
   }
