@@ -145,7 +145,7 @@ abstract class AsyncMessagePopulator()(implicit ctx: AsyncWebApiContext) extends
       "headers",
       entry =>
         parseHeaderSchema(entry, message.id) foreach { param =>
-          message.withHeaders(Seq(param))
+          message.set(MessageModel.Headers, AmfArray(Seq(param), Annotations(entry.value)), Annotations(entry))
       }
     )
 
