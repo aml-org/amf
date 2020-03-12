@@ -74,7 +74,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     ctx.closedShape(binding.id, map, "amqpIsExchangeChannelBinding")
     map.key(
       "exchange", { entry =>
-        val exchange    = Amqp091ChannelExchange(Annotations(entry)).adopted(binding.id)
+        val exchange    = Amqp091ChannelExchange(Annotations(entry.key)).adopted(binding.id)
         val exchangeMap = entry.value.as[YMap]
 
         exchangeMap.key("name", Amqp091ChannelExchangeModel.Name in exchange) // TODO validate maxlength 255
@@ -86,7 +86,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
         ctx.closedShape(exchange.id, exchangeMap, "amqpExchangeChannelBinding")
 
-        binding.set(Amqp091ChannelBindingModel.Exchange, exchange)
+        binding.set(Amqp091ChannelBindingModel.Exchange, exchange, Annotations(entry))
       }
     )
   }
@@ -95,7 +95,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
     ctx.closedShape(binding.id, map, "amqpIsQueueChannelBinding")
     map.key(
       "queue", { entry =>
-        val queue    = Amqp091Queue(Annotations(entry)).adopted(binding.id)
+        val queue    = Amqp091Queue(Annotations(entry.value)).adopted(binding.id)
         val queueMap = entry.value.as[YMap]
 
         queueMap.key("name", Amqp091QueueModel.Name in queue) // TODO validate maxlength 255
@@ -107,7 +107,7 @@ case class AsyncChannelBindingsParser(entryLike: YMapEntryLike, parent: String)(
 
         ctx.closedShape(queue.id, queueMap, "amqpQueueChannelBinding")
 
-        binding.set(Amqp091ChannelBindingModel.Queue, queue)
+        binding.set(Amqp091ChannelBindingModel.Queue, queue, Annotations(entry))
       }
     )
   }
