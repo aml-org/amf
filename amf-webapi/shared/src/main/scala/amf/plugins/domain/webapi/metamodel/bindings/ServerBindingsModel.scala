@@ -2,15 +2,15 @@ package amf.plugins.domain.webapi.metamodel.bindings
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Array
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
 import amf.core.metamodel.domain.common.NameFieldSchema
+import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel, ModelDoc, ModelVocabularies}
+import amf.core.vocabulary.Namespace.ApiBinding
 import amf.core.vocabulary.ValueType
-import amf.core.vocabulary.Namespace.{ApiBinding, ApiContract}
 import amf.plugins.domain.webapi.models.bindings.ServerBindings
 
 object ServerBindingsModel extends DomainElementModel with NameFieldSchema {
 
-  override val `type`: List[ValueType] = ApiContract + "ServerBindings" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] = ApiBinding + "ServerBindings" :: DomainElementModel.`type`
 
   val Bindings = Field(
     Array(ServerBindingModel),
@@ -27,7 +27,7 @@ object ServerBindingsModel extends DomainElementModel with NameFieldSchema {
   override def modelInstance = ServerBindings()
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.ApiContract,
+    ModelVocabularies.ApiBinding,
     "ServerBindings",
     ""
   )

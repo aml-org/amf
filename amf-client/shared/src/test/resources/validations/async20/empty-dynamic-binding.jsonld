@@ -46,7 +46,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-dynamic-binding.yaml#/web-api/some.com/server-bindings",
                 "@type": [
-                  "http://a.ml/vocabularies/apiContract#ServerBindings",
+                  "http://a.ml/vocabularies/apiBinding#ServerBindings",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiBinding#binding": [
@@ -929,7 +929,7 @@
                       {
                         "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-dynamic-binding.yaml#/web-api/end-points/some-channel/publish/request/message-bindings",
                         "@type": [
-                          "http://a.ml/vocabularies/apiContract#MessageBindings",
+                          "http://a.ml/vocabularies/apiBinding#MessageBindings",
                           "http://a.ml/vocabularies/document#DomainElement"
                         ],
                         "http://a.ml/vocabularies/apiBinding#binding": [
@@ -1585,7 +1585,7 @@
                   {
                     "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-dynamic-binding.yaml#/web-api/end-points/some-channel/publish/operation-bindings",
                     "@type": [
-                      "http://a.ml/vocabularies/apiContract#OperationBindings",
+                      "http://a.ml/vocabularies/apiBinding#OperationBindings",
                       "http://a.ml/vocabularies/document#DomainElement"
                     ],
                     "http://a.ml/vocabularies/apiBinding#binding": [
@@ -2203,7 +2203,7 @@
               {
                 "@id": "file://amf-client/shared/src/test/resources/validations/async20/empty-dynamic-binding.yaml#/web-api/end-points/some-channel/channel-bindings",
                 "@type": [
-                  "http://a.ml/vocabularies/apiContract#ChannelBindings",
+                  "http://a.ml/vocabularies/apiBinding#ChannelBindings",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
                 "http://a.ml/vocabularies/apiBinding#binding": [

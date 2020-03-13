@@ -424,6 +424,33 @@ nodeMappings:
 
   ChannelBinding:
     classTerm: apiBinding.ChannelBinding
+    mapping:
+      type:
+        propertyTerm: apiBinding.type
+        range: string
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
+        range: DomainExtension
+        allowMultiple: true
+
+
+  ChannelBindings:
+    classTerm: apiContract.ChannelBindings
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      binding:
+        propertyTerm: apiBinding.binding
+        range: ChannelBinding
+        allowMultiple: true
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
+        range: DomainExtension
+        allowMultiple: true
 
 
   CorrelationId:
@@ -565,6 +592,9 @@ nodeMappings:
       definition:
         propertyTerm: apiBinding.definition
         range: DataNodeUnion
+      type:
+        propertyTerm: apiBinding.type
+        range: string
       designAnnotations:
         propertyTerm: doc.designAnnotation
         range: DomainExtension
@@ -659,8 +689,7 @@ nodeMappings:
         allowMultiple: true
       binding:
         propertyTerm: apiBinding.binding
-        range: ChannelBinding
-        allowMultiple: true
+        range: ChannelBindings
       designAnnotations:
         propertyTerm: doc.designAnnotation
         range: DomainExtension
@@ -837,9 +866,6 @@ nodeMappings:
     classTerm: apiBinding.HttpOperationBinding
     extends: OperationBinding
     mapping:
-      type:
-        propertyTerm: apiBinding.type
-        range: string
       method:
         propertyTerm: apiBinding.method
         range: string
@@ -871,7 +897,7 @@ nodeMappings:
     extends: MessageBinding
     mapping:
       key:
-        propertyTerm: apiBinding.key
+        propertyTerm: apiBinding.messageKey
         range: string
       bindingVersion:
         propertyTerm: apiBinding.bindingVersion
@@ -953,8 +979,7 @@ nodeMappings:
         allowMultiple: true
       binding:
         propertyTerm: apiBinding.binding
-        range: MessageBinding
-        allowMultiple: true
+        range: MessageBindings
       tag:
         propertyTerm: apiContract.tag
         range: Tag
@@ -980,6 +1005,33 @@ nodeMappings:
 
   MessageBinding:
     classTerm: apiBinding.MessageBinding
+    mapping:
+      type:
+        propertyTerm: apiBinding.type
+        range: string
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
+        range: DomainExtension
+        allowMultiple: true
+
+
+  MessageBindings:
+    classTerm: apiContract.MessageBindings
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      binding:
+        propertyTerm: apiBinding.binding
+        range: MessageBinding
+        allowMultiple: true
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
+        range: DomainExtension
+        allowMultiple: true
 
 
   Module:
@@ -1253,8 +1305,7 @@ nodeMappings:
         allowMultiple: true
       binding:
         propertyTerm: apiBinding.binding
-        range: OperationBinding
-        allowMultiple: true
+        range: OperationBindings
       isAbstract:
         propertyTerm: apiContract.isAbstract
         range: boolean
@@ -1269,6 +1320,33 @@ nodeMappings:
 
   OperationBinding:
     classTerm: apiBinding.OperationBinding
+    mapping:
+      type:
+        propertyTerm: apiBinding.type
+        range: string
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
+        range: DomainExtension
+        allowMultiple: true
+
+
+  OperationBindings:
+    classTerm: apiContract.OperationBindings
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      binding:
+        propertyTerm: apiBinding.binding
+        range: OperationBinding
+        allowMultiple: true
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
+        range: DomainExtension
+        allowMultiple: true
 
 
   Organization:
@@ -1700,8 +1778,7 @@ nodeMappings:
         allowMultiple: true
       binding:
         propertyTerm: apiBinding.binding
-        range: ServerBinding
-        allowMultiple: true
+        range: ServerBindings
       designAnnotations:
         propertyTerm: doc.designAnnotation
         range: DomainExtension
@@ -1710,6 +1787,33 @@ nodeMappings:
 
   ServerBinding:
     classTerm: apiBinding.ServerBinding
+    mapping:
+      type:
+        propertyTerm: apiBinding.type
+        range: string
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
+        range: DomainExtension
+        allowMultiple: true
+
+
+  ServerBindings:
+    classTerm: apiContract.ServerBindings
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      binding:
+        propertyTerm: apiBinding.binding
+        range: ServerBinding
+        allowMultiple: true
+      designLink:
+        propertyTerm: doc.design-link-target
+        range: link
+      designAnnotations:
+        propertyTerm: doc.designAnnotation
+        range: DomainExtension
+        allowMultiple: true
 
 
   Settings:
